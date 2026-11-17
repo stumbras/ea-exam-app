@@ -4957,7 +4957,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 48 · Nov 17";
+const BUILD="Version 49 · Nov 17";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -5011,7 +5011,7 @@ async function syncTest(){
     testNote=S.upd?`Working. Your account now holds ${n} tracked facts and questions, saved ${new Date(md.upd).toLocaleString()}. Open this app in Claude on any device and the same progress loads.`:"Working. Account storage answers correctly. Nothing is stored yet because no question has been answered."}
   catch(e){syncWhy=(e&&e.code)||"error";testNote="Not working right now: "+whyText()+". Progress is still saved on this device. Download a backup file to be safe, then try again later."}
   render()}
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="visible"||!aud||aud.state!=="play"||TTS)return;
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="visible"||!aud||aud.state!=="play"||TTS||aud.rec)return;
   try{navigator.wakeLock.request("screen").then(l=>{aud&&(aud.lock=l)}).catch(()=>{})}catch(e){}
   if(!aud.paused&&!aud.needTap){aud.redo=true;try{window.speechSynthesis.cancel();window.speechSynthesis.resume()}catch(e){}}});
 document.addEventListener("visibilitychange",async()=>{
@@ -5169,7 +5169,7 @@ function renderHome(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},
       <button class="mode" data-mode="facts"><span class="lvl">Easy · no daily limit</span><b>Drill all facts in order</b><p>No daily limit: your misses first, then any reviews due, then new facts in order. Facts you answered right stay away until their next scheduled review.</p><span class="cnt">${easyPool(part,filt).filter(i=>{const r=S.it[i.id];return !r||r[4]===0||r[1]<=today()}).length} ready to drill</span></button>
       <button class="mode" data-mode="cards"><span class="lvl">Flashcards · spaced repetition</span><b>Flip cards</b><p>Classic cards: recall the answer, flip, rate yourself. Shares the same schedule and tracking as Easy. Self-rated cards build a fact up to "learning"; mastery still needs a typed answer in Easy.</p><span class="cnt">${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&S.it[i.id]&&S.it[i.id][1]<=today()).length} due · ${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&!S.it[i.id]).length} new</span></button>
       
-      <button class="mode" data-mode="audio"><span class="lvl">Audio · hands-free</span><b>Listen and review</b><p>For driving or the gym: 5, 10 or 15 minutes. You hear a question, a short pause, the answer, then the answer again in short form. Picks facts from your misses and due reviews first, or random.</p><span class="cnt">All parts or this part</span></button>
+      <button class="mode" data-mode="audio"><span class="lvl">Audio · hands-free</span><b>Listen and review</b><p>${recOn()?"Recorded voice that keeps playing with the phone locked or another app open. ":""}For driving or the gym: 5, 10 or 15 minutes. You hear a question, a short pause, the answer, then the answer again in short form. Picks facts from your misses and due reviews first, or random.</p><span class="cnt">All parts or this part</span></button>
       <button class="mode" data-mode="medium"><span class="lvl">Medium · exam wording</span><b>Practice questions</b><p>Rule application, EXCEPT questions and traps, with explanations after each answer.</p><span class="cnt">${lv2} questions</span></button>
       <button class="mode" data-mode="hard"><span class="lvl">Hard · calculations</span><b>Exam-style scenarios</b><p>Multi-step calculations and fact patterns in real exam style. Timed per question.</p><span class="cnt">${lv3+lv2} questions</span></button>
       <button class="mode" data-mode="calc"><span class="lvl">Hard · calculation trainer</span><b>Practice the math</b><p>Social Security, phase-outs, basis, SE tax, penalties and more with fresh numbers every time and the worked steps after each answer.</p><span class="cnt">${GENS.filter(g=>g.p==part&&(filt==="all"||g.d==filt)).length} problem types</span></button>
@@ -5512,7 +5512,7 @@ function audR(it,k){const lead=["Again.","Remember.","One more time.","So, to re
   const how=EXPL[it.id]||(S.ex&&S.ex[it.id]);
   return `${lead} ${f}: ${sayable(shortAns(it.b))}.`+(how?" How it works. "+sayable(how):"")}
 function heardPool(p){S.au=S.au||{};return BANK.filter(i=>i.t==="f"&&i.p==p&&S.au[i.id]&&(!S.it[i.id]||(S.au[i.id][2]||0)>0))} // [count,lastDay,untested flag]
-function audQueue(scope,src,n){const t=today();S.au=S.au||{};const pool=BANK.filter(i=>i.t==="f"&&(scope==="all"||i.p==part));
+function audQueue(scope,src,n){const t=today();S.au=S.au||{};const pool=BANK.filter(i=>i.t==="f"&&(scope==="all"||i.p==part)&&(!aud||!aud.rec||REC[i.id]!==undefined));
   const heard=i=>(S.au[i.id]||[0,0])[0],fresh=i=>(S.au[i.id]||[0,0])[1]!==t; // fresh = not already heard today
   const least=l=>shuffle(l).sort((a,b)=>(fresh(b)-fresh(a))||heard(a)-heard(b)); // not heard today first, then heard least often
   if(src==="random")return least(pool).slice(0,n);
@@ -5568,8 +5568,59 @@ function voiceHtml(){const chip=(k,v,on,attr)=>`<button aria-pressed="${on}" ${a
   const best=vTag(l[0]);
   return `<div><div class="small muted">Voice (installed on this device)</div><div class="seg" style="flex-wrap:wrap">${l.map(x=>chip(x.voiceURI||x.name,x.name.replace(/Microsoft |Google | Online \(Natural\)| \(Enhanced\)| \(Premium\)/g,"").replace(/ - English.*$/,"")+" · "+vTag(x),cur&&(cur.voiceURI||cur.name)===(x.voiceURI||x.name),"data-adv")).join("")}</div><button class="btn ghost small" id="audtest">Play a sample</button>
     ${best==="Basic"||best==="Online"?`<div class="small" style="color:var(--warn)"><b>Only basic voices are installed, and they sound robotic.</b> ${help}</div>`:`<div class="small muted">Voices marked Premium, Natural or Enhanced sound the most human.</div>`}</div>`}
-function hush(){try{if(TTS)TTS.stop().catch(()=>{});else if(window.speechSynthesis)window.speechSynthesis.cancel()}catch(e){}}
-function openAudio(){aud={state:"setup",mins:10,src:"smart",scope:"part",gap:1,rate:1};view="audio";render();window.scrollTo(0,0)}
+function hush(){try{if(recEl&&!recEl.paused)recEl.pause()}catch(e){}try{if(TTS)TTS.stop().catch(()=>{});else if(window.speechSynthesis)window.speechSynthesis.cancel()}catch(e){}}
+/* ---- recorded voice: real audio files, so a review keeps playing when the app is in the background or the phone is locked ----
+   Each file holds one fact: the question, 2 seconds to think, the answer. REC maps a fact id to the second where the answer starts. */
+const REC={"p1f10pujca":4.8,"p1f10u3y89":4.3,"p1f10urowl":4.2,"p1f11pi784":4.0,"p1f14nw5x5":4.8,"p1f16khu25":8.0,"p1f19j9ytd":6.7,"p1f19jm7gi":4.0,"p1f1c789ge":4.9,"p1f1ety9y9":4.4,"p1f1g9hcx1":4.0,"p1f1jqpmue":3.4,"p1f1k3zkkm":4.6,"p1f1k4j0nw":3.9,"p1f1lv6fds":3.6,"p1f1mcz5p2":6.9,"p1f1mjtrts":3.7,"p1f1sjvr64":4.6,"p1f1wap6gc":5.7,"p1f2mt1cj":3.6,"p1f58gxe7":3.6,"p1f59s3y3":5.4,"p1f7f4px2":6.5,"p1fa06h7":5.9,"p1fbi0v65":4.2,"p1fc4vc2k":5.3,"p1feat3om":3.0,"p1fh6i40e":6.0,"p1fhgogdn":7.6,"p1fhny7cb":4.4,"p1fmu5qx0":3.6,"p1fnih91r":3.6,"p1fp9j7ss":4.0,"p1fr8lcfu":3.7,"p1fu76dim":4.0,"p1fvb918q":5.4,"p1fwgt2a3":5.8},REC_MB=1,REC_CACHE="ea-audio-v1";
+const recOn=()=>HOSTED&&Object.keys(REC).length>0,recUrl=id=>"audio/"+id+".mp3";
+let recEl=null,recSaved=null,recDl=null,recSil=null;
+function recSilence(){if(recSil)return recSil;const n=1200,b=new Uint8Array(44+n),v=new DataView(b.buffer),w=(o,t)=>{for(let i=0;i<t.length;i++)b[o+i]=t.charCodeAt(i)};
+  w(0,"RIFF");v.setUint32(4,36+n,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,8000,true);v.setUint32(28,8000,true);v.setUint16(32,1,true);v.setUint16(34,8,true);w(36,"data");v.setUint32(40,n,true);b.fill(128,44);
+  return recSil=URL.createObjectURL(new Blob([b],{type:"audio/wav"}))}
+async function recBlobUrl(id){try{const c=await caches.open(REC_CACHE);let r=await c.match(recUrl(id));   // the copy saved on this device first, then the network
+    if(!r){r=await fetch(recUrl(id));if(!r.ok)return "";c.put(recUrl(id),r.clone()).catch(()=>{})}
+    return URL.createObjectURL(new Blob([await r.arrayBuffer()],{type:"audio/mpeg"}))}catch(e){return ""}}
+function recPrep(a,k){const it=a.queue[k];if(!it||a.urls[it.id]!==undefined)return;a.urls[it.id]=null;recBlobUrl(it.id).then(u=>{if(aud===a&&!a.stop)a.urls[it.id]=u;else if(u)URL.revokeObjectURL(u)})}
+function startRec(){const a=aud;a.rec=true;a.queue=audQueue(a.scope,a.src,a.mins*6+20);
+  if(!a.queue.length){a.msg="Nothing recorded for this choice yet. Pick Smart mix or Random.";render();return}
+  const el=recEl||(recEl=new Audio());el.preload="auto";
+  Object.assign(a,{state:"play",pos:-1,cur:null,heard:0,marked:0,start:Date.now(),end:Date.now()+a.mins*60000,paused:false,stop:false,phase:"q",msg:"",urls:{},began:false,miss:0});
+  el.onended=()=>{if(aud!==a||a.stop||a.state!=="play")return;if(!a.began)recBegin(a);else recNext(a,true)};
+  el.onerror=()=>{if(aud!==a||a.stop||a.state!=="play"||!a.began)return;a.miss++;recNext(a,false)};
+  el.ontimeupdate=()=>{if(aud!==a||!a.cur||a.phase!=="q")return;if(el.currentTime>=(REC[a.cur.id]||0)){a.phase="a";renderAudio()}};
+  el.playbackRate=1;el.src=recSilence();const p=el.play();if(p&&p.catch)p.catch(()=>{});   // a short silent clip inside the tap unlocks the player on phones
+  setTimeout(()=>{if(aud===a&&!a.stop)recBegin(a)},900);
+  try{const ms=navigator.mediaSession;if(ms){ms.setActionHandler("play",()=>recPause(a,false));ms.setActionHandler("pause",()=>recPause(a,true));ms.setActionHandler("nexttrack",()=>recNext(a,false));ms.setActionHandler("previoustrack",()=>{try{recEl.currentTime=0;a.phase="q";renderAudio()}catch(e){}})}}catch(e){}
+  recPrep(a,0);recPrep(a,1);render()}
+function recBegin(a){if(a.began)return;a.began=true;recPlayAt(a,0)}
+function recPlayAt(a,k){const el=recEl,it=a.queue[k];if(!it){recFinish(a);return}   // stays synchronous when the file is ready, so the next fact starts even with the phone locked
+  a.pos=k;a.cur=it;a.didnt=false;a.knew=false;a.phase="q";const u=a.urls[it.id];
+  if(u){el.src=u;el.playbackRate=a.rate;const p=el.play();if(p&&p.catch)p.catch(()=>{if(aud===a&&!a.stop&&!a.paused){a.needTap=true;a.paused=true;a.pauseAt=Date.now();renderAudio()}})}
+  else if(u===""){a.miss++;if(a.miss>4){a.state="recfail";try{el.pause()}catch(e){}render();return}recNext(a,false);return}
+  else{recPrep(a,k);const t=setInterval(()=>{if(aud!==a||a.stop||a.pos!==k){clearInterval(t);return}if(a.urls[it.id]!==null&&a.urls[it.id]!==undefined){clearInterval(t);recPlayAt(a,k)}},120)}
+  recPrep(a,k+1);recPrep(a,k+2);
+  try{if("mediaSession" in navigator&&window.MediaMetadata)navigator.mediaSession.metadata=new MediaMetadata({title:it.f.slice(0,90),artist:"EA Exam APP · Part "+it.p,album:PARTS[it.p].doms[it.d][0]})}catch(e){}
+  renderAudio()}
+function recNext(a,count){const it=a.cur;
+  if(count&&it){a.miss=0;a.heard++;S.au=S.au||{};const u=S.au[it.id]||[0,0];S.au[it.id]=[u[0]+1,today(),(a.knew||a.didnt)?0:1];if(!(a.ids=a.ids||[]).includes(it.id))a.ids.push(it.id);persist()}
+  if(a.paused){a.paused=false;a.needTap=false;a.end+=Date.now()-(a.pauseAt||Date.now())}
+  const k=a.pos+1;if(k>=a.queue.length||Date.now()>=a.end){recFinish(a);return}recPlayAt(a,k)}
+function recPause(a,on){if(aud!==a||a.state!=="play")return;if(on===a.paused&&!a.needTap)return;
+  if(on){a.paused=true;a.pauseAt=Date.now();try{recEl.pause()}catch(e){}}
+  else{a.paused=false;a.needTap=false;a.end+=Date.now()-(a.pauseAt||Date.now());const p=recEl.play();if(p&&p.catch)p.catch(()=>{})}
+  renderAudio()}
+function recFinish(a){try{recEl.pause()}catch(e){}Object.values(a.urls||{}).forEach(u=>{if(u)try{URL.revokeObjectURL(u)}catch(e){}});a.urls={};
+  if(aud!==a)return;if(a.heard){touchDay();S.hist.push({t:Date.now(),p:part,m:"audio",n:a.heard,c:a.heard-a.marked});S.hist=S.hist.slice(-200);persist()}
+  a.state="done";render()}
+async function recCount(){try{const c=await caches.open(REC_CACHE);recSaved=(await c.keys()).filter(r=>REC[r.url.split("/").pop().replace(".mp3","")]!==undefined).length}catch(e){recSaved=0}
+  if(view==="audio"&&aud&&aud.state==="setup")render()}
+async function recDownload(){if(recDl&&recDl.on)return;const ids=Object.keys(REC);recDl={on:true,done:0,total:ids.length,fail:0};render();
+  try{const c=await caches.open(REC_CACHE);let i=0;
+    const one=async()=>{while(i<ids.length&&recDl.on){const id=ids[i++];try{if(!(await c.match(recUrl(id)))){const r=await fetch(recUrl(id));if(r.ok)await c.put(recUrl(id),r);else recDl.fail++}}catch(e){recDl.fail++}
+      recDl.done++;if(recDl.done%8===0){const el=document.getElementById("recdl");if(el)el.textContent="Saving audio… "+recDl.done+" of "+recDl.total}}};
+    await Promise.all([one(),one(),one(),one()])}catch(e){recDl.fail=recDl.total}
+  recDl.on=false;await recCount()}
+function openAudio(){aud={state:"setup",mins:10,src:"smart",scope:"part",gap:1,rate:1,rec:recOn()&&S.set.recv!==false};view="audio";render();window.scrollTo(0,0);if(recOn()&&recSaved===null)recCount()}
 async function startAudio(){const a=aud;a.queue=audQueue(a.scope,a.src,a.mins*8);if(!a.queue.length){a.msg="Nothing to review for this choice yet. Pick Smart mix or Random.";render();return}
   Object.assign(a,{state:"play",pos:0,heard:0,marked:0,start:Date.now(),end:Date.now()+a.mins*60000,paused:false,stop:false,phase:"q",msg:""});
   try{navigator.wakeLock.request("screen").then(l=>{a.lock=l}).catch(()=>{})}catch(e){}
@@ -5591,30 +5642,34 @@ async function startAudio(){const a=aud;a.queue=audQueue(a.scope,a.src,a.mins*8)
 async function gate(a,ms,ph){a.phase=ph;renderAudio();const until=Date.now()+ms;while(aud===a&&!a.stop&&!a.skip&&(a.paused||Date.now()<until)){if(a.paused){await wait(200);a.end+=200}else await wait(80)}if(a.skip)throw{skip:true}}
 function renderAudio(){if(view!=="audio"||!aud)return;const a=aud,chip=(k,v,cur,attr)=>`<button aria-pressed="${cur===k}" ${attr}="${k}">${v}</button>`;
   if(a.state==="setup"){$("#view").innerHTML=`<section class="section"><div class="sesshead"><h2>Audio review</h2><button class="btn ghost small" id="audback">Back</button></div>
-    <div class="card"><div>Hands-free review for driving or the gym. For each fact you hear the question, a short pause to answer in your head, the answer, then the answer once more in short form.</div>
-    ${canSpeak()?"":`<div class="small" style="color:var(--bad)">This browser has no speech voice. Try Chrome, Edge or Safari.</div>`}
-    <div><div class="small muted">Length</div><div class="seg">${[5,10,15].map(m=>chip(m,m+" min",a.mins,"data-amins")).join("")}</div></div>
+    <div class="card"><div>${a.rec?"Hands-free review. For each fact you hear the question, 2 seconds to answer in your head, then the answer.":"Hands-free review for driving or the gym. For each fact you hear the question, a short pause to answer in your head, the answer, then the answer once more in short form."}</div>
+    ${recOn()?`<div><div class="small muted">Voice</div><div class="seg">${chip("1","Recorded voice · keeps playing in the background",a.rec?"1":"0","data-arec")}${chip("0","Phone voice",a.rec?"1":"0","data-arec")}</div></div>
+      ${a.rec?`<div class="notice"><b>Recorded voice.</b> Keeps playing when you switch apps or lock the phone, with play, pause and skip on the lock screen. Recorded so far: ${Object.keys(REC).filter(id=>BYID[id]&&BYID[id].p==part).length} of ${BANK.filter(i=>i.t==="f"&&i.p==part).length} Part ${part} facts.
+        <div style="margin-top:6px">${recDl&&recDl.on?`<b id="recdl">Saving audio… ${recDl.done} of ${recDl.total}</b>`:recSaved!==null&&recSaved>=Object.keys(REC).length?`<b style="color:var(--good)">All audio is saved on this device. It works offline.</b>`:`<span id="recdl">${recSaved===null?"":recSaved+" of "+Object.keys(REC).length+" audio files are saved on this device. "}</span><button class="btn small" id="recget">Save all audio for offline use (${REC_MB} MB)</button>${recDl&&recDl.fail?`<div class="small" style="color:var(--warn)">${recDl.fail} files could not be saved. Check the internet and tap again.</div>`:""}`}</div></div>`:""}`:""}
+    ${a.rec||canSpeak()?"":`<div class="small" style="color:var(--bad)">This browser has no speech voice. Try Chrome, Edge or Safari.</div>`}
+    <div><div class="small muted">Length</div><div class="seg">${(a.rec?[10,20,30,60]:[5,10,15]).map(m=>chip(m,m+" min",a.mins,"data-amins")).join("")}</div></div>
     <div><div class="small muted">What to review</div><div class="seg">${chip("smart","Smart mix (misses, hardest, due, then the rest)",a.src,"data-asrc")}${chip("missed","Only missed and hardest",a.src,"data-asrc")}${chip("random","Random",a.src,"data-asrc")}</div></div>
     <div><div class="small muted">Scope</div><div class="seg">${chip("part","Part "+part+" only",a.scope,"data-ascope")}${chip("all","All three parts",a.scope,"data-ascope")}</div></div>
-    <div><div class="small muted">Pause before the answer</div><div class="seg">${[1,3,5].map(g=>chip(g,g+" sec",a.gap,"data-agap")).join("")}</div></div>
-    ${voiceHtml()}
+    ${a.rec?"":`<div><div class="small muted">Pause before the answer</div><div class="seg">${[1,3,5].map(g=>chip(g,g+" sec",a.gap,"data-agap")).join("")}</div></div>
+    ${voiceHtml()}`}
     <div><div class="small muted">Voice speed</div><div class="seg">${[[0.85,"Slower"],[1,"Normal"],[1.2,"Faster"]].map(([r,l])=>chip(r,l,a.rate,"data-arate")).join("")}</div></div>
     ${a.msg?`<div class="small" style="color:var(--warn)">${esc(a.msg)}</div>`:""}
-    <button class="btn pri" id="audstart" ${canSpeak()?"":"disabled"}>Start ${a.mins}-minute review</button>
-    <div class="small muted">Start it before you drive and don't touch the screen while moving. Turn your volume up; the screen stays on where the browser allows.</div></div></section>`;return}
+    <button class="btn pri" id="audstart" ${a.rec||canSpeak()?"":"disabled"}>Start ${a.mins}-minute review</button>
+    <div class="small muted">${a.rec?"Start it, then lock the phone or open another app. Turn your volume up and silent mode off.":"Start it before you drive and don't touch the screen while moving. Turn your volume up; the screen stays on where the browser allows."}</div></div></section>`;return}
+  if(a.state==="recfail"){$("#view").innerHTML=`<section class="section"><div class="card"><h2>The audio files could not be loaded</h2><div>There is no internet, and these facts are not saved on this device yet. When you are online, open Audio review and tap "Save all audio for offline use".</div><button class="btn pri" id="audback">Back</button></div></section>`;return}
   if(a.state==="fail"){$("#view").innerHTML=`<section class="section"><div class="card"><h2>Audio couldn't start here</h2><div>This device did not speak after several tries. Check the volume and silent switch, close other apps that are playing sound, then try again. On iPhone, open the app from its home screen icon or in Safari.</div><button class="btn pri" id="audback">Back</button></div></section>`;return}
   if(a.state==="done"){const m=Math.max(1,Math.round((Date.now()-a.start)/60000));$("#view").innerHTML=`<section class="section"><div class="ledger"><h2>Audio review complete</h2><div class="row"><span class="big">${a.heard}</span><span class="muted">facts reviewed in about ${m} min</span></div>
     <div class="small">${a.known||0} marked "knew it" · ${a.marked} marked "didn't know" (added to your missed items) · ${(a.ids||[]).filter(id=>S.au[id]&&S.au[id][2]).length} not rated.</div>
     ${(a.ids||[]).some(id=>S.au[id]&&S.au[id][2])?`<button class="btn pri" id="audquiz">Quiz me on what I just heard</button><div class="small muted">A quick quiz on the facts you didn't rate. Your answers update mastery, weak spots and recommendations.</div>`:""}
     <div class="row"><button class="btn pri" id="audagain">Another session</button><button class="btn" id="audback">Back to Part ${part}</button></div></div></section>`;return}
-  const it=a.cur||a.queue[a.pos],left=Math.max(0,Math.round((a.end-Date.now())/1000)),ph={q:"Question",think:"Think of the answer…",a:"Answer",r:"Once more"}[a.phase];
+  const it=a.cur||a.queue[Math.max(0,a.pos)],left=Math.max(0,Math.round((a.end-Date.now())/1000)),ph={q:"Question",think:"Think of the answer…",a:"Answer",r:"Once more"}[a.phase];
   $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Audio review</h2><div class="small muted mono">${a.heard} reviewed · ${fmt(left)} left${a.paused?" · paused":""}</div></div><button class="btn ghost small" id="audend">End</button></div>
    <div class="progress"><i style="width:${Math.min(100,Math.round((1-left/(a.mins*60))*100))}%"></i></div>
-   ${a.needTap?`<div class="card" style="border:2px solid var(--warn)"><b>The voice did not start.</b><div class="small">Phones only allow speech after a tap. Check that the volume is up and silent mode is off, then tap the button.</div><button class="btn pri" id="audtap">Turn the voice on</button></div>`:""}
+   ${a.rec&&a.pos<0?`<div class="notice">Loading the audio…</div>`:""}${a.needTap?`<div class="card" style="border:2px solid var(--warn)"><b>The voice did not start.</b><div class="small">Phones only allow speech after a tap. Check that the volume is up and silent mode is off, then tap the button.</div><button class="btn pri" id="audtap">Turn the voice on</button></div>`:""}
    <div class="card"><div class="meta"><span>Part ${it.p} · ${esc(PARTS[it.p].doms[it.d][0])}</span><span>${ph}</span></div>
    <div class="front">${esc(it.f)}</div>${a.phase==="a"||a.phase==="r"?`<div class="back">${esc(it.b)}</div>`:""}
    <div class="rate" style="grid-template-columns:repeat(2,1fr)"><button id="audmiss" class="r0" ${a.didnt||a.knew?"disabled":""}>${a.didnt?"Added to redrill":"Didn't know it"}</button><button id="audknew" class="r3" ${a.didnt||a.knew?"disabled":""}>${a.knew?"Counted":"Knew it"}</button><button id="audpause">${a.paused?"Resume":"Pause"}</button><button id="audskip">Skip</button></div>
-   <div class="small muted">Tap Knew it or Didn't know it when you can. Untapped facts are saved for a short follow-up quiz.</div></div></section>`}
+   <div class="small muted">Tap Knew it or Didn't know it when you can. Untapped facts are saved for a short follow-up quiz.${a.rec?" You can lock the phone or switch apps; the review keeps playing.":""}</div></div></section>`}
 function audioClick(b){const a=aud;if(!a)return false;
   if(b.dataset.amins){a.mins=+b.dataset.amins;render();return true}if(b.dataset.asrc){a.src=b.dataset.asrc;render();return true}if(b.dataset.ascope){a.scope=b.dataset.ascope;render();return true}
   if(b.dataset.agap){a.gap=+b.dataset.agap;render();return true}if(b.dataset.arate){a.rate=+b.dataset.arate;render();return true}
@@ -5622,7 +5677,14 @@ function audioClick(b){const a=aud;if(!a)return false;
   if(b.dataset.adv){S.set.voice=b.dataset.adv;persist();render();return true}
   if(b.id==="audtest"){unlockSpeech();const line="Qualifying child age test. Under 19 at year end, or under 24 if a full-time student.";const ss=window.speechSynthesis;
     if(!TTS&&ss&&!ss.speaking&&!ss.pending){say(line).catch(()=>{})}else{hush();setTimeout(()=>say(line).catch(()=>{}),220)}return true}
-  if(b.id==="audstart"){unlockSpeech();startAudio();return true}
+  if(b.dataset.arec){a.rec=b.dataset.arec==="1";S.set.recv=a.rec;persist();if(![10,20,30,60].includes(a.mins)||!a.rec)a.mins=10;render();return true}
+  if(b.id==="recget"){recDownload();return true}
+  if(b.id==="audstart"){if(a.rec){startRec();return true}unlockSpeech();startAudio();return true}
+  if(a.rec&&a.state==="play"){
+    if(b.id==="audtap"||b.id==="audpause"){recPause(a,b.id==="audtap"?false:!a.paused);return true}
+    if(b.id==="audskip"){recNext(a,false);return true}
+    if(b.id==="audend"){a.stop=true;recFinish(a);return true}
+    if(b.id==="audback"){a.stop=true;recFinish(a);aud=null;view="home";render();return true}}
   if(b.id==="audtap"){unlockSpeech(true);a.needTap=false;return true}
   if(b.id==="audback"){a.stop=true;hush();aud=null;view="home";render();return true}
   if(b.id==="audagain"){openAudio();return true}
