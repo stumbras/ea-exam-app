@@ -163,6 +163,11 @@ details summary{cursor:pointer;font-weight:600}
 .bwrow.good{background:var(--good-soft)}.bwrow.good span,.bwrow.good em{color:var(--good)}
 .bwrow.bad{background:var(--bad-soft)}.bwrow.bad span,.bwrow.bad em{color:var(--bad)}
 .statusline{font-size:13.5px;color:var(--muted)}
+.examrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;width:100%;text-align:left;font:inherit;color:var(--fg);background:var(--sunk);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.examrow span{font-size:15px;font-weight:600}.examrow b{font-size:15px;color:var(--accent);white-space:nowrap}.examrow em{font-style:normal;font-size:13.5px;font-weight:700;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.exambox{display:grid;gap:9px;background:var(--sunk);border:1.5px solid var(--accent);border-radius:12px;padding:12px}
+.examline{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:15px;font-weight:600}
+.examline input{font:inherit;font-size:16px;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);min-width:0;width:100%}
 .statusline .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--good);margin-right:6px;vertical-align:middle}
 .statusline.off .dot{background:var(--bad)}
 .filters.scroll{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
@@ -179,6 +184,33 @@ details summary{cursor:pointer;font-weight:600}
 .slide .num{font-size:13px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
 .slide .how{background:var(--sunk);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:12px 14px;font-size:16px;line-height:1.55}
 .slide .how b{display:block;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:4px}
+.vis{margin-top:2px}
+.vform{border:2px solid var(--fg);border-radius:10px;overflow:hidden;background:var(--surface);font-size:15px}
+.vform .vh{background:var(--fg);color:var(--surface);padding:9px 12px;font-weight:800;letter-spacing:.01em}.vform .vh small{display:block;font-weight:500;opacity:.85;font-size:12.5px}
+.vrow{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:8px;padding:8px 10px;border-top:1px solid var(--line);align-items:center}
+.vrow .bx{font-family:var(--mono);font-weight:700;font-size:13px;border:1.5px solid var(--line);border-radius:6px;text-align:center;padding:3px 0;background:var(--sunk)}
+.vrow .amt{font-family:var(--mono);font-weight:700;white-space:nowrap}
+.vrow.hl{background:var(--accent-soft)}.vrow.hl .bx{border-color:var(--accent);background:var(--surface)}
+.vnote{font-size:12.5px;color:var(--muted);padding:6px 10px;border-top:1px solid var(--line)}
+.vflow{display:grid;gap:0;justify-items:stretch}
+.vflow .st{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--sunk);font-size:15.5px}
+.vflow .st b{color:var(--accent)}
+.vflow .ar{text-align:center;color:var(--accent);font-weight:800;line-height:1.3}
+.vtier{display:grid;gap:8px}.vtier .tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;font-size:15px}
+.vtier .tr b{font-variant-numeric:tabular-nums}.vtier .tr i{grid-column:1/-1;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--accent),var(--good));display:block}
+.vtime{border-left:3px solid var(--accent);margin-left:8px;padding-left:16px;display:grid;gap:12px}
+.vtime .pt{position:relative;font-size:15.5px}.vtime .pt::before{content:"";position:absolute;left:-24px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface)}
+.vtime .pt b{display:block}
+.vcmp{display:grid;gap:8px}.vcmp .cc{border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.vcmp .cc>b{display:block;padding:7px 12px;background:var(--accent);color:var(--accent-ink);font-size:14.5px}
+.vcmp .cc:nth-child(2)>b{background:var(--fg);color:var(--surface)}
+.vcmp ul{margin:0;padding:8px 12px 10px 28px;font-size:15px;display:grid;gap:3px}
+.vcalc{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;font-size:15.5px}
+.vcalc .cr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:8px 12px;border-top:1px solid var(--line)}.vcalc .cr:first-child{border-top:0}
+.vcalc .cr span:last-child{font-family:var(--mono);font-weight:700;white-space:nowrap}.vcalc .cr.hl{background:var(--accent-soft);font-weight:700}
+.slide ul.pts{margin:0;padding-left:22px;display:grid;gap:7px;font-size:17px;line-height:1.45}
+.slide ul.pts li::marker{color:var(--accent)}
+.slide .exm{background:var(--warn-soft);border-radius:12px;padding:11px 13px;font-size:15.5px;line-height:1.5}.slide .exm b{display:block;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--warn);margin-bottom:3px}
 .lesnav{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .topicrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;text-align:left;width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16.5px;font-weight:600;min-height:54px}
 .topicrow small{font-weight:500;font-size:13.5px;color:var(--muted)}
@@ -207,6 +239,7 @@ details summary{cursor:pointer;font-weight:600}
 const BANK=[];
 function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return (h>>>0).toString(36)}
 function F(p,d,f,b){BANK.push({id:"p"+p+"f"+hash(f),p,d,t:"f",lv:1,f,b})}
+const UNITS={};function U(p,t,re,s){(UNITS[p]=UNITS[p]||[]).push({t,re,s})} // lesson units: title, quiz matcher, slides
 function Q(p,d,lv,s,c,w,e){BANK.push({id:"p"+p+"q"+hash(s),p,d,t:"q",lv,s,opts:[c,...w],ans:0,ex:e,fixed:false})}
 function QX(p,d,lv,s,o,a,e){BANK.push({id:"p"+p+"q"+hash(s),p,d,t:"q",lv,s,opts:o,ans:a,ex:e,fixed:true})}
 const EXPL={};function EX(p,f,t){EXPL["p"+p+"f"+hash(f)]=t}
@@ -4579,6 +4612,7 @@ function mergeState(a,b){const newer=(b.upd||0)>(a.upd||0)?b:a,older=newer===a?b
     if(tx||ty)w=ty>tx?y:tx>ty?x:((y[2]||0)>=(x[2]||0)?y:x);
     else w=((y[2]||0)>(x[2]||0)||((y[2]||0)===(x[2]||0)&&(y[1]||0)>=(x[1]||0)))?y:x;
     const o=w.slice();o[2]=Math.max(x[2]||0,y[2]||0);o[3]=Math.max(x[3]||0,y[3]||0);return o};
+  {const ea=(a.set&&a.set.examT)||0,eb=(b.set&&b.set.examT)||0,src=eb>ea?b:ea>eb?a:newer;out.set=Object.assign({},out.set,{exam:Object.assign({1:"",2:"",3:""},(src.set&&src.set.exam)||{}),examT:Math.max(ea,eb)});if(!out.set.examT)delete out.set.examT}
   out.it=Object.assign({},older.it||{});for(const [id,r] of Object.entries(newer.it||{})){const o=out.it[id];out.it[id]=o?pick(o,r):r}
   const seen=new Set(),h=[];for(const x of [...(older.hist||[]),...(newer.hist||[])]){const k=x.t+"|"+x.m+"|"+x.n;if(!seen.has(k)){seen.add(k);h.push(x)}}out.hist=h.sort((x,y)=>x.t-y.t).slice(-200);
   out.au=Object.assign({},older.au||{});for(const [id,u] of Object.entries(newer.au||{})){const o=out.au[id];if(!o||(u[0]||0)>=(o[0]||0))out.au[id]=u}
@@ -4594,7 +4628,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 44 · Nov 17";
+const BUILD="Version 45 · Nov 17";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -4605,7 +4639,7 @@ document.getElementById("themebtn").addEventListener("click",()=>{const t=themeN
 const HOSTED=!(window.claude&&window.claude.use);            // opened outside Claude: installed app, website copy or a saved file
 const STANDALONE=()=>navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);
 const IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-let offl="none",pasteOpen=false,modeDesc=false;                               // offline state: none | pending | ready
+let offl="none",pasteOpen=false,modeDesc=false,examOpen=false,examMsg="";                               // offline state: none | pending | ready
 if(HOSTED&&"serviceWorker" in navigator&&document.querySelector('link[rel="manifest"]')){offl="pending";
   navigator.serviceWorker.register("./sw.js").then(()=>navigator.serviceWorker.ready).then(()=>{offl="ready";if(!sess&&view==="home")render()}).catch(()=>{offl="none";if(!sess&&view==="home")render()});
   try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
@@ -4703,6 +4737,17 @@ function partStats(p){
   return{ready:Math.round(ready*100),seen,total,mast,examAcc:en?Math.round(ec/en*100):null,examN:en,ft,fm,fl,missed,strength:ft?fs/(ft*MASTER_BOX)*100:0,readyX:ready*100,fpct:ft?Math.round(fm/ft*100):0};
 }
 function examDate(p){return S.set.exam[p]||""}
+function daysTo(d){return d?Math.ceil((new Date(d+"T12:00")-new Date())/86400000):null}
+function examNote(d){if(!d)return "";const m=+d.slice(5,7);  // the exam is given May 1 through the end of February; this app covers the window that ends Feb 28, 2027
+  if(m===3||m===4)return "The exam is not given in March or April. Pick a date from May through February.";
+  if(d>"2027-02-28")return "From May 1, 2027 the exam tests the next tax year. This app covers exams through Feb 28, 2027.";
+  if(daysTo(d)<0)return "This date has passed.";return ""}
+function examRowHtml(){const d=examDate(part),dl=daysTo(d),e=esc;
+  if(examOpen)return `<div class="exambox"><b>Exam dates</b>${[1,2,3].map(p=>{const v=examDate(p),nt=examNote(v);return `<label class="examline"><span>Part ${p}</span><input type="date" data-examin="${p}" value="${v}"><button class="btn ghost small" data-examclr="${p}" type="button">Clear</button></label>${nt?`<div class="small" style="color:var(--warn)">${e(nt)}</div>`:""}`}).join("")}
+    <div class="small muted">Your daily plan and countdown follow these dates. Leave a part empty if it is not booked yet.</div>
+    <div class="row"><button class="btn pri small" id="examsave">Save dates</button><button class="btn ghost small" id="examcancel">Cancel</button></div></div>`;
+  const nice=d?new Date(d+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):"";
+  return `<button class="examrow" id="examedit"><span>${d?"Exam "+e(nice):"Part "+part+" exam date not set"}</span><b>${d?(dl>1?dl+" days left":dl===1?"Tomorrow":dl===0?"Today":"Date passed"):""}</b><em>${d?"Change":"Set date"}</em></button>${examMsg?`<div class="small" style="color:var(--good)"><b>${e(examMsg)}</b></div>`:""}${d&&examNote(d)?`<div class="small" style="color:var(--warn)">${e(examNote(d))}</div>`:""}`}
 function newPerDay(p){ // auto pace: see every fact 5 weeks before the exam (time to reach 90% and then practice)
   if(S.set.newPer!=="auto")return +S.set.newPer;
   const unseen=easyPool(p,"all").filter(i=>!S.it[i.id]).length;if(!unseen)return 0;
@@ -4772,7 +4817,8 @@ function renderHome(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},
   const bw=bestD?`<div class="bw"><div class="bwrow good"><span>Strongest</span><b>${bestD.d}. ${esc(bestD.n)}</b><em>${Math.round(bestD.acc*100)}%</em></div>${worstD&&worstD.d!==bestD.d?`<div class="bwrow bad"><span>Weakest</span><b>${worstD.d}. ${esc(worstD.n)}</b><em>${Math.round(worstD.acc*100)}%</em></div>`:""}</div>`
     :`<div class="small muted">Your strongest and weakest areas appear here after 5 answers in an area.</div>`;
   const dash=`<section class="section" style="margin-top:12px"><div class="ledger dash">
-      <div class="row" style="justify-content:space-between"><h2>Part ${part}: ${P.name}</h2>${daysLeft?`<span class="chip">${esc(daysLeft.replace(/ to your Part \d exam/," to exam"))}</span>`:S.streak.n?`<span class="chip">${S.streak.n}-day streak</span>`:""}</div>
+      <div class="row" style="justify-content:space-between"><h2>Part ${part}: ${P.name}</h2>${S.streak.n?`<span class="chip">${S.streak.n}-day streak</span>`:""}</div>
+      ${examRowHtml()}
       <div class="gauge"><div class="gnum"><b>${pc(ps.readyX)}</b><span>ready · goal 90%</span></div><div class="gbar" title="Overall readiness"><i style="width:${Math.min(100,ps.readyX).toFixed(1)}%"></i><span class="tick"></span></div></div>
       <div class="stats3"><div class="stat"><b>${pc(ps.strength)}</b><span>Memory</span></div><div class="stat"><b>${ps.examAcc===null?"–":ps.examAcc+"%"}</b><span>Exam-style</span></div><div class="stat"><b>${due}</b><span>Due today</span></div></div>
       ${bw}
@@ -4786,10 +4832,11 @@ function renderHome(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},
     <div class="filters scroll" id="filters">${filters}</div>
     <div class="modes tiles${modeDesc?" desc":""}">
       <button class="mode" data-mode="smart"><span class="lvl">Smart session · pick your time</span><b>Study for 10, 20 or 40 minutes</b><p>Tell the app how long you have. It builds the best mix for that time: reviews that are due, facts you missed, questions from your weakest area, and a calculation or two.</p><span class="cnt">adapts to you</span></button>
+      <button class="mode" data-mode="mix"><span class="lvl">Random 10 · everything mixed</span><b>10 random questions</b><p>A quick shuffle of every kind: easy facts, medium questions, hard scenarios and calculations, picked at random from ${filt==="all"?"the whole part":"this domain"}. Tap again for a new set.</p><span class="cnt">easy · medium · hard · math</span></button>
       <button class="mode" data-mode="easy"><span class="lvl">Easy · daily spaced repetition</span><b>Learn and review facts</b><p>Built on how memory works: reviews first, then 4 related new facts at a time. Read them, get quizzed right away, then again at the end, tomorrow, and at growing gaps. Each fact goes from picking it, to telling it from look-alikes, to typing it.</p><span class="cnt">${due} due · ${Math.min(nw,newLeft)} new today</span></button>
       <button class="mode" data-mode="facts"><span class="lvl">Easy · no daily limit</span><b>Drill all facts in order</b><p>No daily limit: your misses first, then any reviews due, then new facts in order. Facts you answered right stay away until their next scheduled review.</p><span class="cnt">${easyPool(part,filt).filter(i=>{const r=S.it[i.id];return !r||r[4]===0||r[1]<=today()}).length} ready to drill</span></button>
       <button class="mode" data-mode="cards"><span class="lvl">Flashcards · spaced repetition</span><b>Flip cards</b><p>Classic cards: recall the answer, flip, rate yourself. Shares the same schedule and tracking as Easy. Self-rated cards build a fact up to "learning"; mastery still needs a typed answer in Easy.</p><span class="cnt">${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&S.it[i.id]&&S.it[i.id][1]<=today()).length} due · ${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&!S.it[i.id]).length} new</span></button>
-      <button class="mode" data-mode="lessons"><span class="lvl">Lessons · slide view</span><b>Read the lessons</b><p>Every fact as a slide, grouped by topic: the point, the rule, and how it works in plain words. Swipe or tap Next, have a slide read aloud, then quiz yourself on the topic.</p><span class="cnt">${TOPICS[part].length} topics · ${BANK.filter(i=>i.p==part&&i.t==="f").length} slides</span></button>
+      <button class="mode" data-mode="lessons"><span class="lvl">Lessons · slide view</span><b>Read the lessons</b><p>Unit lessons with form examples and diagrams, plus every fact as a slide by topic. Swipe or tap Next, have a slide read aloud, then quiz yourself.</p><span class="cnt">${(UNITS[part]||[]).length?(UNITS[part].length+" units · "):""}${BANK.filter(i=>i.p==part&&i.t==="f").length} fact slides</span></button>
       <button class="mode" data-mode="audio"><span class="lvl">Audio · hands-free</span><b>Listen and review</b><p>For driving or the gym: 5, 10 or 15 minutes. You hear a question, a short pause, the answer, then the answer again in short form. Picks facts from your misses and due reviews first, or random.</p><span class="cnt">All parts or this part</span></button>
       <button class="mode" data-mode="medium"><span class="lvl">Medium · exam wording</span><b>Practice questions</b><p>Rule application, EXCEPT questions and traps, with explanations after each answer.</p><span class="cnt">${lv2} questions</span></button>
       <button class="mode" data-mode="hard"><span class="lvl">Hard · calculations</span><b>Exam-style scenarios</b><p>Multi-step calculations and fact patterns in real exam style. Timed per question.</p><span class="cnt">${lv3+lv2} questions</span></button>
@@ -4843,8 +4890,7 @@ function renderHome(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},
   <section class="section">
     <h3>Settings and history</h3>
     <div class="ledger">
-      <label class="small" for="examdate">My Part ${part} exam date</label>
-      <input type="date" id="examdate" value="${exam||""}" min="2026-11-01" max="2027-02-28">
+      <div class="row" style="justify-content:space-between"><span class="small">Exam dates: ${[1,2,3].map(p=>"Part "+p+" "+(examDate(p)?new Date(examDate(p)+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):"not set")).join(" · ")}</span><button class="btn small" id="examedit2">Change exam dates</button></div>
       ${historyHtml()}
       ${flagHtml()}
       <details id="movebox"><summary class="small">Move progress to another device</summary>
@@ -4917,7 +4963,7 @@ function examHtml(daysLeft){const mp=mockPool(part),avg=mp?Math.round(mp.adj):nu
     ${(()=>{const m=lastMock(part);if(!m||!m.d)return "";const P=PARTS[part];
       return `<div class="small">${mp&&mp.count>1?`<span class="muted">Recent mocks, newest first: ${pc.join(", ")}</span><br>`:""}<b>Mock results by domain (combined)</b><br>${Object.keys(m.d).map(d=>{const [c,n]=m.d[d],a=Math.round(c/n*100);return `<span style="color:${a>=80?"var(--good)":a>=70?"var(--warn)":"var(--bad)"}">${a}%</span> ${esc(P.doms[d][0])} (${c}/${n})`}).join("<br>")}${m.sec?`<br><span class="muted">Pace: ${Math.round(m.sec/m.n)} sec per question (exam allows about 126)${m.blank?` · ${m.blank} left blank`:""}.</span>`:""}</div>`})()}
     <div class="row"><button class="btn pri" data-mock="50">Take a 50-question mock</button><button class="btn" data-mock="20">Short mock · 20</button><button class="btn" data-mock="10">Quick mock · 10</button><button class="btn" data-mode="final">Final-week review</button></div>
-    <div class="small muted">Every mock counts, short or long. The score pools your most recent mocks until about 100 questions are covered, weighted by the number of questions, so several short mocks add up to the same signal as one long one. Final-week review mixes your missed items, the facts you keep missing and exam-style questions from your two weakest domains.${daysLeft!=null&&daysLeft<=10?" Your exam is close: do this once a day plus one mock every other day.":""}</div>
+    <div class="small muted">Every mock counts, short or long. The score pools your most recent mocks until about 100 questions are covered, weighted by the number of questions, so several short mocks add up to the same signal as one long one. Final-week review mixes your missed items, the facts you keep missing and exam-style questions from your two weakest domains.${daysTo(examDate(part))!=null&&daysTo(examDate(part))>=0&&daysTo(examDate(part))<=10?" Your exam is close: do this once a day plus one mock every other day.":""}</div>
     ${priorHtml()}
     <details class="small"><summary>What recent test takers say</summary><ul style="margin:6px 0 0;padding-left:18px">
       <li>The real questions are worded differently from practice questions. Understand why each answer is right, don't memorize answers.</li>
@@ -4943,7 +4989,7 @@ function flagHtml(){const ids=Object.keys(S.flag||{}).filter(id=>S.flag[id]&&BYI
   <textarea id="flagbox" rows="4" readonly style="font:12px var(--mono);width:100%;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px">${esc(ids.map(id=>{const i=BYID[id];return "Part "+i.p+": "+(i.f||i.s)+(i.b?" => "+i.b:"")}).join("\n"))}</textarea>
   <div class="row"><button class="btn small" id="copyflags">Copy list</button><button class="btn ghost small" id="clearflags">Clear flags</button><span class="small muted" id="flagmsg"></span></div></div></details>`}
 function historyHtml(){const h=S.hist.filter(x=>x.p==part).slice(-8).reverse();if(!h.length)return`<p class="small muted">No sessions yet for this part.</p>`;
-  const names={smart:"Smart session",audio:"Audio review",heard:"Audio follow-up quiz",final:"Final-week review",topic:"Topic drill",missed:"Redrill missed",weakdom:"Weakest topic",cards:"Flashcards",calc:"Calculation trainer",leech:"Hardest facts",easy:"Easy drill",facts:"All facts",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes"};
+  const names={mix:"Random 10",unit:"Unit quiz",smart:"Smart session",audio:"Audio review",heard:"Audio follow-up quiz",final:"Final-week review",topic:"Topic drill",missed:"Redrill missed",weakdom:"Weakest topic",cards:"Flashcards",calc:"Calculation trainer",leech:"Hardest facts",easy:"Easy drill",facts:"All facts",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes"};
   return `<div class="list">${h.map(x=>`<div class="row small" style="justify-content:space-between"><span>${names[x.m]||x.m} · ${new Date(x.t).toLocaleDateString()}</span><span class="mono">${x.c}/${x.n} · ${Math.round(x.c/x.n*100)}%</span></div>`).join("")}</div>`}
 const CATS={num:"Numbers & limits",form:"Forms & schedules",term:"Terms & acronyms",rule:"Rules & concepts",q:"Exam-style questions"};
 function itemCat(i){if(i.t==="q")return "q";const f=i.f,b=i.b;
@@ -5059,40 +5105,58 @@ async function explainAI(btn){const s=sess,cur=s.queue[s.pos],it=BYID[cur.id];if
   const prompt=`Explain this IRS Enrolled Agent exam item (tax year 2025 law) to a beginner whose first language is not English. Treat the item as correct and do not change or add any tax numbers. Write plain text, no markdown, in four short parts with these labels: "In plain words:" (2 sentences), "Example:" (one concrete example using only the numbers in the item), "Remember it:" (one memory trick), "Exam trap:" (the mistake people usually make). Item: ${fact}`;
   try{await AI(prompt,{modelTier:"quick",onText:({text})=>{box.textContent=text}});btn.textContent="Explained by AI"}catch(e){box.textContent=e&&e.code==="rate_limited"?"Usage limit reached. Try again later.":"The AI explanation isn't available right now.";btn.textContent="Explain with AI";btn.disabled=false}}
 
-/* ================= LESSONS: every fact as a slide, grouped by topic ================= */
-let les=null;
+/* ================= LESSONS: unit decks with forms and diagrams, plus every fact as a slide ================= */
+let les=null,unitRe=null;
 function lesDeck(k){return BANK.filter(i=>i.p==part&&i.t==="f"&&TOPIC_OF[i.id]===k).sort((a,b)=>(a.d-b.d)||(ORDER[a.id]-ORDER[b.id]))}
-function lesKey(k){return part+"-"+k}
-function lesSave(){S.set.les=S.set.les||{};S.set.les[lesKey(les.topic)]=les.idx;persist()}
-function renderLessons(){if(!les)les={topic:null,idx:0};const T=TOPICS[part];
-  if(les.topic===null){const rows=T.map((t,k)=>{const d=lesDeck(k);if(!d.length)return "";const at=Math.min((S.set.les||{})[lesKey(k)]||0,d.length-1),done=at>=d.length-1&&d.length>1;
-      return `<button class="topicrow" data-lestopic="${k}"><span>${esc(t[0])}</span><small>${done?"read":at?("slide "+(at+1)+" of "+d.length):d.length+" slides"}</small><span class="bar" style="grid-column:1/-1"><i style="width:${Math.round((at+(done?1:0))/Math.max(1,d.length)*100)}%;background:var(--accent)"></i></span></button>`}).join("");
-    $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Lessons · Part ${part}</h2><div class="small muted">Pick a topic. Each slide gives the point, the rule, and how it works.</div></div><button class="btn ghost small" id="lesback">Back</button></div><div class="list" style="margin-top:6px">${rows}</div></section>`;return}
-  const deck=lesDeck(les.topic);les.idx=Math.max(0,Math.min(les.idx,deck.length-1));const it=deck[les.idx],how=EXPL[it.id]||(S.ex&&S.ex[it.id])||"";
-  const r=S.it[it.id],st=!r?"Not quizzed yet":r[0]>=MASTER_BOX?"Mastered":r[4]?"Learning":"Missed last time";
-  $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>${esc(T[les.topic][0])}</h2><div class="small muted">Part ${part} · ${esc(PARTS[part].doms[it.d][0])}</div></div><button class="btn ghost small" id="lestopics">Topics</button></div>
-   <div class="progress"><i style="width:${Math.round((les.idx+1)/deck.length*100)}%"></i></div>
-   <div class="card slide" id="slide"><div class="row" style="justify-content:space-between"><span class="num">Slide ${les.idx+1} of ${deck.length}</span><span class="why ${r&&r[4]===0?"miss":""}">${st}</span></div>
-     <div class="front">${esc(it.f)}</div><div class="back" style="border-top:0;padding-top:0">${esc(it.b)}</div>
-     ${how?`<div class="how"><b>How it works</b>${esc(how)}</div>`:""}
-   </div>
-   <div class="lesnav" style="margin-top:12px"><button class="btn" id="lesprev" ${les.idx?"":"disabled"}>‹ Previous</button><button class="btn pri" id="lesnext">${les.idx<deck.length-1?"Next ›":"Finish topic"}</button></div>
-   <div class="row" style="margin-top:10px"><button class="btn small" id="lessay">🔊 Read this slide aloud</button><button class="btn small" id="lesquiz">Quiz me on this topic</button></div>
+function lesKey(){return (les.unit!=null?"u":"")+part+"-"+(les.unit!=null?les.unit:les.topic)}
+function lesLen(){return les.unit!=null?UNITS[part][les.unit].s.length:lesDeck(les.topic).length}
+function lesSave(){S.set.les=S.set.les||{};S.set.les[lesKey()]=les.idx;persist()}
+// drawings for the unit slides: simplified form extracts, flows, tiers, timelines, comparisons and worked sums
+function visHtml(v){if(!v)return "";const e=esc;
+  if(v.k==="form")return `<div class="vis vform"><div class="vh">${e(v.n)}${v.s?`<small>${e(v.s)}</small>`:""}</div>${v.r.map(r=>`<div class="vrow${r[3]?" hl":""}"><span class="bx">${e(r[0])}</span><span>${e(r[1])}</span><span class="amt">${e(r[2]||"")}</span></div>`).join("")}<div class="vnote">Simplified extract for study. Highlighted rows are the ones this slide is about.</div></div>`;
+  if(v.k==="flow")return `<div class="vis vflow">${v.r.map((x,n)=>`${n?'<div class="ar">↓</div>':""}<div class="st">${e(x).replace(/^([^:]{2,32}):/,"<b>$1:</b>")}</div>`).join("")}</div>`;
+  if(v.k==="tiers")return `<div class="vis vtier">${v.r.map(r=>`<div class="tr"><span>${e(r[0])}</span><b>${e(r[1])}</b><i style="width:${r[2]||50}%"></i></div>`).join("")}</div>`;
+  if(v.k==="time")return `<div class="vis vtime">${v.r.map(r=>`<div class="pt"><b>${e(r[0])}</b>${e(r[1])}</div>`).join("")}</div>`;
+  if(v.k==="cmp")return `<div class="vis vcmp">${[v.a,v.b].map(c=>`<div class="cc"><b>${e(c[0])}</b><ul>${c[1].map(x=>`<li>${e(x)}</li>`).join("")}</ul></div>`).join("")}</div>`;
+  if(v.k==="calc")return `<div class="vis vcalc">${v.r.map(r=>`<div class="cr${r[2]?" hl":""}"><span>${e(r[0])}</span><span>${e(r[1])}</span></div>`).join("")}</div>`;
+  return ""}
+function renderLessons(){if(!les)les={unit:null,topic:null,idx:0};const T=TOPICS[part],UN=UNITS[part]||[],pos=S.set.les||{};
+  if(les.unit==null&&les.topic==null){
+    const row=(attr,k,title,n,at)=>{const done=at>=n-1&&n>1;return `<button class="topicrow" ${attr}="${k}"><span>${esc(title)}</span><small>${done?"read":at?("slide "+(at+1)+" of "+n):n+" slides"}</small><span class="bar" style="grid-column:1/-1"><i style="width:${Math.round((at+(done?1:0))/Math.max(1,n)*100)}%;background:var(--accent)"></i></span></button>`};
+    const units=UN.map((u,k)=>row("data-lesunit",k,(k+1)+". "+u.t,u.s.length,Math.min(pos["u"+part+"-"+k]||0,u.s.length-1))).join("");
+    const topics=T.map((t,k)=>{const d=lesDeck(k);return d.length?row("data-lestopic",k,t[0],d.length,Math.min(pos[part+"-"+k]||0,d.length-1)):""}).join("");
+    $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Lessons · Part ${part}</h2><div class="small muted">Read a unit, then quiz yourself on it.</div></div><button class="btn ghost small" id="lesback">Back</button></div>
+      ${units?`<h3 style="margin-top:8px">Units · with form examples and diagrams</h3><div class="list">${units}</div>`:(UNITS[1]||[]).length?`<div class="notice">Unit lessons with form examples are written for Part 1 so far. The fact slides below cover this part.</div>`:""}
+      <h3 style="margin-top:14px">Fact slides · every fact by topic</h3><div class="list">${topics}</div></section>`;return}
+  const n=lesLen();les.idx=Math.max(0,Math.min(les.idx,n-1));let title,sub,body,tag="";
+  if(les.unit!=null){const u=UN[les.unit],sl=u.s[les.idx];title=(les.unit+1)+". "+u.t;sub="Part "+part+" · unit lesson";
+    body=`<div class="front">${esc(sl.h)}</div>${sl.b&&sl.b.length?`<ul class="pts">${sl.b.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}${visHtml(sl.v)}${sl.ex?`<div class="exm"><b>Example</b>${esc(sl.ex)}</div>`:""}`}
+  else{const it=lesDeck(les.topic)[les.idx],how=EXPL[it.id]||(S.ex&&S.ex[it.id])||"",r=S.it[it.id],st=!r?"Not quizzed yet":r[0]>=MASTER_BOX?"Mastered":r[4]?"Learning":"Missed last time";
+    title=T[les.topic][0];sub="Part "+part+" · "+PARTS[part].doms[it.d][0];tag=`<span class="why ${r&&r[4]===0?"miss":""}">${st}</span>`;
+    body=`<div class="front">${esc(it.f)}</div><div class="back" style="border-top:0;padding-top:0">${esc(it.b)}</div>${how?`<div class="how"><b>How it works</b>${esc(how)}</div>`:""}`}
+  $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>${esc(title)}</h2><div class="small muted">${esc(sub)}</div></div><button class="btn ghost small" id="lestopics">All lessons</button></div>
+   <div class="progress"><i style="width:${Math.round((les.idx+1)/n*100)}%"></i></div>
+   <div class="card slide" id="slide"><div class="row" style="justify-content:space-between"><span class="num">Slide ${les.idx+1} of ${n}</span>${tag}</div>${body}</div>
+   <div class="lesnav" style="margin-top:12px"><button class="btn" id="lesprev" ${les.idx?"":"disabled"}>‹ Previous</button><button class="btn pri" id="lesnext">${les.idx<n-1?"Next ›":"Finish"}</button></div>
+   <div class="row" style="margin-top:10px"><button class="btn small" id="lessay">🔊 Read this slide aloud</button><button class="btn small" id="lesquiz">Quiz me on this ${les.unit!=null?"unit":"topic"}</button></div>
    <div class="small muted" style="margin-top:8px">Swipe left or right to move between slides.</div></section>`}
-function lesGo(dx){const deck=lesDeck(les.topic);hush();if(dx>0&&les.idx>=deck.length-1){lesSave();les.topic=null;render();window.scrollTo(0,0);return}les.idx=Math.max(0,Math.min(deck.length-1,les.idx+dx));lesSave();render();window.scrollTo(0,0)}
+function lesGo(dx){const n=lesLen();hush();if(dx>0&&les.idx>=n-1){lesSave();les.unit=null;les.topic=null;render();window.scrollTo(0,0);return}les.idx=Math.max(0,Math.min(n-1,les.idx+dx));lesSave();render();window.scrollTo(0,0)}
+function lesOpen(kind,k){les.unit=kind==="u"?k:null;les.topic=kind==="t"?k:null;const n=lesLen();les.idx=Math.min((S.set.les||{})[lesKey()]||0,Math.max(0,n-1));if(les.idx>=n-1)les.idx=0;render();window.scrollTo(0,0)}
 function lessonClick(b){if(!les)return false;
-  if(b.dataset.lestopic!==undefined){les.topic=+b.dataset.lestopic;les.idx=Math.min((S.set.les||{})[lesKey(les.topic)]||0,Math.max(0,lesDeck(les.topic).length-1));if(les.idx>=lesDeck(les.topic).length-1)les.idx=0;render();window.scrollTo(0,0);return true}
+  if(b.dataset.lesunit!==undefined){lesOpen("u",+b.dataset.lesunit);return true}
+  if(b.dataset.lestopic!==undefined){lesOpen("t",+b.dataset.lestopic);return true}
   if(b.id==="lesback"){hush();les=null;view="home";render();return true}
-  if(b.id==="lestopics"){hush();les.topic=null;render();return true}
+  if(b.id==="lestopics"){hush();les.unit=null;les.topic=null;render();return true}
   if(b.id==="lesprev"){lesGo(-1);return true}if(b.id==="lesnext"){lesGo(1);return true}
-  if(b.id==="lessay"){unlockSpeech();const it=lesDeck(les.topic)[les.idx],how=EXPL[it.id]||"";const line=sayable(it.f.replace(/:/g,","))+". "+sayable(it.b)+(how?". How it works. "+sayable(how):"");const ss=window.speechSynthesis;
-    if(!TTS&&ss&&!ss.speaking&&!ss.pending){say(line).catch(()=>{})}else{hush();setTimeout(()=>say(line).catch(()=>{}),220)}return true}
-  if(b.id==="lesquiz"){hush();topicSel=les.topic;filt="all";les=null;startSession("topic");return true}
+  if(b.id==="lessay"){unlockSpeech();let line;if(les.unit!=null){const sl=UNITS[part][les.unit].s[les.idx];line=sayable(sl.h)+". "+(sl.b||[]).map(sayable).join(". ")+(sl.ex?". Example. "+sayable(sl.ex):"")}
+    else{const it=lesDeck(les.topic)[les.idx],how=EXPL[it.id]||"";line=sayable(it.f.replace(/:/g,","))+". "+sayable(it.b)+(how?". How it works. "+sayable(how):"")}
+    const ss=window.speechSynthesis;if(!TTS&&ss&&!ss.speaking&&!ss.pending){say(line).catch(()=>{})}else{hush();setTimeout(()=>say(line).catch(()=>{}),220)}return true}
+  if(b.id==="lesquiz"){hush();if(les.unit!=null){unitRe=UNITS[part][les.unit].re;les=null;startSession("unit")}else{topicSel=les.topic;filt="all";les=null;startSession("topic")}return true}
   return false}
 // swipe between slides
-let lesX=null,lesY=null;document.addEventListener("touchstart",e=>{if(view==="lessons"&&les&&les.topic!==null&&e.touches.length===1){lesX=e.touches[0].clientX;lesY=e.touches[0].clientY}else lesX=null},{passive:true});
-document.addEventListener("touchend",e=>{if(lesX===null||view!=="lessons"||!les||les.topic===null)return;const t=e.changedTouches[0],dx=t.clientX-lesX,dy=t.clientY-lesY;lesX=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)lesGo(dx<0?1:-1)},{passive:true});
-document.addEventListener("keydown",e=>{if(view!=="lessons"||!les||les.topic===null)return;if(e.key==="ArrowRight")lesGo(1);else if(e.key==="ArrowLeft")lesGo(-1)});
+let lesX=null,lesY=null;const lesIn=()=>view==="lessons"&&les&&(les.topic!=null||les.unit!=null);document.addEventListener("touchstart",e=>{if(lesIn()&&e.touches.length===1){lesX=e.touches[0].clientX;lesY=e.touches[0].clientY}else lesX=null},{passive:true});
+document.addEventListener("touchend",e=>{if(lesX===null||!lesIn())return;const t=e.changedTouches[0],dx=t.clientX-lesX,dy=t.clientY-lesY;lesX=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)lesGo(dx<0?1:-1)},{passive:true});
+document.addEventListener("keydown",e=>{if(!lesIn())return;if(e.key==="ArrowRight")lesGo(1);else if(e.key==="ArrowLeft")lesGo(-1)});
 
 /* ================= AUDIO REVIEW: hands-free, for driving or the gym ================= */
 let TTS=null,aud=null;
@@ -5386,6 +5450,12 @@ function startSession(mode,n){reviewAll=false;
   else if(mode==="calc"){const gens=GENS.filter(g=>g.p==part&&(filt==="all"||g.d==filt));const n2=Math.min(sz,15);
     while(gens.length&&q.length<n2)q=q.concat(weightPick(gens,Math.min(n2-q.length,gens.length)));
     if(!q.length){doneNote="No calculation drills for this domain yet. Choose All domains.";render();return}}
+  else if(mode==="mix"){ // random 10: 3 easy, 3 medium, 2 hard, 2 calculations, plain random (not weighted), shuffled together
+    const inF=i=>i.p==part&&(filt==="all"||i.d==filt),rnd=(l,k)=>shuffle(l.slice()).slice(0,k);
+    const ez=BANK.filter(i=>inF(i)&&(i.t==="f"||i.lv===1)),md=BANK.filter(i=>inF(i)&&i.t==="q"&&i.lv===2),hd=BANK.filter(i=>inF(i)&&i.t==="q"&&i.lv===3),cg=GENS.filter(inF);
+    q=rnd(ez,3).concat(rnd(md,3),rnd(hd,2),rnd(cg,2));
+    if(q.length<10){const rest=shuffle(ez.concat(md,hd,cg).filter(i=>!q.includes(i)));q=q.concat(rest.slice(0,10-q.length))}
+    q=shuffle(q);if(!q.length){doneNote="Nothing to pick from in this selection.";render();return}}
   else if(mode==="leech"){q=hardest(part,20)}
   else if(mode==="final"){ // final-week review: your misses, your hardest facts, then exam-style questions from your weakest domains
     const n2=Math.max(sz,30),ds=Object.keys(PARTS[part].doms).map(d=>({d,st:domStats(part,d)})).sort((a,b)=>(a.st.n>=5?a.st.acc:(prior(part,a.d)??0.5))-(b.st.n>=5?b.st.acc:(prior(part,b.d)??0.5))).slice(0,2).map(x=>x.d);
@@ -5407,6 +5477,7 @@ function startSession(mode,n){reviewAll=false;
     const fa=q.filter(i=>i.t==="f"||i.lv===1),ot=q.filter(i=>!(i.t==="f"||i.lv===1));q=[];while(fa.length||ot.length){q.push(...fa.splice(0,3),...ot.splice(0,2))}} // interleave facts and questions
   else if(mode==="heard"){const l=heardIds?heardIds.map(id=>BYID[id]).filter(Boolean):heardPool(part);heardIds=null;q=shuffle(l).slice(0,Math.max(sz,20));if(!q.length){doneNote="No audio facts waiting to be quizzed.";render();return}}
   else if(mode==="missed"){q=missedPool(part,filt).slice(0,sz);if(!q.length){doneNote="Nothing to redrill here. Nice work.";render();return}}
+  else if(mode==="unit"){const pool=BANK.filter(i=>i.p==part&&unitRe&&unitRe.test((i.f||i.s)+" "+(i.b||"")));q=weightPick(pool.filter(i=>i.t==="q"),Math.ceil(sz*.6));q=shuffle(q.concat(weightPick(pool.filter(i=>i.t==="f"),sz-q.length)));if(!q.length){doneNote="No questions are linked to this unit yet.";render();return}}
   else if(mode==="topic"){q=weightPick(BANK.filter(i=>i.p==part&&TOPIC_OF[i.id]===topicSel),sz)}
   else if(mode==="weakdom"){q=weightPick(BANK.filter(i=>i.p==part&&i.d==filt),sz)}
   else if(mode==="mock"){const doms=PARTS[part].doms;for(const d in doms){const k=Math.max(1,Math.round(n*doms[d][1]/100));const pool=BANK.filter(i=>i.p==part&&i.d==d&&i.t==="q"),hardish=shuffle(pool.filter(i=>i.lv>=2)),easy=shuffle(pool.filter(i=>i.lv<2));const e=Math.min(easy.length,Math.floor(k*0.15));q=q.concat(hardish.slice(0,k-e),easy.slice(0,e+Math.max(0,k-e-hardish.length)))}q=shuffle(q).slice(0,n)}
@@ -5476,7 +5547,7 @@ function renderSession(){
   if(sess.queue[sess.pos].learn)return renderLearn();
   if(sess.queue[sess.pos].lazy){const c=sess.queue[sess.pos];Object.assign(c,mkEntry(BYID[c.id],c.lazy));c.lazy=0}
   const s=sess,cur=s.queue[s.pos],it=BYID[cur.id],P=PARTS[it.p],V=view4(cur,it),quick=QUICK.includes(s.mode);
-  const names={smart:"Smart session · built for your time",easy:"Easy · learn and review",facts:"Easy · all facts in order",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes",calc:"Calculation trainer",leech:"Hardest facts for you",cards:"Flashcards",missed:"Redrill missed items",weakdom:"Weakest topic",topic:"Topic drill",heard:"Audio follow-up quiz",final:"Final-week review"};
+  const names={mix:"Random 10 · everything mixed",unit:"Unit quiz",smart:"Smart session · built for your time",easy:"Easy · learn and review",facts:"Easy · all facts in order",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes",calc:"Calculation trainer",leech:"Hardest facts for you",cards:"Flashcards",missed:"Redrill missed items",weakdom:"Weakest topic",topic:"Topic drill",heard:"Audio follow-up quiz",final:"Final-week review"};
   const pct=s.mode==="mock"?Object.keys(s.answers).length/s.queue.length:s.done/(s.total);
   const stepLab=cur.final?"End-of-session check":it.t==="g"?"Calculation · new numbers each time":it.t==="f"?(S.set.simple!==false?"Fact":`Fact · step ${V.step} of 3`):["","Easy","Medium","Hard"][it.lv]+" question";
   if(cur.why===undefined)cur.why=s.mode==="mock"?null:whyTag(it); // decided when the item first appears, before the answer changes its record
@@ -5578,8 +5649,8 @@ document.addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b)return;
   if(view==="audio"&&!b.dataset.part){if(audioClick(b))return}
   if(b.dataset.part&&aud){aud.stop=true;hush();aud=null;view="home"}
-  if(b.dataset.part&&view==="lessons"){hush();part=+b.dataset.part;try{sessionStorage.setItem("ea-part",part)}catch(_){}les={topic:null,idx:0};render();return}
-  if(b.dataset.mode==="lessons"){les={topic:null,idx:0};view="lessons";render();window.scrollTo(0,0);return}
+  if(b.dataset.part&&view==="lessons"){hush();part=+b.dataset.part;try{sessionStorage.setItem("ea-part",part)}catch(_){}les={unit:null,topic:null,idx:0};render();return}
+  if(b.dataset.mode==="lessons"){les={unit:null,topic:null,idx:0};view="lessons";render();window.scrollTo(0,0);return}
   if(view==="lessons"&&lessonClick(b))return;
   if(b.dataset.mode==="audio"){openAudio();return}
   if(b.dataset.part){part=+b.dataset.part;try{sessionStorage.setItem("ea-part",part)}catch(_){}filt="all";confirmReset=false;if(view!=="session"){view="home"}render();return}
@@ -5608,6 +5679,11 @@ document.addEventListener("click",e=>{
   if(b.dataset.kcat){kCat=b.dataset.kcat;renderFacts();return}
   if(b.id==="updnow"){applyUpdate();return}
   if(b.id==="modedesc"){modeDesc=!modeDesc;render();return}
+  if(b.id==="examedit"||b.id==="examedit2"){examOpen=true;examMsg="";render();if(b.id==="examedit2")window.scrollTo(0,0);return}
+  if(b.id==="examcancel"){examOpen=false;render();return}
+  if(b.dataset.examclr){const i=document.querySelector('[data-examin="'+b.dataset.examclr+'"]');if(i)i.value="";return}
+  if(b.id==="examsave"){let ch=false;document.querySelectorAll("[data-examin]").forEach(i=>{const p=i.dataset.examin,v=/^\d{4}-\d{2}-\d{2}$/.test(i.value)?i.value:"";if((S.set.exam[p]||"")!==v){S.set.exam[p]=v;ch=true}});
+    if(ch){S.set.examT=Date.now();persist()}examOpen=false;examMsg=ch?"Exam dates saved.":"";render();setTimeout(()=>{examMsg=""},0);return}
   if(b.id==="pasteopen"){pasteOpen=!pasteOpen;render();const t=document.getElementById("pastecode");if(t)t.focus();return}
   if(b.id==="pastego"){const t=document.getElementById("pastecode"),v=t?t.value.trim():"";if(!v){bkNote="Paste the code first.";render();return}pasteOpen=false;restoreFrom(v);return}
   if(b.id==="bkdown"){backupDownload();return}
@@ -5636,7 +5712,7 @@ document.addEventListener("click",e=>{
   if(b.id==="home"){sess=null;view="home";render();window.scrollTo(0,0);return}
   if(b.id==="redo"){newSess("weak",[...new Set(sess.missed)].map(id=>BYID[id]));return}
 });
-document.addEventListener("change",e=>{if(e.target.id==="examdate"){S.set.exam[part]=e.target.value;persist();render()}});
+
 document.addEventListener("change",e=>{if(e.target.id==="bkfile"&&e.target.files&&e.target.files[0]){const r=new FileReader();r.onload=()=>restoreFrom(String(r.result||""));r.readAsText(e.target.files[0])}});
 document.addEventListener("change",e=>{const k=e.target.dataset&&e.target.dataset.prior;if(k){S.set.prior=S.set.prior||{};if(e.target.value==="")delete S.set.prior[k];else S.set.prior[k]=Math.max(0,Math.min(100,+e.target.value||0));persist()}});
 document.addEventListener("keydown",e=>{
