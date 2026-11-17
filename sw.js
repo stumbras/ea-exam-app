@@ -6,6 +6,7 @@ const CORE=[INDEX,BASE+"manifest.webmanifest",BASE+"icon-192.png",BASE+"icon-512
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE&&k!==FONTS).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET")return;const u=new URL(r.url);
+  if(u.origin===self.location.origin&&/\/version\.json$/.test(u.pathname)){e.respondWith(fetch(r).catch(()=>new Response("{}",{headers:{"Content-Type":"application/json"}})));return}
   if(u.origin===self.location.origin&&u.href.startsWith(BASE)){
     const key=(r.mode==="navigate"||u.href===BASE)?INDEX:u.origin+u.pathname;
     e.respondWith((async()=>{const c=await caches.open(CACHE),hit=await c.match(key);
@@ -17,3 +18,7 @@ self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET")return;c
     e.respondWith((async()=>{const c=await caches.open(FONTS),hit=await c.match(r);if(hit)return hit;
       try{const res=await fetch(r);if(res&&(res.ok||res.type==="opaque"))c.put(r,res.clone());return res}catch(x){return new Response("",{status:503})}})())}
 });
+// "Update now" in the app: fetch the newest app file, store it, then tell the open app to reload.
+self.addEventListener("message",e=>{if(e.data!=="refresh")return;e.waitUntil((async()=>{const c=await caches.open(CACHE);
+  try{const res=await fetch(INDEX,{cache:"reload"});if(res&&res.ok)await c.put(INDEX,res.clone())}catch(x){}
+  (await self.clients.matchAll()).forEach(x=>x.postMessage("refreshed"))})())});

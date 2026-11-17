@@ -4,76 +4,76 @@
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="EA Exam"><meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>EA Exam APP</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: a single study column like a tax workbook — part tabs, a status ledger, then the drill card */
 :root{
-  --bg:#e8edf3; --surface:#f8fafc; --sunk:#dde5ee; --line:#cad4e0; --fg:#142030; --muted:#566477;
-  --accent:#0e7268; --accent-ink:#ffffff; --accent-soft:#d5ece8;
-  --good:#1d7a45; --good-soft:#dcefe3; --warn:#9a6200; --warn-soft:#f6ead0; --bad:#b03a2e; --bad-soft:#f6e0dc;
-  --glow1:rgba(60,110,200,.34); --glow2:rgba(16,160,140,.30); --glow3:rgba(120,90,200,.16); --tint:linear-gradient(165deg,#cfdcf0 0%,#cde6e4 48%,#dad6ef 100%); --dots:rgba(30,60,100,.09); --shadow:0 1px 2px rgba(16,32,56,.06),0 6px 18px rgba(16,32,56,.06);
+  --bg:#e9eef5; --surface:#ffffff; --sunk:#edf1f6; --line:#b4c0cf; --fg:#0a1220; --muted:#3b4758;
+  --accent:#075e55; --accent-ink:#ffffff; --accent-soft:#cfeae5;
+  --good:#0f6634; --good-soft:#d9f0e1; --warn:#7a4a00; --warn-soft:#fbecc8; --bad:#a3271b; --bad-soft:#fbe1dc;
+  --glow1:rgba(60,110,200,.20); --glow2:rgba(16,160,140,.18); --glow3:rgba(120,90,200,.10); --tint:linear-gradient(170deg,#dbe5f3 0%,#dcebe9 55%,#e3e0f1 100%); --dots:transparent; --shadow:0 1px 2px rgba(10,22,40,.10),0 8px 24px rgba(10,22,40,.10);
   --band:linear-gradient(135deg,#132c48 0%,#1a4a68 55%,#0f746b 100%);
-  --font:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-  --r:10px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",system-ui,sans-serif; --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --r:14px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0e1621; --surface:#16212f; --sunk:#1c293a; --line:#2a3a4e; --fg:#e2e9f2; --muted:#98a7b9;
-  --accent:#4cc9b8; --accent-ink:#06201c; --accent-soft:#163a37;
-  --good:#6fd08f; --good-soft:#163222; --warn:#e8b55a; --warn-soft:#3a2d12; --bad:#f08a7e; --bad-soft:#3d1d19;
-  --glow1:rgba(60,110,210,.30); --glow2:rgba(30,180,160,.20); --glow3:rgba(130,90,220,.16); --tint:linear-gradient(165deg,#0c1626 0%,#0b2026 50%,#151432 100%); --dots:rgba(255,255,255,.05); --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px rgba(0,0,0,.25);
+  --bg:#090f18; --surface:#141e2c; --sunk:#1d2a3b; --line:#3b4e66; --fg:#f3f6fa; --muted:#b9c5d3;
+  --accent:#5fdccb; --accent-ink:#04211d; --accent-soft:#143f3b;
+  --good:#7fe0a0; --good-soft:#143524; --warn:#f2c268; --warn-soft:#3d2f10; --bad:#ff9d91; --bad-soft:#431d18;
+  --glow1:rgba(60,110,210,.22); --glow2:rgba(30,180,160,.14); --glow3:rgba(130,90,220,.12); --tint:linear-gradient(170deg,#0a1422 0%,#0a1c22 55%,#12122a 100%); --dots:transparent; --shadow:0 1px 2px rgba(0,0,0,.45),0 10px 26px rgba(0,0,0,.35);
   --band:linear-gradient(135deg,#0f2238 0%,#153d58 55%,#0c5e57 100%); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0e1621; --surface:#16212f; --sunk:#1c293a; --line:#2a3a4e; --fg:#e2e9f2; --muted:#98a7b9;
-  --accent:#4cc9b8; --accent-ink:#06201c; --accent-soft:#163a37;
-  --good:#6fd08f; --good-soft:#163222; --warn:#e8b55a; --warn-soft:#3a2d12; --bad:#f08a7e; --bad-soft:#3d1d19;
-  --glow1:rgba(60,110,210,.30); --glow2:rgba(30,180,160,.20); --glow3:rgba(130,90,220,.16); --tint:linear-gradient(165deg,#0c1626 0%,#0b2026 50%,#151432 100%); --dots:rgba(255,255,255,.05); --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px rgba(0,0,0,.25);
+  --bg:#090f18; --surface:#141e2c; --sunk:#1d2a3b; --line:#3b4e66; --fg:#f3f6fa; --muted:#b9c5d3;
+  --accent:#5fdccb; --accent-ink:#04211d; --accent-soft:#143f3b;
+  --good:#7fe0a0; --good-soft:#143524; --warn:#f2c268; --warn-soft:#3d2f10; --bad:#ff9d91; --bad-soft:#431d18;
+  --glow1:rgba(60,110,210,.22); --glow2:rgba(30,180,160,.14); --glow3:rgba(130,90,220,.12); --tint:linear-gradient(170deg,#0a1422 0%,#0a1c22 55%,#12122a 100%); --dots:transparent; --shadow:0 1px 2px rgba(0,0,0,.45),0 10px 26px rgba(0,0,0,.35);
   --band:linear-gradient(135deg,#0f2238 0%,#153d58 55%,#0c5e57 100%); color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{background:radial-gradient(circle at 1px 1px,var(--dots) 1px,transparent 1.6px) 0 0/22px 22px,radial-gradient(900px 700px at -10% -5%,var(--glow1),transparent 60%),radial-gradient(800px 650px at 110% 10%,var(--glow2),transparent 60%),radial-gradient(900px 700px at 50% 115%,var(--glow3),transparent 62%),var(--tint),var(--bg);background-attachment:scroll;min-height:100vh;color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.55;margin:0}
+body{background:radial-gradient(circle at 1px 1px,var(--dots) 1px,transparent 1.6px) 0 0/22px 22px,radial-gradient(900px 700px at -10% -5%,var(--glow1),transparent 60%),radial-gradient(800px 650px at 110% 10%,var(--glow2),transparent 60%),radial-gradient(900px 700px at 50% 115%,var(--glow3),transparent 62%),var(--tint),var(--bg);background-attachment:scroll;min-height:100vh;color:var(--fg);font-family:var(--font);font-size:17px;line-height:1.55;margin:0;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
 .wrap{max-width:760px;margin:0 auto;padding-block:16px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{margin:0;text-wrap:balance;line-height:1.25}
-h1{font-size:20px;font-weight:700;letter-spacing:-.01em}
-h2{font-size:17px;font-weight:600}
-h3{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+h1{font-size:21px;font-weight:700;letter-spacing:-.015em}
+h2{font-size:19px;font-weight:700;letter-spacing:-.01em}
+h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
 button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .muted{color:var(--muted)}
-.small{font-size:13px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--band);color:#fff;border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+.small{font-size:14.5px;line-height:1.5}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--band);color:#fff;border-radius:18px;padding:14px 16px;box-shadow:var(--shadow)}
 .brand{display:flex;align-items:center;gap:12px;min-width:0}
+.topact{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#themebtn{cursor:pointer;font-family:inherit}
 .logo{flex:none;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-weight:700;font-size:15px;letter-spacing:.02em;color:#0f3a4f;background:linear-gradient(145deg,#ffffff,#cfeee9);box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)}
 .top h1{color:#fff}
 .top .cycle{color:rgba(255,255,255,.78)}
 .top .chip{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);color:#fff}
 .top .chip .dot{background:rgba(255,255,255,.7)}
 .top .chip.ok .dot{background:#7ee2a8}
-.cycle{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:2px}
-.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 9px;border-radius:999px;background:var(--sunk);color:var(--muted);border:1px solid var(--line)}
+.cycle{font-size:12.5px;font-weight:500;letter-spacing:.02em;color:var(--muted);margin-top:2px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--sunk);color:var(--muted);border:1px solid var(--line)}
 .chip .dot{width:7px;height:7px;border-radius:50%;background:var(--muted)}
 .chip.ok .dot{background:var(--good)}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:16px 0 4px;background:var(--sunk);padding:4px;border-radius:var(--r)}
-.tabs button{border:0;background:transparent;padding:9px 6px;border-radius:7px;font-weight:600;font-size:14px;color:var(--muted)}
-.tabs button small{display:block;font-weight:400;font-size:11px}
-.tabs button[aria-selected="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(16,32,56,.12)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0 0;background:var(--sunk);padding:4px;border-radius:var(--r)}
+.tabs button{border:0;background:transparent;padding:10px 6px;border-radius:10px;font-weight:700;font-size:15px;color:var(--muted);min-height:48px}
+.tabs button small{display:block;font-weight:500;font-size:12px}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(10,22,40,.22)}
 .section{margin-top:22px;display:grid;gap:10px}
-.ledger{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;display:grid;gap:12px}
+.ledger{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat{display:grid;gap:2px}
-.stat b{font-family:var(--mono);font-size:20px;font-weight:600}
-.stat span{font-size:12px;color:var(--muted)}
+.stat b{font-size:24px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{font-size:13.5px;color:var(--muted)}
 @media (max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
-.verdict{font-size:14px}
+.verdict{font-size:15.5px}
 .domains{display:grid;gap:8px}
 .dom{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center}
-.dom .name{font-size:14px;min-width:0}
-.dom .name .w{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:4px}
-.bar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--sunk);overflow:hidden;display:flex}
+.dom .name{font-size:15.5px;font-weight:500;min-width:0}
+.dom .name .w{font-size:12.5px;font-weight:500;color:var(--muted);margin-left:4px}
+.bar{grid-column:1/-1;height:9px;border-radius:5px;background:var(--sunk);overflow:hidden;display:flex}
 .bar i{display:block;height:100%}
 .bar .m{background:var(--accent)}
-.pill{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pill{font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
 .pill.weak{background:var(--bad-soft);color:var(--bad)}
 .pill.mid{background:var(--warn-soft);color:var(--warn)}
 .pill.strong{background:var(--good-soft);color:var(--good)}
@@ -82,67 +82,101 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 @media (max-width:520px){.modes{grid-template-columns:1fr}}
 .mode{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;display:grid;gap:4px;min-width:0}
 .mode:hover{border-color:var(--accent)}
-.mode .lvl{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
-.mode b{font-size:16px}
-.mode p{margin:0;font-size:13px;color:var(--muted)}
-.mode .cnt{font-family:var(--mono);font-size:12px;color:var(--fg)}
+.mode .lvl{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+.mode b{font-size:17.5px;letter-spacing:-.01em}
+.mode p{margin:0;font-size:14.5px;line-height:1.45;color:var(--muted)}
+.mode .cnt{font-size:13px;font-weight:600;color:var(--fg);font-variant-numeric:tabular-nums}
 .mode.primary{background:#b8321f;border-color:#b8321f;color:#fff;box-shadow:0 0 0 3px var(--bad-soft)}
 .mode.primary p,.mode.primary .lvl,.mode.primary .cnt{color:#fff;opacity:.95}
 .mode.next{border:2px solid #b8321f;background:var(--bad-soft)}
 .mode.next .lvl{color:var(--bad);font-weight:700}
 .btn.next{background:#b8321f;border-color:#b8321f;color:#fff}
 .filters{display:flex;flex-wrap:wrap;gap:6px}
-.filters button,.seg button{border:1px solid var(--line);background:var(--surface);padding:5px 10px;border-radius:999px;font-size:13px}
-.filters button[aria-pressed="true"],.seg button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--fg);font-weight:600}
+.filters button,.seg button{border:1.5px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:999px;font-size:14.5px;font-weight:500;min-height:40px}
+.filters button[aria-pressed="true"],.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
 .seg{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.btn{border:1px solid var(--line);background:var(--surface);padding:10px 16px;border-radius:8px;font-weight:600}
+.btn{border:1.5px solid var(--line);background:var(--surface);padding:12px 18px;border-radius:12px;font-weight:700;min-height:46px}
+.btn.small{font-size:14.5px;padding:9px 14px;min-height:40px}
 .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.ghost{background:transparent}
 .btn:disabled{opacity:.45;cursor:default}
 /* Session */
 .sesshead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.progress{height:4px;background:var(--sunk);border-radius:2px;overflow:hidden;margin-top:10px}
+.progress{height:7px;background:var(--sunk);border-radius:4px;overflow:hidden;margin-top:10px}
 .progress i{display:block;height:100%;background:var(--accent);transition:width .2s}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;margin-top:14px;display:grid;gap:14px}
-.meta{display:flex;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.front{font-size:18px;font-weight:600;line-height:1.4}
-.stem{font-size:16px;line-height:1.55}
-.back{border-top:1px dashed var(--line);padding-top:14px;font-size:16px;line-height:1.55}
-.opts{display:grid;gap:8px}
-.opt{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px 12px;font-size:15px;line-height:1.45;align-items:start}
-.opt .k{font-family:var(--mono);font-weight:600;color:var(--muted)}
-.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
-.opt.right{border-color:var(--good);background:var(--good-soft)}
-.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.meta{display:flex;gap:8px;flex-wrap:wrap;font-size:12.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.front{font-size:20px;font-weight:700;line-height:1.35;letter-spacing:-.01em}
+.stem{font-size:18px;line-height:1.5;font-weight:500}
+.back{border-top:1.5px solid var(--line);padding-top:14px;font-size:17.5px;line-height:1.55}
+.opts{display:grid;gap:10px}
+.opt{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:14px 14px;font-size:17px;line-height:1.45;align-items:start;min-height:54px}
+.opt .k{font-weight:800;color:var(--accent)}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.opt.right{border-color:var(--good);background:var(--good-soft);box-shadow:inset 0 0 0 1.5px var(--good);font-weight:600}.opt.right .k{color:var(--good)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft);box-shadow:inset 0 0 0 1.5px var(--bad)}.opt.wrong .k{color:var(--bad)}
 .opt:disabled{cursor:default}
-.explain{background:var(--sunk);border-radius:8px;padding:12px;font-size:14px;line-height:1.55}
+.explain{background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:16px;line-height:1.55}
 .explain b{display:block;margin-bottom:4px}
-.steps{margin:6px 0 0;padding-left:22px;display:grid;gap:5px}.steps li{padding-left:2px}.steps li::marker{color:var(--accent);font-weight:700;font-family:var(--mono);font-size:12px}
-.trap{margin-top:8px;padding:8px 10px;border-left:3px solid var(--warn,#b7791f);background:var(--surface);border-radius:0 6px 6px 0;font-size:13px}.trap b{display:inline;margin:0}
-.cloze{font-size:16px;line-height:1.55;background:var(--sunk);border-radius:8px;padding:10px 12px}
+.steps{margin:6px 0 0;padding-left:22px;display:grid;gap:5px}.steps li{padding-left:2px}.steps li::marker{color:var(--accent);font-weight:800;font-size:14px}
+.trap{margin-top:8px;padding:8px 10px;border-left:3px solid var(--warn,#b7791f);background:var(--warn-soft);color:var(--fg);border-radius:0 8px 8px 0;font-size:15px}.trap b{display:inline;margin:0}
+.cloze{font-size:17.5px;line-height:1.55;background:var(--sunk);border-radius:12px;padding:12px 14px}
 .blank{font-family:var(--mono);font-weight:600;color:var(--accent);border-bottom:2px solid var(--accent)}
-.related{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);font-size:13px;display:grid;gap:2px}
+.related{margin-top:10px;padding-top:8px;border-top:1px solid var(--line);font-size:14.5px;display:grid;gap:2px}
 .related b{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
 .rate{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.rate button{padding:12px 6px;border-radius:8px;border:1px solid var(--line);background:var(--bg);font-weight:600;font-size:14px;display:grid;gap:2px}
-.rate button small{font-weight:400;font-size:11px;color:var(--muted);font-family:var(--mono)}
-.rate .r0{border-color:var(--bad)} .rate .r3{border-color:var(--good)}
+.rate button{padding:13px 6px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:15.5px;display:grid;gap:2px;min-height:52px}
+.rate button small{font-weight:500;font-size:12.5px;color:var(--muted)}
+.rate .r0{border-color:var(--bad);color:var(--bad)} .rate .r3{border-color:var(--good);color:var(--good)}
 .conf{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.timer{font-family:var(--mono);font-size:13px}
+.timer{font-family:var(--mono);font-size:15px;font-weight:600}
 .nav{display:flex;flex-wrap:wrap;gap:5px}
-.nav button{width:30px;height:30px;border-radius:6px;border:1px solid var(--line);background:var(--surface);font-family:var(--mono);font-size:11px;padding:0}
+.nav button{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font-size:13px;font-weight:600;padding:0}
 .nav button.ans{background:var(--accent-soft)}
 .nav button.flag{border-color:var(--warn);border-width:2px}
 .nav button.cur{outline:2px solid var(--accent)}
 .list{display:grid;gap:8px}
-.item{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;display:grid;gap:4px;font-size:14px;min-width:0}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:4px;font-size:15.5px;min-width:0}
 .item .q{font-weight:600}
-input[type=search],input[type=date],select{font:inherit;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 12px;width:100%}
-.big{font-family:var(--mono);font-size:40px;font-weight:600}
-.notice{font-size:13px;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px}
+input[type=search],input[type=date],select{font:inherit;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;width:100%;font-size:16px}
+.big{font-size:44px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.notice{font-size:14.5px;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px}
 details summary{cursor:pointer;font-weight:600}
 .confirm{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.dash{gap:12px}
+.gauge{display:grid;gap:6px}
+.gnum{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.gnum b{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.gnum span{font-size:15px;font-weight:600;color:var(--muted)}
+.gbar{position:relative;height:14px;border-radius:7px;background:var(--sunk);border:1px solid var(--line);overflow:hidden}
+.gbar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--good));border-radius:7px}
+.gbar .tick{position:absolute;left:90%;top:0;bottom:0;width:2px;background:var(--fg)}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stats3 .stat{background:var(--sunk);border-radius:10px;padding:8px 10px}
+.stats3 .stat b{font-size:21px}
+.bw{display:grid;gap:6px}
+.bwrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 12px;border-radius:10px;font-size:15.5px}
+.bwrow span{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.bwrow b{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bwrow em{font-style:normal;font-weight:800;font-variant-numeric:tabular-nums}
+.bwrow.good{background:var(--good-soft)}.bwrow.good span,.bwrow.good em{color:var(--good)}
+.bwrow.bad{background:var(--bad-soft)}.bwrow.bad span,.bwrow.bad em{color:var(--bad)}
+.statusline{font-size:13.5px;color:var(--muted)}
+.statusline .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--good);margin-right:6px;vertical-align:middle}
+.statusline.off .dot{background:var(--bad)}
+.filters.scroll{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
+.filters.scroll::-webkit-scrollbar{display:none}
+.filters.scroll button{white-space:nowrap;flex:none}
+.modes.tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.modes.tiles .mode{padding:12px;gap:3px;min-height:82px;align-content:start}
+.modes.tiles .mode p{display:none}
+.modes.tiles.desc .mode p{display:block}
+.modes.tiles .mode.next{grid-column:1/-1;order:-1}
+.modes.tiles .mode b{font-size:16.5px;line-height:1.25}
+.modes.tiles .mode .lvl{font-size:11.5px;line-height:1.3}
+.why{display:inline-block;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.why.miss{background:var(--bad-soft);color:var(--bad)}.why.weak{background:var(--warn-soft);color:var(--warn)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -150,10 +184,11 @@ details summary{cursor:pointer;font-weight:600}
 <div class="wrap" id="app">
   <header class="top">
     <div class="brand"><span class="logo" aria-hidden="true">EA</span><div>
-      <h1>EA Exam Drill</h1>
-      <div class="cycle">SEE · TAX YEAR 2025 LAW · WINDOW CLOSES FEB 28, 2027</div>
+      <h1>EA Exam APP</h1>
+      <div class="cycle">2025 tax law · exam window to Feb 28, 2027</div>
     </div></div>
-    <span class="chip" id="sync" role="button" tabindex="0" title="Tap to test account saving" style="cursor:pointer"><span class="dot"></span><span id="synctext">Saved on this device</span></span>
+    <div class="topact"><span class="chip" id="sync" role="button" tabindex="0" title="Tap to test account saving" style="cursor:pointer"><span class="dot"></span><span id="synctext">Saved on this device</span></span>
+    <button class="chip" id="themebtn" type="button" aria-label="Switch between light and dark">Dark</button></div>
   </header>
   <nav class="tabs" role="tablist" id="tabs"></nav>
   <main id="view"></main>
@@ -4177,14 +4212,27 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 40 · Nov 17";
+const BUILD="Version 41 · Nov 17";
+// Light / dark switch. With no choice saved, the device setting decides.
+function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
+function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
+  const b=document.getElementById("themebtn");if(b)b.textContent=themeNow()==="dark"?"☀ Light":"☾ Dark";
+  const m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",themeNow()==="dark"?"#0f2238":"#132c48")}
+try{applyTheme(localStorage.getItem("ea-theme")||"")}catch(e){applyTheme("")}
+document.getElementById("themebtn").addEventListener("click",()=>{const t=themeNow()==="dark"?"light":"dark";try{localStorage.setItem("ea-theme",t)}catch(e){}applyTheme(t)});
 const HOSTED=!(window.claude&&window.claude.use);            // opened outside Claude: installed app, website copy or a saved file
 const STANDALONE=()=>navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);
 const IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-let offl="none",pasteOpen=false;                               // offline state: none | pending | ready
+let offl="none",pasteOpen=false,modeDesc=false;                               // offline state: none | pending | ready
 if(HOSTED&&"serviceWorker" in navigator&&document.querySelector('link[rel="manifest"]')){offl="pending";
   navigator.serviceWorker.register("./sw.js").then(()=>navigator.serviceWorker.ready).then(()=>{offl="ready";if(!sess&&view==="home")render()}).catch(()=>{offl="none";if(!sess&&view==="home")render()});
-  try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}}
+  try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+  navigator.serviceWorker.addEventListener("message",e=>{if(e.data==="refreshed")location.reload()});
+  checkUpdate();document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")checkUpdate()})}
+// The installed app checks for a newer version whenever it has a connection, and offers it with one tap.
+let updateReady="",updating=false;
+function checkUpdate(){if(!navigator.onLine)return;fetch("./version.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v!==BUILD&&j.v!==updateReady){updateReady=j.v;if(!sess&&view==="home")render()}}).catch(()=>{})}
+function applyUpdate(){updating=true;render();const c=navigator.serviceWorker.controller;if(c)c.postMessage("refresh");setTimeout(()=>location.reload(),6000)}
 const WHY={nohost:"this page is not opened inside Claude",nodb:"account storage is not offered in this view",nouser:"your account could not be identified in this view",noid:"your account could not be identified in this view",timeout:"your account did not answer in time",not_confirmed:"a save could not be read back",quota_exceeded:"account storage is full",unavailable:"the account service is busy"};
 const whyText=()=>WHY[syncWhy]||(syncWhy?"error: "+syncWhy:"");
 const devName=()=>/iPhone/.test(navigator.userAgent)?"iPhone":/iPad/.test(navigator.userAgent)?"iPad":/Android/.test(navigator.userAgent)?"Android":"computer";
@@ -4218,6 +4266,9 @@ async function syncTest(){
     testNote=S.upd?`Working. Your account now holds ${n} tracked facts and questions, saved ${new Date(md.upd).toLocaleString()}. Open this app in Claude on any device and the same progress loads.`:"Working. Account storage answers correctly. Nothing is stored yet because no question has been answered."}
   catch(e){syncWhy=(e&&e.code)||"error";testNote="Not working right now: "+whyText()+". Progress is still saved on this device. Download a backup file to be safe, then try again later."}
   render()}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="visible"||!aud||aud.state!=="play"||TTS)return;
+  try{navigator.wakeLock.request("screen").then(l=>{aud&&(aud.lock=l)}).catch(()=>{})}catch(e){}
+  if(!aud.paused&&!aud.needTap){aud.redo=true;try{window.speechSynthesis.cancel();window.speechSynthesis.resume()}catch(e){}}});
 document.addEventListener("visibilitychange",async()=>{
   if(document.hidden){if(saveTimer){clearTimeout(saveTimer);pushRemote()}}
   else if(mainRef&&!loaded){retryN=0;retryLater()}
@@ -4324,19 +4375,54 @@ function renderHome(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},
   const filters=`<button aria-pressed="${filt==="all"}" data-f="all">All domains</button>`+Object.entries(P.doms).map(([d,[n]])=>`<button aria-pressed="${filt==d}" data-f="${d}">${d}. ${esc(n)}</button>`).join("");
   const isWebCopy=document.title==="EA Exam APP";
   const nAcct=acct?acct.items:0;
-  const warn=!connDone?`<section class="section"><div class="ledger"><div class="small muted">Checking account saving… <span style="float:right">${BUILD}</span></div></div></section>`
-   :HOSTED?`<section class="section"><div class="ledger" style="border-left:4px solid var(--good)"><div class="small"><b style="color:var(--good)">Progress is saved on this device.</b> ${Object.keys(S.it||{}).length} facts and questions tracked. ${offl==="ready"?"<b>Offline: ready.</b> It works with no internet.":offl==="pending"?"Offline: getting ready, keep this open a few seconds.":"Offline use is not available in this browser."}${offl!=="none"&&!STANDALONE()?(IOS?" To install: tap Share, then Add to Home Screen.":" To install: open the browser menu and choose Install app or Add to Home screen."):""} <span class="muted">${BUILD}</span></div>
-      <div class="row" style="margin-top:8px"><button class="btn small" id="bkcopy">Copy progress code</button><button class="btn small" id="pasteopen">Paste progress code</button></div>
-      ${pasteOpen?`<textarea id="pastecode" rows="3" placeholder="Paste the progress code from your other device here" style="width:100%;margin-top:8px;font:12px var(--mono);padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)"></textarea><div class="row" style="margin-top:6px"><button class="btn small" id="pastego">Merge this code</button></div>`:""}
-      ${bkNote?`<div class="small" style="color:var(--accent);margin-top:6px">${esc(bkNote)}</div>`:""}
-      <div class="small muted" style="margin-top:6px">To move progress between devices: copy the code on one, paste it on the other. Merging keeps the fuller record, so nothing is lost.</div></div></section>`
-   :mainRef&&remoteOk?`<section class="section"><div class="ledger" style="border-left:4px solid var(--good)"><div class="small"><b style="color:var(--good)">Progress saving: ON.</b> Every answer in this app (${esc(document.title)}) is saved to your Claude account${acct&&acct.upd?`. Stored there now: ${nAcct} tracked facts and questions, last saved ${new Date(acct.upd).toLocaleString()}`:". Nothing stored yet; it starts with your first answer"}. <span class="muted">${BUILD}</span></div></div></section>`
-   :`<section class="section"><div class="ledger" style="border:2px solid var(--bad)"><div><b style="color:var(--bad)">Progress saving: OFF on this screen.</b></div><div class="small" style="margin-top:6px">${"Reason: "+esc(whyText()||"account storage did not answer")+". Answers given here can be lost when this screen closes. Study where this box is green, and send Claude the reason shown here."} <span class="muted">${BUILD}</span></div><div class="row" style="margin-top:8px"><button class="btn small" id="synctest">Test again</button><button class="btn small" id="warnbk">Download backup file</button></div></div></section>`;
+  const saveOk=HOSTED||(mainRef&&remoteOk);
+  // Shown at the top only when something needs attention: saving is off, or the app is not installed yet.
+  const warn=!connDone?"":!saveOk?`<section class="section"><div class="ledger" style="border:2px solid var(--bad)"><div><b style="color:var(--bad)">Progress saving: OFF on this screen.</b></div><div class="small" style="margin-top:6px">${"Reason: "+esc(whyText()||"account storage did not answer")+". Answers given here can be lost when this screen closes. Study where the status line is green, and send Claude the reason shown here."}</div><div class="row" style="margin-top:8px"><button class="btn small" id="synctest">Test again</button><button class="btn small" id="warnbk">Download backup file</button></div></div></section>`
+   :HOSTED&&offl!=="none"&&!STANDALONE()&&!warnHide?`<section class="section"><div class="ledger" style="border-left:4px solid var(--accent)"><div class="small"><b>Install this app for offline use.</b> ${IOS?"Tap Share, then Add to Home Screen.":"Open the browser menu and choose Install app or Add to Home screen."} Then open it from the home screen icon.</div><div class="row"><button class="btn ghost small" id="warnhide">Hide</button></div></div></section>`:"";
+  const statusLine=!connDone?`<div class="statusline"><span class="dot" style="background:var(--muted)"></span>Checking saving… · ${BUILD}</div>`
+   :!saveOk?`<div class="statusline off"><span class="dot"></span><b style="color:var(--bad)">Saving is OFF on this screen</b> · ${BUILD}</div>`
+   :HOSTED?`<div class="statusline"><span class="dot"></span>Saved on this device · ${offl==="ready"?"Offline ready":offl==="pending"?"Getting the offline copy…":"Online only here"} · ${BUILD}</div>`
+   :`<div class="statusline"><span class="dot"></span>Saving to your Claude account${acct&&acct.upd?" · "+acct.items+" items stored":""} · ${BUILD}</div>`;
+  // strongest and weakest area, from the difficulty-weighted accuracy of recent answers (at least 5 answers in the area)
+  const rated=Object.entries(P.doms).map(([d,[n]])=>{const st=domStats(part,d);return{d,n,ans:st.n,acc:st.n>=5?st.acc:null}}).filter(x=>x.acc!==null);
+  const bestD=rated.length?rated.reduce((a,b)=>b.acc>a.acc?b:a):null,worstD=rated.length>1?rated.reduce((a,b)=>b.acc<a.acc?b:a):null;
+  const bw=bestD?`<div class="bw"><div class="bwrow good"><span>Strongest</span><b>${bestD.d}. ${esc(bestD.n)}</b><em>${Math.round(bestD.acc*100)}%</em></div>${worstD&&worstD.d!==bestD.d?`<div class="bwrow bad"><span>Weakest</span><b>${worstD.d}. ${esc(worstD.n)}</b><em>${Math.round(worstD.acc*100)}%</em></div>`:""}</div>`
+    :`<div class="small muted">Your strongest and weakest areas appear here after 5 answers in an area.</div>`;
+  const dash=`<section class="section" style="margin-top:12px"><div class="ledger dash">
+      <div class="row" style="justify-content:space-between"><h2>Part ${part}: ${P.name}</h2>${daysLeft?`<span class="chip">${esc(daysLeft.replace(/ to your Part \d exam/," to exam"))}</span>`:S.streak.n?`<span class="chip">${S.streak.n}-day streak</span>`:""}</div>
+      <div class="gauge"><div class="gnum"><b>${pc(ps.readyX)}</b><span>ready · goal 90%</span></div><div class="gbar" title="Overall readiness"><i style="width:${Math.min(100,ps.readyX).toFixed(1)}%"></i><span class="tick"></span></div></div>
+      <div class="stats3"><div class="stat"><b>${pc(ps.strength)}</b><span>Memory</span></div><div class="stat"><b>${ps.examAcc===null?"–":ps.examAcc+"%"}</b><span>Exam-style</span></div><div class="stat"><b>${due}</b><span>Due today</span></div></div>
+      ${bw}
+      ${statusLine}
+    </div></section>`;
   const tnote=testNote?`<section class="section"><div class="ledger" style="border-left:4px solid ${/^Working/.test(testNote)?"var(--good)":/^Testing/.test(testNote)?"var(--line)":"var(--bad)"}"><div class="small"><b>Account saving test.</b> ${esc(testNote)}</div></div></section>`:"";
-  $("#view").innerHTML=tnote+warn+`
+  const upd=updateReady?`<section class="section"><div class="ledger" style="border:2px solid var(--accent)"><div><b>A newer version is ready: ${esc(updateReady)}.</b></div><div class="small">You have ${esc(BUILD)}. Your progress stays as it is.</div><div class="row"><button class="btn pri" id="updnow" ${updating?"disabled":""}>${updating?"Updating…":"Update now"}</button></div></div></section>`:"";
+  $("#view").innerHTML=upd+tnote+warn+dash+`
   <section class="section">
+    <div class="row" style="justify-content:space-between"><h3>Study now</h3><button class="btn ghost small" id="modedesc" style="min-height:34px;padding:5px 12px">${modeDesc?"Hide details":"What each one does"}</button></div>
+    <div class="filters scroll" id="filters">${filters}</div>
+    <div class="modes tiles${modeDesc?" desc":""}">
+      <button class="mode" data-mode="smart"><span class="lvl">Smart session · pick your time</span><b>Study for 10, 20 or 40 minutes</b><p>Tell the app how long you have. It builds the best mix for that time: reviews that are due, facts you missed, questions from your weakest area, and a calculation or two.</p><span class="cnt">adapts to you</span></button>
+      <button class="mode" data-mode="easy"><span class="lvl">Easy · daily spaced repetition</span><b>Learn and review facts</b><p>Built on how memory works: reviews first, then 4 related new facts at a time. Read them, get quizzed right away, then again at the end, tomorrow, and at growing gaps. Each fact goes from picking it, to telling it from look-alikes, to typing it.</p><span class="cnt">${due} due · ${Math.min(nw,newLeft)} new today</span></button>
+      <button class="mode" data-mode="facts"><span class="lvl">Easy · no daily limit</span><b>Drill all facts in order</b><p>No daily limit: your misses first, then any reviews due, then new facts in order. Facts you answered right stay away until their next scheduled review.</p><span class="cnt">${easyPool(part,filt).filter(i=>{const r=S.it[i.id];return !r||r[4]===0||r[1]<=today()}).length} ready to drill</span></button>
+      <button class="mode" data-mode="cards"><span class="lvl">Flashcards · spaced repetition</span><b>Flip cards</b><p>Classic cards: recall the answer, flip, rate yourself. Shares the same schedule and tracking as Easy. Self-rated cards build a fact up to "learning"; mastery still needs a typed answer in Easy.</p><span class="cnt">${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&S.it[i.id]&&S.it[i.id][1]<=today()).length} due · ${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&!S.it[i.id]).length} new</span></button>
+      <button class="mode" data-mode="audio"><span class="lvl">Audio · hands-free</span><b>Listen and review</b><p>For driving or the gym: 5, 10 or 15 minutes. You hear a question, a short pause, the answer, then the answer again in short form. Picks facts from your misses and due reviews first, or random.</p><span class="cnt">All parts or this part</span></button>
+      <button class="mode" data-mode="medium"><span class="lvl">Medium · exam wording</span><b>Practice questions</b><p>Rule application, EXCEPT questions and traps, with explanations after each answer.</p><span class="cnt">${lv2} questions</span></button>
+      <button class="mode" data-mode="hard"><span class="lvl">Hard · calculations</span><b>Exam-style scenarios</b><p>Multi-step calculations and fact patterns in real exam style. Timed per question.</p><span class="cnt">${lv3+lv2} questions</span></button>
+      <button class="mode" data-mode="calc"><span class="lvl">Hard · calculation trainer</span><b>Practice the math</b><p>Social Security, phase-outs, basis, SE tax, penalties and more with fresh numbers every time and the worked steps after each answer.</p><span class="cnt">${GENS.filter(g=>g.p==part&&(filt==="all"||g.d==filt)).length} problem types</span></button>
+      <button class="mode" data-mode="mock"><span class="lvl">Mock exam · timed</span><b>Simulate the test</b><p>Questions weighted by the official domain percentages. No feedback until you finish.</p><span class="cnt">10 · 20 · 25 · 50 · 100 questions</span></button>
+      <button class="mode" data-mode="weak"><span class="lvl">Targeted</span><b>Fix weak spots</b><p>Drills your weakest domain (now: ${esc(P.doms[wd][0])}), focusing on what you missed.</p><span class="cnt">mixed levels</span></button>
+      <button class="mode" data-mode="traps" ${traps?"":"disabled"}><span class="lvl">Misconceptions</span><b>Confident mistakes</b><p>Items you answered wrong while sure. These are the most dangerous on exam day.</p><span class="cnt">${traps} items</span></button>
+    </div>
+    <div class="row small"><span class="muted">Session size</span><div class="seg" id="sizes">${[10,20,30,50].map(n=>`<button aria-pressed="${S.set.size===n}" data-size="${n}">${n}</button>`).join("")}</div>
+      <span class="muted">New per day</span><div class="seg" id="newper">${["auto",15,25,40,60].map(n=>`<button aria-pressed="${S.set.newPer==n}" data-new="${n}">${n==="auto"?"Auto ("+newPerDay(part)+")":n}</button>`).join("")}</div></div>
+    <div class="row small" id="smartsizes" hidden><span class="muted">How long do you have?</span>${[10,20,40,60].map(n=>`<button class="btn" data-smart="${n}">${n} min</button>`).join("")}<button class="btn ghost" data-smart="0">Cancel</button></div>
+    <div class="row small" id="mocksizes" hidden><span class="muted">Mock length</span>${[10,20,25,50,100].map(n=>`<button class="btn" data-mock="${n}">${n} questions · ${Math.round(n*2.1)} min</button>`).join("")}<button class="btn ghost" data-mock="0">Cancel</button></div>
+  </section>
+  <section class="section">
+    <h3>Progress details</h3>
     <div class="ledger">
-      <div class="row" style="justify-content:space-between"><h2>Part ${part}: ${P.name} <span class="muted small mono">${P.form}</span></h2>${S.streak.n?`<span class="chip">${S.streak.n}-day streak</span>`:""}</div>
+      <div class="row" style="justify-content:space-between"><b>${P.form}</b>${S.streak.n?`<span class="chip">${S.streak.n}-day streak</span>`:""}</div>
       <div class="stats">
         <div class="stat"><b>${ps.fl}<span class="muted small">/${ps.ft}</span></b><span>Facts learned so far</span></div>
         <div class="stat"><b>${ps.examAcc===null?"–":ps.examAcc+"%"}</b><span>Exam-style accuracy</span></div>
@@ -4356,25 +4442,6 @@ function renderHome(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},
   </section>
   ${missedHtml()}
   ${examHtml(daysLeft)}
-  <section class="section">
-    <h3>All study modes</h3>
-    <div class="filters" id="filters">${filters}</div>
-    <div class="modes">
-      <button class="mode" data-mode="easy"><span class="lvl">Easy · daily spaced repetition</span><b>Learn and review facts</b><p>Built on how memory works: reviews first, then 4 related new facts at a time. Read them, get quizzed right away, then again at the end, tomorrow, and at growing gaps. Each fact goes from picking it, to telling it from look-alikes, to typing it.</p><span class="cnt">${due} due · ${Math.min(nw,newLeft)} new today</span></button>
-      <button class="mode" data-mode="facts"><span class="lvl">Easy · no daily limit</span><b>Drill all facts in order</b><p>No daily limit: your misses first, then any reviews due, then new facts in order. Facts you answered right stay away until their next scheduled review.</p><span class="cnt">${easyPool(part,filt).filter(i=>{const r=S.it[i.id];return !r||r[4]===0||r[1]<=today()}).length} ready to drill</span></button>
-      <button class="mode" data-mode="cards"><span class="lvl">Flashcards · spaced repetition</span><b>Flip cards</b><p>Classic cards: recall the answer, flip, rate yourself. Shares the same schedule and tracking as Easy. Self-rated cards build a fact up to "learning"; mastery still needs a typed answer in Easy.</p><span class="cnt">${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&S.it[i.id]&&S.it[i.id][1]<=today()).length} due · ${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&!S.it[i.id]).length} new</span></button>
-      <button class="mode" data-mode="audio"><span class="lvl">Audio · hands-free</span><b>Listen and review</b><p>For driving or the gym: 5, 10 or 15 minutes. You hear a question, a short pause, the answer, then the answer again in short form. Picks facts from your misses and due reviews first, or random.</p><span class="cnt">All parts or this part</span></button>
-      <button class="mode" data-mode="medium"><span class="lvl">Medium · exam wording</span><b>Practice questions</b><p>Rule application, EXCEPT questions and traps, with explanations after each answer.</p><span class="cnt">${lv2} questions</span></button>
-      <button class="mode" data-mode="hard"><span class="lvl">Hard · calculations</span><b>Exam-style scenarios</b><p>Multi-step calculations and fact patterns in real exam style. Timed per question.</p><span class="cnt">${lv3+lv2} questions</span></button>
-      <button class="mode" data-mode="calc"><span class="lvl">Hard · calculation trainer</span><b>Practice the math</b><p>Social Security, phase-outs, basis, SE tax, penalties and more with fresh numbers every time and the worked steps after each answer.</p><span class="cnt">${GENS.filter(g=>g.p==part&&(filt==="all"||g.d==filt)).length} problem types</span></button>
-      <button class="mode" data-mode="mock"><span class="lvl">Mock exam · timed</span><b>Simulate the test</b><p>Questions weighted by the official domain percentages. No feedback until you finish.</p><span class="cnt">10 · 20 · 25 · 50 · 100 questions</span></button>
-      <button class="mode" data-mode="weak"><span class="lvl">Targeted</span><b>Fix weak spots</b><p>Drills your weakest domain (now: ${esc(P.doms[wd][0])}), focusing on what you missed.</p><span class="cnt">mixed levels</span></button>
-      <button class="mode" data-mode="traps" ${traps?"":"disabled"}><span class="lvl">Misconceptions</span><b>Confident mistakes</b><p>Items you answered wrong while sure. These are the most dangerous on exam day.</p><span class="cnt">${traps} items</span></button>
-    </div>
-    <div class="row small"><span class="muted">Session size</span><div class="seg" id="sizes">${[10,20,30,50].map(n=>`<button aria-pressed="${S.set.size===n}" data-size="${n}">${n}</button>`).join("")}</div>
-      <span class="muted">New per day</span><div class="seg" id="newper">${["auto",15,25,40,60].map(n=>`<button aria-pressed="${S.set.newPer==n}" data-new="${n}">${n==="auto"?"Auto ("+newPerDay(part)+")":n}</button>`).join("")}</div></div>
-    <div class="row small" id="mocksizes" hidden><span class="muted">Mock length</span>${[10,20,25,50,100].map(n=>`<button class="btn" data-mock="${n}">${n} questions · ${Math.round(n*2.1)} min</button>`).join("")}<button class="btn ghost" data-mock="0">Cancel</button></div>
-  </section>
   ${leechHtml()}
   ${evalHtml()}
   <section class="section">
@@ -4407,7 +4474,7 @@ function renderHome(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},
       ${HOSTED?"":`<div class="row" style="margin-bottom:6px"><button class="btn small" id="synctest">Test account saving</button></div>`}
       ${testNote?`<div class="small" style="color:${/^Working/.test(testNote)?"var(--good)":/^Testing/.test(testNote)?"var(--muted)":"var(--bad)"};margin-bottom:8px"><b>${esc(testNote)}</b></div>`:""}
       <div class="row"><button class="btn small" id="bkdown">Download backup file</button><label class="btn small" style="cursor:pointer">Restore from backup<input type="file" id="bkfile" accept=".json,application/json,text/plain" hidden></label><button class="btn ghost small" id="bkcopy">Copy progress code</button><button class="btn ghost small" id="pasteopen">Paste progress code</button></div>
-      ${pasteOpen&&!HOSTED?`<textarea id="pastecode" rows="3" placeholder="Paste the progress code from your other device here" style="width:100%;margin-top:8px;font:12px var(--mono);padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)"></textarea><div class="row" style="margin:6px 0"><button class="btn small" id="pastego">Merge this code</button></div>`:""}
+      ${pasteOpen?`<textarea id="pastecode" rows="3" placeholder="Paste the progress code from your other device here" style="width:100%;margin-top:8px;font:12px var(--mono);padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)"></textarea><div class="row" style="margin:6px 0"><button class="btn small" id="pastego">Merge this code</button></div>`:""}
       ${bkNote?`<div class="small" style="color:var(--accent)">${esc(bkNote)}</div>`:""}
       <div class="small muted" style="margin-bottom:10px">Restoring merges the backup with what is already here: for every fact the fuller record is kept, so nothing is lost.</div>
       <div class="confirm">${confirmReset?`<span class="small">Erase all progress for Part ${part}?</span><button class="btn" id="resetyes" style="border-color:var(--bad);color:var(--bad)">Erase Part ${part}</button><button class="btn ghost" id="resetno">Keep</button>`:`<button class="btn ghost small" id="reset">Reset Part ${part} progress</button>`}</div>
@@ -4491,7 +4558,7 @@ function flagHtml(){const ids=Object.keys(S.flag||{}).filter(id=>S.flag[id]&&BYI
   <textarea id="flagbox" rows="4" readonly style="font:12px var(--mono);width:100%;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px">${esc(ids.map(id=>{const i=BYID[id];return "Part "+i.p+": "+(i.f||i.s)+(i.b?" => "+i.b:"")}).join("\n"))}</textarea>
   <div class="row"><button class="btn small" id="copyflags">Copy list</button><button class="btn ghost small" id="clearflags">Clear flags</button><span class="small muted" id="flagmsg"></span></div></div></details>`}
 function historyHtml(){const h=S.hist.filter(x=>x.p==part).slice(-8).reverse();if(!h.length)return`<p class="small muted">No sessions yet for this part.</p>`;
-  const names={audio:"Audio review",heard:"Audio follow-up quiz",final:"Final-week review",topic:"Topic drill",missed:"Redrill missed",weakdom:"Weakest topic",cards:"Flashcards",calc:"Calculation trainer",leech:"Hardest facts",easy:"Easy drill",facts:"All facts",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes"};
+  const names={smart:"Smart session",audio:"Audio review",heard:"Audio follow-up quiz",final:"Final-week review",topic:"Topic drill",missed:"Redrill missed",weakdom:"Weakest topic",cards:"Flashcards",calc:"Calculation trainer",leech:"Hardest facts",easy:"Easy drill",facts:"All facts",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes"};
   return `<div class="list">${h.map(x=>`<div class="row small" style="justify-content:space-between"><span>${names[x.m]||x.m} · ${new Date(x.t).toLocaleDateString()}</span><span class="mono">${x.c}/${x.n} · ${Math.round(x.c/x.n*100)}%</span></div>`).join("")}</div>`}
 const CATS={num:"Numbers & limits",form:"Forms & schedules",term:"Terms & acronyms",rule:"Rules & concepts",q:"Exam-style questions"};
 function itemCat(i){if(i.t==="q")return "q";const f=i.f,b=i.b;
@@ -4641,39 +4708,61 @@ function audQueue(scope,src,n){const t=today();S.au=S.au||{};const pool=BANK.fil
 const CVOICES=[["buttery","Buttery"],["airy","Airy"],["glassy","Glassy"],["rounded","Rounded"]];
 const VF=/samantha|victoria|karen|moira|tessa|zira|aria|jenny|susan|allison|ava|serena|fiona|kate|nicky|female|michelle|emma|sonia|libby|hazel|catherine|joanna|salli|kimberly|kendra|ivy/i,VM=/daniel|alex|fred|david|mark|guy|tom\b|aaron|\bmale|oliver|arthur|rishi|gordon|ryan|evan|nathan|matthew|joey|justin|george|james|brian|eddy|reed|rocko/i;
 function vGender(n){return VF.test(n)?"female":VM.test(n)?"male":""}
+const vTag=x=>{const n=x.name+" "+(x.voiceURI||"");return /premium/i.test(n)?"Premium":/enhanced/i.test(n)?"Enhanced":/natural|neural|siri/i.test(n)?"Natural":/google|online/i.test(n)||x.localService===false?"Online":"Basic"};
 function devVoices(){let v=[];try{v=window.speechSynthesis.getVoices()||[]}catch(e){}
-  const q=x=>(/natural|neural|premium|enhanced|siri/i.test(x.name)?0:/google|online/i.test(x.name)?1:x.localService===false?2:3)+(/^en[-_]US/i.test(x.lang)?0:.5)+(/compact|eloquence|novelty|bad news|bells|boing|bubbles|cellos|whisper|zarvox|trinoids|organ|jester|wobble|albert|bahh|superstar|grandma|grandpa|flo|shelley|sandy|rocko|reed|eddy/i.test(x.name)?5:0);
+  const rank={Premium:0,Natural:0,Enhanced:1,Online:2,Basic:3};
+  const q=x=>rank[vTag(x)]+(/^en[-_]US/i.test(x.lang)?0:.5)+(/compact|eloquence|novelty|bad news|bells|boing|bubbles|cellos|whisper|zarvox|trinoids|organ|jester|wobble|albert|bahh|superstar|grandma|grandpa|flo|shelley|sandy|rocko|reed|eddy/i.test(x.name+" "+(x.voiceURI||""))?5:0);
   return v.filter(x=>/^en/i.test(x.lang)).sort((a,b)=>q(a)-q(b)).slice(0,10)}
-function pickVoice(){const l=devVoices();return l.find(x=>x.name===S.set.voice)||l[0]||null}
+function pickVoice(){const l=devVoices();return l.find(x=>(x.voiceURI||x.name)===S.set.voice)||l.find(x=>x.name===S.set.voice)||l[0]||null}
 try{if(window.speechSynthesis)window.speechSynthesis.onvoiceschanged=()=>{if(view==="audio"&&aud&&aud.state==="setup")render()}}catch(e){}
-let liveU=null; // keep a reference: iOS drops the "finished" event if the utterance is garbage-collected
-function sayOne(text,rate){return new Promise((res,rej)=>{let done=false,started=false,idle=0,spent=0;const t0=Date.now();
+let liveU=null,liveU0=null,spokeOnce=false; // keep references: iOS drops the "finished" event if an utterance is garbage-collected
+// Phones only let speech begin from a tap. Call this first inside every tap that leads to speech.
+function unlockSpeech(force){if(TTS||!("speechSynthesis" in window))return;const ss=window.speechSynthesis;try{ss.resume()}catch(e){}
+  if(spokeOnce&&!force)return;try{const u=new SpeechSynthesisUtterance(" ");u.volume=0;liveU0=u;ss.speak(u);spokeOnce=true}catch(e){}}
+// Speak one short piece. Resolves when it has really been spoken; rejects {nostart:true} when the device never started speaking.
+function sayOne(text,rate){return new Promise((res,rej)=>{let done=false,started=false,idle=0,spent=0,tries=0;
+  const ss=window.speechSynthesis;
   const fin=(ok,e)=>{if(done)return;done=true;clearInterval(iv);liveU=null;ok?res():rej(e)};
-  const max=text.length*120/rate+4000; // watchdog: never wait forever for the "finished" event
-  const iv=setInterval(()=>{if(aud&&aud.paused)return;spent+=250;const ss=window.speechSynthesis;
-    if((started||spent>1500)&&ss&&!ss.speaking&&!ss.pending){if(++idle>=2)fin(true)}else idle=0;
-    if(spent>max)fin(true)},250);
-  try{const u=new SpeechSynthesisUtterance(text);liveU=u;const v=pickVoice();if(v){u.voice=v;u.lang=v.lang}else u.lang="en-US";u.rate=rate;
-    u.onstart=()=>{started=true};u.onend=()=>fin(true);u.onerror=e=>fin(false,e);window.speechSynthesis.speak(u)}catch(e){fin(false,e)}})}
+  const max=text.length*130/rate+5000; // never wait forever for the "finished" event
+  let U=null;
+  const go=()=>{try{const u=new SpeechSynthesisUtterance(text);U=liveU=u;const v=pickVoice();if(v){u.voice=v;u.lang=v.lang}else u.lang="en-US";u.rate=rate;u.pitch=1;
+    u.onstart=()=>{started=true};u.onend=()=>fin(true);
+    u.onerror=e=>{if(/interrupt|cancel/i.test((e&&e.error)||"")||started)fin(false,e);else if(tries>=1)fin(false,{nostart:true})};  // an error before any sound: wait for the retry
+    ss.speak(u)}catch(e){if(tries>=1)fin(false,{nostart:true})}};
+  const iv=setInterval(()=>{if(aud&&aud.paused)return;spent+=250;
+    if(!started&&ss.speaking)started=true;
+    if(started){if(!ss.speaking&&!ss.pending){if(++idle>=2)fin(true)}else idle=0;if(spent>max)fin(true);return}
+    if(spent>=2500&&tries===0){tries=1;spent=0;if(U){U.onend=U.onerror=U.onstart=null}try{ss.cancel();ss.resume()}catch(e){}setTimeout(()=>{if(!done)go()},180);return}  // one more try
+    if(spent>=3000&&tries===1)fin(false,{nostart:true})},250);
+  go()})}
 function chunks(text){const parts=text.match(/[^.!?;:]+[.!?;:]*\s*/g)||[text];const out=[];let cur="";for(const p of parts){if((cur+p).length>200&&cur){out.push(cur.trim());cur=p}else cur+=p}if(cur.trim())out.push(cur.trim());return out}
 async function say(text){const rate=aud?aud.rate:1;if(TTS)return TTS.speak(text.slice(0,1900),{rate,voice:S.set.cvoice||"buttery",language:"en"});
-  const a=aud;for(const c of chunks(text)){if(a&&(aud!==a||a.stop))return;if(a&&a.skip)throw{skip:true};await sayOne(c,rate)}}
+  const a=aud;for(const c of chunks(text)){if(a&&(aud!==a||a.stop))return;if(a&&a.skip)throw{skip:true};if(a&&a.redo)throw{redo:true};await sayOne(c,rate)}
+  if(a&&a.redo)throw{redo:true}}
 function voiceHtml(){const chip=(k,v,on,attr)=>`<button aria-pressed="${on}" ${attr}="${esc(k)}">${esc(v)}</button>`;
   if(TTS)return `<div><div class="small muted">Voice (Claude voices)</div><div class="seg">${CVOICES.map(([k,l])=>chip(k,l,(S.set.cvoice||"buttery")===k,"data-acv")).join("")}</div><button class="btn ghost small" id="audtest">Play a sample</button></div>`;
   const l=devVoices(),cur=pickVoice();
-  if(!l.length)return `<div class="small muted">Voice: your device's default voice.</div>`;
-  return `<div><div class="small muted">Voice (from your device)</div><div class="seg" style="flex-wrap:wrap">${l.map(x=>chip(x.name,x.name.replace(/Microsoft |Google | Online \(Natural\)| \(Enhanced\)| \(Premium\)/g,"").replace(/ - English.*$/,"")+(vGender(x.name)?" · "+vGender(x.name):""),cur&&cur.name===x.name,"data-adv")).join("")}</div><button class="btn ghost small" id="audtest">Play a sample</button><div class="small muted">These are the voices installed on this phone or computer. For a more natural voice, download an "Enhanced" or "Premium" English voice in the device's speech settings, or open the app in Claude on a computer to get the Claude voices.</div></div>`}
+  const help=IOS?`To get a natural voice on this iPhone or iPad (free): open the Settings app, search for "Voices", open English, and download a voice marked Premium or Enhanced, for example Ava (Premium). Then close and reopen this app and pick it here.`:`For a more natural voice, download an "Enhanced", "Premium" or "Natural" English voice in this device's speech settings, then reopen this app.`;
+  if(!l.length)return `<div class="small muted">Voice: this device's default voice. ${help}</div><button class="btn ghost small" id="audtest">Play a sample</button>`;
+  const best=vTag(l[0]);
+  return `<div><div class="small muted">Voice (installed on this device)</div><div class="seg" style="flex-wrap:wrap">${l.map(x=>chip(x.voiceURI||x.name,x.name.replace(/Microsoft |Google | Online \(Natural\)| \(Enhanced\)| \(Premium\)/g,"").replace(/ - English.*$/,"")+" · "+vTag(x),cur&&(cur.voiceURI||cur.name)===(x.voiceURI||x.name),"data-adv")).join("")}</div><button class="btn ghost small" id="audtest">Play a sample</button>
+    ${best==="Basic"||best==="Online"?`<div class="small" style="color:var(--warn)"><b>Only basic voices are installed, and they sound robotic.</b> ${help}</div>`:`<div class="small muted">Voices marked Premium, Natural or Enhanced sound the most human.</div>`}</div>`}
 function hush(){try{if(TTS)TTS.stop().catch(()=>{});else if(window.speechSynthesis)window.speechSynthesis.cancel()}catch(e){}}
 function openAudio(){aud={state:"setup",mins:10,src:"smart",scope:"part",gap:1,rate:1};view="audio";render();window.scrollTo(0,0)}
 async function startAudio(){const a=aud;a.queue=audQueue(a.scope,a.src,a.mins*8);if(!a.queue.length){a.msg="Nothing to review for this choice yet. Pick Smart mix or Random.";render();return}
   Object.assign(a,{state:"play",pos:0,heard:0,marked:0,start:Date.now(),end:Date.now()+a.mins*60000,paused:false,stop:false,phase:"q",msg:""});
-  try{a.lock=await navigator.wakeLock.request("screen")}catch(e){}
+  try{navigator.wakeLock.request("screen").then(l=>{a.lock=l}).catch(()=>{})}catch(e){}
   render();
-  while(aud===a&&!a.stop&&a.pos<a.queue.length&&Date.now()<a.end){const it=a.queue[a.pos];a.skip=false;a.cur=it;a.didnt=false;a.knew=false;
+  while(aud===a&&!a.stop&&a.pos<a.queue.length&&Date.now()<a.end){const it=a.queue[a.pos];a.skip=false;a.redo=false;a.cur=it;a.didnt=false;a.knew=false;
     try{a.phase="q";renderAudio();await say(audQ(it));await gate(a,a.gap*1000,"think");
       a.phase="a";renderAudio();await say(audA(it));await gate(a,500,"a");
       a.phase="r";renderAudio();await say(audR(it,a.pos));await gate(a,700,"r")}
-    catch(e){if(aud!==a||a.stop)break;if(!a.skip){if(a.heard===0&&a.pos===0){a.state="fail";render();return}await wait(300)}}
+    catch(e){if(aud!==a||a.stop)break;
+      if(a.redo||(e&&e.redo)){while(aud===a&&!a.stop&&a.paused){await wait(150);a.end+=150}a.redo=false;continue}       // paused or interrupted: say this fact again
+      if(!a.skip&&e&&e.nostart){a.fails=(a.fails||0)+1;if(a.fails>3){a.state="fail";render();return}
+        a.needTap=true;a.paused=true;renderAudio();while(aud===a&&!a.stop&&a.needTap){await wait(150);a.end+=150}if(aud!==a||a.stop)break;a.paused=false;continue}
+      if(!a.skip){if(TTS&&a.heard===0&&a.pos===0){a.state="fail";render();return}await wait(300);a.errs=(a.errs||0)+1;if(a.errs<=2)continue}}                              // other speech error: try this fact again, twice at most
+    a.errs=0;a.fails=0;
     if(aud!==a||a.stop)break;if(!a.skip){a.heard++;S.au=S.au||{};const u=S.au[it.id]||[0,0];S.au[it.id]=[u[0]+1,today(),(a.knew||a.didnt)?0:1];if(!(a.ids=a.ids||[]).includes(it.id))a.ids.push(it.id)}a.pos++}
   if(aud===a){hush();try{a.lock&&a.lock.release()}catch(e){}
     if(a.heard){touchDay();S.hist.push({t:Date.now(),p:part,m:"audio",n:a.heard,c:a.heard-a.marked});S.hist=S.hist.slice(-200);persist()}
@@ -4692,7 +4781,7 @@ function renderAudio(){if(view!=="audio"||!aud)return;const a=aud,chip=(k,v,cur,
     ${a.msg?`<div class="small" style="color:var(--warn)">${esc(a.msg)}</div>`:""}
     <button class="btn pri" id="audstart" ${canSpeak()?"":"disabled"}>Start ${a.mins}-minute review</button>
     <div class="small muted">Start it before you drive and don't touch the screen while moving. Turn your volume up; the screen stays on where the browser allows.</div></div></section>`;return}
-  if(a.state==="fail"){$("#view").innerHTML=`<section class="section"><div class="card"><h2>Audio couldn't start here</h2><div>This view blocked speech. Open the app in Chrome, Edge or Safari on your phone or computer, or use the copy on your website, then try again.</div><button class="btn pri" id="audback">Back</button></div></section>`;return}
+  if(a.state==="fail"){$("#view").innerHTML=`<section class="section"><div class="card"><h2>Audio couldn't start here</h2><div>This device did not speak after several tries. Check the volume and silent switch, close other apps that are playing sound, then try again. On iPhone, open the app from its home screen icon or in Safari.</div><button class="btn pri" id="audback">Back</button></div></section>`;return}
   if(a.state==="done"){const m=Math.max(1,Math.round((Date.now()-a.start)/60000));$("#view").innerHTML=`<section class="section"><div class="ledger"><h2>Audio review complete</h2><div class="row"><span class="big">${a.heard}</span><span class="muted">facts reviewed in about ${m} min</span></div>
     <div class="small">${a.known||0} marked "knew it" · ${a.marked} marked "didn't know" (added to your missed items) · ${(a.ids||[]).filter(id=>S.au[id]&&S.au[id][2]).length} not rated.</div>
     ${(a.ids||[]).some(id=>S.au[id]&&S.au[id][2])?`<button class="btn pri" id="audquiz">Quiz me on what I just heard</button><div class="small muted">A quick quiz on the facts you didn't rate. Your answers update mastery, weak spots and recommendations.</div>`:""}
@@ -4700,6 +4789,7 @@ function renderAudio(){if(view!=="audio"||!aud)return;const a=aud,chip=(k,v,cur,
   const it=a.cur||a.queue[a.pos],left=Math.max(0,Math.round((a.end-Date.now())/1000)),ph={q:"Question",think:"Think of the answer…",a:"Answer",r:"Once more"}[a.phase];
   $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Audio review</h2><div class="small muted mono">${a.heard} reviewed · ${fmt(left)} left${a.paused?" · paused":""}</div></div><button class="btn ghost small" id="audend">End</button></div>
    <div class="progress"><i style="width:${Math.min(100,Math.round((1-left/(a.mins*60))*100))}%"></i></div>
+   ${a.needTap?`<div class="card" style="border:2px solid var(--warn)"><b>The voice did not start.</b><div class="small">Phones only allow speech after a tap. Check that the volume is up and silent mode is off, then tap the button.</div><button class="btn pri" id="audtap">Turn the voice on</button></div>`:""}
    <div class="card"><div class="meta"><span>Part ${it.p} · ${esc(PARTS[it.p].doms[it.d][0])}</span><span>${ph}</span></div>
    <div class="front">${esc(it.f)}</div>${a.phase==="a"||a.phase==="r"?`<div class="back">${esc(it.b)}</div>`:""}
    <div class="rate" style="grid-template-columns:repeat(2,1fr)"><button id="audmiss" class="r0" ${a.didnt||a.knew?"disabled":""}>${a.didnt?"Added to redrill":"Didn't know it"}</button><button id="audknew" class="r3" ${a.didnt||a.knew?"disabled":""}>${a.knew?"Counted":"Knew it"}</button><button id="audpause">${a.paused?"Resume":"Pause"}</button><button id="audskip">Skip</button></div>
@@ -4709,13 +4799,15 @@ function audioClick(b){const a=aud;if(!a)return false;
   if(b.dataset.agap){a.gap=+b.dataset.agap;render();return true}if(b.dataset.arate){a.rate=+b.dataset.arate;render();return true}
   if(b.dataset.acv){S.set.cvoice=b.dataset.acv;persist();render();return true}
   if(b.dataset.adv){S.set.voice=b.dataset.adv;persist();render();return true}
-  if(b.id==="audtest"){hush();say("Qualifying child age test. Under 19 at year end, or under 24 if a full-time student.").catch(()=>{});return true}
-  if(b.id==="audstart"){startAudio();return true}
+  if(b.id==="audtest"){unlockSpeech();const line="Qualifying child age test. Under 19 at year end, or under 24 if a full-time student.";const ss=window.speechSynthesis;
+    if(!TTS&&ss&&!ss.speaking&&!ss.pending){say(line).catch(()=>{})}else{hush();setTimeout(()=>say(line).catch(()=>{}),220)}return true}
+  if(b.id==="audstart"){unlockSpeech();startAudio();return true}
+  if(b.id==="audtap"){unlockSpeech(true);a.needTap=false;return true}
   if(b.id==="audback"){a.stop=true;hush();aud=null;view="home";render();return true}
   if(b.id==="audagain"){openAudio();return true}
   if(b.id==="audend"){a.stop=true;hush();try{a.lock&&a.lock.release()}catch(e){}if(a.heard){S.hist.push({t:Date.now(),p:part,m:"audio",n:a.heard,c:a.heard-a.marked});persist()}a.state="done";render();return true}
-  if(b.id==="audpause"){a.paused=!a.paused;try{if(TTS){a.paused?TTS.pause():TTS.resume()}else{a.paused?speechSynthesis.pause():speechSynthesis.resume()}}catch(e){}renderAudio();return true}
-  if(b.id==="audskip"){a.skip=true;hush();return true}
+  if(b.id==="audpause"){a.paused=!a.paused;try{if(TTS){a.paused?TTS.pause():TTS.resume()}else if(a.paused){a.redo=true;speechSynthesis.cancel()}else unlockSpeech(true)}catch(e){}renderAudio();return true} // device voices resume unreliably, so the current fact is said again
+  if(b.id==="audskip"){unlockSpeech();a.skip=true;if(a.paused){a.paused=false;a.needTap=false}hush();return true}
   if(b.id==="audknew"){if(a.cur&&!a.knew&&!a.didnt){grade(a.cur,2,3);a.knew=true;a.known=(a.known||0)+1;persist();renderAudio()}return true}
   if(b.id==="audquiz"){heardIds=(a.ids||[]).filter(id=>S.au[id]&&S.au[id][2]);aud=null;startSession("heard");return true}
   if(b.id==="audmiss"){if(a.cur&&!a.didnt){grade(a.cur,0);a.didnt=true;a.marked++;if(!a.queue.slice(a.pos+1).includes(a.cur))a.queue.splice(Math.min(a.queue.length,a.pos+5),0,a.cur);renderAudio()}return true}
@@ -4835,6 +4927,13 @@ function genFact(it,force){ // 3-step ladder: 1 recognize · 2 discriminate look
   if(ds.length<3)for(const r of ranked){if(r.t!==ans&&!ds.includes(r.t))ds.push(r.t);if(ds.length===3)break}
   return{kind:"mcq",step:1,stem:stem1,opts:[ans,...ds],ans:0,order:shuffle([...Array(ds.length+1).keys()]),ex:full};
 }
+// Why the app picked this item now: shown on the card so the adaptive choices are visible.
+function whyTag(it){const r=S.it[it.id],t=today(),weak=String(it.d)===String(weakestDomain(it.p));
+  if(r&&r[4]===0)return["miss",(r[6]||0)>=2?"Missed "+r[6]+" times · back for another try":"Missed last time · back for another try"];
+  if(r&&r[5])return["miss","You were sure and wrong on this one"];
+  if(!r)return weak?["weak","New · from your weakest area"]:["","New for you"];
+  if(r[1]<=t)return["","Due for review today"];
+  return weak?["weak","Extra practice · your weakest area"]:["","Extra practice"]}
 function mkEntry(i,force){return i.t==="g"?{id:i.id,calc:i.make()}:i.t==="f"?{id:i.id,fx:genFact(i,force)}:{id:i.id,order:i.fixed?[...i.opts.keys()]:shuffle([...i.opts.keys()])}}
 function numEq(a,k){const n=x=>x.replace(/[^0-9.]/g,"").replace(/\.0+$/,"").replace(/^0+(?=\d)/,"");return n(a)!==""&&n(a)===n(k)}
 function startSession(mode,n){reviewAll=false;
@@ -4873,6 +4972,19 @@ function startSession(mode,n){reviewAll=false;
     const a=shuffle(missedPool(part,"all")).slice(0,Math.ceil(n2*.4)),b=hardest(part,Math.ceil(n2*.2)).filter(i=>!a.includes(i));
     const c=weightPick(BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv>=2&&ds.includes(String(i.d))&&!a.includes(i)),Math.max(0,n2-a.length-b.length));
     q=shuffle(a.concat(b,c))}
+  else if(mode==="smart"){ // n = minutes. Fill the time with what helps most: misses, due reviews, weakest-area questions, a calculation or two, then new facts.
+    const t=today(),budget=(n||20)*60;let used=0;const add=(l,cost,cap)=>{let k=0;for(const i of l){if(used+cost>budget||k>=cap)break;if(!q.includes(i)){q.push(i);used+=cost;k++}}};
+    const facts=easyPool(part,"all"),miss=shuffle(missedPool(part,"all")),dueF=shuffle(facts.filter(i=>{const r=S.it[i.id];return r&&r[4]!==0&&r[1]<=t}));
+    const ds=Object.keys(PARTS[part].doms).map(d=>({d,st:domStats(part,d)})).sort((a,b)=>(a.st.n>=5?a.st.acc:(prior(part,a.d)??0.5))-(b.st.n>=5?b.st.acc:(prior(part,b.d)??0.5))).slice(0,2).map(x=>x.d);
+    const qs=BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv>=2);
+    add(miss,40,Math.ceil(budget*.25/40));                                                   // about a quarter of the time: what was missed
+    add(dueF,25,Math.ceil(budget*.25/25));                                                   // a quarter: reviews that are due
+    add(weightPick(qs.filter(i=>ds.includes(String(i.d))),40),70,Math.ceil(budget*.30/70));   // most of the rest: exam questions from the two weakest areas
+    add(weightPick(GENS.filter(g=>g.p==part),3),100,budget>=1200?2:1);                         // one or two calculations
+    add(weightPick(qs,40),70,99);                                                            // then any exam questions
+    add(facts.filter(i=>!S.it[i.id]).sort((a,b)=>ORDER[a.id]-ORDER[b.id]),35,99);             // and new facts if time is left
+    if(!q.length){doneNote="Nothing to study in this part yet.";render();return}
+    const fa=q.filter(i=>i.t==="f"||i.lv===1),ot=q.filter(i=>!(i.t==="f"||i.lv===1));q=[];while(fa.length||ot.length){q.push(...fa.splice(0,3),...ot.splice(0,2))}} // interleave facts and questions
   else if(mode==="heard"){const l=heardIds?heardIds.map(id=>BYID[id]).filter(Boolean):heardPool(part);heardIds=null;q=shuffle(l).slice(0,Math.max(sz,20));if(!q.length){doneNote="No audio facts waiting to be quizzed.";render();return}}
   else if(mode==="missed"){q=missedPool(part,filt).slice(0,sz);if(!q.length){doneNote="Nothing to redrill here. Nice work.";render();return}}
   else if(mode==="topic"){q=weightPick(BANK.filter(i=>i.p==part&&TOPIC_OF[i.id]===topicSel),sz)}
@@ -4944,10 +5056,11 @@ function renderSession(){
   if(sess.queue[sess.pos].learn)return renderLearn();
   if(sess.queue[sess.pos].lazy){const c=sess.queue[sess.pos];Object.assign(c,mkEntry(BYID[c.id],c.lazy));c.lazy=0}
   const s=sess,cur=s.queue[s.pos],it=BYID[cur.id],P=PARTS[it.p],V=view4(cur,it),quick=QUICK.includes(s.mode);
-  const names={easy:"Easy · learn and review",facts:"Easy · all facts in order",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes",calc:"Calculation trainer",leech:"Hardest facts for you",cards:"Flashcards",missed:"Redrill missed items",weakdom:"Weakest topic",topic:"Topic drill",heard:"Audio follow-up quiz",final:"Final-week review"};
+  const names={smart:"Smart session · built for your time",easy:"Easy · learn and review",facts:"Easy · all facts in order",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes",calc:"Calculation trainer",leech:"Hardest facts for you",cards:"Flashcards",missed:"Redrill missed items",weakdom:"Weakest topic",topic:"Topic drill",heard:"Audio follow-up quiz",final:"Final-week review"};
   const pct=s.mode==="mock"?Object.keys(s.answers).length/s.queue.length:s.done/(s.total);
   const stepLab=cur.final?"End-of-session check":it.t==="g"?"Calculation · new numbers each time":it.t==="f"?`Fact · step ${V.step} of 3`:["","Easy","Medium","Hard"][it.lv]+" question";
-  const meta=`<div class="meta"><span>Part ${it.p} · ${esc(P.doms[it.d][0])}</span><span>${stepLab}</span>${S.it[it.id]?"":"<span>New</span>"}</div>`;
+  if(cur.why===undefined)cur.why=s.mode==="mock"?null:whyTag(it); // decided when the item first appears, before the answer changes its record
+  const meta=`<div class="meta"><span>Part ${it.p} · ${esc(P.doms[it.d][0])}</span><span>${stepLab}</span></div>${cur.why?`<div><span class="why ${cur.why[0]}">${esc(cur.why[1])}</span></div>`:""}`;
   const mock=s.mode==="mock";const chosen=mock?s.answers[s.pos]:s.sel;const shown=!mock&&s.phase==="shown";
   let body=meta;
   if(V.rev){body+=`<div class="small muted">${esc(V.stem)}</div><div class="front">“${esc(V.cloze)}”</div>`}
@@ -5055,6 +5168,8 @@ document.addEventListener("click",e=>{
   if(b.id==="aicoach"){runCoach();return}
   if(b.id==="aiexplain"){explainAI(b);return}
   if(b.id==="howbtn"){b.hidden=true;fetchHow(sess.queue[sess.pos].id);return}
+  if(b.dataset.smart!==undefined){const n=+b.dataset.smart;if(!n){$("#smartsizes").hidden=true;return}startSession("smart",n);return}
+  if(b.dataset.mode==="smart"){$("#smartsizes").hidden=false;$("#smartsizes").scrollIntoView({block:"nearest"});return}
   if(b.dataset.mode){if(b.dataset.mode==="mock"){$("#mocksizes").hidden=false;$("#mocksizes").scrollIntoView({block:"nearest"});return}startSession(b.dataset.mode);return}
   if(b.dataset.rev!==undefined){reviewAll=b.dataset.rev==="1";const y=window.scrollY;renderResults();window.scrollTo(0,y);return}
   if(b.dataset.mock!==undefined){const n=+b.dataset.mock;if(!n){$("#mocksizes").hidden=true;return}startSession("mock",n);return}
@@ -5067,6 +5182,8 @@ document.addEventListener("click",e=>{
   if(b.id==="facttoggle"){showFacts=!showFacts;render();return}
   if(b.dataset.kstat){kStat=b.dataset.kstat;renderFacts();return}
   if(b.dataset.kcat){kCat=b.dataset.kcat;renderFacts();return}
+  if(b.id==="updnow"){applyUpdate();return}
+  if(b.id==="modedesc"){modeDesc=!modeDesc;render();return}
   if(b.id==="pasteopen"){pasteOpen=!pasteOpen;render();const t=document.getElementById("pastecode");if(t)t.focus();return}
   if(b.id==="pastego"){const t=document.getElementById("pastecode"),v=t?t.value.trim():"";if(!v){bkNote="Paste the code first.";render();return}pasteOpen=false;restoreFrom(v);return}
   if(b.id==="bkdown"){backupDownload();return}
