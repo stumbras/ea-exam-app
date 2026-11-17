@@ -163,6 +163,7 @@ details summary{cursor:pointer;font-weight:600}
 .bwrow.good{background:var(--good-soft)}.bwrow.good span,.bwrow.good em{color:var(--good)}
 .bwrow.bad{background:var(--bad-soft)}.bwrow.bad span,.bwrow.bad em{color:var(--bad)}
 .statusline{font-size:13.5px;color:var(--muted)}
+.linkbtn{font:inherit;font-weight:700;color:var(--accent);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
 .syncrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.syncrow .btn{justify-content:center;text-align:center;width:100%}
 .examrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;width:100%;text-align:left;font:inherit;color:var(--fg);background:var(--sunk);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
 .examrow span{font-size:15px;font-weight:600}.examrow b{font-size:15px;color:var(--accent);white-space:nowrap}.examrow em{font-style:normal;font-size:13.5px;font-weight:700;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;padding:3px 10px;white-space:nowrap}
@@ -4956,7 +4957,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 47 · Nov 17";
+const BUILD="Version 48 · Nov 17";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -4967,7 +4968,7 @@ document.getElementById("themebtn").addEventListener("click",()=>{const t=themeN
 const HOSTED=!(window.claude&&window.claude.use);            // opened outside Claude: installed app, website copy or a saved file
 const STANDALONE=()=>navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);
 const IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-let offl="none",pasteOpen=false,modeDesc=false,examOpen=false,examMsg="";                               // offline state: none | pending | ready
+let offl="none",pasteOpen=false,modeDesc=false,examOpen=false,examMsg="",updMsg="";                               // offline state: none | pending | ready
 if(HOSTED&&"serviceWorker" in navigator&&document.querySelector('link[rel="manifest"]')){offl="pending";
   navigator.serviceWorker.register("./sw.js").then(()=>navigator.serviceWorker.ready).then(()=>{offl="ready";if(!sess&&view==="home")render()}).catch(()=>{offl="none";if(!sess&&view==="home")render()});
   try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
@@ -5137,7 +5138,7 @@ function renderHome(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},
    :HOSTED&&offl!=="none"&&!STANDALONE()&&!warnHide?`<section class="section"><div class="ledger" style="border-left:4px solid var(--accent)"><div class="small"><b>Install this app for offline use.</b> ${IOS?"Tap Share, then Add to Home Screen.":"Open the browser menu and choose Install app or Add to Home screen."} Then open it from the home screen icon.</div><div class="row"><button class="btn ghost small" id="warnhide">Hide</button></div></div></section>`:"";
   const statusLine=!connDone?`<div class="statusline"><span class="dot" style="background:var(--muted)"></span>Checking saving… · ${BUILD}</div>`
    :!saveOk?`<div class="statusline off"><span class="dot"></span><b style="color:var(--bad)">Saving is OFF on this screen</b> · ${BUILD}</div>`
-   :HOSTED?`<div class="statusline"><span class="dot"></span>Saved on this device · ${offl==="ready"?"Offline ready":offl==="pending"?"Getting the offline copy…":"Online only here"} · ${BUILD}</div>`
+   :HOSTED?`<div class="statusline"><span class="dot"></span>Saved on this device · ${offl==="ready"?"Offline ready":offl==="pending"?"Getting the offline copy…":"Online only here"} · ${BUILD} · <button class="linkbtn" id="updcheck">Check for update</button>${updMsg?`<div class="small" style="margin-top:4px"><b>${esc(updMsg)}</b></div>`:""}</div>`
    :`<div class="statusline"><span class="dot"></span>Saving to your Claude account${acct&&acct.upd?" · "+acct.items+" items stored":""} · ${BUILD}</div>`;
   // strongest and weakest area, from the difficulty-weighted accuracy of recent answers (at least 5 answers in the area)
   const rated=Object.entries(P.doms).map(([d,[n]])=>{const st=domStats(part,d);return{d,n,ans:st.n,acc:st.n>=5?st.acc:null}}).filter(x=>x.acc!==null);
@@ -5162,11 +5163,12 @@ function renderHome(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},
     <div class="filters scroll" id="filters">${filters}</div>
     <div class="modes tiles${modeDesc?" desc":""}">
       <button class="mode" data-mode="smart"><span class="lvl">Smart session · pick your time</span><b>Study for 10, 20 or 40 minutes</b><p>Tell the app how long you have. It builds the best mix for that time: reviews that are due, facts you missed, questions from your weakest area, and a calculation or two.</p><span class="cnt">adapts to you</span></button>
+      <button class="mode" data-mode="lessons"><span class="lvl">Slides · units with forms</span><b>Slides</b><p>Unit lessons with form examples and diagrams, plus every fact as a slide by topic. Swipe or tap Next, have a slide read aloud, then quiz yourself.</p><span class="cnt">${(UNITS[part]||[]).length?(UNITS[part].length+" units · "):""}${BANK.filter(i=>i.p==part&&i.t==="f").length} fact slides</span></button>
       <button class="mode" data-mode="mix"><span class="lvl">Random 10 · everything mixed</span><b>10 random questions</b><p>A quick shuffle of every kind: easy facts, medium questions, hard scenarios and calculations, picked at random from ${filt==="all"?"the whole part":"this domain"}. Tap again for a new set.</p><span class="cnt">easy · medium · hard · math</span></button>
       <button class="mode" data-mode="easy"><span class="lvl">Easy · daily spaced repetition</span><b>Learn and review facts</b><p>Built on how memory works: reviews first, then 4 related new facts at a time. Read them, get quizzed right away, then again at the end, tomorrow, and at growing gaps. Each fact goes from picking it, to telling it from look-alikes, to typing it.</p><span class="cnt">${due} due · ${Math.min(nw,newLeft)} new today</span></button>
       <button class="mode" data-mode="facts"><span class="lvl">Easy · no daily limit</span><b>Drill all facts in order</b><p>No daily limit: your misses first, then any reviews due, then new facts in order. Facts you answered right stay away until their next scheduled review.</p><span class="cnt">${easyPool(part,filt).filter(i=>{const r=S.it[i.id];return !r||r[4]===0||r[1]<=today()}).length} ready to drill</span></button>
       <button class="mode" data-mode="cards"><span class="lvl">Flashcards · spaced repetition</span><b>Flip cards</b><p>Classic cards: recall the answer, flip, rate yourself. Shares the same schedule and tracking as Easy. Self-rated cards build a fact up to "learning"; mastery still needs a typed answer in Easy.</p><span class="cnt">${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&S.it[i.id]&&S.it[i.id][1]<=today()).length} due · ${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&!S.it[i.id]).length} new</span></button>
-      <button class="mode" data-mode="lessons"><span class="lvl">Lessons · slide view</span><b>Read the lessons</b><p>Unit lessons with form examples and diagrams, plus every fact as a slide by topic. Swipe or tap Next, have a slide read aloud, then quiz yourself.</p><span class="cnt">${(UNITS[part]||[]).length?(UNITS[part].length+" units · "):""}${BANK.filter(i=>i.p==part&&i.t==="f").length} fact slides</span></button>
+      
       <button class="mode" data-mode="audio"><span class="lvl">Audio · hands-free</span><b>Listen and review</b><p>For driving or the gym: 5, 10 or 15 minutes. You hear a question, a short pause, the answer, then the answer again in short form. Picks facts from your misses and due reviews first, or random.</p><span class="cnt">All parts or this part</span></button>
       <button class="mode" data-mode="medium"><span class="lvl">Medium · exam wording</span><b>Practice questions</b><p>Rule application, EXCEPT questions and traps, with explanations after each answer.</p><span class="cnt">${lv2} questions</span></button>
       <button class="mode" data-mode="hard"><span class="lvl">Hard · calculations</span><b>Exam-style scenarios</b><p>Multi-step calculations and fact patterns in real exam style. Timed per question.</p><span class="cnt">${lv3+lv2} questions</span></button>
@@ -5455,7 +5457,7 @@ function renderLessons(){if(!les)les={unit:null,topic:null,idx:0};const T=TOPICS
     const row=(attr,k,title,n,at)=>{const done=at>=n-1&&n>1;return `<button class="topicrow" ${attr}="${k}"><span>${esc(title)}</span><small>${done?"read":at?("slide "+(at+1)+" of "+n):n+" slides"}</small><span class="bar" style="grid-column:1/-1"><i style="width:${Math.round((at+(done?1:0))/Math.max(1,n)*100)}%;background:var(--accent)"></i></span></button>`};
     const units=UN.map((u,k)=>row("data-lesunit",k,(k+1)+". "+u.t,u.s.length,Math.min(pos["u"+part+"-"+k]||0,u.s.length-1))).join("");
     const topics=T.map((t,k)=>{const d=lesDeck(k);return d.length?row("data-lestopic",k,t[0],d.length,Math.min(pos[part+"-"+k]||0,d.length-1)):""}).join("");
-    $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Lessons · Part ${part}</h2><div class="small muted">Read a unit, then quiz yourself on it.</div></div><button class="btn ghost small" id="lesback">Back</button></div>
+    $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Slides · Part ${part}</h2><div class="small muted">Read a unit, then quiz yourself on it.</div></div><button class="btn ghost small" id="lesback">Back</button></div>
       ${units?`<h3 style="margin-top:8px">Units · with form examples and diagrams</h3><div class="list">${units}</div>`:(UNITS[1]||[]).length?`<div class="notice">Unit lessons with form examples are written for Part 1 so far. The fact slides below cover this part.</div>`:""}
       <h3 style="margin-top:14px">Fact slides · every fact by topic</h3><div class="list">${topics}</div></section>`;return}
   const n=lesLen();les.idx=Math.max(0,Math.min(les.idx,n-1));let title,sub,body,tag="";
@@ -5464,7 +5466,7 @@ function renderLessons(){if(!les)les={unit:null,topic:null,idx:0};const T=TOPICS
   else{const it=lesDeck(les.topic)[les.idx],how=EXPL[it.id]||(S.ex&&S.ex[it.id])||"",r=S.it[it.id],st=!r?"Not quizzed yet":r[0]>=MASTER_BOX?"Mastered":r[4]?"Learning":"Missed last time";
     title=T[les.topic][0];sub="Part "+part+" · "+PARTS[part].doms[it.d][0];tag=`<span class="why ${r&&r[4]===0?"miss":""}">${st}</span>`;
     body=`<div class="front">${esc(it.f)}</div><div class="back" style="border-top:0;padding-top:0">${esc(it.b)}</div>${how?`<div class="how"><b>How it works</b>${esc(how)}</div>`:""}`}
-  $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>${esc(title)}</h2><div class="small muted">${esc(sub)}</div></div><button class="btn ghost small" id="lestopics">All lessons</button></div>
+  $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>${esc(title)}</h2><div class="small muted">${esc(sub)}</div></div><button class="btn ghost small" id="lestopics">All slides</button></div>
    <div class="progress"><i style="width:${Math.round((les.idx+1)/n*100)}%"></i></div>
    <div class="card slide" id="slide"><div class="row" style="justify-content:space-between"><span class="num">Slide ${les.idx+1} of ${n}</span>${tag}</div>${body}</div>
    <div class="lesnav" style="margin-top:12px"><button class="btn" id="lesprev" ${les.idx?"":"disabled"}>‹ Previous</button><button class="btn pri" id="lesnext">${les.idx<n-1?"Next ›":"Finish"}</button></div>
@@ -6013,6 +6015,7 @@ document.addEventListener("click",e=>{
   if(b.dataset.kstat){kStat=b.dataset.kstat;renderFacts();return}
   if(b.dataset.kcat){kCat=b.dataset.kcat;renderFacts();return}
   if(b.id==="updnow"){applyUpdate();return}
+  if(b.id==="updcheck"){updMsg="Checking…";render();fetch("./version.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject()).then(j=>{if(j&&j.v&&j.v!==BUILD){updateReady=j.v;updMsg="";render();window.scrollTo(0,0)}else{updMsg="This is the newest version ("+BUILD+").";render()}}).catch(()=>{updMsg="Could not check. Is the internet on?";render()});return}
   if(b.id==="modedesc"){modeDesc=!modeDesc;render();return}
   if(b.id==="examedit"||b.id==="examedit2"){examOpen=true;examMsg="";render();if(b.id==="examedit2")window.scrollTo(0,0);return}
   if(b.id==="examcancel"){examOpen=false;render();return}
