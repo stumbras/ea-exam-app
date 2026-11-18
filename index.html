@@ -5802,7 +5802,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 53 · Nov 18";
+const BUILD="Version 54 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -6144,6 +6144,7 @@ function renderBk(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},0)
       <button class="mode bkm" data-mode="audio"><span class="lvl">5 · Listen</span><b>Audio review</b><p>Hands-free: hear a question, a pause, then the answer.</p><span class="cnt">5, 10 or 15 minutes</span></button>
       <button class="mode bkm" data-mode="mix"><span class="lvl">Extra · quick practice</span><b>Random 10</b><p>Ten mixed cards and questions from ${filt==="all"?"the whole course":"this module"}.</p><span class="cnt">about 5 minutes</span></button>
     </div>
+    ${HOSTED?`<a class="btn" href="course-book.pdf" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin:10px 0">📘 Open the course book (PDF, 112 pages)</a>`:""}
     <div class="row small"><span class="muted">Questions per session</span><div class="seg" id="sizes">${[10,20,30,50].map(n=>`<button aria-pressed="${S.set.size===n}" data-size="${n}">${n}</button>`).join("")}</div></div>
   </section>
   <section class="section"><h3>Modules</h3><div class="ledger domains">${mods}</div>
