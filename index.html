@@ -4970,6 +4970,16 @@ U(4,"How our office works: one return from first contact to accepted",/our offic
  {h:"Bookkeeping clients: the monthly rhythm",v:{k:"flow",r:["Client is added to the firm's QuickBooks accountant login; each team member uses their own Intuit sign-in","Week 1: collect statements and receipts; work the bank feed","Week 2: questions to the client in one list; reconcile every account","Week 3: review, adjust, run the reports","Send the reports with a short plain-language note; lock the month"]},
   ex:"At year end the same books feed the tax return: the Profit and Loss report becomes Schedule C or the business return."}
 ],5);
+U(4,"Solving Life LLC: our five tools in five minutes",/Google Workspace|Google Voice|Verifyle|OLT|website|Our office/i,[
+ {h:"The whole toolkit on one screen",v:{k:"flow",r:["Website: the client finds Solving Life LLC and reads what we do","Google Voice: the client texts or calls the business line","Google Workspace: email, e-signature for the three documents, shared drive for records","OLTPro Web: the client portal for uploads, then the return, Form 8879 signature and e-file","QuickBooks: the invoice and pay link; our own books"]},
+  b:["Each tool has one job. If you know which job belongs to which tool, you know where everything is."]},
+ {h:"Google Workspace",b:["The firm's Google account: business email, calendar, Drive and e-signature.","Engagement letter and Consent Form go out for Google eSignature.","Client records live in the shared drive IMPORTANT DOCUMENTS STORAGE, not in anyone's personal Drive. Google Vault keeps deleted files recoverable.","Sign in with your own work login and two-step sign-in. Never share a login."]},
+ {h:"Google Voice",b:["The business phone line. Calls and texts with U.S. clients come from this number, not from a personal phone.","Use it to answer questions, book times and send the portal invite.","Never ask for or accept IDs, Social Security numbers or tax documents by text. Those go through the portal."]},
+ {h:"OLTPro Web and the client portal",v:{k:"scr",n:"OLTPro Web",r:[["Client Manager","New Return · Manage Return"],["Client portal and app","Uploads · messages · Form 8879 e-signature"],["E-File","Queue for Transmit · Get E-File Status"]]},
+  b:["Our tax software, used in a browser. The preparer prepares; the owner reviews and transmits.","It will not e-file until an invoice exists for the client."]},
+ {h:"Verifyle",b:["A secure sharing and e-signature service, kept for later and only if needed.","Its use for us: a client who cannot print and cannot use the tax software's e-signature can sign with a code sent by text.","Until the owner switches it on, do not send clients there."]},
+ {h:"Our website",b:["solvinglifewith.com is the firm's front door: services, how to contact us, and the Privacy Notice.","It does not collect tax documents. A client who wants to start is sent to the business line, then the three documents, then the portal.","Only the owner edits the website."]}
+],5);
 
 // Bookkeeping · QuickBooks · Taxes: flashcards. Original wording. F(part, module, front, back)
 // Module 1: U.S. money, business and tax system
@@ -5219,6 +5229,12 @@ F(4,5,"How is a first return with a new ITIN application filed?","On paper, with
 F(4,5,"Which single document proves both identity and foreign status for Form W-7?","A valid passport.");
 F(4,5,"Does an ITIN allow a person to work or give immigration status?","No. It is for tax filing only.");
 F(4,5,"What do notarized copies of ID do for a Form W-7?","Nothing; they are rejected. Send originals, copies certified by the issuing agency, or use a Certifying Acceptance Agent.");
+F(4,5,"Solving Life LLC: what is Google Workspace used for?","Business email, Google eSignature for the engagement letter and Consent Form, and the shared drive where client records are kept.");
+F(4,5,"Solving Life LLC: what is Google Voice used for?","The business phone line for calls and texts with clients. Never for IDs or tax documents.");
+F(4,5,"Solving Life LLC: what is OLTPro Web?","Our tax software, used in a browser, with a client portal for uploads, messages and Form 8879 signature, and e-file.");
+F(4,5,"Solving Life LLC: what is Verifyle for?","Kept for later: signing by a texted code for a client who cannot print and cannot use the tax software's e-signature.");
+F(4,5,"Solving Life LLC: what does the website do, and not do?","It explains the firm, shows how to contact us and carries the Privacy Notice. It does not collect tax documents.");
+F(4,5,"Solving Life LLC: where do client records live?","In the Google shared drive IMPORTANT DOCUMENTS STORAGE, never in a personal Drive or on a personal phone.");
 
 // Bookkeeping · QuickBooks · Taxes: basic quiz, modules 1 to 3. Original questions. Q(part, module, level, stem, correct, [wrong x3], explanation)
 Q(4,1,1,"Which agency collects federal income tax?","The Internal Revenue Service (IRS)",["The Federal Reserve","The FDIC","The Securities and Exchange Commission"],"The IRS is part of the Treasury and administers the federal tax law.");
@@ -6249,7 +6265,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 57 · Nov 18";
+const BUILD="Version 58 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -6595,7 +6611,7 @@ function renderBk(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},0)
       <button class="mode bkm" data-mode="labs"><span class="lvl">6 · Check your skills</span><b>Cases</b><p>Mock tax returns, mock QuickBooks, bookkeeping jobs and client conversations, step by step.</p><span class="cnt">${LABS.length} cases</span></button>
       <button class="mode bkm" data-mode="audio"><span class="lvl">7 · Listen</span><b>Audio review</b><p>Hands-free: hear a question, a pause, then the answer.</p><span class="cnt">5, 10 or 15 minutes</span></button>
     </div>
-    ${HOSTED?`<a class="btn" href="course-book.pdf" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin:10px 0">📘 Open the course book (PDF, 113 pages)</a>`:""}
+    ${HOSTED?`<a class="btn" href="course-book.pdf" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin:10px 0">📘 Open the course book (PDF, 116 pages)</a>`:""}
     <div class="row small"><span class="muted">Questions per session</span><div class="seg" id="sizes">${[10,20,30,50].map(n=>`<button aria-pressed="${S.set.size===n}" data-size="${n}">${n}</button>`).join("")}</div></div>
   </section>
   <section class="section"><h3>Modules</h3><div class="ledger domains">${mods}</div>
