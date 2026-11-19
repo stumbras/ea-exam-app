@@ -59,6 +59,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .tabs button small{display:block;font-weight:500;font-size:12px}
 .tabs button[aria-selected="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(10,22,40,.22)}
 .section{margin-top:22px;display:grid;gap:10px}
+.qd .qdgo{width:100%;min-height:54px;font-size:17px}
+.qdgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.qdgrid .btn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;min-height:58px;padding:8px 12px}.qdgrid .btn span{font-size:12.5px;color:var(--muted);font-weight:600}.qdgrid .btn b{font-size:15px}
+.qdprog{display:grid;gap:6px}.qdprog .bar{height:8px}
+.dlist{display:grid;gap:0}.drow{display:grid;grid-template-columns:minmax(0,1fr) 70px auto;gap:10px;align-items:center;padding:10px 4px;border:0;border-top:1px solid var(--line);background:none;color:var(--fg);font:inherit;text-align:left;cursor:pointer;min-height:46px}.drow:hover{background:var(--accent-soft)}.drow .dn{font-weight:600}.drow .db{height:7px;border-radius:4px;background:var(--line);overflow:hidden;display:block}.drow .db i{display:block;height:100%}.drow .ds{font-size:13px;color:var(--muted);font-weight:700;min-width:46px;text-align:right}
+details.more{margin:12px 0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}details.more>summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;gap:2px;position:relative}details.more>summary::-webkit-details-marker{display:none}details.more>summary::after{content:"▸";position:absolute;right:16px;top:14px;color:var(--muted)}details.more[open]>summary::after{content:"▾"}details.more>summary span{font-size:13px;color:var(--muted)}details.more>.section,details.more>section{padding:0 12px 6px}
 .ledger{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat{display:grid;gap:2px}
@@ -6501,7 +6506,7 @@ function renderTax(){const e=esc,t=TS();if(tv.dr)return renderDrill();if(tv.p10!
     ${coach}<div class="filters scroll qnav">${nav}</div>${tv.msg?`<div class="notice" style="margin:8px 0"><b>${e(tv.msg)}</b></div>`:""}${body}
     <div style="margin-top:16px"><button class="btn ghost small" data-tsave="reset">Start this return over</button></div></section>`}
 function taxClick(b){const d=b.dataset;
-  if(d.tdrgo){tv={cur:null,tab:"guide",msg:"",add:null,dr:d.tdrgo,dri:0,drs:0,dra:null};view="taxsim";render();window.scrollTo(0,0);return true}
+  if(d.tdrgo){tv={cur:null,tab:"guide",msg:"",add:null,dr:d.tdrgo,dri:0,drs:0,dra:null,from:"home"};view="taxsim";render();window.scrollTo(0,0);return true}
   if(d.mode==="taxsim"){tv={cur:null,tab:"guide",msg:"",add:null};view="taxsim";render();window.scrollTo(0,0);return true}
   if(view!=="taxsim")return false;const g=id=>{const el=document.getElementById(id);return el?el.value.trim():""},num=id=>{const v=parseFloat(g(id).replace(/[$,\s]/g,""));return isNaN(v)?0:v};
   if(d.ttap){const k=d.ttap.indexOf("|"),el=document.getElementById(d.ttap.slice(0,k));if(el){el.value=d.ttap.slice(k+1);el.classList.add("ok")}b.classList.add("done");return true}
@@ -7039,15 +7044,133 @@ function TD(){const t=TS();t.drl=t.drl||{};return t.drl}
 function drillCard(){const d=TD(),e=esc;return `<div class="vis vscr" style="margin-top:14px"><div class="sh"><i></i><i></i><i></i><b>Decision drills · before you type</b></div>${Object.entries(DRILL).map(([k,v])=>`<div class="sr"><span>${e(v.t)}<br><small>${v.q.length} questions${d[k]?` · best ${d[k]}/${v.q.length}`:""}</small></span><span><button class="btn small" data-tdr="${k}">Start</button></span></div>`).join("")}<div class="vnote">Short drills on the choices that decide a return: filing status, above or below the line, standard or itemized, and which return a business, trust or student files.</div></div>`}
 function renderDrill(){const e=esc,k=tv.dr,D=DRILL[k],i=tv.dri||0,q=D.q[i],a=tv.dra;
   if(i>=D.q.length){const sc=tv.drs||0,d=TD();if(!d[k]||sc>d[k]){d[k]=sc;persist()}
-    $("#view").innerHTML=`<section class="section"><h2>${e(D.t)}: ${sc} of ${D.q.length}</h2><p>${sc===D.q.length?"Every decision right.":"Run it again until every answer is automatic."}</p><div class="row"><button class="btn pri" data-tdr="${k}">Again</button><button class="btn" data-tdr="">Back to the tax software</button></div></section>`;return}
+    $("#view").innerHTML=`<section class="section"><h2>${e(D.t)}: ${sc} of ${D.q.length}</h2><p>${sc===D.q.length?"Every decision right.":"Run it again until every answer is automatic."}</p><div class="row"><button class="btn pri" data-tdr="${k}">Again</button><button class="btn" data-tdr="">${tv.from==="home"?"Back to study":"Back to the tax software"}</button>${(()=>{const ks=Object.keys(DRILL).filter(x=>typeof DRILLP==="undefined"||!DRILLP[x]||DRILLP[x].includes(part));const i=ks.indexOf(k);return i>=0&&i+1<ks.length?`<button class="btn" data-tdr="${ks[i+1]}">Next drill: ${e(DRILL[ks[i+1]].t)}</button>`:""})()}</div></section>`;return}
   const ord=q[1]===DR_AB?q[1].map((x,k)=>k):p10Ord({q:q[0],o:q[1]});
   $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>${e(D.t)}</h2><div class="small muted">Question ${i+1} of ${D.q.length} · ${tv.drs||0} right</div></div><button class="btn ghost small" data-tdr="">Back</button></div>
    <div class="card"><b>${e(q[0])}</b><div class="dpo" style="flex-direction:column;align-items:stretch">${ord.map(o=>`<button class="btn ${a==null?"":o===q[2]?"good":o===a?"bad":""}" data-tdra="${o}" ${a!=null?"disabled":""}>${e(q[1][o])}</button>`).join("")}</div>
    ${a==null?"":`<div class="${a===q[2]?"okt":"badt"}"><b>${a===q[2]?"✓ Right.":"Answer: "+e(q[1][q[2]])+"."}</b> ${e(q[3])}</div><div class="row" style="margin-top:8px"><button class="btn pri" data-tdrn="1">Next</button></div>`}</div></section>`}
 function drillClick(d){
-  if(d.tdr!==undefined){if(d.tdr){tv.dr=d.tdr;tv.dri=0;tv.drs=0;tv.dra=null}else{tv.dr=null}return true}
+  if(d.tdr!==undefined){if(d.tdr){tv.dr=d.tdr;tv.dri=0;tv.drs=0;tv.dra=null}else{tv.dr=null;if(tv.from==="home"){view="home";window.scrollTo(0,0)}}return true}
   if(d.tdra!==undefined&&tv.dr){if(tv.dra==null){tv.dra=+d.tdra;if(tv.dra===DRILL[tv.dr].q[tv.dri][2])tv.drs=(tv.drs||0)+1}return true}
   if(d.tdrn&&tv.dr){tv.dri++;tv.dra=null;return true}
+  return false}
+
+/* ================= More quick decision drills (tax year 2025; returns filed in 2026) ================= */
+Object.assign(DRILL,{
+basis:{t:"Basis of property",q:[
+ ["Bought 100 shares for $5,000 and paid a $50 commission.",["$5,050","$5,000","$4,950"],0,"Purchase costs such as commissions are added to basis."],
+ ["Inherited a house worth $300,000 at the date of death. Her father had paid $90,000 for it.",["$300,000, the value at death","$90,000, the father's basis","$195,000, the average"],0,"Inherited property generally gets a basis equal to fair market value at death."],
+ ["Gift of stock: donor's basis $10,000, value at the gift $15,000. Later sold for $18,000.",["$10,000, the donor's basis","$15,000, the value at the gift","$18,000, the sale price"],0,"For a gift that has gone up in value, the donor's basis carries over."],
+ ["Gift of stock: donor's basis $10,000, value at the gift $7,000. Later sold for $6,000. Basis for the loss?",["$7,000, the value at the gift","$10,000, the donor's basis","$6,000, the sale price"],0,"When value at the gift is below the donor's basis, the lower value is used to figure a loss."],
+ ["Same gift (donor basis $10,000, value at gift $7,000), sold for $8,500.",["No gain or loss","$1,500 gain","$1,500 loss"],0,"A sale between the two bases gives neither gain nor loss."],
+ ["Like-kind exchange: gave a rental building with adjusted basis $200,000 (worth $350,000) for another building worth $350,000. No cash.",["$200,000, carried over","$350,000, its value","$275,000, the average"],0,"The deferred gain stays in the new property through the carried-over basis."],
+ ["Paid $250,000 for a home, added a $30,000 room, and spent $5,000 repainting.",["$280,000","$285,000","$250,000"],0,"Improvements add to basis; repairs and painting don't."],
+ ["Received stock worth $8,000 as pay for services.",["$8,000, the amount taxed as income","$0, since nothing was paid","The company's basis in the stock"],0,"Property received for services takes a basis equal to the income reported."],
+ ["A partner contributes land (basis $40,000, worth $70,000). The partnership's basis in the land?",["$40,000, carried over","$70,000, its value","$55,000, the average"],0,"Contributed property keeps the contributor's basis (§723)."],
+ ["Owned 100 shares (basis $3,000) and received a 10% stock dividend of the same stock.",["$3,000 spread over 110 shares","$3,000 for the old 100, $300 for the new 10","$3,300 in all"],0,"A nontaxable stock dividend spreads the old basis over all the shares."]]},
+inc:{t:"Taxable or not",q:[
+ ["Child support received.",["Not taxable","Taxable"],0,"Child support is never income to the recipient."],
+ ["Alimony under a divorce decree signed in 2020.",["Not taxable","Taxable"],0,"For agreements after 2018, alimony isn't income to the recipient and isn't deductible by the payer."],
+ ["Unemployment compensation.",["Taxable","Not taxable"],0,"Reported on Form 1099-G."],
+ ["Life insurance paid because of the insured's death.",["Not taxable","Taxable"],0,"Death benefits are excluded; interest on them is taxable."],
+ ["Gambling winnings from a casino.",["Taxable","Not taxable"],0,"All gambling winnings are income; losses are an itemized deduction up to winnings."],
+ ["Workers' compensation for a job injury.",["Not taxable","Taxable"],0,"Excluded under §104."],
+ ["A $20,000 cash gift from a parent.",["Not taxable","Taxable"],0,"Gifts aren't income to the recipient; the giver may need Form 709."],
+ ["Scholarship money used for room and board.",["Taxable","Not taxable"],0,"Only amounts for tuition, fees and required books and supplies are excluded."],
+ ["Jury duty pay.",["Taxable","Not taxable"],0,"Reported as other income; it's an adjustment if paid over to an employer."],
+ ["Interest on a city's municipal bond.",["Not taxable federally","Taxable"],0,"Tax-exempt but still reported on the return."],
+ ["Employer-paid group-term life insurance over $50,000 of coverage.",["Taxable, for the cost of the excess","Not taxable at all"],0,"The cost of coverage over $50,000 is added to wages."],
+ ["A rebate from a car dealer on a new car the client bought.",["Not taxable","Taxable"],0,"A purchase rebate reduces the cost; it isn't income."]]},
+char:{t:"Capital or ordinary",q:[
+ ["Stock held 2 years, sold at a gain.",["Long-term capital gain","Short-term capital gain","Ordinary income"],0,"Held more than 1 year."],
+ ["Stock held 11 months, sold at a gain.",["Short-term capital gain","Long-term capital gain","Ordinary income"],0,"One year or less is short-term, taxed like ordinary income."],
+ ["Inherited stock sold 2 months after the death.",["Long-term capital gain","Short-term capital gain","Ordinary income"],0,"Inherited property is always treated as held long-term."],
+ ["Business equipment sold at a gain no larger than the depreciation taken.",["Ordinary income (§1245)","Long-term capital gain","§1231 gain"],0,"Depreciation recapture on personal property is ordinary."],
+ ["A store sells its inventory.",["Ordinary income","Long-term capital gain","§1231 gain"],0,"Inventory isn't a capital asset."],
+ ["Gold coins held 3 years, sold at a gain.",["Long-term gain taxed at up to 28%","Long-term gain taxed at up to 20%","Ordinary income"],0,"Collectibles have a 28% maximum rate."],
+ ["A personal car sold at a loss.",["Not deductible","Capital loss","Ordinary loss"],0,"Losses on personal-use property aren't deductible."],
+ ["Gifted stock the donor held 3 years; the recipient sells it 2 months later at a gain.",["Long-term capital gain","Short-term capital gain","Ordinary income"],0,"When the donor's basis carries over, the donor's holding period tacks on."],
+ ["Loss on qualifying §1244 small business stock, single filer, $30,000.",["Ordinary loss","Capital loss","Not deductible"],0,"Up to $50,000 ($100,000 joint) a year is ordinary."],
+ ["A rental building held 10 years, sold at a gain above its straight-line depreciation.",["§1231 gain, part taxed at up to 25%","All ordinary income","All short-term gain"],0,"The straight-line depreciation part is unrecaptured §1250 gain."]]},
+dep:{t:"Who is a dependent",q:[
+ ["Daughter, 20, full-time student, lives at home.",["Qualifying child","Qualifying relative","Not a dependent"],0,"Under 24 and a full-time student."],
+ ["Son, 25, lives at home all year, earns $3,000; the parent pays all his support.",["Qualifying relative","Qualifying child","Not a dependent"],0,"Too old for a qualifying child; his gross income is under $5,200 for 2025."],
+ ["Mother lives in her own apartment, has $4,000 of interest, and the client pays 60% of her support.",["Qualifying relative","Qualifying child","Not a dependent"],0,"A parent doesn't have to live with the taxpayer."],
+ ["Nephew, 15, lived with the client 7 months of the year.",["Qualifying child","Qualifying relative","Not a dependent"],0,"Nephews meet the relationship test; more than half the year in the home."],
+ ["Girlfriend's son, not related, lived with the client all year and has no income. His mother has no income and files no return.",["Qualifying relative","Qualifying child","Not a dependent"],0,"An unrelated person can be a qualifying relative as a member of the household all year."],
+ ["Son, 22, not a student, earned $9,000.",["Not a dependent","Qualifying child","Qualifying relative"],0,"Too old for a qualifying child and over the $5,200 gross income limit."],
+ ["A friend who lived with the client for 6 months.",["Not a dependent","Qualifying relative","Qualifying child"],0,"A non-relative must live in the home the entire year."],
+ ["Brother, 40, permanently disabled, lived with the client all year.",["Qualifying child","Qualifying relative","Not a dependent"],0,"No age limit for a permanently and totally disabled qualifying child."],
+ ["Foster child placed by an agency, 10, lived with the client all year.",["Qualifying child","Qualifying relative","Not a dependent"],0,"An eligible foster child meets the relationship test."]]},
+due:{t:"Due dates (2025 returns)",q:[
+ ["Form 1040 for 2025.",["April 15, 2026","March 16, 2026","May 15, 2026"],0,"The 15th day of the 4th month."],
+ ["Form 1065 for a calendar-year partnership.",["March 16, 2026","March 15, 2026","April 15, 2026"],0,"March 15, 2026 is a Sunday, so the next business day."],
+ ["Form 1120-S for a calendar-year S corporation.",["March 16, 2026","April 15, 2026","March 31, 2026"],0,"The 15th day of the 3rd month, moved off the weekend."],
+ ["Form 1120 for a calendar-year C corporation.",["April 15, 2026","March 16, 2026","May 15, 2026"],0,"The 15th day of the 4th month."],
+ ["Form 1041 for a calendar-year trust.",["April 15, 2026","March 16, 2026","May 15, 2026"],0,"The 15th day of the 4th month."],
+ ["Form 990 for a calendar-year charity.",["May 15, 2026","April 15, 2026","March 16, 2026"],0,"The 15th day of the 5th month."],
+ ["Form 941 for October–December 2025.",["February 2, 2026","January 31, 2026","January 15, 2026"],0,"January 31, 2026 is a Saturday."],
+ ["Forms W-2 to employees and the SSA for 2025.",["February 2, 2026","January 31, 2026","February 28, 2026"],0,"The January 31 deadline moves to Monday."],
+ ["Form 709 for 2025 gifts.",["April 15, 2026","December 31, 2025","March 16, 2026"],0,"Same day as Form 1040; a 1040 extension also extends Form 709."],
+ ["Form 5500 for a calendar-year plan.",["July 31, 2026","April 15, 2026","October 15, 2026"],0,"The last day of the 7th month; Form 5558 extends it."]]},
+frm:{t:"Which IRS form",q:[
+ ["Authorize an EA to represent a client.",["Form 2848","Form 8821","Form 56"],0,"Form 8821 only lets someone see information."],
+ ["Let a mortgage lender see a client's tax records, nothing more.",["Form 8821","Form 2848","Form 911"],0,"Tax information authorization."],
+ ["Ask for a collection due process hearing.",["Form 12153","Form 9423","Form 843"],0,"Form 9423 is the Collection Appeals Program."],
+ ["Request an installment agreement by mail.",["Form 9465","Form 656","Form 433-D"],0,"Form 656 is an offer in compromise."],
+ ["Offer to settle a tax debt for less than owed.",["Form 656","Form 9465","Form 12153"],0,"With Form 433-A (OIC) or 433-B (OIC)."],
+ ["Ask for innocent spouse relief.",["Form 8857","Form 8379","Form 8822"],0,"Form 8379 is injured spouse allocation."],
+ ["Ask the Taxpayer Advocate Service for help.",["Form 911","Form 843","Form 12203"],0,"Request for Taxpayer Advocate Service Assistance."],
+ ["Claim a refund or abatement of a penalty.",["Form 843","Form 1040-X","Form 911"],0,"Claim for Refund and Request for Abatement."],
+ ["Appeal a levy quickly without a CDP hearing.",["Form 9423","Form 12153","Form 656"],0,"Collection Appeals Program; no Tax Court review."],
+ ["Report that someone filed using the client's SSN.",["Form 14039","Form 3949-A","Form 211"],0,"Identity Theft Affidavit."],
+ ["Request Appeals for a $12,000 exam disagreement.",["Form 12203","A formal written protest","Form 12153"],0,"Small case request for $25,000 or less."],
+ ["Change a client's home address with the IRS.",["Form 8822","Form 8822-B","Form 8821"],0,"8822-B is for businesses."]]}
+});
+// Which parts show each drill on the study page
+const DRILLP={fs:[1],ab:[1],sd:[1],inc:[1],dep:[1],basis:[1,2],char:[1,2],en:[2],due:[2,3],frm:[3]};
+
+/* ================= Study page: quick drill, decision drills and practice cases, with progress ================= */
+const OPEN={};let qdOver=0;
+document.addEventListener("toggle",e=>{const t=e.target;if(t&&t.matches&&t.matches("details.more"))OPEN[t.id]=t.open},true);
+function qdCommon(p){const ids=new Set();BANK.forEach(i=>{const r=S.it[i.id];if(i.p==p&&r&&r[5])ids.add(i.id)});hardest(p,60).forEach(i=>ids.add(i.id));return [...ids].map(id=>BYID[id]).filter(Boolean)}
+function quickHtml(){const P=PARTS[part],n=S.set.qd||10,e=esc;touchDay();
+  const miss=missedPool(part,"all").length,com=qdCommon(part).length,wd=weakestDomain(part),nw=newList(part,"all").length;
+  const ps=partStats(part),day=S.day||{n:0};
+  return `<section class="section"><div class="ledger qd">
+    <div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">Quick drill</h3><div class="seg" id="qdsize">${[5,10,20].map(k=>`<button aria-pressed="${n===k}" data-qdn="${k}">${k}</button>`).join("")}</div></div>
+    <div class="small muted">Built from your answers: what you missed, reviews that are due, and your weakest area at the level you're ready for.</div>
+    <button class="btn pri qdgo" data-qd="smart">▶ Smart drill · ${n} questions</button>
+    <div class="qdgrid">
+      <button class="btn" data-qd="missed" ${miss?"":"disabled"}><span>Redo misses</span><b>${miss}</b></button>
+      <button class="btn" data-qd="common" ${com?"":"disabled"}><span>Common mistakes</span><b>${com}</b></button>
+      <button class="btn" data-qd="weak"><span>Weakest area</span><b>${e(String(wd))}. ${e(P.doms[wd][0].split(/[,:(·]/)[0].split(" ").slice(0,3).join(" ").replace(/[&,]$/,""))}</b></button>
+      <button class="btn" data-qd="new" ${nw?"":"disabled"}><span>New material</span><b>${nw}</b></button>
+    </div>
+    <div class="small muted">Today: ${day.n||0} answered${S.streak&&S.streak.n?" · "+S.streak.n+"-day streak":""} · ${ps.examAcc===null?"exam-style score after a few drills":"exam-style "+ps.examAcc+"%"}</div>
+  </div></section>`}
+function drillsHtml(){if(PARTS[part].x||typeof DRILL==="undefined")return "";const e=esc;
+  const ks=Object.keys(DRILL).filter(k=>typeof DRILLP==="undefined"||!DRILLP[k]||DRILLP[k].includes(+part));if(!ks.length)return "";
+  const B=(typeof TD==="function")?TD():{};const perfect=ks.filter(k=>B[k]===DRILL[k].q.length).length;
+  return `<section class="section"><div class="ledger">
+    <div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">Quick decisions</h3><span class="chip">${perfect}/${ks.length} perfect</span></div>
+    <div class="small muted">One-tap rounds on the calls the exam tests constantly. Run each until every answer is automatic.</div>
+    <div class="dlist">${ks.map(k=>{const t=DRILL[k].q.length,b=B[k];const pct=b==null?0:Math.round(b/t*100);
+      return `<button class="drow" data-tdrgo="${k}"><span class="dn">${e(DRILL[k].t)}</span><span class="db"><i style="width:${pct}%;background:${b===t?"var(--good)":"var(--accent)"}"></i></span><span class="ds">${b==null?"Start":b===t?"✓ "+b+"/"+t:b+"/"+t}</span></button>`}).join("")}</div>
+  </div></section>`}
+function casesHtml(){if(typeof PDRL==="undefined"||!PDRL[part])return "";const D=PDRL[part],CS=D.cases(),e=esc;if(!CS.length)return "";
+  const B=S.w7b||{},key=c=>+part===7?c.id:+part===8?"n-"+c.id:part+"-"+c.id;const perfect=CS.filter(c=>B[key(c)]===c.s.length).length;
+  return `<section class="section"><div class="ledger">
+    <div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">${e(D.t)}</h3><span class="chip">${perfect}/${CS.length} perfect</span></div>
+    <div class="dlist">${CS.map((c,k)=>{const t=c.s.length,b=B[key(c)];const pct=b==null?0:Math.round(b/t*100);
+      return `<button class="drow" data-w7start="${k}"><span class="dn">${e(c.t)}</span><span class="db"><i style="width:${pct}%;background:${b===t?"var(--good)":"var(--accent)"}"></i></span><span class="ds">${b==null?"Start":b===t?"✓ "+b+"/"+t:b+"/"+t}</span></button>`}).join("")}</div>
+  </div></section>`}
+function quickClick(b){const d=b.dataset;
+  if(d.qdn){S.set.qd=+d.qdn;persist();render();return true}
+  if(d.w7start!==undefined){view="w7";w7Go(+d.w7start);render();window.scrollTo(0,0);return true}
+  if(d.qd){const n=S.set.qd||10;filt="all";
+    if(d.qd==="smart"){startSession("qd",n);return true}
+    qdOver=n;startSession(d.qd==="new"?"easy":d.qd);qdOver=0;return true}
   return false}
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
@@ -9083,7 +9206,7 @@ const INTRO={
    ["Intuit Academy Bookkeeping on Coursera: course 1, Bookkeeping Basics (free to audit)","https://www.coursera.org/learn/bookkeeping-basics"],
    ["Intuit's free QuickBooks curriculum; the Advanced course prepares for the QuickBooks Level 1 Certification","https://www.intuit.com/solutions/education/resources/quickbooks-support/curriculum/"],
    ["How to open ProAdvisor Academy training inside QuickBooks Online Accountant","https://quickbooks.intuit.com/learn-support/en-us/proadvisor-program/quickbooks-proadvisor-benefits-tiers-and-points/00/197206"]]}};
-function introHtml(key){const I=INTRO[key];if(!I)return"";let shut=false;try{shut=localStorage.getItem("intro-"+key)==="0"}catch(_){}
+function introHtml(key){const I=INTRO[key];if(!I)return"";let shut=true;try{shut=localStorage.getItem("intro-"+key)!=="1"}catch(_){}
   return `<section class="section" style="margin-top:12px"><details class="ledger intro" data-intro="${key}" ${shut?"":"open"}><summary><b>${esc(I.t)}</b> <span class="small muted">what it is, what it tests, how it works</span></summary><p style="margin:8px 0">${esc(I.lead)}</p>${I.rows.map(r=>`<div class="introrow"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join("")}${I.links?`<div class="introrow"><b>Free official Intuit training</b><span>${I.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])}</a>`).join("<br>")}</span></div>`:""}</details></section>`}
 document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.dataset&&d.dataset.intro)try{localStorage.setItem("intro-"+d.dataset.intro,d.open?"1":"0")}catch(_){}},true);
 
@@ -10992,7 +11115,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 106 · Nov 19";
+const BUILD="Version 107 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -11191,20 +11314,20 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
   const rated=Object.entries(P.doms).map(([d,[n]])=>{const st=domStats(part,d);return{d,n,ans:st.n,acc:st.n>=5?st.acc:null}}).filter(x=>x.acc!==null);
   const bestD=rated.length?rated.reduce((a,b)=>b.acc>a.acc?b:a):null,worstD=rated.length>1?rated.reduce((a,b)=>b.acc<a.acc?b:a):null;
   const bw=bestD?`<div class="bw"><div class="bwrow good"><span>Strongest</span><b>${bestD.d}. ${esc(bestD.n)}</b><em>${Math.round(bestD.acc*100)}%</em></div>${worstD&&worstD.d!==bestD.d?`<div class="bwrow bad"><span>Weakest</span><b>${worstD.d}. ${esc(worstD.n)}</b><em>${Math.round(worstD.acc*100)}%</em></div>`:""}</div>`
-    :`<div class="small muted">Your strongest and weakest areas appear here after 5 answers in an area.</div>`;
+    :"";
   const dash=`<section class="section" style="margin-top:12px"><div class="ledger dash">
       <div class="row" style="justify-content:space-between"><h2>${pl(part)}: ${P.name}</h2>${S.streak.n?`<span class="chip">${S.streak.n}-day streak</span>`:""}</div>
       ${examRowHtml()}
       <div class="gauge"><div class="gnum"><b>${pc(ps.readyX)}</b><span>ready · goal 90%</span></div><div class="gbar" title="Overall readiness"><i style="width:${Math.min(100,ps.readyX).toFixed(1)}%"></i><span class="tick"></span></div></div>
       <div class="stats3"><div class="stat"><b>${pc(ps.strength)}</b><span>Memory</span></div><div class="stat"><b>${ps.examAcc===null?"–":ps.examAcc+"%"}</b><span>Exam-style</span></div><div class="stat"><b>${due}</b><span>Due today</span></div></div>
       ${bw}
-      <div class="syncrow" title="Move progress between devices"><button class="btn small" id="syncsave">⬆ Save progress</button><label class="btn small" style="cursor:pointer">⬇ Load progress<input type="file" data-bk="1" accept=".json,application/json,text/plain,.txt" hidden></label></div>
       ${bkNote?`<div class="small" style="color:var(--accent)"><b>${esc(bkNote)}</b></div>`:""}
       ${statusLine}
     </div></section>`;
   const tnote=testNote?`<section class="section"><div class="ledger" style="border-left:4px solid ${/^Working/.test(testNote)?"var(--good)":/^Testing/.test(testNote)?"var(--line)":"var(--bad)"}"><div class="small"><b>Account saving test.</b> ${esc(testNote)}</div></div></section>`:"";
   const upd=updateReady?`<section class="section"><div class="ledger" style="border:2px solid var(--accent)"><div><b>A newer version is ready: ${esc(updateReady)}.</b></div><div class="small">You have ${esc(BUILD)}. Your progress stays as it is.</div><div class="row"><button class="btn pri" id="updnow" ${updating?"disabled":""}>${updating?"Updating…":"Update now"}</button></div></div></section>`:"";
-  $("#view").innerHTML=upd+tnote+warn+introHtml(P.x||"ea")+(P.x?"":`<div class="card" style="margin:10px 0"><b>Decision drills from the tax practice</b><div class="small muted">Quick rounds on the choices Part 1 and Part 2 test constantly.</div><div class="row" style="margin-top:6px">${Object.entries(DRILL).map(([k,v])=>`<button class="btn small" data-tdrgo="${k}">${esc(v.t)}</button>`).join("")}</div></div>`)+dash+`
+  $("#view").innerHTML=upd+tnote+warn+dash+quickHtml()+drillsHtml()+casesHtml()+introHtml(P.x||"ea")+`
+  <details class="more" id="moremodes" ${OPEN.moremodes?"open":""}><summary><b>All study modes</b><span>Slides, flashcards, audio, practice questions, mock exams, settings</span></summary>
   <section class="section">
     <div class="row" style="justify-content:space-between"><h3>Study now</h3><button class="btn ghost small" id="modedesc" style="min-height:34px;padding:5px 12px">${modeDesc?"Hide details":"What each one does"}</button></div>
     <div class="filters scroll" id="filters">${filters}</div>
@@ -11230,6 +11353,8 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
     <div class="row small" id="smartsizes" hidden><span class="muted">How long do you have?</span>${[10,20,40,60].map(n=>`<button class="btn" data-smart="${n}">${n} min</button>`).join("")}<button class="btn ghost" data-smart="0">Cancel</button></div>
     <div class="row small" id="mocksizes" hidden><span class="muted">Mock length</span>${(P.mocks||[10,20,25,50,100]).map(n=>`<button class="btn" data-mock="${n}">${n} questions · ${Math.round(n*mpq(part))} min</button>`).join("")}<button class="btn ghost" data-mock="0">Cancel</button></div>
   </section>
+  </details>
+  <details class="more" id="moreprog" ${OPEN.moreprog?"open":""}><summary><b>Progress details</b><span>Domains, knowledge map, misses, plan and recommendations</span></summary>
   <section class="section">
     <h3>Progress details</h3>
     <div class="ledger">
@@ -11266,9 +11391,13 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
     <div class="row" style="justify-content:space-between"><span class="small muted">Built from your answers in every mode, Easy included.</span><button class="btn ghost small" id="facttoggle">${showFacts?"Hide the list":"See the items"}</button></div>
     <div id="facts" ${showFacts?"":"hidden"}></div>
   </section>
+  </details>
+  <details class="more" id="moreset" ${OPEN.moreset?"open":""}><summary><b>Settings and history</b><span>Exam dates, backups, moving progress, reset</span></summary>
   <section class="section">
     <h3>Settings and history</h3>
     <div class="ledger">
+      <div class="syncrow" title="Move progress between devices"><button class="btn small" id="syncsave">⬆ Save progress</button><label class="btn small" style="cursor:pointer">⬇ Load progress<input type="file" data-bk="1" accept=".json,application/json,text/plain,.txt" hidden></label></div>
+
       <div class="row" style="justify-content:space-between"><span class="small">Exam dates: ${exParts().map(p=>pl(p)+" "+(examDate(p)?new Date(examDate(p)+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):"not set")).join(" · ")}</span><button class="btn small" id="examedit2">Change exam dates</button></div>
       ${historyHtml()}
       ${flagHtml()}
@@ -11289,7 +11418,7 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
       <div class="small muted" style="margin-bottom:10px">Restoring merges the backup with what is already here: for every fact the fuller record is kept, so nothing is lost.</div>
       <div class="confirm">${confirmReset?`<span class="small">Erase all progress for ${pl(part)}?</span><button class="btn" id="resetyes" style="border-color:var(--bad);color:var(--bad)">Erase ${pl(part)}</button><button class="btn ghost" id="resetno">Keep</button>`:`<button class="btn ghost small" id="reset">Reset ${pl(part)} progress</button>`}</div>
     </div>
-  </section>`;
+  </section></details>`;
   markNext();if(showFacts)renderFacts();
 }
 /* ================= Bookkeeping · QuickBooks · Taxes: a simpler home for the foundation course ================= */
@@ -11470,7 +11599,7 @@ function flagHtml(){const ids=Object.keys(S.flag||{}).filter(id=>S.flag[id]&&BYI
   <textarea id="flagbox" rows="4" readonly style="font:12px var(--mono);width:100%;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px">${esc(ids.map(id=>{const i=BYID[id];return "Part "+i.p+": "+(i.f||i.s)+(i.b?" => "+i.b:"")}).join("\n"))}</textarea>
   <div class="row"><button class="btn small" id="copyflags">Copy list</button><button class="btn ghost small" id="clearflags">Clear flags</button><span class="small muted" id="flagmsg"></span></div></div></details>`}
 function historyHtml(){const h=S.hist.filter(x=>x.p==part).slice(-8).reverse();if(!h.length)return`<p class="small muted">No sessions yet for this part.</p>`;
-  const names={quiz:"Quiz",mix:"Random 10",unit:"Unit quiz",smart:"Smart session",audio:"Audio review",heard:"Audio follow-up quiz",final:"Final-week review",topic:"Topic drill",missed:"Redrill missed",weakdom:"Weakest topic",cards:"Flashcards",calc:"Calculation trainer",leech:"Hardest facts",easy:"Easy drill",facts:"All facts",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes"};
+  const names={qd:"Smart drill",common:"Common mistakes",quiz:"Quiz",mix:"Random 10",unit:"Unit quiz",smart:"Smart session",audio:"Audio review",heard:"Audio follow-up quiz",final:"Final-week review",topic:"Topic drill",missed:"Redrill missed",weakdom:"Weakest topic",cards:"Flashcards",calc:"Calculation trainer",leech:"Hardest facts",easy:"Easy drill",facts:"All facts",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes"};
   return `<div class="list">${h.map(x=>`<div class="row small" style="justify-content:space-between"><span>${names[x.m]||x.m} · ${new Date(x.t).toLocaleDateString()}</span><span class="mono">${x.c}/${x.n} · ${Math.round(x.c/x.n*100)}%</span></div>`).join("")}</div>`}
 const CATS={num:"Numbers & limits",form:"Forms & schedules",term:"Terms & acronyms",rule:"Rules & concepts",q:"Exam-style questions"};
 function itemCat(i){if(i.t==="q")return "q";const f=i.f,b=i.b;
@@ -11988,7 +12117,7 @@ function whyTag(it){const r=S.it[it.id],t=today(),weak=String(it.d)===String(wea
 function mkEntry(i,force){return i.t==="g"?{id:i.id,calc:i.make()}:i.t==="f"?{id:i.id,fx:genFact(i,force)}:{id:i.id,order:i.fixed?[...i.opts.keys()]:shuffle([...i.opts.keys()])}}
 function numEq(a,k){const n=x=>x.replace(/[^0-9.]/g,"").replace(/\.0+$/,"").replace(/^0+(?=\d)/,"");return n(a)!==""&&n(a)===n(k)}
 function startSession(mode,n){reviewAll=false;
-  const sz=S.set.size;let q=[];
+  const sz=qdOver||S.set.size;let q=[];
   if(mode==="easy"){touchDay();const due=shuffle(dueList(part,filt).slice(0,sz));const newLeft=Math.max(0,newPerDay(part)-S.day.nw);
     const nw=newList(part,filt),CAP=12; // about 12 new facts per sitting is what sticks; run another session for more
     let news=nw.slice(0,Math.max(0,Math.min(newLeft,CAP,sz-due.length)));
@@ -12030,6 +12159,20 @@ function startSession(mode,n){reviewAll=false;
     const a=shuffle(missedPool(part,"all")).slice(0,Math.ceil(n2*.4)),b=hardest(part,Math.ceil(n2*.2)).filter(i=>!a.includes(i));
     const c=weightPick(BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv>=2&&ds.includes(String(i.d))&&!a.includes(i)),Math.max(0,n2-a.length-b.length));
     q=shuffle(a.concat(b,c))}
+  else if(mode==="qd"){ // n = questions. Adaptive quick drill: misses, due reviews, weakest areas at the right level, a calculation, new facts.
+    const N=n||10,t=today(),pickN=(l,k)=>{let c=0;for(const i of l){if(q.length>=N||c>=k)break;if(!q.includes(i)){q.push(i);c++}}};
+    const facts=easyPool(part,"all"),miss=shuffle(missedPool(part,"all")),dueF=shuffle(facts.filter(i=>{const r=S.it[i.id];return r&&r[4]!==0&&r[1]<=t}));
+    const ds=Object.keys(PARTS[part].doms).map(d=>({d,st:domStats(part,d)})).sort((a,b)=>(a.st.n>=5?a.st.acc:(prior(part,a.d)??0.5))-(b.st.n>=5?b.st.acc:(prior(part,b.d)??0.5))).slice(0,2).map(x=>x.d);
+    const lvOK=(d,lv)=>{const st=domStats(part,d),a=st.n>=5?st.acc:null;return a===null?lv<=2:a<.6?lv<=2:a<.8?lv>=2:lv>=2};
+    const qs=BANK.filter(i=>i.p==part&&i.t==="q");
+    pickN(miss,Math.ceil(N*.3));pickN(dueF,Math.ceil(N*.2));
+    pickN(weightPick(qs.filter(i=>ds.includes(String(i.d))&&lvOK(String(i.d),i.lv)),N),Math.ceil(N*.35));
+    if(N>=10)pickN(weightPick(GENS.filter(g=>g.p==part&&ds.includes(String(g.d))),1),1);
+    pickN(facts.filter(i=>!S.it[i.id]).sort((a,b)=>ORDER[a.id]-ORDER[b.id]),Math.ceil(N*.2));
+    pickN(weightPick(qs,N),N);pickN(shuffle(facts),N);
+    if(!q.length){doneNote="Nothing to study in this part yet.";render();return}
+    const fa=q.filter(i=>i.t==="f"||i.lv===1),ot=q.filter(i=>!(i.t==="f"||i.lv===1));q=[];while(fa.length||ot.length){q.push(...fa.splice(0,2),...ot.splice(0,2))}}
+  else if(mode==="common"){q=shuffle(qdCommon(part)).slice(0,sz);if(!q.length){doneNote="No common mistakes yet. They appear after you miss an item twice or miss one you were sure of.";render();return}}
   else if(mode==="smart"){ // n = minutes. Fill the time with what helps most: misses, due reviews, weakest-area questions, a calculation or two, then new facts.
     const t=today(),budget=(n||20)*60;let used=0;const add=(l,cost,cap)=>{let k=0;for(const i of l){if(used+cost>budget||k>=cap)break;if(!q.includes(i)){q.push(i);used+=cost;k++}}};
     const facts=easyPool(part,"all"),miss=shuffle(missedPool(part,"all")),dueF=shuffle(facts.filter(i=>{const r=S.it[i.id];return r&&r[4]!==0&&r[1]<=t}));
@@ -12115,7 +12258,7 @@ function renderSession(){
   if(sess.queue[sess.pos].learn)return renderLearn();
   if(sess.queue[sess.pos].lazy){const c=sess.queue[sess.pos];Object.assign(c,mkEntry(BYID[c.id],c.lazy));c.lazy=0}
   const s=sess,cur=s.queue[s.pos],it=BYID[cur.id],P=PARTS[it.p],V=view4(cur,it),quick=QUICK.includes(s.mode);
-  const names={quiz:"Quiz · basic questions",mix:"Random 10 · everything mixed",unit:"Unit quiz",smart:"Smart session · built for your time",easy:"Easy · learn and review",facts:"Easy · all facts in order",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes",calc:"Calculation trainer",leech:"Hardest facts for you",cards:"Flashcards",missed:"Redrill missed items",weakdom:"Weakest topic",topic:"Topic drill",heard:"Audio follow-up quiz",final:"Final-week review"};
+  const names={qd:"Smart drill",common:"Common mistakes",quiz:"Quiz · basic questions",mix:"Random 10 · everything mixed",unit:"Unit quiz",smart:"Smart session · built for your time",easy:"Easy · learn and review",facts:"Easy · all facts in order",medium:"Medium",hard:"Hard",mock:"Mock exam",weak:"Weak spots",traps:"Confident mistakes",calc:"Calculation trainer",leech:"Hardest facts for you",cards:"Flashcards",missed:"Redrill missed items",weakdom:"Weakest topic",topic:"Topic drill",heard:"Audio follow-up quiz",final:"Final-week review"};
   const pct=s.mode==="mock"?Object.keys(s.answers).length/s.queue.length:s.done/(s.total);
   const stepLab=cur.final?"End-of-session check":it.t==="g"?"Calculation · new numbers each time":it.t==="f"?(S.set.simple!==false?"Fact":`Fact · step ${V.step} of 3`):["","Easy","Medium","Hard"][it.lv]+" question";
   if(cur.why===undefined)cur.why=s.mode==="mock"?null:whyTag(it); // decided when the item first appears, before the answer changes its record
@@ -12222,6 +12365,7 @@ document.addEventListener("click",e=>{
   if(qboClick(b)||taxClick(b))return;
   if(labClick(b))return;
   if(w7Click(b))return;
+  if(quickClick(b))return;
   if(view==="lessons"&&lessonClick(b))return;
   if(b.dataset.mode==="audio"){openAudio();return}
   if(b.dataset.sec){hush();const sc=b.dataset.sec;if(sc==="start"){view="start"}else{if(sc==="bk")part=BK;else if(sc==="s65")part=5;else if(sc==="edpna")part=6;else if(sc==="caa")part=7;else if(sc==="notary")part=8;else if(PARTS[part].bk||PARTS[part].x){let lp=1;try{lp=+(localStorage.getItem("ea-lastpart")||1)||1}catch(_){}part=lp}view="home"}
