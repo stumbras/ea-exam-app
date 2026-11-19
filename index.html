@@ -7600,7 +7600,16 @@ function kBeep(kind){const k=S.kids;if(!k||k.sound===false||!kAudio())return;try
    case "move":N(0,.05,.22,2500,"highpass");T(520,0,.04,"triangle",.05);break;
    case "mate":[392,523,659,784,1047].forEach((f,i)=>T(f,i*.09,.16,"square",.06));[1047,1319,1568].forEach(f=>T(f,.5,.7,"triangle",.07));break;
    case "tick":T(1200,0,.02,"square",.02);break;case "key":T(1800+Math.random()*400,0,.015,"square",.012);break;
-   case "drum":N(0,.25,.25,180);T(90,0,.25,"sine",.2,45);break}}catch(_){}}
+   case "drum":N(0,.25,.25,180);T(90,0,.25,"sine",.2,45);break;
+   case "dice":for(let i=0;i<6;i++)N(i*.055+Math.random()*.02,.035,.22,2600+i*300,"bandpass");T(200,.36,.05,"triangle",.08);break;
+   case "kaching":T(1568,0,.08,"square",.04);T(2093,.06,.35,"sine",.09);N(.02,.12,.08,7000,"highpass");T(1047,.12,.25,"triangle",.05);break;
+   case "build":N(0,.06,.3,350);N(.16,.06,.3,350);N(.32,.06,.3,350);[784,988,1175].forEach((f,i)=>T(f,.45+i*.07,.18,"triangle",.07));break;
+   case "whoosh":N(0,.6,.25,400,"bandpass",3000);break;case "chime":T(880,0,.25,"sine",.1);T(1320,.14,.35,"sine",.09);break;
+   case "signal":T(1450,0,.018,"square",.03);T(980,.32,.018,"square",.03);break;case "charge":T(220,0,.9,"sine",.06,880);T(440,0,.9,"triangle",.03,1760);break;
+   case "boom":N(0,.55,.4,600,"lowpass",80);T(70,0,.5,"sine",.25,35);break;case "alarm":T(880,0,.18,"square",.05);T(660,.2,.18,"square",.05);T(880,.4,.18,"square",.05);break;
+   case "spark":[2349,2794,3136].forEach((f,i)=>T(f,i*.03,.06,"sine",.04));break}}catch(_){}}
+let kWind=null;function kWindOn(on){try{const k=S.kids;if(!on||!k||k.sound===false){if(kWind){kWind.g.gain.setTargetAtTime(0,kAC.currentTime,.3);const w=kWind;kWind=null;setTimeout(()=>{try{w.s.stop()}catch(_){}},900)}return}if(kWind||!kAudio())return;
+  const n=kAC.sampleRate*4,buf=kAC.createBuffer(1,n,kAC.sampleRate),ch=buf.getChannelData(0);let lp=0;for(let i=0;i<n;i++){lp=lp*.985+(Math.random()*2-1)*.015;ch[i]=lp*6}const src=kAC.createBufferSource(),fl=kAC.createBiquadFilter(),g=kAC.createGain();src.buffer=buf;src.loop=true;fl.type="lowpass";fl.frequency.value=500;g.gain.value=0;src.connect(fl);fl.connect(g);g.connect(kMaster);src.start();g.gain.setTargetAtTime(.05,kAC.currentTime,.8);kWind={s:src,g}}catch(_){}}
 /* light space music: 4 chords, arpeggio and bass, quiet; off unless he turns it on */
 const KCH=[[60,64,67,72],[57,60,64,69],[53,57,60,65],[55,59,62,67]],kMidi=n=>440*Math.pow(2,(n-69)/12);
 function kMusicTick(){const k=S.kids;if(!kMus)return;if(view!=="kids"||document.hidden||!k||!k.music||k.sound===false){kMusicStop();return}
@@ -8030,7 +8039,7 @@ function renderKids(){const v=$("#view"),k=KS();
   if(!k.setup||KV.scr==="setup"){kSetupView(v);return kThemeOn(v)}
   if((k.trophyQ||[]).length&&(KV.scr==="home"||KV.scr==="reward"||(KV.scr==="show"&&KV.stage==="done"))){kCertView(v,k.trophyQ[0],true);kThemeOn(v);return kAfterRender()}
   const R={col:kColView,land:kLandView,poker:kPokerView,desk:kDeskView,drive:kDriveView,show:kShowView,mine:kMineView,chess:kChessView,term:kTermView,base:kBaseView,badges:kBadgesView,grown:kGrownView,reward:kRewardView,brain:kBrainView,trophies:kTrophyHall,cert:v=>kCertView(v,KV.id,false),sounds:kSoundView}[KV.scr];
-  R?R(v):kHome(v);const root=v.querySelector(".kids");if(root)root.classList.add("th-"+(k.theme||"galaxy"));kAfterRender()}
+  R?R(v):kHome(v);kWindOn(KV.scr==="col"&&KV.mode!=="ast");const root=v.querySelector(".kids");if(root)root.classList.add("th-"+(k.theme||"galaxy"));kAfterRender()}
 let kWarm=false;function kAfterRender(){const k=KS(),g=KV;if(!kWarm&&navigator.onLine&&typeof KVREC!=="undefined"&&HOSTED){kWarm=true;const vv=kNatural(k)?k.voice:"max",list=(KVREC[vv]||[]).slice();let i=0;const step=()=>{if(i>=list.length)return;fetch(`voice/${vv}/${list[i++]}.mp3`).catch(()=>{}).finally(()=>setTimeout(step,120))};setTimeout(step,4000)}
   if(k.lessonQ&&$(".klesson")&&k.lessonSaid!==k.lessonQ){k.lessonSaid=k.lessonQ;const L=KLES[k.lessonQ];kSpeak(`Power-up! ${L[0]}. ${L[1]} For example: ${L[2]}`,{read:true,force:k.voice!=="off"})}
   const Q=kCurQ();if(Q&&!$(".klesson")){const fresh=g.scr==="show"?g.ans==null:g.scr==="chess"?g.ans==null:g.P&&g.P.labAns==null;
@@ -8475,7 +8484,7 @@ function kRoadOk(){const k=KS();return k.rocket.dest>=1}
 function kCarOk(id){const c=KCARS.find(x=>x[0]===id),k=KS();k.drive=k.drive||{best:0,rides:0};return c&&c[7](k)}
 function kDriveStart(car){const k=KS();k.drive=k.drive||{best:0,rides:0};if((k.tix||0)<1)return false;if(!car){KV={scr:"drive",pick:1};kDrv=null;return true}
   const C=KCARS.find(x=>x[0]===car);if(!C||!C[7](k))return false;k.tix--;k.drive.rides++;k.drive.car=car;persist();KV={scr:"drive"};const mis=kPick(KDMIS);
-  kDrv={car:C,mode:car==="rd"?"roadster":"car",lane:1,x:null,t:0,v:230,bat:100,dist:0,bolts:0,obs:[],spawn:0,scT:12,inv:0,shake:0,fly:0,plaid:0,ap:0,apT:0,brake:false,sc:0,crashes:0,mis,over:false,last:0,
+  kDrv={rain:car!=="rd"&&Math.random()<.3,car:C,mode:car==="rd"?"roadster":"car",lane:1,x:null,t:0,v:230,bat:100,dist:0,bolts:0,obs:[],spawn:0,scT:12,inv:0,shake:0,fly:0,plaid:0,ap:0,apT:0,brake:false,sc:0,crashes:0,mis,over:false,last:0,
     stars:Array.from({length:70},()=>[Math.random(),Math.random(),Math.random()*1.8+.4]),snow:Array.from({length:40},()=>[Math.random(),Math.random(),Math.random()*1.5+.5]),col:car==="ct"&&!k.drive.colSet?"#b8bcc6":(k.drive.col||"#c8102e")};
   kLine(car==="rd"?"Rocket Roadster ready! At thirty seconds we launch into space!":`${C[1]} ready! Mission: ${mis[1].replace("⚡","lightning bolts")}.`,3);return true}
 function kRoadster(c,x,y,fly,t){c.save();c.translate(x,y);const s=fly?1.12:1;c.scale(s,s);c.fillStyle="rgba(0,0,0,.3)";c.beginPath();c.ellipse(fly?10:3,fly?26:6,22,40,0,0,7);c.fill();
@@ -8513,11 +8522,12 @@ function kDriveLoop(ts){const D=kDrv,cv=$("#kdrv");if(!D||KV.scr!=="drive"||!cv)
     D.scT-=dt;if(D.scT<=0&&!SP){D.scT=18;D.obs.push({ln:kR(0,2),y:-80,k:"sc"})}
     D.spawn-=dt;if(D.spawn<=0){D.spawn=Math.max(.36,.9-D.t*.008);const r=Math.random(),ln=kR(0,2);D.obs.push({ln,y:-60,k:r<.42?"bolt":r<.6?"cone":r<.84?"car":r<.92?"boost":"ap",col:kPick(["#1d3f8f","#f4f6ff","#4b5563","#16181d","#c8102e","#16a34a"]),sh:kPick(["sedan","suv","sedan"])})}
     for(const o of D.obs){o.y+=D.v*dt*(o.k==="car"?.55:1);const hit=o.ln===D.lane&&Math.abs(o.y-carY)<(o.k==="car"?70:o.k==="sc"?60:42);if(hit&&!o.done){
-      if(o.k==="bolt"){o.done=1;D.bolts+=SP||D.fly||D.plaid?2:1;D.bat=Math.min(100,D.bat+6);kBeep("coin")}
-      else if(o.k==="sc"){o.done=1;D.sc++;D.bat=Math.min(100,D.bat+45);kBeep("chest");kLine("Supercharging! Battery boost!",2);kVib(40)}
-      else if(o.k==="ap"){o.done=1;D.ap=6;kBeep("up");kLine("Autopilot on!",2)}
-      else if(o.k==="boost"){o.done=1;D.bat=Math.min(100,D.bat+12);if(R){D.fly=4;kLine("Thrusters!",1)}else{D.plaid=3.5;kLine(C[0]==="ms"?"Plaid mode!":"Ludicrous speed!",1)}kBeep("up")}
-      else if(!D.inv&&!D.fly&&!D.plaid){o.done=1;D.bat-=(o.k==="car"?18:10)*C[6];D.crashes++;D.inv=1;D.shake=.35;kBeep("crash");kVib(140)}}}
+      if(o.k==="bolt"){o.done=1;D.combo=(D.t-(D.lastBolt||-9)<1.6)?(D.combo||1)+1:1;D.lastBolt=D.t;const add=(SP||D.fly||D.plaid?2:1)*(D.combo>=5?3:D.combo>=3?2:1);D.bolts+=add;D.bat=Math.min(100,D.bat+6);kBeep(D.combo>=3?"spark":"coin");D.fx=(D.fx||[]).concat([{x:lx(o.ln),y:carY-30,t:0,k:"spark",txt:D.combo>=3?`x${D.combo>=5?3:2} COMBO`:""}])}
+      else if(o.k==="sc"){o.done=1;D.sc++;D.bat=Math.min(100,D.bat+45);kBeep("charge");kLine("Supercharging! Battery boost!",2);kVib(40)}
+      else if(o.k==="ap"){o.done=1;D.ap=6;kBeep("chime");kLine("Autopilot on!",2)}
+      else if(o.k==="boost"){o.done=1;D.bat=Math.min(100,D.bat+12);if(R){D.fly=4;kLine("Thrusters!",1)}else{D.plaid=3.5;kLine(C[0]==="ms"?"Plaid mode!":"Ludicrous speed!",1)}kBeep("whoosh")}
+      else if(!D.inv&&!D.fly&&!D.plaid){o.done=1;D.bat-=(o.k==="car"?18:10)*C[6];D.crashes++;D.combo=0;D.inv=1;D.shake=.35;kBeep("crash");kVib(140);D.fx=(D.fx||[]).concat([{x:lx(o.ln),y:carY-20,t:0,k:"smoke"}])}}}
+    kGateStep(D,dt,lx,carY,SP);
     D.obs=D.obs.filter(o=>o.y<H+90&&!(o.done&&o.k!=="car"&&o.k!=="cone"));if(D.bat<=0||D.t>=60){D.over=true;D.bat=Math.max(0,D.bat);kDriveEnd()}}
   const biome=D.t<20?0:D.t<40?1:2,night=Math.max(0,Math.min(1,(D.t-24)/4))*Math.max(0,Math.min(1,(46-D.t)/4));
   const sx=D.shake?(Math.random()-.5)*8:0;c.save();c.translate(sx,0);
@@ -8532,11 +8542,17 @@ function kDriveLoop(ts){const D=kDrv,cv=$("#kdrv");if(!D||KV.scr!=="drive"||!cv)
   if(biome===2&&!SP){c.fillStyle="rgba(255,255,255,.9)";for(const f of D.snow){const y=(f[1]*H+D.t*80*f[2])%H,x=(f[0]*W+Math.sin(D.t+f[1]*9)*12)%W;c.beginPath();c.arc(x,y,f[2]*1.6,0,7);c.fill()}}
   if(D.plaid&&!SP){c.strokeStyle="rgba(255,255,255,.5)";c.lineWidth=2;for(let i=0;i<10;i++){const x=RX+Math.random()*RW;c.beginPath();c.moveTo(x,Math.random()*H);c.lineTo(x,Math.random()*H+60);c.stroke()}}
   if(!(D.inv&&Math.floor(D.t*12)%2)){if(R)kRoadster(c,D.x,carY,SP||D.fly>0,D.t);else{const sz={sedan:[46,84],suv:[50,90],truck:[54,96],plaid:[46,90]}[C[3]];kCar(c,D.x,carY,sz[0],sz[1],D.col,C[3])}}
-  if(D.ap){c.strokeStyle="rgba(63,182,255,.8)";c.lineWidth=3;c.setLineDash([8,8]);c.beginPath();c.moveTo(lx(D.lane),carY-60);c.lineTo(lx(D.lane),carY-240);c.stroke();c.setLineDash([])}
+  if(D.ap){c.strokeStyle="rgba(63,182,255,.8)";c.lineWidth=3;c.setLineDash([8,8]);c.beginPath();c.moveTo(lx(D.lane),carY-60);c.lineTo(lx(D.lane),carY-240);c.stroke();c.setLineDash([]);
+    c.lineWidth=2;c.font="bold 10px system-ui";for(const o of D.obs){if(o.k!=="car"&&o.k!=="cone")continue;if(o.y<carY-360||o.y>carY+20)continue;const x=lx(o.ln),bw=o.k==="car"?48:34,bh=o.k==="car"?82:34,dist=Math.max(0,Math.round((carY-o.y)/6));c.strokeStyle=o.ln===D.lane&&dist<35?"rgba(255,90,90,.95)":"rgba(63,182,255,.95)";c.strokeRect(x-bw/2,o.y-bh/2,bw,bh);c.fillStyle=c.strokeStyle;c.fillText(`${dist} m`,x,o.y-bh/2-7)}
+    c.fillStyle="rgba(63,182,255,.9)";c.font="bold 11px system-ui";c.fillText("◉ AUTOPILOT VIEW",W/2,carY+58)}
+  if(D.gate&&!SP)kGateDraw(c,D,lx,LW,W);
+  for(const f of (D.fx||[])){f.t+=dt;if(f.k==="spark"){c.fillStyle=`rgba(255,230,90,${1-f.t*2})`;for(let i=0;i<8;i++){const a=i/8*6.28;c.beginPath();c.arc(f.x+Math.cos(a)*f.t*90,f.y+Math.sin(a)*f.t*90,3,0,7);c.fill()}if(f.txt){c.font="900 16px system-ui";c.fillText(f.txt,f.x,f.y-30-f.t*40)}}else{c.fillStyle=`rgba(200,200,210,${.7-f.t})`;c.beginPath();c.arc(f.x,f.y-f.t*40,14+f.t*50,0,7);c.fill()}}D.fx=(D.fx||[]).filter(f=>f.t<.6);
+  if(D.rain&&!SP){c.strokeStyle="rgba(180,200,255,.45)";c.lineWidth=1.5;for(let i=0;i<60;i++){const x=(i*53+D.t*40)%W,y=(i*97+D.t*900)%H;c.beginPath();c.moveTo(x,y);c.lineTo(x-4,y+14);c.stroke()}}
   c.restore();
   c.fillStyle="rgba(5,8,24,.78)";c.fillRect(0,0,W,52);c.fillStyle="#fff";c.textAlign="left";c.textBaseline="middle";c.font="900 22px system-ui";c.fillText(SP?`${Math.round(D.v*80).toLocaleString("en-US")}`:`${Math.round(D.v/4.5)}`,10,20);c.font="bold 10px system-ui";c.fillText(SP?"MPH IN SPACE":"MPH",10,40);
   c.textAlign="center";c.font="bold 13px system-ui";c.fillText(`${D.dist.toFixed(1)} mi · ⚡${D.bolts}${D.ap?" · 🤖 AUTOPILOT":D.plaid?" · 💨 PLAID":D.fly?" · 🚀 THRUST":""}`,W/2,18);
-  const mp=kDMisProg(D);c.font="11px system-ui";c.fillStyle=mp.done?"#2ec27e":"#c7cbe6";c.fillText(`🎯 ${D.mis[1]}${mp.txt}`,W/2,36);
+  if(D.gateMsgT>0){c.fillStyle="rgba(255,77,109,.92)";c.fillRect(W/2-90,60,180,24);c.fillStyle="#fff";c.font="bold 13px system-ui";c.textAlign="center";c.fillText(`🧠 ${D.gateMsg}`,W/2,72)}
+  const mp=kDMisProg(D);c.font="11px system-ui";c.textAlign="center";c.fillStyle=mp.done?"#2ec27e":"#c7cbe6";c.fillText(`🎯 ${D.mis[1]}${mp.txt}`,W/2,36);
   c.textAlign="right";c.font="bold 14px system-ui";c.fillStyle=D.bat>40?"#2ec27e":D.bat>20?"#ffb703":"#ff4d6d";c.fillText(`🔋 ${Math.round(D.bat)}%`,W-10,20);c.fillStyle="rgba(255,255,255,.25)";c.fillRect(10,48,W-20,3);c.fillStyle="#ffd23f";c.fillRect(10,48,(W-20)*Math.min(1,D.t/60),3);
   kDriveHum(D.over?0:D.v);if(!D.over)requestAnimationFrame(kDriveLoop);else setTimeout(()=>{if(KV.scr==="drive")render()},500)}
 function kDMisProg(D){const m=D.mis;if(m[0]==="bolts")return{done:D.bolts>=15,txt:` (${Math.min(15,D.bolts)}/15)`};if(m[0]==="dist")return{done:D.dist>=2.5,txt:` (${Math.min(2.5,D.dist).toFixed(1)}/2.5)`};if(m[0]==="sc")return{done:D.sc>=1,txt:D.sc?" ✓":""};return{done:D.crashes===0&&D.t>=60,txt:D.crashes?" ✗":""}}
@@ -8550,18 +8566,18 @@ function kDriveView(v){const D=kDrv,k=KS();k.drive=k.drive||{best:0,rides:0};
     <div class="kcard"><div class="kh">🎨 Paint</div><div class="kpaint">${KCOLS.map(([n,col])=>`<button class="kswatch ${(k.drive.col||"#c8102e")===col?"on":""}" style="background:${col}" data-kcol="${col}" aria-label="${n}" title="${n}"></button>`).join("")}</div><div class="ksmall">${esc((KCOLS.find(x=>x[1]===(k.drive.col||"#c8102e"))||KCOLS[1])[0])}</div>
      <button class="ktog ${k.drive.tilt?"on":""}" data-k="tilt"><span>📱 Tilt the phone to steer</span><b>${k.drive.tilt?"ON":"OFF"}</b></button></div>
     <button class="kbtn big green" data-kride="${sel}" ${kCarOk(sel)&&(k.tix||0)>0?"":"disabled"}>${(k.tix||0)>0?`Drive the ${esc(KCARS.find(x=>x[0]===sel)[1])} 🏁`:"Earn a 🎟️ ticket first"}</button>
-    <button class="kbtn ghost" data-k="cartoon">🎬 Watch the Rocket Roadster cartoon</button><div class="ksmall">Power-ups: ⚡ charge · 🔋 Plaid/Ludicrous speed (Roadster: thrusters) · 🤖 Autopilot dodges for you · ⚡SUPERCHARGER lanes refill your battery. Hold 🛑 to use regenerative braking: slowing down recharges the battery, just like a real EV!</div></div>`;return}
+    <button class="kbtn ghost" data-k="cartoon">🎬 Watch the Rocket Roadster cartoon</button><div class="ksmall">🧠 Brain Gates: drive through the right answer for turbo! Power-ups: ⚡ charge (grab them fast for combos) · 🔋 Plaid/Ludicrous speed (Roadster: thrusters) · 🤖 Autopilot dodges for you · ⚡SUPERCHARGER lanes refill your battery. Hold 🛑 to use regenerative braking: slowing down recharges the battery, just like a real EV!</div></div>`;return}
   if(KV.cartoon){v.innerHTML=`<div class="kids">${kTop("Rocket Roadster","drive")}<div class="kvid"><video src="video/rocket-roadster.mp4" controls autoplay playsinline></video></div><div class="ksmall">${navigator.onLine?"":"The cartoon needs internet the first time."}</div><button class="kbtn big" data-k="drive">Pick your Tesla ▶</button></div>`;return}
   if(!D){KV={scr:"home"};return kHome(v)}
   if(D.over){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Tesla Drive","home")}<div class="kcard kend"><div class="kbig2">${D.t>=60?(D.mode==="roadster"?"🔴":"🏁"):"🔋"}</div><h2>${D.t>=60?(D.mode==="roadster"?"Rocket Roadster reached Mars!":"You made it to the Supercharger!"):"Battery empty!"}</h2>
-    <p><b>${D.dist.toFixed(1)} miles</b> · ⚡ ${D.bolts} bolts · ${D.sc} Supercharger${D.sc===1?"":"s"} · ${D.crashes} crash${D.crashes===1?"":"es"}</p><p>🎯 ${esc(D.mis[1])}: <b>${D.misOk?"✅ done! +10 ⚡":"not this time"}</b> · +${D.coins} coins${D.best?" · 🏆 New record!":""}</p>
+    <p><b>${D.dist.toFixed(1)} miles</b> · ⚡ ${D.bolts} bolts · ${D.sc} Supercharger${D.sc===1?"":"s"} · 🧠 ${D.gates||0} brain gate${(D.gates||0)===1?"":"s"} · ${D.crashes} crash${D.crashes===1?"":"es"}</p><p>🎯 ${esc(D.mis[1])}: <b>${D.misOk?"✅ done! +10 ⚡":"not this time"}</b> · +${D.coins} coins${D.best?" · 🏆 New record!":""}</p>
     ${D.mode==="roadster"?`<p class="ksmall">True story: in 2018 a real red Tesla Roadster was launched into space on a Falcon Heavy rocket, with a dummy astronaut called Starman in the driver’s seat. It’s still flying around the Sun!</p>`:`<p class="ksmall">💡 ${esc(D.fact)}</p>`}
     <p class="ksmall">Best drive: ${k.drive.best} miles · 🎟️ ${k.tix||0} ticket${(k.tix||0)===1?"":"s"} left</p>
     <div class="kpad">${(k.tix||0)>0?`<button class="kbtn big green" data-k="drive">Drive again 🏁</button>`:""}<button class="kbtn ${(k.tix||0)>0?"ghost":"big"}" data-k="home">Home</button></div>${(k.tix||0)<1?`<div class="ksmall">Earn tickets: score 4+ in a Quiz Show round, promote a pawn, open the daily chest, finish all 3 quests or every 3 Computer Academy missions.</div>`:""}</div></div>`;return}
   const W=Math.min(380,v.clientWidth||360)-4,H=Math.round(W*1.35);v.innerHTML=`<div class="kids">${kTop(D.car[1],"home")}<div class="kdrvbox"><canvas id="kdrv" width="${W}" height="${H}" aria-label="Driving game: tap left or right to change lanes"></canvas></div>
    <div class="kpad kdrvbtns"><button class="kbtn big" data-k="dl">◀</button><button class="kbtn big kbrk" id="kbrk">🛑 Regen</button><button class="kbtn big" data-k="honk">📯</button><button class="kbtn big" data-k="dr">▶</button></div><div class="ksmall">Tap the left or right side of the road${KS().drive.tilt?" or tilt the phone":""}. Hold 🛑 to brake and recharge.</div></div>`;
   D.last=0;requestAnimationFrame(kDriveLoop)}
-function kDriveSteer(dir){if(!kDrv||kDrv.over)return;kDrv.lane=Math.max(0,Math.min(2,kDrv.lane+dir));kBeep("click")}
+function kDriveSteer(dir){if(!kDrv||kDrv.over)return;const nl=Math.max(0,Math.min(2,kDrv.lane+dir));if(nl!==kDrv.lane)kBeep("signal");kDrv.lane=nl}
 document.addEventListener("pointerdown",e=>{try{if(view!=="kids"||KV.scr!=="drive"||!e.target)return;if(e.target.id==="kbrk"||e.target.closest&&e.target.closest("#kbrk")){if(kDrv)kDrv.brake=true;return}if(e.target.id!=="kdrv")return;const r=e.target.getBoundingClientRect();kDriveSteer(e.clientX-r.left<r.width/2?-1:1);kLastAct=Date.now()}catch(_){}});
 ["pointerup","pointercancel","pointerleave"].forEach(ev=>document.addEventListener(ev,()=>{if(kDrv)kDrv.brake=false},true));
 window.addEventListener("deviceorientation",e=>{if(kDrv&&e.gamma!=null)kDrv.gamma=e.gamma});
@@ -8826,10 +8842,10 @@ function kColLevel(c){return 1+Object.values(c.b).reduce((a,b)=>a+b,0)}
 function kColRate(c){return KCOLB.reduce((a,B)=>a+(c.b[B[0]]||0)*B[4],0)}
 function kColPop(c){return (c.b.hab||0)*4+(c.b.dome||0)*12+(c.b.green||0)*2}
 function kColCost(B,lv){return Math.round(B[3]*Math.pow(1.6,lv))}
-function kColIdle(){const c=kCol(),now=Date.now(),mins=Math.min(8*60,(now-(c.last||now))/60000);c.last=now;const got=Math.floor(mins*kColRate(c)*.5);if(got>0){c.cr+=got;if(mins>3)c.away=got}return got}
+function kColIdle(){const c=kCol(),now=Date.now(),mins=Math.min(8*60,(now-(c.last||now))/60000);c.last=now;const got=Math.floor(mins*kColRate(c)*.5);if(got>0){c.cr+=got;if(mins>3){c.away=got;setTimeout(()=>kBeep("kaching"),300)}}return got}
 function kColLvlCheck(){const k=KS(),c=kCol(),L=kColLevel(c),old=c.lvl||1;if(L>old){c.lvl=L;const t=L%3===0?1:0;if(t)kTix(1,`colony level ${L}`);kT(`🔴 Colony level ${L}!${t?" +1 🎟️":""}`);kFx=true;kBeep("up");kLine("Colony level up!",3);
   if(kColPop(c)>=50)kTrophy("col50","🔴","Mars colony of 50 people!","Built a Mars colony big enough for 50 people.");if(L>=20)kTrophy("col20","🛸","Mars Colony level 20!","Built a giant Mars colony with Starships and domes.")}}
-function kColBuy(id){const k=KS(),c=kCol(),B=KCOLB.find(x=>x[0]===id),lv=c.b[id]||0,cost=kColCost(B,lv);if(kColLevel(c)<B[5]+1||c.cr<cost||lv>=10)return false;c.cr-=cost;c.b[id]=lv+1;kBeep(lv?"coin":"place");
+function kColBuy(id){const k=KS(),c=kCol(),B=KCOLB.find(x=>x[0]===id),lv=c.b[id]||0,cost=kColCost(B,lv);if(kColLevel(c)<B[5]+1||c.cr<cost||lv>=10)return false;c.cr-=cost;c.b[id]=lv+1;kBeep(lv?"kaching":"build");
   if(!c.seen[id]){c.seen[id]=1;KV.fact=[B[2]+" "+B[1],B[6]];kLine(`${B[1]} built! ${B[6]}`,3)}kColLvlCheck();persist();return true}
 /* Mission Control: learn to earn credits */
 function kMcStart(){KV={scr:"col",mode:"mc",i:0,n:5,right:0,res:[],Q:kQ(kSubPick({sci:2,math:2,geo:1,code:1,eng:1})),ans:null}}
@@ -8844,9 +8860,9 @@ function kAstStart(){const k=KS();KV={scr:"col",mode:"ast"};kAst={n:0,right:0,sh
 function kAstNext(){const A=kAst;if(A.n>=10||A.shield<=0){A.over=true;kAstEnd();return}A.n++;A.P=kFact(A.lv);const cv=$("#kast"),W=cv?cv.width:340;const sp=40+A.n*6+Math.min(30,A.lv*2);
   A.rocks=A.P.o.map((v,i)=>({v,x:W*(i+.5)/4+(Math.random()-.5)*20,y:-30-Math.random()*60,vy:sp*(.85+Math.random()*.3),r:30,rot:Math.random()*6}));A.qT=Date.now()}
 function kAstHit(x,y){const A=kAst;if(!A||A.over)return;for(const r of A.rocks){if(Math.hypot(r.x-x,r.y-y)<r.r+8){const ok=r.v===A.P.a;A.booms.push({x:r.x,y:r.y,t:0,ok});
-  kAnswer("math",ok,{s:"math",q:A.P.q,o:[],a:-1,nosave:1});if(ok){A.right++;kBeep("coin");kVib(25);kAstNext()}else{A.shield--;kBeep("crash");kVib(90);kT(`${A.P.q} = ${A.P.a}`);if(A.shield<=0){A.over=true;kAstEnd()}else kAstNext()}return}}}
+  kAnswer("math",ok,{s:"math",q:A.P.q,o:[],a:-1,nosave:1});if(ok){A.right++;kBeep("boom");kBeep("spark");kVib(25);kAstNext()}else{A.shield--;kBeep("alarm");kVib(90);kT(`${A.P.q} = ${A.P.a}`);if(A.shield<=0){A.over=true;kAstEnd()}else kAstNext()}return}}}
 function kAstLoop(ts){const A=kAst,cv=$("#kast");if(!A||KV.scr!=="col"||KV.mode!=="ast"||!cv)return;const c=cv.getContext("2d"),W=cv.width,H=cv.height,dt=A.last?Math.min(.05,(ts-A.last)/1000):0;A.last=ts;A.t+=dt;const ground=H-70;
-  if(!A.over){for(const r of A.rocks){r.y+=r.vy*dt;r.rot+=dt}const hitG=A.rocks.find(r=>r.v===A.P.a&&r.y>ground-10);if(hitG){A.shield--;A.booms.push({x:hitG.x,y:ground,t:0,ok:false});kBeep("crash");kVib(120);kAnswer("math",false,{s:"math",q:A.P.q,o:[],a:-1,nosave:1});kT(`${A.P.q} = ${A.P.a}`);if(A.shield<=0){A.over=true;kAstEnd()}else kAstNext()}}
+  if(!A.over){for(const r of A.rocks){r.y+=r.vy*dt;r.rot+=dt}const hitG=A.rocks.find(r=>r.v===A.P.a&&r.y>ground-10);if(hitG){A.shield--;A.booms.push({x:hitG.x,y:ground,t:0,ok:false});kBeep("boom");kBeep("alarm");kVib(120);kAnswer("math",false,{s:"math",q:A.P.q,o:[],a:-1,nosave:1});kT(`${A.P.q} = ${A.P.a}`);if(A.shield<=0){A.over=true;kAstEnd()}else kAstNext()}}
   const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,"#05030f");g.addColorStop(.7,"#3b0d0d");g.addColorStop(1,"#c2410c");c.fillStyle=g;c.fillRect(0,0,W,H);c.fillStyle="rgba(255,255,255,.6)";for(let i=0;i<50;i++)c.fillRect((i*71)%W,((i*37)+A.t*8)%(H*.6),1.5,1.5);
   c.fillStyle="#9a3412";c.beginPath();c.moveTo(0,ground+20);for(let x=0;x<=W;x+=20)c.lineTo(x,ground+10+Math.sin(x/30)*6);c.lineTo(W,H);c.lineTo(0,H);c.fill();
   c.fillStyle="rgba(147,197,253,.25)";c.strokeStyle=A.shield>1?"#93c5fd":"#fca5a5";c.lineWidth=3;c.beginPath();c.ellipse(W/2,ground+30,W*.42,60,0,Math.PI,0);c.fill();c.stroke();c.font="26px serif";c.textAlign="center";c.textBaseline="middle";c.fillText("🏠🌱🚀🔬",W/2,ground+12);
@@ -8888,15 +8904,15 @@ function meMove(E,pi,n){const P=E.p[pi],old=P.pos;P.pos=(P.pos+n)%KMB.length;if(
 function meLand(E,pi){const P=E.p[pi],i=P.pos,s=KMB[i];
   if(s[0]==="reg"){const o=E.own[i];if(o.o===null){if(pi===0){E.stage="buy";return}if(P.cash>=s[3]+80){P.cash-=s[3];o.o=1;meLog(E,`🤖 Robo bought ${s[2]} for ${s[3]} 💠`)}return}
     if(o.o===pi){if(pi===0&&o.b<3){E.stage="build";return}if(pi===1&&o.b<3){const cost=Math.round(s[3]*.6);if(P.cash>=cost+60){P.cash-=cost;o.b++;meLog(E,`🤖 Robo built a ${KMBUILD[o.b].slice(3)} on ${s[2]}`)}}return}
-    const rent=meRent(E,i),O=E.p[o.o];P.cash-=rent;O.cash+=rent;meLog(E,`${P.ic} ${P.name} paid ${rent} 💠 rent to ${O.name} (${s[4]} × ${KMBMUL[o.b]}${O.tech?` + ${O.tech*10}% tech`:""})`);if(pi===0){kBeep("no")}else kBeep("coin");return}
+    const rent=meRent(E,i),O=E.p[o.o];P.cash-=rent;O.cash+=rent;meLog(E,`${P.ic} ${P.name} paid ${rent} 💠 rent to ${O.name} (${s[4]} × ${KMBMUL[o.b]}${O.tech?` + ${O.tech*10}% tech`:""})`);if(pi===0){kBeep("no")}else kBeep("kaching");return}
   if(s[0]==="card"||s[0]==="lab"||s[0]==="storm"){if(pi===0){E.stage="q";E.qkind=s[0];E.Q=kQ(kSubPick());E.ans=null;return}
     if(s[0]==="card"){const g=kPick([40,60,80]);P.cash+=g;meLog(E,`🤖 Robo's mission card: +${g} 💠`)}else if(s[0]==="lab"){if(Math.random()<.6){P.tech++;meLog(E,`🤖 Robo researched new tech (Tech ${P.tech})`)}}else{P.cash-=30;meLog(E,"🌪️ Dust storm! Robo paid 30 💠 for repairs")}}}
-function meRoll(){const E=KV.E;if(E.stage!=="roll"||E.over)return;const d=kR(1,6);E.die=d;kBeep("drum");meMove(E,0,d);meLog(E,`🎲 You rolled ${d} and landed on ${KMB[E.p[0].pos][2]}.`);meLand(E,0);if(E.stage==="roll")meRobo()}
+function meRoll(){const E=KV.E;if(E.stage!=="roll"||E.over)return;const d=kR(1,6);E.die=d;kBeep("dice");meMove(E,0,d);meLog(E,`🎲 You rolled ${d} and landed on ${KMB[E.p[0].pos][2]}.`);meLand(E,0);if(E.stage==="roll")meRobo()}
 function meRobo(){const E=KV.E;if(E.over)return;const d=kR(1,6);meMove(E,1,d);meLog(E,`🤖 Robo rolled ${d} → ${KMB[E.p[1].pos][2]}`);meLand(E,1);meEndRound()}
 function meEndRound(){const E=KV.E;if(E.p.some(p=>p.cash<0)||E.round>=E.maxR){meFinish();return}E.round++;E.stage="roll";persist()}
 function meAct(a){const E=KV.E,P=E.p[0],i=P.pos,s=KMB[i],k=KS();
-  if(a==="buy"&&E.stage==="buy"){if(P.cash>=s[3]){P.cash-=s[3];E.own[i].o=0;meLog(E,`✅ You bought ${s[2]} for ${s[3]} 💠. Rent here: ${s[4]} 💠`);kBeep("coin");kLine(`You bought ${s[2]}!`,1)}else meLog(E,"Not enough 💠 to buy it.");E.stage="roll";meRobo();return}
-  if(a==="build"&&E.stage==="build"){const o=E.own[i],cost=Math.round(s[3]*.6);if(P.cash>=cost){P.cash-=cost;o.b++;meLog(E,`🏗️ You built a ${KMBUILD[o.b].slice(3)} on ${s[2]}! Rent is now ${meRent(E,i)} 💠`);kBeep("place")}else meLog(E,"Not enough 💠 to build.");E.stage="roll";meRobo();return}
+  if(a==="buy"&&E.stage==="buy"){if(P.cash>=s[3]){P.cash-=s[3];E.own[i].o=0;meLog(E,`✅ You bought ${s[2]} for ${s[3]} 💠. Rent here: ${s[4]} 💠`);kBeep("kaching");kLine(`You bought ${s[2]}!`,1)}else meLog(E,"Not enough 💠 to buy it.");E.stage="roll";meRobo();return}
+  if(a==="build"&&E.stage==="build"){const o=E.own[i],cost=Math.round(s[3]*.6);if(P.cash>=cost){P.cash-=cost;o.b++;meLog(E,`🏗️ You built a ${KMBUILD[o.b].slice(3)} on ${s[2]}! Rent is now ${meRent(E,i)} 💠`);kBeep("build")}else meLog(E,"Not enough 💠 to build.");E.stage="roll";meRobo();return}
   if(a==="skip"&&(E.stage==="buy"||E.stage==="build")){E.stage="roll";meRobo();return}}
 function meAnswer(ok,Q){const E=KV.E,P=E.p[0];const hint=!!(Q&&Q.rm);kAnswer(Q.s,ok,Q);
   if(E.qkind==="card"){const g=ok&&!hint?kPick([60,80,100]):0;P.cash+=g;meLog(E,ok?(hint?"Right, but a hint means no bonus.":`📡 Mission success: +${g} 💠`):"📡 Mission failed. No bonus this time.")}
@@ -8915,6 +8931,14 @@ function meView(v){const E=KV.E,k=KS(),me=E.p[0],bot=E.p[1];
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Mars Empire","col")}<div class="mboard">${cells}<div class="mcenter"><div class="mscore"><span>🧑‍🚀 ${me.cash} 💠 · 🔬${me.tech}</span><span>🤖 ${bot.cash} 💠 · 🔬${bot.tech}</span></div><div class="ksmall">Round ${E.round}/${E.maxR}</div>${ctrl}<div class="mtip">💡 ${esc(KMTIP[E.round%KMTIP.length])}</div></div></div>
    <div class="kcard pklog">${E.log.slice(-4).map(l=>`<div>${esc(l)}</div>`).join("")}</div>
    <details class="kcard"><summary class="kh">📘 How to play (easy!)</summary><p>Roll the dice and move your rover. Land on a free region? <b>Buy it</b>. When Robo lands on your land, Robo pays you <b>rent</b>. Land on your own region to <b>build</b>: 🏕️ outpost (×3 rent), 🏠 base (×7), 🏙️ city (×15). 🔬 Labs give <b>tech</b> (+10% rent each). 📡 Mission cards and 🌪️ storms ask a question. Pass the 🚀 Launch Pad for +100 💠. After ${E.maxR} rounds, the richest empire wins!</p></details></div>`}
+
+/* Brain Gates: every 15 seconds three answer boards cross the road; drive through the right one for turbo */
+function kGateStep(D,dt,lx,carY,SP){if(SP||D.over)return;D.gT=(D.gT==null?9:D.gT)-dt;if(!D.gate&&D.gT<=0){D.gT=15;const k=KS(),P=kFact(Math.max(1,k.lv.math)),opts=kShuf([P.a,...P.o.filter(x=>x!==P.a).slice(0,2)]);D.gate={q:P.q,a:P.a,opts,y:-90};D.obs=D.obs.filter(o=>o.y>-20||o.y<-200);kBeep("chime");kLine("Brain gate ahead!",1)}
+  if(!D.gate)return;D.gate.y+=D.v*dt;if(D.gate.y>=carY-10&&!D.gate.done){D.gate.done=1;const pick=D.gate.opts[D.lane],ok=pick===D.gate.a;kAnswer("math",ok,{s:"math",q:D.gate.q,o:[],a:-1,nosave:1});
+    if(ok){D.bolts+=5;D.plaid=Math.max(D.plaid,2);D.gates=(D.gates||0)+1;kBeep("kaching");kLine("Correct! Turbo!",2);D.fx=(D.fx||[]).concat([{x:lx(D.lane),y:carY-40,t:0,k:"spark",txt:"+5 ⚡ TURBO"}])}else{kBeep("no");D.gateMsg=`${D.gate.q} = ${D.gate.a}`;D.gateMsgT=2.5}}
+  if(D.gate.y>carY+120)D.gate=null;D.gateMsgT=Math.max(0,(D.gateMsgT||0)-dt)}
+function kGateDraw(c,D,lx,LW,W){const G=D.gate;c.fillStyle="rgba(5,8,24,.85)";c.fillRect(0,G.y-64,W,26);c.fillStyle="#ffd23f";c.font="900 15px system-ui";c.textAlign="center";c.fillText(`🧠 ${G.q} = ?`,W/2,G.y-51);
+  G.opts.forEach((v,i)=>{const x=lx(i);c.fillStyle=G.done?(v===G.a?"#2ec27e":"#6b7280"):"#3fb6ff";c.beginPath();c.roundRect(x-LW/2+5,G.y-32,LW-10,34,8);c.fill();c.fillStyle="#fff";c.font="900 18px system-ui";c.fillText(v,x,G.y-14)})}
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -12858,7 +12882,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 117 · Nov 18";
+const BUILD="Version 118 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
