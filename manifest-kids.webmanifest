@@ -1,6 +1,6 @@
 {
- "name": "Space Academy",
- "short_name": "Space Academy",
+ "name": "Rocket Genius",
+ "short_name": "Rocket Genius",
  "description": "Learning games for kids: math, English, science, code, geography and chess.",
  "start_url": "./?kids",
  "scope": "./",

@@ -1,10 +1,10 @@
 # Solving Life LLC · Study
 
 A single-file, offline-first study app (a Progressive Web App) for professional exams, with a
-built-in learning-games section for kids called **Space Academy**.
+built-in learning-games section for kids called **Rocket Genius**.
 
 **Open the app:** https://stumbras.github.io/ea-exam-app/
-**Kids-only link (Space Academy):** https://stumbras.github.io/ea-exam-app/?kids
+**Kids-only link (Rocket Genius):** https://stumbras.github.io/ea-exam-app/?kids
 
 ---
 
@@ -24,7 +24,12 @@ drills, practice cases, progress tracking and a 🔄 update button. Content is w
 sources (IRS, SSA, NASAA, Colorado Secretary of State) and is updated as new forms and rules come out.
 It is a study aid, not legal or tax advice.
 
-## Space Academy (kids, ages 8–14)
+**Quick decisions** (one-tap drills with progress bars) now also cover earned vs unearned income,
+Schedule 1 vs Schedule A (above vs below the line), taxable vs non-taxable, losses/carryovers/NOLs and
+borrowing, step-up and estate basics (Part 1); employee vs independent contractor and accounting choices
+(Part 2); penalties, statutes of limitation and who can represent taxpayers (Part 3).
+
+## Rocket Genius (kids, ages 8–14)
 
 Every subject adapts to the player: three right answers in a row (with 70%+ recent accuracy) moves a
 subject up a level, two misses move it down. Hints are always available but never earn points.
@@ -60,6 +65,17 @@ subject up a level, two misses move it down. Hints are always available but neve
   🍕 Pizza Rush and 🚕 Taxi. They teach compass directions (NORTH is up, "the hideout is SOUTH-EAST"),
   street-address map reading, and money math (making change and multiplying for bonus tips).
   One ticket = a 5-minute visit. No crime or violence: everything is cartoon mischief.
+- **🔄 Smart rotation:** a daily "brain mix" suggests three activities he hasn't done yet; the first win at each
+  one each day gives a bonus ticket (up to 4), and after three rounds of the same thing it suggests switching.
+- **🎓 Genius Lessons:** bite-size tracks from Kid to Elite (3 cards + 2 questions each): Money & Economy,
+  Government & Law, Crypto & Blockchain, How Hacks Happen (ethical cyber defense), Medicine & Body,
+  Engineering & Space, and Science Careers, each ending with real career paths.
+- **🎵 Music Lab:** note reading on the treble staff (4 adaptive levels), an on-screen piano, play-along songs
+  (Hot Cross Buns, Mary Had a Little Lamb, Twinkle Twinkle, Ode to Joy) where the microphone checks each
+  note played on a real keyboard or recorder (with recorder fingerings), a tuner with guitar string notes,
+  and an 8-beat composer.
+- **📱 Phone Powers:** tests for tilt, microphone, vibration and voice, with step-by-step permission settings
+  for Pixel/Android and iPhone. Tilt steering is smoothed, auto-centers, and works in landscape too.
 - **Rewards earned by learning:** 🎟️ tickets unlock Tesla Drive and Booster Landing 2.0, a rocket-landing
   physics game with 10 levels: Landing Zone, Droneship, Windy Droneship, Night Landing (deploy the legs
   yourself), Moon (1/6 gravity), Mars (38% gravity and dust gusts), Tower Catch (the chopsticks close),
@@ -103,7 +119,7 @@ subject up a level, two misses move it down. Hints are always available but neve
 - After the first visit with internet, the app works offline.
 - When a new version is available, a green bar appears and the 🔄 **Update app** button installs it.
   Progress is kept through updates.
-- Opening the `?kids` link on a device locks that device to Space Academy. Opening the link with
+- Opening the `?kids` link on a device locks that device to Rocket Genius. Opening the link with
   `?study` at the end returns it to the full app.
 
 ## Privacy
@@ -130,7 +146,7 @@ This repository holds the built app that GitHub Pages serves:
 
 - `index.html`: the whole app (HTML, CSS and JavaScript in one file)
 - `sw.js`: the service worker that makes the app work offline
-- `manifest.webmanifest`, `manifest-kids.webmanifest`: install settings for the study app and Space Academy
+- `manifest.webmanifest`, `manifest-kids.webmanifest`: install settings for the study app and Rocket Genius
 - `audio/`, `voice/`, `video/`: recorded audio, voice clips and the cartoon video
 - `course-book.pdf`: the printable course book
 - `version.json`: the current version, used by the update button
