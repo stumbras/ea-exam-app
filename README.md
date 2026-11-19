@@ -39,14 +39,28 @@ subject up a level, two misses move it down. Hints are always available but neve
   pot odds, and play-chip hands against a robot with a win-chance coach). Play chips only.
 - **💻 Computer Academy:** real terminal commands in a safe pretend computer for Linux (bash), Windows
   (PowerShell) and Mac (zsh), plus keyboard-shortcut missions on simulated Windows, Mac and
-  Linux Mint desktops.
+  Linux Mint desktops. The 🚗 **Tesla Hacker** pack has 20 pretend "hack your own game car" missions
+  that teach real Linux skills: hidden files, editing config files with `>` and `>>`, `grep`, pipes,
+  `wc`, `tail`, `find`, backups, file permissions (`ls -l`, `chmod +x`) and writing and running shell
+  scripts, ending with three harder ELITE missions. A robot helper, Byte, explains each step, shows a
+  clickable map of the folders, offers "did you mean" fixes for typos, and can type a command for the
+  player (help that reveals the answer earns no points). Every finished mission shows an ACCESS GRANTED
+  screen and unlocks a Tesla Drive reward.
 - **🔴 Mars Colony Tycoon:** build a Mars base whose buildings each teach a real Mars science fact and
   keep earning credits while the player is away. Credits come from learning (Mission Control questions)
   and from ☄️ Asteroid Defense, a fast math-facts arcade game. Also includes 🎲 **Mars Empire**, an easy
   board game against a robot that mixes buying regions and collecting rent with building outposts,
   bases and cities, plus research labs and question cards.
-- **Rewards earned by learning:** 🎟️ tickets unlock Tesla Drive (a driving game with Autopilot,
-  Supercharger and regenerative-braking power-ups) and Booster Landing (a rocket-landing physics game).
+- **Rewards earned by learning:** 🎟️ tickets unlock Tesla Drive and Booster Landing (a rocket-landing
+  physics game). Tesla Drive has top-down drawings of the Model 3, Model Y, Model X (Falcon Wing doors
+  open during turbo), Model S Plaid, Cybertruck (smashes cones) and Rocket Roadster (flies into space).
+  **Road Trip** is a 60-second drive with ⚡ bolts, combos, jump ramps, a Boring tunnel, Superchargers,
+  regenerative braking, an Autopilot power-up that only dodges, Brain Gate math questions and a 💡 hint
+  button. **Demolition Derby** is a touch-to-steer arena game where the last car rolling wins, with
+  momentum physics, repair and shield power-ups, a Monster Truck boss on higher levels, and ❓ brain
+  crates that give MEGA RAM for a correct math answer. Hacker missions unlock paints, Boombox horns
+  (goat, applause, robot, cow, Emissions Testing Mode) and Easter eggs (Rainbow Road, Santa Mode,
+  Track Mode, light-show underglow, Bioweapon Defense Mode, Warp Speed, Mega Ramps, Derby Armor).
 - **Progress:** levels per subject (math goes to level 25, algebra and geometry), an estimated
   grade-level gauge, power-up mini lessons before new skills, a review queue for missed questions,
   daily chest and quests, badges, certificates in a Trophy Hall, a buildable base, and a prize goal a
