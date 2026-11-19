@@ -2913,6 +2913,9 @@ F(3,4,"Refunds without bank details (Executive Order 14247)","The IRS began phas
 Q(3,4,2,"A client's 2025 return claims a refund but gives no bank account. What happens under the IRS's paper check phase-out?","The IRS sends a CP53E asking for bank details",["The return is rejected and must be filed again","The refund is applied to next year's estimated tax","The refund is forfeited after 30 days of waiting"],"The return is still processed. If there is no response and no other issue, a paper check is issued after about 6 weeks.");
 Q(3,4,2,"After receiving Notice CP53E, how can a taxpayer give the IRS direct deposit details?","Through the IRS Individual Online Account",["By calling the IRS toll-free line","By telling a local office employee","By emailing a photo of a check"],"IRS employees can't take direct deposit information over the phone or in person; the IRS asks for it only by mail.");
 Q(3,4,1,"Under the 2025 phase-out, does the IRS still accept paper checks and money orders as payments?","Yes, for now, though it plans to move to electronic",["No: since September 30, 2025, only card payments","No: only EFTPS payments are accepted now","Only from businesses, never from individuals"],"The executive order changed refunds first; mailed payments are still processed (FS-2026-02).");
+// Career facts (2026)
+F(3,1,"SEE user fee from April 20, 2026","The IRS part of the fee for each SEE part dropped from $99 to $66 (T.D. 10045, interim final rule). The testing vendor's own per-part fee is charged on top. After passing, Form 23 costs $140.");
+Q(3,1,1,"Effective April 20, 2026, what is the IRS user fee for each part of the Special Enrollment Examination?","$66, plus the testing vendor's fee",["$99, plus the testing vendor's fee","$140, the same as Form 23","$0; only the vendor charges a fee"],"T.D. 10045 cut the IRS fee from $99 to $66 per part.");
 
 // Names and meanings: every form, schedule, credit, deduction, acronym and key term.
 // Fronts that are exactly "Form X" / "Schedule X" / an acronym get a typed-recall step (type the number or acronym from its meaning).
@@ -10989,7 +10992,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 105 · Nov 19";
+const BUILD="Version 106 · Nov 19";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
