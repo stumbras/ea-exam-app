@@ -64,6 +64,41 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .qdprog{display:grid;gap:6px}.qdprog .bar{height:8px}
 .dlist{display:grid;gap:0}.drow{display:grid;grid-template-columns:minmax(0,1fr) 70px auto;gap:10px;align-items:center;padding:10px 4px;border:0;border-top:1px solid var(--line);background:none;color:var(--fg);font:inherit;text-align:left;cursor:pointer;min-height:46px}.drow:hover{background:var(--accent-soft)}.drow .dn{font-weight:600}.drow .db{height:7px;border-radius:4px;background:var(--line);overflow:hidden;display:block}.drow .db i{display:block;height:100%}.drow .ds{font-size:13px;color:var(--muted);font-weight:700;min-width:46px;text-align:right}
 details.more{margin:12px 0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}details.more>summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;gap:2px;position:relative}details.more>summary::-webkit-details-marker{display:none}details.more>summary::after{content:"▸";position:absolute;right:16px;top:14px;color:var(--muted)}details.more[open]>summary::after{content:"▾"}details.more>summary span{font-size:13px;color:var(--muted)}details.more>.section,details.more>section{padding:0 12px 6px}
+.top{position:relative}body.onstart .top{padding-right:96px}
+.kidsbtn{display:none}body.onstart .kidsbtn{display:flex}@media(min-width:600px){body.onstart .kidsbtn{top:50%;margin-top:-30px;width:64px;height:60px;font-size:24px}}
+.kidsbtn{position:absolute;top:12px;right:12px;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:72px;height:72px;border:3px solid #fff;border-radius:18px;background:linear-gradient(160deg,#ff2d2d,#d10000);color:#fff;font-size:28px;line-height:1;cursor:pointer;box-shadow:0 6px 18px rgba(255,0,0,.45);animation:kpulse 2.4s ease-in-out infinite}
+.kidsbtn span{font:900 13px/1 system-ui,sans-serif;letter-spacing:1.5px}.kidsbtn:active{transform:scale(.95)}
+@keyframes kpulse{0%,100%{box-shadow:0 6px 18px rgba(255,0,0,.45)}50%{box-shadow:0 6px 26px rgba(255,60,60,.85)}}
+body.kidsmode .top,body.kidsmode .tabs{display:none}
+.kids{--k1:#0b1033;color:#fff;background:radial-gradient(circle at 20% 0%,#2a1f7a 0,#0b1033 55%,#050818 100%);border-radius:22px;padding:12px;margin-top:8px;min-height:90vh;display:grid;gap:12px;align-content:start;font-size:17px}
+.kids h2{color:#fff;margin:6px 0;font-size:22px}.kids p{margin:6px 0}
+.ktop{display:flex;align-items:center;gap:6px}.ktop b{flex:1;font-size:16px;text-align:center;line-height:1.2}.ktop .kbtn{white-space:nowrap;padding:8px 10px;min-height:40px;font-size:14px}.kpill{white-space:nowrap;background:rgba(255,255,255,.14);border-radius:999px;padding:5px 10px;font-weight:800;font-size:15px}
+.kbtn{border:0;border-radius:14px;padding:12px 16px;font:800 16px/1.2 system-ui,sans-serif;color:#0b1033;background:#ffd23f;cursor:pointer;min-height:48px}.kbtn:disabled{opacity:.4}.kbtn.ghost{background:rgba(255,255,255,.14);color:#fff}.kbtn.small{padding:6px 10px;min-height:34px;font-size:14px}.kbtn.big{font-size:18px;min-height:56px;flex:1}.kbtn.green{background:#2ec27e;color:#fff}.kbtn.red{background:#ff3b3b;color:#fff}
+.kcard{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:14px;color:#fff;text-align:left;font:inherit;display:grid;gap:8px}
+.kpilot{grid-template-columns:auto 1fr;align-items:center}.kav{font-size:46px}.kname{font-size:20px;font-weight:900}.krank{font-weight:800;color:#ffd23f}
+.kbar{height:12px;border-radius:8px;background:rgba(255,255,255,.15);overflow:hidden}.kbar i{display:block;height:100%;background:linear-gradient(90deg,#ffd23f,#ff7b00)}
+.ksmall{font-size:14px;color:rgba(255,255,255,.75)}.kh{font-weight:900;font-size:17px}.kin{flex:1;font-size:18px;padding:10px;border-radius:12px;border:0}
+.kgames{display:grid;gap:12px}.kgame{border:0;border-radius:22px;padding:16px 16px 16px 84px;text-align:left;color:#fff;cursor:pointer;position:relative;display:grid;gap:3px;min-height:104px;font:inherit;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.kgame b{font-size:21px}.kgame span{font-weight:700}.kgame em{font-style:normal;font-size:14px;opacity:.85}.kgi{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:44px}
+.kgame.g1{background:linear-gradient(135deg,#ff3d6e,#ff8a00)}.kgame.g2{background:linear-gradient(135deg,#00b4d8,#5b4bff)}.kgame.g3{background:linear-gradient(135deg,#1db954,#0b8f6a)}
+.ksrow{display:grid;grid-template-columns:30px 1fr auto;gap:2px 8px;align-items:center}.ksi{font-size:22px;grid-row:span 2}.ksn{font-weight:800}.kslv{font-weight:900;color:var(--sc)}.ksbar{grid-column:2/3;height:8px;border-radius:6px;background:rgba(255,255,255,.15);overflow:hidden}.ksbar i{display:block;height:100%;background:var(--sc)}.ksup{font-size:13px;color:rgba(255,255,255,.75);text-align:right}
+.kbadges{cursor:pointer}.kbrow{display:flex;flex-wrap:wrap;gap:6px}.kb{font-size:26px;filter:grayscale(1);opacity:.35}.kb.on{filter:none;opacity:1}
+.kbgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.kbig{background:rgba(255,255,255,.08);border-radius:16px;padding:12px;display:grid;gap:4px;text-align:center;opacity:.45;filter:grayscale(1)}.kbig.on{opacity:1;filter:none;border:2px solid #ffd23f}.kbig span{font-size:40px}.kbig em{font-style:normal;font-size:13px;color:rgba(255,255,255,.75)}
+.kq{background:#fff;color:#14163a;border-radius:20px;padding:16px;display:grid;gap:12px;border-top:8px solid var(--sc)}.kqh{display:flex;justify-content:space-between;align-items:center}.kq .kbtn.ghost{background:#eef0ff;color:#14163a}.ksub{font-weight:900;color:var(--sc)}
+.kqt{font-size:21px;font-weight:800;line-height:1.35}.kopts{display:grid;gap:10px}.kopt{border:3px solid #dfe3ff;background:#f6f7ff;border-radius:16px;padding:14px;font:800 18px/1.3 system-ui,sans-serif;color:#14163a;text-align:left;cursor:pointer;min-height:56px}
+.kopt.good{background:#d9fbe8;border-color:#2ec27e}.kopt.bad{background:#ffe1e1;border-color:#ff3b3b}.kopt.dim{opacity:.5}.kfb{border-radius:14px;padding:12px;display:grid;gap:6px;font-size:16px}.kfb.ok{background:#d9fbe8}.kfb.no{background:#fff1d6}
+.ktoast{background:linear-gradient(90deg,#ffd23f,#ff7b00);color:#14163a;font-weight:900;border-radius:16px;padding:12px;text-align:center;animation:kpop .6s ease}
+@keyframes kpop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.khud{display:grid;grid-template-columns:auto auto 1fr;gap:12px;align-items:center;background:rgba(255,255,255,.08);border-radius:18px;padding:12px}
+.kfuel{width:18px;height:70px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:flex-end;overflow:hidden}.kfuel i{display:block;width:100%;background:linear-gradient(0deg,#ff3d00,#ffd23f)}.krk{font-size:40px}
+.kdots{display:flex;gap:5px;margin-top:6px}.kdots i{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.2)}.kdots i.y{background:#2ec27e}.kdots i.n{background:#ff3b3b}.kdots i.c{background:#ffd23f}
+.kend{text-align:center;justify-items:center;overflow:hidden}.kflip{display:inline-block;transform:translateY(-50%) scaleX(-1)!important}.krocket{font-size:70px}.krocket.fly{animation:kfly 1.6s ease-in forwards}@keyframes kfly{0%{transform:translateY(0)}100%{transform:translateY(-120px) scale(.6);opacity:.2}}
+.kgrid{display:grid;gap:3px;background:#7a2e10;padding:4px;border-radius:12px}.kc{aspect-ratio:1;background:#c1440e;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px}.kc.tr{background:#e2683a}.kc.rock{background:#8a3a14}.krov{display:inline-block;background:#3fb6ff;color:#fff;border-radius:50%;width:80%;height:80%;display:flex;align-items:center;justify-content:center;font-size:20px;transition:transform .2s}
+.kprog{display:flex;flex-wrap:wrap;gap:6px;min-height:36px}.kcmd{background:#3fb6ff;color:#fff;border-radius:10px;padding:6px 10px;font-weight:900}.kpad{display:flex;flex-wrap:wrap;gap:8px}
+.kbat{position:relative;height:26px;min-width:120px;border:3px solid #fff;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.1)}.kbat.big{height:40px}.kbat i{display:block;height:100%;background:#2ec27e}.kbat span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;text-shadow:0 1px 2px #000}
+.ktrip{display:flex;flex-wrap:wrap;gap:4px}.ktd{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:14px}.ktd.done{background:#2ec27e}.ktd.here{background:#ffd23f;font-size:16px}
+.kcar{font-size:60px;transform:scaleX(-1)}.kcar.drive{animation:kdrive 1.4s ease-out}@keyframes kdrive{0%{transform:scaleX(-1) translateX(140px)}100%{transform:scaleX(-1) translateX(0)}}
+.kgrown summary{font-weight:900;cursor:pointer}.kgr{font-size:14px;color:rgba(255,255,255,.85)}.kdays{display:flex;gap:6px;align-items:flex-end}.kdays span{display:grid;justify-items:center;font-size:12px;gap:2px;flex:1}.kdays i{display:block;width:100%;background:#ffd23f;border-radius:4px;min-height:2px}
 .ledger{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat{display:grid;gap:2px}
@@ -298,6 +333,7 @@ details summary{cursor:pointer;font-weight:600}
     </div></div>
     <div class="topact"><span class="chip" id="sync" role="button" tabindex="0" title="Tap to test account saving" style="cursor:pointer"><span class="dot"></span><span id="synctext">Saved on this device</span></span>
     <button class="chip" id="themebtn" type="button" aria-label="Switch between light and dark">Dark</button></div>
+    <button class="kidsbtn" id="kidsbtn" type="button" aria-label="Open the kids Space Academy">🚀<span>KIDS</span></button>
   </header>
   <nav class="tabs" role="tablist" id="tabs"></nav>
   <main id="view"></main>
@@ -7173,6 +7209,378 @@ function quickClick(b){const d=b.dataset;
     qdOver=n;startSession(d.qd==="new"?"easy":d.qd);qdOver=0;return true}
   return false}
 
+/* ================= Kids · content: science, computers, English, geography (levels 1–20 in 5 tiers) ================= */
+// Bank rows: [tier 1-5, question, correct, wrong1, wrong2, wrong3, did-you-know]
+const KB={
+sci:[
+ [1,"Which planet do we live on?","Earth","Mars","Venus","Jupiter","Earth is the only planet we know that has life."],
+ [1,"What do plants need to make their own food?","Sunlight, water and air","Only rocks","Only milk","Only darkness","Leaves use sunlight to turn water and air into sugar."],
+ [1,"What is the closest star to Earth?","The Sun","The Moon","Mars","The North Star","The Sun is a star. It's so close that it looks huge and bright."],
+ [1,"Ice is water in which state?","Solid","Liquid","Gas","Plasma","Water can be a solid (ice), a liquid, or a gas (steam)."],
+ [1,"Which animal is a mammal?","Dolphin","Shark","Frog","Eagle","Dolphins breathe air and feed their babies milk, like all mammals."],
+ [1,"What pulls things down toward the ground?","Gravity","Wind","Light","Sound","Gravity is why a ball falls when you drop it."],
+ [1,"How many legs does an insect have?","6","8","4","10","Spiders have 8 legs, so spiders are not insects."],
+ [1,"Where does the Moon get its light?","From the Sun","From its own fire","From Earth's lamps","From comets","The Moon is like a mirror reflecting sunlight."],
+ [2,"Which planet is called the Red Planet?","Mars","Venus","Saturn","Mercury","Mars looks red because of rusty iron dust."],
+ [2,"What gas do we breathe in to stay alive?","Oxygen","Carbon dioxide","Helium","Neon","Plants give off oxygen, and we breathe out carbon dioxide."],
+ [2,"Water turning into invisible vapor is called…","Evaporation","Freezing","Melting","Condensation","Puddles disappear on sunny days because of evaporation."],
+ [2,"Which is the biggest planet?","Jupiter","Earth","Saturn","Neptune","More than 1,000 Earths could fit inside Jupiter."],
+ [2,"A magnet pulls on which object?","An iron nail","A plastic spoon","A wooden stick","A rubber ball","Magnets pull on iron and steel, not on plastic or wood."],
+ [2,"Which part of a plant takes in water from the soil?","Roots","Flowers","Leaves","Seeds","Roots also hold the plant in the ground."],
+ [2,"How long does Earth take to travel once around the Sun?","About 365 days","24 hours","30 days","7 days","That trip is one year. One spin on its axis is one day."],
+ [2,"What do we call animals that eat only plants?","Herbivores","Carnivores","Omnivores","Predators","Cows and rabbits are herbivores. Lions are carnivores."],
+ [3,"What causes day and night?","Earth spinning on its axis","Earth going around the Sun","The Moon blocking the Sun","Clouds covering the sky","Earth spins once every 24 hours."],
+ [3,"Which planet has the most famous rings?","Saturn","Mars","Mercury","Earth","Jupiter, Uranus and Neptune have faint rings too."],
+ [3,"Plants make food in a process called…","Photosynthesis","Digestion","Evaporation","Erosion","'Photo' means light and 'synthesis' means putting together."],
+ [3,"Which organ pumps blood around your body?","Heart","Lungs","Stomach","Brain","Your heart beats about 100,000 times a day."],
+ [3,"In a food chain, plants are called…","Producers","Consumers","Decomposers","Predators","Plants produce food from sunlight; animals consume it."],
+ [3,"Can sound travel through outer space?","No, space has no air to carry it","Yes, louder than on Earth","Yes, but only at night","Only on the Moon","Sound needs something to travel through, like air or water."],
+ [3,"What kind of energy does a battery store?","Chemical energy","Sound energy","Wind energy","No energy at all","When you use it, the chemical energy turns into electricity."],
+ [3,"Which material lets electricity flow through it easily?","Copper","Rubber","Plastic","Wood","Wires are made of copper. Rubber and plastic keep us safe as insulators."],
+ [4,"What is the center of an atom called?","Nucleus","Electron","Shell","Orbit","Tiny electrons zoom around the nucleus."],
+ [4,"Which planet is closest to the Sun?","Mercury","Venus","Earth","Mars","Venus is the hottest planet, though, because of its thick clouds."],
+ [4,"What is H₂O?","Water","Salt","Oxygen gas","Gold","Two hydrogen atoms and one oxygen atom make a water molecule."],
+ [4,"Why do astronauts float on the space station?","They're falling around Earth with the station","There's no gravity at all up there","Their suits are full of helium","The station has giant magnets","The station orbits by falling around Earth, so everything inside floats."],
+ [4,"Which blood cells fight germs?","White blood cells","Red blood cells","Platelets","Plasma","Red cells carry oxygen; platelets help stop bleeding."],
+ [4,"Rock formed when lava cools is called…","Igneous","Sedimentary","Metamorphic","Fossil","'Igneous' comes from the Latin word for fire."],
+ [4,"What does a solar panel turn sunlight into?","Electricity","Water","Wind","Sound","Many electric cars can be charged with solar power."],
+ [4,"Which layer of gas protects Earth from harmful sun rays?","The ozone layer","The crust","The core","The mantle","The ozone layer is high in the atmosphere."],
+ [5,"About how long does sunlight take to reach Earth?","About 8 minutes","About 8 seconds","About 8 hours","About 8 days","Light is the fastest thing there is, but the Sun is 93 million miles away."],
+ [5,"What force keeps the Moon orbiting Earth?","Gravity","Friction","Magnetism","Air pressure","The same gravity that holds you on the ground holds the Moon in orbit."],
+ [5,"Newton's third law says every action has…","An equal and opposite reaction","No reaction","A bigger reaction","A slower reaction","A rocket pushes gas down, and the gas pushes the rocket up."],
+ [5,"Which part of a cell turns food into energy?","Mitochondria","Nucleus","Cell wall","Vacuole","Mitochondria are often called the powerhouse of the cell."],
+ [5,"Which planet spins tipped on its side?","Uranus","Neptune","Venus","Mars","Scientists think a giant crash long ago tipped Uranus over."],
+ [5,"What is a light-year?","How far light travels in one year","A year on Mars","The time to reach the Moon","A very sunny year","A light-year is almost 6 trillion miles."],
+ [5,"What kind of batteries do most electric cars use?","Lithium-ion batteries","Gas tanks","Steam boilers","Potato batteries","Phones and laptops use lithium-ion batteries too."],
+ [5,"What is the chemical symbol for gold?","Au","Ag","Go","Gd","'Au' comes from 'aurum', the Latin word for gold. Ag is silver."],
+ [5,"Which planet has the Great Red Spot, a giant storm?","Jupiter","Mars","Saturn","Venus","The Great Red Spot is wider than Earth."]],
+code:[
+ [1,"What is a computer program?","Step-by-step instructions for a computer","A TV show","A kind of keyboard","A long cable","Programmers write programs in languages like Python and Scratch."],
+ [1,"Which part of a computer do you type on?","Keyboard","Monitor","Speaker","Printer","The keys send letters into the computer."],
+ [1,"A mistake in a program is called a…","Bug","Byte","Mouse","Pixel","Finding and fixing bugs is called debugging."],
+ [1,"Which is an input device (it sends information in)?","Mouse","Speaker","Monitor","Printer","Speakers, monitors and printers are output devices."],
+ [1,"Which password is the strongest?","Tg7!rocket#29","1234","password","your first name","Long passwords with letters, numbers and symbols are hardest to guess."],
+ [2,"An algorithm is…","A set of steps to solve a problem","A type of robot","A computer virus","A screen","A recipe for cookies is an algorithm too."],
+ [2,"Repeating steps in a program is called a…","Loop","Bug","File","Pixel","Loops save time: 'repeat 10 times' instead of writing a step 10 times."],
+ [2,"The tiny dots that make up a screen picture are…","Pixels","Bytes","Loops","Bugs","A phone screen has millions of pixels."],
+ [2,"What should you never share online?","Your password and home address","Your favorite color","A drawing of a rocket","A cool math fact","Keep personal information private and tell a grown-up if something feels wrong."],
+ [2,"IF it is raining THEN take an umbrella. It's raining. What do you do?","Take an umbrella","Wear sunglasses","Stay in bed","Nothing","IF–THEN rules let programs make decisions."],
+ [3,"Computers store everything using only two digits:","0 and 1","1 and 2","0 and 9","A and B","This is called binary. Each 0 or 1 is a bit."],
+ [3,"The 'brain' of a computer that does the calculations is the…","CPU, the processor","Mouse","Monitor","Speaker","A CPU can do billions of steps every second."],
+ [3,"Which of these is a programming language?","Python","Pizza","Panda","Pencil","Python is used by NASA, scientists and game makers."],
+ [3,"8 bits make one…","Byte","Kilobyte","Pixel","Loop","About 1,000 bytes make a kilobyte."],
+ [3,"How does GPS know where you are?","Signals from satellites","Light from the Moon","Phone cameras only","Radio from other cars","At least four satellites are needed to find a spot on Earth."],
+ [4,"What is a variable in code?","A named box that stores a value","A broken program","A screen color","A key on the keyboard","In x = 5, the variable x stores the number 5."],
+ [4,"What is RAM used for?","Holding what the computer is working on right now","Keeping files forever with the power off","Printing pages","Cooling the computer","RAM forgets everything when the power goes off."],
+ [4,"'Sunny AND warm' must both be true. It's sunny but cold. Is it true?","False","True","Both","Neither can be known","With AND, every part must be true."],
+ [4,"'Snack OR juice': you get one of them. Is the rule true?","True","False","Only if you get both","Only on weekends","With OR, at least one part must be true."],
+ [5,"What does print('Hi') show in Python?","Hi","print","('Hi')","Nothing","print() shows text on the screen."],
+ [5,"x = 5, then x = x + 3. What is x now?","8","5","3","53","The new x is the old x plus 3."],
+ [5,"How many different patterns can 3 bits make?","8","3","6","9","Each bit doubles it: 2 × 2 × 2 = 8."],
+ [5,"A self-driving car's computer mainly uses what to 'see' the road?","Cameras and sensors","A paper map","The radio","The horn","Its software has to be checked and watched by a driver."]],
+eng:[
+ [1,"Which word is a noun (a person, place or thing)?","rocket","quickly","jump","blue","Rocket names a thing, so it's a noun."],
+ [1,"Which word rhymes with 'star'?","car","sun","moon","sky","Star and car end with the same sound."],
+ [1,"Which sentence begins correctly?","My dog likes to run.","my dog likes to run.","My Dog likes to run.","my Dog Likes to run.","Sentences start with a capital letter."],
+ [1,"What punctuation ends a question?","?",".","!",",","'Can we go to Mars?' ends with a question mark."],
+ [2,"Which word is a verb (an action)?","launch","rocket","shiny","moon","To launch is something you do."],
+ [2,"Which word is an adjective (it describes)?","bright","run","planet","quickly","Bright describes a star or a light."],
+ [2,"Pick the correct sentence.","They're going to the park.","Their going to the park.","There going to the park.","They'r going to the park.","They're = they are."],
+ [2,"Which word has a prefix that means 'not'?","unhappy","happily","happiness","happy","'Un-' means not: unhappy means not happy."],
+ [3,"In 'The fast car zoomed away,' which word is the adverb?","away","fast","car","zoomed","Adverbs tell how, where or when. 'Away' tells where."],
+ [3,"Pick the correct sentence.","Its tail is long.","It's tail is long.","Its' tail is long.","It is tail is long.","'Its' shows ownership; 'it's' means it is."],
+ [3,"Which is a complete sentence?","The rover found a rock.","Found a rock on Mars.","The red rover.","Because it was dusty.","A complete sentence has a subject and a verb."],
+ [3,"What is the main idea of a story about how bees make honey?","How bees make honey","Bees are yellow","Flowers smell nice","Honey is sticky","The main idea is what the whole text is mostly about."],
+ [4,"Which sentence uses commas correctly?","We packed food, water, and maps.","We packed, food water and maps.","We, packed food water and maps.","We packed food water, and, maps.","Commas separate items in a list."],
+ [4,"What does the suffix '-less' mean in 'fearless'?","without","full of","again","before","Fearless means without fear."],
+ [4,"'The engine roared like a lion' is an example of a…","Simile","Rhyme","Question","Title","A simile compares using 'like' or 'as'."],
+ [4,"Which word is a conjunction (a joining word)?","because","quickly","Mars","bright","Conjunctions join ideas: and, but, or, because."],
+ [5,"'The wind whispered through the trees' is an example of…","Personification","A simile","A rhyme","A fact","Personification gives human actions to things."],
+ [5,"Which sentence is in the passive voice?","The rocket was built by engineers.","Engineers built the rocket.","Engineers are building rockets.","The engineers will build it.","Passive voice puts the thing acted on first."],
+ [5,"What is the word 'enormous' closest in meaning to?","huge","tiny","angry","quiet","Enormous and huge are synonyms."],
+ [5,"Which is a fact, not an opinion?","Mars has two moons.","Mars is the coolest planet.","Space movies are the best.","Rockets are boring.","Facts can be checked. Mars has two moons, Phobos and Deimos."]],
+geo:[
+ [1,"How many continents are there?","7","5","9","3","Africa, Antarctica, Asia, Australia, Europe, North America, South America."],
+ [1,"Which continent do we live on in the United States?","North America","Europe","Asia","Africa","Canada and Mexico are on North America too."],
+ [1,"Which is the largest ocean?","Pacific Ocean","Atlantic Ocean","Indian Ocean","Arctic Ocean","The Pacific is bigger than all the land on Earth put together."],
+ [1,"On a map, which direction is usually at the top?","North","South","East","West","Never Eat Soggy Waffles: North, East, South, West, going clockwise."],
+ [2,"What is the coldest continent?","Antarctica","Africa","Australia","Europe","Antarctica is covered by ice more than a mile thick."],
+ [2,"Which mountains run through Colorado?","The Rocky Mountains","The Alps","The Andes","The Himalayas","Colorado has more than 50 peaks over 14,000 feet."],
+ [2,"The imaginary line around the middle of Earth is the…","Equator","North Pole","Prime meridian","Tropic of Ice","Places near the equator are usually warm all year."],
+ [2,"Which river is the longest in the United States?","Missouri River","Colorado River","Hudson River","Rio Grande","The Missouri joins the Mississippi near St. Louis."],
+ [3,"What is the tallest mountain above sea level?","Mount Everest","Pikes Peak","Mount Fuji","Kilimanjaro","Everest is about 29,000 feet tall, on the border of Nepal and China."],
+ [3,"The Grand Canyon is in which state?","Arizona","Colorado","Texas","Utah","The Colorado River carved it over millions of years."],
+ [3,"Which country is both a country and a continent?","Australia","Canada","Brazil","India","Australia is also home to kangaroos and koalas."],
+ [3,"What is the largest hot desert in the world?","Sahara","Gobi","Mojave","Atacama","The Sahara covers much of North Africa."],
+ [4,"Which line divides Earth into Northern and Southern Hemispheres?","The equator","The prime meridian","The Tropic of Cancer","The Arctic Circle","The prime meridian divides east and west."],
+ [4,"Which country has the most people?","India","United States","Russia","Brazil","India passed China around 2023."],
+ [4,"What is the longest mountain range on land?","The Andes","The Rockies","The Alps","The Appalachians","The Andes run down the west side of South America."],
+ [5,"Lines that run north to south on a globe are lines of…","Longitude","Latitude","Altitude","Attitude","Latitude lines run east to west, like rungs on a ladder."],
+ [5,"Which country has the most time zones, counting its territories?","France","Russia","United States","China","With islands around the world, France has 12 time zones."],
+ [5,"The Strait of Gibraltar connects the Atlantic Ocean with the…","Mediterranean Sea","Pacific Ocean","Red Sea","Black Sea","It separates Spain and Morocco, Europe and Africa."]]
+};
+// Spelling (American English): [tier, correct, misspellings…]
+const KSP=[[1,"because","becuase","becase","beacuse"],[1,"friend","freind","frend","friand"],[1,"said","sed","siad","sayd"],[1,"people","peeple","peopel","pepole"],[1,"could","cud","coud","colud"],
+ [2,"beautiful","beautifull","beutiful","beatiful"],[2,"favorite","favourite","favorit","faverite"],[2,"different","diffrent","diferent","differant"],[2,"tomorrow","tommorow","tomorow","tommorrow"],[2,"surprise","suprise","surprize","serprise"],[2,"color","colour","culor","colr"],
+ [3,"necessary","neccessary","necesary","nesessary"],[3,"separate","seperate","separete","seperat"],[3,"February","Febuary","Febraury","Februray"],[3,"calendar","calender","calandar","calander"],[3,"believe","beleive","belive","beleave"],[3,"library","libary","liberry","librery"],
+ [4,"environment","enviroment","envirnment","environmint"],[4,"rhythm","rythm","rhythum","rithm"],[4,"definitely","definately","definitly","defenitely"],[4,"restaurant","restaraunt","resturant","restaurent"],[4,"occasion","ocassion","occassion","ocasion"],
+ [5,"accommodate","accomodate","acommodate","acomodate"],[5,"embarrass","embarass","embaras","embarras"],[5,"millennium","millenium","milennium","milenium"],[5,"mischievous","mischievious","mischevous","mischivous"],[5,"pronunciation","pronounciation","pronunciasion","pronounsiation"]];
+// Synonyms: [tier, word, synonym, wrong…]
+const KSY=[[1,"big","large","tiny","slow"],[1,"happy","glad","sad","cold"],[1,"fast","quick","slow","heavy"],[2,"tiny","small","huge","loud"],[2,"shout","yell","whisper","sleep"],[2,"begin","start","finish","forget"],
+ [3,"enormous","huge","little","noisy"],[3,"brave","courageous","scared","lazy"],[3,"ancient","very old","brand new","shiny"],[4,"curious","eager to know","bored","sleepy"],[4,"reluctant","unwilling","excited","fast"],[4,"abundant","plentiful","rare","empty"],
+ [5,"meticulous","very careful","sloppy","quick"],[5,"ambiguous","unclear","obvious","colorful"],[5,"benevolent","kind and generous","cruel","tired"],[5,"ephemeral","short-lived","forever","heavy"]];
+// Irregular past tense: [tier, verb, past, wrong…]
+const KPT=[[1,"go","went","goed","gone"],[1,"see","saw","seed","seen"],[1,"run","ran","runned","runs"],[2,"bring","brought","bringed","brang"],[2,"catch","caught","catched","cought"],[2,"think","thought","thinked","thunk"],
+ [3,"swim","swam","swimmed","swum"],[3,"freeze","froze","freezed","frozed"],[3,"teach","taught","teached","tought"],[4,"fly","flew","flied","flown"],[4,"begin","began","beginned","begun"],[5,"seek","sought","seeked","saught"],[5,"weave","wove","weaved","woven"]];
+// Plurals: [tier, singular, plural, wrong…]
+const KPL=[[1,"cat","cats","cates","caties"],[1,"box","boxes","boxs","boxies"],[2,"mouse","mice","mouses","meese"],[2,"child","children","childs","childes"],[3,"wolf","wolves","wolfs","wolvs"],[3,"goose","geese","gooses","geeses"],[4,"cactus","cacti","cactis","cactae"],[5,"phenomenon","phenomena","phenomenons","phenomenas"],[5,"criterion","criteria","criterions","criterias"]];
+// U.S. states and capitals: [state, capital, tier]
+const KUS=[["Colorado","Denver",1],["California","Sacramento",3],["Texas","Austin",2],["Florida","Tallahassee",3],["New York","Albany",3],["Arizona","Phoenix",2],["Utah","Salt Lake City",2],["Georgia","Atlanta",2],["Massachusetts","Boston",2],["Tennessee","Nashville",2],
+ ["Illinois","Springfield",3],["Washington","Olympia",3],["Pennsylvania","Harrisburg",4],["Ohio","Columbus",3],["Michigan","Lansing",4],["Virginia","Richmond",3],["North Carolina","Raleigh",3],["Nevada","Carson City",4],["Oregon","Salem",4],["Hawaii","Honolulu",2],
+ ["Alaska","Juneau",4],["Wyoming","Cheyenne",3],["New Mexico","Santa Fe",3],["Kansas","Topeka",4],["Nebraska","Lincoln",4],["Oklahoma","Oklahoma City",2],["Missouri","Jefferson City",4],["Minnesota","Saint Paul",4],["Wisconsin","Madison",4],["Iowa","Des Moines",4],
+ ["Louisiana","Baton Rouge",4],["Arkansas","Little Rock",4],["Mississippi","Jackson",4],["Alabama","Montgomery",4],["South Carolina","Columbia",4],["Kentucky","Frankfort",5],["Indiana","Indianapolis",3],["West Virginia","Charleston",5],["Maryland","Annapolis",5],["Delaware","Dover",5],
+ ["New Jersey","Trenton",5],["Connecticut","Hartford",5],["Rhode Island","Providence",5],["Vermont","Montpelier",5],["New Hampshire","Concord",5],["Maine","Augusta",5],["Idaho","Boise",4],["Montana","Helena",5],["North Dakota","Bismarck",5],["South Dakota","Pierre",5]];
+// Countries: [country, capital, continent, tier]
+const KCO=[["France","Paris","Europe",1],["Japan","Tokyo","Asia",1],["England (United Kingdom)","London","Europe",1],["Italy","Rome","Europe",2],["Spain","Madrid","Europe",2],["Mexico","Mexico City","North America",1],["Egypt","Cairo","Africa",2],["China","Beijing","Asia",2],["Germany","Berlin","Europe",2],["Russia","Moscow","Europe and Asia",2],
+ ["Canada","Ottawa","North America",3],["Australia","Canberra","Australia",4],["Brazil","Brasília","South America",4],["Argentina","Buenos Aires","South America",3],["India","New Delhi","Asia",3],["Kenya","Nairobi","Africa",3],["South Korea","Seoul","Asia",3],["Greece","Athens","Europe",3],["Lithuania","Vilnius","Europe",3],["Thailand","Bangkok","Asia",3],
+ ["Philippines","Manila","Asia",3],["Peru","Lima","South America",4],["Turkey","Ankara","Europe and Asia",5],["Nigeria","Abuja","Africa",5],["South Africa","Pretoria","Africa",5],["Vietnam","Hanoi","Asia",4],["Norway","Oslo","Europe",4],["Ireland","Dublin","Europe",3],["Chile","Santiago","South America",4],["Morocco","Rabat","Africa",5],["New Zealand","Wellington","Australia (Oceania)",4],["Pakistan","Islamabad","Asia",5]];
+// Road trips for the Supercharger game: [city, state or country, fact, question, correct, wrong…]
+const KTRIP={usa:[
+ ["Los Angeles","California","Los Angeles is the second-largest city in the U.S. Many Hollywood movies are made here.","Los Angeles is on which ocean?","Pacific","Atlantic","Indian","Arctic"],
+ ["Las Vegas","Nevada","Las Vegas is in the Mojave Desert. Nearby Hoover Dam makes electricity from the Colorado River.","Hoover Dam makes electricity from which river?","Colorado River","Mississippi River","Hudson River","Amazon River"],
+ ["Salt Lake City","Utah","The Great Salt Lake is saltier than the ocean, so swimmers float easily.","Salt Lake City is the capital of which state?","Utah","Idaho","Nevada","Wyoming"],
+ ["Denver","Colorado","Denver is the Mile High City, about 5,280 feet above sea level.","How many feet are in a mile?","5,280","1,000","3,280","10,000"],
+ ["Kansas City","Missouri","Kansas City sits right on the border of Missouri and Kansas and is famous for barbecue.","Kansas City sits on the border of Missouri and…","Kansas","Texas","Ohio","Iowa"],
+ ["St. Louis","Missouri","The Gateway Arch is 630 feet tall, the tallest arch in the world.","St. Louis is where the Missouri River meets the…","Mississippi River","Colorado River","Ohio River","Snake River"],
+ ["Chicago","Illinois","Chicago is on Lake Michigan, one of the five Great Lakes.","How many Great Lakes are there?","5","3","7","10"],
+ ["Nashville","Tennessee","Nashville is called Music City. It's the capital of Tennessee.","Nashville is the capital of which state?","Tennessee","Kentucky","Georgia","Alabama"],
+ ["Atlanta","Georgia","Atlanta's airport is one of the busiest airports in the world.","Atlanta is the capital of which state?","Georgia","Florida","Alabama","Virginia"],
+ ["Washington, D.C.","District of Columbia","Washington, D.C. is the nation's capital, home of the White House and the U.S. Capitol.","Who lives in the White House?","The President","The Mayor","The King","The Governor"],
+ ["New York City","New York","New York is the largest U.S. city. The Statue of Liberty was a gift from France.","The Statue of Liberty was a gift from which country?","France","England","Spain","Canada"],
+ ["Boston","Massachusetts","In 1773, colonists dumped tea into Boston Harbor: the Boston Tea Party.","Boston is on which ocean?","Atlantic","Pacific","Indian","Arctic"]],
+world:[
+ ["London","United Kingdom","Big Ben is the nickname of the giant bell in London's famous clock tower.","London is the capital of the…","United Kingdom","United States","Canada","Australia"],
+ ["Paris","France","The Eiffel Tower was finished in 1889 and is about 1,000 feet tall.","Paris is the capital of which country?","France","Italy","Spain","Germany"],
+ ["Rome","Italy","The Colosseum in Rome is almost 2,000 years old.","Rome is in which country?","Italy","Greece","Egypt","France"],
+ ["Cairo","Egypt","The Great Pyramid of Giza, near Cairo, is about 4,500 years old.","Cairo is on which great river?","Nile","Amazon","Danube","Mississippi"],
+ ["Nairobi","Kenya","Nairobi has a national park with lions and giraffes right next to the city.","Kenya is on which continent?","Africa","Asia","South America","Europe"],
+ ["Dubai","United Arab Emirates","The Burj Khalifa in Dubai is the tallest building in the world, over 2,700 feet.","Dubai is in the Middle East, on which continent?","Asia","Africa","Europe","Australia"],
+ ["Mumbai","India","Mumbai is one of the biggest cities in India, the country with the most people.","India's capital is…","New Delhi","Mumbai","Bangkok","Cairo"],
+ ["Beijing","China","The Great Wall of China stretches thousands of miles; parts are near Beijing.","Beijing is the capital of…","China","Japan","India","Korea"],
+ ["Tokyo","Japan","The Tokyo area is home to about 37 million people, the largest city area on Earth.","Japan is made up of many…","Islands","Deserts","Glaciers","Volcano-free plains"],
+ ["Sydney","Australia","The Sydney Opera House looks like giant white sails. Australia's capital is Canberra, though.","What is the capital of Australia?","Canberra","Sydney","Melbourne","Perth"],
+ ["Rio de Janeiro","Brazil","Rio is famous for Carnival and the Christ the Redeemer statue.","Brazil's capital is…","Brasília","Rio de Janeiro","São Paulo","Lima"],
+ ["Mexico City","Mexico","Mexico City was built on top of an old lake by the Aztecs.","Mexico City is on which continent?","North America","South America","Europe","Asia"]]};
+const KRANKS=[[0,"Space Cadet"],[150,"Rocket Pilot"],[400,"Moon Walker"],[800,"Mars Explorer"],[1400,"Asteroid Ace"],[2200,"Jupiter Navigator"],[3200,"Saturn Ranger"],[4500,"Starship Captain"],[6000,"Galaxy Commander"],[8000,"Universe Legend"]];
+const KDEST=[["Moon","🌕","238,900 miles from Earth"],["Mars","🔴","Average 140 million miles away"],["Asteroid Belt","🪨","Between Mars and Jupiter"],["Jupiter","🟠","The biggest planet"],["Saturn","🪐","The planet with the famous rings"],["Uranus","🔵","The planet tipped on its side"],["Neptune","🌀","The windiest planet"],["Pluto","⚪","A dwarf planet in the Kuiper Belt"],["Alpha Centauri","✨","The closest star system to the Sun"]];
+const KSUB={math:["Math","🔢","#ff4d6d"],eng:["English","📖","#ffb703"],sci:["Science","🔬","#2ec27e"],code:["Code","💻","#3fb6ff"],geo:["Geography","🌎","#a678ff"]};
+
+/* ================= Kids · Space Academy: 3 games, 5 subjects, adaptive levels, ranks and badges ================= */
+let KV={scr:"home"},kToast="",kRecent=[];
+const KBAD=[["first","🚀","Liftoff","Answer your first question"],["combo5","🔥","On Fire","5 right in a row"],["combo10","☄️","Comet Streak","10 right in a row"],["q100","💯","Century","Answer 100 questions"],["q500","🏅","Marathon","Answer 500 questions"],
+ ["lv5","⭐","Rising Star","Reach level 5 in any subject"],["lv10","🌟","Superstar","Reach level 10 in any subject"],["lv15","💫","Genius Mode","Reach level 15 in any subject"],["all5","🧑‍🚀","All-Round Astronaut","Level 5 in every subject"],["all10","👨‍🚀","Mission Specialist","Level 10 in every subject"],
+ ["moon","🌕","Moon Landing","Fly a rocket to the Moon"],["mars","🔴","Martian","Fly a rocket to Mars"],["saturn","🪐","Ring Rider","Fly a rocket to Saturn"],["alpha","✨","Star Traveler","Reach Alpha Centauri"],["perfect","🎯","Perfect Mission","10 out of 10 on a rocket mission"],
+ ["rover1","🤖","First Code","Solve your first rover puzzle"],["rover10","🦾","Code Master","Solve 10 rover puzzles"],["stars3","💎","Efficient Engineer","Solve 5 puzzles with 3 stars"],
+ ["trip1","⚡","First Charge","Drive to your first Supercharger city"],["coast","🗽","Coast to Coast","Finish the U.S. road trip"],["world","🌍","World Tour","Finish the world road trip"],["days3","📅","3-Day Streak","Play 3 days in a row"],["days7","🏆","7-Day Streak","Play 7 days in a row"]];
+function KS(){S.kids=S.kids||{};const k=S.kids;k.name=k.name||"";k.xp=k.xp||0;k.coins=k.coins||0;k.lv=k.lv||{};k.st=k.st||{};
+  for(const s in KSUB){if(!k.lv[s])k.lv[s]=1;if(!k.st[s])k.st[s]={n:0,c:0,run:0,h:[]}}
+  k.badges=k.badges||{};k.days=k.days||{};k.streak=k.streak||{d:"",n:0};k.rocket=k.rocket||{dest:0,missions:0};k.rover=k.rover||{lvl:1,solved:0,stars3:0};k.trip=k.trip||{route:"usa",stop:0,bat:60};k.combo=k.combo||0;k.bestCombo=k.bestCombo||0;
+  const wk=String(Math.floor((Date.now()/86400000+3)/7));if(!k.week||k.week.w!==wk)k.week={w:wk,start:Object.assign({},k.lv)};return k}
+const kR=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),kPick=a=>a[Math.floor(Math.random()*a.length)];
+function kShuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function kMk(s,q,c,w,f){let u=[String(c),...w.map(String)].filter((x,i,a)=>x!==""&&a.indexOf(x)===i);if(u.length<4&&!isNaN(+c)&&String(c).trim()!=="")for(const n of kNear(+c,6,+c<0)){if(u.length>=4)break;if(!u.includes(String(n)))u.push(String(n))}const o=kShuf(u.slice(0,4));return{s,q,o,a:o.indexOf(String(c)),f:f||""}}
+function kNear(a,n=3,neg=false){const out=new Set();const tries=[a+1,a-1,a+2,a-2,a+10,a-10,a+5,a-5,Math.round(a*1.1)+1,a+3];for(const t of kShuf(tries)){if(out.size>=n)break;if(t!==a&&(neg||t>=0))out.add(t)}let k=4;while(out.size<n){out.add(a+k++)}return [...out]}
+function kRank(xp){let i=0;for(let j=0;j<KRANKS.length;j++)if(xp>=KRANKS[j][0])i=j;return i}
+function kToday(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+/* ---------- questions ---------- */
+function kMath(L){let q,a,w,f="";const r=kR;
+  if(L<=1){const x=r(3,12),y=r(2,9);q=`${x} + ${y} = ?`;a=x+y}
+  else if(L===2){if(Math.random()<.5){const x=r(15,60),y=r(8,39);q=`${x} + ${y} = ?`;a=x+y}else{const x=r(40,99),y=r(11,x-5);q=`${x} − ${y} = ?`;a=x-y}}
+  else if(L===3){if(Math.random()<.5){const x=r(120,600),y=r(105,399);q=`${x} + ${y} = ?`;a=x+y}else{const x=r(400,950),y=r(110,x-50);q=`${x} − ${y} = ?`;a=x-y}}
+  else if(L===4){const x=kPick([2,5,10]),y=r(2,12);q=`${x} × ${y} = ?`;a=x*y}
+  else if(L===5){const x=r(3,9),y=r(3,10);q=`${x} × ${y} = ?`;a=x*y}
+  else if(L===6){const y=r(3,9),a0=r(3,10);q=`${y*a0} ÷ ${y} = ?`;a=a0}
+  else if(L===7){const x=r(13,48),y=r(3,9);q=`${x} × ${y} = ?`;a=x*y}
+  else if(L===8){const t=r(3,6),l=r(120,250),u=r(50,l*t-100);q=`A rocket has ${t} fuel tanks with ${l} liters each. It burns ${u} liters on liftoff. How many liters are left?`;a=t*l-u;f=`${t} × ${l} = ${t*l}, then ${t*l} − ${u} = ${a}.`}
+  else if(L===9){const d=kPick([2,3,4,5,10]),n=d===2?1:r(1,d-1),m=d*r(3,12);q=`What is ${n}/${d} of ${m}?`;a=m/d*n;f=`${m} ÷ ${d} = ${m/d}, then × ${n} = ${a}.`}
+  else if(L===10){const p=kPick([[1,2],[1,3],[2,3],[1,4],[3,4],[2,5]]),k=r(2,4);const c=`${p[0]*k}/${p[1]*k}`;const w0=[`${p[0]*k+1}/${p[1]*k}`,`${p[0]*k}/${p[1]*k+1}`,`${p[0]}/${p[1]*k}`];q=`Which fraction is equal to ${p[0]}/${p[1]}?`;return kMk("math",q,c,w0,`Multiply the top and bottom by ${k}: ${p[0]}/${p[1]} = ${c}.`)}
+  else if(L===11){const x=r(12,39),y=r(11,29);q=`${x} × ${y} = ?`;a=x*y}
+  else if(L===12){const d=r(3,9),qq=r(6,15),rem=r(1,d-1),n=d*qq+rem;q=`${n} ÷ ${d} = ?`;const c=`${qq} R ${rem}`;return kMk("math",q,c,[`${qq} R ${rem+1>=d?rem-1:rem+1}`,`${qq+1} R ${rem}`,`${qq-1} R ${rem}`],`${d} × ${qq} = ${d*qq}, and ${n} − ${d*qq} leaves ${rem}.`)}
+  else if(L===13){const x=r(12,95)/10,y=r(11,89)/10,s=Math.round((x+y)*10)/10;q=`${x.toFixed(1)} + ${y.toFixed(1)} = ?`;return kMk("math",q,s.toFixed(1),[(s+1).toFixed(1),(s-0.1).toFixed(1),(s+0.1).toFixed(1)],"Line up the decimal points, then add.")}
+  else if(L===14){const l=r(5,15),wd=r(3,9);if(Math.random()<.5){q=`A rectangle is ${l} m long and ${wd} m wide. What is its area in square meters?`;a=l*wd;f="Area = length × width."}else{q=`A rectangle is ${l} m long and ${wd} m wide. What is its perimeter in meters?`;a=2*(l+wd);f="Perimeter = add all four sides: 2 × (length + width)."}}
+  else if(L===15){const x=r(2,9),y=r(2,6),z=r(2,6);if(Math.random()<.5){q=`${x} + ${y} × ${z} = ?`;a=x+y*z;f="Multiply before you add."}else{q=`(${x} + ${y}) × ${z} = ?`;a=(x+y)*z;f="Do what's in the parentheses first."}}
+  else if(L===16){const p=kPick([10,20,25,50]),n=kPick([40,60,80,120,200,240,300,400]);q=`What is ${p}% of ${n}?`;a=n*p/100;f=`${p}% means ${p} out of every 100.`}
+  else if(L===17){const x=r(2,12),y=r(x+1,x+15);if(Math.random()<.5){q=`−${x} + ${y} = ?`;a=y-x}else{q=`${x} − ${y} = ?`;a=x-y}return kMk("math",q,a,kNear(a,3,true),"Picture a number line: below zero the numbers are negative.")}
+  else if(L===18){if(Math.random()<.5){const x=r(3,30),b=r(5,40);q=`x + ${b} = ${x+b}. What is x?`;a=x}else{const x=r(3,12),m=r(3,9);q=`${m}x = ${m*x}. What is x?`;a=x}f="Do the opposite operation to both sides."}
+  else if(L===19){const t=r(0,2);if(t===0){const x=r(4,15);q=`${x}² = ?`;a=x*x;f=`${x}² means ${x} × ${x}.`}else if(t===1){const x=r(4,12);q=`√${x*x} = ?`;a=x;f=`${x} × ${x} = ${x*x}.`}else{const b=kPick([2,3]),e=b===2?r(3,6):r(2,4);q=`${b}${["","","²","³","⁴","⁵","⁶"][e]} = ?`;a=Math.pow(b,e);f=`Multiply ${b} by itself ${e} times.`}}
+  else{if(Math.random()<.6){const x=r(2,12),m=r(2,7),b=r(1,20);q=`${m}x + ${b} = ${m*x+b}. What is x?`;a=x;f=`Subtract ${b}, then divide by ${m}.`}else{const p=r(2,5),qq=r(p+1,9),k=r(2,6);q=`${p}:${qq} is the same ratio as ${p*k}:?`;a=qq*k;f=`Both numbers are multiplied by ${k}.`}}
+  return kMk("math",q,a,kNear(a),f)}
+function kBank(sub,T){let pool=KB[sub].filter(x=>x[0]===T);if(pool.length<4)pool=pool.concat(KB[sub].filter(x=>x[0]===T-1||x[0]===T+1));if(!pool.length)pool=KB[sub];
+  const fresh=pool.filter(x=>!kRecent.includes(x[1]));const it=kPick(fresh.length?fresh:pool);return kMk(sub,it[1],it[2],it.slice(3,6),it[6])}
+function kTierPick(list,T){let p=list.filter(x=>x[0]===T);if(p.length<3)p=list.filter(x=>Math.abs(x[0]-T)<=1);if(!p.length)p=list;const f=p.filter(x=>!kRecent.includes(x[1]+"|"+x[2]));return kPick(f.length?f:p)}
+function kEng(T){const t=Math.random();
+  if(t<.3){const it=kTierPick(KSP,T);const brit={favorite:"British spelling is 'favourite'; American English drops the u.",color:"British spelling is 'colour'; American English drops the u."};return kMk("eng","Which word is spelled correctly in American English?",it[1],it.slice(2,5),brit[it[1]]||`Correct spelling: ${it[1]}.`)}
+  if(t<.45){const it=kTierPick(KSY,T);const o3=kPick(KSY.filter(x=>x[1]!==it[1]&&!it.slice(2,5).includes(x[2])))[2];return kMk("eng",`Which word or phrase means the same as "${it[1]}"?`,it[2],it.slice(3,5).concat([o3]),`"${it[1]}" and "${it[2]}" are synonyms.`)}
+  if(t<.58){const it=kTierPick(KPT,T);return kMk("eng",`Yesterday I ___. Which is the past tense of "${it[1]}"?`,it[2],it.slice(3,5).concat([it[1]]),`Past tense: ${it[2]}. Words like "gone" or "seen" need a helper: "I have gone."`)}
+  if(t<.68){const it=kTierPick(KPL,T);return kMk("eng",`What is the plural of "${it[1]}"?`,it[2],it.slice(3,5).concat([it[1]]),`One ${it[1]}, two ${it[2]}.`)}
+  return kBank("eng",T)}
+function kCode(T){const t=Math.random();
+  if(T<=2&&t<.35){const s=kR(1,9),d=kR(2,6),seq=[0,1,2,3].map(i=>s+i*d);return kMk("code",`What comes next? ${seq.join(", ")}, ?`,s+4*d,kNear(s+4*d),`The pattern adds ${d} each time. Spotting patterns is a coding superpower.`)}
+  if(T>=2&&T<=3&&t<.35){const n=kR(2,6),m=kR(2,5);return kMk("code",`A robot runs: repeat ${n} times → move ${m} steps. How many steps in all?`,n*m,kNear(n*m),`A loop repeats: ${n} × ${m} = ${n*m}.`)}
+  if(T>=4&&t<.4){const bits=T===4?kR(3,4):kR(4,5),n=kR(Math.pow(2,bits-1),Math.pow(2,bits)-1),b=n.toString(2);
+    if(T===5&&Math.random()<.4)return kMk("code",`What is ${n} written in binary?`,b,[(n+1).toString(2),(n-1).toString(2),(n^1).toString(2)===b?(n+2).toString(2):(n^2).toString(2)],`Binary place values are 1, 2, 4, 8, 16. ${n} = ${b}.`);
+    return kMk("code",`The binary number ${b} equals which normal number?`,n,kNear(n),`Place values from the right: 1, 2, 4, 8, 16. ${b} = ${n}.`)}
+  if(T===5&&t<.6){const a=kR(2,9),m=kR(2,4),c=kR(1,6);return kMk("code",`x = ${a}\nx = x × ${m}\nx = x − ${c}\nWhat is x now?`,a*m-c,kNear(a*m-c),`${a} × ${m} = ${a*m}, then − ${c} = ${a*m-c}.`)}
+  return kBank("code",T)}
+function kGeo(T){const t=Math.random();
+  if(t<.3){const p=KUS.filter(x=>Math.abs(x[2]-T)<=1),it=kPick(p.length?p:KUS),w=kShuf(KUS.filter(x=>x[1]!==it[1])).slice(0,3).map(x=>x[1]);
+    return Math.random()<.7?kMk("geo",`What is the capital of ${it[0]}?`,it[1],w,`${it[1]} is the capital of ${it[0]}.`):kMk("geo",`${it[1]} is the capital of which state?`,it[0],kShuf(KUS.filter(x=>x[0]!==it[0])).slice(0,3).map(x=>x[0]),`${it[1]}, ${it[0]}.`)}
+  if(t<.55){const p=KCO.filter(x=>Math.abs(x[3]-T)<=1),it=kPick(p.length?p:KCO);
+    if(Math.random()<.65){const w=kShuf(KCO.filter(x=>x[1]!==it[1])).slice(0,3).map(x=>x[1]);return kMk("geo",`What is the capital of ${it[0]}?`,it[1],w,`${it[1]} is the capital of ${it[0]}.`)}
+    const conts=["Europe","Asia","Africa","North America","South America","Australia"].filter(c=>c!==it[2]);if(/and|\(/.test(it[2]))return kMk("geo",`What is the capital of ${it[0]}?`,it[1],kShuf(KCO.filter(x=>x[1]!==it[1])).slice(0,3).map(x=>x[1]),`${it[1]} is the capital of ${it[0]}.`);
+    return kMk("geo",`${it[0]} is on which continent?`,it[2],kShuf(conts).slice(0,3),`${it[0]} is in ${it[2]}.`)}
+  return kBank("geo",T)}
+function kQ(sub){const k=KS(),L=k.lv[sub],T=Math.min(5,Math.ceil(L/4));let Q;
+  for(let i=0;i<6;i++){Q=sub==="math"?kMath(L):sub==="eng"?kEng(T):sub==="code"?kCode(T):sub==="geo"?kGeo(T):kBank("sci",T);if(!kRecent.includes(Q.q)&&Q.a>=0&&Q.o.length===4)break}
+  kRecent.push(Q.q);if(kRecent.length>60)kRecent.shift();Q.lv=L;return Q}
+function kSubPick(weights){const k=KS();const subs=Object.keys(KSUB);const sc=subs.map(s=>{const st=k.st[s],acc=st.h.length?st.h.reduce((a,b)=>a+b,0)/st.h.length:.6;return (weights&&weights[s]||1)*(1.4-acc)*(1+ (Math.max(...subs.map(x=>k.lv[x]))-k.lv[s])*0.15)});
+  let tot=sc.reduce((a,b)=>a+b,0),x=Math.random()*tot;for(let i=0;i<subs.length;i++){x-=sc[i];if(x<=0)return subs[i]}return subs[0]}
+/* ---------- scoring ---------- */
+function kAnswer(sub,ok){const k=KS(),st=k.st[sub],nm=KSUB[sub][0];st.n++;if(ok)st.c++;st.run=ok?Math.max(0,st.run)+1:Math.min(0,st.run)-1;st.h.push(ok?1:0);if(st.h.length>12)st.h.shift();
+  let msg="";const lv=k.lv[sub];
+  if(ok&&st.run>=3){const last=st.h.slice(-8),acc=last.reduce((a,b)=>a+b,0)/last.length;if(acc>=.7&&lv<20){k.lv[sub]=lv+1;st.run=0;msg=`⬆ LEVEL UP! ${nm} level ${lv+1}`}}
+  if(!ok&&st.run<=-2&&lv>1){k.lv[sub]=lv-1;st.run=0;msg=`${nm} set to level ${lv-1} for a bit of practice. You've got this!`}
+  if(ok){k.xp+=10+k.lv[sub];k.coins+=1+Math.floor(k.lv[sub]/5);k.combo++;k.bestCombo=Math.max(k.bestCombo,k.combo)}else k.combo=0;
+  const t=kToday();k.days[t]=(k.days[t]||0)+1;if(k.streak.d!==t){const y=new Date(Date.now()-86400000),yk=y.getFullYear()+"-"+String(y.getMonth()+1).padStart(2,"0")+"-"+String(y.getDate()).padStart(2,"0");k.streak={d:t,n:k.streak.d===yk?k.streak.n+1:1}}
+  const ks=Object.keys(k.days).sort();if(ks.length>60)for(const d of ks.slice(0,ks.length-60))delete k.days[d];
+  kBadges();persist();if(msg)kToast=msg;return msg}
+function kBadges(){const k=KS(),b=k.badges,give=id=>{if(!b[id]){b[id]=Date.now();const x=KBAD.find(z=>z[0]===id);kToast=(kToast?kToast+" · ":"")+`🏅 New badge: ${x[2]}!`}};
+  const tot=Object.values(k.st).reduce((a,s)=>a+s.n,0),lvs=Object.values(k.lv),mx=Math.max(...lvs),mn=Math.min(...lvs);
+  if(tot>=1)give("first");if(k.combo>=5)give("combo5");if(k.combo>=10)give("combo10");if(tot>=100)give("q100");if(tot>=500)give("q500");
+  if(mx>=5)give("lv5");if(mx>=10)give("lv10");if(mx>=15)give("lv15");if(mn>=5)give("all5");if(mn>=10)give("all10");
+  const d=k.rocket.dest;if(d>=1)give("moon");if(d>=2)give("mars");if(d>=5)give("saturn");if(d>=9)give("alpha");
+  if(k.rover.solved>=1)give("rover1");if(k.rover.solved>=10)give("rover10");if(k.rover.stars3>=5)give("stars3");
+  if(k.trip.arrived)give("trip1");if(k.trip.coast)give("coast");if(k.trip.world)give("world");if(k.streak.n>=3)give("days3");if(k.streak.n>=7)give("days7")}
+/* ---------- shared UI ---------- */
+function kSay(t){try{const u=new SpeechSynthesisUtterance(t.replace(/×/g," times ").replace(/÷/g," divided by ").replace(/−/g," minus ").replace(/√/g,"square root of ").replace(/²/g," squared").replace(/³/g," cubed"));u.lang="en-US";u.rate=.95;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(_){}}
+function kTop(title,back){const k=KS();return `<div class="ktop"><button class="kbtn ghost" data-k="${back||"exit"}">${back?"◀ Back":"◀ Grown-ups"}</button><b>${esc(title)}</b><span class="kpill">⚡ ${k.coins}</span>${k.streak.n?`<span class="kpill">🔥 ${k.streak.n}</span>`:""}</div>`}
+function kQuestion(Q,ans){const sb=KSUB[Q.s];return `<div class="kq" style="--sc:${sb[2]}"><div class="kqh"><span class="ksub">${sb[1]} ${sb[0]} · Lv ${Q.lv}</span><button class="kbtn ghost small" data-k="say">🔊 Read</button></div>
+  <div class="kqt">${esc(Q.q).replace(/\n/g,"<br>")}</div><div class="kopts">${Q.o.map((o,i)=>`<button class="kopt ${ans==null?"":i===Q.a?"good":i===ans?"bad":"dim"}" data-ka="${i}" ${ans!=null?"disabled":""}>${esc(o)}</button>`).join("")}</div>
+  ${ans==null?"":`<div class="kfb ${ans===Q.a?"ok":"no"}"><b>${ans===Q.a?kPick(["✅ Awesome!","✅ Correct!","✅ Nailed it!","✅ Boom! Right!"]):"❌ Not quite. Answer: "+esc(Q.o[Q.a])}</b>${Q.f?`<div>💡 ${esc(Q.f)}</div>`:""}</div><button class="kbtn big" data-k="next">Next ▶</button>`}</div>`}
+function kToastHtml(){if(!kToast)return "";const t=kToast;kToast="";return `<div class="ktoast">${esc(t)}</div>`}
+/* ---------- home ---------- */
+function renderKids(){const v=$("#view");if(KV.scr==="rocket")return kRocketView(v);if(KV.scr==="rover")return kRoverView(v);if(KV.scr==="trip")return kTripView(v);if(KV.scr==="badges")return kBadgesView(v);
+  const k=KS(),ri=kRank(k.xp),next=KRANKS[ri+1],cur=KRANKS[ri],pct=next?Math.round((k.xp-cur[0])/(next[0]-cur[0])*100):100;
+  const subs=Object.entries(KSUB).map(([s,[n,ic,col]])=>{const st=k.st[s],up=k.lv[s]-(k.week.start[s]||k.lv[s]);const acc=st.n?Math.round(st.c/st.n*100):null;
+    return `<div class="ksrow" style="--sc:${col}"><span class="ksi">${ic}</span><span class="ksn">${n}</span><span class="kslv">Lv ${k.lv[s]}</span><span class="ksbar"><i style="width:${Math.max(4,Math.min(3,Math.max(0,st.run))/3*100)}%"></i></span><span class="ksup">${up>0?"⬆ +"+up+" this week":acc!==null?acc+"% right":"new"}</span></div>`}).join("");
+  const dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)],route=KTRIP[k.trip.route],city=route[Math.min(k.trip.stop,route.length-1)],nxt=route[k.trip.stop+1];
+  const nb=Object.keys(k.badges).length;
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Space Academy")}
+   <div class="kcard kpilot"><div class="kav">🧑‍🚀</div><div><div class="kname">${k.name?esc(k.name):`<button class="kbtn small" data-k="name">Tap to add your name</button>`}${k.name?` <button class="kbtn ghost small" data-k="name">✏️</button>`:""}</div>
+     <div class="krank">${esc(cur[1])}</div><div class="kbar"><i style="width:${pct}%"></i></div><div class="ksmall">${k.xp} XP${next?` · ${next[0]-k.xp} XP to ${esc(next[1])}`:" · top rank!"}</div></div></div>
+   ${KV.naming?`<div class="kcard"><input id="kname" class="kin" maxlength="18" placeholder="Your name" value="${esc(k.name)}"><button class="kbtn" data-k="saveName">Save</button></div>`:""}
+   <div class="kgames">
+    <button class="kgame g1" data-k="rocket"><span class="kgi">🚀</span><b>Rocket Mission</b><span>Next stop: ${dest[1]} ${esc(dest[0])}</span><em>10 questions · every subject</em></button>
+    <button class="kgame g2" data-k="rover"><span class="kgi">🤖</span><b>Mars Rover Code</b><span>Puzzle level ${k.rover.lvl} · ${k.rover.solved} solved</span><em>Code the rover, then answer lab questions</em></button>
+    <button class="kgame g3" data-k="trip"><span class="kgi kflip">🚗</span><b>⚡ Supercharger Road Trip</b><span>${esc(city[0])}${nxt?" → "+esc(nxt[0]):""}</span><em>Answer to charge, drive to new cities</em></button>
+   </div>
+   <div class="kcard"><div class="kh">Your skill levels</div>${subs}<div class="ksmall">Levels go up after 3 right answers in a row and go down a little after misses, so questions always fit you.</div></div>
+   <button class="kcard kbadges" data-k="badges"><div class="kh">Badges · ${nb} of ${KBAD.length}</div><div class="kbrow">${KBAD.slice(0,12).map(b=>`<span class="kb ${k.badges[b[0]]?"on":""}" title="${esc(b[2])}">${b[1]}</span>`).join("")}</div><div class="ksmall">Tap to see them all</div></button>
+   <details class="kcard kgrown"><summary>👨 Grown-up corner</summary>${kGrown()}</details>
+  </div>`}
+function kGrown(){const k=KS();const days=[];for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*86400000),key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");days.push([d.toLocaleDateString(undefined,{weekday:"short"}),k.days[key]||0])}
+  return `<div class="ksmall">Answers in the last 7 days</div><div class="kdays">${days.map(([n,c])=>`<span><i style="height:${Math.min(60,c*2)}px"></i>${esc(n)}<b>${c}</b></span>`).join("")}</div>
+   ${Object.entries(KSUB).map(([s,[n,ic]])=>{const st=k.st[s],r=st.h.length?Math.round(st.h.reduce((a,b)=>a+b,0)/st.h.length*100):null;return `<div class="kgr">${ic} ${n}: level ${k.lv[s]} of 20 · ${st.n} answered · ${st.n?Math.round(st.c/st.n*100)+"% right overall":"–"}${r!==null?` · last ${st.h.length}: ${r}%`:""}</div>`}).join("")}
+   <div class="kgr">Rocket: ${k.rocket.missions} missions · Rover: level ${k.rover.lvl}, ${k.rover.solved} solved · Trip: ${k.trip.route==="usa"?"U.S.":"World"} stop ${k.trip.stop+1} · Best streak ${k.bestCombo}</div>
+   <div class="ksmall">Levels 1–4 are about 2nd grade, 5–8 3rd–4th grade, 9–12 5th grade, 13–16 6th grade, 17–20 middle school, so a strong 8-year-old can keep climbing.</div>
+   ${KV.reset?`<div class="row"><button class="kbtn red" data-k="resetYes">Erase all kids progress</button><button class="kbtn ghost" data-k="resetNo">Keep</button></div>`:`<button class="kbtn ghost small" data-k="reset">Reset kids progress</button>`}`}
+function kBadgesView(v){const k=KS();v.innerHTML=`<div class="kids">${kTop("Badges","home")}<div class="kbgrid">${KBAD.map(b=>`<div class="kbig ${k.badges[b[0]]?"on":""}"><span>${b[1]}</span><b>${esc(b[2])}</b><em>${esc(b[3])}</em></div>`).join("")}</div></div>`}
+/* ---------- game 1: rocket mission ---------- */
+function kRocketStart(){const order=kShuf(Object.keys(KSUB).concat(Object.keys(KSUB)));KV={scr:"rocket",i:0,n:10,fuel:0,right:0,res:[],order,Q:kQ(order[0]),ans:null}}
+function kRocketView(v){const k=KS(),g=KV,dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)];
+  if(g.done){const ok=g.right>=7;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Rocket Mission","home")}<div class="kcard kend"><div class="krocket ${ok?"fly":""}">🚀</div>
+    <h2>${ok?`You reached ${esc(g.dest[0])}! ${g.dest[1]}`:"Not enough fuel this time"}</h2><p>${g.right} of ${g.n} right${ok?` · ${esc(g.dest[2])}`:` · you need 7 to reach ${esc(g.dest[0])}`}</p>
+    <div class="row"><button class="kbtn big" data-k="rocket">${ok?"Next mission 🚀":"Try again 🚀"}</button><button class="kbtn ghost" data-k="home">Mission Control</button></div></div></div>`;return}
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Rocket Mission","home")}<div class="khud"><div class="kfuel"><i style="height:${g.fuel}%"></i></div><div class="krk">${g.fuel>=70?"🚀🔥":"🚀"}</div>
+   <div><b>Destination: ${dest[1]} ${esc(dest[0])}</b><div class="ksmall">Question ${g.i+1} of ${g.n} · fuel ${g.fuel}% · need 70%</div><div class="kdots">${Array.from({length:g.n},(_,i)=>`<i class="${i<g.i?(g.res[i]?"y":"n"):i===g.i?"c":""}"></i>`).join("")}</div></div></div>${kQuestion(g.Q,g.ans)}</div>`}
+/* ---------- game 2: rover code ---------- */
+const KDIR=[[0,-1],[1,0],[0,1],[-1,0]];
+function kRoverPuzzle(lvl){const N=lvl<=3?5:lvl<=7?6:7,rocks=Math.min(14,2+lvl),loop=lvl>=3;
+  for(let t=0;t<400;t++){const g=Array.from({length:N},()=>Array(N).fill(0)),sx=0,sy=N-1;let n=0;while(n<rocks){const x=kR(0,N-1),y=kR(0,N-1);if((x!==sx||y!==sy)&&!g[y][x]){g[y][x]=1;n++}}
+    let tx,ty;do{tx=kR(0,N-1);ty=kR(0,N-1)}while(g[ty][tx]||(tx===sx&&ty===sy)||Math.abs(tx-sx)+Math.abs(ty-sy)<Math.min(N-1,2+Math.floor(lvl/2)));
+    const best=kRoverBFS(g,N,sx,sy,0,tx,ty,loop);if(best>=3&&best<=12)return{N,g,sx,sy,d:0,tx,ty,best,loop,prog:[],x:sx,y:sy,dd:0,state:"edit"}}
+  return kRoverPuzzle(Math.max(1,lvl-1))}
+function kRoverBFS(g,N,sx,sy,sd,tx,ty,loop){const key=(x,y,d)=>x+","+y+","+d,seen=new Set([key(sx,sy,sd)]);let fr=[[sx,sy,sd]],dist=0;
+  while(fr.length&&dist<20){const nx=[];for(const [x,y,d] of fr){if(x===tx&&y===ty)return dist;const moves=[[x,y,(d+3)%4],[x,y,(d+1)%4]];
+      const step=k=>{let cx=x,cy=y;for(let i=0;i<k;i++){cx+=KDIR[d][0];cy+=KDIR[d][1];if(cx<0||cy<0||cx>=N||cy>=N||g[cy][cx])return null}return[cx,cy,d]};const s1=step(1);if(s1)moves.push(s1);if(loop){const s3=step(3);if(s3)moves.push(s3)}
+      for(const m of moves){const kk=key(...m);if(!seen.has(kk)){seen.add(kk);nx.push(m)}}}fr=nx;dist++}return 99}
+function kRoverStart(){const k=KS();KV={scr:"rover",P:kRoverPuzzle(k.rover.lvl)}}
+function kRoverRun(){const P=KV.P;if(!P.prog.length)return;P.state="run";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[];const steps=[];for(const c of P.prog){if(c==="L")steps.push("L");else if(c==="R")steps.push("R");else if(c==="F")steps.push("F");else steps.push("F","F","F")}
+  let i=0;const tick=()=>{if(KV.scr!=="rover"||KV.P!==P)return;if(i>=steps.length){P.state=(P.x===P.tx&&P.y===P.ty)?"win":"miss";kRoverEnd();renderKids();return}
+    const s=steps[i++];if(s==="L")P.dd=(P.dd+3)%4;else if(s==="R")P.dd=(P.dd+1)%4;else{const nx=P.x+KDIR[P.dd][0],ny=P.y+KDIR[P.dd][1];if(nx<0||ny<0||nx>=P.N||ny>=P.N||P.g[ny][nx]){P.state="crash";renderKids();return}P.path.push(P.x+","+P.y);P.x=nx;P.y=ny;if(P.x===P.tx&&P.y===P.ty){P.state="win";kRoverEnd();renderKids();return}}
+    renderKids();setTimeout(tick,380)};setTimeout(tick,200)}
+function kRoverEnd(){const P=KV.P,k=KS();if(P.state!=="win"||P.scored)return;P.scored=1;const n=P.prog.length;P.stars=n<=P.best?3:n<=P.best+2?2:1;
+  k.rover.solved++;if(P.stars===3)k.rover.stars3++;k.xp+=15+5*P.stars+k.rover.lvl;k.coins+=P.stars;if(P.stars>=2&&k.rover.lvl<20)k.rover.lvl++;kAnswer("code",true);P.lab=kQ(kSubPick({sci:2,math:1.5,code:1,geo:1,eng:1}));P.labAns=null}
+function kRoverView(v){const P=KV.P,k=KS();
+  if(P.state==="win"&&P.lab){const done=P.labAns!=null;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Mars Rover Code","home")}<div class="kcard kend"><h2>💎 Sample collected! ${"⭐".repeat(P.stars)}</h2><p>${P.prog.length} commands · best possible ${P.best}${P.stars<3?" · try for fewer commands next time":""}</p></div>
+    <div class="kcard"><div class="kh">🔬 Lab test: answer to analyze the sample</div></div>${kQuestion(P.lab,P.labAns).replace('data-k="next"','data-k="roverNext"')}</div>`;return}
+  const cell=(x,y)=>{const r=P.x===x&&P.y===y,t=P.tx===x&&P.ty===y,rock=P.g[y][x],tr=(P.path||[]).includes(x+","+y);return `<span class="kc ${tr?"tr":""} ${rock?"rock":""}">${r?`<b class="krov" style="transform:rotate(${P.dd*90}deg)">⬆</b>`:t?"💎":rock?"🪨":""}</span>`};
+  const grid=Array.from({length:P.N},(_,y)=>Array.from({length:P.N},(_,x)=>cell(x,y)).join("")).join("");const max=P.best+5,lab={F:"⬆",L:"↺",R:"↻",F3:"🔁3⬆"};
+  const msg=P.state==="crash"?"💥 Bump! The rover hit a rock or the edge. Fix your code and run it again.":P.state==="miss"?"🤔 The rover stopped before the 💎. Add more commands.":P.state==="run"?"Running your code…":"Program the rover (🤖 ⬆ points the way it faces) to reach the 💎. Then press Run.";
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Mars Rover Code","home")}<div class="kcard"><div class="row" style="justify-content:space-between"><b>Puzzle level ${k.rover.lvl}</b><span class="ksmall">Best: ${P.best} commands</span></div><div class="kgrid" style="grid-template-columns:repeat(${P.N},1fr)">${grid}</div><div class="ksmall">${esc(msg)}</div></div>
+   <div class="kcard"><div class="kprog">${P.prog.length?P.prog.map((c,i)=>`<span class="kcmd">${lab[c]}</span>`).join(""):'<span class="ksmall">Your code appears here</span>'}</div>
+    <div class="kpad"><button class="kbtn" data-kc="F" ${P.prog.length>=max||P.state==="run"?"disabled":""}>⬆ Forward</button><button class="kbtn" data-kc="L" ${P.prog.length>=max||P.state==="run"?"disabled":""}>↺ Left</button><button class="kbtn" data-kc="R" ${P.prog.length>=max||P.state==="run"?"disabled":""}>↻ Right</button>${P.loop?`<button class="kbtn" data-kc="F3" ${P.prog.length>=max||P.state==="run"?"disabled":""}>🔁 Repeat 3 × ⬆</button>`:""}</div>
+    <div class="kpad"><button class="kbtn big" data-k="run" ${!P.prog.length||P.state==="run"?"disabled":""}>▶ Run</button><button class="kbtn ghost" data-k="undo" ${P.state==="run"?"disabled":""}>⌫ Undo</button><button class="kbtn ghost" data-k="clear" ${P.state==="run"?"disabled":""}>Clear</button><button class="kbtn ghost" data-k="newpuz" ${P.state==="run"?"disabled":""}>New map</button></div></div></div>`}
+/* ---------- game 3: supercharger road trip ---------- */
+const KLEG=[45,40,50,45,35,45,40,50,45,40,35,50];
+function kTripView(v){const k=KS(),T=k.trip,route=KTRIP[T.route],city=route[T.stop],nxt=route[T.stop+1],need=nxt?KLEG[T.stop%KLEG.length]:0,g=KV;
+  if(g.Q){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Supercharger Road Trip","home")}<div class="khud"><div class="kbat"><i style="width:${T.bat}%"></i><span>${T.bat}%</span></div><div><b>⚡ Charging in ${esc(city[0])}</b><div class="ksmall">Right answer +25% · miss +5%</div></div></div>${kQuestion(g.Q,g.ans)}</div>`;return}
+  if(g.arrive){const A=g.arrive;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Supercharger Road Trip","home")}<div class="kcard kend"><div class="kcar drive">💨🚗</div><h2>Welcome to ${esc(A.c[0])}, ${esc(A.c[1])}!</h2><p>Arrival bonus: answer for +5 ⚡ coins and +10% battery.</p></div>
+    ${kQuestion(A.Q,A.ans).replace('data-k="next"','data-k="tripDone"')}</div>`;return}
+  const dots=route.map((c,i)=>`<span class="ktd ${i<T.stop?"done":i===T.stop?"here":""}" title="${esc(c[0])}">${i===T.stop?"🚗":i<T.stop?"✓":"•"}</span>`).join("");
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Supercharger Road Trip","home")}<div class="kcard"><div class="kh">${T.route==="usa"?"🇺🇸 Coast to coast":"🌍 World tour"} · stop ${T.stop+1} of ${route.length}</div><div class="ktrip">${dots}</div>
+    <h2 style="margin:8px 0 4px">📍 ${esc(city[0])}, ${esc(city[1])}</h2><div class="ksmall">${esc(city[2])}</div></div>
+   <div class="kcard"><div class="kbat big"><i style="width:${T.bat}%;background:${T.bat>=need?"#2ec27e":"#ffb703"}"></i><span>${T.bat}%</span></div>
+    ${nxt?`<p>Next: <b>${esc(nxt[0])}</b> needs <b>${need}%</b> battery.</p>`:"<p>You made it to the end of the route! 🎉</p>"}
+    <div class="kpad"><button class="kbtn big" data-k="charge" ${T.bat>=100?"disabled":""}>⚡ Charge: answer a question</button>${nxt?`<button class="kbtn big green" data-k="drive" ${T.bat>=need?"":"disabled"}>🚗 Drive to ${esc(nxt[0])}</button>`:`<button class="kbtn big green" data-k="newRoute">${T.route==="usa"?"🌍 Start the world tour":"🇺🇸 Drive the U.S. again"}</button>`}</div></div></div>`}
+function kTripMath(){const r=kR(2,5),b=kPick([30,40,45,60,75]);return {s:"math",...kMk("math",`Your electric car uses 1% of its battery every ${r} miles. How many miles can it go on ${b}%?`,r*b,kNear(r*b),`${b} × ${r} = ${r*b} miles.`),lv:KS().lv.math}}
+/* ---------- clicks ---------- */
+function kidsClick(b){const d=b.dataset;
+  if(b.id==="kidsbtn"){KV={scr:"home"};view="kids";render();window.scrollTo(0,0);return true}
+  if(view!=="kids")return false;const k=KS(),g=KV;
+  if(d.k==="exit"){view="start";render();window.scrollTo(0,0);return true}
+  if(d.k==="home"){KV={scr:"home"};render();window.scrollTo(0,0);return true}
+  if(d.k==="badges"){KV={scr:"badges"};render();return true}
+  if(d.k==="name"){KV.naming=true;render();setTimeout(()=>{const i=$("#kname");if(i)i.focus()},50);return true}
+  if(d.k==="saveName"){const i=$("#kname");k.name=(i?i.value:"").trim().slice(0,18);KV.naming=false;persist();render();return true}
+  if(d.k==="reset"){KV.reset=true;render();return true}if(d.k==="resetNo"){KV.reset=false;render();return true}
+  if(d.k==="resetYes"){delete S.kids;KV={scr:"home"};persist();render();return true}
+  if(d.k==="say"){const Q=g.scr==="rover"?g.P.lab:g.scr==="trip"?(g.Q||(g.arrive&&g.arrive.Q)):g.Q;if(Q)kSay(Q.q+". "+Q.o.join(". "));return true}
+  if(d.k==="rocket"){kRocketStart();render();window.scrollTo(0,0);return true}
+  if(d.k==="rover"){kRoverStart();render();window.scrollTo(0,0);return true}
+  if(d.k==="trip"){KV={scr:"trip"};render();window.scrollTo(0,0);return true}
+  if(d.ka!==undefined){const i=+d.ka;
+    if(g.scr==="rocket"&&g.ans==null){g.ans=i;const ok=i===g.Q.a;g.res=g.res||[];g.res[g.i]=ok;if(ok){g.right++;g.fuel=Math.min(100,g.fuel+10)}kAnswer(g.Q.s,ok);render();return true}
+    if(g.scr==="rover"&&g.P.lab&&g.P.labAns==null){g.P.labAns=i;const ok=i===g.P.lab.a;if(ok)k.coins+=3;kAnswer(g.P.lab.s,ok);render();return true}
+    if(g.scr==="trip"&&g.Q&&g.ans==null){g.ans=i;const ok=i===g.Q.a;k.trip.bat=Math.min(100,k.trip.bat+(ok?25:5));kAnswer(g.Q.s,ok);render();return true}
+    if(g.scr==="trip"&&g.arrive&&g.arrive.ans==null){g.arrive.ans=i;const ok=i===g.arrive.Q.a;if(ok){k.coins+=5;k.trip.bat=Math.min(100,k.trip.bat+10)}kAnswer("geo",ok);render();return true}
+    return true}
+  if(d.k==="next"&&g.scr==="rocket"){g.i++;if(g.i>=g.n){g.done=true;g.dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)];k.rocket.missions++;if(g.right>=7){k.xp+=50;k.coins+=10;if(k.rocket.dest<KDEST.length)k.rocket.dest++;if(g.right===10)k.badges.perfect||(k.badges.perfect=Date.now(),kToast=(kToast?kToast+" · ":"")+"🏅 New badge: Perfect Mission!")}kBadges();persist()}
+    else{g.Q=kQ(g.order[g.i%g.order.length]);g.ans=null}render();window.scrollTo(0,0);return true}
+  if(d.kc&&g.scr==="rover"){const P=g.P;if(P.state!=="edit"){P.state="edit";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[]}P.prog.push(d.kc);render();return true}
+  if(d.k==="undo"&&g.scr==="rover"){const P=g.P;P.prog.pop();P.state="edit";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[];render();return true}
+  if(d.k==="clear"&&g.scr==="rover"){const P=g.P;P.prog=[];P.state="edit";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[];render();return true}
+  if(d.k==="newpuz"){kRoverStart();render();return true}
+  if(d.k==="run"){kRoverRun();render();return true}
+  if(d.k==="roverNext"){kRoverStart();render();window.scrollTo(0,0);return true}
+  if(d.k==="charge"&&g.scr==="trip"){g.Q=Math.random()<.3?kTripMath():kQ(kSubPick({geo:2,math:1.5,sci:1,eng:1,code:1}));g.ans=null;render();return true}
+  if(d.k==="next"&&g.scr==="trip"){g.Q=null;g.ans=null;render();return true}
+  if(d.k==="drive"&&g.scr==="trip"){const T=k.trip,route=KTRIP[T.route],need=KLEG[T.stop%KLEG.length];if(T.bat<need)return true;T.bat-=need;T.stop++;T.arrived=1;
+    if(T.stop>=route.length-1){if(T.route==="usa")T.coast=1;else T.world=1}k.xp+=20;const c=route[T.stop];g.arrive={c,Q:{...kMk("geo",c[3],c[4],c.slice(5,8),c[2]),lv:k.lv.geo},ans:null};kBadges();persist();render();window.scrollTo(0,0);return true}
+  if(d.k==="tripDone"){KV={scr:"trip"};render();return true}
+  if(d.k==="newRoute"){const T=k.trip;T.route=T.route==="usa"?"world":"usa";T.stop=0;T.bat=Math.max(T.bat,60);persist();render();return true}
+  return false}
+
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
    Publication 5726 (ITIN Acceptance Agents Training, Rev. 6-2026) and the Instructions for Form W-7 (Rev. December 2024).
@@ -11093,7 +11501,7 @@ function restoreFrom(text){try{let o=JSON.parse(text.trim());if(o&&o.state)o=o.s
   catch(e){bkNote="That is not a progress file or code from this app. Pick the file named EA-Exam-progress, or copy the whole code again.";render()}}
 function setSync(ok,txt){remoteOk=ok;const el=document.getElementById("sync");if(!el)return;el.classList.toggle("ok",ok);document.getElementById("synctext").textContent=txt||(ok?"Synced to your account":"Saved on this device")}
 // Merge two copies of progress (for example phone and computer): keep the fuller record of every fact.
-function mergeState(a,b){const newer=(b.upd||0)>(a.upd||0)?b:a,older=newer===a?b:a;const out=Object.assign(blank(),older,newer);
+function mergeState(a,b){const newer=(b.upd||0)>(a.upd||0)?b:a,older=newer===a?b:a;const out=Object.assign(blank(),older,newer);if(a.kids||b.kids)out.kids=((a.kids&&a.kids.xp)||0)>=((b.kids&&b.kids.xp)||0)?a.kids:b.kids;
   // each fact: the most recently answered record wins, and attempt counts never go down
   const pick=(x,y)=>{const tx=x[7]||0,ty=y[7]||0;let w;
     if(tx||ty)w=ty>tx?y:tx>ty?x:((y[2]||0)>=(x[2]||0)?y:x);
@@ -11115,7 +11523,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 107 · Nov 18";
+const BUILD="Version 108 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -11279,7 +11687,7 @@ function renderStart(){const b=bkStats("all"),e=[1,2,3].map(p=>Math.round(partSt
     ${[5,6,7,8].map(p=>{const X=PARTS[p],ps=partStats(p),n=BANK.filter(i=>i.p==p);return `<button class="startcard x${p}" data-sec="${X.x}"><span class="lvl">${p===7?"Certification training":p===8?"State commission course":"Exam preparation"}</span><b>${X.short} · ${esc(X.name)}</b><p>${p===8?"Become a Colorado notary: qualifications and the exam, acknowledgments, jurats, copy certifications, ID rules, the stamp and journal, fees, prohibited acts, and electronic and remote notarization.":p===7?"ITINs and Form W-7 for a Certifying Acceptance Agent: program rules, the 13 documents, the Certificate of Accuracy, exceptions, records and compliance.":p===5?"Investment adviser representative exam: economics, investment vehicles, client strategies, and securities law and ethics.":"Social Security disability representation: the programs, the five-step evaluation, evidence, appeals, fees and conduct."}</p><span class="sbar"><i style="width:${Math.round(ps.readyX)}%"></i></span><em>${Math.round(ps.readyX)}% ready · ${n.filter(i=>i.t==="f").length} flashcards · ${n.filter(i=>i.t==="q").length} questions</em></button>`}).join("")}
   </div><div class="statusline" style="margin-top:14px">${BUILD}${HOSTED?` · <button class="linkbtn" id="updcheck">Check for update</button>${updMsg?" · "+esc(updMsg):""}`:""}</div>
   ${updateReady?`<div class="ledger" style="border:2px solid var(--accent);margin-top:10px"><b>A newer version is ready: ${esc(updateReady)}.</b><div class="row"><button class="btn pri" id="updnow" ${updating?"disabled":""}>${updating?"Updating…":"Update now"}</button></div></div>`:""}</section>`}
-function render(){renderTabs();if(view==="start")return renderStart();if(view==="labs")return renderLabs();if(view==="qbo")return renderQbo();if(view==="taxsim")return renderTax();if(view==="w7")return renderW7();if(view==="lessons")return renderLessons();if(view==="audio")return renderAudio();if(view==="session")return renderSession();if(view==="results")return renderResults();renderHome()}
+function render(){document.body.classList.toggle("kidsmode",view==="kids");document.body.classList.toggle("onstart",view==="start");if(view==="kids")return renderKids();renderTabs();if(view==="start")return renderStart();if(view==="labs")return renderLabs();if(view==="qbo")return renderQbo();if(view==="taxsim")return renderTax();if(view==="w7")return renderW7();if(view==="lessons")return renderLessons();if(view==="audio")return renderAudio();if(view==="session")return renderSession();if(view==="results")return renderResults();renderHome()}
 
 function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},0);
   const P=PARTS[part],ps=partStats(part);
@@ -12358,6 +12766,7 @@ function renderResults(){
 /* ================= EVENTS ================= */
 document.addEventListener("click",e=>{
   const b=e.target.closest("button");if(!b)return;
+  if(kidsClick(b))return;
   if(view==="audio"&&!b.dataset.part){if(audioClick(b))return}
   if(b.dataset.part&&aud){aud.stop=true;hush();aud=null;view="home"}
   if(b.dataset.part&&view==="lessons"){hush();part=+b.dataset.part;try{sessionStorage.setItem("ea-part",part)}catch(_){}les={unit:null,topic:null,idx:0};render();return}
