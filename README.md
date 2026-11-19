@@ -74,6 +74,16 @@ subject up a level, two misses move it down. Hints are always available but neve
   rob the bank; players catch them by bumping them with a car or with a foam "splat" on foot.
   ⚡ Quick-decision questions (times tables, change, road safety, phishing, compass) pop up for six
   seconds and build a 🔥 combo multiplier for a 🏆 score.
+- **✈️ Sky Pilot:** a kid-friendly 3D flight simulator with simplified real physics in metric units
+  (m/s, km/h, meters). A live forces panel shows lift, weight, thrust and drag; stall speed drops when
+  flaps are down, and gear and flaps add drag. Six missions unlock in order: 🛫 First Takeoff,
+  ⭕ Ring Run (turning by banking), 🛬 Smooth Landing (gear, flaps, throttle and green approach hoops,
+  scored by touchdown sink rate), 🚀 Rocket Watch (navigate by compass to a launch pad and watch a
+  liftoff), 🏝️ Island Hop (fly over the ocean and land on an island airstrip) and 🌤️ Free Flight.
+  Easy mode helps level the wings, trims for a gentle glide with gear and flaps down, and softens the
+  touchdown; Pro mode turns the helpers off. Optional real-pilot stick (pull back to climb) and
+  tilt-to-fly with the phone's motion sensor. Each finished mission ends with a pilot science
+  question (four forces, stalls, flaps, headings, m/s to km/h, the Wright brothers).
   One ticket = a 5-minute visit. No crime or violence: everything is cartoon mischief.
 - **🔄 Smart rotation:** a daily "brain mix" suggests three activities he hasn't done yet; the first win at each
   one each day gives a bonus ticket (up to 4), and after three rounds of the same thing it suggests switching.
