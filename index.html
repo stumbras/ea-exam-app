@@ -257,6 +257,10 @@ body.kidsmode .top,body.kidsmode .tabs{display:none}
 @keyframes tglitch{0%{transform:translate(0)}50%{transform:translate(-2px,1px)}100%{transform:translate(2px,-1px)}}
 .tht{font:700 15px ui-monospace,monospace}.thr{display:flex;gap:10px;align-items:center;text-align:left;background:rgba(34,255,102,.12);border-radius:12px;padding:10px;font-size:15px}.thr span{font-size:34px}.thr small{display:block;opacity:.8;font-size:12px}
 .tlight{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;font-size:64px;animation:tlights .3s infinite;cursor:pointer}@keyframes tlights{0%{background:rgba(255,0,80,.55)}33%{background:rgba(0,200,255,.55)}66%{background:rgba(255,220,0,.55)}100%{background:rgba(120,0,255,.55)}}
+.kdbrq{width:92%;max-height:94%;overflow:auto;text-align:left}
+.kdbrules{display:grid;gap:8px;text-align:left}.kdbrq .kdbrules>.kpad{position:sticky;bottom:-14px;background:rgba(10,14,30,.98);padding:10px 0 12px;margin:0;justify-content:center}.kdbrules .kh{text-align:center;color:#ffd23f}
+.kdbr{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.06);border-radius:12px;padding:8px;font-size:13.5px;line-height:1.35}.kdbr span{font-size:24px;line-height:1}.kdbr b{color:#ffd23f}
+.kcard .kdbrules,.kids>.kdbrules{background:#111827;border-radius:16px;padding:12px;margin:8px 0}
 .ledger{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat{display:grid;gap:2px}
@@ -8423,6 +8427,11 @@ function kidsClick(b){const d=b.dataset;
   if(d.kdq!==undefined){kDbAnswer(+d.kdq);return true}
   if(d.k==="dbqh"){const Q=kDby&&kDby.q;if(Q&&!Q.rm){const w=Q.opts.map((o,i)=>i).filter(i=>Q.opts[i]!==Q.a);Q.rm=kShuf(w).slice(0,Math.min(2,w.length-1));k.hints++;render()}return true}
   if(d.k==="dbboost"){kDbBoost();return true}
+  if(d.k==="dbrules"){if(kDby&&!kDby.over&&!kDby.q){kDby.rules=1;kDby.joy=null;render()}return true}
+  if(d.k==="dbgo"){if(kDby){kDby.rules=0;k.derby.rules=1;persist();try{speechSynthesis.cancel();if(kAud)kAud.pause()}catch(_){}kBeep("click");render()}return true}
+  if(d.k==="dbread"){kSay(kDbRulesText());return true}
+  if(d.k==="dbcoach"){k.derby=k.derby||{lv:1,wins:0,ko:0,best:0,plays:0};const on=!(kDby&&KV.scr==="derby"?kDby.coach<=3:kDbCoachOn());k.derby.coach=on;if(kDby&&KV.scr==="derby"){kDby.coach=on?0:9;kDby.coachT=0}persist();kBeep("click");render();return true}
+  if(d.k==="dbhow"){KV.dbhow=!KV.dbhow;render();return true}
   if(d.k==="dbhint"){kDbHint();return true}
   if(d.k==="dhint"){kDriveHint();return true}
   if(d.khorn){k.drive=k.drive||{};k.drive.horn=d.khorn;persist();kHorn(d.khorn);render();return true}
@@ -9012,10 +9021,19 @@ const KDBC=["#1d3f8f","#16a34a","#f59e0b","#7c3aed","#0ea5e9","#db2777","#65a30d
 const KDBP={fix:["🔧","Repair +35"],boost:["⚡","Turbo!"],shield:["🛡️","Shield!"],bomb:["💣","BOOM!"],brain:["❓","Brain crate!"]};
 const KDBTIPS=["Drag anywhere to steer, like the Roblox thumbstick!","Tap 💥 BOOST right before you hit someone!","Ram with your FRONT: it does double damage!","Hit them in the SIDE to make them spin!","💣 bombs blast every car near you!","❓ crates: answer right for MEGA RAM!","Cybertruck has steel armor: it takes half damage.","Wrecked? No problem: you come back in 2 seconds!"];
 let kDby=null,kDbRAF=0;
+const KDBRULES=[["👆","Drive","Put your finger anywhere on the arena and drag. Your car drives the way you drag, like the thumbstick in Roblox. Let go to slow down."],
+ ["💥","Smash","Crash into the other cars! Every hit breaks them a little and gives you points."],
+ ["🎯","Best hit","Hit with your FRONT bumper into their SIDE. That does the most damage and makes them spin!"],
+ ["🟠","Boost","Tap the orange 💥 BOOST button right before you crash for a super-hard hit."],
+ ["❤️","Health","The green bar over each car is its health. Break a car to zero = KO! +100 points. If YOUR bar runs out, you come back in 2 seconds."],
+ ["🔧","Power-ups","🔧 repair · ⚡ turbo · 🛡️ shield · 💣 bomb blasts cars near you · ❓ brain crate: answer right for MEGA RAM."],
+ ["🏆","Win","Reach the 🎯 goal score before the timer hits 0. Beat it to unlock the next level!"]];
+function kDbRulesHtml(game){return `<div class="kdbrules"><div class="kh">💥 How to play Demolition Derby</div>${KDBRULES.map(r=>`<div class="kdbr"><span>${r[0]}</span><div><b>${r[1]}</b> ${esc(r[2])}</div></div>`).join("")}<div class="kpad"><button class="kbtn ghost small" data-k="dbread">🔊 Read it to me</button>${game?`<button class="kbtn big green" data-k="dbgo">Got it! Let's smash 💥</button>`:""}</div></div>`}
+function kDbRulesText(){return "How to play Demolition Derby. "+KDBRULES.map(r=>r[1]+". "+r[2].replace(/[🔧⚡🛡️💣❓🎯🟠💥]/g,"")).join(" ")}
 function kDbGoal(lv){return 400+lv*150}
 function kDerbyStart(car){const k=KS();k.drive=k.drive||{best:0,rides:0};k.derby=k.derby||{lv:1,wins:0,ko:0,best:0,plays:0};if((k.tix||0)<1)return false;const C=KCARS.find(x=>x[0]===car)||KCARS[0];k.tix--;k.derby.plays++;k.drive.car=C[0];persist();const lv=k.derby.lv;
-  kDby={C,lv,t:0,cd:3.4,cdLast:4,dur:75,goal:kDbGoal(lv),over:false,res:"",score:0,ko:0,deaths:0,cars:[],pw:[],fx:[],skid:[],obs:[],pwT:2,tipT:0,tip:"",shake:0,flash:0,slow:0,last:0,init:0,n:Math.min(5,2+lv),hints:0,arrowT:0,boostCd:0,joy:null,lastKO:-9,camX:0,camY:0};
-  KV={scr:"derby"};kLine("Smash arena! Hit the score goal before time runs out!",3);return true}
+  kDby={C,lv,t:0,cd:3.4,cdLast:4,dur:75,goal:kDbGoal(lv),over:false,res:"",score:0,ko:0,deaths:0,cars:[],pw:[],fx:[],skid:[],obs:[],pwT:2,tipT:0,tip:"",shake:0,flash:0,slow:0,last:0,init:0,n:Math.min(5,2+lv),hints:0,arrowT:0,boostCd:0,joy:null,lastKO:-9,camX:0,camY:0,rules:k.derby.rules?0:1,coach:kDbCoachOn()?0:9,coachT:0};
+  KV={scr:"derby"};if(!kDby.rules)kLine("Smash arena! Hit the score goal before time runs out!",3);return true}
 function kDbMkAI(D,x,y){const boss=D.lv>=3&&!D.bossOut;if(boss)D.bossOut=1;const hp=boss?150:45+D.lv*7;D.spawned=(D.spawned||0)+1;
   return{x,y,a:Math.atan2(D.AW/2-x,-(D.AH/2-y)),av:0,vx:0,vy:0,hp,max:hp,r:boss?32:26,m:boss?2.2:1,arm:boss?.7:1,vmax:boss?105:88+Math.min(70,D.lv*12),sh:boss?"monster":kPick(["sedan","suv","sedan","truck"]),col:KDBC[D.spawned%KDBC.length],alive:1,ai:{tg:null,tT:Math.random()*1.5,back:0},boss}}
 function kDbInit(D,W,H){const k=KS(),sh=D.C[3];D.W=W;D.H=H;D.AW=Math.round(W*1.8);D.AH=Math.round(H*1.6);const AW=D.AW,AH=D.AH;
@@ -9100,11 +9118,13 @@ function kDbDraw(cv,D,dt){const c=cv.getContext("2d"),W=cv.width,H=cv.height,AW=
   if(D.joy){const dx=D.joy.x-D.joy.ox,dy=D.joy.y-D.joy.oy,m=Math.hypot(dx,dy)||1,k2=Math.min(1,52/m);c.fillStyle="rgba(255,255,255,.14)";c.strokeStyle="rgba(255,255,255,.5)";c.lineWidth=2;c.beginPath();c.arc(D.joy.ox,D.joy.oy,52,0,7);c.fill();c.stroke();c.fillStyle="rgba(255,255,255,.75)";c.beginPath();c.arc(D.joy.ox+dx*k2,D.joy.oy+dy*k2,22,0,7);c.fill()}
   else if(D.t<7&&!D.over){const gx=70,gy=H-72,wob=Math.sin(D.t*4)*14;c.fillStyle="rgba(255,255,255,.1)";c.strokeStyle="rgba(255,255,255,.35)";c.lineWidth=2;c.beginPath();c.arc(gx,gy,48,0,7);c.fill();c.stroke();c.fillStyle="rgba(255,255,255,.45)";c.beginPath();c.arc(gx+wob,gy-10,20,0,7);c.fill();c.fillStyle="#fff";c.font="bold 11px system-ui";c.fillText("👆 drag to steer",gx,gy+62)}
   if(D.cd>0){const n=Math.ceil(D.cd),txt=D.cd>.4?String(Math.min(3,n)):"GO!";c.font="900 72px system-ui";c.strokeStyle="rgba(0,0,0,.6)";c.lineWidth=6;c.strokeText(txt,W/2,H/2);c.fillStyle=txt==="GO!"?"#2ec27e":"#ffd23f";c.fillText(txt,W/2,H/2);c.font="bold 13px system-ui";c.fillStyle="#fff";c.fillText(`Hit ${D.goal} points before the time runs out!`,W/2,H/2+52)}
+  if(D.coach<=3&&D.cd<=0&&!D.over){const tx=KDBCOACH[D.coach],pu=1+Math.sin(D.t*6)*.03;c.font="900 13px system-ui";const tw=Math.min(W-20,c.measureText(tx).width+28);c.save();c.translate(W/2,H-150);c.scale(pu,pu);c.fillStyle="rgba(22,140,90,.95)";c.beginPath();c.roundRect(-tw/2,-18,tw,36,12);c.fill();c.strokeStyle="#9ff5c8";c.lineWidth=2;c.stroke();c.fillStyle="#fff";c.fillText(tx,0,0);c.restore();
+    c.font="bold 10px system-ui";c.fillStyle="rgba(255,255,255,.75)";c.fillText(`Coach step ${D.coach+1} of 4`,W/2,H-122)}
   if(D.tipT>0){c.font="bold 12px system-ui";const tw=Math.min(W-20,c.measureText(D.tip).width+24);c.fillStyle="rgba(255,77,109,.94)";c.beginPath();c.roundRect(W/2-tw/2,58,tw,24,8);c.fill();c.fillStyle="#fff";c.fillText(D.tip,W/2,70)}}
 function kDerbyLoop(ts){const D=kDby,cv=$("#kdby");if(!D||KV.scr!=="derby"||!cv){kDriveHum(0);return}const W=cv.width,H=cv.height;if(!D.init)kDbInit(D,W,H);let dt=D.last?Math.min(.04,(ts-D.last)/1000):0;D.last=ts;const me=D.cars[0];
-  if(!D.over&&!D.q){D.flash=Math.max(0,D.flash-dt);D.shake=Math.max(0,D.shake-dt);if(D.slow>0){D.slow-=dt;dt*=.35}
+  if(!D.over&&!D.q&&!D.rules){D.flash=Math.max(0,D.flash-dt);D.shake=Math.max(0,D.shake-dt);if(D.slow>0){D.slow-=dt;dt*=.35}
     if(D.cd>0){D.cd-=dt;const n=Math.ceil(D.cd);if(n!==D.cdLast){D.cdLast=n;if(n>0)kBeep("click");else{kBeep("launch");kLine("Go!",3)}}}
-    else{D.t+=dt;D.tipT=Math.max(0,D.tipT-dt);D.arrowT=Math.max(0,D.arrowT-dt);D.boostCd=Math.max(0,D.boostCd-dt);for(const o of D.cars)for(const f of["boost","shield","mega"])if(o[f]>0)o[f]-=dt;
+    else{D.t+=dt;kDbCoach(D,dt);D.tipT=Math.max(0,D.tipT-dt);D.arrowT=Math.max(0,D.arrowT-dt);D.boostCd=Math.max(0,D.boostCd-dt);for(const o of D.cars)for(const f of["boost","shield","mega"])if(o[f]>0)o[f]-=dt;
       if(me.alive){let tx=null,ty=null,thr=0;const turn=3.6;if(D.joy){const dx=D.joy.x-D.joy.ox,dy=D.joy.y-D.joy.oy,m=Math.hypot(dx,dy);if(m>8){tx=me.x+dx*10;ty=me.y+dy*10;thr=Math.min(1,.35+m/60)}}if(D.kL||D.kR){me.a+=(D.kR?1:-1)*turn*dt;tx=null;thr=Math.max(thr,.6)}if(D.kU)thr=1;if(D.kD)thr=-.5;if(kDbDrive(me,tx,ty,thr,turn,dt)>60)D.skid.push([me.x,me.y])}
       else if((D.respawnT-=dt)<=0){Object.assign(me,{alive:1,hp:me.max,x:D.AW/2,y:D.AH*.86,vx:0,vy:0,a:0,av:0,shield:2.5});kBeep("chime");kDbFx(D,{k:"txt",x:me.x,y:me.y-40,txt:"🛡️ BACK IN!"})}
       for(const o of D.cars){if(o.ai&&o.alive)kDbAI(D,o,dt);else if(!o.alive&&!o.me){o.vx*=.94;o.vy*=.94}if(o.alive||!o.me){o.a+=(o.av||0)*dt;o.av=(o.av||0)*(1-Math.min(1,dt*3));o.x+=o.vx*dt;o.y+=o.vy*dt}}
@@ -9114,22 +9134,26 @@ function kDerbyLoop(ts){const D=kDby,cv=$("#kdby");if(!D||KV.scr!=="derby"||!cv)
       for(const p of D.pw){p.t+=dt;if(p.t>16){p.alive=0;continue}for(const o of D.cars){if(!o.alive||!p.alive)continue;if(o.ai&&(p.k==="brain"||p.k==="bomb"))continue;if(Math.hypot(o.x-p.x,o.y-p.y)<o.r+16){p.alive=0;kDbPick(D,o,p)}}}D.pw=D.pw.filter(p=>p.alive);
       if(!D.q&&D.t>=D.dur)kDerbyEnd(D)}
     const tx=Math.max(0,Math.min(D.AW-W,me.x-W/2)),ty=Math.max(-50,Math.min(D.AH-H,me.y-H*.55));D.camX+=(tx-D.camX)*Math.min(1,dt*6+.02);D.camY+=(ty-D.camY)*Math.min(1,dt*6+.02)}
-  kDbDraw(cv,D,D.q?0:dt);kDriveHum(D.over||D.q||D.cd>0||!me.alive?0:Math.hypot(me.vx,me.vy)*1.5);if(!D.q&&$("#kdby")===cv)kDbRAF=requestAnimationFrame(kDerbyLoop)}
+  kDbDraw(cv,D,D.q?0:dt);kDriveHum(D.over||D.q||D.cd>0||!me.alive?0:Math.hypot(me.vx,me.vy)*1.5);if(!D.q&&!D.rules&&$("#kdby")===cv)kDbRAF=requestAnimationFrame(kDerbyLoop)}
 function kDerbyView(v){const D=kDby,k=KS();if(!D){KV={scr:"drive",pick:1,dm:"derby"};return kDriveView(v)}
   if(D.over){const st=D.stars||0;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Demolition Derby","home")}<div class="kcard kend"><div class="kstars">${"⭐".repeat(st)}${"☆".repeat(3-st)}</div><h2>${D.res==="win"?"🏆 Goal smashed!":"⏱️ Time's up!"}</h2>
     <div class="kscore">${D.score} points</div><p>🎯 Goal ${D.goal} · <b>${D.ko} KO${D.ko===1?"":"s"}</b>${D.deaths?` · wrecked ${D.deaths}×`:""} · +${D.coins} coins</p><p>${D.res==="win"?`🔓 Derby level ${k.derby.lv} unlocked${k.derby.lv>=3?": the 👹 Monster Truck is waiting!":"!"}`:`Best: ${k.derby.best} · level ${D.lv}`}</p>
     <p class="ksmall">💡 ${esc(kPick(KDBTIPS))}</p><p class="ksmall">🔬 Physics: a heavier car pushes harder when it hits. That's momentum: mass × speed. It's why the Cybertruck and the Monster Truck are so tough!</p>
     <div class="kpad">${(k.tix||0)>0?`<button class="kbtn big green" data-kderby="${D.C[0]}">Smash again 💥</button>`:""}<button class="kbtn ghost" data-k="drive">Pick a car</button><button class="kbtn ghost" data-k="home">Home</button></div><p class="ksmall">🎟️ ${k.tix||0} ticket${(k.tix||0)===1?"":"s"} left${(k.tix||0)<1?" · earn more by learning!":""}</p></div></div>`;return}
   const W=Math.min(380,v.clientWidth||360)-4,H=Math.round(W*1.35);if(!D.init)kDbInit(D,W,H);
-  v.innerHTML=`<div class="kids">${kTop("💥 Derby · Lv "+D.lv,"home")}<div class="kdrvbox kdbbox"><canvas id="kdby" width="${W}" height="${H}" aria-label="Demolition derby: drag to steer, tap boost"></canvas>${D.q?`<div class="kdbq"><div class="kdbqt">🧠 ${esc(D.q.q)} = ?</div><div class="kdbqo">${D.q.opts.map((o,i)=>`<button class="kbtn big" data-kdq="${i}" ${D.q.rm&&D.q.rm.includes(i)?"disabled":""}>${esc(o)}</button>`).join("")}</div>${D.q.rm?`<div class="ksmall">💡 Hint used: no MEGA RAM this time</div>`:`<button class="kbtn ghost small" data-k="dbqh">💡 Hint</button>`}<div class="ksmall">Right answer = 🧠 MEGA RAM (double damage) + repair + 50 points!</div></div>`:""}</div>
-   <div class="kpad kdrvbtns"><button class="kbtn big" data-k="dbhint">💡 Hint</button></div><div class="ksmall">👆 Drag anywhere to steer (like Roblox). Tap 💥 BOOST to ram. Front hits do double damage, side hits make cars spin. Grab ❓ for brain power and 💣 for a blast!</div></div>`;
+  v.innerHTML=`<div class="kids">${kTop("💥 Derby · Lv "+D.lv,"home")}<div class="kdrvbox kdbbox"><canvas id="kdby" width="${W}" height="${H}" aria-label="Demolition derby: drag to steer, tap boost"></canvas>${D.rules?`<div class="kdbq kdbrq">${kDbRulesHtml(true)}</div>`:""}${D.q?`<div class="kdbq"><div class="kdbqt">🧠 ${esc(D.q.q)} = ?</div><div class="kdbqo">${D.q.opts.map((o,i)=>`<button class="kbtn big" data-kdq="${i}" ${D.q.rm&&D.q.rm.includes(i)?"disabled":""}>${esc(o)}</button>`).join("")}</div>${D.q.rm?`<div class="ksmall">💡 Hint used: no MEGA RAM this time</div>`:`<button class="kbtn ghost small" data-k="dbqh">💡 Hint</button>`}<div class="ksmall">Right answer = 🧠 MEGA RAM (double damage) + repair + 50 points!</div></div>`:""}</div>
+   <div class="kpad kdrvbtns"><button class="kbtn big" data-k="dbrules">📖 Rules</button><button class="kbtn big" data-k="dbhint">💡 Hint</button><button class="kbtn big ${D.coach<=3?"":"ghost"}" data-k="dbcoach">🧑‍🏫 ${D.coach<=3?"Coach ON":"Coach OFF"}</button></div><div class="ksmall">👆 Drag anywhere to steer (like Roblox). Tap 💥 BOOST to ram. Front hits do double damage, side hits make cars spin. Grab ❓ for brain power and 💣 for a blast!</div></div>`;
   const cv=$("#kdby");if(cv){const pos=e=>{const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*cv.width/r.width,y:(e.clientY-r.top)*cv.height/r.height}};
     cv.onpointerdown=e=>{e.preventDefault();const p=pos(e),B=kDbBtn(D);if(Math.hypot(p.x-B.x,p.y-B.y)<B.r+10){kDbBoost();return}if(D.joy&&D.joy.id!==e.pointerId)return;D.joy={id:e.pointerId,ox:p.x,oy:p.y,x:p.x,y:p.y};try{cv.setPointerCapture(e.pointerId)}catch(_){}};
     cv.onpointermove=e=>{if(D.joy&&e.pointerId===D.joy.id){const p=pos(e);D.joy.x=p.x;D.joy.y=p.y}};cv.onpointerup=cv.onpointercancel=e=>{if(D.joy&&e.pointerId===D.joy.id)D.joy=null};kDbDraw(cv,D,0)}
-  cancelAnimationFrame(kDbRAF);if(!D.q){D.last=0;kDbRAF=requestAnimationFrame(kDerbyLoop)}}
+  cancelAnimationFrame(kDbRAF);if(!D.q&&!D.rules){D.last=0;kDbRAF=requestAnimationFrame(kDerbyLoop)}}
 document.addEventListener("keydown",e=>{if(view!=="kids"||KV.scr!=="derby"||!kDby)return;const m={ArrowLeft:"kL",ArrowRight:"kR",ArrowUp:"kU",ArrowDown:"kD"}[e.key];if(m){e.preventDefault();kDby[m]=true}if(e.key===" "){e.preventDefault();kDbBoost()}});
 document.addEventListener("keyup",e=>{if(!kDby)return;const m={ArrowLeft:"kL",ArrowRight:"kR",ArrowUp:"kU",ArrowDown:"kD"}[e.key];if(m)kDby[m]=false});
-function kDbBoost(){const D=kDby;if(!D||D.over||D.q||D.cd>0||D.boostCd>0||!D.cars[0]||!D.cars[0].alive)return;D.cars[0].boost=2;D.boostCd=4;kBeep("whoosh");kVib(30)}
+const KDBCOACH=["👆 Put your finger on the arena and drag toward a car!","💥 Now CRASH into a car, front bumper first!","🟠 Great hit! Tap the orange BOOST button, then crash!","🏆 Break cars to zero health for a KO: +100! Reach the 🎯 goal!"];
+function kDbCoachOn(){const d=KS().derby||{};return d.coach===true||(d.coach!==false&&(d.plays||0)<=3)}
+function kDbCoach(D,dt){if(D.coach>3)return;const me=D.cars[0],sp=Math.hypot(me.vx,me.vy);if(D.coachT===0)kLine(KDBCOACH[D.coach].replace(/[👆💥🟠🏆🎯]/g,""),2);D.coachT+=dt;
+  const next=D.coach===0?sp>70:D.coach===1?D.score>0:D.coach===2?D.boosted:D.coachT>5;if(next&&D.coachT>1.2){D.coach++;D.coachT=0;if(D.coach<4)kBeep("chime")}}
+function kDbBoost(){const D=kDby;if(!D||D.over||D.q||D.cd>0||D.boostCd>0||!D.cars[0]||!D.cars[0].alive)return;D.cars[0].boost=2;D.boostCd=4;D.boosted=1;kBeep("whoosh");kVib(30)}
 function kDbHint(){const D=kDby;if(!D||D.over)return;D.arrowT=5;D.tip=KDBTIPS[D.hints++%KDBTIPS.length];D.tipT=4;kBeep("chime");kSay(D.tip)}
 /* ---------- hacker rewards: every Computer Academy mission unlocks something for Tesla Drive ---------- */
 const KHACK=[["paint_cherry","🎨","Midnight Cherry paint","A deep red paint for every Tesla"],["bb_goat","🐐","Boombox horn: Goat","Your horn bleats like a goat"],["rainbow","🌈","Rainbow Road","Your road turns into a rainbow"],["bb_fart","💨","Emissions Testing Mode","The real Tesla whoopee-cushion horn"],
@@ -9176,7 +9200,7 @@ function kDrivePick(v){const k=KS(),dm=KV.dm||"road",sel=KV.car||k.drive.car||"m
   const paints=KCOLS.concat(Object.entries(KPAINTX).filter(([id])=>u[id]).map(([,p])=>p)),pc=k.drive.col||"#c8102e";
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Tesla Drive","home")}
    <div class="kmodes"><button class="kmode ${dm==="road"?"on":""}" data-kdm="road">🏁 Road Trip</button><button class="kmode ${dm==="derby"?"on":""}" data-kdm="derby">💥 Demolition Derby</button></div>
-   <div class="kcard kend"><p class="ksmall">${dm==="road"?"60-second drive: grab ⚡, dodge 🚧, jump 🦘 ramps, drive through the Boring tunnel and answer 🧠 Brain Gates for turbo.":`💥 Smash Arena: hit the score goal (${kDbGoal(dl)}) in 75 seconds! Drag to steer like Roblox, tap 💥 BOOST to ram. Wrecked? You're back in 2 seconds. Level ${dl}${dl>=3?" · 👹 Monster Truck boss":""} · wins ${(k.derby&&k.derby.wins)||0}`}</p><p class="ksmall">🎟️ ${k.tix||0} ticket${(k.tix||0)===1?"":"s"} · each ${dm==="road"?"ride":"derby"} uses 1${dm==="road"?` · best ${k.drive.best||0} mi`:""}</p></div>
+   <div class="kcard kend"><p class="ksmall">${dm==="road"?"60-second drive: grab ⚡, dodge 🚧, jump 🦘 ramps, drive through the Boring tunnel and answer 🧠 Brain Gates for turbo.":`💥 Smash Arena: hit the score goal (${kDbGoal(dl)}) in 75 seconds! Drag to steer like Roblox, tap 💥 BOOST to ram. Wrecked? You're back in 2 seconds. Level ${dl}${dl>=3?" · 👹 Monster Truck boss":""} · wins ${(k.derby&&k.derby.wins)||0}`}</p>${dm==="derby"?`<button class="ktog ${kDbCoachOn()?"on":""}" data-k="dbcoach"><span>🧑‍🏫 Coach (step-by-step help)</span><b>${kDbCoachOn()?"ON":"OFF"}</b></button><button class="kbtn ghost" data-k="dbhow">📖 ${KV.dbhow?"Hide the rules":"How to play"}</button>${KV.dbhow?kDbRulesHtml(false):""}`:""}<p class="ksmall">🎟️ ${k.tix||0} ticket${(k.tix||0)===1?"":"s"} · each ${dm==="road"?"ride":"derby"} uses 1${dm==="road"?` · best ${k.drive.best||0} mi`:""}</p></div>
    <div class="kcars">${KCARS.map(c=>`<button class="kcarb ${sel===c[0]?"on":""}" data-kcar="${c[0]}"><canvas class="kcpv" width="70" height="104" data-pv="${c[0]}"></canvas><b>${esc(c[1])}</b><em>${esc(c[8])}</em><i>⚡${Math.round(c[4]*100)} · 🔋${Math.round(100/c[5])} · 🛡️${Math.round(100/c[6])}</i></button>`).join("")}</div>
    <button class="kbtn big green" ${dm==="road"?`data-kride="${sel}"`:`data-kderby="${sel}"`} ${(k.tix||0)>0?"":"disabled"}>${(k.tix||0)>0?(dm==="road"?`Drive the ${esc(C[1])} 🏁`:`Derby in the ${esc(C[1])} 💥`):"Earn a 🎟️ ticket first"}</button>
    <div class="kcard"><div class="kh">🎨 Paint</div><div class="kpaint">${paints.map(([n,col])=>`<button class="kswatch ${pc===col?"on":""}" style="background:${col}" data-kcol="${col}" aria-label="${n}" title="${n}"></button>`).join("")}</div><div class="ksmall">${esc((paints.find(x=>x[1]===pc)||["Ultra Red"])[0])}${C[3]==="roadster"?" · the Rocket Roadster is always red":""}</div>
@@ -13209,7 +13233,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 121 · Nov 18";
+const BUILD="Version 122 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");

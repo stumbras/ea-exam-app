@@ -60,7 +60,9 @@ subject up a level, two misses move it down. Hints are always available but neve
   ram, and hit a score goal to level up. It has a follow camera and mini-map, momentum physics (front
   hits do double damage, side hits make cars spin), respawns for the player and for new challengers,
   repair, turbo, shield and 💣 bomb power-ups, a Monster Truck boss from level 3, and ❓ brain crates
-  that give MEGA RAM for a correct math answer. Hacker missions unlock paints, Boombox horns
+  that give MEGA RAM for a correct math answer. A picture "How to play" screen opens before the first derby (and from
+  📖 Rules anytime, which pauses the game), and an optional 🧑‍🏫 Coach walks new players through
+  driving, crashing and boosting step by step. Hacker missions unlock paints, Boombox horns
   (goat, applause, robot, cow, Emissions Testing Mode) and Easter eggs (Rainbow Road, Santa Mode,
   Track Mode, light-show underglow, Bioweapon Defense Mode, Warp Speed, Mega Ramps, Derby Armor).
 - **Progress:** levels per subject (math goes to level 25, algebra and geometry), an estimated
