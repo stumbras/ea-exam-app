@@ -176,6 +176,21 @@ body.kidsmode .top,body.kidsmode .tabs{display:none}
 .tp{color:#2ec27e;font-weight:700}.tdir{color:#5fb4ff;font-weight:700}.terr{color:#ff7b8a}.tok{color:#ffd23f;font-weight:800}
 .tkeys{display:flex;flex-wrap:wrap;gap:6px}.tkey{border:0;border-radius:10px;padding:10px 12px;background:#1f2937;color:#9ff5c8;font:800 15px ui-monospace,monospace;cursor:pointer;min-width:44px}.tkey.run{background:#2ec27e;color:#05080f;flex:1}
 @media(min-width:700px){.kgames{grid-template-columns:repeat(4,1fr)}.kcats{grid-template-columns:repeat(3,1fr)}}
+.kdrive{border:0;border-radius:20px;padding:12px 16px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;text-align:left;color:#fff;cursor:pointer;background:linear-gradient(120deg,#e31937,#7a0d1c 60%,#111827);box-shadow:0 8px 24px rgba(227,25,55,.4);font:inherit}
+.kdrive b{font-size:20px;display:block}.kdrive em{font-style:normal;font-size:14px;display:block}.kdrive i{font-style:normal;font-size:12px;opacity:.8}.kdcar{font-size:44px;display:inline-block;transform:scaleX(-1);animation:kbob 1.4s ease-in-out infinite}
+.kdrvbox{display:flex;justify-content:center}.kdrvbox canvas{border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.45);touch-action:manipulation;max-width:100%}.kdrvbtns .kbtn{flex:1}
+.klaunch{position:relative;height:440px;border-radius:20px;overflow:hidden;background:linear-gradient(#020414,#14104a 60%,#ff8a00 140%)}.kstarsbg{position:absolute;inset:-200% 0 0 0;background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(1.5px 1.5px at 120px 80px,#fff,transparent),radial-gradient(2px 2px at 220px 160px,#ffe9a0,transparent),radial-gradient(1px 1px at 300px 40px,#fff,transparent);background-size:340px 200px;animation:kstarfly 2s linear 3s infinite}
+@keyframes kstarfly{to{transform:translateY(200px)}}.kpadsite{position:absolute;bottom:0;left:0;right:0;height:46px;background:linear-gradient(#4b5563,#1f2937)}
+.krk-wrap{position:absolute;left:50%;bottom:40px;width:80px;margin-left:-40px;animation:krise 2.4s cubic-bezier(.55,0,.8,.3) 3s forwards}.krk-wrap .krk-svg{width:80px;height:170px}.krk-flame{transform-origin:40px 102px;animation:kflick .08s infinite alternate;opacity:0;animation:kflick .08s 2.4s infinite alternate}
+@keyframes kflick{from{transform:scaleY(.8);opacity:1}to{transform:scaleY(1.15);opacity:1}}@keyframes krise{0%{transform:translateY(0)}10%{transform:translate(2px,-6px)}100%{transform:translateY(-560px)}}
+.ksmoke i{position:absolute;bottom:30px;width:46px;height:46px;border-radius:50%;background:rgba(230,230,240,.85);opacity:0;animation:ksmoke 2.2s ease-out forwards}@keyframes ksmoke{0%{opacity:0;transform:scale(.3)}20%{opacity:.9}100%{opacity:0;transform:translate(var(--dx,0),-40px) scale(2.6)}}
+.ksmoke i:nth-child(odd){--dx:-50px}.ksmoke i:nth-child(even){--dx:50px}
+.kcount{position:absolute;top:34%;left:0;right:0;text-align:center;font:900 72px system-ui,sans-serif;color:#fff;text-shadow:0 4px 18px rgba(255,138,0,.8)}.kcount span{position:absolute;left:0;right:0;opacity:0;animation:kcnt .9s ease-out forwards}
+.kcount span:nth-child(1){animation-delay:0s}.kcount span:nth-child(2){animation-delay:.9s}.kcount span:nth-child(3){animation-delay:1.8s}.kcount span.go{animation:kcnt2 1.8s ease-out 2.7s forwards;font-size:48px;color:#ffd23f}
+@keyframes kcnt{0%{opacity:0;transform:scale(2)}30%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.8)}}@keyframes kcnt2{0%{opacity:0;transform:scale(2)}25%{opacity:1;transform:scale(1)}80%{opacity:1}100%{opacity:0}}
+.kdest{position:absolute;bottom:60px;left:0;right:0;text-align:center;font:900 28px system-ui,sans-serif;color:#fff;opacity:0;animation:kpop .6s 4.4s forwards}
+.kride{border:0;border-radius:20px;padding:16px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;text-align:left;color:#fff;cursor:pointer;background:linear-gradient(120deg,#1d4ed8,#111827);font:inherit;box-shadow:0 8px 24px rgba(0,0,0,.35)}.kride span{font-size:50px}.kride b{font-size:20px;display:block}.kride em{font-style:normal;font-size:14px}
+.kride.rocket{background:linear-gradient(120deg,#e31937,#3b0764 70%,#030616)}.kride.lock{opacity:.55}.kvid video{width:100%;border-radius:16px;background:#000;box-shadow:0 8px 24px rgba(0,0,0,.5)}
 .ledger{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat{display:grid;gap:2px}
@@ -7495,7 +7510,7 @@ function KS(){S.kids=S.kids||{};const k=S.kids;
   const def={name:"",avatar:0,setup:false,bday:null,xp:0,coins:0,lv:{},st:{},badges:{},days:{},streak:{d:"",n:0},combo:0,bestCombo:0,rocket:{dest:0,missions:0},mine:{lvl:1,solved:0,stars3:0,dia:0},
     chess:{lv:1,st:{n:0,c:0,run:0,h:[]},solved:0,mates:0,forks:0,promos:0},inv:{grass:6,dirt:6,stone:4,wood:4,flower:1,tree:1},unl:{},base:[],placed:0,secs:0,daySecs:{},goal:{prize:"",mins:120,correct:200,s0:0,c0:0,ms:{},hist:[]},
     chest:{d:"",n:0},quest:{d:""},questsAll:0,today:{d:""},sound:true,voice:"cmd",music:false,autoRead:false,know:{flag:{},state:{},country:{},planet:{},bee:{}},
-    term:{lv:0},show:{rounds:0,perfect:0,best:0},scan:null,rev:[],fixed:0,hints:0,seen:{}};
+    term:{lv:0},show:{rounds:0,perfect:0,best:0},tix:1,drive:{best:0,rides:0},tesLv:0,scan:null,rev:[],fixed:0,hints:0,seen:{}};
   for(const x in def)if(k[x]===undefined||k[x]===null&&x!=="bday"&&x!=="scan")k[x]=JSON.parse(JSON.stringify(def[x]));
   for(const c of ["flag","state","country","planet","bee"])if(!k.know[c])k.know[c]={};
   for(const s in KSUB){if(!k.lv[s])k.lv[s]=1;if(!k.st[s])k.st[s]={n:0,c:0,run:0,h:[]}}
@@ -7713,7 +7728,8 @@ const KEV=[[1,"Electric cars store their energy in a…","battery","gas tank","c
  [3,"When an electric car slows down, its motor can work in reverse to…","put a little energy back in the battery","make the horn louder","spray water","turn on the radio","That's called regenerative braking: slowing down recharges the battery a bit."],[3,"What does AC stand for in electricity?","Alternating current","Always charging","Air conditioner","Auto car","Nikola Tesla helped make alternating current (AC) the power system used in homes today."],
  [3,"An electric car's motor turns electricity into…","motion","water","light only","smoke","Motors turn electrical energy into motion energy."],[4,"Big car batteries are measured in…","kilowatt-hours (kWh)","gallons","pounds of coal","meters","A kilowatt-hour is an amount of energy. A bigger kWh number means more range."],
  [4,"Nikola Tesla was born in 1856 in a village that is now in which country?","Croatia","Japan","Brazil","Canada","He was born in Smiljan, in today's Croatia, and later moved to America."],[4,"Which uses energy better: an electric motor or a gasoline engine?","An electric motor","A gasoline engine","They're exactly the same","Neither uses energy","Electric motors turn most of their energy into motion; gas engines lose most of it as heat."],
- [5,"Energy can't be created or destroyed, only…","changed from one form to another","lost forever","turned into nothing","made from nothing","That's the law of conservation of energy: chemical → electrical → motion → heat."],[5,"Why do electric cars have so much speed right from a stop?","Electric motors give full power instantly","They have rockets","They are lighter than bikes","They use jet fuel","Electric motors deliver strong force (torque) instantly, so they accelerate super fast."]];
+ [5,"Energy can't be created or destroyed, only…","changed from one form to another","lost forever","turned into nothing","made from nothing","That's the law of conservation of energy: chemical → electrical → motion → heat."],[2,"What does Tesla call the storage space under the hood, where an engine would be?","The frunk (front trunk)","The glovebox","The roof rack","The tailgate","No engine up front means extra space: the frunk."],[2,"Which Tesla is a pickup truck with a stainless-steel body?","Cybertruck","Model 3","Model S","Roadster","The Cybertruck's body is made of stainless steel. Deliveries began in November 2023."],[2,"Which Tesla is famous for its Falcon Wing back doors?","Model X","Model 3","Cybertruck","Model Y","Model X rear doors open upward like wings."],[3,"Which Tesla is a compact SUV?","Model Y","Model S","Roadster","Semi","Model Y is the SUV; Model 3 is the smaller sedan."],[3,"What is the Tesla Semi?","An electric big-rig truck","A small scooter","A race car","A bus for kids","Semi trucks pull big trailers. The Tesla Semi is fully electric."],[3,"Tesla cars get new features while parked in the driveway through…","over-the-air software updates","a mechanic visit","new tires","a USB stick from the dealer","Like a phone update, the car downloads new software over the internet."],[3,"What does Sentry Mode do?","Uses the car's cameras to watch it while parked","Makes the car fly","Turns on the radio","Locks the frunk forever","Sentry Mode records if someone comes too close to the parked car."],[3,"What does Dog Mode do?","Keeps the cabin comfy for a pet and shows a message on the screen","Teaches dogs to drive","Plays barking sounds","Opens the windows","It keeps the temperature safe and tells people the pet is OK."],[4,"Tesla's humanoid (people-shaped) robot is called…","Optimus","Cybercab","Megapack","Plaid","Optimus is Tesla's robot. Robots use motors, sensors and code, the same ideas as electric cars!"],[4,"The Cybercab robotaxi, shown in 2024, has no…","steering wheel or pedals","wheels","battery","seats","It's designed to drive itself, so there is nothing for a driver to hold."],[4,"How many electric motors does a Model S Plaid have?","3","1","2","8","Plaid is tri-motor: one in front and two in the back."],[4,"What is a Tesla Powerwall?","A home battery that stores electricity","A wall charger only","A garage door","A solar panel","It stores power, often from solar panels, to use at night or in an outage."],[4,"What is a Megapack?","A giant battery that stores energy for the power grid","A big backpack","A truck","A rocket","Many Megapacks together can power thousands of homes."],[5,"The first Tesla Roadster (2008) was built on a sports car from which company?","Lotus","Ferrari","Ford","Toyota","Tesla adapted the Lotus Elise to create its first car."],[5,"Which company makes the Mustang Mach-E electric SUV?","Ford","Tesla","Hyundai","Rivian","Ford used its famous Mustang name for this electric SUV."],[5,"The Rivian R1T is an electric…","pickup truck","motorcycle","airplane","boat","Rivian makes the R1T pickup and the R1S SUV."],[5,"The Ioniq 5 electric car is made by…","Hyundai","Tesla","Ford","Nissan","Hyundai's Ioniq 5 has a retro, boxy design."],[5,"The Nissan Leaf is famous for being…","one of the first mass-market electric cars","a pickup truck","a gas race car","a flying car","The Leaf went on sale in 2010 and became one of the best-selling early EVs."],[5,"BYD, one of the world's biggest electric-car makers, is from which country?","China","Germany","Brazil","Canada","BYD makes electric cars and buses and sells them around the world."],
+ [5,"Why do electric cars have so much speed right from a stop?","Electric motors give full power instantly","They have rockets","They are lighter than bikes","They use jet fuel","Electric motors deliver strong force (torque) instantly, so they accelerate super fast."]];
 function kSvgBattery(p){const c=p>=50?"#2ec27e":p>=25?"#ffb703":"#ff4d6d";return `<svg class="kpicsvg wide" viewBox="0 0 240 110" role="img" aria-label="Battery at ${p} percent"><rect x="10" y="20" width="200" height="70" rx="14" fill="#14163a" stroke="#fff" stroke-width="5"/><rect x="214" y="42" width="16" height="26" rx="5" fill="#fff"/><rect x="18" y="28" width="${(184*p/100).toFixed(1)}" height="54" rx="9" fill="${c}"/><text x="110" y="67" font-size="26" font-weight="900" text-anchor="middle" fill="#fff">⚡ ${p}%</text></svg>`}
 function kTeslaQ(T){const r=Math.random();let Q;
   if(r<.45){if(T<=1){const p=kPick([25,50,75,100]);Q=kMk("sci","How full is the car's battery?",`${p}%`,[25,50,75,100].filter(x=>x!==p).map(x=>x+"%"),"Percent means out of 100. Half full is 50%.")}
@@ -7817,7 +7833,7 @@ function kRevDue(sub){const k=KS(),it=k.rev.find(x=>x.s===sub&&x.due<=(k.qn||0))
   if(!Q.kind){const order=kShuf([0,1,2,3]);Q.o=order.map(i=>it.o[i]);Q.a=order.indexOf(it.a);if(it.oh)Q.oh=order.map(i=>it.oh[i])}Q.key="rv"+it.id;return Q}
 /* question picker: review first, then a fresh question, mixed with picture questions */
 function kGen(sub,L,T,cat){const v=Math.random();
-  if(cat==="flags")return kFlagQ(T);if(cat==="maps")return kMapQ(T);if(cat==="space")return v<.5?kPlanetQ(T):v<.65?kMoonQ():v<.85?kSciGen(Math.max(2,T)):kBank("sci",T);if(cat==="bee")return kBeeQ(T);if(cat==="tesla")return kTeslaQ(T);
+  if(cat==="flags")return kFlagQ(T);if(cat==="maps")return kMapQ(T);if(cat==="space")return v<.5?kPlanetQ(T):v<.65?kMoonQ():v<.85?kSciGen(Math.max(2,T)):kBank("sci",T);if(cat==="bee")return kBeeQ(T);if(cat==="tesla")return kTeslaQ(Math.min(5,Math.ceil(Math.max(KS().tesLv||0,L)/4)));
   if(sub==="math")return v<.38?kMathVis(L):kMath(L);
   if(sub==="eng")return v<.2?kPicWordQ(T):v<.3?kBeeQ(T):kEng(T);
   if(sub==="sci")return v<.1?kTeslaQ(T):v<.24?kPlanetQ(T):v<.3?kAnimalQ(T):v<.36?kMoonQ():v<.62&&T>=2?kSciGen(T):kBank("sci",T);
@@ -7849,7 +7865,7 @@ function kTrophyCheck(){const k=KS(),wk=k.week.secs||0,w=k.week.w;
 function kGoalInfo(){const k=KS(),g=k.goal,mins=Math.max(0,Math.floor((k.secs-g.s0)/60)),cor=Math.max(0,kCorrect()-g.c0);return{mins,cor,f:Math.min(1,mins/Math.max(1,g.mins),cor/Math.max(1,g.correct))}}
 function kGoalCheck(){const k=KS(),g=k.goal,{f}=kGoalInfo();for(const m of [25,50,75,100])if(f*100>=m&&!g.ms[m]){g.ms[m]=Date.now();kFx=true;kBeep("chest");
   if(m===25){k.coins+=25;kGive("gold",3);kT("🥉 Prize goal 25%! +25 ⚡ and 3 gold blocks");kLine("Prize goal twenty-five percent!",4)}
-  if(m===50){kGive("tesla",1);kGive("charger",1);kUnlocks();kT("🥈 Prize goal 50%! A Tesla and a Supercharger for your base");kLine("Halfway to your prize! You won a Tesla for your base!",4)}
+  if(m===50){kGive("tesla",1);kGive("charger",1);k.tix=(k.tix||0)+2;kUnlocks();kT("🥈 Prize goal 50%! A Tesla and a Supercharger for your base");kLine("Halfway to your prize! You won a Tesla for your base!",4)}
   if(m===75){k.coins+=40;kGive("dia",3);kT("🥇 Prize goal 75%! +40 ⚡ and 3 diamonds");kLine("Seventy-five percent! Almost there!",4)}
   if(m===100){kGive("trophy",1);k.coins+=60;kUnlocks();kTrophy(`goal-${g.hist.length}`,"🏆",`Prize goal complete${g.prize?": "+g.prize:""}!`,`Finished ${g.mins} minutes and ${g.correct} right answers.`);kLine("You did it! Prize goal complete!",5)}}}
 function kBadges(){const k=KS(),b=k.badges,give=id=>{if(!b[id]){b[id]=Date.now();const x=KBAD.find(z=>z[0]===id);kT(`🏅 New badge: ${x[2]}!`);kFx=true;kLine(`New badge! ${x[2]}!`,3)}};
@@ -7868,10 +7884,10 @@ function kQuests(){const k=KS(),t=kToday();if(k.quest.d!==t){let h=7;for(const c
   if(k.quest.ids.includes("review")&&!k.rev.length)k.quest.ids[2]="combo";return k.quest}
 function kOpenChest(){const k=KS(),t=kToday();if(k.chest.d===t)return;k.chest.d=t;k.chest.n++;const coins=10+5*Math.min(6,k.streak.n||0);k.coins+=coins;
   const got={};for(let i=0;i<4;i++){const id=kPick(KBASIC);got[id]=(got[id]||0)+1}if(Math.random()<.4)got.gold=(got.gold||0)+1;if(Math.random()<.2)got.dia=(got.dia||0)+1;for(const id in got)kGive(id,got[id]);
-  kBadges();kUnlocks();persist();kFx=true;kBeep("chest");kLine("Treasure chest! Awesome loot!",4);
-  KV={scr:"reward",emoji:"🎁",title:"Daily chest!",lines:[`+${coins} ⚡ coins${k.streak.n>1?` (🔥 ${k.streak.n}-day streak bonus)`:""}`,...Object.entries(got).map(([id,n])=>`+${n} ${KBM[id][1]}`),"Come back tomorrow for another chest!"]}}
+  k.tix=(k.tix||0)+1;kBadges();kUnlocks();persist();kFx=true;kBeep("chest");kLine("Treasure chest! Awesome loot!",4);
+  KV={scr:"reward",emoji:"🎁",title:"Daily chest!",lines:[`+${coins} ⚡ coins${k.streak.n>1?` (🔥 ${k.streak.n}-day streak bonus)`:""}`,...Object.entries(got).map(([id,n])=>`+${n} ${KBM[id][1]}`),"+1 🎟️ Tesla Drive ticket","Come back tomorrow for another chest!"]}}
 function kClaimQuest(id){const k=KS(),q=kQuests(),Q=KQT[id];if(!Q||q.cl[id]||Q[3](k.today)<Q[2])return;q.cl[id]=1;k.coins+=15;const b=kPick(KBASIC);kGive(b,3);kT(`📜 Quest done! +15 ⚡ and 3 ${KBM[b][1]}`);kBeep("coin");kLine("Quest complete!",2);
-  if(q.ids.every(x=>q.cl[x])){k.coins+=25;k.questsAll++;kGive("gold",1);kT("All 3 quests done! Bonus +25 ⚡ and a gold block");kFx=true;kBeep("chest");kLine("All quests complete! Bonus loot!",3)}kBadges();kUnlocks();persist()}
+  if(q.ids.every(x=>q.cl[x])){k.coins+=25;k.questsAll++;kGive("gold",1);kTix(1,"all quests");kT("All 3 quests done! Bonus +25 ⚡ and a gold block");kFx=true;kBeep("chest");kLine("All quests complete! Bonus loot!",3)}kBadges();kUnlocks();persist()}
 
 /* ---------- chess engine (board index 0 = a8, 63 = h1; uppercase = white) ---------- */
 const KN=[[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
@@ -7960,7 +7976,7 @@ function kCurQ(){const g=KV;if(g.scr==="show")return g.Q;if(g.scr==="mine")retur
 function renderKids(){const v=$("#view"),k=KS();
   if(!k.setup||KV.scr==="setup")return kSetupView(v);
   if((k.trophyQ||[]).length&&(KV.scr==="home"||KV.scr==="reward"||(KV.scr==="show"&&KV.stage==="done")))return kCertView(v,k.trophyQ[0],true);
-  const R={show:kShowView,mine:kMineView,chess:kChessView,term:kTermView,base:kBaseView,badges:kBadgesView,grown:kGrownView,reward:kRewardView,brain:kBrainView,trophies:kTrophyHall,cert:v=>kCertView(v,KV.id,false),sounds:kSoundView}[KV.scr];
+  const R={drive:kDriveView,show:kShowView,mine:kMineView,chess:kChessView,term:kTermView,base:kBaseView,badges:kBadgesView,grown:kGrownView,reward:kRewardView,brain:kBrainView,trophies:kTrophyHall,cert:v=>kCertView(v,KV.id,false),sounds:kSoundView}[KV.scr];
   R?R(v):kHome(v);kAfterRender()}
 function kAfterRender(){const k=KS(),g=KV;
   if(k.lessonQ&&$(".klesson")&&k.lessonSaid!==k.lessonQ){k.lessonSaid=k.lessonQ;const L=KLES[k.lessonQ];kSpeak(`Power-up! ${L[0]}. ${L[1]} For example: ${L[2]}`,{read:true,force:k.voice!=="off"})}
@@ -7989,17 +8005,17 @@ const KSCAN=["math","eng","sci","code","geo"];
 function kShowQ(){const g=KV,c=g.cat;let sub;if(c==="brain")sub=KSCAN[g.i%5];else if(c==="mix")sub=kSubPick();else sub=KCATS.find(x=>x[0]===c)[4];
   const cat=["flags","maps","space","bee","tesla"].includes(c)?c:c==="brain"?"scan":c==="mix"?"mix":"";g.Q=kQ(sub,cat);g.ans=null;KV.lock=null;g.Q.t0=0}
 function kShowStart(cat){KV={scr:"show",stage:"play",cat,i:0,n:5,right:0,score:0,res:[],before:cat==="brain"?Object.assign({},KS().lv):null};kShowQ();kLine(cat==="brain"?"Brain scan starting! Five questions.":"Let's play! Question one!",2)}
-function kShowAnswer(ok){const g=KV,k=KS(),Q=g.Q,el=(Date.now()-(Q.t0||Date.now()))/1000;g.res[g.i]=ok;
+function kShowAnswer(ok){const g=KV,k=KS(),Q=g.Q,el=(Date.now()-(Q.t0||Date.now()))/1000;g.res[g.i]=ok;if(g.cat==="tesla"&&!Q.rm){k.tesLv=Math.max(1,Math.min(20,(k.tesLv||k.lv.sci)+(ok?1:-1)))}
   if(ok&&!Q.rm){g.right++;Q.speed=el<8?30:el<14?15:0;g.score+=100+Q.speed;Q.cheer=kPick(KCHEER)}
   const lv0=k.lv[Q.s];kAnswer(Q.s,ok,Q);
   if(g.cat==="brain"&&!Q.rm){const mx=KMAXLV[Q.s]||20;k.lv[Q.s]=Math.max(1,Math.min(mx,ok?Math.max(k.lv[Q.s],lv0+2):lv0-1));k.st[Q.s].run=0}persist()}
 function kShowEnd(){const g=KV,k=KS();g.stage="done";g.stars=g.right>=5?3:g.right>=4?2:g.right>=3?1:0;k.show.rounds++;if(g.right===5)k.show.perfect++;if(g.cat==="tesla"&&g.right>=3)k.show.tesla=(k.show.tesla||0)+1;k.show.best=Math.max(k.show.best,g.score);g.lines=[];
   if(g.cat==="brain"){k.scan={done:1,d:Date.now(),subs:Object.fromEntries(KSCAN.map(s=>[s,1]))};g.lines.push("Your levels were adjusted to fit you. Every answer from now on keeps tuning them.");kTrophyCheck();k.xp+=40;k.coins+=10;kFx=true;kBeep("chest");kLine("Brain scan complete!",4)}
   else{k.xp+=30+Math.round(g.score/10);k.coins+=5+g.right*2;g.lines.push(`+${30+Math.round(g.score/10)} XP and +${5+g.right*2} ⚡`);
-    if(g.right>=4){k.today.show++;const first=k.rocket.dest<KDEST.length;g.dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)];if(first)k.rocket.dest++;k.rocket.missions++;const bl={1:"moon",2:"mars",3:"stone",4:"sand",5:"ice",6:"ice",7:"water",8:"ice",9:"star"}[Math.min(k.rocket.dest,9)]||"stone";kGive(bl,3);g.lines.push(`🚀 Liftoff! ${first?`You reached ${g.dest[0]} ${g.dest[1]}`:"Another flight"} · +3 ${KBM[bl][1]} blocks`);kFx=true;kBeep("launch");kLine(`Three, two, one, liftoff!${first?" Welcome to "+g.dest[0]+"!":""}`,4)}
+    if(g.right>=4){k.today.show++;kTix(g.right===5?2:1,g.right===5?"perfect round":"4 of 5");g.launch=1;const first=k.rocket.dest<KDEST.length;g.dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)];if(first)k.rocket.dest++;if(k.rocket.dest===1)kTrophy("roadster","🚀","Rocket Roadster unlocked!","Reached the Moon, so the flying Rocket Roadster is ready in Tesla Drive. Watch its cartoon!");k.rocket.missions++;const bl={1:"moon",2:"mars",3:"stone",4:"sand",5:"ice",6:"ice",7:"water",8:"ice",9:"star"}[Math.min(k.rocket.dest,9)]||"stone";kGive(bl,3);g.lines.push(`🚀 Liftoff! ${first?`You reached ${g.dest[0]} ${g.dest[1]}`:"Another flight"} · +3 ${KBM[bl][1]} blocks`);kFx=true;kBeep("launch");kLine(`Three, two, one, liftoff!${first?" Welcome to "+g.dest[0]+"!":""}`,4)}
     else{g.lines.push("Get 4 of 5 to launch the rocket to the next planet!");kLine(`You got ${g.right} out of 5. Let's go again!`,3)}}
   kBadges();kUnlocks();kGoalCheck();persist()}
-function kShowView(v){const g=KV,k=KS();
+function kShowView(v){const g=KV,k=KS();if(g.stage==="launch")return kLaunchView(v);
   if(g.stage==="pick"){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Quiz Show","home")}<div class="kcard kshowhero"><div class="kshowt">🎤 SPACE QUIZ SHOW</div><div class="ksmall">5 quick questions. Answer fast for speed bonus points. Get 4 to launch your rocket!</div></div>
      <div class="kcats">${KCATS.map(c=>{const lv=c[4]&&c[4]!=="*"?`Lv ${k.lv[c[4]]}`:c[0]==="brain"?(k.scan?"Retake":"New!"):"Adaptive";return `<button class="kcat" data-kcat="${c[0]}"><span>${c[1]}</span><b>${esc(c[2])}</b><em>${esc(c[3])}</em><i>${lv}</i></button>`}).join("")}</div></div>`;return}
   if(g.stage==="done"){const b=kBrain();v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Quiz Show","home")}<div class="kcard kend">${g.right>=4&&g.cat!=="brain"?`<div class="krocket fly">🚀</div>`:""}<div class="kstars">${"⭐".repeat(g.stars)}${"☆".repeat(3-g.stars)}</div>
@@ -8080,7 +8096,7 @@ function kChessTap(i){const g=KV,P=g.P;if(!P||P.state!=="play")return;const p=P.
   P.sel=null;P.dots=[]}
 function kChessHinted(P){const k=KS(),st=k.chess.st;st.n++;st.h.push(.5);if(st.h.length>12)st.h.shift();k.hints++;kLine("Solved! Next time, try it without the hint.",2);persist()}
 function kChessAdvance(){const g=KV,k=KS();g.step++;if(g.pawn>=g.need){k.chess.promos++;k.coins+=30;k.xp+=50;kGive("gold",3);kBadges();kUnlocks();persist();kFx=true;kBeep("mate");kLine("Promotion! Your pawn is now a queen!",4);
-    KV={scr:"reward",emoji:"👑",title:"Promotion!",lines:["Your pawn reached the end and became a QUEEN!","+30 ⚡ coins, +50 XP and 3 gold blocks"],again:"chess"};return}kChessNext()}
+    kTix(1,"promotion");KV={scr:"reward",emoji:"👑",title:"Promotion!",lines:["Your pawn reached the end and became a QUEEN!","+30 ⚡ coins, +50 XP, 3 gold blocks and a 🎟️ Tesla Drive ticket"],again:"chess"};return}kChessNext()}
 /* ---------- base builder ---------- */
 function kBaseView(v){const k=KS(),sel=KV.sel||"grass",b=KBM[sel],un=sel==="erase"||kUnl(sel)||(k.inv[sel]||0)>0,n=k.inv[sel]||0;
   const pal=KBLK.filter(x=>kUnl(x[0])||(k.inv[x[0]]||0)>0||x[4]).map(x=>{const ok=kUnl(x[0])||(k.inv[x[0]]||0)>0;return `<button class="kpal ${sel===x[0]?"on":""} ${ok?"":"lock"}" data-kpal="${x[0]}" aria-label="${esc(x[1])}">${kCell(x[0])}<i>${ok?(k.inv[x[0]]||0):"🔒"}</i></button>`}).join("");
@@ -8188,7 +8204,7 @@ function tExec(){const inp=$("#tin");if(!inp)return;const line=inp.value,T=KV.T,
   if(T.lines.length>150)T.lines.splice(0,T.lines.length-150);kBeep(r.err?"no":"key");
   const m=KTERM[k.term.lv];if(m&&!r.err&&r.ctx&&m[5](r.ctx)){T.done=true;const hint=T.hinted;k.term.lv++;k.today.term++;
     if(hint){T.lines.push({h:`<span class="tok">✔ MISSION COMPLETE</span> (hint used, so no points this time)`});kLine("Mission complete! Try the next one without a hint.",3)}
-    else{k.coins+=10;k.xp+=25;k.extraC=(k.extraC||0)+1;kDay(k);kGoalCheck();T.lines.push({h:`<span class="tok">✔ MISSION COMPLETE! +10 ⚡ +25 XP</span>`});kFx=true;kBeep("chest");kLine(`Mission complete! ${m[0]}!`,4)}
+    else{k.coins+=10;k.xp+=25;k.extraC=(k.extraC||0)+1;if(k.term.lv%3===0)kTix(1,"3 missions");kDay(k);kGoalCheck();T.lines.push({h:`<span class="tok">✔ MISSION COMPLETE! +10 ⚡ +25 XP</span>`});kFx=true;kBeep("chest");kLine(`Mission complete! ${m[0]}!`,4)}
     kBadges();kUnlocks();kTrophyCheck();persist();render();setTimeout(()=>{const o=$("#tout");if(o)o.scrollTop=o.scrollHeight},30);return}
   if(box){box.innerHTML=T.lines.map(l=>`<div>${l.h}</div>`).join("");box.scrollTop=box.scrollHeight}const pr=$("#tprompt");if(pr)pr.innerHTML=tPrompt();inp.focus()}
 function tTab(){const inp=$("#tin");if(!inp)return;const v=inp.value,parts=v.split(/\s+/),last=parts.pop()||"",dir=last.includes("/")?last.slice(0,last.lastIndexOf("/")+1):"",pre=last.slice(dir.length),base=dir?tRes(dir):KS().term.cwd;
@@ -8223,6 +8239,7 @@ function kHome(v){const k=KS(),ri=kRank(k.xp),cur=KRANKS[ri],next=KRANKS[ri+1],p
     <button class="kgame g3" data-k="chess"><span class="kgi">♞</span><b>Chess Quest</b><span>Chess level ${k.chess.lv} · ${k.chess.solved} solved</span><em>Puzzles push your pawn to queen</em></button>
     <button class="kgame g4" data-k="term"><span class="kgi">🐧</span><b>Hacker Terminal</b><span>${k.term.lv>=KTERM.length?"Terminal Master!":`Mission ${k.term.lv+1} of ${KTERM.length}`}</span><em>Real Linux commands</em></button>
    </div>
+   <button class="kdrive" data-k="drive"><span class="kdcar">🚗</span><div><b>Tesla Drive</b><em>${(k.tix||0)>0?`🎟️ ${k.tix} ticket${k.tix>1?"s":""}: tap to drive!`:"Earn 🎟️ tickets: 4+ in a Quiz Show round"}</em>${k.drive&&k.drive.best?`<i>Best: ${k.drive.best} mi</i>`:""}</div></button>
    <button class="kcard kbrainb" data-k="brain">${kGauge(b.known?b.avgLv:1,b.known?kOrd(b.g)+" grade":"scanning…")}<div><div class="kh">🧠 Brain Power</div><div class="ksmall">${b.known?(b.ahead>=1?`${b.ahead} grade${b.ahead>1?"s":""} ahead${age!=null?" for age "+age:""}! Tap for details.`:"Right on track. Level up to pull ahead! Tap for details."):"Take a Brain Scan to see your level!"}</div></div></button>
    <div class="kcard kprize"><div class="kh">🎁 Prize goal: ${g.prize?esc(g.prize):"ask a grown-up to pick your prize!"}</div>
     <div class="kpbar"><i style="width:${Math.round(gi.f*100)}%"></i>${ms.map(([m,ic])=>`<span class="kms ${g.ms[m]?"on":""}" style="left:${m===100?97:m}%">${ic}</span>`).join("")}</div>
@@ -8291,14 +8308,18 @@ function kidsClick(b){const d=b.dataset;
   if(d.k==="beeSay"||d.k==="beeDef"||d.k==="beeSent"){const Q=kCurQ();if(Q&&Q.kind==="bee")kSay(d.k==="beeSay"?`${Q.word}. ${Q.word}.`:d.k==="beeDef"?`${Q.word} means ${Q.def}.`:Q.sent);return true}
   if(d.k==="beeGo"){const ok=kBeeCheck();if(ok==null)return true;const Q=kCurQ();
     if(g.scr==="show"&&g.ans==null){g.ans=ok;kShowAnswer(ok)}else if(g.scr==="chess"&&g.ans==null){g.ans=ok;if(ok&&!Q.rm)g.pawn++;kAnswer(Q.s,ok,Q)}else if(g.scr==="mine"&&g.P.labAns==null){g.P.labAns=ok;if(ok&&!Q.rm)k.coins+=3;kAnswer(Q.s,ok,Q)}render();return true}
-  if(d.k==="show")return go({scr:"show",stage:"pick"});
+  if(d.k==="show")return go({scr:"show",stage:"pick"});if(d.k==="skipLaunch"&&g.scr==="show"){g.stage="done";return top()}
+  if(d.kride){if(d.kride==="roadster"&&!kRoadOk()){kT("Launch your rocket to the Moon in the Quiz Show to unlock it!");render();return true}if(kDriveStart(d.kride))return top();kT("You need a 🎟️ ticket!");render();return true}
+  if(d.k==="cartoon"){KV={scr:"drive",cartoon:1};kDrv=null;return top()}
+  if(d.k==="drive"){if(kDriveStart())return top();kT("You need a 🎟️ ticket. Score 4+ in a Quiz Show round to earn one!");render();return true}
+  if(d.k==="dl"||d.k==="dr"){kDriveSteer(d.k==="dl"?-1:1);return true}
   if(d.kcat){kShowStart(d.kcat);return top()}
   if(d.ka!==undefined){const i=+d.ka;
     if(g.scr==="show"&&g.ans==null&&KV.lock==null){KV.lock=i;kBeep("drum");render();setTimeout(()=>{if(KV.scr!=="show"||KV.lock!==i)return;const ok=i===g.Q.a;g.ans=i;KV.lock=null;kShowAnswer(ok);render()},650);return true}
     if(g.scr==="mine"&&g.P.lab&&g.P.labAns==null){g.P.labAns=i;const Q=g.P.lab,ok=i===Q.a;if(ok&&!Q.rm)k.coins+=3;kAnswer(Q.s,ok,Q)}
     else if(g.scr==="chess"&&g.Q&&g.ans==null){g.ans=i;const ok=i===g.Q.a;if(ok&&!g.Q.rm)g.pawn++;kAnswer(g.Q.s,ok,g.Q)}
     render();return true}
-  if(d.k==="next"&&g.scr==="show"){g.i++;if(g.i>=g.n)kShowEnd();else{kShowQ();if(g.i===4)kLine("Final question!",1)}return top()}
+  if(d.k==="next"&&g.scr==="show"){g.i++;if(g.i>=g.n){kShowEnd();if(g.launch){g.stage="launch";setTimeout(()=>{if(KV===g&&g.stage==="launch"){g.stage="done";render()}},5200)}}else{kShowQ();if(g.i===4)kLine("Final question!",1)}return top()}
   if(d.k==="cnext"&&g.scr==="chess"){kChessAdvance();return top()}
   if(d.ksq!==undefined&&g.scr==="chess"){kChessTap(+d.ksq);render();return true}
   if(d.k==="chint"&&g.scr==="chess"&&g.P&&g.P.state==="play"){g.P.hinted=true;k.hints++;kSay(g.P.tip+" The red square shows which piece to move.");render();return true}
@@ -8325,6 +8346,74 @@ function kidsClick(b){const d=b.dataset;
 document.addEventListener("keydown",e=>{try{if(view!=="kids")return;const t=e.target;if(!t)return;kLastAct=Date.now();
   if(t.id==="kbeein"&&e.key==="Enter"){e.preventDefault();const b=$('[data-k="beeGo"]');if(b)b.click()}
   if(t.id==="tin"){if(e.key==="Enter"){e.preventDefault();tExec()}else if(e.key==="Tab"){e.preventDefault();tTab()}else if(e.key==="ArrowUp"){e.preventDefault();const T=KV.T;if(T&&T.hist.length){T.hi=Math.max(0,(T.hi||T.hist.length)-1);t.value=T.hist[T.hi]}}else if(e.key==="ArrowDown"){e.preventDefault();const T=KV.T;if(T){T.hi=Math.min(T.hist.length,(T.hi||0)+1);t.value=T.hist[T.hi]||""}}}}catch(_){}});
+
+/* ---------- rewards: Tesla Drive rides (earned with tickets) and the rocket launch cutscene ---------- */
+function kTix(n,why){const k=KS();k.tix=(k.tix||0)+n;kT(`🎟️ +${n} Tesla Drive ticket${n>1?"s":""}${why?" ("+why+")":""}`)}
+function kRocketSvg(){return `<svg class="krk-svg" viewBox="0 0 80 170" aria-hidden="true"><path d="M40 4 C58 24 62 52 62 92 L18 92 C18 52 22 24 40 4Z" fill="#f4f6ff" stroke="#14163a" stroke-width="3"/><path d="M40 4 C50 15 55 28 58 40 L22 40 C25 28 30 15 40 4Z" fill="#ff3b3b"/><circle cx="40" cy="62" r="10" fill="#3fb6ff" stroke="#14163a" stroke-width="3"/>
+  <path d="M18 70 L4 104 L18 98Z M62 70 L76 104 L62 98Z" fill="#ff3b3b" stroke="#14163a" stroke-width="3"/><rect x="26" y="92" width="28" height="10" rx="3" fill="#8a8fa8" stroke="#14163a" stroke-width="3"/>
+  <g class="krk-flame"><path d="M28 102 Q40 160 52 102Z" fill="#ff8a00"/><path d="M33 102 Q40 140 47 102Z" fill="#ffe066"/></g></svg>`}
+function kLaunchView(v){const g=KV,k=KS();v.innerHTML=`<div class="kids">${kTop("Liftoff!","home")}<div class="klaunch"><div class="kstarsbg"></div><div class="kcount"><span>3</span><span>2</span><span>1</span><span class="go">LIFTOFF!</span></div>
+  <div class="kpadsite"></div><div class="ksmoke">${Array.from({length:10},(_,i)=>`<i style="left:${30+i*4}%;animation-delay:${(2.6+i*.05).toFixed(2)}s"></i>`).join("")}</div><div class="krk-wrap">${kRocketSvg()}</div>
+  <div class="kdest">${g.dest?`${g.dest[1]} ${esc(g.dest[0])}!`:"🚀 Another flight!"}</div></div><button class="kbtn ghost" data-k="skipLaunch">Skip ▶</button></div>`}
+/* Tesla Drive: a 60-second electric road trip, purely a reward */
+let kDrv=null;
+function kRoadOk(){const k=KS();return k.rocket.dest>=1}
+function kDriveStart(mode){const k=KS();if((k.tix||0)<1)return false;if(!mode){KV={scr:"drive",pick:1};kDrv=null;return true}if(mode==="roadster"&&!kRoadOk())return false;k.tix--;k.drive=k.drive||{best:0,rides:0};k.drive.rides++;persist();KV={scr:"drive"};
+  kDrv={mode,lane:1,x:null,t:0,v:230,bat:100,dist:0,bolts:0,obs:[],spawn:0,inv:0,shake:0,fly:0,over:false,last:0,stars:Array.from({length:70},()=>[Math.random(),Math.random(),Math.random()*1.8+.4]),col:mode==="roadster"?"#e31937":kPick(["#e31937","#e31937","#f4f6ff","#1d4ed8","#111827"])};
+  kLine(mode==="roadster"?"Rocket Roadster ready! At thirty seconds we launch into space!":"Let's drive! Collect the lightning bolts to charge your battery.",3);return true}
+function kRoadster(c,x,y,fly,t){c.save();c.translate(x,y);const s=fly?1.12:1;c.scale(s,s);c.fillStyle="rgba(0,0,0,.3)";c.beginPath();c.ellipse(fly?10:3,fly?26:6,22,40,0,0,7);c.fill();
+  if(fly){[[-12,40],[12,40]].forEach(([a,b])=>{const L=18+Math.sin(t*40)*6;const g=c.createLinearGradient(0,b,0,b+L);g.addColorStop(0,"#fff6b0");g.addColorStop(.4,"#ff8a00");g.addColorStop(1,"rgba(255,60,0,0)");c.fillStyle=g;c.beginPath();c.moveTo(a-6,b);c.lineTo(a+6,b);c.lineTo(a,b+L);c.closePath();c.fill()})}
+  c.fillStyle="#111";[[-24,-26],[18,-26],[-24,14],[18,14]].forEach(([a,b])=>{c.beginPath();c.roundRect(a,b,6,14,3);c.fill()});
+  c.fillStyle="#e31937";c.beginPath();c.moveTo(-14,-40);c.quadraticCurveTo(0,-46,14,-40);c.lineTo(20,-16);c.lineTo(20,34);c.quadraticCurveTo(0,42,-20,34);c.lineTo(-20,-16);c.closePath();c.fill();
+  c.fillStyle="rgba(255,255,255,.35)";c.fillRect(-3,-42,6,70);c.fillStyle="#1b2433";c.beginPath();c.moveTo(-15,-14);c.lineTo(15,-14);c.lineTo(13,-8);c.lineTo(-13,-8);c.closePath();c.fill();
+  c.fillStyle="#2a2f3a";c.beginPath();c.roundRect(-15,-6,30,26,6);c.fill();c.fillStyle="#f4f6ff";c.beginPath();c.arc(-7,4,6.5,0,7);c.fill();c.fillStyle="#3fb6ff";c.beginPath();c.arc(-7,3,3.5,0,7);c.fill();
+  c.fillStyle="#555b6e";[[-14,30],[8,30]].forEach(([a,b])=>{c.beginPath();c.roundRect(a,b,7,8,2);c.fill()});c.fillStyle="#fffbe0";c.fillRect(-14,-40,7,3);c.fillRect(7,-40,7,3);c.restore()}
+function kCar(c,x,y,w,h,col){c.save();c.translate(x,y);c.fillStyle="rgba(0,0,0,.3)";c.beginPath();c.roundRect(-w/2+3,-h/2+5,w,h,12);c.fill();
+  c.fillStyle="#111";[[-w/2-3,-h/2+12],[w/2-4,-h/2+12],[-w/2-3,h/2-24],[w/2-4,h/2-24]].forEach(([a,b])=>{c.beginPath();c.roundRect(a,b,7,14,3);c.fill()});
+  const gr=c.createLinearGradient(-w/2,0,w/2,0);gr.addColorStop(0,col);gr.addColorStop(.5,"#fff");gr.addColorStop(.52,col);gr.addColorStop(1,col);c.fillStyle=col;c.beginPath();c.roundRect(-w/2,-h/2,w,h,14);c.fill();
+  c.globalAlpha=.25;c.fillStyle=gr;c.beginPath();c.roundRect(-w/2,-h/2,w,h,14);c.fill();c.globalAlpha=1;
+  c.fillStyle="#1b2433";c.beginPath();c.moveTo(-w/2+6,-h/2+22);c.lineTo(w/2-6,-h/2+22);c.lineTo(w/2-9,-h/2+38);c.lineTo(-w/2+9,-h/2+38);c.closePath();c.fill();c.beginPath();c.roundRect(-w/2+9,-h/2+40,w-18,h-58,6);c.fill();
+  c.fillStyle="#3a4a63";c.beginPath();c.moveTo(-w/2+9,h/2-16);c.lineTo(w/2-9,h/2-16);c.lineTo(w/2-7,h/2-8);c.lineTo(-w/2+7,h/2-8);c.closePath();c.fill();
+  c.fillStyle="#fffbe0";c.fillRect(-w/2+4,-h/2+3,10,4);c.fillRect(w/2-14,-h/2+3,10,4);c.fillStyle="#ff2d2d";c.fillRect(-w/2+3,h/2-5,w-6,3);c.restore()}
+function kDriveLoop(ts){const D=kDrv,cv=$("#kdrv");if(!D||KV.scr!=="drive"||!cv){kDriveHum(0);return}const c=cv.getContext("2d"),W=cv.width,H=cv.height;const dt=D.last?Math.min(.05,(ts-D.last)/1000):0;D.last=ts;
+  const RW=W*.66,RX=(W-RW)/2,LW=RW/3,lx=i=>RX+LW*i+LW/2;if(D.x==null)D.x=lx(1);
+  const R=D.mode==="roadster",SP=R&&D.t>=30;if(!D.over){if(R&&!D.space&&D.t>=30){D.space=1;D.obs=[];kBeep("launch");kLine("Launching to space! Thrusters on!",4);D.shake=.6}D.t+=dt;D.fly=Math.max(0,D.fly-dt);D.v=Math.min(520,230+D.t*5);D.bat-=dt*1.6;D.dist+=D.v*dt/1500;D.x+=(lx(D.lane)-D.x)*Math.min(1,dt*12);D.inv=Math.max(0,D.inv-dt);D.shake=Math.max(0,D.shake-dt);
+    D.spawn-=dt;if(D.spawn<=0){D.spawn=Math.max(.38,.9-D.t*.008);const r=Math.random(),ln=kR(0,2);D.obs.push({ln,y:-60,k:r<.45?"bolt":r<.7?"cone":r<.92?"car":"boost",col:kPick(["#1d4ed8","#f4f6ff","#6b7280","#111827","#16a34a"])})}
+    for(const o of D.obs){o.y+=D.v*dt*(o.k==="car"?.55:1);const hit=o.ln===D.lane&&Math.abs(o.y-(H-110))<(o.k==="car"?70:42);if(hit&&!o.done){
+      if(o.k==="bolt"){o.done=1;D.bolts+=SP||D.fly?2:1;D.bat=Math.min(100,D.bat+7);kBeep("coin")}else if(o.k==="boost"){o.done=1;D.bat=Math.min(100,D.bat+15);if(R){D.fly=4;kLine("Thrusters!",1)}else D.v+=60;kBeep("up")}else if(!D.inv&&!D.fly){o.done=1;D.bat-=o.k==="car"?18:10;D.inv=1;D.shake=.35;kBeep("crash")}}}
+    D.obs=D.obs.filter(o=>o.y<H+80&&!(o.done&&(o.k==="bolt"||o.k==="boost")));if(D.bat<=0||D.t>=60){D.over=true;D.bat=Math.max(0,D.bat);kDriveEnd()}}
+  const sx=D.shake?(Math.random()-.5)*8:0;c.save();c.translate(sx,0);if(SP){kSpaceBg(c,W,H,D);}else{c.fillStyle="#3c8d3c";c.fillRect(0,0,W,H);
+  const off=(D.dist*1500)%80;c.font="22px serif";for(let y=-80+off;y<H;y+=80){c.fillText("🌲",RX-34,y);c.fillText("🌳",RX+RW+10,y+40)}
+  c.fillStyle="#2b2f3a";c.fillRect(RX,0,RW,H);c.fillStyle="#f4f4f4";c.fillRect(RX-4,0,4,H);c.fillRect(RX+RW,0,4,H);c.fillStyle="#ffd23f";
+  for(let i=1;i<3;i++)for(let y=-40+(D.dist*1500*1.5)%40;y<H;y+=40)c.fillRect(RX+LW*i-2,y,4,20);}
+  c.textAlign="center";c.textBaseline="middle";for(const o of D.obs){const x=lx(o.ln);if(o.k==="car"){if(SP){c.font="34px serif";c.fillText("☄️",x,o.y)}else kCar(c,x,o.y,40,74,o.col)}else{c.font=o.k==="boost"?"30px serif":"28px serif";c.fillText(SP?(o.k==="bolt"?"⭐":o.k==="cone"?"🪨":"🔋"):(o.k==="bolt"?"⚡":o.k==="cone"?"🚧":"🔋"),x,o.y)}}
+  if(!(D.inv&&Math.floor(D.t*12)%2)){if(R)kRoadster(c,D.x,H-110,SP||D.fly>0,D.t);else kCar(c,D.x,H-110,46,84,D.col)}c.restore();
+  c.fillStyle="rgba(5,8,24,.72)";c.fillRect(0,0,W,46);c.fillStyle="#fff";c.font="bold 15px system-ui";c.textAlign="left";c.fillText(SP?`${Math.round(D.v*80).toLocaleString("en-US")} mph`:`${Math.round(D.v/4.5)} mph`,10,24);c.textAlign="center";c.fillText(`${D.dist.toFixed(1)} mi · ⚡${D.bolts}`,W/2,24);
+  c.textAlign="right";c.fillStyle=D.bat>40?"#2ec27e":D.bat>20?"#ffb703":"#ff4d6d";c.fillText(`🔋 ${Math.round(D.bat)}%`,W-10,24);c.fillStyle="rgba(255,255,255,.25)";c.fillRect(10,38,W-20,4);c.fillStyle="#ffd23f";c.fillRect(10,38,(W-20)*Math.min(1,D.t/60),4);
+  kDriveHum(D.over?0:D.v);if(!D.over)requestAnimationFrame(kDriveLoop);else setTimeout(()=>{if(KV.scr==="drive")render()},500)}
+function kSpaceBg(c,W,H,D){c.fillStyle="#030616";c.fillRect(0,0,W,H);for(const s of D.stars){const y=(s[1]*H+D.t*60*s[2])%H;c.fillStyle=`rgba(255,255,255,${.4+s[2]/3})`;c.fillRect(s[0]*W,y,s[2],s[2]*2)}
+  const p=Math.min(1,(D.t-30)/30),er=W*1.3*(1-p*.75);c.fillStyle="#1d5fbf";c.beginPath();c.arc(W/2,H+er*.62,er,0,7);c.fill();c.fillStyle="#3fa34d";c.beginPath();c.arc(W/2-er*.2,H+er*.66,er*.45,0,7);c.fill();
+  if(p>.55){const mr=10+(p-.55)*120;c.fillStyle="#d2562b";c.beginPath();c.arc(W*.78,60+mr,mr,0,7);c.fill();c.fillStyle="#a83e1a";c.beginPath();c.arc(W*.78-mr*.3,60+mr*1.1,mr*.25,0,7);c.fill()}
+  if(D.t<33){c.fillStyle=`rgba(255,210,63,${Math.max(0,1-(D.t-30)/3)})`;c.font="bold 26px system-ui";c.textAlign="center";c.fillText("🚀 SPACE!",W/2,H/2)}}
+let kHum=null;function kDriveHum(v){try{const k=S.kids;if(!v||!k||k.sound===false){if(kHum){kHum.g.gain.setTargetAtTime(0,kAC.currentTime,.05);const h=kHum;kHum=null;setTimeout(()=>{try{h.o.stop()}catch(_){}},300)}return}
+  if(!kAudio())return;if(!kHum){const o=kAC.createOscillator(),g=kAC.createGain();o.type="sine";g.gain.value=0;o.connect(g);g.connect(kMaster);o.start();kHum={o,g}}kHum.o.frequency.setTargetAtTime(120+v*.9,kAC.currentTime,.1);kHum.g.gain.setTargetAtTime(.035,kAC.currentTime,.1)}catch(_){}}
+function kDriveEnd(){const D=kDrv,k=KS(),coins=Math.floor(D.bolts/2);k.coins+=coins;const best=D.dist>(k.drive.best||0);if(best)k.drive.best=+D.dist.toFixed(1);D.coins=coins;D.best=best;kBadges();persist();kBeep(D.t>=60?"chest":"no");
+  kLine(D.t>=60?`You made it! ${D.dist.toFixed(1)} miles!${best?" New record!":""}`:"Battery empty! Collect more lightning bolts next time.",4)}
+function kDriveView(v){const D=kDrv,k=KS();if(KV.pick){const ok=kRoadOk();v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Tesla Drive","home")}<div class="kcard kend"><h2>Pick your ride</h2><p class="ksmall">🎟️ ${k.tix||0} ticket${(k.tix||0)===1?"":"s"} · each ride uses 1</p></div>
+   <button class="kride" data-kride="car"><span>🚗</span><div><b>Road car</b><em>60 seconds on the highway. Grab ⚡, dodge 🚧!</em></div></button>
+   <button class="kride rocket ${ok?"":"lock"}" data-kride="roadster"><span>🚀</span><div><b>Rocket Roadster ${ok?"":"🔒"}</b><em>${ok?"Thrusters fly you over traffic, then you launch into space and fly to Mars!":"Unlock it: launch your rocket to the Moon (score 4+ in a Quiz Show round)."}</em></div></button>
+   <button class="kbtn ghost" data-k="cartoon">🎬 Watch the Rocket Roadster cartoon</button></div>`;return}
+  if(KV.cartoon){v.innerHTML=`<div class="kids">${kTop("Rocket Roadster","drive")}<div class="kvid"><video src="video/rocket-roadster.mp4" controls autoplay playsinline></video></div><button class="kbtn big" data-k="drive">Pick your ride ▶</button></div>`;return}
+  if(!D){KV={scr:"home"};return kHome(v)}
+  if(D.over){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Tesla Drive","home")}<div class="kcard kend"><div class="kbig2">${D.t>=60?(D.mode==="roadster"?"🔴":"🏁"):"🔋"}</div><h2>${D.t>=60?(D.mode==="roadster"?"Rocket Roadster reached Mars!":"You made it to the Supercharger!"):"Battery empty!"}</h2>${D.mode==="roadster"?`<p class="ksmall">True story: in 2018 a real red Tesla Roadster was launched into space on a Falcon Heavy rocket, with a dummy astronaut called Starman in the driver’s seat. It’s still flying around the Sun!</p>`:""}
+    <p><b>${D.dist.toFixed(1)} miles</b> · ⚡ ${D.bolts} bolts · +${D.coins} coins${D.best?" · 🏆 New record!":""}</p><p class="ksmall">Best drive: ${k.drive.best} miles · 🎟️ ${k.tix||0} ticket${(k.tix||0)===1?"":"s"} left</p>
+    <div class="kpad">${(k.tix||0)>0?`<button class="kbtn big green" data-k="drive">Drive again ${D.mode==="roadster"?"🚀":"🚗"}</button>`:""}<button class="kbtn ${(k.tix||0)>0?"ghost":"big"}" data-k="home">Home</button></div>${(k.tix||0)<1?`<div class="ksmall">Earn more tickets: score 4+ in a Quiz Show round, promote a pawn in Chess Quest, open your daily chest or finish all 3 quests.</div>`:""}</div></div>`;return}
+  const W=Math.min(380,v.clientWidth||360)-4,H=Math.round(W*1.35);v.innerHTML=`<div class="kids">${kTop("Tesla Drive","home")}<div class="kdrvbox"><canvas id="kdrv" width="${W}" height="${H}" aria-label="Driving game: tap left or right to change lanes"></canvas></div>
+   <div class="kpad kdrvbtns"><button class="kbtn big" data-k="dl">◀ Left</button><button class="kbtn big" data-k="dr">Right ▶</button></div><div class="ksmall">Tap the left or right side of the road, or use the buttons. Grab ⚡ to charge, dodge 🚧 and cars, and 🔋 gives a boost!</div></div>`;
+  D.last=0;requestAnimationFrame(kDriveLoop)}
+function kDriveSteer(dir){if(!kDrv||kDrv.over)return;kDrv.lane=Math.max(0,Math.min(2,kDrv.lane+dir));kBeep("click")}
+document.addEventListener("pointerdown",e=>{try{if(view!=="kids"||KV.scr!=="drive"||!e.target||e.target.id!=="kdrv")return;const r=e.target.getBoundingClientRect();kDriveSteer(e.clientX-r.left<r.width/2?-1:1);kLastAct=Date.now()}catch(_){}});
+document.addEventListener("keydown",e=>{try{if(view!=="kids"||KV.scr!=="drive")return;if(e.key==="ArrowLeft"){e.preventDefault();kDriveSteer(-1)}if(e.key==="ArrowRight"){e.preventDefault();kDriveSteer(1)}}catch(_){}});
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -12268,7 +12357,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 111 · Nov 18";
+const BUILD="Version 112 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");

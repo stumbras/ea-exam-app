@@ -6,7 +6,7 @@ const CORE=[INDEX,BASE+"manifest.webmanifest",BASE+"icon-192.png",BASE+"icon-512
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE&&k!==FONTS&&k!==AUDIO).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET")return;const u=new URL(r.url);
-  if(u.origin===self.location.origin&&u.pathname.indexOf("/audio/")>=0)return; // recorded audio: the app keeps its own saved copies
+  if(u.origin===self.location.origin&&(u.pathname.indexOf("/audio/")>=0||u.pathname.indexOf("/video/")>=0))return; // recorded audio: the app keeps its own saved copies
   if(u.origin===self.location.origin&&/\/version\.json$/.test(u.pathname)){e.respondWith(fetch(r).catch(()=>new Response("{}",{headers:{"Content-Type":"application/json"}})));return}
   if(u.origin===self.location.origin&&u.href.startsWith(BASE)){
     const key=(r.mode==="navigate"||u.href===BASE)?INDEX:u.origin+u.pathname;
