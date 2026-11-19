@@ -56,7 +56,7 @@ subject up a level, two misses move it down. Hints are always available but neve
   open during turbo), Model S Plaid, Cybertruck (smashes cones) and Rocket Roadster (flies into space).
   **Road Trip** is a 60-second drive with ⚡ bolts, combos, jump ramps, a Boring tunnel, Superchargers,
   regenerative braking, an Autopilot power-up that only dodges, Brain Gate math questions and a 💡 hint
-  button. **Demolition Derby** is a 75-second smash arena: steer with a Roblox-style thumbstick, tap BOOST to
+  button. **Demolition Derby** is a 75-second smash arena: tap where to drive or steer with a Roblox-style thumbstick, tap BOOST to
   ram, and hit a score goal to level up. It has a follow camera and mini-map, momentum physics (front
   hits do double damage, side hits make cars spin), respawns for the player and for new challengers,
   repair, turbo, shield and 💣 bomb power-ups, a Monster Truck boss from level 3, and ❓ brain crates
