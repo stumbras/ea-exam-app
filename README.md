@@ -51,6 +51,10 @@ subject up a level, two misses move it down. Hints are always available but neve
   clickable map of the folders, offers "did you mean" fixes for typos, and can type a command for the
   player (help that reveals the answer earns no points). Every finished mission shows an ACCESS GRANTED
   screen and unlocks a Tesla Drive reward.
+  The 📱 **Termux** pack has 15 missions for the real Termux app on Android: `pkg update`,
+  `pkg install`, phone storage permission, finding the phone's network address, `ping`, installing
+  OpenSSH, logging in to the home PC with `ssh` (with a parent's permission and setup), and, at ELITE
+  level, SSH keys (`ssh-keygen`, `ssh-copy-id`). Each mission shows a "try it for real in Termux" tip.
 - **🔴 Mars Colony Tycoon:** build a Mars base whose buildings each teach a real Mars science fact and
   keep earning credits while the player is away. Credits come from learning (Mission Control questions)
   and from ☄️ Asteroid Defense, a fast math-facts arcade game. Also includes 🎲 **Mars Empire**, an easy
@@ -64,6 +68,12 @@ subject up a level, two misses move it down. Hints are always available but neve
   Cookie Cops to the Secret Hideout), 🎈 Balloon Grab, 🕵️ Undercover Cop (catch the Cake Bandit),
   🍕 Pizza Rush and 🚕 Taxi. They teach compass directions (NORTH is up, "the hideout is SOUTH-EAST"),
   street-address map reading, and money math (making change and multiplying for bonus tips).
+  Players can hop out and walk, take any parked car (Cyber Tank, Cybertruck, Roadster, police car,
+  ice-cream truck), and walk into four career buildings for a three-question job: 🏦 Bank (interest
+  and making change), 🏥 Hospital, ⚖️ Courthouse and 🔬 Science Lab. Cartoon robber bots sometimes
+  rob the bank; players catch them by bumping them with a car or with a foam "splat" on foot.
+  ⚡ Quick-decision questions (times tables, change, road safety, phishing, compass) pop up for six
+  seconds and build a 🔥 combo multiplier for a 🏆 score.
   One ticket = a 5-minute visit. No crime or violence: everything is cartoon mischief.
 - **🔄 Smart rotation:** a daily "brain mix" suggests three activities he hasn't done yet; the first win at each
   one each day gives a bonus ticket (up to 4), and after three rounds of the same thing it suggests switching.
