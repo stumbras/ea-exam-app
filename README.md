@@ -40,6 +40,11 @@ subject up a level, two misses move it down. Hints are always available but neve
 - **💻 Computer Academy:** real terminal commands in a safe pretend computer for Linux (bash), Windows
   (PowerShell) and Mac (zsh), plus keyboard-shortcut missions on simulated Windows, Mac and
   Linux Mint desktops.
+- **🔴 Mars Colony Tycoon:** build a Mars base whose buildings each teach a real Mars science fact and
+  keep earning credits while the player is away. Credits come from learning (Mission Control questions)
+  and from ☄️ Asteroid Defense, a fast math-facts arcade game. Also includes 🎲 **Mars Empire**, an easy
+  board game against a robot that mixes buying regions and collecting rent with building outposts,
+  bases and cities, plus research labs and question cards.
 - **Rewards earned by learning:** 🎟️ tickets unlock Tesla Drive (a driving game with Autopilot,
   Supercharger and regenerative-braking power-ups) and Booster Landing (a rocket-landing physics game).
 - **Progress:** levels per subject (math goes to level 25, algebra and geometry), an estimated

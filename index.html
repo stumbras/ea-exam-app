@@ -223,6 +223,15 @@ body.kidsmode .top,body.kidsmode .tabs{display:none}
 .kids.th-mid{background:linear-gradient(#0b1220,#020617)}.kids.th-lava{background:radial-gradient(circle at 30% 0%,#7c1d06 0,#2a0a02 60%,#0d0300 100%)}.kids.th-ocean{background:radial-gradient(circle at 30% 0%,#075985 0,#082f49 60%,#020617 100%)}
 .kids.th-pro{background:#0a0a0a}.kids.th-pro .kcard{background:#151515;border-color:#262626}.kids.th-pro .kgame{filter:saturate(.75)}
 .ktop{min-width:0}.ktop b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ktop .kpill{padding:5px 8px;font-size:14px;flex-shrink:0}.ktop .kpb{padding:5px 7px}.ktop .kbtn{flex-shrink:0}
+.kgame.g5{background:linear-gradient(120deg,#c2410c,#7c2d12 60%,#1c0a05)}.kcolhero{border-radius:20px;overflow:hidden;background:linear-gradient(#1e1b4b,#7c2d12 60%,#c2410c);box-shadow:0 8px 24px rgba(194,65,12,.4)}
+.kcolsky{position:relative;min-height:110px;padding:16px 12px 30px;font-size:28px;letter-spacing:2px;line-height:1.4;background:linear-gradient(transparent 70%,#9a3412 70%)}.krover{position:absolute;bottom:4px;left:0;font-style:normal;font-size:22px;animation:krove 9s linear infinite}@keyframes krove{from{transform:translateX(-30px)}to{transform:translateX(400px)}}
+.kcolstats{display:flex;justify-content:space-around;align-items:center;padding:10px;background:rgba(0,0,0,.35);color:#fff;font-weight:800;flex-wrap:wrap;gap:6px}.kcolstats b{font-size:22px;color:#ffd23f}
+.kcolb{display:grid;grid-template-columns:1fr 1fr;gap:8px}.kcb{border:2px solid rgba(255,255,255,.12);border-radius:14px;padding:10px 6px;background:rgba(255,255,255,.08);color:#fff;display:grid;justify-items:center;gap:2px;text-align:center;cursor:pointer;font:inherit}.kcb span{font-size:32px}.kcb b{font-size:14px}.kcb em{font-style:normal;font-size:12px;color:#ffd23f}.kcb i{font-style:normal;font-size:11px;opacity:.7}.kcb.can{border-color:#2ec27e;box-shadow:0 0 12px rgba(46,194,126,.4)}.kcb.lock{opacity:.45}
+.mboard{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,minmax(64px,auto));gap:3px;background:#7c2d12;padding:4px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.mbc{position:relative;background:#fde7d3;color:#14163a;border-radius:8px;padding:3px 2px;display:grid;justify-items:center;align-content:start;text-align:center;font-size:9.5px;line-height:1.1;border:3px solid transparent}.mbc span{font-size:18px}.mbc b{font-size:9.5px}.mbc em{font-style:normal;font-size:9px;font-weight:800;color:#7c2d12}
+.mbc.me{border-color:#2ec27e;background:#dcfce7}.mbc.bot{border-color:#ff4d6d;background:#ffe4e6}.mtok{position:absolute;bottom:-6px;right:-4px;font-style:normal;font-size:20px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.5));animation:kbob 1s ease-in-out infinite}
+.mcenter{grid-row:2/5;grid-column:2/5;background:radial-gradient(circle,#9a3412,#431407);border-radius:12px;color:#fff;display:grid;align-content:center;justify-items:center;gap:6px;padding:8px;text-align:center}.mscore{display:grid;gap:2px;font-weight:900;font-size:13px}
+.mroll{background:#ffd23f!important;font-size:18px}.mdie{font-size:44px;line-height:1;animation:kpop .4s}.mtip{font-size:11px;opacity:.85;padding:0 4px}
 .ledger{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat{display:grid;gap:2px}
@@ -7618,6 +7627,7 @@ function kSay(t){kSpeak(t,{read:true,force:true})}
 /* active learning time: counts only while the kids page is open, visible and touched in the last 90 seconds */
 setInterval(()=>{try{if(view!=="kids"||document.hidden||Date.now()-kLastAct>90000||!S.kids)return;const k=KS(),t=kToday();k.secs+=15;k.daySecs[t]=(k.daySecs[t]||0)+15;k.week.secs=(k.week.secs||0)+15;
   const ks=Object.keys(k.daySecs).sort();if(ks.length>60)for(const d of ks.slice(0,ks.length-60))delete k.daySecs[d];
+  if(KV.scr==="col"&&KV.mode==="home"&&k.col){kColIdle();const st=document.querySelector(".kcolstats b");if(st)st.textContent="💠 "+Math.floor(k.col.cr)}
   if(++kTicks%4===0){const before=kToast,tq=(k.trophyQ||[]).length;kGoalCheck();kBadges();kUnlocks();kTrophyCheck();persist();if((k.trophyQ||[]).length>tq&&KV.scr==="home"){render();return}if(kToast!==before&&KV.scr==="home")render()}}catch(_){}},15000);
 
 /* ---------- picture questions: flags, maps, planets, moon, animals, math pictures, spelling bee ---------- */
@@ -8013,13 +8023,13 @@ function kBeeHtml(Q,ans,nk){const done=ans!=null;return `<div class="kq bee" sty
   ${Q.rm?`<div class="khint">💡 ${esc(Q.hint)}<div class="kblanks">${esc(Q.word[0].toUpperCase())}${" _".repeat(Q.word.length-1)}</div></div>`:""}
   ${done?`<div class="kfb ${ans?"ok":"no"}"><b>${ans?(Q.rm?"✅ Correct! (hint used, so no points)":"✅ Perfect spelling!"):"❌ Here's how to spell it:"}</b><div class="kspell">${[...Q.word].map((c,i)=>`<span style="animation-delay:${(i*.12).toFixed(2)}s">${esc(c)}</span>`).join("")}</div>${Q.typed&&!ans?`<div>You typed: ${esc(Q.typed)}</div>`:""}<div>📖 ${esc(Q.word)}: ${esc(Q.def)}</div></div><button class="kbtn big" data-k="${nk}">Next ▶</button>`
    :`<input id="kbeein" class="kin kbeein" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type the word"><button class="kbtn big" data-k="beeGo">✔ Check spelling</button>`}</div>`}
-function kCurQ(){const g=KV;if(g.scr==="poker"&&g.mode==="pz")return g.Q;if(g.scr==="show")return g.Q;if(g.scr==="mine")return g.P&&g.P.lab;if(g.scr==="chess")return g.Q;return null}
+function kCurQ(){const g=KV;if(g.scr==="col"&&g.mode==="mc")return g.Q;if(g.scr==="col"&&g.mode==="emp"&&g.E&&g.E.stage==="q")return g.E.Q;if(g.scr==="poker"&&g.mode==="pz")return g.Q;if(g.scr==="show")return g.Q;if(g.scr==="mine")return g.P&&g.P.lab;if(g.scr==="chess")return g.Q;return null}
 /* ---------- main router ---------- */
 function kThemeOn(v){const r=v.querySelector(".kids");if(r)r.classList.add("th-"+(KS().theme||"galaxy"))}
 function renderKids(){const v=$("#view"),k=KS();
   if(!k.setup||KV.scr==="setup"){kSetupView(v);return kThemeOn(v)}
   if((k.trophyQ||[]).length&&(KV.scr==="home"||KV.scr==="reward"||(KV.scr==="show"&&KV.stage==="done"))){kCertView(v,k.trophyQ[0],true);kThemeOn(v);return kAfterRender()}
-  const R={land:kLandView,poker:kPokerView,desk:kDeskView,drive:kDriveView,show:kShowView,mine:kMineView,chess:kChessView,term:kTermView,base:kBaseView,badges:kBadgesView,grown:kGrownView,reward:kRewardView,brain:kBrainView,trophies:kTrophyHall,cert:v=>kCertView(v,KV.id,false),sounds:kSoundView}[KV.scr];
+  const R={col:kColView,land:kLandView,poker:kPokerView,desk:kDeskView,drive:kDriveView,show:kShowView,mine:kMineView,chess:kChessView,term:kTermView,base:kBaseView,badges:kBadgesView,grown:kGrownView,reward:kRewardView,brain:kBrainView,trophies:kTrophyHall,cert:v=>kCertView(v,KV.id,false),sounds:kSoundView}[KV.scr];
   R?R(v):kHome(v);const root=v.querySelector(".kids");if(root)root.classList.add("th-"+(k.theme||"galaxy"));kAfterRender()}
 let kWarm=false;function kAfterRender(){const k=KS(),g=KV;if(!kWarm&&navigator.onLine&&typeof KVREC!=="undefined"&&HOSTED){kWarm=true;const vv=kNatural(k)?k.voice:"max",list=(KVREC[vv]||[]).slice();let i=0;const step=()=>{if(i>=list.length)return;fetch(`voice/${vv}/${list[i++]}.mp3`).catch(()=>{}).finally(()=>setTimeout(step,120))};setTimeout(step,4000)}
   if(k.lessonQ&&$(".klesson")&&k.lessonSaid!==k.lessonQ){k.lessonSaid=k.lessonQ;const L=KLES[k.lessonQ];kSpeak(`Power-up! ${L[0]}. ${L[1]} For example: ${L[2]}`,{read:true,force:k.voice!=="off"})}
@@ -8301,6 +8311,7 @@ function kHome(v){const k=KS(),ri=kRank(k.xp),cur=KRANKS[ri],next=KRANKS[ri+1],p
     <button class="kgame g3" data-k="club"><span class="kgi">♞🃏</span><b>Strategy Club</b><span>Chess Lv ${k.chess.lv} · Poker Lv ${k.poker.lv}</span><em>Chess puzzles & Texas Hold'em</em></button>
     <button class="kgame g4" data-k="term"><span class="kgi">💻</span><b>Computer Academy</b><span>Power ${kCompPower().got}/${kCompPower().max} · ${kCRank(kCompPower().got)}</span><em>Linux, Windows, Mac & shortcuts</em></button>
    </div>
+   <button class="kgame g5 wide" data-k="col"><span class="kgi">🔴</span><b>Mars Colony Tycoon</b><span>${k.col?`💠 ${Math.floor(k.col.cr)} · +${kColRate(k.col)}/min · 👨‍🚀 ${kColPop(k.col)}`:"Build your own Mars base!"}</span><em>Learn for credits · defend with fast math · earns while you're away</em></button>
    <div class="khangar"><button class="kdrive" data-k="drive"><span class="kdcar">🚗</span><div><b>Tesla Drive</b><em>${(k.tix||0)>0?`🎟️ ${k.tix} ticket${k.tix>1?"s":""}: tap to drive!`:"Earn 🎟️ tickets: 4+ in a Quiz Show round"}</em>${k.drive&&k.drive.best?`<i>Best: ${k.drive.best} mi</i>`:""}</div></button><button class="kdrive spx" data-k="land"><span class="kdcar">🚀</span><div><b>Booster Landing</b><em>${(k.tix||0)>0?"Land a rocket! 🎟️ 1":"Earn 🎟️ tickets by learning"}</em>${k.spx&&k.spx.land?`<i>${k.spx.land} landing${k.spx.land>1?"s":""}</i>`:""}</div></button></div>
    <button class="kcard kbrainb" data-k="brain">${kGauge(b.known?b.avgLv:1,b.known?kOrd(b.g)+" grade":"scanning…")}<div><div class="kh">🧠 Brain Power</div><div class="ksmall">${b.known?(b.ahead>=1?`${b.ahead} grade${b.ahead>1?"s":""} ahead${age!=null?" for age "+age:""}! Tap for details.`:"Right on track. Level up to pull ahead! Tap for details."):"Take a Brain Scan to see your level!"}</div></div></button>
    <div class="kcard kprize"><div class="kh">🎁 Prize goal: ${g.prize?esc(g.prize):"ask a grown-up to pick your prize!"}</div>
@@ -8370,7 +8381,7 @@ function kidsClick(b){const d=b.dataset;
   if(d.k==="hint"){const Q=kCurQ();if(Q&&(g.scr!=="show"||g.ans==null)&&!(g.scr==="mine"&&g.P.labAns!=null)){kUseHint(Q);render()}return true}
   if(d.k==="beeSay"||d.k==="beeDef"||d.k==="beeSent"){const Q=kCurQ();if(Q&&Q.kind==="bee")kSay(d.k==="beeSay"?`${Q.word}. ${Q.word}.`:d.k==="beeDef"?`${Q.word} means ${Q.def}.`:Q.sent);return true}
   if(d.k==="beeGo"){const ok=kBeeCheck();if(ok==null)return true;const Q=kCurQ();
-    if(g.scr==="show"&&g.ans==null){g.ans=ok;kShowAnswer(ok)}else if(g.scr==="chess"&&g.ans==null){g.ans=ok;if(ok&&!Q.rm)g.pawn++;kAnswer(Q.s,ok,Q)}else if(g.scr==="mine"&&g.P.labAns==null){g.P.labAns=ok;if(ok&&!Q.rm)k.coins+=3;kAnswer(Q.s,ok,Q)}render();return true}
+    if(g.scr==="show"&&g.ans==null){g.ans=ok;kShowAnswer(ok)}else if(g.scr==="chess"&&g.ans==null){g.ans=ok;if(ok&&!Q.rm)g.pawn++;kAnswer(Q.s,ok,Q)}else if(g.scr==="mine"&&g.P.labAns==null){g.P.labAns=ok;if(ok&&!Q.rm)k.coins+=3;kAnswer(Q.s,ok,Q)}else if(g.scr==="col"&&g.mode==="mc"&&g.ans==null){g.ans=ok;g.res[g.i]=ok&&!Q.rm;if(ok&&!Q.rm){g.right++;kCol().cr+=25}kAnswer(Q.s,ok,Q)}else if(g.scr==="col"&&g.mode==="emp"&&g.E.stage==="q"&&g.E.ans==null){g.E.ans=ok;meAnswer(ok,Q)}render();return true}
   if(d.k==="show")return go({scr:"show",stage:"pick"});if(d.k==="skipLaunch"&&g.scr==="show"){g.stage="done";return top()}
   if(d.kride){if(!kCarOk(d.kride)){const C=KCARS.find(x=>x[0]===d.kride);kT("🔒 "+(C?C[8]:"Locked"));render();return true}if(kDriveStart(d.kride))return top();kT("You need a 🎟️ ticket!");render();return true}
   if(d.kcar){KV.car=d.kcar;kBeep("click");if(!kCarOk(d.kcar)){const C=KCARS.find(x=>x[0]===d.kcar);kT("🔒 Unlock: "+C[8])}render();return true}
@@ -8385,6 +8396,8 @@ function kidsClick(b){const d=b.dataset;
     if(g.scr==="show"&&g.ans==null&&KV.lock==null){KV.lock=i;kBeep("drum");render();setTimeout(()=>{if(KV.scr!=="show"||KV.lock!==i)return;const ok=i===g.Q.a;g.ans=i;KV.lock=null;kShowAnswer(ok);render()},650);return true}
     if(g.scr==="mine"&&g.P.lab&&g.P.labAns==null){g.P.labAns=i;const Q=g.P.lab,ok=i===Q.a;if(ok&&!Q.rm)k.coins+=3;kAnswer(Q.s,ok,Q)}
     else if(g.scr==="chess"&&g.Q&&g.ans==null){g.ans=i;const ok=i===g.Q.a;if(ok&&!g.Q.rm)g.pawn++;kAnswer(g.Q.s,ok,g.Q)}
+    else if(g.scr==="col"&&g.mode==="emp"&&g.E.stage==="q"&&g.E.ans==null){g.E.ans=i;const ok=i===g.E.Q.a;g.E.Q.cheer=kPick(KCHEER);meAnswer(ok,g.E.Q)}
+    else if(g.scr==="col"&&g.mode==="mc"&&g.ans==null){g.ans=i;const ok=i===g.Q.a;g.res[g.i]=ok&&!g.Q.rm;if(ok&&!g.Q.rm){g.right++;kCol().cr+=25}g.Q.cheer=kPick(KCHEER);kAnswer(g.Q.s,ok,g.Q)}
     else if(g.scr==="poker"&&g.mode==="pz"&&g.ans==null){g.ans=i;const ok=i===g.Q.a;g.res[g.i]=ok&&!g.Q.rm;if(ok&&!g.Q.rm)g.right++;g.Q.cheer=kPick(KCHEER);pkAns(ok,!!g.Q.rm)}
     render();return true}
   if(d.k==="next"&&g.scr==="show"){g.i++;if(g.i>=g.n){kShowEnd();if(g.launch){g.stage="launch";setTimeout(()=>{if(KV===g&&g.stage==="launch"){g.stage="done";render()}},5200)}}else{kShowQ();if(g.i===4)kLine("Final question!",1)}return top()}
@@ -8393,6 +8406,15 @@ function kidsClick(b){const d=b.dataset;
   if(d.k==="chint"&&g.scr==="chess"&&g.P&&g.P.state==="play"){g.P.hinted=true;k.hints++;kSay(g.P.tip+" The red square shows which piece to move.");render();return true}
   if(d.k==="chess"){kChessStart();return top()}
   if(d.k==="land"){kLnd=null;return go({scr:"land",pick:1})}
+  if(d.k==="col"){kColIdle();persist();return go({scr:"col",mode:"home"})}
+  if(d.k==="mc"){kMcStart();return top()}
+  if(d.k==="mcnext"&&g.scr==="col"){g.i++;if(g.i>=5){g.mode="mcdone";kColLvlCheck();persist()}else{g.Q=kQ(kSubPick({sci:2,math:2,geo:1,code:1,eng:1}));g.ans=null}return top()}
+  if(d.k==="ast"){kAstStart();return top()}
+  if(d.k==="emp"){meNew();return top()}
+  if(d.me&&g.scr==="col"&&g.mode==="emp"){if(d.me==="roll")meRoll();else meAct(d.me);render();return true}
+  if(d.k==="meq"&&g.scr==="col"&&g.mode==="emp"){g.E.stage="roll";meRobo();return top()}
+  if(d.k==="factOk"){KV.fact=null;render();return true}
+  if(d.kcb){if(!kColBuy(d.kcb)){kT("Not enough 💠 credits yet. Play Mission Control or Asteroid Defense!")}render();return true}
   if(d.kland!==undefined){const lv=+d.kland;k.spx=k.spx||{lv:0,land:0,tries:0};if(lv>k.spx.lv){kT("🔒 Land the level before it first!");render();return true}if(kLandStart(lv))return top();kT("You need a 🎟️ ticket. Learn to earn one!");render();return true}
   if(d.k==="mic"){kListen();return true}
   if(d.kth){k.theme=d.kth;persist();render();return true}
@@ -8791,6 +8813,108 @@ function kListen(){const Q=kCurQ();if(!KSR||!Q||Q.kind==="bee"||KV.ans!=null||(K
       const L="abcd"[i];if(new RegExp(`^(answer |option |letter )?${L}$`).test(an))sc=90;if(sc>bs){bs=sc;best=i}}});
     if(best>=0&&bs>=30){kT(`🎤 Heard: "${alts[0]}"`);const btn=document.querySelector(`[data-ka="${best}"]`);if(btn)btn.click();else render()}else{kT(`🎤 Heard "${alts[0]}" but it didn't match. Try again or tap.`);render()}};
   r.onerror=()=>{kT("🎤 Couldn't hear you. Tap an answer instead.");render()};r.start()}catch(_){kT("🎤 Voice answers aren't supported here.");render()}}
+
+/* ---------- game 5: Mars Colony Tycoon (build, earn while away, learn for credits, defend with fast math) ---------- */
+const KCOLB=[["solar","Solar Farm","☀️",40,3,0,"Mars gets less than half the sunlight Earth does, so colonies need big solar farms."],["hab","Habitat","🏠",60,2,0,"Mars air is about 95% carbon dioxide, so people must live inside sealed habitats."],
+ ["green","Greenhouse","🌱",90,4,1,"Plants use photosynthesis: they take in carbon dioxide and give off oxygen. Perfect for Mars!"],["oxy","Oxygen Maker","🫧",150,6,2,"In 2021 a NASA experiment called MOXIE made real oxygen from the Martian air on the Perseverance rover."],
+ ["ice","Ice Mine","🧊",220,8,3,"Mars has water ice at its poles and under the ground. Ice can become drinking water and rocket fuel."],["rover","Rover Garage","🚙",320,11,4,"NASA's Perseverance rover landed in Jezero Crater in February 2021 to search for signs of ancient life."],
+ ["lab","Science Lab","🔬",450,15,5,"A day on Mars (a sol) lasts about 24 hours and 40 minutes, a little longer than an Earth day."],["robot","Robot Factory","🤖",650,20,6,"Robots can build and repair things outside where it's too cold and dangerous for people."],
+ ["dome","Mega Dome","🛖",900,26,7,"Gravity on Mars is about 38% of Earth's. You could jump almost three times higher!"],["pad","Starship Pad","🚀",1300,35,8,"SpaceX plans to send Starship to Mars. Mars and Earth line up for the shortest trip about every 26 months."],
+ ["olymp","Olympus Lookout","🌋",2000,50,10,"Olympus Mons on Mars is the tallest volcano in the solar system, about two and a half times as tall as Mount Everest."]];
+function kCol(){const k=KS();k.col=k.col||{cr:30,b:{solar:1},last:Date.now(),lvl:1,def:{best:0,waves:0},mc:0,seen:{}};return k.col}
+function kColLevel(c){return 1+Object.values(c.b).reduce((a,b)=>a+b,0)}
+function kColRate(c){return KCOLB.reduce((a,B)=>a+(c.b[B[0]]||0)*B[4],0)}
+function kColPop(c){return (c.b.hab||0)*4+(c.b.dome||0)*12+(c.b.green||0)*2}
+function kColCost(B,lv){return Math.round(B[3]*Math.pow(1.6,lv))}
+function kColIdle(){const c=kCol(),now=Date.now(),mins=Math.min(8*60,(now-(c.last||now))/60000);c.last=now;const got=Math.floor(mins*kColRate(c)*.5);if(got>0){c.cr+=got;if(mins>3)c.away=got}return got}
+function kColLvlCheck(){const k=KS(),c=kCol(),L=kColLevel(c),old=c.lvl||1;if(L>old){c.lvl=L;const t=L%3===0?1:0;if(t)kTix(1,`colony level ${L}`);kT(`🔴 Colony level ${L}!${t?" +1 🎟️":""}`);kFx=true;kBeep("up");kLine("Colony level up!",3);
+  if(kColPop(c)>=50)kTrophy("col50","🔴","Mars colony of 50 people!","Built a Mars colony big enough for 50 people.");if(L>=20)kTrophy("col20","🛸","Mars Colony level 20!","Built a giant Mars colony with Starships and domes.")}}
+function kColBuy(id){const k=KS(),c=kCol(),B=KCOLB.find(x=>x[0]===id),lv=c.b[id]||0,cost=kColCost(B,lv);if(kColLevel(c)<B[5]+1||c.cr<cost||lv>=10)return false;c.cr-=cost;c.b[id]=lv+1;kBeep(lv?"coin":"place");
+  if(!c.seen[id]){c.seen[id]=1;KV.fact=[B[2]+" "+B[1],B[6]];kLine(`${B[1]} built! ${B[6]}`,3)}kColLvlCheck();persist();return true}
+/* Mission Control: learn to earn credits */
+function kMcStart(){KV={scr:"col",mode:"mc",i:0,n:5,right:0,res:[],Q:kQ(kSubPick({sci:2,math:2,geo:1,code:1,eng:1})),ans:null}}
+/* Asteroid Defense: tap the asteroid with the right answer */
+function kFact(L){const r=kR;let q,a;if(L<=2){const x=r(2,10),y=r(1,10);if(Math.random()<.5){q=`${x} + ${y}`;a=x+y}else{q=`${x+y} − ${y}`;a=x}}else if(L<=3){const x=r(10,60),y=r(5,30);q=`${x} + ${y}`;a=x+y}
+  else if(L<=6){const x=r(2,10),y=r(2,10);q=`${x} × ${y}`;a=x*y}else if(L<=9){if(Math.random()<.5){const y=r(2,10),z=r(2,10);q=`${y*z} ÷ ${y}`;a=z}else{const x=r(2,12),y=r(3,12);q=`${x} × ${y}`;a=x*y}}
+  else if(L<=14){const t=r(0,2);if(t===0){const x=r(11,25),y=r(2,9);q=`${x} × ${y}`;a=x*y}else if(t===1){const x=r(2,15);q=`${x}²`;a=x*x}else{const d=kPick([2,4,5,10]),m=d*r(2,12);q=`${m} ÷ ${d} × 3`;a=m/d*3}}
+  else{const t=r(0,2);if(t===0){const x=r(2,12),y=r(13,30);q=`${x} − ${y}`;a=x-y}else if(t===1){const p=kPick([10,20,25,50]),n=kPick([40,80,120,200]);q=`${p}% of ${n}`;a=n*p/100}else{const x=r(2,9),m=r(2,6);q=`${m}x = ${m*x}, x =`;a=x}}
+  const w=new Set();while(w.size<3){const d=kPick([1,2,3,5,10,-1,-2,-3,-5,-10]);if(a+d!==a&&(a+d>=0||a<0))w.add(a+d)}return{q,a,o:kShuf([a,...w])}}
+let kAst=null;
+function kAstStart(){const k=KS();KV={scr:"col",mode:"ast"};kAst={n:0,right:0,shield:3,P:null,rocks:[],t:0,last:0,over:false,booms:[],lv:k.lv.math};kAstNext();kLine("Asteroids incoming! Tap the one with the right answer!",3)}
+function kAstNext(){const A=kAst;if(A.n>=10||A.shield<=0){A.over=true;kAstEnd();return}A.n++;A.P=kFact(A.lv);const cv=$("#kast"),W=cv?cv.width:340;const sp=40+A.n*6+Math.min(30,A.lv*2);
+  A.rocks=A.P.o.map((v,i)=>({v,x:W*(i+.5)/4+(Math.random()-.5)*20,y:-30-Math.random()*60,vy:sp*(.85+Math.random()*.3),r:30,rot:Math.random()*6}));A.qT=Date.now()}
+function kAstHit(x,y){const A=kAst;if(!A||A.over)return;for(const r of A.rocks){if(Math.hypot(r.x-x,r.y-y)<r.r+8){const ok=r.v===A.P.a;A.booms.push({x:r.x,y:r.y,t:0,ok});
+  kAnswer("math",ok,{s:"math",q:A.P.q,o:[],a:-1,nosave:1});if(ok){A.right++;kBeep("coin");kVib(25);kAstNext()}else{A.shield--;kBeep("crash");kVib(90);kT(`${A.P.q} = ${A.P.a}`);if(A.shield<=0){A.over=true;kAstEnd()}else kAstNext()}return}}}
+function kAstLoop(ts){const A=kAst,cv=$("#kast");if(!A||KV.scr!=="col"||KV.mode!=="ast"||!cv)return;const c=cv.getContext("2d"),W=cv.width,H=cv.height,dt=A.last?Math.min(.05,(ts-A.last)/1000):0;A.last=ts;A.t+=dt;const ground=H-70;
+  if(!A.over){for(const r of A.rocks){r.y+=r.vy*dt;r.rot+=dt}const hitG=A.rocks.find(r=>r.v===A.P.a&&r.y>ground-10);if(hitG){A.shield--;A.booms.push({x:hitG.x,y:ground,t:0,ok:false});kBeep("crash");kVib(120);kAnswer("math",false,{s:"math",q:A.P.q,o:[],a:-1,nosave:1});kT(`${A.P.q} = ${A.P.a}`);if(A.shield<=0){A.over=true;kAstEnd()}else kAstNext()}}
+  const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,"#05030f");g.addColorStop(.7,"#3b0d0d");g.addColorStop(1,"#c2410c");c.fillStyle=g;c.fillRect(0,0,W,H);c.fillStyle="rgba(255,255,255,.6)";for(let i=0;i<50;i++)c.fillRect((i*71)%W,((i*37)+A.t*8)%(H*.6),1.5,1.5);
+  c.fillStyle="#9a3412";c.beginPath();c.moveTo(0,ground+20);for(let x=0;x<=W;x+=20)c.lineTo(x,ground+10+Math.sin(x/30)*6);c.lineTo(W,H);c.lineTo(0,H);c.fill();
+  c.fillStyle="rgba(147,197,253,.25)";c.strokeStyle=A.shield>1?"#93c5fd":"#fca5a5";c.lineWidth=3;c.beginPath();c.ellipse(W/2,ground+30,W*.42,60,0,Math.PI,0);c.fill();c.stroke();c.font="26px serif";c.textAlign="center";c.textBaseline="middle";c.fillText("🏠🌱🚀🔬",W/2,ground+12);
+  for(const r of A.rocks){c.save();c.translate(r.x,r.y);c.rotate(r.rot);c.fillStyle="#57534e";c.beginPath();for(let i=0;i<9;i++){const a=i/9*Math.PI*2,rr=r.r*(.82+.18*Math.sin(i*2.3));c.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}c.closePath();c.fill();c.fillStyle="#78716c";c.beginPath();c.arc(-8,-6,6,0,7);c.fill();c.restore();
+    c.fillStyle="#fff";c.font="900 19px system-ui";c.fillText(r.v,r.x,r.y+1);c.fillStyle="rgba(255,138,0,.5)";c.beginPath();c.moveTo(r.x-10,r.y-r.r);c.lineTo(r.x,r.y-r.r-18);c.lineTo(r.x+10,r.y-r.r);c.fill()}
+  for(const b of A.booms){b.t+=dt;c.fillStyle=b.ok?`rgba(255,210,63,${1-b.t*2})`:`rgba(255,60,60,${1-b.t*2})`;c.beginPath();c.arc(b.x,b.y,20+b.t*90,0,7);c.fill()}A.booms=A.booms.filter(b=>b.t<.5);
+  c.fillStyle="rgba(5,8,24,.8)";c.fillRect(0,0,W,58);c.fillStyle="#ffd23f";c.font="900 26px system-ui";c.fillText(A.over?"":`${A.P.q} = ?`,W/2,24);c.fillStyle="#fff";c.font="bold 12px system-ui";c.textAlign="left";c.fillText(`🛡️ ${"❤️".repeat(Math.max(0,A.shield))}`,8,48);c.textAlign="right";c.fillText(`${A.n}/10 · ✅ ${A.right}`,W-8,48);
+  if(!A.over)requestAnimationFrame(kAstLoop);else setTimeout(()=>{if(KV.scr==="col"&&KV.mode==="ast")render()},700)}
+function kAstEnd(){const A=kAst,k=KS(),c=kCol();if(A.done)return;A.done=1;const cr=A.right*8;c.cr+=cr;c.def.waves++;c.def.best=Math.max(c.def.best,A.right);A.cr=cr;A.tix=A.right>=8&&A.shield>0;if(A.tix)kTix(1,"wave defended");kFx=A.tix;kBeep(A.tix?"chest":"no");kLine(A.tix?"Wave defended! The colony is safe!":`You stopped ${A.right} asteroids. Try again!`,4);persist()}
+function kColView(v){const k=KS(),c=kCol(),g=KV;if(g.mode==="emp")return meView(v);
+  if(g.mode==="mc"){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Mission Control","col")}<div class="khud show"><div><b>Q ${g.i+1}/5</b></div><div class="kdots">${Array.from({length:5},(_,i)=>`<i class="${i<g.i?(g.res[i]?"y":"n"):i===g.i?"c":""}"></i>`).join("")}</div><div class="kscore sm">💠 ${c.cr}</div></div>${k.lessonQ&&g.ans==null?kLessonCard():kQuestion(g.Q,g.ans,"mcnext")}</div>`;return}
+  if(g.mode==="mcdone"){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Mission Control","col")}<div class="kcard kend"><div class="kbig2">📡</div><h2>${g.right} of 5 right!</h2><p>+${g.right*25} 💠 credits for your colony</p><div class="kpad"><button class="kbtn big" data-k="mc">Again ▶</button><button class="kbtn ghost" data-k="col">Colony</button></div></div></div>`;return}
+  if(g.mode==="ast"){const A=kAst;if(A&&A.over){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Asteroid Defense","col")}<div class="kcard kend"><div class="kbig2">${A.tix?"🛡️":"☄️"}</div><h2>${A.tix?"Wave defended!":"The shield broke!"}</h2><p>${A.right} of ${A.n} asteroids stopped · +${A.cr} 💠${A.tix?" · +1 🎟️ ticket":""}</p><p class="ksmall">Stop 8 or more without losing all shields to earn a ticket. Best: ${c.def.best}/10</p><div class="kpad"><button class="kbtn big green" data-k="ast">Next wave ☄️</button><button class="kbtn ghost" data-k="col">Colony</button></div></div></div>`;return}
+    const W=Math.min(380,v.clientWidth||360)-4,H=Math.round(W*1.35);v.innerHTML=`<div class="kids">${kTop("Asteroid Defense","col")}<div class="kdrvbox"><canvas id="kast" width="${W}" height="${H}" aria-label="Tap the asteroid with the right answer"></canvas></div><div class="ksmall">Tap the asteroid with the right answer before it hits the dome! Wrong taps cost a shield.</div></div>`;kAst.last=0;requestAnimationFrame(kAstLoop);return}
+  const rate=kColRate(c),L=kColLevel(c),away=c.away;c.away=0;
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop(`${k.name?k.name+"'s":"My"} Mars Colony`,"home")}
+   ${away?`<div class="kcard kwin"><b>👋 Welcome back! Your colony earned ${away} 💠 while you were away.</b></div>`:""}
+   ${g.fact?`<div class="klesson"><div class="klt">🔬 SCIENCE UNLOCKED</div><h2>${esc(g.fact[0])}</h2><p class="klx">${esc(g.fact[1])}</p><button class="kbtn big" data-k="factOk">Cool! 👍</button></div>`:""}
+   <div class="kcolhero"><div class="kcolsky">${Object.entries(c.b).filter(([id,n])=>n>0).map(([id,n])=>{const B=KCOLB.find(x=>x[0]===id);return `<span title="${esc(B[1])}">${B[2].repeat(Math.min(3,n))}</span>`}).join(" ")}<i class="krover">🚙</i></div>
+    <div class="kcolstats"><b>💠 ${Math.floor(c.cr)}</b><span>+${rate}/min</span><span>👨‍🚀 ${kColPop(c)} people</span><span>Lv ${L}</span></div></div>
+   <div class="kostabs"><button class="kostab on" data-k="col">🏗️ My Colony</button><button class="kostab desk" data-k="emp">🎲 Mars Empire board game</button></div>
+   <div class="kgames"><button class="kgame g1" data-k="mc"><span class="kgi">📡</span><b>Mission Control</b><span>Learn = credits</span><em>5 questions · +25 💠 each</em></button><button class="kgame g2" data-k="ast"><span class="kgi">☄️</span><b>Asteroid Defense</b><span>Fast math!</span><em>8+ stopped = 🎟️</em></button></div>
+   <div class="kcard"><div class="kh">🏗️ Build & upgrade</div><div class="kcolb">${KCOLB.map(B=>{const lv=c.b[B[0]]||0,cost=kColCost(B,lv),locked=L<B[5]+1,max=lv>=10;return `<button class="kcb ${locked?"lock":""} ${c.cr>=cost&&!locked&&!max?"can":""}" data-kcb="${B[0]}" ${locked||max?"disabled":""}><span>${B[2]}</span><b>${esc(B[1])}</b><em>${locked?`🔒 colony Lv ${B[5]+1}`:max?"MAX":`Lv ${lv} → ${lv+1} · 💠 ${cost}`}</em><i>+${B[4]}/min each level</i></button>`}).join("")}</div>
+    <div class="ksmall">Your colony earns 💠 every minute, even while you're away (up to 8 hours). Every 3 colony levels = 🎟️ ticket. Each new building teaches a real Mars science fact.</div></div></div>`}
+
+document.addEventListener("pointerdown",e=>{try{if(view!=="kids"||KV.scr!=="col"||KV.mode!=="ast"||!e.target||e.target.id!=="kast")return;const r=e.target.getBoundingClientRect(),sc=e.target.width/r.width;kAstHit((e.clientX-r.left)*sc,(e.clientY-r.top)*sc);kLastAct=Date.now()}catch(_){}});
+
+const KMTIP=["Cities earn 15× rent. Building on land you own is often smarter than buying more land.","Keep some 💠 saved for rent, or you could go broke!","Research Labs give tech: every tech level makes ALL your rents 10% bigger.","Cheap regions near the start get landed on a lot. They can be great deals!","Net worth = cash + land + buildings. That's how the winner is decided.","Robo buys when it has extra money. Grab the best regions first!"];
+/* ---------- Mars Empire: an easy board game (a Monopoly + Civilization mix) inside Mars Colony ---------- */
+const KMB=[["start","🚀","Launch Pad"],["reg","🟤","Utopia Plain",60,6],["card","📡","Mission Card"],["reg","🔵","Polar Ice Cap",80,8],["reg","🟠","Arabia Terra",100,10],
+ ["lab","🔬","Research Lab"],["reg","🟢","Elysium",120,12],["reg","🟣","Hellas Basin",140,14],["storm","🌪️","Dust Storm"],["reg","⚪","Gale Crater",160,16],["card","📡","Mission Card"],
+ ["reg","🟡","Tharsis Ridge",180,18],["lab","🔬","Research Lab"],["reg","🔴","Valles Marineris",220,22],["reg","🌋","Olympus Mons",260,26],["reg","💎","Jezero Crater",300,30]];
+const KMBUILD=["","🏕️ Outpost","🏠 Base","🏙️ City"],KMBMUL=[1,3,7,15];
+function meNew(){const own={};KMB.forEach((s,i)=>{if(s[0]==="reg")own[i]={o:null,b:0}});KV={scr:"col",mode:"emp",E:{own,p:[{pos:0,cash:500,tech:0,name:"You",ic:"🧑‍🚀"},{pos:0,cash:500,tech:0,name:"Robo",ic:"🤖"}],turn:0,round:1,maxR:15,log:["Welcome to Mars Empire! Roll the dice to explore Mars."],stage:"roll",die:0,Q:null,over:false}};kLine("Mars Empire! Roll the dice!",2)}
+function meRent(E,i){const s=KMB[i],o=E.own[i],owner=E.p[o.o];return Math.round(s[4]*KMBMUL[o.b]*(1+owner.tech*.1))}
+function meWorth(E,pi){let w=E.p[pi].cash;for(const i in E.own){const o=E.own[i];if(o.o===pi)w+=KMB[i][3]+o.b*Math.round(KMB[i][3]*.6)}return w}
+function meLog(E,t){E.log.push(t);if(E.log.length>6)E.log.shift()}
+function meMove(E,pi,n){const P=E.p[pi],old=P.pos;P.pos=(P.pos+n)%KMB.length;if(P.pos<old){P.cash+=100;meLog(E,`${P.ic} ${P.name} passed the Launch Pad: +100 💠`)}return P.pos}
+function meLand(E,pi){const P=E.p[pi],i=P.pos,s=KMB[i];
+  if(s[0]==="reg"){const o=E.own[i];if(o.o===null){if(pi===0){E.stage="buy";return}if(P.cash>=s[3]+80){P.cash-=s[3];o.o=1;meLog(E,`🤖 Robo bought ${s[2]} for ${s[3]} 💠`)}return}
+    if(o.o===pi){if(pi===0&&o.b<3){E.stage="build";return}if(pi===1&&o.b<3){const cost=Math.round(s[3]*.6);if(P.cash>=cost+60){P.cash-=cost;o.b++;meLog(E,`🤖 Robo built a ${KMBUILD[o.b].slice(3)} on ${s[2]}`)}}return}
+    const rent=meRent(E,i),O=E.p[o.o];P.cash-=rent;O.cash+=rent;meLog(E,`${P.ic} ${P.name} paid ${rent} 💠 rent to ${O.name} (${s[4]} × ${KMBMUL[o.b]}${O.tech?` + ${O.tech*10}% tech`:""})`);if(pi===0){kBeep("no")}else kBeep("coin");return}
+  if(s[0]==="card"||s[0]==="lab"||s[0]==="storm"){if(pi===0){E.stage="q";E.qkind=s[0];E.Q=kQ(kSubPick());E.ans=null;return}
+    if(s[0]==="card"){const g=kPick([40,60,80]);P.cash+=g;meLog(E,`🤖 Robo's mission card: +${g} 💠`)}else if(s[0]==="lab"){if(Math.random()<.6){P.tech++;meLog(E,`🤖 Robo researched new tech (Tech ${P.tech})`)}}else{P.cash-=30;meLog(E,"🌪️ Dust storm! Robo paid 30 💠 for repairs")}}}
+function meRoll(){const E=KV.E;if(E.stage!=="roll"||E.over)return;const d=kR(1,6);E.die=d;kBeep("drum");meMove(E,0,d);meLog(E,`🎲 You rolled ${d} and landed on ${KMB[E.p[0].pos][2]}.`);meLand(E,0);if(E.stage==="roll")meRobo()}
+function meRobo(){const E=KV.E;if(E.over)return;const d=kR(1,6);meMove(E,1,d);meLog(E,`🤖 Robo rolled ${d} → ${KMB[E.p[1].pos][2]}`);meLand(E,1);meEndRound()}
+function meEndRound(){const E=KV.E;if(E.p.some(p=>p.cash<0)||E.round>=E.maxR){meFinish();return}E.round++;E.stage="roll";persist()}
+function meAct(a){const E=KV.E,P=E.p[0],i=P.pos,s=KMB[i],k=KS();
+  if(a==="buy"&&E.stage==="buy"){if(P.cash>=s[3]){P.cash-=s[3];E.own[i].o=0;meLog(E,`✅ You bought ${s[2]} for ${s[3]} 💠. Rent here: ${s[4]} 💠`);kBeep("coin");kLine(`You bought ${s[2]}!`,1)}else meLog(E,"Not enough 💠 to buy it.");E.stage="roll";meRobo();return}
+  if(a==="build"&&E.stage==="build"){const o=E.own[i],cost=Math.round(s[3]*.6);if(P.cash>=cost){P.cash-=cost;o.b++;meLog(E,`🏗️ You built a ${KMBUILD[o.b].slice(3)} on ${s[2]}! Rent is now ${meRent(E,i)} 💠`);kBeep("place")}else meLog(E,"Not enough 💠 to build.");E.stage="roll";meRobo();return}
+  if(a==="skip"&&(E.stage==="buy"||E.stage==="build")){E.stage="roll";meRobo();return}}
+function meAnswer(ok,Q){const E=KV.E,P=E.p[0];const hint=!!(Q&&Q.rm);kAnswer(Q.s,ok,Q);
+  if(E.qkind==="card"){const g=ok&&!hint?kPick([60,80,100]):0;P.cash+=g;meLog(E,ok?(hint?"Right, but a hint means no bonus.":`📡 Mission success: +${g} 💠`):"📡 Mission failed. No bonus this time.")}
+  else if(E.qkind==="lab"){if(ok&&!hint){P.tech++;meLog(E,`🔬 New tech! Tech level ${P.tech}: your rents are now +${P.tech*10}%`)}else meLog(E,"🔬 The experiment failed. Try again next lap!")}
+  else{if(ok&&!hint)meLog(E,"🌪️ You knew it, so the dust storm missed you!");else{P.cash-=30;meLog(E,"🌪️ Dust storm damage: −30 💠")}}}
+function meFinish(){const E=KV.E,k=KS();if(E.over)return;E.over=true;const a=meWorth(E,0),b=meWorth(E,1);E.win=a>b?"me":a<b?"bot":"tie";E.wa=a;E.wb=b;const t=E.win==="me"?2:1;kTix(t,E.win==="me"?"Mars Empire win":"Mars Empire game");kCol().cr+=Math.max(0,Math.round(a/10));
+  k.emp=k.emp||{games:0,wins:0};k.emp.games++;if(E.win==="me"){k.emp.wins++;kFx=true;kBeep("chest");kLine("You rule Mars! Victory!",4);if(k.emp.wins===1)kTrophy("emp1","👑","Emperor of Mars!","Won a game of Mars Empire against Robo.")}else kLine("Robo wins this time. Rematch!",4);persist()}
+function meView(v){const E=KV.E,k=KS(),me=E.p[0],bot=E.p[1];
+  if(E.stage==="q"&&!E.over){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Mars Empire","col")}<div class="kcard"><b>${{card:"📡 Mission Card: answer to win a bonus!",lab:"🔬 Research Lab: answer to discover new tech!",storm:"🌪️ Dust Storm: answer to avoid damage!"}[E.qkind]}</b></div>${kQuestion(E.Q,E.ans,"meq")}</div>`;return}
+  const pos=[[0,0],[0,1],[0,2],[0,3],[0,4],[1,4],[2,4],[3,4],[4,4],[4,3],[4,2],[4,1],[4,0],[3,0],[2,0],[1,0]];
+  const cells=KMB.map((s,i)=>{const o=E.own[i],own=o&&o.o!==null?(o.o===0?"me":"bot"):"",tok=E.p.map((p,pi)=>p.pos===i?p.ic:"").join("");return `<div class="mbc ${own}" style="grid-row:${pos[i][0]+1};grid-column:${pos[i][1]+1}"><span>${s[1]}</span><b>${esc(s[2])}</b>${s[0]==="reg"?`<em>${o.o===null?`${s[3]} 💠`:KMBUILD[o.b]?KMBUILD[o.b].slice(0,2):"rent "+meRent(E,i)}</em>`:""}${tok?`<i class="mtok">${tok}</i>`:""}</div>`}).join("");
+  const cur=KMB[me.pos],ctrl=E.over?`<div class="kh">${E.win==="me"?"👑 You win!":E.win==="bot"?"🤖 Robo wins!":"🤝 Tie!"}</div><div class="ksmall">Your worth ${E.wa} 💠 vs Robo ${E.wb} 💠 (cash + land + buildings) · +${E.win==="me"?2:1} 🎟️</div><button class="kbtn big green" data-k="emp">New game 🎲</button>`
+   :E.stage==="buy"?`<div class="kh">${cur[1]} ${esc(cur[2])} is free!</div><div class="ksmall">Price ${cur[3]} 💠 · rent ${cur[4]} 💠 (×3 with an outpost, ×7 base, ×15 city)</div><div class="kpad"><button class="kbtn green" data-me="buy" ${me.cash<cur[3]?"disabled":""}>Buy ${cur[3]} 💠</button><button class="kbtn ghost" data-me="skip">Skip</button></div>`
+   :E.stage==="build"?`<div class="kh">Your land: ${esc(cur[2])}</div><div class="ksmall">Build a ${KMBUILD[E.own[me.pos].b+1].slice(3)} for ${Math.round(cur[3]*.6)} 💠? Rent goes from ${meRent(E,me.pos)} to ${Math.round(cur[4]*KMBMUL[E.own[me.pos].b+1]*(1+me.tech*.1))} 💠.</div><div class="kpad"><button class="kbtn green" data-me="build" ${me.cash<Math.round(cur[3]*.6)?"disabled":""}>Build</button><button class="kbtn ghost" data-me="skip">Not now</button></div>`
+   :`<button class="kbtn big mroll" data-me="roll">🎲 Roll the dice</button>${E.die?`<div class="mdie">${["","⚀","⚁","⚂","⚃","⚄","⚅"][E.die]}</div>`:""}`;
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Mars Empire","col")}<div class="mboard">${cells}<div class="mcenter"><div class="mscore"><span>🧑‍🚀 ${me.cash} 💠 · 🔬${me.tech}</span><span>🤖 ${bot.cash} 💠 · 🔬${bot.tech}</span></div><div class="ksmall">Round ${E.round}/${E.maxR}</div>${ctrl}<div class="mtip">💡 ${esc(KMTIP[E.round%KMTIP.length])}</div></div></div>
+   <div class="kcard pklog">${E.log.slice(-4).map(l=>`<div>${esc(l)}</div>`).join("")}</div>
+   <details class="kcard"><summary class="kh">📘 How to play (easy!)</summary><p>Roll the dice and move your rover. Land on a free region? <b>Buy it</b>. When Robo lands on your land, Robo pays you <b>rent</b>. Land on your own region to <b>build</b>: 🏕️ outpost (×3 rent), 🏠 base (×7), 🏙️ city (×15). 🔬 Labs give <b>tech</b> (+10% rent each). 📡 Mission cards and 🌪️ storms ask a question. Pass the 🚀 Launch Pad for +100 💠. After ${E.maxR} rounds, the richest empire wins!</p></details></div>`}
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -12734,7 +12858,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 116 · Nov 18";
+const BUILD="Version 117 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
