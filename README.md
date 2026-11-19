@@ -60,8 +60,12 @@ subject up a level, two misses move it down. Hints are always available but neve
   🍕 Pizza Rush and 🚕 Taxi. They teach compass directions (NORTH is up, "the hideout is SOUTH-EAST"),
   street-address map reading, and money math (making change and multiplying for bonus tips).
   One ticket = a 5-minute visit. No crime or violence: everything is cartoon mischief.
-- **Rewards earned by learning:** 🎟️ tickets unlock Tesla Drive and Booster Landing (a rocket-landing
-  physics game). Tesla Drive has top-down drawings of the Model 3, Model Y, Model X (Falcon Wing doors
+- **Rewards earned by learning:** 🎟️ tickets unlock Tesla Drive and Booster Landing 2.0, a rocket-landing
+  physics game with 10 levels: Landing Zone, Droneship, Windy Droneship, Night Landing (deploy the legs
+  yourself), Moon (1/6 gravity), Mars (38% gravity and dust gusts), Tower Catch (the chopsticks close),
+  Starship Flip (tap FLIP to swing upright), Asteroid Field and a Falcon Heavy boss with two boosters
+  landing at once. It has sonic booms, altitude callouts, 1-3 star ratings, a fact for each level, and a
+  Mission Control question before launch: a correct answer gives +15% fuel. Tesla Drive has top-down drawings of the Model 3, Model Y, Model X (Falcon Wing doors
   open during turbo), Model S Plaid, Cybertruck (smashes cones) and Rocket Roadster (flies into space).
   **Road Trip** is a 60-second drive with ⚡ bolts, combos, jump ramps, a Boring tunnel, Superchargers,
   regenerative braking, an Autopilot power-up that only dodges, Brain Gate math questions and a 💡 hint
