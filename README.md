@@ -56,9 +56,11 @@ subject up a level, two misses move it down. Hints are always available but neve
   open during turbo), Model S Plaid, Cybertruck (smashes cones) and Rocket Roadster (flies into space).
   **Road Trip** is a 60-second drive with ⚡ bolts, combos, jump ramps, a Boring tunnel, Superchargers,
   regenerative braking, an Autopilot power-up that only dodges, Brain Gate math questions and a 💡 hint
-  button. **Demolition Derby** is a touch-to-steer arena game where the last car rolling wins, with
-  momentum physics, repair and shield power-ups, a Monster Truck boss on higher levels, and ❓ brain
-  crates that give MEGA RAM for a correct math answer. Hacker missions unlock paints, Boombox horns
+  button. **Demolition Derby** is a 75-second smash arena: steer with a Roblox-style thumbstick, tap BOOST to
+  ram, and hit a score goal to level up. It has a follow camera and mini-map, momentum physics (front
+  hits do double damage, side hits make cars spin), respawns for the player and for new challengers,
+  repair, turbo, shield and 💣 bomb power-ups, a Monster Truck boss from level 3, and ❓ brain crates
+  that give MEGA RAM for a correct math answer. Hacker missions unlock paints, Boombox horns
   (goat, applause, robot, cow, Emissions Testing Mode) and Easter eggs (Rainbow Road, Santa Mode,
   Track Mode, light-show underglow, Bioweapon Defense Mode, Warp Speed, Mega Ramps, Derby Armor).
 - **Progress:** levels per subject (math goes to level 25, algebra and geometry), an estimated
