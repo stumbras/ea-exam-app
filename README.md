@@ -65,7 +65,8 @@ subject up a level, two misses move it down. Hints are always available but neve
   driving, crashing and boosting step by step. Hacker missions unlock paints, Boombox horns
   (goat, applause, robot, cow, Emissions Testing Mode) and Easter eggs (Rainbow Road, Santa Mode,
   Track Mode, light-show underglow, Bioweapon Defense Mode, Warp Speed, Mega Ramps, Derby Armor).
-- **Progress:** levels per subject (math goes to level 25, algebra and geometry), an estimated
+- **Progress:** levels per subject (math goes to level 25, algebra and geometry; chess to level 25,
+  first-try-only from level 18; a perfect streak of 8 gives a double level-up), an estimated
   grade-level gauge, power-up mini lessons before new skills, a review queue for missed questions,
   daily chest and quests, badges, certificates in a Trophy Hall, a buildable base, and a prize goal a
   parent can set.

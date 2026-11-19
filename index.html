@@ -7907,7 +7907,7 @@ function kAnswer(sub,ok,Q){const k=KS(),st=k.st[sub],nm=KSUB[sub][0],hint=!!(Q&&
   if(hint){st.h.push(ok?.5:0);if(st.h.length>12)st.h.shift();if(!ok)st.run=Math.min(0,st.run)-1;if(ok){kT("💡 Hint used: no points this time. Try the next one on your own!");kBeep("click");kLine("Right! Next time, try it without a hint.",1)}else{kBeep("no");kLine(kPick(KOOPS),1)}
     kRevPush(Q,ok);kDay(k);persist();return}
   if(ok)st.c++;st.run=ok?Math.max(0,st.run)+1:Math.min(0,st.run)-1;st.h.push(ok?1:0);if(st.h.length>12)st.h.shift();const lv=k.lv[sub];
-  if(ok&&st.run>=3){const last=st.h.slice(-8),acc=last.reduce((a,b)=>a+b,0)/last.length;if(acc>=.7&&lv<(KMAXLV[sub]||20)){kLevelUp(sub,nm,lv);st.run=0}}
+  if(ok&&st.run>=3){const last=st.h.slice(-8),acc=last.reduce((a,b)=>a+b,0)/last.length;if(acc>=.7&&lv<(KMAXLV[sub]||20)){kLevelUp(sub,nm,lv);st.run=0;if(acc===1&&last.length>=8&&lv+1<(KMAXLV[sub]||20)){kLevelUp(sub,nm,lv+1);st.h=st.h.slice(-4);kT(`🚀 DOUBLE LEVEL UP! ${nm} level ${lv+2}. You're crushing it!`)}}}
   if(!ok&&st.run<=-2&&lv>1){k.lv[sub]=lv-1;st.run=0;kT(`${nm} set to level ${lv-1} for a bit of practice. You've got this!`)}
   if(ok){k.xp+=10+k.lv[sub];k.coins+=1+Math.floor(k.lv[sub]/5);k.combo++;k.bestCombo=Math.max(k.bestCombo,k.combo);k.today.sub[sub]=(k.today.sub[sub]||0)+1;k.today.combo=Math.max(k.today.combo,k.combo);
     if(Q&&Q.know){const [c,id]=Q.know;k.know[c][id]=1}if(Q&&Q.kind==="bee"){k.know.bee[Q.word]=1;k.today.bee++}
@@ -8029,14 +8029,14 @@ function kPzMate(tier){let pool=KMATE.filter(x=>x[0]<=tier&&!kRecent.includes(x[
   return{type:"mate",b,ok,prompt:"Checkmate in 1! Find the move that traps the black king.",tip:it[2]}}
 function kPuzzle(L){let P=null;
   if(L<=3)P=kPzCap(L);else if(L<=6)P=Math.random()<.7?kPzSafe():kPzCap(3);else if(L<=9)P=Math.random()<.75?kPzMate(L<=8?1:2):kPzSafe();
-  else if(L<=13)P=Math.random()<.55?kPzMate(L<=11?2:3):kPzFork();else P=kPick([()=>kPzMate(3),()=>kPzFork(),()=>kPzSafe(),()=>kPzMate(2)])();
+  else if(L<=13)P=Math.random()<.55?kPzMate(L<=11?2:3):kPzFork();else if(L<=17)P=kPick([()=>kPzMate(3),()=>kPzFork(),()=>kPzMate(2),()=>kPzSafe(),()=>kPzMate(3)])();else P=kPick([()=>kPzMate(3),()=>kPzMate(3),()=>kPzFork(),()=>kPzMate(2)])();
   P=P||kPzCap(Math.min(3,L))||kPzMate(1);Object.assign(P,{sel:null,dots:[],tries:0,state:"play",msg:"",lv:L});return P}
 function kChessWhy(P,f,t){const n=cMove(P.b,f,t);if(P.type==="cap")return "No black piece there. Look for a square where you can capture!";
   if(P.type==="safe")return P.b[t]&&cAttacked(n,t,false)?"Trap! That piece is protected, so black would take back.":"Look for a capture that black can't take back.";
   if(P.type==="fork")return P.b[f]!=="N"?"Use your knight!":!cInCheck(n,false)?"That doesn't check the king.":"Check, but it doesn't attack the other piece too.";
   return !cInCheck(n,false)?"That move isn't check. Checkmate starts with check!":"Check, but the king can escape or block. Look for a move that leaves no escape."}
 function kChessAnswer(P,ok){const k=KS(),c=k.chess,st=c.st;st.n++;if(ok)st.c++;st.run=ok?Math.max(0,st.run)+1:Math.min(0,st.run)-1;st.h.push(ok?1:0);if(st.h.length>12)st.h.shift();
-  if(ok&&st.run>=3){const l=st.h.slice(-8);if(l.reduce((a,b)=>a+b,0)/l.length>=.7&&c.lv<20){c.lv++;st.run=0;kT(`⬆ LEVEL UP! Chess level ${c.lv}`);kFx=true;kBeep("up")}}
+  if(ok&&st.run>=3){const l=st.h.slice(-8);if(l.reduce((a,b)=>a+b,0)/l.length>=.7&&c.lv<25){const old=c.lv,dbl=l.length>=8&&l.every(x=>x===1)&&c.lv<24;c.lv+=dbl?2:1;st.run=0;if(dbl)st.h=st.h.slice(-4);kT(old<18&&c.lv>=18?`🔥 Chess level ${c.lv}: EXPERT! Only your first try counts now.`:dbl?`🚀 DOUBLE LEVEL UP! Chess level ${c.lv}`:`⬆ LEVEL UP! Chess level ${c.lv}`);kFx=true;kBeep("up")}}
   if(!ok&&st.run<=-2&&c.lv>1){c.lv--;st.run=0;kT(`Chess set to level ${c.lv} for practice.`)}
   if(ok){c.solved++;if(P.type==="mate")c.mates++;if(P.type==="fork")c.forks++;k.xp+=15+c.lv;k.coins+=2;k.combo++;k.bestCombo=Math.max(k.bestCombo,k.combo);k.today.chess++;k.today.combo=Math.max(k.today.combo,k.combo);if(!kFx)kBeep("ok")}else{k.combo=0;kBeep("no")}
   kDay(k);kGoalCheck();kBadges();kUnlocks();persist()}
@@ -8183,7 +8183,7 @@ function kChessView(v){const g=KV,k=KS(),P=g.P;
 function kChessTap(i){const g=KV,P=g.P;if(!P||P.state!=="play")return;const p=P.b[i];
   if(p&&cWhite(p)){P.sel=i;P.dots=cMoves(P.b,true).filter(m=>m[0]===i).map(m=>m[1]);kBeep("click");return}
   if(P.sel!=null&&P.dots.includes(i)){if(P.ok.some(m=>m[0]===P.sel&&m[1]===i)){P.b2=cMove(P.b,P.sel,i);P.last=[P.sel,i];P.state="won";kBeep("move");
-      if(P.hinted){kChessHinted(P)}else{const ok=P.tries<2;if(ok){g.pawn++;P.cheer=P.type==="mate"?"Checkmate!":P.type==="fork"?"Knight fork!":kPick(KCHEER)}kChessAnswer(P,ok);if(ok)kLine(P.type==="mate"?"Checkmate! Great move!":P.type==="fork"?"Knight fork! Nice!":kPick(KCHEER),2)}}
+      if(P.hinted){kChessHinted(P)}else{const ok=P.tries<(P.lv>=18?1:2);if(ok){g.pawn++;P.cheer=P.type==="mate"?"Checkmate!":P.type==="fork"?"Knight fork!":kPick(KCHEER)}kChessAnswer(P,ok);if(ok)kLine(P.type==="mate"?"Checkmate! Great move!":P.type==="fork"?"Knight fork! Nice!":kPick(KCHEER),2)}}
     else{P.tries++;P.msg=kChessWhy(P,P.sel,i);kBeep("no");kLine(P.tries>=2?"Not that one. Look at the red square for a hint.":"Not that one. Try again!",2);if(P.tries>=3){P.state="shown";P.last=P.ok[0];P.b2=cMove(P.b,P.ok[0][0],P.ok[0][1]);kChessAnswer(P,false)}}}
   P.sel=null;P.dots=[]}
 function kChessHinted(P){const k=KS(),st=k.chess.st;st.n++;st.h.push(.5);if(st.h.length>12)st.h.shift();k.hints++;kLine("Solved! Next time, try it without the hint.",2);persist()}
@@ -8337,7 +8337,7 @@ function kSkill(ic,n,col,lv,st,up,mx){const acc=st.n?Math.round(st.c/st.n*100):n
 function kHome(v){const k=KS(),ri=kRank(k.xp),cur=KRANKS[ri],next=KRANKS[ri+1],pct=next?(k.xp-cur[0])/(next[0]-cur[0])*100:100,age=kAge(k),q=kQuests(),gi=kGoalInfo(),g=k.goal,yr=new Date().getFullYear(),b=kBrain();
   const dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)],chestReady=k.chest.d!==kToday(),bdayGift=kIsBday(k)&&k.bdayDone!==yr,nT=Object.keys(k.troph||{}).length;
   const ms=[[25,"🥉","+25 ⚡ and gold"],[50,"🥈","🚗 Tesla for your base"],[75,"🥇","+40 ⚡ and diamonds"],[100,"🏆","Your prize!"]];
-  const subs=Object.entries(KSUB).map(([s,[n,ic,col]])=>kSkill(ic,n,col,k.lv[s],k.st[s],k.lv[s]-(k.week.start[s]||k.lv[s]),KMAXLV[s]||20)).join("")+kSkill("♟️","Chess","#ff9f1c",k.chess.lv,k.chess.st,k.chess.lv-(k.week.chess||k.chess.lv),20)+kSkill("🃏","Poker","#e31937",k.poker.lv,k.poker.st,0,16);
+  const subs=Object.entries(KSUB).map(([s,[n,ic,col]])=>kSkill(ic,n,col,k.lv[s],k.st[s],k.lv[s]-(k.week.start[s]||k.lv[s]),KMAXLV[s]||20)).join("")+kSkill("♟️","Chess","#ff9f1c",k.chess.lv,k.chess.st,k.chess.lv-(k.week.chess||k.chess.lv),25)+kSkill("🃏","Poker","#e31937",k.poker.lv,k.poker.st,0,16);
   const bads=KBAD.slice().sort((a,c)=>(k.badges[c[0]]?1:0)-(k.badges[a[0]]?1:0)).slice(0,14),nb=KBAD.filter(x=>k.badges[x[0]]).length;
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop(k.name?`Hi, ${k.name}!`:"Space Academy")}${kUpdBtn()}
    ${kIsBday(k)?`<div class="kcard kbday">🎂 <b>Happy Birthday, ${esc(k.name)}!</b>${age!=null?` You're ${age} today!`:""}</div>`:""}${bdayGift?`<button class="kchest" data-k="bday">🎁 Open your birthday present!</button>`:""}
@@ -13233,7 +13233,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 122 · Nov 18";
+const BUILD="Version 123 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
