@@ -7555,7 +7555,7 @@ const KVREC={"max":["1189a49b","119aa3f1","1206b5df","124cf4b9","12d6e461","138d
 const KLINK="https://stumbras.github.io/ea-exam-app/?kids";
 let KV={scr:"home"},kToast="",kRecent=[],kLastAct=Date.now(),kFx=false,kTicks=0,kAC=null,kMaster=null,kMus=null,kPend=null,kGreeted=false,kVoices=[];
 function KLOCK(){try{return localStorage.getItem("kidsLock")==="1"}catch(_){return false}}
-function kLockUI(){try{if(!KLOCK())return;document.title="Space Academy";const m=document.querySelector('link[rel="manifest"]');if(m)m.setAttribute("href","manifest-kids.webmanifest")}catch(_){}}
+function kLockUI(){try{if(!KLOCK())return;document.title="Space Academy";const m=document.querySelector('link[rel="manifest"]');if(m)m.setAttribute("href","manifest-kids.webmanifest");const at=document.querySelector('meta[name="apple-mobile-web-app-title"]');if(at)at.setAttribute("content","Space Academy")}catch(_){}}
 (function(){try{const q=new URLSearchParams(location.search);if(q.has("study"))localStorage.removeItem("kidsLock");else if(q.has("kids")||location.hash==="#kids")localStorage.setItem("kidsLock","1");kLockUI()}catch(_){}})();
 const KAV=["🧑‍🚀","🦸","🥷","🧙","🤖","🐉","🦊","👾"];
 const KMON=["January","February","March","April","May","June","July","August","September","October","November","December"];
