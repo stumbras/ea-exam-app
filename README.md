@@ -51,6 +51,15 @@ subject up a level, two misses move it down. Hints are always available but neve
   and from ☄️ Asteroid Defense, a fast math-facts arcade game. Also includes 🎲 **Mars Empire**, an easy
   board game against a robot that mixes buying regions and collecting rent with building outposts,
   bases and cities, plus research labs and question cards.
+- **🌴 Brick Bay:** an original, kid-friendly, old-school top-down city game in a toy-brick style
+  (studded buildings, minifig-style people who dive out of the way, palm trees, flamingos, a beach
+  and an ocean). It has a joystick, boost and Boombox honk, traffic, a sunset-to-night cycle with
+  street lights, a synth/8-bit radio, stunt ramps, speed cameras with a silly cartoon police chase
+  (shake them off at the Spray Shop), and 10 hidden gems. Missions: 🍪 Cookie Caper (escape the
+  Cookie Cops to the Secret Hideout), 🎈 Balloon Grab, 🕵️ Undercover Cop (catch the Cake Bandit),
+  🍕 Pizza Rush and 🚕 Taxi. They teach compass directions (NORTH is up, "the hideout is SOUTH-EAST"),
+  street-address map reading, and money math (making change and multiplying for bonus tips).
+  One ticket = a 5-minute visit. No crime or violence: everything is cartoon mischief.
 - **Rewards earned by learning:** 🎟️ tickets unlock Tesla Drive and Booster Landing (a rocket-landing
   physics game). Tesla Drive has top-down drawings of the Model 3, Model Y, Model X (Falcon Wing doors
   open during turbo), Model S Plaid, Cybertruck (smashes cones) and Rocket Roadster (flies into space).
@@ -60,7 +69,7 @@ subject up a level, two misses move it down. Hints are always available but neve
   ram, and hit a score goal to level up. It has a follow camera and mini-map, momentum physics (front
   hits do double damage, side hits make cars spin), respawns for the player and for new challengers,
   repair, turbo, shield and 💣 bomb power-ups, a Monster Truck boss from level 3, and ❓ brain crates
-  that give MEGA RAM for a correct math answer. A picture "How to play" screen opens before the first derby (and from
+  that give MEGA RAM for a correct math answer. It also has ⚡ ZAP lightning shots (5 shots that recharge), 🚀 homing-rocket pickups, and from level 2 the other cars shoot slow orange balls back. A fixed joystick sits bottom-left. The 🧑‍🏫 Coach is off unless switched on. A picture "How to play" screen opens before the first derby (and from
   📖 Rules anytime, which pauses the game), and an optional 🧑‍🏫 Coach walks new players through
   driving, crashing and boosting step by step. Hacker missions unlock paints, Boombox horns
   (goat, applause, robot, cow, Emissions Testing Mode) and Easter eggs (Rainbow Road, Santa Mode,
