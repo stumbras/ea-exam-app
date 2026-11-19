@@ -8454,7 +8454,7 @@ function kidsClick(b){const d=b.dataset;
   if(d.kcar){KV.car=d.kcar;kBeep("click");if(!kCarOk(d.kcar)){const C=KCARS.find(x=>x[0]===d.kcar);kT("🔒 Unlock: "+C[8])}render();return true}
   if(d.kcol){k.drive=k.drive||{};k.drive.col=d.kcol;k.drive.colSet=1;persist();kBeep("click");render();return true}
   if(d.k==="tilt"){k.drive=k.drive||{};k.drive.tilt=!k.drive.tilt;persist();try{if(k.drive.tilt&&typeof DeviceOrientationEvent!=="undefined"&&DeviceOrientationEvent.requestPermission)DeviceOrientationEvent.requestPermission().catch(()=>{})}catch(_){}render();return true}
-  if(d.k==="honk"){kHorn();if(kDrv&&kDrv.t-(kDrv.honkT??-9)>=3){kDrv.honkT=kDrv.t;for(const o of kDrv.obs)if(o.k==="car"&&o.ln===kDrv.lane&&o.y<kDrv.v)o.ln=o.ln===1?kPick([0,2]):1}return true}
+  if(d.k==="honk"){if(kDrv&&kDrv.car[0]==="tk"){kTankFire();return true}kHorn();if(kDrv&&kDrv.t-(kDrv.honkT??-9)>=3){kDrv.honkT=kDrv.t;for(const o of kDrv.obs)if(o.k==="car"&&o.ln===kDrv.lane&&o.y<kDrv.v)o.ln=o.ln===1?kPick([0,2]):1}return true}
   if(d.k==="cartoon"){KV={scr:"drive",cartoon:1};kDrv=null;return top()}
   if(d.k==="drive"){if(kDriveStart())return top();kT("You need a 🎟️ ticket. Score 4+ in a Quiz Show round to earn one!");render();return true}
   if(d.k==="dl"||d.k==="dr"){kDriveSteer(d.k==="dl"?-1:1);return true}
@@ -8548,7 +8548,7 @@ let kDrv=null;
 /* Tesla Drive 2.0: models, paint, Autopilot, Plaid mode, Superchargers, regen braking, day/night, three landscapes, missions */
 const KCARS=[["m3","Model 3","🚗","sedan",1,1,1,k=>true,"Quick, smooth and efficient."],["my","Model Y","🚙","suv",.95,.9,.9,k=>true,"Family SUV with a light bar and glass roof."],
  ["mx","Model X","🚙","x",1.05,1,.85,k=>true,"Falcon Wing doors pop open in turbo!"],["ms","Model S Plaid","🏎️","plaid",1.2,1.1,1,k=>true,"Fastest: 0 to 60 mph in about 2 seconds."],
- ["ct","Cybertruck","🛻","truck",.95,1.05,.5,k=>true,"Stainless-steel armor: smashes cones!"],["rd","Rocket Roadster","🚀","roadster",1.1,1,1,k=>true,"Blasts into space at 30 seconds!"]];
+ ["ct","Cybertruck","🛻","truck",.95,1.05,.5,k=>true,"Stainless-steel armor: smashes cones!"],["tk","Cyber Tank","🛡️","tank",.85,1.15,.35,k=>true,"Treads + turret! Crushes cones AND robot cars. 💥 FIRE the cannon!"],["rd","Rocket Roadster","🚀","roadster",1.1,1,1,k=>true,"Blasts into space at 30 seconds!"]];
 const KCOLS=[["Pearl White","#f4f6ff"],["Ultra Red","#c8102e"],["Deep Blue","#1d3f8f"],["Stealth Grey","#4b5563"],["Solid Black","#16181d"],["Quicksilver","#b8bcc6"]];
 const KDMIS=[["bolts","Collect 15 ⚡",15],["dist","Drive 2.5 miles",2.5],["sc","Charge at a Supercharger",1],["clean","Finish with no crashes",0]];
 const KEVF=["Regenerative braking turns the car's motion back into electricity when it slows down.","Superchargers can add hundreds of miles of range in about half an hour.","Electric motors give full power instantly, that's why EVs are so quick off the line.","A car's battery is measured in kilowatt-hours (kWh), like the size of a gas tank.","EVs have far fewer moving parts than gas cars, so there's no oil to change.","Cameras and computers help cars see lanes and other cars. Engineers call it computer vision."];
@@ -8593,7 +8593,7 @@ function kDriveLoop(ts){const D=kDrv,cv=$("#kdrv");if(!D||KV.scr!=="drive"||!cv)
       else if(o.k==="ramp"){o.done=1;D.jump=1.15;D.bolts+=3;kBeep("whoosh");kVib(30);D.fx=(D.fx||[]).concat([{x:lx(o.ln),y:carY-40,t:0,k:"spark",txt:"🦘 JUMP! +3"}])}
       else if(o.k==="ap"){o.done=1;D.ap=5;kBeep("chime");kLine("Autopilot on!",2)}
       else if(o.k==="boost"){o.done=1;D.bat=Math.min(100,D.bat+12);if(R){D.fly=4;kLine("Thrusters!",1)}else{D.plaid=3.5;kLine(C[0]==="ms"?"Plaid mode!":"Ludicrous speed!",1)}kBeep("whoosh")}
-      else if(o.k==="cone"&&C[0]==="ct"&&!D.jump){o.done=1;D.bolts++;D.shake=.15;kBeep("boom");D.fx=(D.fx||[]).concat([{x:lx(o.ln),y:carY-30,t:0,k:"spark",txt:"💪 SMASH! +1"}])}
+      else if(((o.k==="cone"&&(C[0]==="ct"||C[0]==="tk"))||(o.k==="car"&&C[0]==="tk"))&&!D.jump){const wasCar=o.k==="car";o.done=1;o.k="gone";D.bolts+=wasCar?2:1;D.shake=.15;kBeep("boom");D.fx=(D.fx||[]).concat([{x:lx(o.ln),y:carY-30,t:0,k:"spark",txt:"💪 SMASH! +1"}])}
       else if(!D.inv&&!D.fly&&!D.plaid&&!D.jump){o.done=1;D.bat=Math.max(0,D.bat-(o.k==="car"?8:5)*C[6]);D.v*=.6;D.crashes++;D.combo=0;D.inv=1.5;D.hitT=D.t;D.shake=.35;kBeep("crash");kVib(140);D.fx=(D.fx||[]).concat([{x:lx(o.ln),y:carY-20,t:0,k:"smoke"}])}}}
     kGateStep(D,dt,lx,carY,SP);
     D.obs=D.obs.filter(o=>o.y<H+90&&!(o.done&&o.k!=="car"&&o.k!=="cone"));if(D.t>=60){D.over=true;kDriveEnd()}}
@@ -8615,7 +8615,7 @@ function kDriveLoop(ts){const D=kDrv,cv=$("#kdrv");if(!D||KV.scr!=="drive"||!cv)
   if(D.ap){c.strokeStyle="rgba(63,182,255,.8)";c.lineWidth=3;c.setLineDash([8,8]);c.beginPath();c.moveTo(lx(D.lane),carY-60);c.lineTo(lx(D.lane),carY-240);c.stroke();c.setLineDash([]);
     c.lineWidth=2;c.font="bold 10px system-ui";for(const o of D.obs){if(o.k!=="car"&&o.k!=="cone")continue;if(o.y<carY-360||o.y>carY+20)continue;const x=lx(o.ln),bw=o.k==="car"?48:34,bh=o.k==="car"?82:34,dist=Math.max(0,Math.round((carY-o.y)/6));c.strokeStyle=o.ln===D.lane&&dist<35?"rgba(255,90,90,.95)":"rgba(63,182,255,.95)";c.strokeRect(x-bw/2,o.y-bh/2,bw,bh);c.fillStyle=c.strokeStyle;c.fillText(`${dist} m`,x,o.y-bh/2-7)}
     c.fillStyle="rgba(63,182,255,.9)";c.font="bold 11px system-ui";c.fillText("◉ AUTOPILOT VIEW",W/2,carY+58)}
-  if(D.gate&&!SP)kGateDraw(c,D,lx,LW,W);kDriveOverlay(c,D,lx,W,H,carY,SP);
+  if(D.gate&&!SP)kGateDraw(c,D,lx,LW,W);kDriveOverlay(c,D,lx,W,H,carY,SP,dt);
   for(const f of (D.fx||[])){f.t+=dt;if(f.k==="spark"){c.fillStyle=`rgba(255,230,90,${1-f.t*2})`;for(let i=0;i<8;i++){const a=i/8*6.28;c.beginPath();c.arc(f.x+Math.cos(a)*f.t*90,f.y+Math.sin(a)*f.t*90,3,0,7);c.fill()}if(f.txt){c.font="900 16px system-ui";c.fillText(f.txt,f.x,f.y-30-f.t*40)}}else{c.fillStyle=`rgba(200,200,210,${.7-f.t})`;c.beginPath();c.arc(f.x,f.y-f.t*40,14+f.t*50,0,7);c.fill()}}D.fx=(D.fx||[]).filter(f=>f.t<.6);
   if(D.rain&&!SP){c.strokeStyle="rgba(180,200,255,.28)";c.lineWidth=1.5;for(let i=0;i<34;i++){const x=(i*53+D.t*40)%W,y=(i*97+D.t*900)%H;c.beginPath();c.moveTo(x,y);c.lineTo(x-4,y+14);c.stroke()}}
   c.restore();
@@ -8640,13 +8640,13 @@ function kDriveView(v){const D=kDrv,k=KS();k.drive=k.drive||{best:0,rides:0};
     <p class="ksmall">Best drive: ${k.drive.best} miles · 🎟️ ${k.tix||0} ticket${(k.tix||0)===1?"":"s"} left</p>
     <div class="kpad">${(k.tix||0)>0?`<button class="kbtn big green" data-k="drive">Drive again 🏁</button>`:""}<button class="kbtn ${(k.tix||0)>0?"ghost":"big"}" data-k="home">Home</button></div>${(k.tix||0)<1?`<div class="ksmall">Earn tickets: score 4+ in a Quiz Show round, promote a pawn, open the daily chest, finish all 3 quests or every 3 Computer Academy missions.</div>`:""}</div></div>`;return}
   const W=Math.min(380,v.clientWidth||360)-4,H=Math.round(W*1.35);v.innerHTML=`<div class="kids">${kTop(D.car[1],"home")}<div class="kdrvbox"><canvas id="kdrv" width="${W}" height="${H}" aria-label="Driving game: tap left or right to change lanes"></canvas></div>
-   <div class="kpad kdrvbtns"><button class="kbtn big" data-k="dl">◀</button><button class="kbtn big kbrk" id="kbrk">🛑 Regen</button><button class="kbtn big" data-k="dhint">💡</button><button class="kbtn big" data-k="honk">${kHornIc()}</button><button class="kbtn big" data-k="dr">▶</button></div><div class="ksmall">Tap the left or right side of the road${KS().drive.tilt?" or tilt the phone":""}. Hold 🛑 to brake and recharge. 💡 = hint.</div></div>`;
+   <div class="kpad kdrvbtns"><button class="kbtn big" data-k="dl">◀</button><button class="kbtn big kbrk" id="kbrk">🛑 Regen</button><button class="kbtn big" data-k="dhint">💡</button><button class="kbtn big" data-k="honk">${D.car[0]==="tk"?"💥":kHornIc()}</button><button class="kbtn big" data-k="dr">▶</button></div><div class="ksmall">Tap the left or right side of the road${KS().drive.tilt?" or tilt the phone":""}. Hold 🛑 to brake and recharge. 💡 = hint.</div></div>`;
   D.last=0;requestAnimationFrame(kDriveLoop)}
 function kDriveSteer(dir){if(!kDrv||kDrv.over)return;const nl=Math.max(0,Math.min(2,kDrv.lane+dir));if(nl!==kDrv.lane)kBeep("signal");kDrv.lane=nl}
 document.addEventListener("pointerdown",e=>{try{if(view!=="kids"||KV.scr!=="drive"||!e.target)return;if(e.target.id==="kbrk"||e.target.closest&&e.target.closest("#kbrk")){if(kDrv)kDrv.brake=true;return}if(e.target.id!=="kdrv")return;const r=e.target.getBoundingClientRect();kDriveSteer(e.clientX-r.left<r.width/2?-1:1);kLastAct=Date.now()}catch(_){}});
 ["pointerup","pointercancel","pointerleave"].forEach(ev=>document.addEventListener(ev,()=>{if(kDrv)kDrv.brake=false},true));
 window.addEventListener("deviceorientation",e=>{if(kDrv&&e.gamma!=null)kDrv.gamma=e.gamma});
-document.addEventListener("keydown",e=>{try{if(view!=="kids"||KV.scr!=="drive")return;if(e.key==="ArrowLeft"){e.preventDefault();kDriveSteer(-1)}if(e.key==="ArrowRight"){e.preventDefault();kDriveSteer(1)}if(e.key==="ArrowDown"&&kDrv)kDrv.brake=true;if(e.key===" "){e.preventDefault();kHorn()}}catch(_){}});
+document.addEventListener("keydown",e=>{try{if(view!=="kids"||KV.scr!=="drive")return;if(e.key==="ArrowLeft"){e.preventDefault();kDriveSteer(-1)}if(e.key==="ArrowRight"){e.preventDefault();kDriveSteer(1)}if(e.key==="ArrowDown"&&kDrv)kDrv.brake=true;if(e.key===" "){e.preventDefault();if(kDrv&&kDrv.car[0]==="tk")kTankFire();else kHorn()}}catch(_){}});
 document.addEventListener("keyup",e=>{if(e.key==="ArrowDown"&&kDrv)kDrv.brake=false});
 
 /* ---------- Computer Academy: terminals for Linux, Windows and Mac, plus desktop shortcut missions ---------- */
@@ -8976,6 +8976,12 @@ function kShade(h,p){const n=parseInt(String(h).slice(1),16);if(isNaN(n))return 
 function kTesla(c,x,y,w,h,col,sh,o={}){const hw=w/2,hh=h/2,T=sh==="truck",X=sh==="x",R=sh==="roadster",S=sh==="plaid",Y=sh==="suv",steel=T&&col==="#b8bcc6";c.save();c.translate(x,y);c.textAlign="center";c.textBaseline="middle";
   if(R&&o.fly){for(const s of[-1,1]){const L=20+Math.sin((o.t||0)*40+s)*7,g=c.createLinearGradient(0,hh,0,hh+L);g.addColorStop(0,"#fff6b0");g.addColorStop(.4,"#ff8a00");g.addColorStop(1,"rgba(255,60,0,0)");c.fillStyle=g;c.beginPath();c.moveTo(s*hw*.4-6,hh);c.lineTo(s*hw*.4+6,hh);c.lineTo(s*hw*.4,hh+L);c.closePath();c.fill()}}
   c.fillStyle="rgba(0,0,0,.32)";c.beginPath();c.roundRect(-hw+2,-hh+5,w+2,h,10);c.fill();
+  if(sh==="tank"){const tt=((o.t||0)*40)%8;for(const s of[-1,1]){c.fillStyle="#1f2125";c.beginPath();c.roundRect(s>0?hw*.5:-hw*1.02,-hh*.96,hw*.52,h*.96,6);c.fill();c.strokeStyle="#4b5563";c.lineWidth=2;for(let y=-hh*.92+tt;y<hh*.92;y+=8){c.beginPath();c.moveTo(s>0?hw*.53:-hw*.99,y);c.lineTo(s>0?hw*.99:-hw*.53,y);c.stroke()}}
+    const tg=c.createLinearGradient(-hw*.6,0,hw*.6,0);tg.addColorStop(0,"#868c95");tg.addColorStop(.4,"#eceff3");tg.addColorStop(.65,"#c3c8cf");tg.addColorStop(1,"#7d838c");c.fillStyle=tg;c.beginPath();c.moveTo(-hw*.5,-hh*.86);c.lineTo(hw*.5,-hh*.86);c.lineTo(hw*.58,-hh*.6);c.lineTo(hw*.58,hh*.86);c.lineTo(-hw*.58,hh*.86);c.lineTo(-hw*.58,-hh*.6);c.closePath();c.fill();c.strokeStyle="rgba(0,0,0,.35)";c.lineWidth=1;c.stroke();
+    c.fillStyle="#e9f4ff";c.fillRect(-hw*.48,-hh*.87,hw*.96,2.5);c.fillStyle="#ff2a3a";c.fillRect(-hw*.55,hh*.83,hw*1.1,2.2);
+    c.fillStyle="#6b7280";c.fillRect(-3.5,-hh*1.2,7,hh*1.2);c.fillStyle="#374151";c.fillRect(-5,-hh*1.24,10,7);if(o.boost){c.fillStyle="rgba(255,160,40,.9)";c.beginPath();c.arc(0,-hh*1.3,6+Math.random()*4,0,7);c.fill()}
+    const g2=c.createRadialGradient(-hw*.12,-hh*.05,2,0,hh*.05,hw*.46);g2.addColorStop(0,"#e5e7eb");g2.addColorStop(1,"#8b929c");c.fillStyle=g2;c.beginPath();c.arc(0,hh*.05,hw*.44,0,7);c.fill();c.strokeStyle="rgba(0,0,0,.35)";c.stroke();
+    c.fillStyle="#e31937";c.font=`900 ${Math.max(7,w*.22)}px system-ui`;c.fillText("T",0,hh*.06);c.restore();return}
   c.fillStyle="#0c0d10";for(const yy of[-hh*.62,hh*.56])for(const s of[-1,1]){c.beginPath();c.roundRect(s>0?hw-5:-hw-2,yy-h*.09,7,h*.18,3);c.fill()}
   const body=()=>{c.beginPath();if(T){c.moveTo(-hw*.86,-hh);c.lineTo(hw*.86,-hh);c.lineTo(hw,-hh*.9);c.lineTo(hw,hh*.97);c.lineTo(hw*.95,hh);c.lineTo(-hw*.95,hh);c.lineTo(-hw,hh*.97);c.lineTo(-hw,-hh*.9);c.closePath()}
     else{const n=R?.5:.6;c.moveTo(-n*hw,-hh);c.quadraticCurveTo(0,-hh*1.05,n*hw,-hh);c.quadraticCurveTo(hw,-hh*.97,hw,-hh*.58);c.lineTo(hw,hh*.6);c.quadraticCurveTo(hw,hh*.96,hw*.8,hh);c.quadraticCurveTo(0,hh*1.03,-hw*.8,hh);c.quadraticCurveTo(-hw,hh*.96,-hw,hh*.6);c.lineTo(-hw,-hh*.58);c.quadraticCurveTo(-hw,-hh*.97,-n*hw,-hh);c.closePath()}};
@@ -9004,7 +9010,7 @@ function kTesla(c,x,y,w,h,col,sh,o={}){const hw=w/2,hh=h/2,T=sh==="truck",X=sh==
 function kRoadster(c,x,y,fly,t){kTesla(c,x,y,48,86,"#e31937","roadster",{fly,t})}
 function kCarPreviews(){document.querySelectorAll("canvas.kcpv").forEach(cv=>{const C=KCARS.find(x=>x[0]===cv.dataset.pv);if(!C)return;const c=cv.getContext("2d"),k=KS(),sz=KCSZ[C[3]],sc=Math.min(1,(cv.height-14)/sz[1]);c.clearRect(0,0,cv.width,cv.height);
   const col=C[3]==="roadster"?"#e31937":C[3]==="truck"&&!(k.drive&&k.drive.colSet)?"#b8bcc6":(k.drive&&k.drive.col||"#c8102e");kTesla(c,cv.width/2,cv.height/2,sz[0]*sc,sz[1]*sc,col,C[3],{boost:C[3]==="x",t:0})})}
-const KCSZ={sedan:[48,92],suv:[52,96],x:[54,100],truck:[56,106],plaid:[48,98],roadster:[48,86]};
+const KCSZ={tank:[58,98],sedan:[48,92],suv:[52,96],x:[54,100],truck:[56,106],plaid:[48,98],roadster:[48,86]};
 /* ---------- Demolition Derby: Smash Arena (thumbstick, follow camera, respawns, score goal) ---------- */
 const KDBC=["#1d3f8f","#16a34a","#f59e0b","#7c3aed","#0ea5e9","#db2777","#65a30d","#ea580c"];
 const KDBP={fix:["🔧","Repair +35"],boost:["⚡","Turbo!"],shield:["🛡️","Shield!"],bomb:["💣","BOOM!"],rocket:["🚀","3 homing rockets!"],brain:["❓","Brain crate!"]};
@@ -9028,7 +9034,7 @@ function kDbMkAI(D,x,y){const boss=D.lv>=3&&!D.bossOut;if(boss)D.bossOut=1;const
   return{x,y,a:Math.atan2(D.AW/2-x,-(D.AH/2-y)),av:0,vx:0,vy:0,hp,max:hp,r:boss?32:26,m:boss?2.2:1,arm:boss?.7:1,vmax:boss?105:88+Math.min(70,D.lv*12),sh:boss?"monster":kPick(["sedan","suv","sedan","truck"]),col:KDBC[D.spawned%KDBC.length],alive:1,ai:{tg:null,tT:Math.random()*1.5,back:0},boss}}
 function kDbInit(D,W,H){const k=KS(),sh=D.C[3];D.W=W;D.H=H;D.AW=Math.round(W*1.8);D.AH=Math.round(H*1.6);const AW=D.AW,AH=D.AH;
   D.obs=[[.28,.33],[.72,.33],[.28,.68],[.72,.68]].map(([a,b])=>({x:AW*a,y:AH*b,r:24}));
-  D.cars=[{me:1,x:AW/2,y:AH*.86,a:0,av:0,vx:0,vy:0,hp:120,max:120,r:sh==="truck"?29:27,m:sh==="truck"?1.4:1.1,arm:D.C[6]*(kEggsOn().armor?.85:1),vmax:200*D.C[4],sh,col:sh==="roadster"?"#e31937":sh==="truck"&&!k.drive.colSet?"#b8bcc6":(k.drive.col||"#c8102e"),alive:1}];
+  D.cars=[{me:1,x:AW/2,y:AH*.86,a:0,av:0,vx:0,vy:0,hp:120,max:120,r:sh==="tank"?30:sh==="truck"?29:27,m:sh==="tank"?1.9:sh==="truck"?1.4:1.1,arm:D.C[6]*(kEggsOn().armor?.85:1),vmax:200*D.C[4],sh,col:sh==="roadster"?"#e31937":sh==="truck"&&!k.drive.colSet?"#b8bcc6":(k.drive.col||"#c8102e"),alive:1}];
   const spots=[[.15,.12],[.85,.12],[.5,.1],[.1,.5],[.9,.5]];for(let i=0;i<D.n;i++){const [a,b]=spots[i];D.cars.push(kDbMkAI(D,AW*a,AH*b))}D.camX=Math.max(0,Math.min(AW-W,AW/2-W/2));D.camY=Math.max(-50,Math.min(AH-H,AH*.86-H*.6));D.init=1}
 function kAng(d){while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;return d}
 function kDbDrive(o,tx,ty,thr,turn,dt){if(tx!=null){const want=Math.atan2(tx-o.x,-(ty-o.y)),df=kAng(want-o.a);o.a+=Math.max(-turn*dt,Math.min(turn*dt,df))}
@@ -9150,19 +9156,20 @@ function kDbCoach(D,dt){if(D.coach>4)return;const me=D.cars[0],sp=Math.hypot(me.
   const next=D.coach===0?(D.touched||D.kU||D.kL||D.kR):D.coach===1?D.score>0:D.coach===2?D.boosted:D.coach===3?D.zapped:D.coachT>5;if(next&&D.coachT>1.2){D.coach++;D.coachT=0;if(D.coach<5)kBeep("chime")}}
 function kDbZapBtn(D){return{x:D.W-52,y:D.H-150,r:30}}
 function kZapSnd(){if(!kAudio()||KS().sound===false)return;const t=kAC.currentTime;kTone(1500,t,.06,"square",.04);kTone(900,t+.03,.08,"sawtooth",.035);kTone(500,t+.07,.08,"square",.025)}
-function kDbShoot(D,o,k,tg){const hx=Math.sin(o.a),hy=-Math.cos(o.a),sp=k==="rocket"?330:k==="zap"?560:280;D.shots.push({k,x:o.x+hx*(o.r+10),y:o.y+hy*(o.r+10),vx:hx*sp+o.vx*.5,vy:hy*sp+o.vy*.5,t:0,life:k==="rocket"?2.6:1.1,own:o,tg})}
+function kDbShoot(D,o,k,tg){const hx=Math.sin(o.a),hy=-Math.cos(o.a),sp=k==="rocket"?330:k==="zap"?560:k==="shell"?440:280;D.shots.push({k,x:o.x+hx*(o.r+10),y:o.y+hy*(o.r+10),vx:hx*sp+o.vx*.5,vy:hy*sp+o.vy*.5,t:0,life:k==="rocket"?2.6:k==="shell"?1.3:1.1,own:o,tg})}
 function kDbZap(){const D=kDby;if(!D||D.over||D.q||D.rules||D.cd>0)return;const me=D.cars[0];if(!me||!me.alive)return;
   if(D.rockets>0){const tg=D.cars.filter(o=>o.ai&&o.alive).sort((a,b)=>Math.hypot(a.x-me.x,a.y-me.y)-Math.hypot(b.x-me.x,b.y-me.y))[0];D.rockets--;kDbShoot(D,me,"rocket",tg);kBeep("whoosh");D.zapped=1;return}
-  if(D.zapCd>0)return;if(D.ammo<1){D.tip="⚡ Recharging… wait a second!";D.tipT=1;return}D.ammo--;D.zapCd=.3;kDbShoot(D,me,"zap");kZapSnd();D.zapped=1}
+  if(D.zapCd>0)return;if(D.ammo<1){D.tip="⚡ Recharging… wait a second!";D.tipT=1;return}D.ammo--;const tank=me.sh==="tank";D.zapCd=tank?.6:.3;kDbShoot(D,me,tank?"shell":"zap");if(tank){kBeep("boom");D.shake=Math.max(D.shake,.15);me.vx-=Math.sin(me.a)*40;me.vy+=Math.cos(me.a)*40}else kZapSnd();D.zapped=1}
 function kDbShots(D,dt){for(const b of D.shots){b.t+=dt;if(b.k==="rocket"&&b.tg&&b.tg.alive){const want=Math.atan2(b.tg.x-b.x,-(b.tg.y-b.y)),cur=Math.atan2(b.vx,-b.vy),na=cur+Math.max(-4*dt,Math.min(4*dt,kAng(want-cur))),sp=Math.hypot(b.vx,b.vy);b.vx=Math.sin(na)*sp;b.vy=-Math.cos(na)*sp;if(Math.random()<.5)kDbFx(D,{k:"smoke",x:b.x,y:b.y})}
     b.x+=b.vx*dt;b.y+=b.vy*dt;if(b.x<0||b.y<0||b.x>D.AW||b.y>D.AH||b.t>b.life||D.obs.some(s=>Math.hypot(b.x-s.x,b.y-s.y)<s.r)){b.dead=1;kDbFx(D,{k:"deb",x:b.x,y:b.y,vx:0,vy:0,col:b.k==="zap"?"#9be7ff":"#ff9f1c"});continue}
-    for(const o of D.cars){if(b.dead||!o.alive||o===b.own)continue;if(Math.hypot(o.x-b.x,o.y-b.y)<o.r+6){b.dead=1;const n=Math.hypot(b.vx,b.vy)||1,push=b.k==="rocket"?230:90;o.vx+=b.vx/n*push;o.vy+=b.vy/n*push;o.av=(o.av||0)+(Math.random()-.5)*(b.k==="rocket"?8:3);
-      if(b.k==="rocket"){kDbFx(D,{k:"boom",x:b.x,y:b.y});kBeep("boom");D.shake=Math.max(D.shake,.3)}else kBeep("spark");for(let i=0;i<6;i++)kDbFx(D,{k:"deb",x:b.x,y:b.y,vx:(Math.random()-.5)*160,vy:(Math.random()-.5)*160,col:b.k==="zap"?"#9be7ff":"#ffd23f"});
-      kDbDmg(D,o,(b.k==="rocket"?22:b.k==="zap"?8:6)*(b.own.mega>0?1.5:1),b.own,b.x,b.y)}}}D.shots=D.shots.filter(b=>!b.dead)}
+    for(const o of D.cars){if(b.dead||!o.alive||o===b.own)continue;if(Math.hypot(o.x-b.x,o.y-b.y)<o.r+6){b.dead=1;const n=Math.hypot(b.vx,b.vy)||1,push=b.k==="rocket"?230:b.k==="shell"?200:90;o.vx+=b.vx/n*push;o.vy+=b.vy/n*push;o.av=(o.av||0)+(Math.random()-.5)*(b.k==="rocket"?8:3);
+      if(b.k==="rocket"||b.k==="shell"){kDbFx(D,{k:"boom",x:b.x,y:b.y});kBeep("boom");D.shake=Math.max(D.shake,.3)}else kBeep("spark");for(let i=0;i<6;i++)kDbFx(D,{k:"deb",x:b.x,y:b.y,vx:(Math.random()-.5)*160,vy:(Math.random()-.5)*160,col:b.k==="zap"?"#9be7ff":"#ffd23f"});
+      kDbDmg(D,o,(b.k==="rocket"?22:b.k==="shell"?16:b.k==="zap"?8:6)*(b.own.mega>0?1.5:1),b.own,b.x,b.y)}}}D.shots=D.shots.filter(b=>!b.dead)}
 function kDbShotDraw(c,D){for(const b of D.shots){if(b.k==="zap"){c.strokeStyle="rgba(120,220,255,.65)";c.lineWidth=5;c.beginPath();c.moveTo(b.x,b.y);c.lineTo(b.x-b.vx*.045,b.y-b.vy*.045);c.stroke();c.save();c.shadowColor="#3fb6ff";c.shadowBlur=14;c.fillStyle="#e8fcff";c.beginPath();c.arc(b.x,b.y,6,0,7);c.fill();c.restore()}
     else if(b.k==="rocket"){c.save();c.translate(b.x,b.y);c.rotate(Math.atan2(b.vx,-b.vy));c.fillStyle="#ff8a00";c.beginPath();c.moveTo(-4,10);c.lineTo(4,10);c.lineTo(0,20+Math.random()*7);c.closePath();c.fill();c.fillStyle="#e5e7eb";c.beginPath();c.roundRect(-4,-10,8,20,4);c.fill();c.fillStyle="#e31937";c.beginPath();c.moveTo(-4,-8);c.lineTo(0,-17);c.lineTo(4,-8);c.closePath();c.fill();c.restore()}
+    else if(b.k==="shell"){c.strokeStyle="rgba(255,150,40,.6)";c.lineWidth=4;c.beginPath();c.moveTo(b.x,b.y);c.lineTo(b.x-b.vx*.05,b.y-b.vy*.05);c.stroke();c.fillStyle="#374151";c.beginPath();c.arc(b.x,b.y,7,0,7);c.fill();c.fillStyle="#9ca3af";c.beginPath();c.arc(b.x-2,b.y-2,2.5,0,7);c.fill()}
     else{c.fillStyle="#ff9f1c";c.beginPath();c.arc(b.x,b.y,6,0,7);c.fill();c.strokeStyle="rgba(255,159,28,.45)";c.lineWidth=3;c.beginPath();c.arc(b.x,b.y,10,0,7);c.stroke()}}}
-function kDbZapBtnDraw(c,D){const Z=kDbZapBtn(D),rk=D.rockets>0,rdy=rk||D.ammo>=1;c.globalAlpha=.92;c.fillStyle=rk?"#e31937":rdy?"#1d8fe0":"#4b5563";c.beginPath();c.arc(Z.x,Z.y,Z.r,0,7);c.fill();c.globalAlpha=1;c.fillStyle="#fff";c.font="20px serif";c.fillText(rk?"🚀":"⚡",Z.x,Z.y-6);c.font="900 10px system-ui";c.fillText(rk?`FIRE ×${D.rockets}`:"ZAP",Z.x,Z.y+14);
+function kDbZapBtnDraw(c,D){const Z=kDbZapBtn(D),rk=D.rockets>0,rdy=rk||D.ammo>=1;c.globalAlpha=.92;c.fillStyle=rk?"#e31937":rdy?"#1d8fe0":"#4b5563";c.beginPath();c.arc(Z.x,Z.y,Z.r,0,7);c.fill();c.globalAlpha=1;c.fillStyle="#fff";c.font="20px serif";const tk=D.cars[0]&&D.cars[0].sh==="tank";c.fillText(rk?"🚀":tk?"💥":"⚡",Z.x,Z.y-6);c.font="900 10px system-ui";c.fillText(rk?`FIRE ×${D.rockets}`:tk?"CANNON":"ZAP",Z.x,Z.y+14);
   if(!rk)for(let i=0;i<5;i++){c.fillStyle=i<Math.floor(D.ammo)?"#9be7ff":"rgba(255,255,255,.25)";c.beginPath();c.arc(Z.x-16+i*8,Z.y+Z.r+8,3,0,7);c.fill()}}
 function kDbBoost(){const D=kDby;if(!D||D.over||D.q||D.cd>0||D.boostCd>0||!D.cars[0]||!D.cars[0].alive)return;D.cars[0].boost=2;D.boostCd=4;D.boosted=1;kBeep("whoosh");kVib(30)}
 function kDbHint(){const D=kDby;if(!D||D.over)return;D.arrowT=5;D.tip=KDBTIPS[D.hints++%KDBTIPS.length];D.tipT=4;kBeep("chime");kSay(D.tip)}
@@ -9200,7 +9207,10 @@ function kDriveCar(c,D,carY,SP,night){const C=D.car,R=D.mode==="roadster";if(D.t
   if(D.eg.bio&&D.t<5){c.strokeStyle="rgba(63,182,255,.85)";c.lineWidth=3;c.beginPath();c.ellipse(D.x,carY,sz[0]*.95,sz[1]*.68,0,0,7);c.stroke()}if(D.eg.santa&&!SP){c.font="18px serif";c.fillText("🎅",D.x,carY+6)}}
 const KDTIPS=["Grab ⚡ bolts: they charge your battery. Grab them fast for COMBOS!","🔋 boosts give you Plaid speed. You can't crash during a boost!","🦘 Ramps make you jump over everything!","🤖 Autopilot dodges cones and cars, but YOU answer the Brain Gates.","Red SUPERCHARGER lanes refill your battery a lot.","Hold 🛑 Regen to slow down and recharge, like a real Tesla!","📢 Honk and the car ahead moves over (every 3 seconds)."];
 function kDriveHint(){const D=kDrv;if(!D||D.over)return;D.hintT=5;D.hints=(D.hints||0)+1;if(D.gate&&!D.gate.done&&!D.gate.hinted){D.gate.hinted=1;KS().hints++;D.tip="💡 Follow the green arrows (no bonus with a hint)"}else D.tip=KDTIPS[(D.hints-1)%KDTIPS.length];D.tipT=4;kBeep("chime")}
-function kDriveOverlay(c,D,lx,W,H,carY,SP){c.textAlign="center";c.textBaseline="middle";
+function kTankFire(){const D=kDrv;if(!D||D.over||(D.tankCd||0)>0)return;D.tankCd=.8;D.shells=(D.shells||[]).concat([{ln:D.lane,y:null}]);kBeep("boom");D.shake=Math.max(D.shake||0,.15);kVib(40)}
+function kDriveOverlay(c,D,lx,W,H,carY,SP,dt){c.textAlign="center";c.textBaseline="middle";dt=dt||0;D.tankCd=Math.max(0,(D.tankCd||0)-dt);
+  if(D.shells&&D.shells.length){for(const s of D.shells){if(s.y==null)s.y=carY-60;s.y-=720*dt;for(const o of D.obs)if(!o.done&&o.ln===s.ln&&(o.k==="cone"||o.k==="car")&&Math.abs(o.y-s.y)<42){o.done=1;o.k="gone";s.dead=1;D.bolts+=1;D.fx=(D.fx||[]).concat([{x:lx(o.ln),y:o.y,t:0,k:"spark",txt:"💥 BOOM! +1"},{x:lx(o.ln),y:o.y,t:0,k:"smoke"}]);kBeep("boom");break}if(s.y<-30)s.dead=1;
+    c.fillStyle="rgba(255,150,40,.7)";c.beginPath();c.arc(lx(s.ln),s.y+10,5,0,7);c.fill();c.fillStyle="#374151";c.beginPath();c.arc(lx(s.ln),s.y,7,0,7);c.fill()}D.shells=D.shells.filter(s=>!s.dead)}
   if(D.plaid&&D.eg.warp){c.strokeStyle="rgba(170,200,255,.75)";c.lineWidth=2;const cx=W/2,cy=H*.35;for(let i=0;i<26;i++){const a=Math.random()*6.28,r1=30+Math.random()*60,r2=r1+80+Math.random()*120;c.beginPath();c.moveTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1);c.lineTo(cx+Math.cos(a)*r2,cy+Math.sin(a)*r2);c.stroke()}}
   if(D.hintT>0&&!D.over){const danger=ln=>D.obs.some(o=>o.ln===ln&&!o.done&&(o.k==="cone"||o.k==="car")&&o.y>carY-260&&o.y<carY+30),good=ln=>D.obs.some(o=>o.ln===ln&&!o.done&&(o.k==="bolt"||o.k==="sc"||o.k==="ramp")&&o.y>carY-260&&o.y<carY);let best=D.lane;const G=D.gate&&!D.gate.done&&D.gate.hinted?D.gate:null;
     if(G)best=G.opts.indexOf(G.a);else{const safe=[0,1,2].filter(l=>!danger(l));best=safe.find(good)??(safe.includes(D.lane)?D.lane:safe.sort((a,b)=>Math.abs(a-D.lane)-Math.abs(b-D.lane))[0]??D.lane)}
@@ -13588,7 +13598,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 127 · Nov 18";
+const BUILD="Version 128 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");

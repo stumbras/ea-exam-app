@@ -74,7 +74,7 @@ subject up a level, two misses move it down. Hints are always available but neve
   plasma temperatures around 1,400 °C and a comms blackout), and a parachute splashdown or a Starship
   flip-and-land. It uses metric units throughout and is designed to be easy: there is no failing,
   running out of fuel gets an emergency boost, and the score and stars reward good flying. Tesla Drive has top-down drawings of the Model 3, Model Y, Model X (Falcon Wing doors
-  open during turbo), Model S Plaid, Cybertruck (smashes cones) and Rocket Roadster (flies into space).
+  open during turbo), Model S Plaid, Cybertruck (smashes cones), Rocket Roadster (flies into space) and a cartoon Cyber Tank (treads and a turret: it crushes cones and robot cars, 💥 FIRE clears its lane in Road Trip, and it shoots cannon shells in Demolition Derby).
   **Road Trip** is a 60-second drive with ⚡ bolts, combos, jump ramps, a Boring tunnel, Superchargers,
   regenerative braking, an Autopilot power-up that only dodges, Brain Gate math questions and a 💡 hint
   button. **Demolition Derby** is a 75-second smash arena: tap where to drive or steer with a Roblox-style thumbstick, tap BOOST to
