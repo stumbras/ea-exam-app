@@ -65,7 +65,15 @@ subject up a level, two misses move it down. Hints are always available but neve
   yourself), Moon (1/6 gravity), Mars (38% gravity and dust gusts), Tower Catch (the chopsticks close),
   Starship Flip (tap FLIP to swing upright), Asteroid Field and a Falcon Heavy boss with two boosters
   landing at once. It has sonic booms, altitude callouts, 1-3 star ratings, a fact for each level, and a
-  Mission Control question before launch: a correct answer gives +15% fuel. Tesla Drive has top-down drawings of the Model 3, Model Y, Model X (Falcon Wing doors
+  Mission Control question before launch: a correct answer gives +15% fuel. It also has 🌍 **Space Mission**, a mini
+  Kerbal-style game. A rocket builder (capsule, 1-3 fuel tanks, Spark or Raptor engine, parachutes or
+  legs) shows mass in tonnes, weight and thrust in kN and the thrust-to-weight ratio (it must be above
+  1 to lift off). Then the player flies a whole mission: countdown, liftoff, gravity turn, Mach 1, Max-Q,
+  stage separation at 70 km, the Kármán line at 100 km, orbit at 200 km (7.8 km/s, grab stars, dodge
+  space junk, dock with the space station), deorbit burn, re-entry (keep the heat shield angle; real
+  plasma temperatures around 1,400 °C and a comms blackout), and a parachute splashdown or a Starship
+  flip-and-land. It uses metric units throughout and is designed to be easy: there is no failing,
+  running out of fuel gets an emergency boost, and the score and stars reward good flying. Tesla Drive has top-down drawings of the Model 3, Model Y, Model X (Falcon Wing doors
   open during turbo), Model S Plaid, Cybertruck (smashes cones) and Rocket Roadster (flies into space).
   **Road Trip** is a 60-second drive with ⚡ bolts, combos, jump ramps, a Boring tunnel, Superchargers,
   regenerative braking, an Autopilot power-up that only dodges, Brain Gate math questions and a 💡 hint
