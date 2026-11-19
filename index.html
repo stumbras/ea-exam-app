@@ -7658,7 +7658,8 @@ function kSvgAngle(d){const a=d*Math.PI/180,x=40+150*Math.cos(a),y=130-150*Math.
 function kSvgLine(v){const x=20+v*280;return `<svg class="kpicsvg wide" viewBox="0 0 320 70" role="img" aria-label="Number line"><line x1="20" y1="35" x2="300" y2="35" stroke="#14163a" stroke-width="3"/>${Array.from({length:11},(_,i)=>`<line x1="${20+i*28}" x2="${20+i*28}" y1="${i%5?28:24}" y2="${i%5?42:46}" stroke="#14163a" stroke-width="2"/>`).join("")}<text x="20" y="64" font-size="13" text-anchor="middle" fill="#14163a">0</text><text x="300" y="64" font-size="13" text-anchor="middle" fill="#14163a">1</text><circle cx="${x}" cy="35" r="8" fill="#ff4d6d"/><text x="${x}" y="18" font-size="14" text-anchor="middle" font-weight="900" fill="#ff4d6d">?</text></svg>`}
 function kSvgGrid(px,py,neg){const lo=neg?-5:0,hi=neg?5:6,n=hi-lo,S=150/n,X=v=>20+(v-lo)*S,Y=v=>170-(v-lo)*S;let g="";for(let v=lo;v<=hi;v++){g+=`<line x1="${X(v)}" x2="${X(v)}" y1="${Y(lo)}" y2="${Y(hi)}" stroke="${v===0?"#14163a":"#dfe3ff"}" stroke-width="${v===0?2:1}"/><line y1="${Y(v)}" y2="${Y(v)}" x1="${X(lo)}" x2="${X(hi)}" stroke="${v===0?"#14163a":"#dfe3ff"}" stroke-width="${v===0?2:1}"/>`;if(v!==0||!neg)g+=`<text x="${X(v)}" y="${Y(lo)+13}" font-size="9" text-anchor="middle" fill="#55597a">${v}</text><text x="${X(lo)-6}" y="${Y(v)+3}" font-size="9" text-anchor="end" fill="#55597a">${v}</text>`}
   return `<svg class="kpicsvg" viewBox="0 0 190 190" role="img" aria-label="Coordinate grid">${g}<circle cx="${X(px)}" cy="${Y(py)}" r="6" fill="#ff4d6d"/></svg>`}
-function kMathVis(L){const r=Math.random();let Q;
+function kMathVis(L){for(let i=0;i<15;i++){const Q=kMathVis0(L);if(Q.o.length===4&&new Set(Q.o).size===4&&Q.a>=0)return Q}return kMath(L)}
+function kMathVis0(L){const r=Math.random();let Q;
   if(L<=3){if(r<.4){const ro=kR(2,L<=2?4:5),co=kR(2,L<=2?5:7),e=kPick(["⭐","🍎","🚀","💎","🐟","🪙"]);Q=kMk("math","How many are there in all?",ro*co,kNear(ro*co),`${ro} rows of ${co}: ${ro} × ${co} = ${ro*co}. Rows times columns is the trick!`);Q.pic=`<div class="kdotsg" style="grid-template-columns:repeat(${co},1fr)">${Array(ro*co).fill(`<span>${e}</span>`).join("")}</div>`}
     else if(r<.7){const n=kR(3,8),nm={3:"triangle",4:"square",5:"pentagon",6:"hexagon",7:"heptagon",8:"octagon"};Q=Math.random()<.5?kMk("math","How many sides does this shape have?",n,kNear(n),`A ${nm[n]} has ${n} sides.${n===8?" Stop signs are octagons!":""}`):kMk("math","What is this shape called?",nm[n],Object.values(nm).filter(x=>x!==nm[n]).slice(0,3),`It has ${n} sides, so it's a ${nm[n]}.`);Q.pic=kSvgShape(n)}
     else{const h=kR(1,12),m=kPick([0,30]);Q=kMk("math","What time does the clock show?",`${h}:${m?"30":"00"}`,[`${h%12+1}:${m?"30":"00"}`,`${h}:${m?"00":"30"}`,`${m?6:12}:${String(h*5%60).padStart(2,"0")}`],"The short hand shows the hour. The long red hand shows the minutes.");Q.pic=kSvgClock(h,m)}}
@@ -7825,6 +7826,7 @@ function kGen(sub,L,T,cat){const v=Math.random();
 function kQ(sub,cat){const k=KS(),L=k.lv[sub],T=Math.min(5,Math.ceil(L/4));let Q=null;
   if(!cat||cat==="mix"){const rv=kRevDue(sub);if(rv)return rv}
   for(let i=0;i<8;i++){Q=kGen(sub,L,T,cat);const key=Q.key||Q.q;if(!kRecent.includes(key)&&(Q.kind==="bee"||(Q.a>=0&&Q.o.length===4)))break}
+  if(Q.kind!=="bee"&&(Q.a<0||Q.o.length!==4||new Set(Q.o).size!==4))Q=sub==="math"?kMath(L):kBank(sub==="sci"||sub==="geo"||sub==="code"||sub==="eng"?sub:"sci",T);
   kRecent.push(Q.key||Q.q);if(kRecent.length>80)kRecent.shift();Q.lv=L;Q.s=Q.s||sub;return Q}
 function kSubPick(weights){const k=KS();const subs=Object.keys(KSUB);const sc=subs.map(s=>{const st=k.st[s],acc=st.h.length?st.h.reduce((a,b)=>a+b,0)/st.h.length:.6;return (weights&&weights[s]||1)*(1.4-acc)*(1+(Math.max(...subs.map(x=>k.lv[x]))-k.lv[s])*0.15)});
   let tot=sc.reduce((a,b)=>a+b,0),x=Math.random()*tot;for(let i=0;i<subs.length;i++){x-=sc[i];if(x<=0)return subs[i]}return subs[0]}
@@ -12266,7 +12268,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 110 · Nov 18";
+const BUILD="Version 111 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
