@@ -99,6 +99,43 @@ body.kidsmode .top,body.kidsmode .tabs{display:none}
 .ktrip{display:flex;flex-wrap:wrap;gap:4px}.ktd{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:14px}.ktd.done{background:#2ec27e}.ktd.here{background:#ffd23f;font-size:16px}
 .kcar{font-size:60px;transform:scaleX(-1)}.kcar.drive{animation:kdrive 1.4s ease-out}@keyframes kdrive{0%{transform:scaleX(-1) translateX(140px)}100%{transform:scaleX(-1) translateX(0)}}
 .kgrown summary{font-weight:900;cursor:pointer}.kgr{font-size:14px;color:rgba(255,255,255,.85)}.kdays{display:flex;gap:6px;align-items:flex-end}.kdays span{display:grid;justify-items:center;font-size:12px;gap:2px;flex:1}.kdays i{display:block;width:100%;background:#ffd23f;border-radius:4px;min-height:2px}
+.kids button.kcard{cursor:pointer;width:100%}.kpilot{display:grid}.kgrownb{font-weight:900;text-align:center!important}
+.kchest{border:0;border-radius:20px;padding:18px;font:900 21px/1.2 system-ui,sans-serif;color:#14163a;background:linear-gradient(135deg,#ffe066,#ff8a00);cursor:pointer;animation:kbob 1.4s ease-in-out infinite;box-shadow:0 8px 24px rgba(255,160,0,.45)}
+@keyframes kbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.kbday{background:linear-gradient(135deg,#ff4d6d,#a678ff);font-size:18px}.kwin{background:linear-gradient(135deg,#2ec27e,#0b8f6a);border-color:#ffd23f}
+.kpbar{position:relative;height:16px;border-radius:10px;background:rgba(255,255,255,.15);margin:14px 0 8px}.kpbar>i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#2ec27e,#ffd23f)}
+.kms{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:22px;filter:grayscale(1);opacity:.55}.kms.on{filter:none;opacity:1}
+.kmsl{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:13px;color:rgba(255,255,255,.7)}.kmsl .on{color:#ffd23f;font-weight:800}
+.kquest{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center}.kquest>span{font-size:24px}.kquest em{font-style:normal;font-weight:800}.kquest.done{opacity:.6}.kbar.sm{height:8px;margin-top:4px}
+.kbasec{grid-template-columns:auto 1fr!important;align-items:center}.kbasec .kbtn{justify-self:start;margin-top:4px}
+.kmini{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;width:112px;padding:3px;border-radius:8px;background:var(--bio)}.kmini .kcell{font-size:9px;border-radius:1px}
+.kbase{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;padding:6px;border-radius:14px;background:var(--bio);box-shadow:inset 0 0 0 3px rgba(0,0,0,.15)}
+.kcell{aspect-ratio:1;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;border:0;padding:0;min-width:0;background:transparent;color:inherit}
+.kbase .kcell{cursor:pointer}.kcell.e{background:rgba(0,0,0,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
+.kpals{display:flex;flex-wrap:wrap;gap:8px}.kpal{position:relative;width:48px;height:48px;border-radius:10px;border:3px solid transparent;padding:3px;background:rgba(255,255,255,.12);cursor:pointer}.kpal.on{border-color:#ffd23f}.kpal .kcell{width:100%;height:100%;font-size:22px}
+.kpal i{position:absolute;right:-6px;bottom:-6px;background:#ffd23f;color:#14163a;font:900 11px/1 system-ui,sans-serif;border-radius:8px;padding:3px 5px;font-style:normal}.kpal.lock{opacity:.45}
+.bk{box-shadow:inset -3px -3px 0 rgba(0,0,0,.28),inset 3px 3px 0 rgba(255,255,255,.22)}
+.bl-grass{background:linear-gradient(#5dc23c 0 32%,#8b5a2b 32%)}.bl-dirt{background:radial-gradient(circle at 30% 30%,#6e4520 9%,transparent 10%),radial-gradient(circle at 70% 65%,#6e4520 9%,transparent 10%),#8b5a2b}
+.bl-stone{background:radial-gradient(circle at 25% 35%,#6c7077 11%,transparent 12%),radial-gradient(circle at 70% 70%,#6c7077 13%,transparent 14%),#8e939a}.bl-sand{background:radial-gradient(circle at 40% 60%,#d2b25e 9%,transparent 10%),#ead48c}
+.bl-wood{background:repeating-linear-gradient(0deg,#b98142 0 22%,#8f5e2c 22% 26%)}.bl-leaf{background:radial-gradient(circle at 30% 40%,#1f6e1f 13%,transparent 14%),radial-gradient(circle at 70% 70%,#1f6e1f 11%,transparent 12%),#2f9a2f}
+.bl-water{background:linear-gradient(160deg,#6aaeff,#2d6cd4)}.bl-glass{background:linear-gradient(135deg,rgba(255,255,255,.75) 0 16%,rgba(190,230,255,.4) 16%);outline:2px solid #e6f6ff;outline-offset:-2px}
+.bl-brick{background:repeating-linear-gradient(0deg,#b5462f 0 42%,#ddd2c4 42% 50%)}.bl-moon{background:radial-gradient(circle at 30% 30%,#9a9a9a 15%,transparent 16%),radial-gradient(circle at 72% 68%,#9a9a9a 11%,transparent 12%),#d2d2d2}
+.bl-mars{background:radial-gradient(circle at 35% 60%,#8f2f0a 11%,transparent 12%),#cc5a26}.bl-ice{background:linear-gradient(135deg,#fff 0 14%,#bfe9ff 14%)}
+.bl-gold{background:linear-gradient(135deg,#fff3a6 0 18%,#f7c52b 18% 70%,#c9930c 70%)}.bl-dia{background:linear-gradient(135deg,#e6ffff 0 18%,#5ee1e6 18% 70%,#24a9b4 70%)}
+.bl-lava{background:radial-gradient(circle at 35% 40%,#ffe066 15%,transparent 16%),radial-gradient(circle at 70% 72%,#ffd43b 11%,transparent 12%),#ff6a00}.bl-star{background:radial-gradient(circle,#ffe066 20%,transparent 22%),#3b2f86}
+.bl-ore{background:radial-gradient(circle at 28% 30%,#5ee1e6 13%,transparent 14%),radial-gradient(circle at 72% 40%,#5ee1e6 11%,transparent 12%),radial-gradient(circle at 45% 74%,#5ee1e6 13%,transparent 14%),#8e939a;font-size:14px}
+.kgrid .kc.g{background:var(--bio)}.kgrid .kc.g.tr{background:color-mix(in srgb,var(--bio) 70%,#fff)}.kgrid{background:rgba(0,0,0,.35)}
+.kboard{display:grid;grid-template-columns:repeat(8,1fr);border-radius:8px;overflow:hidden;border:5px solid #6b4423}
+.ksq{aspect-ratio:1;border:0;padding:0;display:flex;align-items:center;justify-content:center;font-size:min(9.2vw,42px);position:relative;line-height:1;cursor:pointer;min-width:0}
+.ksq.l{background:#f0d9b5}.ksq.d{background:#b58863}.ksq.sel{background:#f6e05e}.ksq.last{background:#a9d86e}.ksq.hint{box-shadow:inset 0 0 0 4px #ff2d2d}
+.ksq.dot::after{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:rgba(20,22,58,.38)}.ksq.dot.cap::after{width:84%;height:84%;background:transparent;border:4px solid rgba(220,30,30,.6)}
+.ksq .wp{color:#fff;text-shadow:0 0 2px #000,0 0 2px #000,0 0 1px #000}.ksq .bp{color:#151515}.ksq em{position:absolute;font:700 9px/1 system-ui,sans-serif;color:rgba(0,0,0,.45);font-style:normal}.krk1{left:2px;top:2px}.kfl{right:2px;bottom:2px}
+.kptrack{display:flex;gap:4px}.kptrack span{flex:1;height:34px;border-radius:8px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:22px}.kptrack span.on{background:#2ec27e}
+.ksmall2{font-size:14px;color:#55597a}
+.kconf{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}.kconf i{position:absolute;top:-40px;font-style:normal;font-size:24px;animation:kfall 1.9s ease-in forwards}@keyframes kfall{to{transform:translateY(110vh) rotate(560deg);opacity:.15}}
+.kbig2{font-size:72px;animation:kpop .7s ease}.kav.big{font-size:68px}.kavs{display:flex;flex-wrap:wrap;gap:8px}.kavb{font-size:32px;width:58px;height:58px;border-radius:14px;border:3px solid transparent;background:rgba(255,255,255,.12);cursor:pointer}.kavb.on{border-color:#ffd23f;background:rgba(255,210,63,.2)}
+.kbd{display:flex;gap:8px;flex-wrap:wrap}.kbd>*{flex:1;min-width:0}.kids select{font-size:17px;padding:11px 8px;border-radius:12px;border:0;color:#14163a;background:#fff}.kbd label{display:grid;gap:4px}
+.kerr{background:#ffe1e1;color:#7a0d0d;border-radius:12px;padding:10px;font-weight:800}.klink{word-break:break-all;color:#ffd23f}.kdays small{font-size:10px;opacity:.7}
 .ledger{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat{display:grid;gap:2px}
@@ -7375,23 +7412,66 @@ const KRANKS=[[0,"Space Cadet"],[150,"Rocket Pilot"],[400,"Moon Walker"],[800,"M
 const KDEST=[["Moon","🌕","238,900 miles from Earth"],["Mars","🔴","Average 140 million miles away"],["Asteroid Belt","🪨","Between Mars and Jupiter"],["Jupiter","🟠","The biggest planet"],["Saturn","🪐","The planet with the famous rings"],["Uranus","🔵","The planet tipped on its side"],["Neptune","🌀","The windiest planet"],["Pluto","⚪","A dwarf planet in the Kuiper Belt"],["Alpha Centauri","✨","The closest star system to the Sun"]];
 const KSUB={math:["Math","🔢","#ff4d6d"],eng:["English","📖","#ffb703"],sci:["Science","🔬","#2ec27e"],code:["Code","💻","#3fb6ff"],geo:["Geography","🌎","#a678ff"]};
 
-/* ================= Kids · Space Academy: 3 games, 5 subjects, adaptive levels, ranks and badges ================= */
-let KV={scr:"home"},kToast="",kRecent=[];
-const KBAD=[["first","🚀","Liftoff","Answer your first question"],["combo5","🔥","On Fire","5 right in a row"],["combo10","☄️","Comet Streak","10 right in a row"],["q100","💯","Century","Answer 100 questions"],["q500","🏅","Marathon","Answer 500 questions"],
- ["lv5","⭐","Rising Star","Reach level 5 in any subject"],["lv10","🌟","Superstar","Reach level 10 in any subject"],["lv15","💫","Genius Mode","Reach level 15 in any subject"],["all5","🧑‍🚀","All-Round Astronaut","Level 5 in every subject"],["all10","👨‍🚀","Mission Specialist","Level 10 in every subject"],
- ["moon","🌕","Moon Landing","Fly a rocket to the Moon"],["mars","🔴","Martian","Fly a rocket to Mars"],["saturn","🪐","Ring Rider","Fly a rocket to Saturn"],["alpha","✨","Star Traveler","Reach Alpha Centauri"],["perfect","🎯","Perfect Mission","10 out of 10 on a rocket mission"],
- ["rover1","🤖","First Code","Solve your first rover puzzle"],["rover10","🦾","Code Master","Solve 10 rover puzzles"],["stars3","💎","Efficient Engineer","Solve 5 puzzles with 3 stars"],
- ["trip1","⚡","First Charge","Drive to your first Supercharger city"],["coast","🗽","Coast to Coast","Finish the U.S. road trip"],["world","🌍","World Tour","Finish the world road trip"],["days3","📅","3-Day Streak","Play 3 days in a row"],["days7","🏆","7-Day Streak","Play 7 days in a row"]];
-function KS(){S.kids=S.kids||{};const k=S.kids;k.name=k.name||"";k.xp=k.xp||0;k.coins=k.coins||0;k.lv=k.lv||{};k.st=k.st||{};
+/* ================= Kids · Space Academy: Rocket Mission, Block Miner, Chess Quest; adaptive levels, daily chest and quests, base building, prize goals ================= */
+const KLINK="https://stumbras.github.io/ea-exam-app/?kids";
+let KV={scr:"home"},kToast="",kRecent=[],kLastAct=Date.now(),kFx=false,kTicks=0,kAC=null;
+function KLOCK(){try{return localStorage.getItem("kidsLock")==="1"}catch(_){return false}}
+function kLockUI(){try{if(!KLOCK())return;document.title="Space Academy";const m=document.querySelector('link[rel="manifest"]');if(m)m.setAttribute("href","manifest-kids.webmanifest")}catch(_){}}
+(function(){try{const q=new URLSearchParams(location.search);if(q.has("study"))localStorage.removeItem("kidsLock");else if(q.has("kids")||location.hash==="#kids")localStorage.setItem("kidsLock","1");kLockUI()}catch(_){}})();
+const KAV=["🧑‍🚀","🦸","🥷","🧙","🤖","🐉","🦊","👾"];
+const KMON=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const KBIO=["#6abf45","#a9a9a9","#c8552a","#7d6b5d","#d9a066","#d8c690","#7fc6d4","#4a6fd1","#cfc8bb","#3b2f86"];
+const KBAD=[["first","🚀","Liftoff","Answer your first question"],["combo5","🔥","On Fire","5 right in a row"],["combo10","☄️","Comet Streak","10 right in a row"],["q100","💯","Century","100 right answers"],["q500","🏅","Marathon","500 right answers"],
+ ["lv5","⭐","Rising Star","Level 5 in any subject"],["lv10","🌟","Superstar","Level 10 in any subject"],["lv15","💫","Genius Mode","Level 15 in any subject"],["all5","🧑‍🚀","All-Rounder","Level 5 in every subject"],["all10","👨‍🚀","Mission Specialist","Level 10 in every subject"],
+ ["moon","🌕","Moon Landing","Fly a rocket to the Moon"],["mars","🔴","Martian","Fly a rocket to Mars"],["saturn","🪐","Ring Rider","Fly a rocket to Saturn"],["alpha","✨","Star Traveler","Reach Alpha Centauri"],["perfect","🎯","Perfect Mission","10 of 10 on a rocket mission"],
+ ["mine1","⛏️","First Diamond","Mine your first diamond"],["mine10","💎","Diamond Hunter","Mine 10 diamonds"],["stars3","🌠","Efficient Coder","5 maps with 3 stars"],
+ ["chess1","♟️","First Move","Solve a chess puzzle"],["chess25","♞","Chess Knight","Solve 25 chess puzzles"],["mate10","♚","Checkmate Hero","Find 10 checkmates"],["fork","🍴","Fork Master","Win with a knight fork"],["promo","👑","Promotion","Promote a pawn to a queen"],
+ ["build10","🧱","Builder","Place 10 blocks in your base"],["build50","🏰","Architect","Place 50 blocks in your base"],["chest","🎁","Treasure Hunter","Open a daily chest"],["quests","📜","Quest Master","Finish all 3 daily quests"],
+ ["hour1","⏱️","Power Hour","1 hour of learning"],["goal","🏆","Prize Winner","Finish a prize goal"],["days3","📅","3-Day Streak","Play 3 days in a row"],["days7","🗓️","7-Day Streak","Play 7 days in a row"]];
+/* blocks and items for the base: [id, name, emoji (items only), coin price, unlock test, how to unlock] */
+const KBLK=[["grass","Grass","",1],["dirt","Dirt","",1],["stone","Stone","",1],["sand","Sand","",1],["wood","Wood","",2],["leaf","Leaves","",1],["water","Water","",2],["glass","Glass","",2],
+ ["brick","Brick","",3,k=>kRank(k.xp)>=1,"Reach the Rocket Pilot rank"],["moon","Moon rock","",3,k=>k.rocket.dest>=1,"Fly a rocket to the Moon"],["mars","Mars dust","",3,k=>k.rocket.dest>=2,"Fly a rocket to Mars"],["ice","Ice","",3,k=>k.rocket.dest>=5,"Fly a rocket to Saturn"],
+ ["gold","Gold","",8,k=>k.chess.solved>=5,"Solve 5 chess puzzles"],["dia","Diamond","",15,k=>k.mine.dia>=1,"Mine a diamond in Block Miner"],["lava","Lava","",5,k=>k.mine.lvl>=5,"Reach Block Miner level 5"],["star","Star block","",20,k=>k.rocket.dest>=9,"Reach Alpha Centauri"],
+ ["tree","Tree","🌳",4],["flower","Flower","🌻",3],["lamp","Lamp","💡",6,k=>kRank(k.xp)>=2,"Reach the Moon Walker rank"],["pet","Puppy","🐶",10,k=>k.streak.n>=2,"Play 2 days in a row"],["cat","Kitten","🐱",10,k=>k.chest.n>=2,"Open 2 daily chests"],
+ ["robot","Robot","🤖",12,k=>k.mine.solved>=5,"Solve 5 Block Miner maps"],["knight","Knight statue","♞",12,k=>k.chess.promos>=1,"Promote a pawn in Chess Quest"],["rocketi","Rocket","🚀",15,k=>k.rocket.dest>=2,"Fly a rocket to Mars"],
+ ["tesla","Tesla","🚗",20,k=>!!k.goal.ms[50],"Reach 50% of your prize goal"],["charger","Supercharger","⚡",8,k=>!!k.goal.ms[50],"Reach 50% of your prize goal"],["ufo","UFO","🛸",25,k=>kRank(k.xp)>=5,"Reach the Jupiter Navigator rank"],
+ ["cake","Birthday cake","🎂",5,k=>!!k.bdayDone,"Play on your birthday"],["trophy","Trophy","🏆",30,k=>!!k.goal.ms[100],"Finish a prize goal"]];
+const KBM=Object.fromEntries(KBLK.map(b=>[b[0],b])),KBASIC=["grass","dirt","stone","sand","wood","leaf","water","glass"];
+const KQT={math:["🔢","Get 8 math answers right",8,t=>t.sub.math||0],eng:["📖","Get 8 English answers right",8,t=>t.sub.eng||0],sci:["🔬","Get 8 science answers right",8,t=>t.sub.sci||0],code:["💻","Get 8 code answers right",8,t=>t.sub.code||0],geo:["🌎","Get 8 geography answers right",8,t=>t.sub.geo||0],
+ chess:["♟️","Solve 3 chess puzzles",3,t=>t.chess],dia:["💎","Mine 2 diamonds",2,t=>t.dia],launch:["🚀","Win 1 rocket mission",1,t=>t.launch],place:["🧱","Place 10 blocks in your base",10,t=>t.place],combo:["🔥","Get 6 right in a row",6,t=>t.combo]};
+function kToday(off=0){const d=new Date(Date.now()+off*86400000);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function KS(){S.kids=S.kids||{};const k=S.kids;
+  if(k.rover&&!k.mine)k.mine={lvl:k.rover.lvl||1,solved:k.rover.solved||0,stars3:k.rover.stars3||0,dia:0};delete k.rover;delete k.trip;
+  const def={name:"",avatar:0,setup:false,bday:null,xp:0,coins:0,lv:{},st:{},badges:{},days:{},streak:{d:"",n:0},combo:0,bestCombo:0,rocket:{dest:0,missions:0},mine:{lvl:1,solved:0,stars3:0,dia:0},
+    chess:{lv:1,st:{n:0,c:0,run:0,h:[]},solved:0,mates:0,forks:0,promos:0},inv:{grass:6,dirt:6,stone:4,wood:4,flower:1,tree:1},unl:{},base:[],placed:0,secs:0,daySecs:{},goal:{prize:"",mins:120,correct:200,s0:0,c0:0,ms:{},hist:[]},
+    chest:{d:"",n:0},quest:{d:""},questsAll:0,today:{d:""},pin:"",sound:true};
+  for(const x in def)if(k[x]===undefined||k[x]===null&&x!=="bday")k[x]=JSON.parse(JSON.stringify(def[x]));
   for(const s in KSUB){if(!k.lv[s])k.lv[s]=1;if(!k.st[s])k.st[s]={n:0,c:0,run:0,h:[]}}
-  k.badges=k.badges||{};k.days=k.days||{};k.streak=k.streak||{d:"",n:0};k.rocket=k.rocket||{dest:0,missions:0};k.rover=k.rover||{lvl:1,solved:0,stars3:0};k.trip=k.trip||{route:"usa",stop:0,bat:60};k.combo=k.combo||0;k.bestCombo=k.bestCombo||0;
-  const wk=String(Math.floor((Date.now()/86400000+3)/7));if(!k.week||k.week.w!==wk)k.week={w:wk,start:Object.assign({},k.lv)};return k}
+  if(!Array.isArray(k.base)||k.base.length!==64)k.base=Array(64).fill("");
+  const t=kToday();if(k.today.d!==t)k.today={d:t,sub:{},chess:0,dia:0,launch:0,place:0,combo:0};
+  const wk=String(Math.floor((Date.now()/86400000+3)/7));if(!k.week||k.week.w!==wk)k.week={w:wk,start:Object.assign({},k.lv),chess:k.chess.lv};return k}
 const kR=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),kPick=a=>a[Math.floor(Math.random()*a.length)];
 function kShuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function kMk(s,q,c,w,f){let u=[String(c),...w.map(String)].filter((x,i,a)=>x!==""&&a.indexOf(x)===i);if(u.length<4&&!isNaN(+c)&&String(c).trim()!=="")for(const n of kNear(+c,6,+c<0)){if(u.length>=4)break;if(!u.includes(String(n)))u.push(String(n))}const o=kShuf(u.slice(0,4));return{s,q,o,a:o.indexOf(String(c)),f:f||""}}
 function kNear(a,n=3,neg=false){const out=new Set();const tries=[a+1,a-1,a+2,a-2,a+10,a-10,a+5,a-5,Math.round(a*1.1)+1,a+3];for(const t of kShuf(tries)){if(out.size>=n)break;if(t!==a&&(neg||t>=0))out.add(t)}let k=4;while(out.size<n){out.add(a+k++)}return [...out]}
 function kRank(xp){let i=0;for(let j=0;j<KRANKS.length;j++)if(xp>=KRANKS[j][0])i=j;return i}
-function kToday(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function kT(m){kToast=kToast?kToast+" · "+m:m}
+function kAge(k){const b=k.bday;if(!b||!b.y)return null;const n=new Date();let a=n.getFullYear()-b.y;if(n.getMonth()+1<b.m||(n.getMonth()+1===b.m&&n.getDate()<b.d))a--;return a}
+function kIsBday(k){const b=k.bday,n=new Date();return !!(b&&b.m===n.getMonth()+1&&b.d===n.getDate())}
+function kLocIdx(k){return Math.min(k.rocket.dest,KBIO.length-1)}
+function kLoc(k){const d=k.rocket.dest;return d<=0?"Earth":KDEST[Math.min(d,KDEST.length)-1][0]}
+function kCorrect(){const k=KS();return Object.values(k.st).reduce((a,s)=>a+s.c,0)+k.chess.st.c}
+function kGive(id,n){const k=KS();k.inv[id]=(k.inv[id]||0)+n}
+function kUnl(id){const k=KS(),b=KBM[id];return !b[4]||!!k.unl[id]}
+function kUnlocks(){const k=KS();for(const b of KBLK)if(b[4]&&!k.unl[b[0]]&&b[4](k)){k.unl[b[0]]=1;kT(`🔓 New for your base: ${b[2]||""}${b[1]}`)}}
+function kBeep(kind){const k=S.kids;if(!k||k.sound===false)return;try{kAC=kAC||new (window.AudioContext||window.webkitAudioContext)();
+  const seq={ok:[[660,.07],[880,.12]],no:[[220,.16]],up:[[523,.09],[659,.09],[784,.09],[1047,.22]],chest:[[392,.08],[523,.08],[659,.08],[784,.08],[1047,.28]],click:[[520,.03]]}[kind]||[];let t=kAC.currentTime;
+  for(const [f,d] of seq){const o=kAC.createOscillator(),g=kAC.createGain();o.type="square";o.frequency.value=f;g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(kAC.destination);o.start(t);o.stop(t+d);t+=d}}catch(_){}}
+function kSay(t){try{const u=new SpeechSynthesisUtterance(t.replace(/×/g," times ").replace(/÷/g," divided by ").replace(/−/g," minus ").replace(/√/g,"square root of ").replace(/²/g," squared").replace(/³/g," cubed"));u.lang="en-US";u.rate=.95;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(_){}}
+/* active learning time: counts only while the kids page is open, visible and touched in the last 90 seconds */
+setInterval(()=>{try{if(view!=="kids"||document.hidden||Date.now()-kLastAct>90000||!S.kids)return;const k=KS(),t=kToday();k.secs+=15;k.daySecs[t]=(k.daySecs[t]||0)+15;
+  const ks=Object.keys(k.daySecs).sort();if(ks.length>60)for(const d of ks.slice(0,ks.length-60))delete k.daySecs[d];
+  if(++kTicks%4===0){const before=kToast;kGoalCheck();kBadges();kUnlocks();persist();if(kToast!==before&&KV.scr==="home")render()}}catch(_){}},15000);
 /* ---------- questions ---------- */
 function kMath(L){let q,a,w,f="";const r=kR;
   if(L<=1){const x=r(3,12),y=r(2,9);q=`${x} + ${y} = ?`;a=x+y}
@@ -7439,71 +7519,13 @@ function kGeo(T){const t=Math.random();
     if(Math.random()<.65){const w=kShuf(KCO.filter(x=>x[1]!==it[1])).slice(0,3).map(x=>x[1]);return kMk("geo",`What is the capital of ${it[0]}?`,it[1],w,`${it[1]} is the capital of ${it[0]}.`)}
     const conts=["Europe","Asia","Africa","North America","South America","Australia"].filter(c=>c!==it[2]);if(/and|\(/.test(it[2]))return kMk("geo",`What is the capital of ${it[0]}?`,it[1],kShuf(KCO.filter(x=>x[1]!==it[1])).slice(0,3).map(x=>x[1]),`${it[1]} is the capital of ${it[0]}.`);
     return kMk("geo",`${it[0]} is on which continent?`,it[2],kShuf(conts).slice(0,3),`${it[0]} is in ${it[2]}.`)}
+  if(t<.7&&T>=2&&typeof KTRIP!=="undefined"){const all=KTRIP.usa.concat(KTRIP.world||[]).filter(x=>x.length>=8&&!kRecent.includes(x[3]));if(all.length){const c=kPick(all);return kMk("geo",c[3],c[4],c.slice(5,8),c[2])}}
   return kBank("geo",T)}
 function kQ(sub){const k=KS(),L=k.lv[sub],T=Math.min(5,Math.ceil(L/4));let Q;
   for(let i=0;i<6;i++){Q=sub==="math"?kMath(L):sub==="eng"?kEng(T):sub==="code"?kCode(T):sub==="geo"?kGeo(T):kBank("sci",T);if(!kRecent.includes(Q.q)&&Q.a>=0&&Q.o.length===4)break}
   kRecent.push(Q.q);if(kRecent.length>60)kRecent.shift();Q.lv=L;return Q}
 function kSubPick(weights){const k=KS();const subs=Object.keys(KSUB);const sc=subs.map(s=>{const st=k.st[s],acc=st.h.length?st.h.reduce((a,b)=>a+b,0)/st.h.length:.6;return (weights&&weights[s]||1)*(1.4-acc)*(1+ (Math.max(...subs.map(x=>k.lv[x]))-k.lv[s])*0.15)});
   let tot=sc.reduce((a,b)=>a+b,0),x=Math.random()*tot;for(let i=0;i<subs.length;i++){x-=sc[i];if(x<=0)return subs[i]}return subs[0]}
-/* ---------- scoring ---------- */
-function kAnswer(sub,ok){const k=KS(),st=k.st[sub],nm=KSUB[sub][0];st.n++;if(ok)st.c++;st.run=ok?Math.max(0,st.run)+1:Math.min(0,st.run)-1;st.h.push(ok?1:0);if(st.h.length>12)st.h.shift();
-  let msg="";const lv=k.lv[sub];
-  if(ok&&st.run>=3){const last=st.h.slice(-8),acc=last.reduce((a,b)=>a+b,0)/last.length;if(acc>=.7&&lv<20){k.lv[sub]=lv+1;st.run=0;msg=`⬆ LEVEL UP! ${nm} level ${lv+1}`}}
-  if(!ok&&st.run<=-2&&lv>1){k.lv[sub]=lv-1;st.run=0;msg=`${nm} set to level ${lv-1} for a bit of practice. You've got this!`}
-  if(ok){k.xp+=10+k.lv[sub];k.coins+=1+Math.floor(k.lv[sub]/5);k.combo++;k.bestCombo=Math.max(k.bestCombo,k.combo)}else k.combo=0;
-  const t=kToday();k.days[t]=(k.days[t]||0)+1;if(k.streak.d!==t){const y=new Date(Date.now()-86400000),yk=y.getFullYear()+"-"+String(y.getMonth()+1).padStart(2,"0")+"-"+String(y.getDate()).padStart(2,"0");k.streak={d:t,n:k.streak.d===yk?k.streak.n+1:1}}
-  const ks=Object.keys(k.days).sort();if(ks.length>60)for(const d of ks.slice(0,ks.length-60))delete k.days[d];
-  kBadges();persist();if(msg)kToast=msg;return msg}
-function kBadges(){const k=KS(),b=k.badges,give=id=>{if(!b[id]){b[id]=Date.now();const x=KBAD.find(z=>z[0]===id);kToast=(kToast?kToast+" · ":"")+`🏅 New badge: ${x[2]}!`}};
-  const tot=Object.values(k.st).reduce((a,s)=>a+s.n,0),lvs=Object.values(k.lv),mx=Math.max(...lvs),mn=Math.min(...lvs);
-  if(tot>=1)give("first");if(k.combo>=5)give("combo5");if(k.combo>=10)give("combo10");if(tot>=100)give("q100");if(tot>=500)give("q500");
-  if(mx>=5)give("lv5");if(mx>=10)give("lv10");if(mx>=15)give("lv15");if(mn>=5)give("all5");if(mn>=10)give("all10");
-  const d=k.rocket.dest;if(d>=1)give("moon");if(d>=2)give("mars");if(d>=5)give("saturn");if(d>=9)give("alpha");
-  if(k.rover.solved>=1)give("rover1");if(k.rover.solved>=10)give("rover10");if(k.rover.stars3>=5)give("stars3");
-  if(k.trip.arrived)give("trip1");if(k.trip.coast)give("coast");if(k.trip.world)give("world");if(k.streak.n>=3)give("days3");if(k.streak.n>=7)give("days7")}
-/* ---------- shared UI ---------- */
-function kSay(t){try{const u=new SpeechSynthesisUtterance(t.replace(/×/g," times ").replace(/÷/g," divided by ").replace(/−/g," minus ").replace(/√/g,"square root of ").replace(/²/g," squared").replace(/³/g," cubed"));u.lang="en-US";u.rate=.95;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(_){}}
-function kTop(title,back){const k=KS();return `<div class="ktop"><button class="kbtn ghost" data-k="${back||"exit"}">${back?"◀ Back":"◀ Grown-ups"}</button><b>${esc(title)}</b><span class="kpill">⚡ ${k.coins}</span>${k.streak.n?`<span class="kpill">🔥 ${k.streak.n}</span>`:""}</div>`}
-function kQuestion(Q,ans){const sb=KSUB[Q.s];return `<div class="kq" style="--sc:${sb[2]}"><div class="kqh"><span class="ksub">${sb[1]} ${sb[0]} · Lv ${Q.lv}</span><button class="kbtn ghost small" data-k="say">🔊 Read</button></div>
-  <div class="kqt">${esc(Q.q).replace(/\n/g,"<br>")}</div><div class="kopts">${Q.o.map((o,i)=>`<button class="kopt ${ans==null?"":i===Q.a?"good":i===ans?"bad":"dim"}" data-ka="${i}" ${ans!=null?"disabled":""}>${esc(o)}</button>`).join("")}</div>
-  ${ans==null?"":`<div class="kfb ${ans===Q.a?"ok":"no"}"><b>${ans===Q.a?kPick(["✅ Awesome!","✅ Correct!","✅ Nailed it!","✅ Boom! Right!"]):"❌ Not quite. Answer: "+esc(Q.o[Q.a])}</b>${Q.f?`<div>💡 ${esc(Q.f)}</div>`:""}</div><button class="kbtn big" data-k="next">Next ▶</button>`}</div>`}
-function kToastHtml(){if(!kToast)return "";const t=kToast;kToast="";return `<div class="ktoast">${esc(t)}</div>`}
-/* ---------- home ---------- */
-function renderKids(){const v=$("#view");if(KV.scr==="rocket")return kRocketView(v);if(KV.scr==="rover")return kRoverView(v);if(KV.scr==="trip")return kTripView(v);if(KV.scr==="badges")return kBadgesView(v);
-  const k=KS(),ri=kRank(k.xp),next=KRANKS[ri+1],cur=KRANKS[ri],pct=next?Math.round((k.xp-cur[0])/(next[0]-cur[0])*100):100;
-  const subs=Object.entries(KSUB).map(([s,[n,ic,col]])=>{const st=k.st[s],up=k.lv[s]-(k.week.start[s]||k.lv[s]);const acc=st.n?Math.round(st.c/st.n*100):null;
-    return `<div class="ksrow" style="--sc:${col}"><span class="ksi">${ic}</span><span class="ksn">${n}</span><span class="kslv">Lv ${k.lv[s]}</span><span class="ksbar"><i style="width:${Math.max(4,Math.min(3,Math.max(0,st.run))/3*100)}%"></i></span><span class="ksup">${up>0?"⬆ +"+up+" this week":acc!==null?acc+"% right":"new"}</span></div>`}).join("");
-  const dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)],route=KTRIP[k.trip.route],city=route[Math.min(k.trip.stop,route.length-1)],nxt=route[k.trip.stop+1];
-  const nb=Object.keys(k.badges).length;
-  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Space Academy")}
-   <div class="kcard kpilot"><div class="kav">🧑‍🚀</div><div><div class="kname">${k.name?esc(k.name):`<button class="kbtn small" data-k="name">Tap to add your name</button>`}${k.name?` <button class="kbtn ghost small" data-k="name">✏️</button>`:""}</div>
-     <div class="krank">${esc(cur[1])}</div><div class="kbar"><i style="width:${pct}%"></i></div><div class="ksmall">${k.xp} XP${next?` · ${next[0]-k.xp} XP to ${esc(next[1])}`:" · top rank!"}</div></div></div>
-   ${KV.naming?`<div class="kcard"><input id="kname" class="kin" maxlength="18" placeholder="Your name" value="${esc(k.name)}"><button class="kbtn" data-k="saveName">Save</button></div>`:""}
-   <div class="kgames">
-    <button class="kgame g1" data-k="rocket"><span class="kgi">🚀</span><b>Rocket Mission</b><span>Next stop: ${dest[1]} ${esc(dest[0])}</span><em>10 questions · every subject</em></button>
-    <button class="kgame g2" data-k="rover"><span class="kgi">🤖</span><b>Mars Rover Code</b><span>Puzzle level ${k.rover.lvl} · ${k.rover.solved} solved</span><em>Code the rover, then answer lab questions</em></button>
-    <button class="kgame g3" data-k="trip"><span class="kgi kflip">🚗</span><b>⚡ Supercharger Road Trip</b><span>${esc(city[0])}${nxt?" → "+esc(nxt[0]):""}</span><em>Answer to charge, drive to new cities</em></button>
-   </div>
-   <div class="kcard"><div class="kh">Your skill levels</div>${subs}<div class="ksmall">Levels go up after 3 right answers in a row and go down a little after misses, so questions always fit you.</div></div>
-   <button class="kcard kbadges" data-k="badges"><div class="kh">Badges · ${nb} of ${KBAD.length}</div><div class="kbrow">${KBAD.slice(0,12).map(b=>`<span class="kb ${k.badges[b[0]]?"on":""}" title="${esc(b[2])}">${b[1]}</span>`).join("")}</div><div class="ksmall">Tap to see them all</div></button>
-   <details class="kcard kgrown"><summary>👨 Grown-up corner</summary>${kGrown()}</details>
-  </div>`}
-function kGrown(){const k=KS();const days=[];for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*86400000),key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");days.push([d.toLocaleDateString(undefined,{weekday:"short"}),k.days[key]||0])}
-  return `<div class="ksmall">Answers in the last 7 days</div><div class="kdays">${days.map(([n,c])=>`<span><i style="height:${Math.min(60,c*2)}px"></i>${esc(n)}<b>${c}</b></span>`).join("")}</div>
-   ${Object.entries(KSUB).map(([s,[n,ic]])=>{const st=k.st[s],r=st.h.length?Math.round(st.h.reduce((a,b)=>a+b,0)/st.h.length*100):null;return `<div class="kgr">${ic} ${n}: level ${k.lv[s]} of 20 · ${st.n} answered · ${st.n?Math.round(st.c/st.n*100)+"% right overall":"–"}${r!==null?` · last ${st.h.length}: ${r}%`:""}</div>`}).join("")}
-   <div class="kgr">Rocket: ${k.rocket.missions} missions · Rover: level ${k.rover.lvl}, ${k.rover.solved} solved · Trip: ${k.trip.route==="usa"?"U.S.":"World"} stop ${k.trip.stop+1} · Best streak ${k.bestCombo}</div>
-   <div class="ksmall">Levels 1–4 are about 2nd grade, 5–8 3rd–4th grade, 9–12 5th grade, 13–16 6th grade, 17–20 middle school, so a strong 8-year-old can keep climbing.</div>
-   ${KV.reset?`<div class="row"><button class="kbtn red" data-k="resetYes">Erase all kids progress</button><button class="kbtn ghost" data-k="resetNo">Keep</button></div>`:`<button class="kbtn ghost small" data-k="reset">Reset kids progress</button>`}`}
-function kBadgesView(v){const k=KS();v.innerHTML=`<div class="kids">${kTop("Badges","home")}<div class="kbgrid">${KBAD.map(b=>`<div class="kbig ${k.badges[b[0]]?"on":""}"><span>${b[1]}</span><b>${esc(b[2])}</b><em>${esc(b[3])}</em></div>`).join("")}</div></div>`}
-/* ---------- game 1: rocket mission ---------- */
-function kRocketStart(){const order=kShuf(Object.keys(KSUB).concat(Object.keys(KSUB)));KV={scr:"rocket",i:0,n:10,fuel:0,right:0,res:[],order,Q:kQ(order[0]),ans:null}}
-function kRocketView(v){const k=KS(),g=KV,dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)];
-  if(g.done){const ok=g.right>=7;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Rocket Mission","home")}<div class="kcard kend"><div class="krocket ${ok?"fly":""}">🚀</div>
-    <h2>${ok?`You reached ${esc(g.dest[0])}! ${g.dest[1]}`:"Not enough fuel this time"}</h2><p>${g.right} of ${g.n} right${ok?` · ${esc(g.dest[2])}`:` · you need 7 to reach ${esc(g.dest[0])}`}</p>
-    <div class="row"><button class="kbtn big" data-k="rocket">${ok?"Next mission 🚀":"Try again 🚀"}</button><button class="kbtn ghost" data-k="home">Mission Control</button></div></div></div>`;return}
-  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Rocket Mission","home")}<div class="khud"><div class="kfuel"><i style="height:${g.fuel}%"></i></div><div class="krk">${g.fuel>=70?"🚀🔥":"🚀"}</div>
-   <div><b>Destination: ${dest[1]} ${esc(dest[0])}</b><div class="ksmall">Question ${g.i+1} of ${g.n} · fuel ${g.fuel}% · need 70%</div><div class="kdots">${Array.from({length:g.n},(_,i)=>`<i class="${i<g.i?(g.res[i]?"y":"n"):i===g.i?"c":""}"></i>`).join("")}</div></div></div>${kQuestion(g.Q,g.ans)}</div>`}
-/* ---------- game 2: rover code ---------- */
 const KDIR=[[0,-1],[1,0],[0,1],[-1,0]];
 function kRoverPuzzle(lvl){const N=lvl<=3?5:lvl<=7?6:7,rocks=Math.min(14,2+lvl),loop=lvl>=3;
   for(let t=0;t<400;t++){const g=Array.from({length:N},()=>Array(N).fill(0)),sx=0,sy=N-1;let n=0;while(n<rocks){const x=kR(0,N-1),y=kR(0,N-1);if((x!==sx||y!==sy)&&!g[y][x]){g[y][x]=1;n++}}
@@ -7514,71 +7536,294 @@ function kRoverBFS(g,N,sx,sy,sd,tx,ty,loop){const key=(x,y,d)=>x+","+y+","+d,see
   while(fr.length&&dist<20){const nx=[];for(const [x,y,d] of fr){if(x===tx&&y===ty)return dist;const moves=[[x,y,(d+3)%4],[x,y,(d+1)%4]];
       const step=k=>{let cx=x,cy=y;for(let i=0;i<k;i++){cx+=KDIR[d][0];cy+=KDIR[d][1];if(cx<0||cy<0||cx>=N||cy>=N||g[cy][cx])return null}return[cx,cy,d]};const s1=step(1);if(s1)moves.push(s1);if(loop){const s3=step(3);if(s3)moves.push(s3)}
       for(const m of moves){const kk=key(...m);if(!seen.has(kk)){seen.add(kk);nx.push(m)}}}fr=nx;dist++}return 99}
-function kRoverStart(){const k=KS();KV={scr:"rover",P:kRoverPuzzle(k.rover.lvl)}}
-function kRoverRun(){const P=KV.P;if(!P.prog.length)return;P.state="run";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[];const steps=[];for(const c of P.prog){if(c==="L")steps.push("L");else if(c==="R")steps.push("R");else if(c==="F")steps.push("F");else steps.push("F","F","F")}
-  let i=0;const tick=()=>{if(KV.scr!=="rover"||KV.P!==P)return;if(i>=steps.length){P.state=(P.x===P.tx&&P.y===P.ty)?"win":"miss";kRoverEnd();renderKids();return}
-    const s=steps[i++];if(s==="L")P.dd=(P.dd+3)%4;else if(s==="R")P.dd=(P.dd+1)%4;else{const nx=P.x+KDIR[P.dd][0],ny=P.y+KDIR[P.dd][1];if(nx<0||ny<0||nx>=P.N||ny>=P.N||P.g[ny][nx]){P.state="crash";renderKids();return}P.path.push(P.x+","+P.y);P.x=nx;P.y=ny;if(P.x===P.tx&&P.y===P.ty){P.state="win";kRoverEnd();renderKids();return}}
-    renderKids();setTimeout(tick,380)};setTimeout(tick,200)}
-function kRoverEnd(){const P=KV.P,k=KS();if(P.state!=="win"||P.scored)return;P.scored=1;const n=P.prog.length;P.stars=n<=P.best?3:n<=P.best+2?2:1;
-  k.rover.solved++;if(P.stars===3)k.rover.stars3++;k.xp+=15+5*P.stars+k.rover.lvl;k.coins+=P.stars;if(P.stars>=2&&k.rover.lvl<20)k.rover.lvl++;kAnswer("code",true);P.lab=kQ(kSubPick({sci:2,math:1.5,code:1,geo:1,eng:1}));P.labAns=null}
-function kRoverView(v){const P=KV.P,k=KS();
-  if(P.state==="win"&&P.lab){const done=P.labAns!=null;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Mars Rover Code","home")}<div class="kcard kend"><h2>💎 Sample collected! ${"⭐".repeat(P.stars)}</h2><p>${P.prog.length} commands · best possible ${P.best}${P.stars<3?" · try for fewer commands next time":""}</p></div>
-    <div class="kcard"><div class="kh">🔬 Lab test: answer to analyze the sample</div></div>${kQuestion(P.lab,P.labAns).replace('data-k="next"','data-k="roverNext"')}</div>`;return}
-  const cell=(x,y)=>{const r=P.x===x&&P.y===y,t=P.tx===x&&P.ty===y,rock=P.g[y][x],tr=(P.path||[]).includes(x+","+y);return `<span class="kc ${tr?"tr":""} ${rock?"rock":""}">${r?`<b class="krov" style="transform:rotate(${P.dd*90}deg)">⬆</b>`:t?"💎":rock?"🪨":""}</span>`};
-  const grid=Array.from({length:P.N},(_,y)=>Array.from({length:P.N},(_,x)=>cell(x,y)).join("")).join("");const max=P.best+5,lab={F:"⬆",L:"↺",R:"↻",F3:"🔁3⬆"};
-  const msg=P.state==="crash"?"💥 Bump! The rover hit a rock or the edge. Fix your code and run it again.":P.state==="miss"?"🤔 The rover stopped before the 💎. Add more commands.":P.state==="run"?"Running your code…":"Program the rover (🤖 ⬆ points the way it faces) to reach the 💎. Then press Run.";
-  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Mars Rover Code","home")}<div class="kcard"><div class="row" style="justify-content:space-between"><b>Puzzle level ${k.rover.lvl}</b><span class="ksmall">Best: ${P.best} commands</span></div><div class="kgrid" style="grid-template-columns:repeat(${P.N},1fr)">${grid}</div><div class="ksmall">${esc(msg)}</div></div>
-   <div class="kcard"><div class="kprog">${P.prog.length?P.prog.map((c,i)=>`<span class="kcmd">${lab[c]}</span>`).join(""):'<span class="ksmall">Your code appears here</span>'}</div>
-    <div class="kpad"><button class="kbtn" data-kc="F" ${P.prog.length>=max||P.state==="run"?"disabled":""}>⬆ Forward</button><button class="kbtn" data-kc="L" ${P.prog.length>=max||P.state==="run"?"disabled":""}>↺ Left</button><button class="kbtn" data-kc="R" ${P.prog.length>=max||P.state==="run"?"disabled":""}>↻ Right</button>${P.loop?`<button class="kbtn" data-kc="F3" ${P.prog.length>=max||P.state==="run"?"disabled":""}>🔁 Repeat 3 × ⬆</button>`:""}</div>
-    <div class="kpad"><button class="kbtn big" data-k="run" ${!P.prog.length||P.state==="run"?"disabled":""}>▶ Run</button><button class="kbtn ghost" data-k="undo" ${P.state==="run"?"disabled":""}>⌫ Undo</button><button class="kbtn ghost" data-k="clear" ${P.state==="run"?"disabled":""}>Clear</button><button class="kbtn ghost" data-k="newpuz" ${P.state==="run"?"disabled":""}>New map</button></div></div></div>`}
-/* ---------- game 3: supercharger road trip ---------- */
-const KLEG=[45,40,50,45,35,45,40,50,45,40,35,50];
-function kTripView(v){const k=KS(),T=k.trip,route=KTRIP[T.route],city=route[T.stop],nxt=route[T.stop+1],need=nxt?KLEG[T.stop%KLEG.length]:0,g=KV;
-  if(g.Q){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Supercharger Road Trip","home")}<div class="khud"><div class="kbat"><i style="width:${T.bat}%"></i><span>${T.bat}%</span></div><div><b>⚡ Charging in ${esc(city[0])}</b><div class="ksmall">Right answer +25% · miss +5%</div></div></div>${kQuestion(g.Q,g.ans)}</div>`;return}
-  if(g.arrive){const A=g.arrive;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Supercharger Road Trip","home")}<div class="kcard kend"><div class="kcar drive">💨🚗</div><h2>Welcome to ${esc(A.c[0])}, ${esc(A.c[1])}!</h2><p>Arrival bonus: answer for +5 ⚡ coins and +10% battery.</p></div>
-    ${kQuestion(A.Q,A.ans).replace('data-k="next"','data-k="tripDone"')}</div>`;return}
-  const dots=route.map((c,i)=>`<span class="ktd ${i<T.stop?"done":i===T.stop?"here":""}" title="${esc(c[0])}">${i===T.stop?"🚗":i<T.stop?"✓":"•"}</span>`).join("");
-  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Supercharger Road Trip","home")}<div class="kcard"><div class="kh">${T.route==="usa"?"🇺🇸 Coast to coast":"🌍 World tour"} · stop ${T.stop+1} of ${route.length}</div><div class="ktrip">${dots}</div>
-    <h2 style="margin:8px 0 4px">📍 ${esc(city[0])}, ${esc(city[1])}</h2><div class="ksmall">${esc(city[2])}</div></div>
-   <div class="kcard"><div class="kbat big"><i style="width:${T.bat}%;background:${T.bat>=need?"#2ec27e":"#ffb703"}"></i><span>${T.bat}%</span></div>
-    ${nxt?`<p>Next: <b>${esc(nxt[0])}</b> needs <b>${need}%</b> battery.</p>`:"<p>You made it to the end of the route! 🎉</p>"}
-    <div class="kpad"><button class="kbtn big" data-k="charge" ${T.bat>=100?"disabled":""}>⚡ Charge: answer a question</button>${nxt?`<button class="kbtn big green" data-k="drive" ${T.bat>=need?"":"disabled"}>🚗 Drive to ${esc(nxt[0])}</button>`:`<button class="kbtn big green" data-k="newRoute">${T.route==="usa"?"🌍 Start the world tour":"🇺🇸 Drive the U.S. again"}</button>`}</div></div></div>`}
-function kTripMath(){const r=kR(2,5),b=kPick([30,40,45,60,75]);return {s:"math",...kMk("math",`Your electric car uses 1% of its battery every ${r} miles. How many miles can it go on ${b}%?`,r*b,kNear(r*b),`${b} × ${r} = ${r*b} miles.`),lv:KS().lv.math}}
+/* ---------- scoring, streaks, goals, badges ---------- */
+function kDay(k){const t=kToday();k.days[t]=(k.days[t]||0)+1;if(k.streak.d!==t){k.streak={d:t,n:k.streak.d===kToday(-1)?k.streak.n+1:1}}
+  const ks=Object.keys(k.days).sort();if(ks.length>60)for(const d of ks.slice(0,ks.length-60))delete k.days[d]}
+function kAnswer(sub,ok){const k=KS(),st=k.st[sub],nm=KSUB[sub][0];st.n++;if(ok)st.c++;st.run=ok?Math.max(0,st.run)+1:Math.min(0,st.run)-1;st.h.push(ok?1:0);if(st.h.length>12)st.h.shift();
+  const lv=k.lv[sub];
+  if(ok&&st.run>=3){const last=st.h.slice(-8),acc=last.reduce((a,b)=>a+b,0)/last.length;if(acc>=.7&&lv<20){k.lv[sub]=lv+1;st.run=0;kT(`⬆ LEVEL UP! ${nm} level ${lv+1}`);kFx=true;kBeep("up")}}
+  if(!ok&&st.run<=-2&&lv>1){k.lv[sub]=lv-1;st.run=0;kT(`${nm} set to level ${lv-1} for a bit of practice. You've got this!`)}
+  if(ok){k.xp+=10+k.lv[sub];k.coins+=1+Math.floor(k.lv[sub]/5);k.combo++;k.bestCombo=Math.max(k.bestCombo,k.combo);k.today.sub[sub]=(k.today.sub[sub]||0)+1;k.today.combo=Math.max(k.today.combo,k.combo);if(!kFx)kBeep("ok")}else{k.combo=0;kBeep("no")}
+  kDay(k);kGoalCheck();kBadges();kUnlocks();persist()}
+function kGoalInfo(){const k=KS(),g=k.goal,mins=Math.max(0,Math.floor((k.secs-g.s0)/60)),cor=Math.max(0,kCorrect()-g.c0);return{mins,cor,f:Math.min(1,mins/Math.max(1,g.mins),cor/Math.max(1,g.correct))}}
+function kGoalCheck(){const k=KS(),g=k.goal,{f}=kGoalInfo();for(const m of [25,50,75,100])if(f*100>=m&&!g.ms[m]){g.ms[m]=Date.now();kFx=true;kBeep("chest");
+  if(m===25){k.coins+=25;kGive("gold",3);kT("🥉 Prize goal 25%! +25 ⚡ and 3 gold blocks")}
+  if(m===50){kGive("tesla",1);kGive("charger",1);kUnlocks();kT("🥈 Prize goal 50%! A Tesla and a Supercharger for your base")}
+  if(m===75){k.coins+=40;kGive("dia",3);kT("🥇 Prize goal 75%! +40 ⚡ and 3 diamonds")}
+  if(m===100){kGive("trophy",1);k.coins+=60;kUnlocks();kT(`🏆 PRIZE GOAL DONE! Show a grown-up to get your prize${g.prize?": "+g.prize:""}!`)}}}
+function kBadges(){const k=KS(),b=k.badges,give=id=>{if(!b[id]){b[id]=Date.now();const x=KBAD.find(z=>z[0]===id);kT(`🏅 New badge: ${x[2]}!`);kFx=true}};
+  const cor=kCorrect(),lvs=Object.values(k.lv),mx=Math.max(...lvs),mn=Math.min(...lvs),d=k.rocket.dest,c=k.chess;
+  if(cor>=1)give("first");if(k.combo>=5)give("combo5");if(k.combo>=10)give("combo10");if(cor>=100)give("q100");if(cor>=500)give("q500");
+  if(mx>=5)give("lv5");if(mx>=10)give("lv10");if(mx>=15)give("lv15");if(mn>=5)give("all5");if(mn>=10)give("all10");
+  if(d>=1)give("moon");if(d>=2)give("mars");if(d>=5)give("saturn");if(d>=9)give("alpha");
+  if(k.mine.dia>=1)give("mine1");if(k.mine.dia>=10)give("mine10");if(k.mine.stars3>=5)give("stars3");
+  if(c.solved>=1)give("chess1");if(c.solved>=25)give("chess25");if(c.mates>=10)give("mate10");if(c.forks>=1)give("fork");if(c.promos>=1)give("promo");
+  if(k.placed>=10)give("build10");if(k.placed>=50)give("build50");if(k.chest.n>=1)give("chest");if(k.questsAll>=1)give("quests");
+  if(k.secs>=3600)give("hour1");if(k.goal.ms[100]||k.goal.hist.length)give("goal");if(k.streak.n>=3)give("days3");if(k.streak.n>=7)give("days7")}
+function kQuests(){const k=KS(),t=kToday();if(k.quest.d!==t){let h=7;for(const ch of t)h=(h*31+ch.charCodeAt(0))>>>0;const r=()=>{h=(h*1103515245+12345)>>>0;return h/4294967296};
+    k.quest={d:t,ids:[["math","eng","sci","code","geo"][Math.floor(r()*5)],["chess","dia","launch"][Math.floor(r()*3)],["place","combo"][Math.floor(r()*2)]],cl:{}}}return k.quest}
+function kOpenChest(){const k=KS(),t=kToday();if(k.chest.d===t)return;k.chest.d=t;k.chest.n++;const coins=10+5*Math.min(6,k.streak.n||0);k.coins+=coins;
+  const got={};for(let i=0;i<4;i++){const id=kPick(KBASIC);got[id]=(got[id]||0)+1}if(Math.random()<.4)got.gold=(got.gold||0)+1;if(Math.random()<.2)got.dia=(got.dia||0)+1;for(const id in got)kGive(id,got[id]);
+  kBadges();kUnlocks();persist();kFx=true;kBeep("chest");
+  KV={scr:"reward",emoji:"🎁",title:"Daily chest!",lines:[`+${coins} ⚡ coins${k.streak.n>1?` (🔥 ${k.streak.n}-day streak bonus)`:""}`,...Object.entries(got).map(([id,n])=>`+${n} ${KBM[id][1]}`),"Come back tomorrow for another chest!"]}}
+function kClaimQuest(id){const k=KS(),q=kQuests(),Q=KQT[id];if(!Q||q.cl[id]||Q[3](k.today)<Q[2])return;q.cl[id]=1;k.coins+=15;const b=kPick(KBASIC);kGive(b,3);kT(`📜 Quest done! +15 ⚡ and 3 ${KBM[b][1]}`);kBeep("ok");
+  if(q.ids.every(x=>q.cl[x])){k.coins+=25;k.questsAll++;kGive("gold",1);kT("All 3 quests done! Bonus +25 ⚡ and a gold block");kFx=true;kBeep("chest")}kBadges();kUnlocks();persist()}
+/* ---------- chess engine (board index 0 = a8, 63 = h1; uppercase = white) ---------- */
+const KN=[[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
+function cWhite(p){return p===p.toUpperCase()}
+function cPseudo(b,i){const p=b[i],w=cWhite(p),t=p.toUpperCase(),r=i>>3,c=i&7,res=[];
+  const own=j=>b[j]&&cWhite(b[j])===w,add=(rr,cc)=>{if(rr<0||rr>7||cc<0||cc>7)return false;const j=rr*8+cc;if(own(j))return false;res.push(j);return !b[j]};
+  if(t==="P"){const d=w?-1:1,st=w?6:1,rr=r+d;if(rr>=0&&rr<=7&&!b[rr*8+c]){res.push(rr*8+c);if(r===st&&!b[(r+2*d)*8+c])res.push((r+2*d)*8+c)}
+    for(const dc of [-1,1]){const cc=c+dc;if(rr>=0&&rr<=7&&cc>=0&&cc<=7&&b[rr*8+cc]&&!own(rr*8+cc))res.push(rr*8+cc)}}
+  else if(t==="N"){for(const [a,d] of KN)add(r+a,c+d)}
+  else if(t==="K"){for(let a=-1;a<=1;a++)for(let d=-1;d<=1;d++)if(a||d)add(r+a,c+d)}
+  else{const dirs=t==="B"?[[1,1],[1,-1],[-1,1],[-1,-1]]:t==="R"?[[1,0],[-1,0],[0,1],[0,-1]]:[[1,1],[1,-1],[-1,1],[-1,-1],[1,0],[-1,0],[0,1],[0,-1]];
+    for(const [a,d] of dirs){let rr=r+a,cc=c+d;while(add(rr,cc)){rr+=a;cc+=d}}}
+  return res}
+function cAttacked(b,sq,byW){for(let i=0;i<64;i++){const p=b[i];if(!p||cWhite(p)!==byW)continue;
+  if(p.toUpperCase()==="P"){const rr=(i>>3)+(byW?-1:1);if((sq>>3)===rr&&Math.abs((sq&7)-(i&7))===1)return true;continue}
+  if(cPseudo(b,i).includes(sq))return true}return false}
+function cMove(b,f,t){const n=b.slice();n[t]=n[f];n[f]="";if(n[t]==="P"&&t<8)n[t]="Q";if(n[t]==="p"&&t>=56)n[t]="q";return n}
+function cInCheck(b,w){const k=b.indexOf(w?"K":"k");return k>=0&&cAttacked(b,k,!w)}
+function cMoves(b,w){const out=[];for(let i=0;i<64;i++){const p=b[i];if(!p||cWhite(p)!==w)continue;for(const t of cPseudo(b,i))if(b[t]!==(w?"k":"K")&&!cInCheck(cMove(b,i,t),w))out.push([i,t])}return out}
+function cMate(b,w){return cInCheck(b,w)&&cMoves(b,w).length===0}
+function cFen(f){const b=[];for(const ch of f.split(" ")[0].replace(/\//g,""))if(/\d/.test(ch))for(let i=0;i<+ch;i++)b.push("");else b.push(ch);return b}
+function kNsq(s){const r=s>>3,c=s&7,o=[];for(const [a,d] of KN){const rr=r+a,cc=c+d;if(rr>=0&&rr<8&&cc>=0&&cc<8)o.push(rr*8+cc)}return o}
+function kMirror(b){const n=[];for(let r=0;r<8;r++)for(let c=0;c<8;c++)n.push(b[r*8+7-c]);return n}
+/* checkmate-in-1 positions, white to move: [tier, FEN, lesson, keep orientation]; every one is checked by the engine at load */
+const KMATE=[[1,"6k1/5ppp/8/8/8/8/8/R5K1","Back-rank mate: the king is trapped behind its own pawns."],[1,"6k1/5ppp/8/8/8/8/5PPP/3Q2K1","Back-rank mate with the queen."],
+ [1,"7k/1R6/8/8/8/8/8/R5K1","Ladder mate: one rook guards a row, the other gives check."],[1,"k7/8/K7/8/8/8/8/7R","The rook checks on the edge and your king guards the escape squares."],
+ [1,"4k3/8/4K3/8/8/8/8/R7","Rook mate on the edge, with the two kings facing each other."],[1,"4k3/8/4K3/8/7Q/8/8/8","Queen kiss: the queen checks right next to the king, protected by your king."],
+ [2,"k7/8/1K6/8/8/8/7Q/8","Queen mate with your king's help."],[2,"7k/P5pp/8/8/8/8/8/6K1","Promote the pawn to a queen with checkmate!"],
+ [2,"7k/8/8/8/8/1Q6/8/6RK","The rook guards the g-file while the queen checks on the h-file."],[2,"r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR","Scholar's mate: f7 is the weak spot, and the bishop protects the queen.",1],
+ [2,"6k1/5p1p/5P1Q/8/8/8/8/6K1","The pawn protects the queen, so the king can't take it."],[3,"6rk/6pp/8/6N1/8/8/8/6K1","Smothered mate: the king is boxed in by its own pieces."],
+ [3,"7k/1R6/5N2/8/8/8/8/6K1","Arabian mate: the rook and knight team up in the corner."],[3,"8/4N1pk/8/R7/8/8/8/K7","Anastasia's mate: the knight and rook trap the king on the edge."]];
+const KPN={K:"King",Q:"Queen",R:"Rook",B:"Bishop",N:"Knight",P:"Pawn"};
+const KPTIP={R:"Rooks move in straight lines: up, down, left and right.",B:"Bishops move on diagonals.",N:"Knights jump in an L: 2 squares one way, then 1 to the side. They can jump over pieces.",Q:"The queen moves like a rook and a bishop together.",K:"The king moves 1 square in any direction.",P:"Pawns move forward, but they capture one square diagonally forward."};
+function kPzCap(L){const types=L<=1?["R","B"]:L===2?["N","Q"]:["K","P","N","B","R","Q"];
+  for(let t=0;t<600;t++){const b=Array(64).fill(""),T=kPick(types),s=T==="P"?kR(16,55):kR(0,63);b[s]=T;let n=0;
+    while(n<3){const j=kR(0,63),p=kPick(["p","p","n","b","r"]);if(b[j]||(p==="p"&&(j<8||j>55)))continue;b[j]=p;n++}
+    const mv=cMoves(b,true),caps=mv.filter(m=>b[m[1]]);if(caps.length===1&&mv.length>=3)return{type:"cap",b,ok:caps,prompt:`Capture a black piece with your ${KPN[T]}!`,tip:KPTIP[T]}}return null}
+function kPzSafe(){for(let t=0;t<1500;t++){const b=Array(64).fill(""),put=(p,lo=0,hi=63)=>{let j;do{j=kR(lo,hi)}while(b[j]);b[j]=p};
+    put("K");put("k");for(let i=0;i<2;i++)put(kPick(["Q","R","B","N"]));for(let i=0;i<3;i++){const p=kPick(["p","p","n","b","r"]);put(p,p==="p"?8:0,p==="p"?55:63)}
+    if(cInCheck(b,false)||cInCheck(b,true))continue;const caps=cMoves(b,true).filter(m=>b[m[1]]),safe=caps.filter(m=>!cAttacked(cMove(b,m[0],m[1]),m[1],false));
+    if(safe.length===1&&caps.length>=2)return{type:"safe",b,ok:safe,prompt:"Win a piece safely! One capture is a trap, because that piece is protected.",tip:"Before you capture, check: can a black piece take back on that square?"}}return null}
+function kPzFork(){for(let t=0;t<800;t++){const b=Array(64).fill(""),kk=kR(0,63),s=kPick(kNsq(kk)),qs=kNsq(s).filter(x=>x!==kk);if(!qs.length)continue;const q=kPick(qs),os=kNsq(s).filter(x=>x!==kk&&x!==q);if(!os.length)continue;const o=kPick(os);
+    b[kk]="k";b[q]=kPick(["q","q","r"]);b[o]="N";let wk;do{wk=kR(0,63)}while(b[wk]||wk===s);b[wk]="K";
+    if(cInCheck(b,false)||cInCheck(b,true))continue;const mv=cMoves(b,true);if(mv.some(m=>m[1]===q))continue;
+    const ok=mv.filter(m=>{const n=cMove(b,m[0],m[1]);if(cMate(n,false))return true;return b[m[0]]==="N"&&cInCheck(n,false)&&kNsq(m[1]).includes(q)&&!cAttacked(n,m[1],false)});
+    if(ok.length)return{type:"fork",b,ok,prompt:`Knight fork! Move your knight so it checks the king and attacks the ${b[q]==="q"?"queen":"rook"} at the same time.`,tip:"A fork attacks two pieces at once. The king has to move, so you win the other piece."}}return null}
+function kPzMate(tier){let pool=KMATE.filter(x=>x[0]<=tier&&!kRecent.includes(x[1]));if(!pool.length)pool=KMATE.filter(x=>x[0]<=tier);const it=kPick(pool);kRecent.push(it[1]);if(kRecent.length>60)kRecent.shift();
+  let b=cFen(it[1]);if(!it[3]&&Math.random()<.5)b=kMirror(b);const ok=cMoves(b,true).filter(m=>cMate(cMove(b,m[0],m[1]),false));if(!ok.length||cInCheck(b,false))return null;
+  return{type:"mate",b,ok,prompt:"Checkmate in 1! Find the move that traps the black king.",tip:it[2]}}
+function kPuzzle(L){let P=null;
+  if(L<=3)P=kPzCap(L);else if(L<=6)P=Math.random()<.7?kPzSafe():kPzCap(3);else if(L<=9)P=Math.random()<.75?kPzMate(L<=8?1:2):kPzSafe();
+  else if(L<=13)P=Math.random()<.55?kPzMate(L<=11?2:3):kPzFork();else P=kPick([()=>kPzMate(3),()=>kPzFork(),()=>kPzSafe(),()=>kPzMate(2)])();
+  P=P||kPzCap(Math.min(3,L))||kPzMate(1);Object.assign(P,{sel:null,dots:[],tries:0,state:"play",msg:"",lv:L});return P}
+function kChessWhy(P,f,t){const n=cMove(P.b,f,t);if(P.type==="cap")return "No black piece there. Look for a square where you can capture!";
+  if(P.type==="safe")return P.b[t]&&cAttacked(n,t,false)?"Trap! That piece is protected, so black would take back.":"Look for a capture that black can't take back.";
+  if(P.type==="fork")return P.b[f]!=="N"?"Use your knight!":!cInCheck(n,false)?"That doesn't check the king.":"Check, but it doesn't attack the other piece too.";
+  return !cInCheck(n,false)?"That move isn't check. Checkmate starts with check!":"Check, but the king can escape or block. Look for a move that leaves no escape."}
+function kChessAnswer(P,ok){const k=KS(),c=k.chess,st=c.st;st.n++;if(ok)st.c++;st.run=ok?Math.max(0,st.run)+1:Math.min(0,st.run)-1;st.h.push(ok?1:0);if(st.h.length>12)st.h.shift();
+  if(ok&&st.run>=3){const l=st.h.slice(-8);if(l.reduce((a,b)=>a+b,0)/l.length>=.7&&c.lv<20){c.lv++;st.run=0;kT(`⬆ LEVEL UP! Chess level ${c.lv}`);kFx=true;kBeep("up")}}
+  if(!ok&&st.run<=-2&&c.lv>1){c.lv--;st.run=0;kT(`Chess set to level ${c.lv} for practice.`)}
+  if(ok){c.solved++;if(P.type==="mate")c.mates++;if(P.type==="fork")c.forks++;k.xp+=15+c.lv;k.coins+=2;k.combo++;k.bestCombo=Math.max(k.bestCombo,k.combo);k.today.chess++;k.today.combo=Math.max(k.today.combo,k.combo);if(!kFx)kBeep("ok")}else{k.combo=0;kBeep("no")}
+  kDay(k);kGoalCheck();kBadges();kUnlocks();persist()}
+/* ---------- shared UI ---------- */
+function kTop(title,back){const k=KS();const left=back?`<button class="kbtn ghost" data-k="${back}">◀ Back</button>`:KLOCK()?`<button class="kbtn ghost" data-k="sound" aria-label="Sound on or off">${k.sound===false?"🔇":"🔊"}</button>`:`<button class="kbtn ghost" data-k="exit">◀ Study app</button>`;
+  return `<div class="ktop">${left}<b>${esc(title)}</b><span class="kpill">⚡ ${k.coins}</span>${k.streak.n?`<span class="kpill">🔥 ${k.streak.n}</span>`:""}</div>`}
+function kQuestion(Q,ans,nk="next"){const sb=KSUB[Q.s];return `<div class="kq" style="--sc:${sb[2]}"><div class="kqh"><span class="ksub">${sb[1]} ${sb[0]} · Lv ${Q.lv}</span><button class="kbtn ghost small" data-k="say">🔊 Read</button></div>
+  <div class="kqt">${esc(Q.q).replace(/\n/g,"<br>")}</div><div class="kopts">${Q.o.map((o,i)=>`<button class="kopt ${ans==null?"":i===Q.a?"good":i===ans?"bad":"dim"}" data-ka="${i}" ${ans!=null?"disabled":""}>${esc(o)}</button>`).join("")}</div>
+  ${ans==null?"":`<div class="kfb ${ans===Q.a?"ok":"no"}"><b>${ans===Q.a?kPick(["✅ Awesome!","✅ Correct!","✅ Nailed it!","✅ Boom! Right!"]):"❌ Not quite. Answer: "+esc(Q.o[Q.a])}</b>${Q.f?`<div>💡 ${esc(Q.f)}</div>`:""}</div><button class="kbtn big" data-k="${nk}">Next ▶</button>`}</div>`}
+function kToastHtml(){let h="";if(kToast){h=`<div class="ktoast">${esc(kToast)}</div>`;kToast=""}
+  if(kFx){kFx=false;const em=["⭐","✨","🟩","🟦","🟨","💎","🎉","🟫"];h+=`<div class="kconf" aria-hidden="true">${Array.from({length:26},()=>`<i style="left:${kR(0,96)}%;animation-delay:${(Math.random()*.5).toFixed(2)}s">${kPick(em)}</i>`).join("")}</div>`}return h}
+function kCell(id,tag="span",attr=""){const b=id&&KBM[id];if(!b)return `<${tag} class="kcell e" ${attr}></${tag}>`;return b[2]?`<${tag} class="kcell it" ${attr}>${b[2]}</${tag}>`:`<${tag} class="kcell bk bl-${id}" ${attr}></${tag}>`}
+function kBar(p){return `<div class="kbar"><i style="width:${Math.max(0,Math.min(100,p))}%"></i></div>`}
+/* ---------- main router ---------- */
+function renderKids(){const v=$("#view"),k=KS();
+  if(!k.setup||KV.scr==="setup")return kSetupView(v);
+  const R={rocket:kRocketView,mine:kMineView,chess:kChessView,base:kBaseView,badges:kBadgesView,grown:kGrownView,reward:kRewardView}[KV.scr];return R?R(v):kHome(v)}
+/* ---------- profile ---------- */
+function kSetupView(v){const k=KS(),b=k.bday||{},yr=new Date().getFullYear(),av=KV.av!=null?KV.av:k.avatar||0,opt=(n,lab,sel)=>`<option value="${n}" ${sel?"selected":""}>${lab}</option>`;
+  v.innerHTML=`<div class="kids">${k.setup?kTop("Your profile","home"):`<div class="ktop">${KLOCK()?"":`<button class="kbtn ghost" data-k="exit">◀ Study app</button>`}<b>Space Academy</b></div>`}
+  <div class="kcard kend"><div class="kav big" id="kavbig">${KAV[av]}</div><h2>${k.setup?"Your astronaut profile":"Welcome, astronaut!"}</h2><p>${k.setup?"Change your name, birthday or avatar.":"Let's make your profile. Then the adventure begins!"}</p></div>
+  <div class="kcard"><label class="kh" for="kname">Your name</label><input id="kname" class="kin" maxlength="18" autocomplete="off" value="${esc(k.name)}" placeholder="Type your name">
+   <div class="kh">Your birthday</div><div class="kbd"><select id="kbm" aria-label="Birth month">${opt("","Month",!b.m)}${KMON.map((m,i)=>opt(i+1,m,b.m===i+1)).join("")}</select>
+   <select id="kbdd" aria-label="Birth day">${opt("","Day",!b.d)}${Array.from({length:31},(_,i)=>opt(i+1,i+1,b.d===i+1)).join("")}</select>
+   <select id="kby" aria-label="Birth year">${opt("","Year",!b.y)}${Array.from({length:15},(_,i)=>yr-3-i).map(y=>opt(y,y,b.y===y)).join("")}</select></div>
+   <div class="kh">Pick your avatar</div><div class="kavs">${KAV.map((a,i)=>`<button class="kavb ${i===av?"on":""}" data-kav="${i}" aria-label="Avatar ${i+1}">${a}</button>`).join("")}</div>
+   ${KV.err?`<div class="kerr">${esc(KV.err)}</div>`:""}<button class="kbtn big" data-k="saveSetup">${k.setup?"Save":"🚀 Start my adventure!"}</button></div></div>`}
+function kSaveSetup(){const k=KS(),name=($("#kname").value||"").trim().slice(0,18),m=+$("#kbm").value,d=+$("#kbdd").value,y=+$("#kby").value;
+  if(!name){KV.err="Please type your name.";return}if((m||d||y)&&!(m&&d&&y)){KV.err="Pick the month, day and year of your birthday.";return}
+  const first=!k.setup;k.name=name;k.bday=m?{m,d,y}:null;k.avatar=KV.av!=null?KV.av:k.avatar;
+  if(first&&Object.values(k.st).every(s=>!s.n)){const a=kAge(k),L=a==null?3:a<=6?1:a===7?2:a===8?3:a===9?5:a===10?6:8;for(const s in KSUB)k.lv[s]=L;k.week.start=Object.assign({},k.lv)}
+  k.setup=true;persist();KV={scr:"home"};if(first){kT(`Welcome aboard, ${name}! Open your first daily chest 🎁`);kFx=true;kBeep("up")}}
+/* ---------- home ---------- */
+function kHome(v){const k=KS(),ri=kRank(k.xp),cur=KRANKS[ri],next=KRANKS[ri+1],pct=next?(k.xp-cur[0])/(next[0]-cur[0])*100:100,age=kAge(k),q=kQuests(),gi=kGoalInfo(),g=k.goal,yr=new Date().getFullYear();
+  const dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)],chestReady=k.chest.d!==kToday(),bdayGift=kIsBday(k)&&k.bdayDone!==yr;
+  const ms=[[25,"🥉","+25 ⚡ and gold"],[50,"🥈","🚗 Tesla for your base"],[75,"🥇","+40 ⚡ and diamonds"],[100,"🏆","Your prize!"]];
+  const subs=Object.entries(KSUB).map(([s,[n,ic,col]])=>{const st=k.st[s],up=k.lv[s]-(k.week.start[s]||k.lv[s]);return kSkill(ic,n,col,k.lv[s],st,up)}).join("")+kSkill("♟️","Chess","#ff9f1c",k.chess.lv,k.chess.st,k.chess.lv-(k.week.chess||k.chess.lv));
+  const bads=KBAD.slice().sort((a,b)=>(k.badges[b[0]]?1:0)-(k.badges[a[0]]?1:0)).slice(0,14),nb=KBAD.filter(b=>k.badges[b[0]]).length;
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop(k.name?`Hi, ${k.name}!`:"Space Academy")}
+   ${kIsBday(k)?`<div class="kcard kbday">🎂 <b>Happy Birthday, ${esc(k.name)}!</b>${age!=null?` You're ${age} today!`:""}</div>`:""}
+   ${bdayGift?`<button class="kchest" data-k="bday">🎁 Open your birthday present!</button>`:""}
+   ${g.ms[100]?`<div class="kcard kwin"><div class="kh">🏆 You finished your prize goal!</div><div>Show this to a grown-up to get your prize${g.prize?`: <b>${esc(g.prize)}</b>`:""}.</div></div>`:""}
+   <button class="kcard kpilot" data-k="profile"><div class="kav">${KAV[k.avatar||0]}</div><div><div class="kname">${esc(k.name)}${age!=null?` <span class="ksmall">· age ${age}</span>`:""}</div><div class="krank">${esc(cur[1])}</div>${kBar(pct)}<div class="ksmall">${k.xp} XP${next?` · ${next[0]-k.xp} XP to ${esc(next[1])}`:" · top rank!"}</div></div></button>
+   ${chestReady?`<button class="kchest" data-k="chest">🎁 Open today's chest!</button>`:""}
+   <div class="kcard kprize"><div class="kh">🎁 Prize goal: ${g.prize?esc(g.prize):"ask a grown-up to pick your prize!"}</div>
+    <div class="kpbar"><i style="width:${Math.round(gi.f*100)}%"></i>${ms.map(([m,ic])=>`<span class="kms ${g.ms[m]?"on":""}" style="left:${m===100?97:m}%">${ic}</span>`).join("")}</div>
+    <div class="ksmall">⏱️ ${Math.min(gi.mins,g.mins)} of ${g.mins} minutes · ✅ ${Math.min(gi.cor,g.correct)} of ${g.correct} right answers</div>
+    <div class="kmsl">${ms.map(([m,ic,t])=>`<span class="${g.ms[m]?"on":""}">${ic} ${m}%: ${t}</span>`).join("")}</div></div>
+   <div class="kgames">
+    <button class="kgame g1" data-k="rocket"><span class="kgi">🚀</span><b>Rocket Mission</b><span>${k.rocket.dest>=KDEST.length?"All planets visited! Fly for coins":`Next stop: ${dest[1]} ${esc(dest[0])}`}</span><em>10 questions from every subject</em></button>
+    <button class="kgame g2" data-k="mine"><span class="kgi">⛏️</span><b>Block Miner</b><span>Map level ${k.mine.lvl} · 💎 ${k.mine.dia} mined</span><em>Code your bot to the diamond</em></button>
+    <button class="kgame g3" data-k="chess"><span class="kgi">♞</span><b>Chess Quest</b><span>Chess level ${k.chess.lv} · ${k.chess.solved} puzzles solved</span><em>Puzzles and questions push your pawn to queen</em></button>
+   </div>
+   <div class="kcard"><div class="kh">📜 Today's quests</div>${q.ids.map(id=>{const Q=KQT[id],have=Math.min(Q[2],Q[3](k.today)),cl=q.cl[id];
+     return `<div class="kquest ${cl?"done":""}"><span>${Q[0]}</span><div><b>${Q[1]}</b><div class="kbar sm"><i style="width:${have/Q[2]*100}%"></i></div></div>${cl?"✅":have>=Q[2]?`<button class="kbtn small" data-kq="${id}">Claim</button>`:`<em>${have}/${Q[2]}</em>`}</div>`}).join("")}
+    <div class="ksmall">Finish all 3 for a bonus. New quests every day!</div></div>
+   <button class="kcard kbasec" data-k="base"><div class="kmini" style="--bio:${KBIO[kLocIdx(k)]}">${k.base.map(id=>kCell(id)).join("")}</div><div><div class="kh">🏠 My base on ${esc(kLoc(k))}</div><div class="ksmall">${k.placed} blocks placed. Build with blocks you win in every game.</div><span class="kbtn small">Build ▶</span></div></button>
+   <div class="kcard"><div class="kh">Your skill levels</div>${subs}<div class="ksmall">Levels go up after 3 right answers in a row and down a little after misses, so it always fits you.</div></div>
+   <button class="kcard kbadges" data-k="badges"><div class="kh">Badges · ${nb} of ${KBAD.length}</div><div class="kbrow">${bads.map(b=>`<span class="kb ${k.badges[b[0]]?"on":""}">${b[1]}</span>`).join("")}</div><div class="ksmall">Tap to see them all</div></button>
+   <button class="kcard kgrownb" data-k="grown">👨 Grown-up corner: progress and work done</button>
+  </div>`}
+function kSkill(ic,n,col,lv,st,up){const acc=st.n?Math.round(st.c/st.n*100):null;return `<div class="ksrow" style="--sc:${col}"><span class="ksi">${ic}</span><span class="ksn">${n}</span><span class="kslv">Lv ${lv}</span><span class="ksbar"><i style="width:${Math.max(4,lv/20*100)}%"></i></span><span class="ksup">${up>0?"⬆ +"+up+" this week":acc!==null?acc+"% right":"new"}</span></div>`}
+function kRewardView(v){const g=KV;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop(g.title,"home")}<div class="kcard kend"><div class="kbig2">${g.emoji}</div><h2>${esc(g.title)}</h2>${g.lines.map(l=>`<p>${esc(l)}</p>`).join("")}
+  <div class="kpad">${g.again?`<button class="kbtn big" data-k="${g.again}">Play again ▶</button>`:""}<button class="kbtn ${g.again?"ghost":"big"}" data-k="home">${g.again?"Home":"Awesome!"}</button></div></div></div>`}
+function kBadgesView(v){const k=KS();v.innerHTML=`<div class="kids">${kTop("Badges","home")}<div class="kbgrid">${KBAD.map(b=>`<div class="kbig ${k.badges[b[0]]?"on":""}"><span>${b[1]}</span><b>${esc(b[2])}</b><em>${esc(b[3])}</em></div>`).join("")}</div></div>`}
+/* ---------- game 1: rocket mission ---------- */
+function kRocketStart(){const order=kShuf(Object.keys(KSUB).concat(Object.keys(KSUB)));KV={scr:"rocket",i:0,n:10,fuel:0,right:0,res:[],order,Q:kQ(order[0]),ans:null}}
+const KDBLK={1:"moon",2:"mars",3:"stone",4:"sand",5:"ice",6:"ice",7:"water",8:"ice",9:"star"};
+function kRocketEnd(){const k=KS(),g=KV;g.done=true;k.rocket.missions++;g.ok=g.right>=7;g.lines=[];
+  if(g.ok){const first=k.rocket.dest<KDEST.length;g.dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)];k.xp+=50;k.coins+=10;if(first)k.rocket.dest++;k.today.launch++;const bl=KDBLK[Math.min(k.rocket.dest,9)]||"stone";kGive(bl,3);
+    g.lines=[`+50 XP and +10 ⚡`,`+3 ${KBM[bl][1]} blocks for your base`];if(g.right===10){k.coins+=10;g.lines.push("🎯 Perfect mission: +10 ⚡ bonus");if(!k.badges.perfect){k.badges.perfect=Date.now();kT("🏅 New badge: Perfect Mission!")}}kFx=true;kBeep("chest")}
+  else g.dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)];kGoalCheck();kBadges();kUnlocks();persist()}
+function kRocketView(v){const k=KS(),g=KV,dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)];
+  if(g.done){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Rocket Mission","home")}<div class="kcard kend"><div class="krocket ${g.ok?"fly":""}">🚀</div>
+    <h2>${g.ok?`You reached ${esc(g.dest[0])}! ${g.dest[1]}`:"Not enough fuel this time"}</h2><p>${g.right} of ${g.n} right${g.ok?` · ${esc(g.dest[2])}`:` · you need 7 to reach ${esc(g.dest[0])}`}</p>${g.lines.map(l=>`<p><b>${esc(l)}</b></p>`).join("")}
+    <div class="kpad"><button class="kbtn big" data-k="rocket">${g.ok?"Next mission 🚀":"Try again 🚀"}</button><button class="kbtn ghost" data-k="home">Home</button></div></div></div>`;return}
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Rocket Mission","home")}<div class="khud"><div class="kfuel"><i style="height:${g.fuel}%"></i></div><div class="krk">${g.fuel>=70?"🚀🔥":"🚀"}</div>
+   <div><b>Destination: ${dest[1]} ${esc(dest[0])}</b><div class="ksmall">Question ${g.i+1} of ${g.n} · fuel ${g.fuel}% · need 70%</div><div class="kdots">${Array.from({length:g.n},(_,i)=>`<i class="${i<g.i?(g.res[i]?"y":"n"):i===g.i?"c":""}"></i>`).join("")}</div></div></div>${kQuestion(g.Q,g.ans)}</div>`}
+/* ---------- game 2: block miner ---------- */
+function kMineStart(){const k=KS(),P=kRoverPuzzle(k.mine.lvl);P.ob=P.g.map(row=>row.map(c=>c?kPick(k.mine.lvl>=3?["stone","stone","lava","leaf"]:["stone","stone","leaf"]):""));KV={scr:"mine",P}}
+function kRoverRun(){const P=KV.P;if(!P.prog.length)return;P.state="run";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[];const steps=[];for(const c of P.prog){if(c==="F3")steps.push("F","F","F");else steps.push(c)}
+  let i=0;const tick=()=>{if(KV.scr!=="mine"||KV.P!==P)return;if(i>=steps.length){P.state=(P.x===P.tx&&P.y===P.ty)?"win":"miss";kMineEnd();renderKids();return}
+    const s=steps[i++];if(s==="L")P.dd=(P.dd+3)%4;else if(s==="R")P.dd=(P.dd+1)%4;else{const nx=P.x+KDIR[P.dd][0],ny=P.y+KDIR[P.dd][1];if(nx<0||ny<0||nx>=P.N||ny>=P.N||P.g[ny][nx]){P.state="crash";kBeep("no");renderKids();return}P.path.push(P.x+","+P.y);P.x=nx;P.y=ny;if(P.x===P.tx&&P.y===P.ty){P.state="win";kMineEnd();renderKids();return}}
+    kBeep("click");renderKids();setTimeout(tick,360)};setTimeout(tick,200)}
+function kMineEnd(){const P=KV.P,k=KS();if(P.state!=="win"||P.scored)return;P.scored=1;const n=P.prog.length;P.stars=n<=P.best?3:n<=P.best+2?2:1;
+  k.mine.solved++;if(P.stars===3)k.mine.stars3++;const d=P.stars===3?2:1;k.mine.dia+=d;k.today.dia+=d;kGive("dia",d);kGive("stone",2);kGive("wood",1);
+  k.xp+=15+5*P.stars+k.mine.lvl;k.coins+=P.stars;if(P.stars>=2&&k.mine.lvl<20)k.mine.lvl++;P.got=`+${d} 💎 diamond${d>1?"s":""}, +2 stone, +1 wood`;kAnswer("code",true);kBeep("chest");kFx=true;
+  P.lab=kQ(kSubPick({sci:2,math:1.5,code:1,geo:1,eng:1}));P.labAns=null}
+function kMineView(v){const P=KV.P,k=KS(),bio=KBIO[kLocIdx(k)];
+  if(P.state==="win"&&P.lab){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Block Miner","home")}<div class="kcard kend"><h2>💎 Diamond mined! ${"⭐".repeat(P.stars)}</h2><p><b>${esc(P.got)}</b></p><p>${P.prog.length} commands · best possible ${P.best}${P.stars<3?" · try for fewer commands next time":""}</p></div>
+    <div class="kcard"><div class="kh">🔬 Bonus: answer to test the diamond (+3 ⚡)</div></div>${kQuestion(P.lab,P.labAns,"mineNext")}</div>`;return}
+  const cell=(x,y)=>{const r=P.x===x&&P.y===y,t=P.tx===x&&P.ty===y,ob=P.g[y][x],tr=(P.path||[]).includes(x+","+y);
+    return r?`<span class="kc g" style="--bio:${bio}"><b class="krov" style="transform:rotate(${P.dd*90}deg)">▲</b></span>`:t?`<span class="kc bk bl-ore">✨</span>`:ob?`<span class="kc bk bl-${P.ob[y][x]}"></span>`:`<span class="kc g ${tr?"tr":""}" style="--bio:${bio}"></span>`};
+  const grid=Array.from({length:P.N},(_,y)=>Array.from({length:P.N},(_,x)=>cell(x,y)).join("")).join(""),max=P.best+5,lab={F:"⬆",L:"↺",R:"↻",F3:"🔁3⬆"},off=P.prog.length>=max||P.state==="run";
+  const msg=P.state==="crash"?"💥 Bonk! The bot hit a block or the edge. Fix your code and run it again.":P.state==="miss"?"🤔 The bot stopped before the diamond. Add more commands.":P.state==="run"?"Running your code…":"Program the bot (▲ points the way it faces) to reach the diamond ore ✨, then press Run.";
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Block Miner","home")}<div class="kcard"><div class="kpad" style="justify-content:space-between"><b>Map level ${k.mine.lvl}</b><span class="ksmall">Best: ${P.best} commands</span></div><div class="kgrid" style="grid-template-columns:repeat(${P.N},1fr)">${grid}</div><div class="ksmall">${esc(msg)}</div></div>
+   <div class="kcard"><div class="kprog">${P.prog.length?P.prog.map(c=>`<span class="kcmd">${lab[c]}</span>`).join(""):'<span class="ksmall">Your code appears here</span>'}</div>
+    <div class="kpad"><button class="kbtn" data-kc="F" ${off?"disabled":""}>⬆ Forward</button><button class="kbtn" data-kc="L" ${off?"disabled":""}>↺ Left</button><button class="kbtn" data-kc="R" ${off?"disabled":""}>↻ Right</button>${P.loop?`<button class="kbtn" data-kc="F3" ${off?"disabled":""}>🔁 Repeat 3 × ⬆</button>`:""}</div>
+    <div class="kpad"><button class="kbtn big green" data-k="run" ${!P.prog.length||P.state==="run"?"disabled":""}>▶ Run</button><button class="kbtn ghost" data-k="undo" ${P.state==="run"?"disabled":""}>⌫ Undo</button><button class="kbtn ghost" data-k="clear" ${P.state==="run"?"disabled":""}>Clear</button><button class="kbtn ghost" data-k="newmap" ${P.state==="run"?"disabled":""}>New map</button></div></div></div>`}
+/* ---------- game 3: chess quest ---------- */
+function kChessStart(){KV={scr:"chess",step:0,pawn:0,need:6};kChessNext()}
+function kChessNext(){const g=KV;if(g.step%2===0){g.P=kPuzzle(KS().chess.lv);g.Q=null}else{g.Q=kQ(kSubPick());g.ans=null;g.P=null}}
+const KGL={K:"♚",Q:"♛",R:"♜",B:"♝",N:"♞",P:"♟"};
+function kBoard(P){const b=P.state==="play"?P.b:P.b2,last=P.last||[],hint=P.tries>=2&&P.state==="play"?P.ok[0][0]:-1;
+  return `<div class="kboard">${b.map((p,i)=>{const r=i>>3,c=i&7,cls=["ksq",(r+c)%2?"d":"l"];if(i===P.sel)cls.push("sel");if(last.includes(i))cls.push("last");if(i===hint)cls.push("hint");if(P.state==="play"&&P.dots.includes(i))cls.push(p?"dot cap":"dot");
+    return `<button class="${cls.join(" ")}" data-ksq="${i}" aria-label="${"abcdefgh"[c]}${8-r}${p?" "+(cWhite(p)?"white ":"black ")+KPN[p.toUpperCase()]:""}">${p?`<span class="${cWhite(p)?"wp":"bp"}">${KGL[p.toUpperCase()]}&#xFE0E;</span>`:""}${c===0?`<em class="krk1">${8-r}</em>`:""}${r===7?`<em class="kfl">${"abcdefgh"[c]}</em>`:""}</button>`}).join("")}</div>`}
+function kChessView(v){const g=KV,k=KS(),P=g.P;
+  const track=`<div class="kcard"><div class="kh">♟️ Push your pawn to the end to make a queen!</div><div class="kptrack">${Array.from({length:g.need+1},(_,i)=>`<span class="${i<g.pawn?"on":""}">${i===g.pawn?"♙":i===g.need?"👑":""}</span>`).join("")}</div><div class="ksmall">Chess puzzles and questions take turns. Each right answer moves your pawn 1 square.</div></div>`;
+  if(!P){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Chess Quest","home")}${track}${kQuestion(g.Q,g.ans,"cnext")}</div>`;return}
+  const done=P.state!=="play",why=P.state==="won"?(P.tries<2?`✅ ${kPick(["Brilliant!","Great move!","Superb!","Grandmaster move!"])}`:"✅ You found it!"):P.state==="shown"?"Here's the answer. You'll get the next one!":"";
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Chess Quest","home")}${track}<div class="kq" style="--sc:#ff9f1c"><div class="kqh"><span class="ksub">♟️ Chess · Lv ${P.lv}</span><button class="kbtn ghost small" data-k="say">🔊 Read</button></div>
+   <div class="kqt">${esc(P.prompt)}</div><div class="ksmall2">You play white. Tap a piece to see where it can go, then tap a square.</div>${kBoard(P)}
+   ${P.msg&&!done?`<div class="kfb no"><b>${esc(P.msg)}</b>${P.tries>=2?"<div>💡 Hint: the red square shows which piece to move.</div>":""}</div>`:""}
+   ${done?`<div class="kfb ${P.state==="won"?"ok":"no"}"><b>${why}</b><div>💡 ${esc(P.tip)}</div></div><button class="kbtn big" data-k="cnext">Next ▶</button>`:""}</div></div>`}
+function kChessTap(i){const g=KV,P=g.P;if(!P||P.state!=="play")return;const p=P.b[i];
+  if(p&&cWhite(p)){P.sel=i;P.dots=cMoves(P.b,true).filter(m=>m[0]===i).map(m=>m[1]);kBeep("click");return}
+  if(P.sel!=null&&P.dots.includes(i)){if(P.ok.some(m=>m[0]===P.sel&&m[1]===i)){P.b2=cMove(P.b,P.sel,i);P.last=[P.sel,i];P.state="won";const ok=P.tries<2;if(ok)g.pawn++;kChessAnswer(P,ok)}
+    else{P.tries++;P.msg=kChessWhy(P,P.sel,i);kBeep("no");if(P.tries>=3){P.state="shown";P.last=P.ok[0];P.b2=cMove(P.b,P.ok[0][0],P.ok[0][1]);kChessAnswer(P,false)}}}
+  P.sel=null;P.dots=[]}
+function kChessAdvance(){const g=KV,k=KS();g.step++;if(g.pawn>=g.need){k.chess.promos++;k.coins+=30;k.xp+=50;kGive("gold",3);kBadges();kUnlocks();persist();kFx=true;kBeep("chest");
+    KV={scr:"reward",emoji:"👑",title:"Promotion!",lines:["Your pawn reached the end and became a QUEEN!","+30 ⚡ coins, +50 XP and 3 gold blocks"],again:"chess"};return}kChessNext()}
+/* ---------- base builder ---------- */
+function kBaseView(v){const k=KS(),sel=KV.sel||"grass",b=KBM[sel],un=sel==="erase"||kUnl(sel)||(k.inv[sel]||0)>0,n=k.inv[sel]||0;
+  const pal=KBLK.filter(x=>kUnl(x[0])||(k.inv[x[0]]||0)>0||x[4]).map(x=>{const ok=kUnl(x[0])||(k.inv[x[0]]||0)>0;return `<button class="kpal ${sel===x[0]?"on":""} ${ok?"":"lock"}" data-kpal="${x[0]}" aria-label="${esc(x[1])}">${kCell(x[0])}<i>${ok?(k.inv[x[0]]||0):"🔒"}</i></button>`}).join("");
+  const info=sel==="erase"?"Tap a block in your base to put it back in your bag.":!un?`🔒 ${b[1]}: ${b[5]} to unlock it.`:`${b[2]||""} ${b[1]}: ${n} in your bag.`;
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop(`My base on ${kLoc(k)}`,"home")}<div class="kbase" style="--bio:${KBIO[kLocIdx(k)]}">${k.base.map((id,i)=>kCell(id,"button",`data-kcell="${i}" aria-label="Square ${i+1}"`)).join("")}</div>
+   <div class="kcard"><div class="kpals"><button class="kpal ${sel==="erase"?"on":""}" data-kpal="erase" aria-label="Remove blocks"><span class="kcell it">🧽</span></button>${pal}</div>
+    <div class="ksmall">${esc(info)}</div>${sel!=="erase"&&un&&kUnl(sel)?`<button class="kbtn small" data-k="buy" ${k.coins<b[3]*5?"disabled":""}>Buy 5 for ${b[3]*5} ⚡</button>`:""}
+    <div class="ksmall">Win blocks in Rocket Mission, Block Miner, Chess Quest, quests and chests. New planets unlock new blocks!</div></div></div>`}
+function kBaseTap(i){const k=KS(),sel=KV.sel||"grass",cur=k.base[i];
+  if(sel==="erase"){if(cur){kGive(cur,1);k.base[i]="";kBeep("click")}persist();return}
+  if(!(kUnl(sel)||(k.inv[sel]||0)>0))return;if((k.inv[sel]||0)<1){kT(`Out of ${KBM[sel][1]}. Buy more or win some in the games!`);return}
+  if(cur===sel)return;if(cur)kGive(cur,1);k.base[i]=sel;k.inv[sel]--;k.placed++;k.today.place++;kBeep("click");kBadges();persist()}
+/* ---------- grown-up corner: progress and work done ---------- */
+function kMinsOn(k,off){return Math.round((k.daySecs[kToday(off)]||0)/60)}
+function kGrownView(v){const k=KS(),g=k.goal,gi=kGoalInfo(),wk=Array.from({length:7},(_,i)=>kMinsOn(k,i-6)),wkSum=wk.reduce((a,b)=>a+b,0),ansWk=Array.from({length:7},(_,i)=>k.days[kToday(i-6)]||0);
+  const rows=Object.entries(KSUB).map(([s,[n,ic]])=>{const st=k.st[s],r=st.h.length?Math.round(st.h.reduce((a,b)=>a+b,0)/st.h.length*100):null;return `<div class="kgr">${ic} <b>${n}</b>: level ${k.lv[s]} of 20 · ${st.c} right of ${st.n} · ${st.n?Math.round(st.c/st.n*100)+"%":"–"}${r!==null?` · recent ${r}%`:""}</div>`}).join("");
+  const cs=k.chess.st;v.innerHTML=`<div class="kids">${kTop("Grown-up corner","home")}
+   <div class="kcard"><div class="kh">⏱️ Learning time</div><div class="kgr">Today <b>${kMinsOn(k,0)} min</b> · last 7 days <b>${wkSum} min</b> · all time <b>${(k.secs/3600).toFixed(1)} h</b></div>
+    <div class="kdays">${wk.map((m,i)=>`<span><i style="height:${Math.min(70,m)}px"></i>${esc(new Date(Date.now()+(i-6)*86400000).toLocaleDateString(undefined,{weekday:"short"}))}<b>${m}m</b><small>${ansWk[i]} ans</small></span>`).join("")}</div>
+    <div class="ksmall">Time counts only while the kids page is open and he's actively playing (it stops after 90 seconds without a tap).</div></div>
+   <div class="kcard"><div class="kh">🎁 Prize goal</div><div class="kgr">${g.prize?`Prize: <b>${esc(g.prize)}</b>`:"No prize set yet."} · ${Math.min(gi.mins,g.mins)} of ${g.mins} min · ${Math.min(gi.cor,g.correct)} of ${g.correct} right answers · <b>${Math.round(gi.f*100)}%</b></div>
+    ${g.ms[100]?`<div class="kgr">🏆 Finished ${esc(new Date(g.ms[100]).toLocaleString())}. Give the prize, then start the next goal.</div>`:""}
+    ${KV.goalEdit?`<label class="ksmall" for="kgp">Prize (what he earns)</label><input id="kgp" class="kin" maxlength="60" value="${esc(g.prize)}" placeholder="Example: 400 Robux">
+     <div class="kbd"><label class="ksmall">Minutes<input id="kgm" class="kin" type="number" min="10" max="2000" value="${g.mins}"></label><label class="ksmall">Right answers<input id="kgc" class="kin" type="number" min="10" max="5000" value="${g.correct}"></label></div>
+     <div class="kpad"><button class="kbtn" data-k="goalSave">Save goal</button><button class="kbtn ghost" data-k="goalCancel">Cancel</button></div>`
+     :`<div class="kpad"><button class="kbtn small" data-k="goalEdit">✏️ Set prize and goal</button><button class="kbtn ghost small" data-k="goalGiven">✓ Prize given · start new goal</button></div>`}
+    <div class="ksmall">Both parts count: minutes of active play and right answers. About 2 hours and 200 right answers fits an 8-year-old playing steadily. Milestones at 25%, 50% and 75% give in-game rewards.</div>
+    ${g.hist.length?`<div class="kgr">Past prizes: ${g.hist.slice(-5).reverse().map(h=>`${esc(h.p||"prize")} (${esc(h.d)})`).join(" · ")}</div>`:""}</div>
+   <div class="kcard"><div class="kh">📚 Work done</div><div class="kgr">Right answers: <b>${kCorrect()}</b> · questions tried ${Object.values(k.st).reduce((a,s)=>a+s.n,0)+cs.n} · best streak ${k.bestCombo} · rank ${esc(KRANKS[kRank(k.xp)][1])} (${k.xp} XP)</div>${rows}
+    <div class="kgr">♟️ <b>Chess</b>: level ${k.chess.lv} · ${k.chess.solved} puzzles solved · ${k.chess.mates} checkmates · ${k.chess.forks} forks · ${k.chess.promos} promotions · ${cs.n?Math.round(cs.c/cs.n*100)+"% first-try rate":"–"}</div>
+    <div class="kgr">🚀 Rocket: ${k.rocket.missions} mission${k.rocket.missions===1?"":"s"}, reached ${esc(kLoc(k))} · ⛏️ Block Miner: map level ${k.mine.lvl}, ${k.mine.solved} map${k.mine.solved===1?"":"s"}, ${k.mine.dia} diamond${k.mine.dia===1?"":"s"} · 🏠 ${k.placed} blocks placed · 🏅 ${KBAD.filter(b=>k.badges[b[0]]).length} badges · 🔥 ${k.streak.n}-day streak</div>
+    <div class="ksmall">Levels 1–4 are about 2nd grade, 5–8 3rd–4th grade, 9–12 5th grade, 13–16 6th grade, and 17–20 middle school.</div></div>
+   <div class="kcard"><div class="kh">🔗 His own link</div><div class="kgr"><b class="klink">${esc(KLINK)}</b></div><div class="kpad"><button class="kbtn small" data-k="copyLink">Copy link</button></div>
+    <div class="ksmall">Open it on his tablet or phone (Add to Home Screen gives it an app icon). That device then shows only the kids page. Progress is saved on that device, and this corner shows it there. To use the study app on that device again, open the app link with ?study at the end.</div>
+    <div class="kgr">This device: ${KLOCK()?"kids page only":"full study app"}</div></div>
+   <div class="kcard"><div class="kpad"><button class="kbtn ghost small" data-k="profile">Edit name, birthday or avatar</button><button class="kbtn ghost small" data-k="sound">Sound ${k.sound===false?"off":"on"}</button></div>
+    ${KV.reset?`<div class="kpad"><button class="kbtn red small" data-k="resetYes">Erase all kids progress</button><button class="kbtn ghost small" data-k="resetNo">Keep</button></div>`:`<button class="kbtn ghost small" data-k="reset">Reset kids progress</button>`}</div></div>`}
 /* ---------- clicks ---------- */
 function kidsClick(b){const d=b.dataset;
   if(b.id==="kidsbtn"){KV={scr:"home"};view="kids";render();window.scrollTo(0,0);return true}
-  if(view!=="kids")return false;const k=KS(),g=KV;
-  if(d.k==="exit"){view="start";render();window.scrollTo(0,0);return true}
-  if(d.k==="home"){KV={scr:"home"};render();window.scrollTo(0,0);return true}
-  if(d.k==="badges"){KV={scr:"badges"};render();return true}
-  if(d.k==="name"){KV.naming=true;render();setTimeout(()=>{const i=$("#kname");if(i)i.focus()},50);return true}
-  if(d.k==="saveName"){const i=$("#kname");k.name=(i?i.value:"").trim().slice(0,18);KV.naming=false;persist();render();return true}
-  if(d.k==="reset"){KV.reset=true;render();return true}if(d.k==="resetNo"){KV.reset=false;render();return true}
-  if(d.k==="resetYes"){delete S.kids;KV={scr:"home"};persist();render();return true}
-  if(d.k==="say"){const Q=g.scr==="rover"?g.P.lab:g.scr==="trip"?(g.Q||(g.arrive&&g.arrive.Q)):g.Q;if(Q)kSay(Q.q+". "+Q.o.join(". "));return true}
+  if(view!=="kids")return false;kLastAct=Date.now();const k=KS(),g=KV,go=(o,top=true)=>{KV=o;render();if(top)window.scrollTo(0,0);return true};
+  if(d.kav!==undefined){KV.av=+d.kav;document.querySelectorAll(".kavb").forEach(x=>x.classList.toggle("on",x===b));const big=$("#kavbig");if(big)big.textContent=KAV[KV.av];kBeep("click");return true}
+  if(d.k==="saveSetup"){kSaveSetup();render();window.scrollTo(0,0);return true}
+  if(d.k==="exit"){if(KLOCK())return true;view="start";render();window.scrollTo(0,0);return true}
+  if(d.k==="home")return go({scr:"home"});
+  if(d.k==="profile")return go({scr:"setup"});
+  if(d.k==="badges")return go({scr:"badges"});
+  if(d.k==="grown")return go({scr:"grown"});
+  if(d.k==="base")return go({scr:"base",sel:"grass"});
+  if(d.k==="chest"){kOpenChest();render();window.scrollTo(0,0);return true}
+  if(d.k==="bday"){const yr=new Date().getFullYear();if(k.bdayDone!==yr&&kIsBday(k)){k.bdayDone=yr;k.coins+=50;kGive("cake",1);kUnlocks();persist();kFx=true;kBeep("chest");return go({scr:"reward",emoji:"🎂",title:`Happy Birthday, ${k.name}!`,lines:["+50 ⚡ coins","A birthday cake for your base 🎂","Have an amazing day!"]})}return true}
+  if(d.kq){kClaimQuest(d.kq);render();return true}
+  if(d.k==="sound"){k.sound=k.sound===false;persist();render();return true}
+  if(d.k==="say"){const Q=g.scr==="mine"?g.P.lab:g.scr==="chess"?(g.P?{q:g.P.prompt,o:[]}:g.Q):g.Q;if(Q)kSay(Q.q+(Q.o.length?". "+Q.o.join(". "):""));return true}
   if(d.k==="rocket"){kRocketStart();render();window.scrollTo(0,0);return true}
-  if(d.k==="rover"){kRoverStart();render();window.scrollTo(0,0);return true}
-  if(d.k==="trip"){KV={scr:"trip"};render();window.scrollTo(0,0);return true}
+  if(d.k==="mine"||d.k==="newmap"||d.k==="mineNext"){kMineStart();render();window.scrollTo(0,0);return true}
+  if(d.k==="chess"){kChessStart();render();window.scrollTo(0,0);return true}
   if(d.ka!==undefined){const i=+d.ka;
-    if(g.scr==="rocket"&&g.ans==null){g.ans=i;const ok=i===g.Q.a;g.res=g.res||[];g.res[g.i]=ok;if(ok){g.right++;g.fuel=Math.min(100,g.fuel+10)}kAnswer(g.Q.s,ok);render();return true}
-    if(g.scr==="rover"&&g.P.lab&&g.P.labAns==null){g.P.labAns=i;const ok=i===g.P.lab.a;if(ok)k.coins+=3;kAnswer(g.P.lab.s,ok);render();return true}
-    if(g.scr==="trip"&&g.Q&&g.ans==null){g.ans=i;const ok=i===g.Q.a;k.trip.bat=Math.min(100,k.trip.bat+(ok?25:5));kAnswer(g.Q.s,ok);render();return true}
-    if(g.scr==="trip"&&g.arrive&&g.arrive.ans==null){g.arrive.ans=i;const ok=i===g.arrive.Q.a;if(ok){k.coins+=5;k.trip.bat=Math.min(100,k.trip.bat+10)}kAnswer("geo",ok);render();return true}
-    return true}
-  if(d.k==="next"&&g.scr==="rocket"){g.i++;if(g.i>=g.n){g.done=true;g.dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)];k.rocket.missions++;if(g.right>=7){k.xp+=50;k.coins+=10;if(k.rocket.dest<KDEST.length)k.rocket.dest++;if(g.right===10)k.badges.perfect||(k.badges.perfect=Date.now(),kToast=(kToast?kToast+" · ":"")+"🏅 New badge: Perfect Mission!")}kBadges();persist()}
-    else{g.Q=kQ(g.order[g.i%g.order.length]);g.ans=null}render();window.scrollTo(0,0);return true}
-  if(d.kc&&g.scr==="rover"){const P=g.P;if(P.state!=="edit"){P.state="edit";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[]}P.prog.push(d.kc);render();return true}
-  if(d.k==="undo"&&g.scr==="rover"){const P=g.P;P.prog.pop();P.state="edit";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[];render();return true}
-  if(d.k==="clear"&&g.scr==="rover"){const P=g.P;P.prog=[];P.state="edit";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[];render();return true}
-  if(d.k==="newpuz"){kRoverStart();render();return true}
+    if(g.scr==="rocket"&&g.ans==null){g.ans=i;const ok=i===g.Q.a;g.res[g.i]=ok;if(ok){g.right++;g.fuel=Math.min(100,g.fuel+10)}kAnswer(g.Q.s,ok)}
+    else if(g.scr==="mine"&&g.P.lab&&g.P.labAns==null){g.P.labAns=i;const ok=i===g.P.lab.a;if(ok)k.coins+=3;kAnswer(g.P.lab.s,ok)}
+    else if(g.scr==="chess"&&g.Q&&g.ans==null){g.ans=i;const ok=i===g.Q.a;if(ok)g.pawn++;kAnswer(g.Q.s,ok)}
+    render();return true}
+  if(d.k==="next"&&g.scr==="rocket"){g.i++;if(g.i>=g.n)kRocketEnd();else{g.Q=kQ(g.order[g.i%g.order.length]);g.ans=null}render();window.scrollTo(0,0);return true}
+  if(d.k==="cnext"&&g.scr==="chess"){kChessAdvance();render();window.scrollTo(0,0);return true}
+  if(d.ksq!==undefined&&g.scr==="chess"){kChessTap(+d.ksq);render();return true}
+  if(d.kc&&g.scr==="mine"){const P=g.P;if(P.state!=="edit"){P.state="edit";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[]}P.prog.push(d.kc);kBeep("click");render();return true}
+  if((d.k==="undo"||d.k==="clear")&&g.scr==="mine"){const P=g.P;if(d.k==="undo")P.prog.pop();else P.prog=[];P.state="edit";P.x=P.sx;P.y=P.sy;P.dd=P.d;P.path=[];render();return true}
   if(d.k==="run"){kRoverRun();render();return true}
-  if(d.k==="roverNext"){kRoverStart();render();window.scrollTo(0,0);return true}
-  if(d.k==="charge"&&g.scr==="trip"){g.Q=Math.random()<.3?kTripMath():kQ(kSubPick({geo:2,math:1.5,sci:1,eng:1,code:1}));g.ans=null;render();return true}
-  if(d.k==="next"&&g.scr==="trip"){g.Q=null;g.ans=null;render();return true}
-  if(d.k==="drive"&&g.scr==="trip"){const T=k.trip,route=KTRIP[T.route],need=KLEG[T.stop%KLEG.length];if(T.bat<need)return true;T.bat-=need;T.stop++;T.arrived=1;
-    if(T.stop>=route.length-1){if(T.route==="usa")T.coast=1;else T.world=1}k.xp+=20;const c=route[T.stop];g.arrive={c,Q:{...kMk("geo",c[3],c[4],c.slice(5,8),c[2]),lv:k.lv.geo},ans:null};kBadges();persist();render();window.scrollTo(0,0);return true}
-  if(d.k==="tripDone"){KV={scr:"trip"};render();return true}
-  if(d.k==="newRoute"){const T=k.trip;T.route=T.route==="usa"?"world":"usa";T.stop=0;T.bat=Math.max(T.bat,60);persist();render();return true}
+  if(d.kpal){KV.sel=d.kpal;kBeep("click");render();return true}
+  if(d.kcell!==undefined){kBaseTap(+d.kcell);render();return true}
+  if(d.k==="buy"){const s=KV.sel,b0=KBM[s];if(b0&&kUnl(s)&&k.coins>=b0[3]*5){k.coins-=b0[3]*5;kGive(s,5);kBeep("ok");persist()}render();return true}
+  if(d.k==="goalEdit"){KV.goalEdit=true;render();return true}if(d.k==="goalCancel"){KV.goalEdit=false;render();return true}
+  if(d.k==="goalSave"){const gl=k.goal;gl.prize=($("#kgp").value||"").trim().slice(0,60);gl.mins=Math.max(10,Math.min(2000,Math.round(+$("#kgm").value||120)));gl.correct=Math.max(10,Math.min(5000,Math.round(+$("#kgc").value||200)));KV.goalEdit=false;persist();render();return true}
+  if(d.k==="goalGiven"){const gl=k.goal;if(gl.ms[100]||Object.keys(gl.ms).length||gl.prize)gl.hist.push({p:gl.prize,d:kToday(),m:gl.mins,c:gl.correct});gl.s0=k.secs;gl.c0=kCorrect();gl.ms={};persist();render();return true}
+  if(d.k==="copyLink"){try{navigator.clipboard.writeText(KLINK);kT("Link copied")}catch(_){kT("Copy the link above")}render();return true}
+  if(d.k==="reset"){KV.reset=true;render();return true}if(d.k==="resetNo"){KV.reset=false;render();return true}
+  if(d.k==="resetYes"){delete S.kids;persist();return go({scr:"home"})}
   return false}
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
@@ -11523,7 +11768,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 108 · Nov 18";
+const BUILD="Version 109 · Nov 18";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -11687,7 +11932,7 @@ function renderStart(){const b=bkStats("all"),e=[1,2,3].map(p=>Math.round(partSt
     ${[5,6,7,8].map(p=>{const X=PARTS[p],ps=partStats(p),n=BANK.filter(i=>i.p==p);return `<button class="startcard x${p}" data-sec="${X.x}"><span class="lvl">${p===7?"Certification training":p===8?"State commission course":"Exam preparation"}</span><b>${X.short} · ${esc(X.name)}</b><p>${p===8?"Become a Colorado notary: qualifications and the exam, acknowledgments, jurats, copy certifications, ID rules, the stamp and journal, fees, prohibited acts, and electronic and remote notarization.":p===7?"ITINs and Form W-7 for a Certifying Acceptance Agent: program rules, the 13 documents, the Certificate of Accuracy, exceptions, records and compliance.":p===5?"Investment adviser representative exam: economics, investment vehicles, client strategies, and securities law and ethics.":"Social Security disability representation: the programs, the five-step evaluation, evidence, appeals, fees and conduct."}</p><span class="sbar"><i style="width:${Math.round(ps.readyX)}%"></i></span><em>${Math.round(ps.readyX)}% ready · ${n.filter(i=>i.t==="f").length} flashcards · ${n.filter(i=>i.t==="q").length} questions</em></button>`}).join("")}
   </div><div class="statusline" style="margin-top:14px">${BUILD}${HOSTED?` · <button class="linkbtn" id="updcheck">Check for update</button>${updMsg?" · "+esc(updMsg):""}`:""}</div>
   ${updateReady?`<div class="ledger" style="border:2px solid var(--accent);margin-top:10px"><b>A newer version is ready: ${esc(updateReady)}.</b><div class="row"><button class="btn pri" id="updnow" ${updating?"disabled":""}>${updating?"Updating…":"Update now"}</button></div></div>`:""}</section>`}
-function render(){document.body.classList.toggle("kidsmode",view==="kids");document.body.classList.toggle("onstart",view==="start");if(view==="kids")return renderKids();renderTabs();if(view==="start")return renderStart();if(view==="labs")return renderLabs();if(view==="qbo")return renderQbo();if(view==="taxsim")return renderTax();if(view==="w7")return renderW7();if(view==="lessons")return renderLessons();if(view==="audio")return renderAudio();if(view==="session")return renderSession();if(view==="results")return renderResults();renderHome()}
+function render(){if(typeof KLOCK==="function"&&KLOCK())view="kids";document.body.classList.toggle("kidsmode",view==="kids");document.body.classList.toggle("onstart",view==="start");if(view==="kids")return renderKids();renderTabs();if(view==="start")return renderStart();if(view==="labs")return renderLabs();if(view==="qbo")return renderQbo();if(view==="taxsim")return renderTax();if(view==="w7")return renderW7();if(view==="lessons")return renderLessons();if(view==="audio")return renderAudio();if(view==="session")return renderSession();if(view==="results")return renderResults();renderHome()}
 
 function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},0);
   const P=PARTS[part],ps=partStats(part);
