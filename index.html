@@ -9740,7 +9740,7 @@ function kFlyRings(lv){const L=[];if(lv===1){[[0,150,1900],[130,170,2350],[390,1
 function kFlyReset(F){const lv=F.lv,st=KFLYM[lv].start,P={x:0,y:0,z:40,psi:0,th:0,ph:0,v:0,thr:0,flaps:0,gear:1,gnd:1,jet:F.jet?1:0};
   if(st==="air")Object.assign(P,{z:1400,y:150,v:40,thr:.6,gear:0,gnd:0});if(st==="app")Object.assign(P,{z:-1800,y:118,v:38,thr:.35,gear:0,gnd:0,th:-.065});if(st==="air2")Object.assign(P,{z:800,y:220,v:45,thr:.7,gear:0,gnd:0});
   F.P=P;F.rings=kFlyRings(lv);F.ringI=0;F.hits=0;F.touched=0;F.sink=0;F.crashT=0;F.rocket={y:0,vy:0,t:-1};F.won=0;F.stallT=0;F.cam={x:P.x,y:P.y+7,z:P.z-24,psi:P.psi,th:0,ro:0};F.tipT=0;
-  kFlySay(KFLYM[lv].ic+" "+KFLYM[lv].goal+"! "+(lv===0?"Push THROTTLE up (right side) ⬆️":lv===2?"First: press 🛞 GEAR DOWN.":lv===3?"Follow the green arrow ➡️":lv===4?"Throttle up and take off!":""),5)}
+  kFlySay(KFLYM[lv].ic+" "+KFLYM[lv].goal+"! "+(lv===0?"Push THROTTLE up (right side) ⬆️":lv===2?"First: press 🛞 GEAR DOWN.":lv===3?"Follow the green arrow ➡️":lv===4?"Throttle up and take off!":""),5);if(["form","boom","sar"].includes(KFLYM[lv].start))kFlyResetM(F)}
 function kFlySay(t,s){if(!kFly)return;kFly.tip=t;kFly.tipT=s||3}
 function kFlyStart(lv){const k=KS();if((k.tix||0)<1)return false;k.tix--;k.fly=k.fly||{lv:0,done:{},stars:{},flights:0,pts:0};k.fly.flights++;persist();
   kFly={lv,jet:k.fly.plane==="jet"&&!!k.fly.done[0],t:0,dur:420,stick:{x:0,y:0},joy:null,thrId:null,real:!!k.fly.real,easy:k.fly.pro?0:1,forces:k.fly.forces!==false,tilt:0,pts:0,done:[],q:null,over:0,asked:k.fly.asked||[],last:0,tip:"",tipT:0};kFlyReset(kFly);KV={scr:"fly"};kLine("Welcome aboard, Captain! "+KFLYM[lv].goal,3);return true}
@@ -9774,12 +9774,12 @@ function kFlyGoal(F){const P=F.P,lv=F.lv;if(F.won||F.crashT>0)return;
   if((lv===1)&&F.ringI>=F.rings.length){const h=F.hits||0;return kFlyWin(F,h>=6?3:h>=4?2:1,`⭕ ${h} of 6 rings! You turn by ROLLING the wings.`)}
   if((lv===2||lv===4)&&P.gnd&&F.touched&&P.v<3){const rw=kFlyRw(P.x,P.z);if(rw&&(lv===2?rw===KFLYRW[0]:rw===KFLYRW[1])){const st=F.sink<1.6?3:F.sink<3?2:1;return kFlyWin(F,st,lv===2?"🛬 You landed the plane! Gear, flaps, slow and gentle.":"🏝️ Island reached! You flew a real trip over the ocean.")}
     if(rw||!F.touched)return;F.touched=0;kFlySay("That's not the right runway. Take off again and find it! 🧭",3)}
-  if(lv===3){const d=Math.hypot(P.x-KFLYPAD.x,P.z-KFLYPAD.z);if(F.rocket.t<0&&d<850){F.rocket.t=0;kBeep("launch");kFlySay("🚀 3… 2… 1… LIFTOFF! Thrust is bigger than weight, so the rocket goes UP!",5);kLine("Three, two, one, liftoff!",3)}if(F.rocket.t>8)return kFlyWin(F,3,"🚀 You watched a rocket launch from the sky!")}}
+  if(lv===3){const d=Math.hypot(P.x-KFLYPAD.x,P.z-KFLYPAD.z);if(F.rocket.t<0&&d<850){F.rocket.t=0;kBeep("launch");kFlySay("🚀 3… 2… 1… LIFTOFF! Thrust is bigger than weight, so the rocket goes UP!",5);kLine("Three, two, one, liftoff!",3)}if(F.rocket.t>15)return kFlyWin(F,3,"🚀 You watched the launch AND the booster landing! Reusable rockets make space cheaper.")}}
 function kFlyWin(F,stars,msg){F.won=1;F.pts+=50*stars;const k=KS(),f=k.fly,first=!f.done[F.lv];f.done[F.lv]=1;f.stars[F.lv]=Math.max(f.stars[F.lv]||0,stars);if(F.lv+1>f.lv&&F.lv<5)f.lv=F.lv+1;f.pts=(f.pts||0)+50*stars;F.done.push(F.lv);
   if(first){k.coins+=20;kTrophy("fly"+F.lv,KFLYM[F.lv].ic,"Sky Pilot: "+KFLYM[F.lv].n,KFLYM[F.lv].goal+" in Sky Pilot.")}if([0,1,2,3,4].every(i=>f.done[i]))kTrophy("flyall","👨‍✈️","Captain Rocket Genius!","Finished every Sky Pilot mission.");
   persist();kBeep("chest");kHorn&&kHorn("clap");kLine(msg.replace(/[^\w\s!.,']/g,""),3);
   const pool=KFLYQ.map((q,i)=>i).filter(i=>!F.asked.includes(i)),qi=pool.length?kPick(pool):kR(0,KFLYQ.length-1);F.asked.push(qi);if(F.asked.length>=KFLYQ.length)F.asked=[];k.fly.asked=F.asked;
-  const Q=KFLYQ[qi],ord=kShuf([0,1,2,3]);F.q={msg,stars,first,qi,q:Q[0],o:ord.map(i=>Q[1][i]),a:ord.indexOf(0),ex:Q[2],ans:null};kDriveHum(0);render()}
+  const Q=F.lv>=6?(Math.random()<.5?kPick(KFLYQ2):(()=>{const h=kHeroQ(kPick(["af","sf"]));return[h.q,[h.o[h.a],...h.o.filter((x,i)=>i!==h.a)].slice(0,4),h.f]})()):KFLYQ[qi],ord=kShuf(Q[1].map((x,i)=>i));F.q={msg,stars,first,qi,q:Q[0],o:ord.map(i=>Q[1][i]),a:ord.indexOf(0),ex:Q[2],ans:null};kDriveHum(0);render()}
 /* ---------- 3D drawing ---------- */
 function kFlyCamUpd(F,dt){const P=F.P,C=F.cam,a=Math.min(1,dt*3.2),dpsi=Math.atan2(Math.sin(P.psi-C.psi),Math.cos(P.psi-C.psi));C.psi+=dpsi*(dt?a:1);C.th+=(P.th*.55-C.th)*(dt?a:1);C.ro+=(P.ph*.3-C.ro)*(dt?a:1);
   C.x=P.x-Math.sin(C.psi)*24;C.z=P.z-Math.cos(C.psi)*24;C.y=Math.max(2,P.y+6.5)}
@@ -9801,11 +9801,12 @@ function kFlyDraw(cv,F){const c=cv.getContext("2d"),W=cv.width,H=cv.height,C=F.c
     for(const e of[-1,1])for(let k=-5;k<=5;k++)if(k)kFlyPoly(c,[pt(e*(L-8),k*2.4-.7),pt(e*(L-8),k*2.4+.7),pt(e*(L-32),k*2.4+.7),pt(e*(L-32),k*2.4-.7)],Fo,"#f5f5f5")}
   const items=[];for(const o of kFlyWorld()){const d=Math.hypot(o.x-C.x,o.z-C.z);if(d>RG*(o.k==="mt"||o.k==="cloud"?2.6:1))continue;const t=kFlyTf(C,o.x,o.k==="cloud"?o.y:0,o.z);if(t[2]<2)continue;items.push([t[2],o,t])}
   for(const g of F.rings){const t=kFlyTf(C,g.x,g.y,g.z);if(t[2]>2)items.push([t[2],g,t,1])}
-  {const t=kFlyTf(C,KFLYPAD.x,0,KFLYPAD.z);if(t[2]>2)items.push([t[2],{k:"pad"},t])}
+  {const t=kFlyTf(C,KFLYPAD.x,0,KFLYPAD.z);if(t[2]>2)items.push([t[2],{k:"pad"},t])}kFlyMilItems(F,C,items,kFlyTf);
   items.sort((a,b)=>b[0]-a[0]);
   for(const [z,o,t,ring] of items){const sx=t[0]/z*Fo,sy=-t[1]/z*Fo,sc=Fo/z;
     if(ring){const ri=F.rings.indexOf(o),nx=Math.cos(o.dir),nz=-Math.sin(o.dir),cur=o.opt?!o.done:ri===F.ringI;c.lineWidth=Math.max(1.5,3.2*sc);c.strokeStyle=o.done?"rgba(46,194,126,.35)":o.miss?"rgba(255,77,109,.3)":cur?(o.opt?"#2ec27e":"#ffd23f"):"rgba(255,210,63,.35)";c.beginPath();
       for(let a=0;a<=24;a++){const an=a/24*6.283,p=kFlyTf(C,o.x+nx*Math.cos(an)*o.R,o.y+Math.sin(an)*o.R,o.z+nz*Math.cos(an)*o.R);if(p[2]<1.2){c.stroke();c.beginPath();continue}const X=p[0]/p[2]*Fo,Y=-p[1]/p[2]*Fo;a?c.lineTo(X,Y):c.moveTo(X,Y)}c.stroke();continue}
+    if((o.k==="lead"||o.k==="smoke"||o.k==="booster")&&kFlyMilDraw(c,o,sx,sy,sc,F,C))continue;
     if(o.k==="mt"){const r=o.r*sc,h=o.h*sc,fog=Math.min(.8,z/(RG*2.6));c.fillStyle=kFlyMix([92,110,96],KFLYHAZE,fog);c.beginPath();c.moveTo(sx-r,sy);c.lineTo(sx,sy-h);c.lineTo(sx+r,sy);c.closePath();c.fill();c.fillStyle=kFlyMix([70,86,76],KFLYHAZE,fog);c.beginPath();c.moveTo(sx,sy-h);c.lineTo(sx+r,sy);c.lineTo(sx+r*.15,sy);c.closePath();c.fill();
       c.fillStyle=kFlyMix([250,250,255],KFLYHAZE,fog*.6);c.beginPath();c.moveTo(sx,sy-h);c.lineTo(sx-r*.24,sy-h*.76);c.lineTo(sx-r*.08,sy-h*.8);c.lineTo(sx+r*.05,sy-h*.72);c.lineTo(sx+r*.24,sy-h*.76);c.closePath();c.fill();continue}
     if(o.k==="cloud"){const r=o.s*sc;c.fillStyle="rgba(255,255,255,.85)";for(const [ox,oy,rr] of[[-.5,0,.55],[0,-.2,.7],[.55,0,.5],[0,.1,.6]]){c.beginPath();c.arc(sx+ox*r,sy+oy*r,rr*r,0,7);c.fill()}continue}
@@ -9843,10 +9844,10 @@ function kFlyHud(c,F,W,H){const P=F.P,lv=F.lv;c.textBaseline="middle";c.fillStyl
   const J={x:70,y:H-90};c.fillStyle="rgba(255,255,255,.12)";c.strokeStyle="rgba(255,255,255,.45)";c.lineWidth=2;c.beginPath();c.arc(J.x,J.y,52,0,7);c.fill();c.stroke();c.fillStyle="rgba(255,255,255,.6)";c.beginPath();c.arc(J.x+F.stick.x*40,J.y+F.stick.y*(F.real?40:-40),22,0,7);c.fill();c.fillStyle="#fff";c.font="bold 10px system-ui";c.fillText(F.tilt?"📱 TILT":F.real?"✈️ PULL = UP":"🕹️ UP = UP",J.x,J.y-64);
   const T={x:W-40,y0:H-230,y1:H-40};c.fillStyle="rgba(255,255,255,.15)";c.beginPath();c.roundRect(T.x-18,T.y0,36,T.y1-T.y0,14);c.fill();const ty=T.y1-(T.y1-T.y0)*P.thr;const gr=c.createLinearGradient(0,T.y1,0,T.y0);gr.addColorStop(0,"#2ec27e");gr.addColorStop(1,"#ff6a00");c.fillStyle=gr;c.beginPath();c.roundRect(T.x-18,ty,36,T.y1-ty,14);c.fill();
   c.fillStyle="#fff";c.beginPath();c.roundRect(T.x-24,ty-8,48,16,6);c.fill();c.fillStyle="#111";c.font="900 10px system-ui";c.fillText(`${Math.round(P.thr*100)}%`,T.x,ty);c.fillStyle="#fff";c.font="bold 9px system-ui";c.fillText("THROTTLE",T.x,T.y0-10);
-  c.font="bold 11px system-ui";c.fillStyle=P.gear?"#2ec27e":"#ffb703";c.textAlign="center";c.fillText(`🛞 ${P.gear?"GEAR DOWN":"GEAR UP"}  ·  🪶 FLAPS ${P.flaps?"DOWN":"UP"}`,W/2,H-14)}
+  c.font="bold 11px system-ui";c.fillStyle=P.gear?"#2ec27e":"#ffb703";c.textAlign="center";c.fillText(`🛞 ${P.gear?"GEAR DOWN":"GEAR UP"}  ·  🪶 FLAPS ${P.flaps?"DOWN":"UP"}`,W/2,H-14);kFlyMilHud(c,F,W,H)}
 function kFlyLoop(ts){const F=kFly,cv=$("#kfly");if(!F||KV.scr!=="fly"||!cv){kDriveHum(0);return}let dt=F.last?Math.min(.04,(ts-F.last)/1000):0;F.last=ts;
   if(!F.over&&!F.q){F.t+=dt;F.tipT=Math.max(0,F.tipT-dt);if(F.tilt&&F.tiltV&&F.tilt0){const[g,b]=F.tiltV;F.stick.x=Math.max(-1,Math.min(1,(g-F.tilt0[0])/22));const y=Math.max(-1,Math.min(1,(b-F.tilt0[1])/18));F.stick.y=Math.abs(y)<.12?0:y}
-    kFlyStep(F,dt);kFlyRingStep(F);if(F.lv===3&&F.rocket.t>=0)F.rocket.t+=dt;kFlyGoal(F);kFlyCoach(F,dt);
+    kFlyStep(F,dt);kFlyMilStep(F,dt);kFlyRingStep(F);if(F.lv===3&&F.rocket.t>=0)F.rocket.t+=dt;kFlyGoal(F);kFlyMilGoal(F);kFlyCoach(F,dt);
     if(F.t>=F.dur){F.over=1;const k=KS();k.fly.best=Math.max(k.fly.best||0,F.pts);persist();kBeep("chest");kLine(`Time's up, Captain! ${F.pts} pilot points.`,3);setTimeout(()=>{if(KV.scr==="fly"&&kFly===F)render()},800)}}
   kFlyCamUpd(F,dt);kFlyDraw(cv,F);kDriveHum(F.over||F.q||F.crashT>0?0:60+F.P.thr*220+F.P.v*1.5);if(!F.q&&!F.over&&$("#kfly")===cv)kFlyRAF=requestAnimationFrame(kFlyLoop)}
 function kFlyCoach(F,dt){if(!F.easy)return;F.coachT=(F.coachT||0)-dt;if(F.coachT>0||F.tipT>0||F.crashT>0)return;const P=F.P,lv=F.lv;let t="";
@@ -9858,13 +9859,13 @@ function kFlyView(v){const k=KS();k.fly=k.fly||{lv:0,done:{},stars:{},flights:0,
   if(!F){const tix=k.tix||0;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("✈️ Sky Pilot","home")}<div class="kcard kcityhero" style="background:linear-gradient(135deg,#2f7fd8,#7cc4ff)"><div class="kcityt">✈️ SKY PILOT</div><div class="ksmall" style="color:#fff">A real-physics flight school, easy mode for kids. Meters and km/h, like real science!</div></div>
     <div class="kcard"><div class="kh">🧲 The four forces of flight</div><div class="kdbr"><span>🟢</span><div><b>LIFT</b> (up): wings make it. More speed = more lift.</div></div><div class="kdbr"><span>🔴</span><div><b>WEIGHT</b> (down): gravity pulls the plane.</div></div><div class="kdbr"><span>🟡</span><div><b>THRUST</b> (forward): the propeller pushes.</div></div><div class="kdbr"><span>🔵</span><div><b>DRAG</b> (back): air pushes against you. Flaps and gear add drag.</div></div></div>
     <div class="kcard"><div class="kh">🎮 How to fly</div><div class="kdbr"><span>🕹️</span><div><b>Stick</b> (bottom-left): left/right tilts (rolls) the wings to turn. ${f.real?"Pull DOWN to climb, like a real pilot.":"Push UP to climb."}</div></div><div class="kdbr"><span>⬆️</span><div><b>Throttle</b> (right): slide up for more thrust.</div></div><div class="kdbr"><span>📱</span><div>Or turn on <b>Tilt to fly</b> and steer by tilting the phone (see 📱 Phone Powers).</div></div></div>
-    ${KFLYM.map((m,i)=>{const lock=i>f.lv&&!(i===5&&f.done[4]),st=f.stars[i]||0;return `<div class="kcard ${lock?"klock":""}"><div class="kh">${m.ic} ${i+1}. ${esc(m.n)} ${f.done[i]?"⭐".repeat(st)+"☆".repeat(3-st):""}</div><div class="ksmall"><b>Goal:</b> ${esc(m.goal)}</div><div class="ksmall">🎓 ${esc(m.lesson)}</div><button class="kbtn ${lock?"ghost":"green"}" data-kflym="${i}" ${lock||tix<1?"disabled":""}>${lock?"🔒 Finish the mission before":tix<1?"Earn a 🎟️ ticket first":"Fly! (🎟️ 1 = 7 minutes)"}</button></div>`}).join("")}
+    ${KFLYM.map((m,i)=>{const lock=i<=4?i>f.lv:i<=6?!f.done[4]:!f.done[i-1],st=f.stars[i]||0;return `<div class="kcard ${lock?"klock":""}"><div class="kh">${m.ic} ${i+1}. ${esc(m.n)} ${f.done[i]?"⭐".repeat(st)+"☆".repeat(3-st):""}</div><div class="ksmall"><b>Goal:</b> ${esc(m.goal)}</div><div class="ksmall">🎓 ${esc(m.lesson)}</div><button class="kbtn ${lock?"ghost":"green"}" data-kflym="${i}" ${lock||tix<1?"disabled":""}>${lock?"🔒 Finish the mission before":tix<1?"Earn a 🎟️ ticket first":"Fly! (🎟️ 1 = 7 minutes)"}</button></div>`}).join("")}
     <div class="kcard"><div class="kh">⚙️ Pilot settings</div><div class="kpad"><button class="kbtn ${f.real?"green":"ghost"}" data-kfly="real">✈️ Real pilot controls: ${f.real?"ON":"OFF"}</button><button class="kbtn ${f.pro?"green":"ghost"}" data-kfly="pro">🎖️ Pro mode (no helpers): ${f.pro?"ON":"OFF"}</button><button class="kbtn ${f.plane==="jet"?"green":"ghost"}" data-kfly="plane" ${f.done[0]?"":"disabled"}>${f.done[0]?(f.plane==="jet"?"⚡ Plane: FIGHTER JET (2× thrust, takes off at 35 m/s)":"✈️ Plane: Trainer (tap for the ⚡ jet)"):"🔒 ⚡ Jet unlocks after First Takeoff"}</button><button class="kbtn ${f.forces!==false?"green":"ghost"}" data-kfly="forces">🧲 Forces panel: ${f.forces!==false?"ON":"OFF"}</button></div><div class="ksmall">🎟️ ${tix} ticket${tix===1?"":"s"} · 🏆 ${f.pts||0} pilot points · ✈️ ${f.flights||0} flights</div></div></div>`;return}
   if(F.over){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("✈️ Sky Pilot","home")}<div class="kcard kend"><div class="kbig2">✈️</div><h2>Great flying, Captain!</h2><div class="kscore">🏆 ${F.pts}</div><p>✅ Missions: ${F.done.length?F.done.map(i=>KFLYM[i].ic).join(" "):"keep practicing!"}</p><div class="kpad">${(k.tix||0)>0?`<button class="kbtn big green" data-kfly="again">Fly again ✈️</button>`:""}<button class="kbtn ghost" data-k="home">Home</button></div><p class="ksmall">🎟️ ${k.tix||0} ticket${(k.tix||0)===1?"":"s"} left</p></div></div>`;kDriveHum(0);return}
   const W=Math.min(380,v.clientWidth||360)-4,H=Math.round(W*1.5),Q=F.q;
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("✈️ Sky Pilot","home")}<div class="kdrvbox kdbbox"><canvas id="kfly" width="${W}" height="${H}" aria-label="Sky Pilot flight simulator" style="touch-action:none"></canvas>
-   ${Q?`<div class="kdbq"><div class="kh">${esc(Q.msg)}</div><div style="font-size:24px">${"⭐".repeat(Q.stars)}</div><div class="ksmall">🧑‍✈️ Pilot quiz: answer for bonus points!</div><div class="kdbqt" style="font-size:16px">${esc(Q.q)}</div><div class="kdbqo" style="grid-template-columns:1fr">${Q.o.map((o,i)=>`<button class="kbtn ${Q.ans==null?"":i===Q.a?"green":i===Q.ans?"red":"ghost"}" data-kfq="${i}" ${Q.ans==null?"":"disabled"}>${esc(o)}</button>`).join("")}</div>${Q.ans!=null?`<div class="ksmall">${Q.ans===Q.a?"✅":"💡"} ${esc(Q.ex)}</div><div class="kpad">${F.lv<5?`<button class="kbtn big green" data-kfly="next">Next: ${KFLYM[F.lv+1].ic} ${esc(KFLYM[F.lv+1].n)} ▶</button>`:""}<button class="kbtn ghost" data-kfly="free">🌤️ Free flight</button></div>`:""}</div>`:""}</div>
-   <div class="kpad kdrvbtns"><button class="kbtn big ${F.P.gear?"green":""}" data-kfly="gear">🛞 Gear ${F.P.gear?"DOWN":"UP"}</button><button class="kbtn big ${F.P.flaps?"green":""}" data-kfly="flaps">🪶 Flaps ${F.P.flaps?"DOWN":"UP"}</button></div>
+   ${Q?`<div class="kdbq"><div class="kh">${esc(Q.msg)}</div><div style="font-size:24px">${"⭐".repeat(Q.stars)}</div><div class="ksmall">🧑‍✈️ Pilot quiz: answer for bonus points!</div><div class="kdbqt" style="font-size:16px">${esc(Q.q)}</div><div class="kdbqo" style="grid-template-columns:1fr">${Q.o.map((o,i)=>`<button class="kbtn ${Q.ans==null?"":i===Q.a?"green":i===Q.ans?"red":"ghost"}" data-kfq="${i}" ${Q.ans==null?"":"disabled"}>${esc(o)}</button>`).join("")}</div>${Q.ans!=null?`<div class="ksmall">${Q.ans===Q.a?"✅":"💡"} ${esc(Q.ex)}</div><div class="kpad">${kFlyNextLv(F.lv)!=null?`<button class="kbtn big green" data-kfly="next">Next: ${KFLYM[kFlyNextLv(F.lv)].ic} ${esc(KFLYM[kFlyNextLv(F.lv)].n)} ▶</button>`:""}<button class="kbtn ghost" data-kfly="free">🌤️ Free flight</button></div>`:""}</div>`:""}</div>
+   <div class="kpad kdrvbtns"><button class="kbtn big ${F.P.gear?"green":""}" data-kfly="gear">🛞 Gear ${F.P.gear?"DOWN":"UP"}</button><button class="kbtn big ${F.P.flaps?"green":""}" data-kfly="flaps">🪶 Flaps ${F.P.flaps?"DOWN":"UP"}</button></div>${F.P.jet?`<div class="kpad"><button class="kbtn big ${F.burn?"green":""}" data-kfly="burn">🔥 Afterburner ${F.burn?"ON":"OFF"}</button></div>`:""}
    <div class="kpad"><button class="kbtn ${F.tilt?"green":"ghost"} small" data-kfly="tilt">📱 Tilt to fly: ${F.tilt?"ON":"OFF"}</button><button class="kbtn ghost small" data-kfly="restart">🔄 Restart mission</button></div>
    <div class="ksmall">🕹️ Stick bottom-left · ⬆️ throttle on the right · keyboard: arrows + W/S, G gear, F flaps</div></div>`;
   const cv=$("#kfly");if(cv){const pos=e=>{const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*cv.width/r.width,y:(e.clientY-r.top)*cv.height/r.height}},J={x:70,y:H-90};
@@ -9882,15 +9883,16 @@ function kFlyClick(d,top){const k=KS(),F=kFly;top=top||(()=>{render();return tru
   if(a==="real"||a==="pro"||a==="forces"){k.fly=k.fly||{lv:0,done:{},stars:{}};if(a==="forces")k.fly.forces=k.fly.forces===false;else k.fly[a]=!k.fly[a];persist();kBeep("click");render();return true}
   if(a==="again"){kFly=null;render();return true}
   if(!F)return true;
-  if(a==="next"||a==="free"){F.lv=a==="free"?5:F.lv+1;F.q=null;kFlyReset(F);render();return true}
+  if(a==="next"||a==="free"){F.lv=a==="free"?5:kFlyNextLv(F.lv);F.q=null;kFlyReset(F);render();return true}
   if(a==="restart"){kFlyReset(F);kBeep("click");render();return true}
+  if(a==="burn"){if(!F.P.jet)return true;F.burn=F.burn?0:1;kBeep(F.burn?"whoosh":"click");kFlySay(F.burn?"🔥 Afterburner ON: huge thrust, but it burns fuel very fast!":"Afterburner off.",2);render();return true}
   if(a==="gear"){if(F.P.gnd){kFlySay("Gear must stay down on the ground! 🛞",2);render();return true}F.P.gear=F.P.gear?0:1;kBeep("click");kFlySay(F.P.gear?"🛞 Gear DOWN: ready to land (more drag).":"🛞 Gear UP: less drag, faster flying!",2);render();return true}
   if(a==="flaps"){F.P.flaps=F.P.flaps?0:1;kBeep("click");kFlySay(F.P.flaps?"🪶 Flaps DOWN: more lift and more drag. Stall speed drops to 17 m/s.":"🪶 Flaps UP: less drag. Stall speed is 21 m/s.",2.5);render();return true}
   if(a==="tilt"){if(F.tilt){F.tilt=0;F.stick={x:0,y:0};render();return true}const on=()=>{F.tilt=1;F.tilt0=F.tiltV?F.tiltV.slice():null;kFlySay("📱 Tilt ON! Hold the phone how you like: that's 'level'. Tilt left/right to turn, top toward you to climb.",4);render()};
     try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==="function"){DeviceOrientationEvent.requestPermission().then(r=>{if(r==="granted")on();else{kT("Tilt was not allowed. You can turn it on in Settings.");render()}}).catch(()=>{kT("Tilt needs permission. See 📱 Phone Powers.");render()});return true}}catch(_){}on();return true}
   return true}
 window.addEventListener("deviceorientation",e=>{if(!kFly||e.gamma==null)return;const ang=(screen.orientation&&screen.orientation.angle)||window.orientation||0;const g=ang===90?e.beta:(ang===-90||ang===270)?-e.beta:e.gamma,b=ang===90?-e.gamma:(ang===-90||ang===270)?e.gamma:e.beta;kFly.tiltV=[g,b];if(kFly.tilt&&!kFly.tilt0)kFly.tilt0=[g,b]});
-document.addEventListener("keydown",e=>{if(view!=="kids"||KV.scr!=="fly"||!kFly)return;const m={ArrowLeft:"kL",ArrowRight:"kR",ArrowUp:"kU",ArrowDown:"kD",w:"kW",s:"kS"}[e.key];if(m){e.preventDefault();kFly[m]=true}if(e.key==="g")kFlyClick({kfly:"gear"});if(e.key==="f")kFlyClick({kfly:"flaps"})});
+document.addEventListener("keydown",e=>{if(view!=="kids"||KV.scr!=="fly"||!kFly)return;const m={ArrowLeft:"kL",ArrowRight:"kR",ArrowUp:"kU",ArrowDown:"kD",w:"kW",s:"kS"}[e.key];if(m){e.preventDefault();kFly[m]=true}if(e.key==="g")kFlyClick({kfly:"gear"});if(e.key==="b")kFlyClick({kfly:"burn"});if(e.key==="f")kFlyClick({kfly:"flaps"})});
 document.addEventListener("keyup",e=>{if(!kFly)return;const m={ArrowLeft:"kL",ArrowRight:"kR",ArrowUp:"kU",ArrowDown:"kD",w:"kW",s:"kS"}[e.key];if(m)kFly[m]=false});
 function kFlyJet(c,s,P,F){const t=F.t;c.lineJoin="round";
   if(P.gear){c.strokeStyle="#333";c.lineWidth=.16*s;for(const x of[-1.1,1.1]){c.beginPath();c.moveTo(x*s*.6,.3*s);c.lineTo(x*s,1.25*s);c.stroke();c.fillStyle="#111";c.beginPath();c.ellipse(x*s,1.35*s,.2*s,.34*s,0,0,7);c.fill()}c.beginPath();c.moveTo(0,.4*s);c.lineTo(0,1.2*s);c.stroke();c.fillStyle="#111";c.beginPath();c.ellipse(0,1.28*s,.15*s,.28*s,0,0,7);c.fill()}
@@ -9901,6 +9903,8 @@ function kFlyJet(c,s,P,F){const t=F.t;c.lineJoin="round";
   c.fillStyle="#dde2ea";c.beginPath();c.ellipse(0,.1*s,.85*s,.62*s,0,0,7);c.fill();c.strokeStyle="#9aa3b5";c.lineWidth=.06*s;c.stroke();
   for(const x of[-.38,.38]){c.fillStyle="#3b3f48";c.beginPath();c.arc(x*s,.12*s,.3*s,0,7);c.fill();if(P.thr>.05){const g=c.createRadialGradient(x*s,.12*s,0,x*s,.12*s,.3*s*(1+P.thr));g.addColorStop(0,P.thr>.8?"#fff6c2":"#ffb703");g.addColorStop(1,"rgba(255,90,0,0)");c.fillStyle=g;c.beginPath();c.arc(x*s,.12*s,(.3+P.thr*.35+Math.sin(t*30)*.04)*s,0,7);c.fill()}}
   c.fillStyle="#7cd3ff";c.beginPath();c.ellipse(0,-.45*s,.32*s,.22*s,0,0,7);c.fill()}
+
+function kFlyNextLv(lv){return lv<4?lv+1:lv===4?6:lv===5?null:lv+1<KFLYM.length?lv+1:null}
 
 /* ---------- 🚀 Booster Landing 2.0: 10 levels, legs, flip, Moon/Mars gravity, asteroids, Falcon Heavy double landing ---------- */
 const KLAND=[{n:"Landing Zone",d:"Land on the pad at the Cape.",ic:"🎯",g:60,pad:110},{n:"Droneship",d:"Land on a ship rocking in the ocean.",ic:"🚢",g:60,pad:96,ship:1},{n:"Windy Droneship",d:"Wind pushes you sideways!",ic:"💨",g:60,pad:96,ship:1,wind:1},
@@ -10395,6 +10399,108 @@ KCTB.push(["inv","💡","Invention Workshop","💡 Inventor & engineer for a day
 function kCtBQ(kind){const pick=id=>{const q=kHeroQ(id);return{q:q.q,o:q.o,a:q.a}};const m={bank:"biz",hosp:"doc",court:"law",lab:"sci2",inv:null}[kind];
   if(kind==="bank"){const out=[pick("biz"),pick("biz")];const p=kR(3,15),pay=p<10?10:20;out.push({q:`💵 A customer buys a $${p} item and pays $${pay}. Change?`,o:[`$${pay-p}`,`$${pay-p+1}`,`$${pay-p+2}`],a:0});return out}
   if(kind==="inv")return[pick("inv"),pick("eng2"),pick("inv")];return[pick(m),pick(m),pick(m)]}
+
+/* ---------- 🎖️ Air Force, 🛰️ Space Force, 🛡️ Cyber Defender: skills + realistic Sky Pilot missions (formation, sound barrier, search & rescue) ---------- */
+KHERO.push(["af","🎖️","Air Force Pilot","sci","Jets, speed, G-force, radio talk"],["sf","🛰️","Space Force","sci","Satellites, orbits, GPS"],["cyb","🛡️","Cyber Defender","code","Passwords, phishing, encryption"]);
+Object.assign(KHQ,{
+af:[[1,"Members of the US Air Force are called…","Airmen",["Guardians","Sailors","Marines"],"Space Force members are Guardians, Navy members are Sailors."],
+ [1,"Pilots talk to the control tower using a…","Radio",["Letter","Drum","Flag"],"Every word is short and clear so nobody gets confused."],
+ [1,"In the pilot alphabet, the letter A is…","Alpha",["Apple","Ace","Arrow"],"Alpha, Bravo, Charlie, Delta… Clear words beat letters on a crackly radio."],
+ [1,"Before every flight, pilots do a…","Checklist walk-around",["Dance","Nap","Snack contest"],"Checklists keep pilots from forgetting anything, even after 10,000 flights."],
+ [2,"In the pilot alphabet, 'Tango Echo Sierra' spells…","T E S",["T A S","D E S","T E X"],"Tango = T, Echo = E, Sierra = S."],
+ [2,"1500 in military time is…","3:00 PM",["5:00 PM","1:50 PM","3:00 AM"],"After noon, subtract 12: 15 − 12 = 3 PM."],
+ [2,"The US Air Force Academy is in…","Colorado Springs, Colorado",["Miami, Florida","Seattle, Washington","Boston, Massachusetts"],"Future officers train there, near Denver!"],
+ [2,"The US Air Force became its own service in…","1947",["1776","1903","2019"],"Before that, it was part of the Army."],
+ [3,"Mach 1 is the speed of…","Sound",["Light","A bicycle","A cheetah"],"Mach 2 is twice the speed of sound."],
+ [3,"At sea level, the speed of sound is about…","343 m/s (about 1,235 km/h)",["34 m/s","3,430 m/s","300,000 km/s"],"Faster than that is supersonic."],
+ [3,"A 'sonic boom' happens when a jet…","Flies faster than sound",["Lands","Honks","Turns on its lights"],"Sound waves pile up into one big BOOM."],
+ [3,"1 G is…","Normal Earth gravity",["Zero gravity","A kind of fuel","A radio code"],"In a hard turn, a fighter pilot can feel 9 G: nine times their weight!"],
+ [4,"Fighter jets refuel in the air from a…","Tanker plane like the KC-46",["Gas station","Helicopter","Hot-air balloon"],"A boom from the tanker connects to the jet while both fly."],
+ [4,"Air Force core values: Integrity first, Service before self, and…","Excellence in all we do",["Speed above all","Win at any cost","Fly every day"],"Character matters as much as flying skill."],
+ [4,"To become an Air Force pilot, you usually need…","A college degree and to become an officer",["Only a driver's license","A chess trophy","Nothing at all"],"Paths: the Air Force Academy, ROTC in college, or Officer Training School."],
+ [4,"A G-suit helps pilots by…","Squeezing the legs so blood stays in the brain",["Keeping them warm","Making them faster","Playing music"],"Too many G's pulls blood to the feet and can make a pilot black out (G-LOC)."]],
+sf:[[1,"Members of the US Space Force are called…","Guardians",["Airmen","Rangers","Astronauts"],"The Space Force protects things in space."],
+ [1,"A satellite is…","Something that orbits a planet",["A kind of car","A star","A cloud"],"The Moon is a natural satellite. GPS satellites are human-made."],
+ [1,"Which satellites help a phone map know where you are?","GPS",["TV remote","Radio DJ","Microwave"],"GPS means Global Positioning System."],
+ [1,"The Space Force mainly protects…","Satellites and America's interests in space",["Ocean fish","Airports only","Schools"],"Satellites run maps, weather, phones and bank payments!"],
+ [2,"The US Space Force was created in…","2019",["1947","1969","2005"],"It's the newest branch of the US military."],
+ [2,"How many branches are in the US armed forces?","6",["3","4","10"],"Army, Navy, Air Force, Marine Corps, Space Force and Coast Guard."],
+ [2,"GPS needs signals from at least how many satellites to find your spot?","4",["1","2","40"],"Four signals give position and exact time."],
+ [2,"Satellites stay up because they…","Fall around Earth so fast they keep missing it",["Have giant balloons","Sit on clouds","Hang from strings"],"That's what an orbit is!"],
+ [3,"GPS satellites orbit about how high?","About 20,000 km",["About 20 km","About 200 km","About 2 million km"],"About 31 GPS satellites work together."],
+ [3,"The International Space Station orbits about how high?","About 400 km",["About 4 km","About 40,000 km","On the Moon"],"That's low Earth orbit."],
+ [3,"A low Earth orbit takes about how long to circle Earth?","About 90 minutes",["About 1 day","About 1 year","About 1 minute"],"Astronauts on the ISS see about 16 sunrises a day!"],
+ [3,"Guardians track 'space debris' because…","Junk moving very fast can smash satellites",["It's pretty","It makes noise","It's made of gold"],"Even a tiny bolt can hit like a bullet in orbit."],
+ [4,"A geostationary satellite stays over one spot because…","It orbits once a day, matching Earth's spin",["It's tied down","It has no engine","It's on a mountain"],"TV and weather satellites often sit there."],
+ [4,"Geostationary orbit is about how high?","About 36,000 km",["About 400 km","About 3,600 km","About 360,000 km"],"Almost a tenth of the way to the Moon."],
+ [4,"Which Colorado base flies the GPS satellites?","Schriever Space Force Base",["Pearl Harbor","Fort Knox","Kennedy Space Center"],"Guardians there keep GPS working for the whole world."],
+ [4,"Missile-warning satellites spot launches by…","Seeing the heat (infrared) of rocket engines",["Listening for noise","Smelling smoke","Reading the news"],"Infrared cameras see heat, even at night."]],
+cyb:[[1,"A strong password is…","Long and hard to guess, like a silly sentence",["Your name","123456","password"],"Example idea: PurpleTacoRocket!42 (but make your own)."],
+ [1,"Someone online asks for your password. You…","Never share it and tell a grown-up",["Send it","Post it","Trade it for Robux"],"Real companies never ask for your password."],
+ [1,"A computer virus is…","A harmful program that spreads",["A cold for computers","A fast mouse","A game level"],"Antivirus and updates help stop it."],
+ [1,"'You won 10,000 Robux! Click here!' is probably…","A scam (phishing)",["Real","A school message","A gift from Dad"],"If it sounds too good to be true, it probably is."],
+ [2,"2FA (two-factor authentication) means…","A second check, like a code on your phone",["Two passwords on paper","Two computers","Typing twice"],"Even if someone steals your password, they still can't get in."],
+ [2,"A firewall…","Blocks unwanted network traffic",["Puts out fires","Heats the computer","Makes Wi-Fi faster"],"It's like a guard at the gate of your network."],
+ [2,"Software updates matter because…","They fix security holes",["They change colors","They're just ads","They slow you down on purpose"],"Hackers love old, unpatched software."],
+ [2,"A lock and 'https' in the address bar mean…","The connection is encrypted",["The site is always honest","It's a game","Nothing"],"Encrypted means scrambled, but scam sites can have locks too!"],
+ [3,"Encryption turns a message into…","Secret code only the right key can unlock",["A picture","A song","A virus"],"Militaries, banks and your phone all use encryption."],
+ [3,"An ethical hacker…","Tests systems WITH permission to find weaknesses",["Breaks in for fun","Steals passwords","Never uses computers"],"Permission is what makes it legal and ethical."],
+ [3,"Phishing tries to…","Trick you into giving passwords or money",["Catch real fish","Speed up games","Fix computers"],"Check the sender and never rush."],
+ [3,"A 'brute-force attack' tries…","Every possible password until one works",["Hitting the computer","Asking nicely","Unplugging Wi-Fi"],"Long passwords make this take millions of years."],
+ [4,"Which US military command defends America's networks?","US Cyber Command",["Space Command only","The Coast Guard Band","NASA"],"Cyber warfare operators work in the Air Force, Army, Navy, Marines and Space Force."],
+ [4,"Ransomware…","Locks files and demands payment",["Gives free games","Cleans your computer","Speeds up downloads"],"Backups are the best defense."],
+ [4,"The 'principle of least privilege' means…","Give each user only the access they need",["Everyone gets admin","Nobody gets access","Share all passwords"],"Less access means less damage if an account is hacked."],
+ [4,"A 'zero-day' is…","A security flaw the maker doesn't know about yet",["A holiday","Day zero of school","A fast computer"],"Defenders race to patch it once it's found."]]});
+KHERO.slice(-3).forEach(H=>{KCATS.splice(KCATS.length-1,0,[H[0],H[1],H[2],H[4],H[3]]);KROT.push(["q:"+H[0],H[1],H[2],"kcat",H[0]])});
+KLT.push(["mil","🎖️","Air Force & Space Force"]);
+KLESS.mil=[
+ ["Who protects the skies and space?",["The US armed forces have 6 branches: Army, Navy, Air Force, Marine Corps, Space Force and Coast Guard.","The Air Force flies planes, jets and drones. Its members are Airmen.","The Space Force (created in 2019) protects satellites. Its members are Guardians."],[["Members of the Space Force are called…",["Guardians","Airmen","Pilots"],0],["Which branch flies most US jets?",["Air Force","Coast Guard","Space Force"],0]]],
+ ["Talk like a pilot",["Radios crackle, so pilots spell with words: Alpha, Bravo, Charlie, Delta, Echo…","Military time uses 24 hours: 0900 is 9 AM, 1500 is 3 PM.","'Roger' means 'I heard you.' 'Wilco' means 'I will comply.'"],[["'Charlie' stands for…",["C","K","S"],0],["1800 in military time is…",["6 PM","8 PM","6 AM"],0]]],
+ ["Fast and high: jets and G-force",["Mach 1 is the speed of sound: about 343 m/s at sea level. Faster is supersonic, and it makes a sonic boom.","Hard turns create G-force. 9 G feels like weighing 9 times more!","G-suits squeeze the legs so blood stays in the brain, and pilots train their breathing to avoid blacking out."],[["Supersonic means faster than…",["Sound","Light","A car"],0],["A G-suit keeps blood in the…",["Brain","Feet","Hands"],0]]],
+ ["ELITE: Orbits, GPS and cyber defense",["GPS satellites orbit about 20,000 km up. Your phone needs at least 4 signals to find your spot.","Guardians at Schriever Space Force Base in Colorado fly the GPS constellation.","Cyber defenders protect military networks with encryption, firewalls and least-privilege access."],[["GPS needs at least how many satellites?",["4","1","12"],0],["Encryption makes messages…",["Secret code","Louder","Shorter"],0]]]];
+KCTB.push(["base","🎖️","Air & Space Base","🎖️ Airman, Guardian and cyber defender for a day"]);
+function kCtBQ(kind){const pick=id=>{const q=kHeroQ(id);return{q:q.q,o:q.o,a:q.a}};const m={bank:"biz",hosp:"doc",court:"law",lab:"sci2"}[kind];
+  if(kind==="bank"){const out=[pick("biz"),pick("biz")];const p=kR(3,15),pay=p<10?10:20;out.push({q:`💵 A customer buys a $${p} item and pays $${pay}. Change?`,o:[`$${pay-p}`,`$${pay-p+1}`,`$${pay-p+2}`],a:0});return out}
+  if(kind==="inv")return[pick("inv"),pick("eng2"),pick("inv")];if(kind==="base")return[pick("af"),pick("sf"),pick("cyb")];return[pick(m),pick(m),pick(m)]}
+/* space-force and air-force facts join the rocket quizzes (Booster Landing, Space Mission) */
+KSPX.push([2,"Which US military branch protects satellites?","Space Force","Coast Guard","Marine Corps","Navy","The Space Force was created in 2019. Its members are Guardians."],[3,"GPS satellites orbit about how high?","About 20,000 km","About 20 km","About 400 km","About 400,000 km","About 31 GPS satellites circle Earth twice a day."],[3,"What is Mach 1?","The speed of sound","The speed of light","Rocket fuel","A kind of orbit","About 343 m/s at sea level."],[4,"A geostationary satellite orbits about how high?","About 36,000 km","About 400 km","About 2,000 km","About 384,000 km","At that height one orbit takes a day, so it hovers over one spot."],[2,"Members of the US Air Force are called…","Airmen","Guardians","Sailors","Rangers","The Air Force Academy is in Colorado Springs."]);
+/* ---------- Sky Pilot: realistic jet systems + 3 military missions ---------- */
+KFLYM.push({ic:"🎖️",n:"Formation Flight",goal:"Stay in formation for 20 s",lesson:"Air Force pilots fly in formation just a few meters apart! Stay BEHIND the lead jet and close. Auto-throttle matches its speed for you: just bank gently to follow its big left turn.",start:"form",jet:1},
+ {ic:"💥",n:"Sound Barrier",goal:"Reach Mach 1 above 300 m",lesson:"Mach 1 = speed of sound = 343 m/s (about 1,235 km/h). Light the 🔥 AFTERBURNER: it sprays extra fuel into the hot exhaust for huge thrust. Keep the nose level, watch the Mach number climb, and listen for the BOOM!",start:"boom",jet:1},
+ {ic:"🚁",n:"Search & Rescue",goal:"Find the hiker's orange smoke and fly low over it",lesson:"Rescue crews find people by spotting signal smoke. Follow the radio heading, slow down, and pass over the smoke below 150 m so the crew can drop supplies. Then climb away from the mountains!",start:"sar"});
+const KFLYQ2=[["What does the afterburner do?",["Adds huge thrust by burning extra fuel in the exhaust","Makes the plane quieter","Lowers the landing gear","Turns on the radio"],"Fighter jets use afterburners for takeoff, fast climbs and supersonic dashes. It uses fuel very fast!"],["What is 'G-LOC'?",["Blacking out from too much G-force","A GPS location","A landing light","A radio code"],"G-induced Loss Of Consciousness. G-suits and breathing tricks help prevent it."],["Why do formation pilots match the lead jet's speed with the throttle?",["To stay in the same spot next to it","To save paint","To make noise","They never do"],"Small, smooth throttle changes keep you in position."],["The phonetic word for R is…",["Romeo","Rocket","Robot","Ruby"],"Romeo! Pilots also say 'Roger' for 'message received'."]];
+function kFlyLead(F){const R=1800,cx=0,cz=3600,w=78/R,th=F.t*w+F.lead0,x=cx+R*Math.sin(th),z=cz-R*Math.cos(th);return{x,z,y:220,psi:Math.PI/2-th,ph:-Math.atan(78*78/(9.8*R))}}
+function kFlyResetM(F){F.formT=0;F.boom=0;F.burn=0;F.gMax=0;const m=KFLYM[F.lv];if(m.jet){F.jet=1}F.lead0=0;
+  const P=F.P;P.jet=F.jet?1:0;
+  if(m.start==="form"){F.lead0=.35;const L=kFlyLead(F);Object.assign(P,{x:L.x-Math.sin(L.psi)*140,z:L.z-Math.cos(L.psi)*140,y:215,psi:L.psi,v:76,thr:.55,gear:0,gnd:0,th:0,ph:0})}
+  if(m.start==="boom")Object.assign(P,{x:-3000,z:-2000,y:650,psi:Math.PI/4,v:140,thr:.8,gear:0,gnd:0,th:0});
+  if(m.start==="sar")Object.assign(P,{x:0,z:900,y:260,psi:-.6,v:55,thr:.5,gear:0,gnd:0,th:0});
+  F.cam={x:P.x,y:P.y+7,z:P.z-24,psi:P.psi,th:0,ro:0};
+  if(m.start==="form")kFlySay("🎖️ Lead: 'Rocket Two, join up on my right wing.' Stay behind me and close!",5);if(m.start==="boom")kFlySay("💥 Press 🔥 AFTERBURNER, keep the wings level and the nose flat. Go for Mach 1!",5);if(m.start==="sar")kFlySay("🚁 Radio: 'Rescue One, hiker reported NORTH-WEST near the mountains. Look for orange smoke.'",6)}
+const KFLYSAR={x:-3900,z:5000};
+/* hooks into the existing flight code (wrappers defined as new names, then called from patched spots) */
+function kFlyMilStep(F,dt){const P=F.P,lv=F.lv;
+  if(F.burn&&P.jet&&!P.gnd){P.v+=150*P.thr*dt}
+  const turnG=1/Math.max(.2,Math.cos(P.ph)),pitchG=Math.max(0,(F.lastTh!=null?(P.th-F.lastTh)/Math.max(dt,.001):0)*P.v/9.8);F.lastTh=P.th;F.g=Math.min(12,turnG+pitchG);F.gMax=Math.max(F.gMax,F.g);
+  if(F.g>7.5&&!(F.gT>0)){F.gT=4;kFlySay("😵 "+F.g.toFixed(1)+" G! Ease off the stick before you black out (G-LOC)!",2.5)}F.gT=Math.max(0,(F.gT||0)-dt);
+  if(lv===KFLYM.length-3){const L=kFlyLead(F),d=Math.hypot(P.x-L.x,P.y-L.y,P.z-L.z),fx=Math.sin(L.psi),fz=Math.cos(L.psi),behind=((P.x-L.x)*fx+(P.z-L.z)*fz)<10;if(F.easy||d<900){const want=78+Math.max(-20,Math.min(30,(d-110)/5));P.v+=(want-P.v)*Math.min(1,dt*.9)}if(F.easy&&d<450){const dp=Math.atan2(Math.sin(L.psi-P.psi),Math.cos(L.psi-P.psi));P.psi+=dp*Math.min(1,dt*.9);P.y+=(L.y-P.y)*Math.min(1,dt*.5)}F.inForm=d<230&&behind;if(F.inForm)F.formT+=dt;F.leadD=d}
+  if(lv===3&&F.rocket.t>=6&&!F.bsay){F.bsay=1;kFlySay("🔄 Look! The booster is flying BACK to land, just like a real Falcon 9!",4)}if(lv===3&&F.rocket.t>=14&&!F.bland){F.bland=1;kBeep("ok");kFlySay("✅ Booster landed! Reusing rockets makes going to space much cheaper.",4)}
+  if(lv===KFLYM.length-2&&!F.boom&&P.v>=343&&P.y>=300){F.boom=1;F.boomT=1.2;kBeep("crash");kVib&&kVib([80,40,120]);kFlySay("💥 BOOM! MACH 1! You broke the sound barrier at "+Math.round(P.v)+" m/s!",4);kLine("Boom! Mach one!",2)}F.boomT=Math.max(0,(F.boomT||0)-dt)}
+function kFlyMilGoal(F){const P=F.P,lv=F.lv,n=KFLYM.length;if(F.won||F.crashT>0)return;
+  if(lv===n-3&&F.formT>=20)return kFlyWin(F,F.t<70?3:F.t<120?2:1,"🎖️ Perfect formation! You flew wing-to-wing with the lead jet.");
+  if(lv===n-2&&F.boom&&F.boomT<=0)return kFlyWin(F,F.gMax<7.5?3:2,"💥 Supersonic! You flew faster than sound: Mach "+(P.v/343).toFixed(2)+".");
+  if(lv===n-1){const d=Math.hypot(P.x-KFLYSAR.x,P.z-KFLYSAR.z);if(d<200&&P.y<150&&!P.gnd)return kFlyWin(F,P.v<60?3:2,"🚁 Supplies dropped! The hiker is safe. Great rescue, crew!");if(d<200&&P.y>=150&&!(F.sarT>0)){F.sarT=4;kFlySay("You're right over the smoke! Go LOWER (below 150 m) to drop supplies.",3)}F.sarT=Math.max(0,(F.sarT||0)-1/60)}}
+function kFlyMilHud(c,F,W,H){const P=F.P,lv=F.lv,n=KFLYM.length;c.textAlign="left";c.textBaseline="middle";
+  if(P.jet){c.font="900 12px system-ui";c.fillStyle=P.v>=343?"#ff6a00":"#ffd23f";c.fillText(`M ${(P.v/343).toFixed(2)}`,8,70);c.fillStyle=(F.g||1)>7.5?"#ff4d6d":(F.g||1)>4?"#ffb703":"#c7cbe6";c.fillText(`${(F.g||1).toFixed(1)} G`,8,86)}
+  if(F.burn&&P.jet){c.fillStyle="rgba(255,106,0,.9)";c.font="900 11px system-ui";c.fillText("🔥 AFTERBURNER",8,102)}
+  c.textAlign="center";
+  if(lv===n-3){c.font="900 13px system-ui";c.fillStyle=F.inForm?"#2ec27e":"#ff9f1c";c.fillText(`🎖️ ${F.inForm?"IN FORMATION":"Join up!"} ${Math.floor(F.formT)}/20 s · ${Math.round(F.leadD||0)} m`,W/2,H-34)}
+  if(F.boomT>0){c.strokeStyle=`rgba(255,255,255,${F.boomT/1.2})`;c.lineWidth=6;c.beginPath();c.arc(W/2,H*.42,(1.2-F.boomT)*W,0,7);c.stroke();c.font="900 44px system-ui";c.fillStyle="#fff";c.fillText("BOOM!",W/2,H*.3)}}
+function kFlyMilItems(F,C,items,kFlyTf){const lv=F.lv,n=KFLYM.length;if(lv===3&&F.rocket.t>6){const tt=Math.min(1,(F.rocket.t-6)/8),yb=1500*(1-tt)*(1-tt),t=kFlyTf(C,KFLYPAD.x+500,yb,KFLYPAD.z);if(t[2]>2)items.push([t[2],{k:"booster",yb},t])}
+  if(lv===n-3){const L=kFlyLead(F),t=kFlyTf(C,L.x,L.y,L.z);if(t[2]>2)items.push([t[2],{k:"lead",L},t])}
+  if(lv===n-1){const t=kFlyTf(C,KFLYSAR.x,0,KFLYSAR.z);if(t[2]>2)items.push([t[2],{k:"smoke"},t])}}
+function kFlyMilDraw(c,o,sx,sy,sc,F,C){if(o.k==="booster"){const s2=Math.max(.6,sc*1.2),h=40*s2,w=5*s2;c.fillStyle="#f4f6fb";c.fillRect(sx-w/2,sy-h,w,h);c.fillStyle="#111";c.fillRect(sx-w/2,sy-h*.82,w,h*.08);c.strokeStyle="#333";c.lineWidth=Math.max(1,s2*.8);c.beginPath();c.moveTo(sx-w/2,sy-h*.12);c.lineTo(sx-w*1.6,sy);c.moveTo(sx+w/2,sy-h*.12);c.lineTo(sx+w*1.6,sy);c.stroke();if(o.yb>0){c.fillStyle="rgba(255,150,40,.9)";c.beginPath();c.moveTo(sx-w/2,sy);c.lineTo(sx+w/2,sy);c.lineTo(sx,sy+h*.5+Math.random()*h*.2);c.closePath();c.fill()}return true}if(o.k==="lead"){c.save();c.translate(sx,sy);c.rotate(o.L.ph-C.ro);kFlyJet(c,sc,{gear:0,thr:.6,jet:1},F);c.restore();if(sc*5<40){c.fillStyle="#2ec27e";c.font="bold 11px system-ui";c.textAlign="center";c.fillText("LEAD",sx,sy-14)}return true}
+  if(o.k==="smoke"){for(let i=0;i<12;i++){const yy=sy-i*14*Math.max(.15,sc*.2)-Math.sin(F.t*2+i)*3,r=(6+i*2.2)*Math.max(.25,sc*.25);c.fillStyle=`rgba(255,${120+i*8},40,${.75-i*.05})`;c.beginPath();c.arc(sx+Math.sin(F.t+i)*4,yy,r,0,7);c.fill()}return true}return false}
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -14338,7 +14444,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 135 · Nov 20";
+const BUILD="Version 136 · Nov 20";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");

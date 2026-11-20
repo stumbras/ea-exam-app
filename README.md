@@ -89,6 +89,17 @@ subject up a level, two misses move it down. Hints are always available but neve
   question (four forces, stalls, flaps, headings, m/s to km/h, the Wright brothers).
   After First Takeoff, a ⚡ fighter jet unlocks: twice the thrust, takes off at 35 m/s and needs a
   longer landing.
+  Military-style missions (after Island Hop): 🎖️ Formation Flight (hold position behind a lead jet,
+  with auto-throttle), 💥 Sound Barrier (afterburner to Mach 1 = 343 m/s with a sonic boom), and
+  🚁 Search & Rescue (find orange signal smoke and pass low to drop supplies). Jets show a Mach number
+  and a G-meter with a G-LOC warning. In Rocket Watch, the booster now flies back and lands.
+- **🧠 Genius Path:** nine hero skills, each a Quiz Show subject with four difficulty tiers and endless
+  generators where it fits: ⚖️ Lawyer Brain, 💼 Entrepreneur, 🔬 Scientist, ⚙️ Engineer, 🩺 Doctor,
+  💡 Inventor, 🎖️ Air Force Pilot, 🛰️ Space Force and 🛡️ Cyber Defender. They show up in the rotation,
+  every third Mix question, Brick Bay buildings (including a 💡 Invention Workshop and an 🎖️ Air & Space
+  Base) and the rocket quizzes. The home screen has a 🧠 Daily Genius card: a curious "why" question, a
+  creativity challenge and a brain teaser (all three = 🎟️), plus skill-level meters for every hero.
+  New lesson tracks: Think Like a Lawyer, Entrepreneur Skills, Inventor's Workshop, Air Force & Space Force.
   One ticket = a 5-minute visit. No crime or violence: everything is cartoon mischief.
 - **🔄 Smart rotation:** a daily "brain mix" suggests three activities he hasn't done yet; the first win at each
   one each day gives a bonus ticket (up to 4), and after three rounds of the same thing it suggests switching.
