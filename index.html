@@ -615,6 +615,14 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 .kbdg>i{position:absolute;left:0;right:0;bottom:0;background:rgba(253,224,71,.35)}
 .kbdg>b{position:absolute;right:-2px;bottom:-2px;z-index:2;min-width:18px;height:18px;border-radius:9px;background:#334155;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 3px}
 .kbdg.up{border-color:#fde047;box-shadow:0 0 10px rgba(253,224,71,.5)}.kbdg.up>b{background:#eab308;color:#1b2440}
+.ktwban{display:flex;align-items:center;gap:10px;width:100%;margin:10px 0;border:0;border-radius:20px;padding:14px;cursor:pointer;font:inherit;text-align:left;color:#fff;background:linear-gradient(120deg,#111827 0%,#cc0000 55%,#ff5a5a 100%);box-shadow:0 12px 26px -14px rgba(204,0,0,.8);position:relative;overflow:hidden}
+.ktwban:after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);animation:ktwshine 3s infinite}
+@keyframes ktwshine{0%{left:-60%}60%,100%{left:120%}}
+.ktwbi{font-size:22px;line-height:1.1;width:54px;flex:none;display:flex;flex-wrap:wrap;justify-content:center}.ktwbt{display:flex;flex-direction:column;gap:2px;flex:1}.ktwbt b{font-size:19px;letter-spacing:.04em}.ktwbt span{font-size:12.5px;opacity:.95}
+.ktwbs{font-weight:800}.ktwbgo{flex:none;width:38px;height:38px;border-radius:50%;background:#fff;color:#cc0000;display:flex;align-items:center;justify-content:center;font-size:16px}
+.ktwgames{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ktwg{display:flex;flex-direction:column;gap:3px;align-items:flex-start;text-align:left;border:0;border-radius:18px;padding:14px 12px;min-height:118px;background:var(--g);color:#fff;font:inherit;cursor:pointer;box-shadow:0 10px 20px -12px rgba(0,0,0,.6);transition:transform .15s}
+.ktwg:active{transform:scale(.97)}.ktwg>span{font-size:32px}.ktwg b{font-size:15px;line-height:1.2}.ktwg em{font-style:normal;font-size:12px;opacity:.92;margin-top:auto}
 </style>
 
 </head><body>
@@ -8820,7 +8828,7 @@ function kHome(v){const k=KS(),ri=kRank(k.xp),cur=KRANKS[ri],next=KRANKS[ri+1],p
    ${g.ms[100]?`<div class="kcard kwin"><div class="kh">🏆 You finished your prize goal!</div><div>Show a grown-up to get your prize${g.prize?`: <b>${esc(g.prize)}</b>`:""}.</div></div>`:""}
    <button class="kcard kpilot" data-k="profile"><div class="kav">${KAV[k.avatar||0]}</div><div><div class="kname">${esc(k.name)}${age!=null?` <span class="ksmall">· age ${age}</span>`:""}</div><div class="krank">${esc(cur[1])}</div>${kBar(pct)}<div class="ksmall">${k.xp} XP${next?` · ${next[0]-k.xp} XP to ${esc(next[1])}`:" · top rank!"}</div></div></button>
    ${chestReady?`<button class="kchest" data-k="chest">🎁 Open today's chest!</button>`:""}
-   ${kRotHtml()}${kGeniusHtml()}
+   ${kRotHtml()}${typeof kTwBanner==="function"?kTwBanner():""}${kGeniusHtml()}
    <div class="kgym"><button class="kgymb" data-kcat="bee"><span>🐝</span><b>Spelling Bee</b></button><button class="kgymb" data-k="music"><span>🎵</span><b>Music Lab</b></button><button class="kgymb" data-k="learn"><span>🎓</span><b>Genius Lessons</b></button><button class="kgymb" data-k="powers"><span>📱</span><b>Phone Powers</b></button></div>
    <div class="kgames">
     <button class="kgame g1" data-k="show"><span class="kgi">🎤</span><b>Quiz Show</b><span>${k.rocket.dest>=KDEST.length?"All planets visited!":`Next stop: ${dest[1]} ${esc(dest[0])}`}</span><em>5 questions · flags, maps, planets, spelling bee</em></button>
@@ -8831,9 +8839,7 @@ function kHome(v){const k=KS(),ri=kRank(k.xp),cur=KRANKS[ri],next=KRANKS[ri+1],p
    <button class="kgame g5 wide" data-k="col"><span class="kgi">🔴</span><b>Mars Colony Tycoon</b><span>${k.col?`💠 ${Math.floor(k.col.cr)} · +${kColRate(k.col)}/min · 👨‍🚀 ${kColPop(k.col)}`:"Build your own Mars base!"}</span><em>Learn for credits · defend with fast math · earns while you're away</em></button>
    <button class="kgame g6 wide" data-k="city"><span class="kgi">🌴</span><b>Brick Bay <i class="knew">NEW!</i></b><span>${k.city?`💵 $${k.city.money||0} · 💎 ${(k.city.gems||[]).length}/10 gems`:"A silly toy-brick beach city!"}</span><em>🚶 hop out · 🏦 career buildings · 🤖 robber bots · ⚡ combos · 🍪 cookie capers · 🎈 balloon grabs · 🕵️ undercover chases · 🎟️ 1 = 5 minutes</em></button>
    <button class="kgame g5 wide" data-k="mj"><span class="kgi">🀄</span><b>Filipino Mahjong (Manila) <i class="knew">NEW!</i></b><span>${k.mj?`${Object.keys(k.mj.steps||{}).length}/6 steps · ${k.mj.wins||0} wins`:"Learn it step by step, then play!"}</span><em>Tiles, sets, chow/pung/kong, flowers · full games vs 3 bots</em></button>
-   <button class="kgame g2 wide ktwhome" data-k="tworld"><span class="kgi">⚡</span><b>Tesla World <i class="knew">NEW!</i></b><span>Tesla · SpaceX · Boring tunnels · robots · Mechazilla Catch</span></button>
    <button class="kgame g2 wide" data-k="pschool"><span class="kgi">✈️</span><b>Pilot School <i class="knew">NEW!</i></b><span>${k.fly?`🏆 ${k.fly.pts||0} pilot points · ✅ ${Object.keys(k.fly.done||{}).length}/${KFLYM.length} missions`:"Fly planes, jets, helicopters, rockets!"}</span><em>✈️ Sky Pilot · 🚀 Booster Landing · 🌍 Space Mission · 🎓 pilot lessons</em></button>
-   <div class="khangar"><button class="kdrive" data-k="drive"><span class="kdcar">🚗</span><div><b>Tesla Drive · 💥 Derby</b><em>${(k.tix||0)>0?`🎟️ ${k.tix} ticket${k.tix>1?"s":""}: tap to drive!`:"Earn 🎟️ tickets: 4+ in a Quiz Show round"}</em>${k.drive&&k.drive.best?`<i>Best: ${k.drive.best} mi</i>`:""}</div></button></div>
    <button class="kcard kbrainb" data-k="brain">${kGauge(b.known?b.avgLv:1,b.known?kOrd(b.g)+" grade":"scanning…")}<div><div class="kh">🧠 Brain Power</div><div class="ksmall">${b.known?(b.ahead>=1?`${b.ahead} grade${b.ahead>1?"s":""} ahead${age!=null?" for age "+age:""}! Tap for details.`:"Right on track. Level up to pull ahead! Tap for details."):"Take a Brain Scan to see your level!"}</div></div></button>
    <div class="kcard kprize"><div class="kh">🎁 Prize goal: ${g.prize?esc(g.prize):"ask a grown-up to pick your prize!"}</div>
     <div class="kpbar"><i style="width:${Math.round(gi.f*100)}%"></i>${ms.map(([m,ic])=>`<span class="kms ${g.ms[m]?"on":""}" style="left:${m===100?97:m}%">${ic}</span>`).join("")}</div>
@@ -8921,7 +8927,7 @@ function kidsClick(b){const d=b.dataset;try{if(kGate(d)){render();return true}kP
   if(d.mj!==undefined||d.mja!==undefined||d.mjd!==undefined)return mjClick(d);
   if(d.k==="mj"){KV={scr:"mj"};kBeep("click");return top()}
   if(d.k==="fly"){kFly=null;KV={scr:"fly"};kBeep("click");return top()}
-  if(d.k==="tworld"){KV={scr:"tworld",co:null};kBeep("click");return top()}if(d.ktw){KV={scr:"tworld",co:d.ktw};if(d.ktw==="mz")MZ=null;kBeep("click");return top()}if(d.kmz&&typeof kMzClick==="function"){kMzClick(d);return top()}if(d.k==="pschool"){kFly=null;KV={scr:"pschool"};kBeep("click");return top()}
+  if(d.k==="tworld"){KV={scr:"tworld",co:null};kBeep("click");return top()}if(d.ktw==="hack"){tInit();try{tSwitch("tesla");tInit()}catch(_){}kBeep("click");return top()}if(d.ktw){KV={scr:"tworld",co:d.ktw};if(d.ktw==="mz")MZ=null;kBeep("click");return top()}if(d.kmz&&typeof kMzClick==="function"){kMzClick(d);return top()}if(d.k==="pschool"){kFly=null;KV={scr:"pschool"};kBeep("click");return top()}
   if(d.kflym!==undefined||d.kfq!==undefined||d.kfly!==undefined||d.kfchk!==undefined||d.kfac!==undefined)return kFlyClick(d,top);
   if(d.kqd!==undefined){kCtQdAns(+d.kqd);return true}
   if(d.kin!==undefined){kCtInAns(+d.kin);return true}
@@ -11386,10 +11392,16 @@ function kTworldView(v){const k=KS(),seen=k.tw||{};if(KV.co==="mz")return kMzVie
      <button class="kbtn ghost" data-k="tworld" style="width:100%">⬅ All companies</button></div>`;return}
   const n=KTW.filter(c=>seen[c.id]).length;
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("⚡ Tesla World","home")}<div class="kcard" style="background:linear-gradient(135deg,#111827,#cc0000 70%,#ff6b6b);color:#fff"><div class="kcityt">⚡ TESLA WORLD</div><div class="ksmall" style="color:#fff">Elon Musk's companies: cars, robots, rockets, tunnels and brain chips. They're separate companies with the same leader, and xAI is now part of SpaceX.</div><div class="ksmall" style="color:#fff;margin-top:6px">🔎 Explored ${n} of ${KTW.length}</div></div>
+   <div class="kh" style="margin:12px 4px 8px">🎮 Tesla games</div><div class="ktwgames">
+    <button class="ktwg" data-k="drive" style="--g:linear-gradient(135deg,#cc0000,#7f1d1d)"><span>🚗</span><b>Tesla Drive & Derby</b><em>${(k.tix||0)>0?`🎟️ ${k.tix}: tap to drive!`:"Costs 🎟️: earn them in quizzes"}${k.drive&&k.drive.best?` · best ${k.drive.best} mi`:""}</em></button>
+    <button class="ktwg" data-ktw="mz" style="--g:linear-gradient(135deg,#0b1d3a,#1d4ed8 60%,#f6a04d)"><span>🦾</span><b>Mechazilla Catch</b><em>${(k.mz||{}).best?`🏆 level ${k.mz.best}`:"Catch the booster!"}</em></button>
+    <button class="ktwg" data-kcat="tesla" style="--g:linear-gradient(135deg,#16a34a,#065f46)"><span>⚡</span><b>Tesla World Quiz</b><em>Earns 🎟️ tickets</em></button>
+    <button class="ktwg" data-ktw="hack" style="--g:linear-gradient(135deg,#111827,#374151)"><span>💻</span><b>Tesla Hacker</b><em>Code the car's lights and horn</em></button>
+   </div>
+   <div class="kh" style="margin:14px 4px 0">🏢 The companies</div>
    <div class="ktwtree"><div class="ktwroot">👤 Elon Musk</div><div class="ktwbr">${KTW.map(c=>`<button class="ktwco${seen[c.id]?" seen":""}" data-ktw="${c.id}" style="--c:${c.c}"><span class="ktwic">${c.ic}</span><b>${esc(c.n)}</b><span class="ksmall">${esc(c.sub)}</span>${seen[c.id]?`<span class="ktwok">✓</span>`:""}</button>`).join("")}</div></div>
-   <button class="kcard ktwgame" data-ktw="mz"><span style="font-size:40px">🦾</span><span><b>Mechazilla Catch</b><span class="ksmall">Steer the Super Heavy booster and catch it with the tower's robot arms, like SpaceX. Answer a question to fuel each launch.</span><span class="ksmall" style="font-weight:800">${(k.mz||{}).best?`🏆 best: level ${k.mz.best}`:"NEW!"}</span></span></button>
    <div class="kcard"><div class="kh">🚇 Where are the Boring tunnels?</div><div class="ksmall" style="margin-bottom:8px">Under Las Vegas! Tesla cars drive people through them. Watch the car ride the Loop.</div>${kTwMap()}<button class="kbtn" data-ktw="boring" style="width:100%;margin-top:8px">🚇 More about the tunnels</button></div>
-   <div class="kcard"><div class="kh">🎟️ Earn tickets</div><button class="kbtn green" data-kcat="tesla" style="width:100%">⚡ Tesla World quiz</button><button class="kbtn" data-k="drive" style="width:100%;margin-top:8px">🚗 Tesla Drive game</button><button class="kbtn" data-k="pschool" style="width:100%;margin-top:8px">🚀 SpaceX rockets in Pilot School</button></div></div>`}
+   <div class="kcard"><div class="kh">🚀 More SpaceX</div><button class="kbtn" data-k="pschool" style="width:100%">🚀 Rockets and Starship in Pilot School</button></div></div>`}
 
 /* ---------- Mechazilla Catch: land the booster in the tower's chopsticks ---------- */
 let MZ=null;
@@ -11462,6 +11474,9 @@ function kMzClick(d){if(!MZ)kMzNew();
 (function(){const ids=new Set(KHERO.map(H=>H[0]));ids.forEach(x=>KHEROIDS.add(x));for(let i=KROT.length-1;i>=0;i--){if(KROT[i][3]==="kcat"&&ids.has(KROT[i][4]))KROT.splice(i,1)}
   KCATS.splice(Math.max(1,KCATS.length-1),0,["genius","🧠","Genius Quiz","Lawyer, doctor, inventor, pilot, history and more, mixed","sci"]);
   KROT.push(["q:genius","🧠","Genius Quiz","kcat","genius"])})();
+
+function kTwBanner(){const k=KS(),n=KTW.filter(c=>(k.tw||{})[c.id]).length,mz=(k.mz||{}).best||0;
+  return `<button class="ktwban" data-k="tworld"><span class="ktwbi">⚡🚀🚇🤖</span><span class="ktwbt"><b>TESLA WORLD</b><span>Tesla Drive · Mechazilla Catch · Tesla Hacker · SpaceX · Boring tunnels · robots</span><span class="ktwbs">${n<KTW.length?`🔎 ${n}/${KTW.length} explored`:"✅ all explored"}${mz?` · 🦾 level ${mz}`:" · NEW game!"}</span></span><span class="ktwbgo">▶</span></button>`}
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -15922,7 +15937,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 149 · Nov 20";
+const BUILD="Version 150 · Nov 20";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
