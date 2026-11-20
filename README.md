@@ -34,6 +34,12 @@ borrowing, step-up and estate basics (Part 1); employee vs independent contracto
 Every subject adapts to the player: three right answers in a row (with 70%+ recent accuracy) moves a
 subject up a level, two misses move it down. Hints are always available but never earn points.
 
+- **Chess coach, landing computer, traffic lights, EA Parts 2 and 3 exam packs (Version 156):**
+  - *Robot Chess coach:* every move is graded against the engine's best move (Best, Good, Inaccuracy, Mistake, Blunder) with the reason and the better move; Take back (counts like a hint); an advantage bar; danger alerts for a piece about to be lost (robot levels 1 to 6 only); opening names and three opening principles; a game review with accuracy, counts and the biggest miss shown on the board.
+  - *Booster Landing flight computer:* a marker under the rocket shows where it would stop if the engine fired now (v squared over 2a), with Get ready and BURN NOW cues: the real hoverslam. Cold-gas thruster puffs, exhaust smoke, engine glow on the pad, and scenery for the launch site, ocean, Moon and Mars.
+  - *Brick Bay traffic lights:* working signals at all 16 intersections. Traffic stops on red. Stopping on red and going on green pays a growing Safe Driver bonus; running a red costs a small ticket, never during a mission or a chase.
+  - *EA Part 2:* 38 exam-style questions (entity and return forms, 2025 amounts such as Section 179 $2,500,000 / $4,000,000, 100% bonus after Jan 19 2025, $31 million gross receipts test, due dates, comparisons).
+  - *EA Part 3:* 36 exam-style questions (2848 vs 8821, 12153, 9465, 656, 911, 8867, 8879, 8948, 14039; penalties, CE hours, PTIN fee $18.75 for 2026, minimum late-filing penalty $525; 30/90-day and 10-year deadlines; Circular 230 comparisons). The red Do this next button offers these packs on Parts 2 and 3.
 - **Sky Pilot 3, Tesla Drive 3 and retina-sharp games (Version 155):**
   - *Every game canvas is now retina sharp:* drawn at up to 2x pixels (it was 1x and looked soft on an iPhone). If a phone cannot hold a smooth frame rate, the game steps the sharpness down by itself and remembers it.
   - *Sky Pilot physics:* propeller thrust fades with speed and slow flight adds induced drag, so a too-steep climb bleeds speed and stalls (Cessna climbs about 5 m/s at 8 degrees, glides about 6.6:1 with no engine). Banked turns need back pressure and raise the stall speed; a G meter shows the load. Buildings are solid.

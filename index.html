@@ -750,6 +750,13 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 /* ---- trip computer ---- */
 .ktrip{background:linear-gradient(160deg,#0b1020,#111827);border:1px solid rgba(148,163,184,.35);border-radius:14px;padding:10px 12px;margin:10px 0;color:#e5e7eb;text-align:left}.ktriph{font-size:11px;font-weight:900;letter-spacing:.14em;color:#93c5fd}
 .ktripg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}.ktripg div{background:rgba(148,163,184,.12);border-radius:10px;padding:6px 2px;text-align:center}.ktripg b{display:block;font-size:19px;color:#fff;font-variant-numeric:tabular-nums}.ktripg span{font-size:10px;opacity:.8}.ktripr{font-weight:800;margin-bottom:4px}
+/* ---- chess coach ---- */
+.kcbev{position:relative;height:22px;border-radius:11px;background:#1f2937;overflow:hidden;margin:6px 0;font-size:11px;font-weight:800;color:#fff}.kcbev i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#f8fafc,#e2e8f0);transition:width .5s}
+.kcbev span,.kcbev b{position:absolute;top:0;line-height:22px;mix-blend-mode:difference}.kcbev .l{left:10px}.kcbev .r{right:10px}.kcbev b{left:50%;transform:translateX(-50%);font-variant-numeric:tabular-nums}
+.kcbop{font-size:12.5px;color:#334155;background:#eef2ff;border-radius:10px;padding:5px 10px;margin-bottom:6px}
+.kcbco{border-radius:12px;padding:8px 10px;margin-top:8px;font-size:13.5px;font-weight:700;line-height:1.35;background:#e2e8f0;color:#0f172a}.kcbco.best{background:#dcfce7;color:#14532d}.kcbco.good{background:#e0f2fe;color:#075985}.kcbco.inacc{background:#fef9c3;color:#713f12}.kcbco.mist{background:#ffedd5;color:#7c2d12}.kcbco.blun{background:#fee2e2;color:#7f1d1d}.kcbco.back{background:#ede9fe;color:#4c1d95}
+.ksq.kthr{box-shadow:inset 0 0 0 3px #ef4444;animation:kthr 1s ease-in-out infinite}@keyframes kthr{0%,100%{box-shadow:inset 0 0 0 3px #ef4444}50%{box-shadow:inset 0 0 0 5px #fca5a5}}
+.kcbrev{background:linear-gradient(160deg,#0b1020,#111827);border:1px solid rgba(148,163,184,.35);border-radius:14px;padding:10px 12px;margin:10px 0;color:#e5e7eb;text-align:left}
 </style>
 
 </head><body>
@@ -1901,6 +1908,98 @@ Q(1,3,3,"Which expense qualifies for the child and dependent care credit?","Dayc
 Q(1,2,3,"Which item is excluded from gross income?","Life insurance proceeds paid because of the insured's death",["Gambling winnings","Jury duty pay","A cash prize won in a raffle"],"Life insurance death benefits are generally tax-free. Also excluded: gifts, inheritances, child support, workers' compensation, and municipal bond interest.");
 Q(1,2,3,"Which payment is taxable to the recipient?","Unemployment compensation",["Child support","Workers' compensation","A gift from a parent"],"Unemployment is fully taxable (Schedule 1). Child support, workers' compensation and gifts are not income.");
 for(let i=XS0;i<BANK.length;i++)BANK[i].xs=1;
+
+/* ================= Parts 2 and 3 exam-style packs (tax year 2025, 2026–27 SEE window) =================
+   Same four question shapes as the Part 1 pack: which form, exact amounts, deadlines, and "which of the following".
+   2025 figures checked Nov 21, 2026: Section 179 $2,500,000 / $4,000,000 (OBBBA), 100% bonus for property acquired after
+   Jan 19, 2025, gross receipts test $31 million, mileage 70 cents, wage base $176,100, excess business loss $313,000 /
+   $626,000, minimum late-filing penalty $525, PTIN fee $18.75 for 2026. */
+const XS23=BANK.length;
+// ======================= PART 2: BUSINESSES =======================
+// ---- which form ----
+Q(2,1,3,"An eligible domestic corporation elects S corporation status by filing…","Form 2553",["Form 8832","Form 1120-S","Form SS-4"],"Form 2553 = S election (all shareholders consent). Form 8832 = entity classification election (for example an LLC choosing to be taxed as a corporation). Form SS-4 = apply for an EIN.");
+Q(2,1,3,"A two-member LLC wants to be taxed as a C corporation instead of a partnership. It files…","Form 8832",["Form 2553","Form 1065","Form 966"],"Form 8832 is the check-the-box entity classification election. An LLC that wants S status can file Form 2553 alone (it is treated as also electing corporate status).");
+Q(2,2,3,"A partnership reports each partner's share of income, deductions and credits on…","Schedule K-1 (Form 1065)",["Form 1099-NEC","Schedule C","Form W-2"],"Partners are not employees. Their share flows through on Schedule K-1; guaranteed payments are also reported there.");
+Q(2,2,3,"Depreciation, the Section 179 election and listed property are reported on…","Form 4562",["Form 4797","Form 8829","Form 3115"],"Form 4562 = depreciation and amortization. Form 4797 = sales of business property. Form 8829 = home office (actual method). Form 3115 = change in accounting method.");
+Q(2,2,3,"A business wants to change from the cash method to the accrual method. It files…","Form 3115",["Form 1128","Form 8832","Form 4562"],"Form 3115 = change in accounting METHOD. Form 1128 = change in tax YEAR.");
+Q(2,2,3,"A calendar-year S corporation needs more time to file. It requests an automatic extension on…","Form 7004",["Form 4868","Form 8868","Form 2350"],"Form 7004 extends business returns (1065, 1120, 1120-S) six months. Form 4868 is for individuals; Form 8868 is for exempt organizations.");
+Q(2,2,3,"An employer reports federal unemployment (FUTA) tax on…","Form 940, filed annually",["Form 941, filed quarterly","Form 944","Form W-3"],"Form 940 = FUTA, annual, due January 31. Form 941 = quarterly income tax withholding and FICA. Form 944 = annual version of 941 for very small employers.");
+Q(2,2,3,"A sole proprietor pays an independent contractor $3,000 for services in 2025. The payment is reported on…","Form 1099-NEC",["Form 1099-MISC","Form W-2","Form 1099-K"],"Nonemployee compensation of $600 or more for 2025 goes on Form 1099-NEC, due January 31. (The threshold rises to $2,000 for payments made in 2026.)");
+Q(2,3,3,"A tax-exempt organization with $1,400 of gross unrelated business income files…","Form 990-T",["Form 990-N","Form 1120","Schedule C"],"Form 990-T is required when gross unrelated business income is $1,000 or more.");
+Q(2,3,3,"A small exempt organization whose gross receipts are normally $50,000 or less may file…","Form 990-N (e-Postcard)",["Form 990-PF","Form 990-T","Form 1023"],"990-N: normally $50,000 or less. 990-EZ: under $200,000 gross receipts and under $500,000 assets. Otherwise the full Form 990.");
+Q(2,3,3,"A farmer reports farm income and expenses on…","Schedule F",["Schedule C","Schedule E","Form 4835"],"Schedule F = farming. Form 4835 = farm rental income of a landowner who does not materially participate.");
+// ---- exact 2025 amounts ----
+Q(2,2,3,"For tax years beginning in 2025, the maximum Section 179 deduction is…","$2,500,000",["$1,250,000","$1,160,000","$4,000,000"],"OBBBA raised it to $2,500,000, reduced dollar for dollar once qualifying property placed in service exceeds $4,000,000. ($1,250,000 was the pre-OBBBA 2025 figure.)");
+Q(2,2,3,"The Section 179 deduction begins to phase out when qualifying property placed in service in 2025 exceeds…","$4,000,000",["$2,500,000","$3,130,000","$5,000,000"],"Dollar-for-dollar reduction above $4,000,000. Section 179 is also limited to taxable income from active trades or businesses; the excess carries forward.");
+Q(2,2,3,"Qualified property acquired AND placed in service after January 19, 2025 is eligible for bonus depreciation of…","100%",["40%","60%","80%"],"OBBBA restored 100% permanently for property acquired after January 19, 2025. Property acquired earlier and placed in service in 2025 gets 40%.");
+Q(2,2,3,"The 2025 standard mileage rate for business use of a vehicle is…","70 cents per mile",["67 cents per mile","65.5 cents per mile","72.5 cents per mile"],"70 cents for 2025 (67 cents in 2024). Parking and tolls are deductible in addition; the rate already includes depreciation.");
+Q(2,2,3,"The 2025 Social Security wage base (the maximum earnings subject to the 6.2% / 12.4% tax) is…","$176,100",["$168,600","$160,200","$184,500"],"$176,100 for 2025. Medicare tax has no wage base, and the 0.9% additional Medicare tax applies above $200,000 ($250,000 joint).");
+Q(2,1,3,"For 2025, a C corporation or a partnership with a C corporation partner may generally use the cash method if average annual gross receipts for the prior 3 years do not exceed…","$31 million",["$25 million","$30 million","$5 million"],"The Section 448(c) gross receipts test is $31 million for 2025. Meeting it also relieves the business from the Section 163(j) interest limit and UNICAP.");
+Q(2,2,3,"For 2025, a single taxpayer's excess business loss is disallowed to the extent net business losses exceed…","$313,000",["$250,000","$305,000","$626,000"],"$313,000 single, $626,000 joint for 2025. The disallowed amount becomes a net operating loss carryforward.");
+Q(2,2,3,"The percentage of business meals with a client that is deductible is…","50%",["100%","80%","0%"],"Business meals: 50%. Entertainment: not deductible. Employee recreation such as a company picnic: 100%.");
+Q(2,2,3,"A new business has $53,000 of start-up costs. How much may it deduct in the first year (before amortization)?","$2,000",["$5,000","$0","$53,000"],"$5,000 is reduced dollar for dollar by costs over $50,000: $5,000 − $3,000 = $2,000. The remaining $51,000 is amortized over 180 months.");
+Q(2,2,3,"A net operating loss arising in 2025 may offset what percentage of taxable income in a later year?","80%",["100%","50%","90%"],"Post-2017 NOLs: no carryback (farming losses excepted), indefinite carryforward, limited to 80% of taxable income.");
+Q(2,2,3,"The corporate income tax rate is…","A flat 21%",["A flat 35%","Graduated 15% to 35%","A flat 28%"],"21% flat since 2018. Dividends are then taxed again to shareholders: double taxation.");
+Q(2,2,3,"The simplified home office deduction is…","$5 per square foot, up to 300 square feet",["$10 per square foot, up to 500 square feet","$5 per square foot, no limit","A flat $1,000"],"Maximum $1,500. No depreciation is taken (so none to recapture), and no carryover of an unused amount.");
+Q(2,2,3,"For 2025, the maximum contribution to a SEP-IRA for a participant is the lesser of 25% of compensation or…","$70,000",["$69,000","$23,500","$16,500"],"$70,000 for 2025. $23,500 is the 401(k) elective deferral limit; $16,500 is the SIMPLE IRA deferral limit.");
+// ---- deadlines ----
+Q(2,2,3,"A calendar-year partnership's Form 1065 is due…","March 15",["April 15","March 31","May 15"],"Partnerships and S corporations: 15th day of the 3rd month. C corporations and individuals: 15th day of the 4th month.");
+Q(2,2,3,"A calendar-year C corporation's Form 1120 is due…","April 15",["March 15","May 15","September 15"],"15th day of the 4th month after year end. With Form 7004 the extended due date is October 15.");
+Q(2,1,3,"For an S election to take effect for the current calendar year, Form 2553 must generally be filed by…","March 15",["January 31","April 15","December 31"],"No later than 2 months and 15 days after the start of the tax year (or any time in the prior year). Late-election relief is available with reasonable cause.");
+Q(2,2,3,"A calendar-year corporation's estimated tax installments are due on the 15th day of…","April, June, September and December",["April, June, September and January","January, April, July and October","March, June, September and December"],"4th, 6th, 9th and 12th months. Individuals use April, June, September and January. Corporations must pay estimates if tax is expected to be $500 or more.");
+Q(2,2,3,"Forms W-2 must be furnished to employees and filed with the SSA by…","January 31",["February 28","March 31","April 15"],"January 31 for both. Form 1099-NEC is also due January 31.");
+Q(2,2,3,"Form 941 for the first quarter (January to March) is due…","April 30",["April 15","March 31","May 15"],"The last day of the month after the quarter ends: April 30, July 31, October 31, January 31.");
+Q(2,3,3,"A calendar-year exempt organization's Form 990 is due…","May 15",["March 15","April 15","June 15"],"15th day of the 5th month after year end. Failing to file for three consecutive years automatically revokes exempt status.");
+// ---- "which of the following" comparisons ----
+Q(2,1,3,"Which entity is NOT a pass-through entity?","C corporation",["S corporation","Partnership","Single-member LLC taxed as a sole proprietorship"],"A C corporation pays its own tax (21%); owners are taxed again on dividends. The others pass income through to owners.");
+Q(2,1,3,"Which is a requirement to be an S corporation?","No more than 100 shareholders and only one class of stock",["At least 2 shareholders","Shareholders may be nonresident aliens","It may be a foreign corporation"],"S corporation: domestic, 100 or fewer shareholders, one class of stock (voting differences allowed), eligible shareholders only (no nonresident aliens, partnerships or corporations).");
+Q(2,1,3,"Which increases a partner's basis in the partnership interest?","The partner's share of partnership liabilities",["A cash distribution","The partner's share of losses","Guaranteed payments received"],"Basis rises with contributions, income and share of liabilities; it falls with distributions, losses and relief of liabilities.");
+Q(2,1,3,"Which payment to a partner is deductible by the partnership in computing ordinary income?","A guaranteed payment for services",["A distribution of profits","A return of the partner's capital","A draw against the capital account"],"Guaranteed payments are fixed without regard to partnership income. They are deducted by the partnership and are ordinary income (and usually self-employment income) to the partner.");
+Q(2,2,3,"Which cost must be capitalized rather than deducted currently?","A new roof that extends the building's useful life",["Repainting the office","Fixing a broken window","Routine servicing of a machine"],"Betterments, restorations and adaptations are capitalized. Routine repairs and maintenance are deducted. The de minimis safe harbor allows expensing items up to $2,500 each ($5,000 with an audited financial statement).");
+Q(2,2,3,"Which worker is most likely an employee rather than an independent contractor?","Someone whose hours, tools and methods are set by the business",["Someone who works for many clients and sets their own hours","Someone paid a flat fee per project who uses their own equipment","Someone who can hire helpers and realize a profit or loss"],"The common-law test looks at behavioral control, financial control and the relationship of the parties. Form SS-8 asks the IRS to decide.");
+Q(2,3,3,"Which is a prohibited activity for a 501(c)(3) organization?","Endorsing a candidate for public office",["Limited lobbying on legislation","Selling items related to its exempt purpose","Paying reasonable salaries to staff"],"Political campaign intervention is absolutely barred. Lobbying is allowed if it is not a substantial part of activities.");
+// ======================= PART 3: REPRESENTATION =======================
+// ---- which form ----
+Q(3,2,3,"A taxpayer authorizes an enrolled agent to REPRESENT them before the IRS using…","Form 2848",["Form 8821","Form 4506-T","Form 8879"],"Form 2848 = power of attorney (represent, sign agreements, receive information). Form 8821 = information authorization only: the appointee can see information but cannot represent.");
+Q(3,2,3,"A taxpayer wants a relative to be able to receive their tax information but not represent them. The form is…","Form 8821",["Form 2848","Form 56","Form 911"],"Form 8821 lets anyone inspect or receive confidential tax information. Form 56 gives notice of a fiduciary relationship (executor, trustee).");
+Q(3,3,3,"A taxpayer who received a Final Notice of Intent to Levy requests a Collection Due Process hearing on…","Form 12153",["Form 9465","Form 656","Form 843"],"Form 12153, within 30 days of the notice. Form 9465 = installment agreement. Form 656 = offer in compromise. Form 843 = claim for refund or abatement.");
+Q(3,3,3,"A taxpayer who cannot pay in full asks to pay over time using…","Form 9465",["Form 656","Form 433-F only","Form 12153"],"Form 9465 = installment agreement request (or apply online). Larger balances also need a collection information statement (Form 433-F or 433-A).");
+Q(3,3,3,"An offer in compromise based on doubt as to collectibility is submitted on…","Form 656 with Form 433-A (OIC) or 433-B (OIC)",["Form 656-L alone","Form 9465","Form 843"],"Form 656 plus the financial statement, the $205 application fee and an initial payment (waived for low-income taxpayers). Form 656-L is for doubt as to LIABILITY.");
+Q(3,3,3,"A taxpayer suffering economic hardship because of an IRS action asks the Taxpayer Advocate Service for help on…","Form 911",["Form 843","Form 12203","Form 2848"],"Form 911 = Request for Taxpayer Advocate Service Assistance. TAS is independent within the IRS.");
+Q(3,1,3,"A paid preparer documents due diligence for a return claiming the EITC on…","Form 8867",["Form 8862","Form 8332","Form 8879"],"Form 8867 covers EITC, the child tax credit/ACTC/ODC, the American Opportunity credit and head of household status. Form 8862 is filed by the TAXPAYER to claim a credit again after a disallowance.");
+Q(3,4,3,"A taxpayer authorizes the preparer (an ERO) to enter the taxpayer's PIN on an e-filed return using…","Form 8879",["Form 8453","Form 8878","Form 8948"],"Form 8879 = e-file signature authorization, kept by the ERO for 3 years, not sent to the IRS. Form 8453 transmits paper attachments. Form 8948 explains why a preparer did not e-file.");
+Q(3,4,3,"A specified tax return preparer who files a client's return on paper generally attaches…","Form 8948",["Form 8879","Form 8944","Form 8453"],"Form 8948 = Preparer Explanation for Not Filing Electronically (for example, the taxpayer chose to file on paper). Form 8944 requests a hardship waiver from the e-file mandate.");
+Q(3,3,3,"A victim of tax-related identity theft reports it to the IRS on…","Form 14039",["Form 14157","Form 3949-A","Form 4506"],"Form 14039 = Identity Theft Affidavit. Form 14157 = complaint about a preparer. Form 3949-A = report suspected tax fraud by someone else.");
+// ---- exact amounts ----
+Q(3,1,3,"How many hours of continuing education must an enrolled agent complete in each 3-year enrollment cycle?","72 hours, with at least 16 each year including 2 of ethics",["60 hours, with at least 20 each year","72 hours, with at least 24 each year","45 hours, with at least 15 each year"],"72 hours per cycle; minimum 16 per year, of which 2 must be ethics or professional conduct.");
+Q(3,1,3,"The fee to obtain or renew a PTIN for 2026 is…","$18.75",["$19.75","$30.75","No fee"],"$18.75 for 2026 (it was $19.75 for 2021 to 2025). PTINs expire December 31 and must be renewed every year, including by enrolled agents who do not prepare returns.");
+Q(3,4,3,"A tax return preparer is required to e-file individual returns if the preparer reasonably expects to file how many or more in the calendar year?","11",["10","25","100"],"The e-file mandate applies to preparers (and their firms) who expect to file 11 or more covered returns.");
+Q(3,2,3,"The failure-to-file penalty is generally…","5% of the unpaid tax per month, up to 25%",["0.5% of the unpaid tax per month, up to 25%","5% per month with no maximum","A flat 20%"],"Failure to FILE: 5% per month, maximum 25%. Failure to PAY: 0.5% per month, maximum 25%. When both apply in the same month the filing penalty is reduced by the payment penalty.");
+Q(3,2,3,"For a 2025 return filed more than 60 days late, the minimum failure-to-file penalty is the lesser of 100% of the tax due or…","$525",["$510","$485","$100"],"$525 for returns required to be filed in 2026 ($510 the year before).");
+Q(3,2,3,"The accuracy-related penalty for negligence or a substantial understatement is…","20% of the underpayment",["75% of the underpayment","5% per month","A flat $5,000"],"20% (accuracy). 75% is the civil fraud penalty. $5,000 is the penalty for a frivolous tax return.");
+Q(3,1,3,"A preparer who knowingly or recklessly discloses or uses tax return information without consent faces a criminal penalty under Section 7216 of up to…","$1,000 and 1 year in prison",["$250 per disclosure","$10,000 and 5 years in prison","$500 with no prison"],"Section 7216 is the criminal provision. Section 6713 is the civil one: $250 per disclosure, up to $10,000 a year.");
+Q(3,1,3,"The preparer penalty for an understatement due to an unreasonable position (Section 6694(a)) is the greater of…","$1,000 or 50% of the income derived from the return",["$5,000 or 75% of the income derived","$250 or 25% of the income derived","$500 flat"],"6694(a) unreasonable position: greater of $1,000 or 50%. 6694(b) willful or reckless conduct: greater of $5,000 or 75%.");
+Q(3,3,3,"The Tax Court's small tax case procedure is available when the amount in dispute for each year is no more than…","$50,000",["$25,000","$10,000","$100,000"],"$50,000 including penalties. Small case decisions cannot be appealed. ($25,000 is the limit for the small case request in IRS Appeals.)");
+Q(3,3,3,"The application fee for an offer in compromise is…","$205",["$186","$150","$500"],"$205, waived for taxpayers who meet the low-income certification or who file based only on doubt as to liability.");
+// ---- deadlines ----
+Q(3,3,3,"After a statutory notice of deficiency is mailed to a U.S. address, the taxpayer has how long to petition the Tax Court?","90 days",["30 days","60 days","150 days"],"90 days (150 if addressed to a person outside the United States). The \"30-day letter\" is the earlier proposal that offers Appeals.");
+Q(3,3,3,"A taxpayer must request a Collection Due Process hearing within how many days of the levy notice?","30 days",["10 days","60 days","90 days"],"30 days to keep the right to go to Tax Court. A late request (within 1 year) gets an equivalent hearing with no court review.");
+Q(3,3,3,"The IRS generally has how long to COLLECT a tax after it is assessed?","10 years",["3 years","6 years","No limit"],"The collection statute expiration date (CSED) is 10 years from assessment. Assessment itself is generally 3 years from filing.");
+Q(3,1,3,"A practitioner must keep copies of written conflict-of-interest consents for at least…","36 months after the representation ends",["12 months","6 years","Indefinitely"],"Circular 230 §10.29: informed consent confirmed in writing within 30 days, kept 36 months from the conclusion of the representation.");
+Q(3,1,3,"A tax return preparer must keep a copy of each return prepared, or a list of the taxpayers' names and identification numbers, for…","3 years after the close of the return period",["1 year","7 years","Until the client asks for it"],"3 years. The return period is the 12 months beginning July 1.");
+Q(3,1,3,"An enrolled agent's renewal of enrollment is required…","Every 3 years",["Every year","Every 2 years","Every 5 years"],"Every 3 years, on a cycle set by the last digit of the Social Security number, using Form 8554.");
+Q(3,4,3,"An e-filed return is rejected. The ERO must take reasonable steps to tell the taxpayer within…","24 hours",["48 hours","5 business days","10 days"],"24 hours. If the return cannot be fixed and re-transmitted, a paper return is timely if filed by the later of the due date or 10 calendar days after the rejection notice.");
+Q(3,2,3,"The third-party designee authorization (the checkbox on the return) expires…","One year from the due date of the return, without extensions",["When the return is processed","3 years from filing","When the taxpayer dies only"],"It lets the designee discuss processing of that return only. It is not a power of attorney.");
+// ---- "which of the following" ----
+Q(3,2,3,"Which person may represent a taxpayer before all offices of the IRS without limit?","An enrolled agent",["An unenrolled preparer who signed the return","An Annual Filing Season Program participant","A full-time employee of an unrelated company"],"Attorneys, CPAs and enrolled agents have unlimited practice rights. AFSP participants have limited rights: only returns they prepared and signed, and only before examination, customer service and TAS.");
+Q(3,1,3,"Which fee arrangement is allowed under Circular 230?","A contingent fee for representing a client in an IRS examination of an original return",["A contingent fee for preparing an original return","An unconscionable fee if the client agrees","A fee split with the IRS employee handling the case"],"Contingent fees are allowed for IRS examinations and challenges to an original return, for refund claims of interest or penalties, and for judicial proceedings. Not for preparing an original return.");
+Q(3,1,3,"A client asks for their records back but still owes the practitioner's fee. Under Circular 230 the practitioner must…","Return the client's records promptly",["Keep everything until paid","Destroy the records","Send them only to the IRS"],"Client records needed to comply with federal tax obligations must be returned on request, fee dispute or not. Where state law allows a lien, the practitioner must still give access to them.");
+Q(3,1,3,"A practitioner learns a client omitted income on a prior return. The practitioner must…","Promptly advise the client of the error and its consequences",["Amend the return without telling the client","Report the client to the IRS","Ignore it because the year is closed"],"Circular 230 §10.21: advise the client of the noncompliance and the consequences. The practitioner does not amend without consent and does not report the client.");
+Q(3,3,3,"Which taxpayer most likely qualifies for first-time penalty abatement?","One with no penalties in the prior 3 years who has filed all returns and paid or arranged to pay",["One who has never filed a return","One with a fraud penalty last year","One who simply forgot"],"First-time abate is an administrative waiver for failure to file, pay or deposit: clean 3-year history, filing compliance and payment compliance.");
+Q(3,3,3,"Which property is generally exempt from an IRS levy?","Unemployment benefits and certain disability payments",["A second home","A bank account","Wages above the exempt amount"],"Exempt items include unemployment benefits, workers' compensation, certain pensions and disability payments, child support obligations, and a limited amount of tools and household goods.");
+Q(3,2,3,"In a civil tax fraud case, the burden of proof is on…","The IRS, by clear and convincing evidence",["The taxpayer, by a preponderance of the evidence","The IRS, beyond a reasonable doubt","The preparer"],"Civil fraud: IRS, clear and convincing evidence. Criminal fraud: government, beyond a reasonable doubt. Ordinary deficiency: generally the taxpayer.");
+Q(3,4,3,"Which is required of every paid tax return preparer by the FTC Safeguards Rule?","A written information security plan (WISP)",["A surety bond","An annual IRS office inspection","A CPA license"],"Paid preparers are financial institutions under the Gramm-Leach-Bliley Act and must have a written information security plan. See IRS Publications 4557 and 5708.");
+for(let i=XS23;i<BANK.length;i++)BANK[i].xs=1;
 
 // PART 2 — Businesses. Tax year 2025 law.
 // Domains: 1 Business entities & considerations · 2 Business tax preparation · 3 Specialized returns & taxpayers
@@ -10176,10 +10275,10 @@ function kCtLoop(ts){const D=kCt,cv=$("#kcty");if(!D||KV.scr!=="city"||!cv){kDri
   if(!D.over&&!D.q&&!D.inside){D.t+=dt;D.tipT=Math.max(0,D.tipT-dt);D.boostCd=Math.max(0,D.boostCd-dt);D.hornCd=Math.max(0,D.hornCd-dt);D.arrowT=Math.max(0,D.arrowT-dt);if(me.boost>0)me.boost-=dt;
     let tx=null,ty=null,thr=0;if(D.foot){}else if(D.joy){const dx=D.joy.x-D.joy.ox,dy=D.joy.y-D.joy.oy,m=Math.hypot(dx,dy);if(D.joy.fixed||m>14||D.joy.drag){D.joy.drag=1;if(m>8){tx=me.x+dx*10;ty=me.y+dy*10;thr=Math.min(1,.35+m/60)}}else{tx=D.joy.ox+D.camX;ty=D.joy.oy+D.camY;thr=Math.hypot(tx-me.x,ty-me.y)>30?1:0}}
     else if(D.goT>0){D.goT-=dt;tx=D.gx;ty=D.gy;thr=Math.hypot(tx-me.x,ty-me.y)>30?1:(D.goT=0)}if(D.kL||D.kR){me.a+=(D.kR?1:-1)*3.4*dt;tx=null;thr=Math.max(thr,.5)}if(D.kU)thr=1;if(D.kD)thr=-.5;
-    if(me.jump>0){me.jump-=dt;thr=Math.max(thr,.8)}if(D.air)kCtJetStep(D,me,tx,ty,dt);else if(!D.foot)kDbDrive(me,tx,ty,thr,3.4,dt);else me.vx=me.vy=0;me.x+=me.vx*dt;me.y+=me.vy*dt;const sp=Math.hypot(me.vx,me.vy);
+    if(me.jump>0){me.jump-=dt;thr=Math.max(thr,.8)}if(D.air)kCtJetStep(D,me,tx,ty,dt);else if(!D.foot)kDbDrive(me,tx,ty,thr,3.4,dt);else me.vx=me.vy=0;me.x+=me.vx*dt;me.y+=me.vy*dt;const sp=Math.hypot(me.vx,me.vy);if(typeof kCt4Step==="function")kCt4Step(D,dt);
     if(!(me.jump>0)&&!D.air){const hit=kCtSolid(me);if(hit>90){kBeep("crash");kVib(60);if(D.balloons){D.balloons--;kBeep("spark");kCtFx({k:"txt",x:me.x,y:me.y-30,txt:"💥🎈 POP!"})}}}
     if(me.x>30*T+12&&!(me.jump>0)&&!D.air){D.money=Math.max(0,D.money-10);kBeep("boom");kCtFx({k:"txt",x:me.x,y:me.y,txt:"💦 SPLASH! -$10"});kLine("Splash! Cars don't swim!",2);Object.assign(me,{x:kCtRc(3),y:me.y,vx:0,vy:0,a:0})}
-    for(const o of D.tr){const v=[[0,-1],[1,0],[0,1],[-1,0]][o.d],near=Math.hypot(o.x-me.x,o.y-me.y)<70&&((me.x-o.x)*v[0]+(me.y-o.y)*v[1])>0,s=near?20:o.sp,ox=o.x,oy=o.y;o.x+=v[0]*s*dt;o.y+=v[1]*s*dt;
+    for(const o of D.tr){const v=[[0,-1],[1,0],[0,1],[-1,0]][o.d],near=Math.hypot(o.x-me.x,o.y-me.y)<70&&((me.x-o.x)*v[0]+(me.y-o.y)*v[1])>0,s=(typeof kCt4Stop==="function"&&kCt4Stop(D,o,v))?0:(near?20:o.sp),ox=o.x,oy=o.y;o.x+=v[0]*s*dt;o.y+=v[1]*s*dt;
       const axis=v[0]?"x":"y",prev=axis==="x"?ox:oy,cur=o[axis];for(let i=0;i<4;i++){const c=kCtRc(i);if((prev-c)*(cur-c)<=0&&prev!==c){const other=axis==="x"?o.y:o.x,oi=KCT.R.findIndex((r,j)=>Math.abs(kCtRc(j)-other)<30);if(oi<0)break;
         const vi=axis==="x"?i:oi,hi=axis==="x"?oi:i,opts=[0,1,2,3].filter(d=>d!==(o.d+2)%4&&(d===0?hi>0:d===2?hi<3:d===3?vi>0:vi<3));const d=opts.length?kPick(opts):(o.d+2)%4;o.d=d;const cx=axis==="x"?c:kCtRc(oi),cy=axis==="x"?kCtRc(oi):c;
         if(d%2===0){o.x=cx+(d===0?14:-14);o.y=cy}else{o.y=cy+(d===1?14:-14);o.x=cx}break}}
@@ -10211,7 +10310,7 @@ function kCtDraw(cv,D,dt){const c=cv.getContext("2d"),W=cv.width,H=cv.height,T=K
   {const s=M.marks.spray;c.strokeStyle="rgba(255,105,180,.8)";c.lineWidth=3;c.beginPath();c.arc(s.x,s.y,26,0,7);c.stroke();c.font="18px serif";c.fillText("🎨",s.x,s.y)}
   c.font="22px serif";KCT.GEMS.forEach(([gx,gy],i)=>{if(!k.city.gems.includes(i))c.fillText("💎",gx*T+T/2,gy*T+T/2+Math.sin(D.t*4+i)*3)});
   for(const p of D.peds){const x=p.ax+(p.bx-p.ax)*p.u+(p.ox||0),y=p.ay+(p.by-p.ay)*p.u+(p.oy||0);kCtFig(c,x,y,p.col)}
-  for(const o of D.tr)kCtMini(c,o,26,46,o.col,o.sh);
+  if(typeof kCt4Draw==="function")kCt4Draw(c,D);for(const o of D.tr)kCtMini(c,o,26,46,o.col,o.sh);
   for(const o of D.cops){kCtMini(c,o,28,48,"#f4f6ff","sedan");const fl=Math.floor(D.t*8)%2;c.fillStyle=fl?"#ff2a3a":"#2a6bff";c.fillRect(o.x-8,o.y-4,8,5);c.fillStyle=fl?"#2a6bff":"#ff2a3a";c.fillRect(o.x,o.y-4,8,5);c.font="14px serif";c.fillText(o.tag==="🍪"?"🍪👮":"👮",o.x,o.y-30)}
   if(D.bandit){const b=D.bandit;kCtMini(c,b,28,48,"#7a3fb5","suv");c.font="18px serif";c.fillText("🎂😈",b.x,b.y-32)}
   const js=me.jump>0?1+Math.sin(me.jump/1.1*Math.PI)*.45:1;if(me.jump>0){c.fillStyle="rgba(0,0,0,.3)";c.beginPath();c.ellipse(me.x+18*(js-1)*2,me.y+20*(js-1)*2,15,24,me.a,0,7);c.fill()}
@@ -10655,6 +10754,7 @@ function kLandRk(c,r,D,L,fire){const star=L.star||L.flip;c.save();c.translate(r.
 function kLandDraw(c,D,W,H,pads,bob,tgtY,dt){const L=D.L,gY=H-60;c.textAlign="center";c.textBaseline="middle";
   const sky=c.createLinearGradient(0,0,0,H);if(L.moon){sky.addColorStop(0,"#000");sky.addColorStop(1,"#0b0b12")}else if(L.mars){sky.addColorStop(0,"#3b1d14");sky.addColorStop(.7,"#c7794a");sky.addColorStop(1,"#e8a07a")}else if(L.night){sky.addColorStop(0,"#01020a");sky.addColorStop(1,"#0b1440")}else{sky.addColorStop(0,"#05081c");sky.addColorStop(.6,"#24306e");sky.addColorStop(1,L.ship?"#1d4ed8":"#f59e0b")}c.fillStyle=sky;c.fillRect(0,0,W,H);
   if(!L.mars){c.fillStyle="rgba(255,255,255,.75)";for(let i=0;i<(L.moon||L.night?80:40);i++)c.fillRect((i*97)%W,(i*53)%(H*.6),1.5,1.5)}if(L.moon){c.font="38px serif";c.fillText("🌍",W-44,70)}if(L.mars){c.fillStyle="rgba(240,180,140,.35)";for(let i=0;i<40;i++){const x=((i*83)+D.t*(40+D.wind*4))%W,y=(i*57)%H;c.fillRect((x+W)%W,y,3,1.5)}}
+  if(typeof kLand2Back==="function")kLand2Back(c,D,W,H,gY,pads);
   if(L.ship){c.fillStyle="#1e40af";c.fillRect(0,gY,W,H-gY);c.strokeStyle="rgba(255,255,255,.35)";c.lineWidth=2;for(let x=-20;x<W;x+=40){c.beginPath();c.arc(x+(D.t*20)%40,gY+8,10,Math.PI,0);c.stroke()}const p=pads[0];c.fillStyle="#334155";c.fillRect(p.x-10,gY-10+bob,p.w+20,18);c.fillStyle="#f8fafc";c.fillRect(p.x,gY-14+bob,p.w,4);c.fillStyle="#fff";c.font="bold 10px system-ui";c.fillText("DRONESHIP",p.x+p.w/2,gY+4+bob)}
   else{c.fillStyle=L.moon?"#6b7280":L.mars?"#9a3412":L.night?"#1f2937":"#57534e";c.fillRect(0,gY,W,H-gY);if(L.moon||L.mars){c.fillStyle=L.moon?"#4b5563":"#7c2d12";for(let i=0;i<6;i++){c.beginPath();c.ellipse((i*71+30)%W,gY+16+(i%3)*12,14+(i%3)*6,5,0,0,7);c.fill()}}
     for(const [i,p] of pads.entries()){c.fillStyle="#d6d3d1";c.fillRect(p.x,gY-6,p.w,8);c.strokeStyle="#fbbf24";c.lineWidth=3;c.beginPath();c.arc(p.x+p.w/2,gY-2,14,0,7);c.stroke();if(L.heavy){c.fillStyle="#fff";c.font="bold 10px system-ui";c.fillText(`LZ-${i+1}`,p.x+p.w/2,gY+14)}}}
@@ -12947,6 +13047,130 @@ function kFly3Post(c,F,C,Fo,W,H){const wx=F.wx||{},dusk=!!wx.dusk,P=F.P,dim=dusk
   const g=F.gl||1;if(!P.gnd&&g>1.08){c.textAlign="left";c.textBaseline="middle";c.fillStyle="rgba(5,8,24,.78)";c.beginPath();c.roundRect(6,70,56,18,8);c.fill();c.font="bold 10px system-ui";c.fillStyle=g>1.35?"#ffd23f":"#c7cbe6";c.fillText(`G ${g.toFixed(1)}`,13,79.5)}}
 // the radio panel never sits on top of the mission quiz or the checklist
 const kFxAtcDom0=kFxAtcDom;kFxAtcDom=function(cv,F){if(F.q||F.chk||F.over){try{const el=cv.parentElement&&cv.parentElement.querySelector(".kfatc");if(el)el.remove();if(F.q&&F.atc&&F.atc.q&&F.atc.q.ans==null)F.atc.q=null}catch(_){}return}kFxAtcDom0(cv,F)};
+
+/* ================= Robot Chess coach =================
+   Real chess training on top of the robot games:
+   - every move is graded against the engine's best move (Best / Good / Inaccuracy / Mistake / Blunder) with the reason
+     ("the robot can take your knight on f3") and the better move
+   - take back a move and try again (counts like a hint: 1 ticket instead of 2 for that win)
+   - an advantage bar shows who is ahead and by how much
+   - a danger alert marks a piece that is about to be lost (training wheels: only against robot levels 1 to 6)
+   - opening names and three opening principles
+   - a game review at the end: accuracy, move counts, and the biggest mistake shown on the board */
+const CBOPEN={"e2e4":["King's Pawn Opening","Controls the center and frees the bishop and queen."],"d2d4":["Queen's Pawn Opening","Controls the center; the pawn is protected by the queen."],"g1f3":["Réti Opening","Develops a knight first and keeps options open."],"c2c4":["English Opening","Fights for the center from the side."],
+ "e2e4 e7e5":["Open Game","Both sides claim the center."],"e2e4 e7e5 g1f3":["King's Knight Opening","Attacks the e5 pawn right away."],"e2e4 e7e5 g1f3 b8c6 f1c4":["Italian Game","The bishop aims at f7, the weakest square near the black king."],
+ "e2e4 e7e5 g1f3 b8c6 f1b5":["Ruy Lopez","One of the oldest openings: pressure on the knight that guards e5."],"e2e4 e7e5 g1f3 b8c6 d2d4":["Scotch Game","Opens the center early."],"e2e4 e7e5 f2f4":["King's Gambit","Offers a pawn for a fast attack."],
+ "e2e4 c7c5":["Sicilian Defense","Black fights for the center from the side. The most popular reply to e4."],"e2e4 e7e6":["French Defense","Solid: Black plans d5 next."],"e2e4 c7c6":["Caro-Kann Defense","Solid: Black plans d5 next."],"e2e4 d7d5":["Scandinavian Defense","Black challenges the e4 pawn at once."],
+ "d2d4 d7d5":["Closed Game","Both sides hold the center."],"d2d4 d7d5 c2c4":["Queen's Gambit","Offers a pawn to pull Black's pawn away from the center."],"d2d4 d7d5 c1f4":["London System","An easy, solid setup: bishop out, then e3 and Nf3."],"d2d4 g8f6":["Indian Defense","Black controls e4 with a knight instead of a pawn."],
+ "e2e4 e7e5 g1f3 g8f6":["Petrov's Defense","Black copies and counterattacks e4."],"e2e4 e7e5 d1h5":["Wayward Queen Attack","Careful: an early queen lets Black develop while chasing it."],"e2e4 e7e5 f1c4":["Bishop's Opening","Aims at f7 right away."]};
+function cbSq(i){return "abcdefgh"[i&7]+(8-(i>>3))}
+function cbSan(b,m){const p=b[m[0]].toUpperCase(),cap=b[m[1]];return(p==="P"?(cap?"abcdefgh"[m[0]&7]+"x":""):p+(cap?"x":""))+cbSq(m[1])}
+function cbAnalyze(b,w,budget){const ms=cMoves(b,w),out=[];if(!ms.length)return out;cbNodes=0;const per=Math.max(500,Math.floor((budget||26000)/ms.length));for(const m of ms){cbStop=cbNodes+per;const n=cMove(b,m[0],m[1]);out.push([-cbSearch(n,!w,1,-1e9,1e9,2),m])}return out.sort((x,y)=>y[0]-x[0])}
+function cbName(p){return(KPN[p.toUpperCase()]||"piece").toLowerCase()}
+function kCbCoachOn(){const C=kCbS();return C.coach!==0}
+function kCbGrade(pre,m,post){const A=cbAnalyze(pre,true),best=A[0],mine=A.find(x=>x[1][0]===m[0]&&x[1][1]===m[1])||best,loss=Math.max(0,best[0]-mine[0]);
+  const cls=loss<25?"best":loss<90?"good":loss<200?"inacc":loss<420?"mist":"blun",same=best[1][0]===m[0]&&best[1][1]===m[1];let why="";
+  if(cls==="mist"||cls==="blun"||cls==="inacc"){const R=cbAnalyze(post,false,14000)[0];
+    if(best[0]>90000&&mine[0]<90000)why="You missed checkmate in one! 👑";
+    else if(R&&R[0]>90000)why="That lets the robot checkmate you.";
+    else if(R&&post[R[1][1]]&&cWhite(post[R[1][1]])&&CBV[post[R[1][1]].toUpperCase()]>=300)why=`The robot can take your ${cbName(post[R[1][1]])} on ${cbSq(R[1][1])}.`;
+    else if(pre[best[1][1]]&&!cWhite(pre[best[1][1]]))why=`You could have taken the ${cbName(pre[best[1][1]])} on ${cbSq(best[1][1])}.`;
+    else why="There was a stronger move."}
+  return{cls,loss:Math.round(loss),best:best[1],bestSan:cbSan(pre,best[1]),san:cbSan(pre,m),same,why}}
+function kCbTip(g,pre,m){g.tips=g.tips||{};const p=pre[m[0]].toUpperCase(),home=[57,62,58,61].filter(i=>pre[i]&&"NB".includes(pre[i])).length;
+  if(g.ply<=14&&p==="Q"&&home>=3&&!g.tips.q){g.tips.q=1;return"Opening tip: bring out knights and bishops before the queen. An early queen gets chased around."}
+  if(g.ply<=12&&p!=="P"&&(g.dest||[]).includes(m[0])&&!pre[m[1]]&&!g.tips.t){g.tips.t=1;return"Opening tip: move each piece once. Get all your pieces into the game first."}
+  if(p==="N"&&((m[1]&7)===0||(m[1]&7)===7)&&g.ply<=20&&!g.tips.r){g.tips.r=1;return"Tip: a knight on the rim is dim. Knights are strongest near the center."}
+  return""}
+const kCbStart0=kCbStart;kCbStart=function(){kCbStart0();Object.assign(KV,{hist:[],coach:null,tb:0,rev:null,line:[],dest:[],tips:{},open:null})};
+const kCbClick0=kCbClick;
+kCbClick=function(d){const g=KV;if(KV.scr!=="chessbot")return;
+  if(d.kcb==="coach"){const C=kCbS();C.coach=C.coach===0?1:0;persist();return}
+  if(d.kcb==="rev"){g.rev=d.i===""||d.i===undefined?null:+d.i;return}
+  if(d.kcb==="back"){if(g.over||g.think||g.turn!=="w"||!(g.hist||[]).length)return;const h=g.hist.pop();g.b=h.b;g.ply=h.ply;g.last=[];g.sel=h.best[0];g.dots=[h.best[1]];g.line=g.line.slice(0,h.ply);g.dest.pop();g.tb=(g.tb||0)+1;g.hints++;g.coach={cls:"back",txt:`↩️ Taken back. The glowing square shows a stronger move (${h.bestSan}). Try it, or find your own.`};g.msg="";g.thr=undefined;kBeep("click");return}
+  const pre=g.b,ply=g.ply,sel=g.sel;kCbClick0(d);
+  if(d.kcb==="new"){return}
+  if(g.ply===ply+1&&d.kcb==="sq"&&sel!=null){const m=[sel,+d.i];g.hist=g.hist||[];g.line=g.line||[];g.dest=g.dest||[];let G=null;try{G=kCbGrade(pre,m,g.b)}catch(_){}
+    if(G){const tip=kCbTip(g,pre,m);g.hist.push({b:pre,ply,m,cls:G.cls,loss:G.loss,best:G.best,bestSan:G.bestSan,san:G.san,why:G.why});
+      const lab={best:"⭐ Best move!",good:"👍 Good move.",inacc:"🤔 Inaccuracy.",mist:"⚠️ Mistake.",blun:"💥 Blunder!"}[G.cls];
+      g.coach={cls:G.cls,txt:`${lab} ${G.san}${G.cls==="best"||G.cls==="good"?"":` · ${G.why} Better: ${G.bestSan}.`}${tip&&(G.cls==="best"||G.cls==="good"||G.cls==="inacc")?" "+tip:""}`}}
+    g.line[ply]=cbSq(m[0])+cbSq(m[1]);g.dest.push(m[1]);g.thr=undefined}};
+const kCbRobot0=kCbRobot;
+kCbRobot=function(){const g=KV,pre=g.b,ply=g.ply;kCbRobot0();const iv=setInterval(()=>{if(KV!==g){clearInterval(iv);return}if(!g.think){clearInterval(iv);if(g.ply===ply+1&&g.last&&g.last.length===2){g.line=g.line||[];g.line[ply]=cbSq(g.last[0])+cbSq(g.last[1]);
+        let nm=null;for(let n=Math.min(g.line.length,5);n>=1;n--){const k=g.line.slice(0,n).join(" ");if(CBOPEN[k]){nm=CBOPEN[k];break}}if(nm&&g.ply<=10&&(!g.open||g.open[0]!==nm[0])){g.open=nm;g.openT=g.ply}
+        g.thr=undefined;try{render()}catch(_){}}}},60)};
+function kCbEval(g){if(g.evPly===g.ply&&g.ev!==undefined)return g.ev;let v=0;try{cbNodes=0;cbStop=6000;const w=g.turn==="w";v=(w?1:-1)*cbSearch(g.b,w,1,-1e9,1e9,2)}catch(_){v=cbEval(g.b)}g.evPly=g.ply;return g.ev=v}
+function kCbThreat(g){if(g.thr!==undefined&&g.thrPly===g.ply)return g.thr;g.thrPly=g.ply;g.thr=null;try{const A=cbAnalyze(g.b,false,12000)[0];if(A){const t=A[1][1],p=g.b[t];if(p&&cWhite(p)&&p!=="K"&&CBV[p]>=300&&A[0]+cbEval(g.b)>170)g.thr={sq:t,p}}}catch(_){}return g.thr}
+function kCbReview(g){const H=g.hist||[];if(!H.length)return"";const n=H.length,acc=Math.round(H.reduce((a,h)=>a+100*Math.exp(-h.loss/260),0)/n),cnt=c=>H.filter(h=>h.cls===c).length;
+  let worst=-1;H.forEach((h,i)=>{if((h.cls==="mist"||h.cls==="blun")&&(worst<0||h.loss>H[worst].loss))worst=i});const C=kCbS();if(!g.accSaved){g.accSaved=1;C.accBest=Math.max(C.accBest||0,acc);C.games=(C.games||0)+1;persist();if(acc>=85&&n>=12)kTrophy("cbacc","🎯","Sharp shooter!","Played a chess game with 85% accuracy or better.")}
+  return `<div class="kcbrev"><div class="ktriph">📊 GAME REVIEW</div><div class="ktripg"><div><b>${acc}%</b><span>accuracy</span></div><div><b>${cnt("best")}</b><span>⭐ best</span></div><div><b>${cnt("mist")}</b><span>⚠️ mistakes</span></div><div><b>${cnt("blun")}</b><span>💥 blunders</span></div></div>
+   ${worst>=0?`<div class="ksmall" style="color:#e5e7eb">Biggest miss: move ${Math.floor(H[worst].ply/2)+1}, you played <b>${esc(H[worst].san)}</b>. ${esc(H[worst].why)} Better: <b>${esc(H[worst].bestSan)}</b>.</div><button class="kbtn small" data-kcb="rev" data-i="${worst}" style="margin-top:6px">🔍 Show me on the board</button>`:`<div class="ksmall" style="color:#e5e7eb">No big mistakes. That is how strong players win: fewer mistakes than the other side.</div>`}
+   <div class="ksmall" style="color:#9fb4d8;margin-top:6px">Best accuracy so far: ${C.accBest||acc}%${g.tb?` · take-backs this game: ${g.tb}`:""}</div></div>`}
+const kCbView0=kCbView;
+kCbView=function(v){const g=KV;if(g.scr==="chessbot"&&g.b&&g.rev!=null&&g.hist&&g.hist[g.rev]){const h=g.hist[g.rev],save={b:g.b,last:g.last,dots:g.dots,sel:g.sel,msg:g.msg};g.b=h.b;g.last=[h.m[0],h.m[1]];g.sel=h.best[0];g.dots=[h.best[1]];g.msg="";
+    try{kCbView0(v)}finally{Object.assign(g,save)}const q=v.querySelector(".kq");if(q){const bd=q.querySelector(".kboard");if(bd)bd.insertAdjacentHTML("beforebegin",`<div class="kcbco mist">🔍 Move ${Math.floor(h.ply/2)+1}: you played <b>${esc(h.san)}</b> (the two marked squares). ${esc(h.why)} The glowing piece and dot show the better move: <b>${esc(h.bestSan)}</b>.</div>`);
+      const pad=q.querySelector(".kpad");if(pad)pad.innerHTML=`<button class="kbtn big" data-kcb="rev" data-i="">◀ Back to the result</button>`}return}
+  kCbView0(v);try{const G=KV,q=v.querySelector(".kq"),bd=q&&q.querySelector(".kboard");if(!bd)return;const C=kCbS(),on=kCbCoachOn();
+    const ev=kCbEval(G),pct=Math.round(50+50*Math.tanh(ev/420)),lab=Math.abs(ev)>90000?"mate":(ev>=0?"+":"−")+(Math.abs(ev)/100).toFixed(1);
+    bd.insertAdjacentHTML("beforebegin",`<div class="kcbev" title="Who is ahead"><i style="width:${pct}%"></i><span class="l">You</span><b>${lab}</b><span class="r">Robot</span></div>${G.open&&G.ply<=12?`<div class="kcbop">📖 <b>${esc(G.open[0])}</b> · ${esc(G.open[1])}</div>`:""}`);
+    if(!G.over&&G.turn==="w"&&!G.think&&on&&G.lv<=6){const T=kCbThreat(G);if(T){const sq=bd.querySelector(`[data-i="${T.sq}"]`);if(sq)sq.classList.add("kthr");bd.insertAdjacentHTML("afterend",`<div class="kcbco mist">🚨 Your ${cbName(T.p)} on ${cbSq(T.sq)} is in danger! Move it, defend it, or take the attacker.</div>`)}}
+    if(G.coach&&on)bd.insertAdjacentHTML("afterend",`<div class="kcbco ${G.coach.cls}">${esc(G.coach.txt)}</div>`);
+    const pad=q.querySelector(".kpad");if(pad&&!G.over){const can=(G.hist||[]).length&&G.turn==="w"&&!G.think;pad.insertAdjacentHTML("beforeend",`<button class="kbtn ghost" data-kcb="back" ${can?"":"disabled"}>↩️ Take back</button><button class="kbtn ${on?"green":"ghost"}" data-kcb="coach">🧑‍🏫 Coach ${on?"ON":"OFF"}</button>`)}
+    if(G.over&&pad)pad.insertAdjacentHTML("beforebegin",kCbReview(G));
+    const note=q.querySelector(".kpad+.ksmall")||[...q.querySelectorAll(".ksmall")].pop();if(note&&!G.over)note.textContent=`Win to level up the robot (+2 🎟️, +1 if you used a hint or a take-back). ${G.lv<=6?"Danger alerts help until robot level 6.":"From level 7 there are no danger alerts: you spot the threats."}`}catch(_){}};
+
+/* ================= Booster Landing 2 and Brick Bay traffic lights =================
+   Booster Landing: a flight computer for the "hoverslam" (the real SpaceX landing burn). A marker under the rocket shows
+   where it would stop if the engine fired now (v² / 2a); when the marker reaches the pad it says BURN NOW. Cold-gas
+   thruster puffs, exhaust smoke, engine glow on the pad, and real scenery (launch site, ocean, Moon, Mars).
+   Brick Bay: working traffic lights at all 16 intersections. Traffic stops on red. Stopping at a red light and
+   going on green pays a Safe Driver bonus; running a red light costs a small ticket (never during a mission or chase). */
+// ---------------- Booster Landing ----------------
+function kLand2Back(c,D,W,H,gY,pads){const L=D.L,t=D.t||0;c.save();
+  for(let i=0;i<9;i++){const x=(i*131+17)%W,y=(i*71+23)%(H*.5),a=.45+.45*Math.sin(t*2.2+i*1.7);c.fillStyle=`rgba(255,255,255,${L.mars?a*.25:a})`;c.beginPath();c.arc(x,y,1.6,0,7);c.fill()}
+  if(L.moon){c.fillStyle="#4b5563";c.beginPath();c.moveTo(0,gY);for(let x=0;x<=W;x+=24)c.lineTo(x,gY-10-((x*7)%23)-(Math.sin(x*.03)*10+10));c.lineTo(W,gY);c.closePath();c.fill();c.strokeStyle="rgba(255,255,255,.12)";c.lineWidth=1;for(let i=0;i<5;i++){c.beginPath();c.ellipse((i*83+40)%W,gY-6,16+i*3,3,0,0,7);c.stroke()}}
+  else if(L.mars){c.fillStyle="rgba(255,235,200,.9)";c.beginPath();c.arc(W*.78,H*.2,7,0,7);c.fill();c.fillStyle="#7c2d12";c.beginPath();c.moveTo(0,gY);c.lineTo(W*.1,gY-34);c.lineTo(W*.26,gY-40);c.lineTo(W*.34,gY-14);c.lineTo(W*.55,gY-10);c.lineTo(W*.7,gY-52);c.lineTo(W*.9,gY-56);c.lineTo(W,gY-22);c.lineTo(W,gY);c.closePath();c.fill()}
+  else{const night=L.night;if(night){c.fillStyle="#f8fafc";c.beginPath();c.arc(W*.8,H*.16,13,0,7);c.fill();c.fillStyle="#0b1440";c.beginPath();c.arc(W*.8+6,H*.16-3,12,0,7);c.fill()}
+    else{const g=c.createRadialGradient(W*.5,gY,4,W*.5,gY,W*.7);g.addColorStop(0,L.ship?"rgba(120,180,255,.35)":"rgba(255,200,90,.5)");g.addColorStop(1,"rgba(255,200,90,0)");c.fillStyle=g;c.fillRect(0,gY-W*.7,W,W*.7)}
+    c.fillStyle=night?"rgba(160,170,210,.10)":"rgba(255,255,255,.16)";for(let i=0;i<5;i++){const x=((i*97+t*(4+i)+(D.wind||0)*t*.2)%(W+160))-80,y=H*.36+i*34;c.beginPath();c.ellipse(x,y,46+i*8,7+i,0,0,7);c.fill()}
+    if(L.ship){c.fillStyle="rgba(10,25,70,.55)";c.fillRect(0,gY-3,W,3);c.fillStyle="rgba(10,20,50,.7)";c.fillRect(W*.08,gY-9,34,6);c.fillRect(W*.08+10,gY-15,10,6)}
+    else{c.fillStyle=night?"#0b1020":"rgba(30,26,40,.78)";c.fillRect(W*.06,gY-52,34,52);c.fillRect(W*.06+34,gY-22,26,22);c.fillRect(W*.86,gY-92,5,92);c.fillRect(W*.86-9,gY-70,23,3);c.fillRect(W*.86-6,gY-46,17,3);c.beginPath();c.arc(W*.72,gY-30,9,0,7);c.fill();c.fillRect(W*.72-1.5,gY-22,3,22);
+      if(night){c.fillStyle="#ffd97a";for(let i=0;i<6;i++)c.fillRect(W*.06+5+(i%3)*10,gY-44+Math.floor(i/3)*16,4,5);c.fillStyle=Math.floor(t*1.5)%2?"#ff3030":"#801010";c.beginPath();c.arc(W*.86+2.5,gY-94,2.5,0,7);c.fill()}}}
+  c.restore()}
+function kLand2Front(c,D,W,H,pads,tgtY,dt){const L=D.L;D.sm=D.sm||[];const fire=D.thr&&D.fuel>0&&!D.over&&D.flipped&&!D.pre;c.save();c.textAlign="center";c.textBaseline="middle";
+  for(const r of D.rk){if(r.ok||r.dead)continue;const alt=tgtY-r.y-46;
+    if(fire){if(Math.random()<.7)D.sm.push({x:r.x+(Math.random()-.5)*8,y:r.y+78,vx:(Math.random()-.5)*26+(D.wind||0)*.4,vy:60+Math.random()*50,t:0});
+      if(alt<110){const a=Math.max(0,1-alt/110),g=c.createRadialGradient(r.x,tgtY,2,r.x,tgtY,70);g.addColorStop(0,`rgba(255,200,120,${.55*a})`);g.addColorStop(1,"rgba(255,160,60,0)");c.fillStyle=g;c.fillRect(r.x-70,tgtY-40,140,60)}}
+    if(D.flipped&&D.fuel>0&&(D.left||D.right)&&!D.over){const s=D.left?1:-1;c.fillStyle="rgba(255,255,255,.75)";c.beginPath();c.moveTo(r.x+s*10,r.y-40);c.lineTo(r.x+s*(26+Math.random()*10),r.y-46);c.lineTo(r.x+s*(26+Math.random()*10),r.y-34);c.closePath();c.fill()}
+    // hoverslam computer
+    if(D.flipped&&!D.over&&!D.pre&&r.vy>10&&D.guide!==0){const a=L.g*1.75,d=r.vy*r.vy/(2*a),stopY=r.y+46+d,gap=tgtY-stopY,now=gap<=4,soon=!now&&gap<Math.max(26,d*.45);
+      const y=Math.min(tgtY+10,stopY),col=now?"#ff4d6d":soon?"#ffd23f":"#2ec27e";c.strokeStyle=col;c.lineWidth=2;c.setLineDash([5,4]);c.beginPath();c.moveTo(r.x-30,y);c.lineTo(r.x+30,y);c.stroke();c.setLineDash([]);
+      c.fillStyle=col;c.beginPath();c.moveTo(r.x-36,y-4);c.lineTo(r.x-30,y);c.lineTo(r.x-36,y+4);c.closePath();c.fill();c.beginPath();c.moveTo(r.x+36,y-4);c.lineTo(r.x+30,y);c.lineTo(r.x+36,y+4);c.closePath();c.fill();
+      if(!now){c.font="bold 9px system-ui";c.fillText("stops here",r.x,y+10)}
+      if(D.rk.length===1||r===D.rk.find(q=>!q.ok&&!q.dead)){const tx=now?(D.thr?"🔥 BURNING":"🔥 BURN NOW!"):soon?"⏳ Get ready…":"🛰️ Falling: wait for the marker to reach the pad";if(!(now&&D.thr&&r.vy<30)){c.font="bold 11px system-ui";const tw=Math.min(W-16,c.measureText(tx).width+22);c.fillStyle=now?(Math.floor(D.t*6)%2?"rgba(255,77,109,.96)":"rgba(180,30,60,.96)"):"rgba(5,8,24,.72)";c.beginPath();c.roundRect(W/2-tw/2,92,tw,22,10);c.fill();c.fillStyle="#fff";c.fillText(tx,W/2,103.5)}
+        if(now&&!D.thr&&!D.burnSaid){D.burnSaid=1;try{kLine("Burn now!",2)}catch(_){}}}}}
+  for(const s of D.sm){s.t+=dt;s.x+=s.vx*dt;s.y+=s.vy*dt;if(s.y>tgtY+6){s.y=tgtY+6;s.vy=0;s.vx*=1.6}const a=Math.max(0,.38-s.t*.34);c.fillStyle=L.moon?`rgba(200,200,210,${a})`:L.mars?`rgba(225,170,130,${a})`:`rgba(230,230,235,${a})`;c.beginPath();c.arc(s.x,s.y,5+s.t*22,0,7);c.fill()}
+  D.sm=D.sm.filter(s=>s.t<1.1);if(D.sm.length>90)D.sm.splice(0,D.sm.length-90);c.restore()}
+const kLandDraw0=kLandDraw;
+kLandDraw=function(c,D,W,H,pads,bob,tgtY,dt){kLandDraw0(c,D,W,H,pads,bob,tgtY,dt);try{kLand2Front(c,D,W,H,pads,tgtY,dt||0)}catch(_){}};
+// ---------------- Brick Bay traffic lights ----------------
+function kCt4Phase(D,a,b){const t=((D.t||0)+((a*3+b*5)%5)*3)%15;return t<6?{ns:"g",ew:"r"}:t<7.5?{ns:"y",ew:"r"}:t<13.5?{ns:"r",ew:"g"}:{ns:"r",ew:"y"}}
+function kCt4Stop(D,o,v){try{const ax=v[0]?"x":"y",pos=o[ax],dir=v[0]||v[1],oth=ax==="x"?o.y:o.x;for(let i=0;i<4;i++){const c=kCtRc(i),dist=(c-pos)*dir;if(dist<34||dist>50)continue;let oi=-1;for(let j=0;j<4;j++)if(Math.abs(kCtRc(j)-oth)<30)oi=j;if(oi<0)return false;
+      const P=ax==="x"?kCt4Phase(D,i,oi):kCt4Phase(D,oi,i);return(ax==="x"?P.ew:P.ns)!=="g"}}catch(_){}return false}
+function kCt4Draw(c,D){const col={g:"#22e06b",y:"#ffd23f",r:"#ff3b3b"},vx0=D.camX-60,vy0=D.camY-60,vx1=D.camX+460,vy1=D.camY+620,head=(x,y,k)=>{c.fillStyle="#111827";c.beginPath();c.roundRect(x-6,y-6,12,12,3);c.fill();c.fillStyle=col[k];c.beginPath();c.arc(x,y,3.8,0,7);c.fill();c.globalAlpha=.3;c.beginPath();c.arc(x,y,8,0,7);c.fill();c.globalAlpha=1};
+  for(let a=0;a<4;a++)for(let b=0;b<4;b++){const cx=kCtRc(a),cy=kCtRc(b);if(cx<vx0||cx>vx1||cy<vy0||cy>vy1)continue;const P=kCt4Phase(D,a,b);
+    head(cx+25,cy+38,P.ns);head(cx-25,cy-38,P.ns);head(cx-38,cy+25,P.ew);head(cx+38,cy-25,P.ew);
+    c.fillStyle="rgba(255,255,255,.75)";c.fillRect(cx+2,cy+33,28,2.5);c.fillRect(cx-30,cy-35.5,28,2.5);c.fillRect(cx-35.5,cy+2,2.5,28);c.fillRect(cx+33,cy-30,2.5,28)}}
+function kCt4Step(D,dt){const me=D.me;if(!me||D.foot||D.air||D.over||D.q||D.inside)return;const S=D.l4=D.l4||{in:null,wait:null,cd:0,streak:0};S.cd=Math.max(0,S.cd-dt);const sp=Math.hypot(me.vx||0,me.vy||0),busy=!!D.mis||(D.cops&&D.cops.length>0)||(D.wanted>0);
+  let near=null;for(let a=0;a<4;a++)for(let b=0;b<4;b++){const dx=me.x-kCtRc(a),dy=me.y-kCtRc(b);if(Math.abs(dx)<62&&Math.abs(dy)<62)near={a,b,dx,dy}}
+  if(!near){S.in=null;S.wait=null;return}
+  const ax=Math.abs(me.vx||0)>Math.abs(me.vy||0)?"ew":"ns",P=kCt4Phase(D,near.a,near.b),inside=Math.abs(near.dx)<26&&Math.abs(near.dy)<26,key=near.a+","+near.b;
+  if(!inside){if(sp<10){let wax=null;if(Math.abs(near.dx)<26&&Math.abs(near.dy)>=30)wax="ns";else if(Math.abs(near.dy)<26&&Math.abs(near.dx)>=30)wax="ew";if(wax&&P[wax]==="r")S.wait={key,ax:wax}}S.in=null;return}
+  if(S.in===key)return;if(sp<6)return;S.in=key;
+  if(S.wait&&S.wait.key===key&&P[S.wait.ax]!=="r"){S.wait=null;S.streak++;const pay=Math.min(15,5+S.streak);D.money=(D.money||0)+pay;D.score=(D.score||0)+10;try{kCtFx({k:"txt",x:me.x,y:me.y-34,txt:`🚦 Safe driver +$${pay}`});kBeep("coin")}catch(_){}
+    if(S.streak===5)try{kTrophy("safedrv","🚦","Safe driver!","Stopped at 5 red lights in a row in Brick Bay.")}catch(_){}return}
+  if(P[ax]==="r"&&sp>=28&&!busy&&S.cd<=0){S.cd=7;S.streak=0;S.wait=null;const fine=Math.min(5,D.money||0);D.money=(D.money||0)-fine;try{kCtFx({k:"txt",x:me.x,y:me.y-34,txt:fine?`🚨 Red light! Ticket −$${fine}`:"🚨 Red light! Stop on red."});kBeep("no")}catch(_){}
+    if(!S.said){S.said=1;D.tip="🚦 Traffic lights work now. Stop at the white line on red, go on green for a Safe Driver bonus.";D.tipT=5}}}
 
 /* ================= Retina-sharp game canvases =================
    Every game canvas was drawn at 1 pixel per CSS pixel, so it looked soft on an iPhone (3 device pixels per CSS pixel).
@@ -17425,7 +17649,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 155 · Nov 21";
+const BUILD="Version 156 · Nov 21";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
