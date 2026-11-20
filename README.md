@@ -106,6 +106,15 @@ subject up a level, two misses move it down. Hints are always available but neve
   Runway starts begin with a tap-through pre-flight checklist. An optional 👁️ cockpit view shows the six-pack
   (airspeed in knots, attitude indicator, altimeter in meters and feet, turn coordinator, heading, vertical
   speed). Free Flight lets him pick any aircraft he has flown.
+- **♠️ Poker Academy:** seven step-by-step lessons (cards and ranks, hand rankings, best 5 of 7, how a hand
+  goes, No-Limit betting, starting hands and position, pot odds), each 5 generated questions with a 4/5 pass
+  mark and a ticket for the first pass. After step 3, a full No-Limit Texas Hold'em table opens: him plus
+  Robo, Lucky and Shark (different styles), blinds 10/20, a moving dealer button, min-raise rules, a raise
+  slider with ½-pot, pot and all-in buttons, correct side pots at showdown, and a coach showing his hand,
+  win chance and pot odds, plus a one-line review after each hand. Play chips only.
+- **🧭 Today's Mission Path:** the home screen leads with three daily steps picked from his weakest skills,
+  each showing level-up progress. Finishing all three pays +2 🎟️. Tapping a game before the path is done
+  shows a friendly reminder, but free play is never blocked.
 - **✈️🚀 Pilot School hub:** Sky Pilot, Booster Landing and Space Mission now live in one hub on the home
   screen, with a ground school (Pilot Basics and Air & Space Force lessons, Air Force, Space Force and SpaceX
   quizzes) that earns the tickets the flying costs.
