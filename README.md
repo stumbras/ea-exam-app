@@ -34,6 +34,7 @@ borrowing, step-up and estate basics (Part 1); employee vs independent contracto
 Every subject adapts to the player: three right answers in a row (with 70%+ recent accuracy) moves a
 subject up a level, two misses move it down. Hints are always available but never earn points.
 
+- **Brick Bay as the game hub (Version 152):** 10 new buildings to walk into. Chess Club, Poker Room, Mahjong Parlor, Arcade, Game Show Studio, School, Hacker HQ and Airport each open a door menu into those games, and the city waits, with a "Back to Brick Bay" button. **Bank Vault** and **City Control** are hacking missions (3 Computer Lab puzzles: commands, binary, passwords, phishing, code) worth big city money and trophies. During a police chase, the Airport offers **Escape by air** into flying. Quick decisions now keep stats (answered, % right, last 20, best streak) on the Brick Bay start screen.
 - **Calmer kids home and hubs (Version 151):** home is now Mission Path, Tesla World, one Daily Genius button and five hub tiles (Brick Bay City, Pilot School, Learning Center, Game Room, My Progress). Hubs with skipped activities pulse red with bonus tickets.
   - **Daily Genius** is one button with today's 4 checks (curious, creative, teaser, Genius Quiz), accuracy and a day streak. Its screen shows performance by topic, weakest first.
   - **Robot Chess:** full games against a robot with 12 levels (from random moves up to a deeper search). Win to level up (+2 tickets, +1 with hints); two losses in a row step it down. Linked from Chess Quest and the Game Room.
