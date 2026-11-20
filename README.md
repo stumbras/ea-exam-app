@@ -101,6 +101,14 @@ subject up a level, two misses move it down. Hints are always available but neve
   mountains and the launch pad. The 🧭 Navigator mission has no arrow: air traffic control radios a
   compass heading, a grid square and an altitude to hold for three legs. The menu has a pilot-instruments
   card (compass, altimeter, airspeed, vertical speed, GPS grid, runway numbers, wind).
+  Each mission uses a real aircraft, easiest first: Cessna 172 (first takeoff, rings, landing), T-6 Texan II
+  trainer, Boeing 737 (slow to respond, bigger stall speed), F-35, a rescue helicopter and the MQ-9 drone.
+  Runway starts begin with a tap-through pre-flight checklist. An optional 👁️ cockpit view shows the six-pack
+  (airspeed in knots, attitude indicator, altimeter in meters and feet, turn coordinator, heading, vertical
+  speed). Free Flight lets him pick any aircraft he has flown.
+- **✈️🚀 Pilot School hub:** Sky Pilot, Booster Landing and Space Mission now live in one hub on the home
+  screen, with a ground school (Pilot Basics and Air & Space Force lessons, Air Force, Space Force and SpaceX
+  quizzes) that earns the tickets the flying costs.
 - **🏛️ History:** USA, Europe, Asia and World history as four leveled Quiz Show subjects that also feed
   Mix, the rotation and the Daily Genius meters.
 - **Stricter rotation:** three winning rounds in a row of the same quiz stop paying tickets until he
