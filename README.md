@@ -74,6 +74,9 @@ subject up a level, two misses move it down. Hints are always available but neve
   rob the bank; players catch them by bumping them with a car or with a foam "splat" on foot.
   ⚡ Quick-decision questions (times tables, change, road safety, phishing, compass) pop up for six
   seconds and build a 🔥 combo multiplier for a 🏆 score.
+  Two ✈️ jets wait on the beach: take off, fly over the buildings through five gold sky rings
+  (guided by an arrow and compass words like NORTH-EAST), answer a pilot question (speed × time,
+  km to meters, thrust, compass), then land on any road, park or beach.
 - **✈️ Sky Pilot:** a kid-friendly 3D flight simulator with simplified real physics in metric units
   (m/s, km/h, meters). A live forces panel shows lift, weight, thrust and drag; stall speed drops when
   flaps are down, and gear and flaps add drag. Six missions unlock in order: 🛫 First Takeoff,
@@ -84,10 +87,12 @@ subject up a level, two misses move it down. Hints are always available but neve
   touchdown; Pro mode turns the helpers off. Optional real-pilot stick (pull back to climb) and
   tilt-to-fly with the phone's motion sensor. Each finished mission ends with a pilot science
   question (four forces, stalls, flaps, headings, m/s to km/h, the Wright brothers).
+  After First Takeoff, a ⚡ fighter jet unlocks: twice the thrust, takes off at 35 m/s and needs a
+  longer landing.
   One ticket = a 5-minute visit. No crime or violence: everything is cartoon mischief.
-- **🔄 Smart rotation:** a daily "brain mix" suggests three activities he hasn't done yet; the first win at each
+- **🔄 Smart rotation:** a daily "brain mix" suggests three activities he hasn't done yet; the first win at each Every play game's end screen (Brick Bay, Sky Pilot, Booster Landing, Space Mission, Derby, Tesla Drive) shows an "Earn your next ticket" card with two fresh learning picks from the rotation; chess promotions and Hacker/Termux missions now count toward it too.
   one each day gives a bonus ticket (up to 4), and after three rounds of the same thing it suggests switching.
-- **🎓 Genius Lessons:** bite-size tracks from Kid to Elite (3 cards + 2 questions each): Money & Economy,
+- **🎓 Genius Lessons:** bite-size tracks from Kid to Elite (3 cards + 2 questions each): Money & Economy, Tracks include ⚖️ Law & Courts (rights, the courtroom, civil vs criminal cases and contracts, and the path to becoming a lawyer).
   Government & Law, Crypto & Blockchain, How Hacks Happen (ethical cyber defense), Medicine & Body,
   Engineering & Space, and Science Careers, each ending with real career paths.
 - **🎵 Music Lab:** note reading on the treble staff (4 adaptive levels), an on-screen piano, play-along songs
