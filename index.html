@@ -609,6 +609,12 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 .ktwf{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.08)}.ktwf:last-child{border-bottom:0}.ktwi{font-size:26px;flex:none;width:36px;text-align:center}
 .ktwgame{display:flex!important;gap:12px;align-items:center;text-align:left;width:100%;border:0;background:linear-gradient(135deg,#0b1d3a,#1d4ed8 60%,#f6a04d)!important;color:#fff!important;cursor:pointer;font:inherit}.ktwgame .ksmall{color:#fff;display:block}.ktwgame>span:last-child{display:flex;flex-direction:column;gap:3px}
 .kmzpad{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:8px;margin-top:8px}.kmzpad .kbtn{font-size:20px;padding:16px 0;user-select:none;-webkit-user-select:none;touch-action:none}
+.kbadges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 8px}
+.kbdg{position:relative;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);overflow:hidden}
+.kbdg>span{font-size:21px;filter:grayscale(1);opacity:.45;z-index:1}.kbdg.on>span{filter:none;opacity:1}
+.kbdg>i{position:absolute;left:0;right:0;bottom:0;background:rgba(253,224,71,.35)}
+.kbdg>b{position:absolute;right:-2px;bottom:-2px;z-index:2;min-width:18px;height:18px;border-radius:9px;background:#334155;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 3px}
+.kbdg.up{border-color:#fde047;box-shadow:0 0 10px rgba(253,224,71,.5)}.kbdg.up>b{background:#eab308;color:#1b2440}
 </style>
 
 </head><body>
@@ -8578,7 +8584,7 @@ function kShowEnd(){const g=KV,k=KS();g.stage="done";g.stars=g.right>=5?3:g.righ
   kBadges();kUnlocks();kGoalCheck();persist()}
 function kShowView(v){const g=KV,k=KS();if(g.stage==="launch")return kLaunchView(v);
   if(g.stage==="pick"){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Quiz Show","home")}<div class="kcard kshowhero"><div class="kshowt">🎤 SPACE QUIZ SHOW</div><div class="ksmall">5 quick questions. Answer fast for speed bonus points. Get 4 to launch your rocket!</div></div>
-     <div class="kcats">${KCATS.map(c=>{const lv=c[4]&&c[4]!=="*"?`Lv ${k.lv[c[4]]}`:c[0]==="brain"?(k.scan?"Retake":"New!"):"Adaptive";return `<button class="kcat" data-kcat="${c[0]}"><span>${c[1]}</span><b>${esc(c[2])}</b><em>${esc(c[3])}</em><i>${lv}</i></button>`}).join("")}</div></div>`;return}
+     <div class="kcats">${KCATS.filter(c=>!(typeof KHEROIDS!=="undefined"&&KHEROIDS.has(c[0]))).map(c=>{const lv=c[4]&&c[4]!=="*"?`Lv ${k.lv[c[4]]}`:c[0]==="brain"?(k.scan?"Retake":"New!"):"Adaptive";return `<button class="kcat" data-kcat="${c[0]}"><span>${c[1]}</span><b>${esc(c[2])}</b><em>${esc(c[3])}</em><i>${lv}</i></button>`}).join("")}</div></div>`;return}
   if(g.stage==="done"){const b=kBrain();v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Quiz Show","home")}<div class="kcard kend">${g.right>=4&&g.cat!=="brain"?`<div class="krocket fly">🚀</div>`:""}<div class="kstars">${"⭐".repeat(g.stars)}${"☆".repeat(3-g.stars)}</div>
      <h2>${g.cat==="brain"?"🧠 Brain Scan complete!":`${g.right} of 5 right!`}</h2>${g.cat!=="brain"?`<div class="kscore">${g.score} points</div>`:""}${g.lines.map(l=>`<p><b>${esc(l)}</b></p>`).join("")}</div>
      ${g.cat==="brain"?kBrainCard(b,true):""}
@@ -10580,7 +10586,7 @@ function kPlayMark(d){const id=kPlayKey(d);if(!id)return;const k=KS(),t=kToday()
 function kNeglected(id){const k=KS(),p=(k.play||{})[id],t=kToday();if(!p||!p.last)return true;const ref=p.last===t?p.prev:p.last;return !ref||kDayDiff(ref,t)>=3}
 function kNegBonus(id,lines){const k=KS(),t=kToday(),key=id;if(!(k.play&&k.play[key]))return;const p=k.play[key];if(p.bon===t)return;const ref=p.prev;if(ref&&kDayDiff(ref,t)<3)return;p.bon=t;kTix(1,"🔴 comeback bonus");if(lines)lines.push("🔴 Comeback bonus: +1 🎟️ for doing something you skipped lately!");kT("🔴 Comeback bonus! +1 🎟️")}
 function kNegScore(id){const k=KS(),p=(k.play||{})[id],t=kToday();if(!p||!p.last)return 500+((id.length*7+t.charCodeAt(9))%13);const ref=p.last===t?p.prev:p.last;return ref?kDayDiff(ref,t):400}
-function kNegHook(v){try{if(!["home","show"].includes(KV.scr||"home")||KV.stage==="play")return;const seen=new Set(),L=[],G=[];v.querySelectorAll("[data-k],[data-kcat]").forEach(b=>{if(b.closest(".kgenius,.krot"))return;const id=kPlayKey(b.dataset);if(!id||seen.has(id)||!kNeglected(id))return;seen.add(id);(KNEGPLAY.includes(id)?G:L).push([kNegScore(id),b])});
+function kNegHook(v){try{if(!["home","show"].includes(KV.scr||"home")||KV.stage==="play")return;const seen=new Set(),L=[],G=[];v.querySelectorAll("[data-k],[data-kcat]").forEach(b=>{if(b.closest(".kgenius,.krot")&&!b.classList.contains("kgq"))return;const id=kPlayKey(b.dataset);if(!id||seen.has(id)||!kNeglected(id))return;seen.add(id);(KNEGPLAY.includes(id)?G:L).push([kNegScore(id),b])});
   L.sort((a,b)=>b[0]-a[0]).slice(0,3).forEach(x=>x[1].classList.add("kneg","kneg-l"));G.sort((a,b)=>b[0]-a[0]).slice(0,1).forEach(x=>x[1].classList.add("kneg","kneg-p"))}catch(_){}}
 
 /* ---------- 🎵 Music Lab: piano, note reading, play your real instrument (mic pitch check), tuner, composer ---------- */
@@ -10758,7 +10764,7 @@ function kHeroTrack(id,ok){const k=KS();k.hero=k.hero||{};const h=k.hero[id]=k.h
 /* quiz show categories + rotation entries */
 KHERO.forEach(H=>{KCATS.splice(KCATS.length-1,0,[H[0],H[1],H[2],H[4],H[3]])});
 KHERO.forEach(H=>KROT.push(["q:"+H[0],H[1],H[2],"kcat",H[0]]));
-function kShowQ(){const g=KV,c=g.cat;if(KHERO.some(H=>H[0]===c)){g.Q=kHeroQ(c);g.ans=null;KV.lock=null;g.Q.t0=0;return}
+function kShowQ(){const g=KV,c=g.cat;if(c==="genius"){g.Q=kHeroQ(kGeniusPick());g.ans=null;KV.lock=null;g.Q.t0=0;return}if(KHERO.some(H=>H[0]===c)){g.Q=kHeroQ(c);g.ans=null;KV.lock=null;g.Q.t0=0;return}
   if(c==="mix"&&g.i%3===2){g.Q=kHeroQ(kPick(KHERO)[0]);g.ans=null;KV.lock=null;g.Q.t0=0;return}
   let sub;if(c==="brain")sub=KSCAN[g.i%5];else if(c==="mix")sub=kSubPick();else sub=KCATS.find(x=>x[0]===c)[4];
   const cat=["flags","maps","space","bee","tesla","spacex"].includes(c)?c:c==="brain"?"scan":c==="mix"?"mix":"";g.Q=kQ(sub,cat);g.ans=null;KV.lock=null;g.Q.t0=0}
@@ -10774,8 +10780,9 @@ function kGeniusHtml(){const g=kGenDay(),k=KS(),cu=KCURIO[kGenIdx(KCURIO.length,
    ${row("cur","🤔","Curious question",esc(cu[0])+(g.cur||g.open==="cur"?`<br>💡 ${esc(cu[1])}`:""),g.cur,`<button class="kbtn small" data-kgen="cur">Find out</button>`)}
    ${row("cre","🎨","Creativity challenge",esc(cr),g.cre,`<button class="kbtn small" data-kgen="cre">I did it!</button>`)}
    ${row("tea","🧩","Brain teaser",esc(te[0])+(g.tea||g.open==="tea"?`<br>💡 ${esc(te[1])}`:""),g.tea,`<button class="kbtn small" data-kgen="tea">${g.open==="tea"?"Got it!":"Answer"}</button>`)}
-   <div class="kgensk">${KHERO.map(H=>{const x=h[H[0]]||{c:0},lv=Math.floor(x.c/5)+1,f=(x.c%5)/5;return `<button class="kgsk" data-kcat="${H[0]}"><span>${H[1]}</span><b>Lv ${lv}</b><i class="kbar sm"><u style="width:${f*100}%"></u></i><em>${esc(H[2])}</em></button>`}).join("")}</div>
-   <div class="ksmall">🤔 ${g.curN} curious · 🎨 ${g.creN} creative · 🧩 ${g.teaN} teasers so far. Tap a hero to practice that skill!</div></div>`}
+   <button class="kbtn green kgq" data-kcat="genius" style="width:100%;margin-top:6px">🧠 Genius Quiz · all ${KHERO.length} topics mixed · earns 🎟️</button>
+   <div class="kbadges">${KHERO.map(H=>{const x=h[H[0]]||{c:0},lv=Math.floor(x.c/5)+1,f=(x.c%5)/5;return `<span class="kbdg${x.c>0?" on":""}${lv>1?" up":""}" title="${esc(H[2])}"><span>${H[1]}</span><b>${lv}</b><i style="height:${Math.round(f*100)}%"></i></span>`}).join("")}</div>
+   <div class="ksmall">🏅 Badges level up from the Genius Quiz: every 5 right answers in a topic = next level. 🤔 ${g.curN} · 🎨 ${g.creN} · 🧩 ${g.teaN} so far.</div></div>`}
 function kGenClick(d){if(d.kgen===undefined)return false;const g=kGenDay(),k=KS(),w=d.kgen;
   if(w==="cur"){if(!g.cur){g.cur=1;g.curN++;k.coins+=5;kBeep("chime");const cu=KCURIO[kGenIdx(KCURIO.length,"c")];kSay(cu[0]+" "+cu[1]);kT("🤔 +5 ⚡ for being curious!")}}
   else if(w==="cre"){if(!g.cre){g.cre=1;g.creN++;k.coins+=10;kBeep("chest");kT("🎨 +10 ⚡ Creative genius! Show Dad what you made.");if(g.creN===10)kTrophy("create10","🎨","Creative genius!","Finished 10 creativity challenges.")}}
@@ -10803,6 +10810,11 @@ KCTB.push(["inv","💡","Invention Workshop","💡 Inventor & engineer for a day
 function kCtBQ(kind){const pick=id=>{const q=kHeroQ(id);return{q:q.q,o:q.o,a:q.a}};const m={bank:"biz",hosp:"doc",court:"law",lab:"sci2",inv:null}[kind];
   if(kind==="bank"){const out=[pick("biz"),pick("biz")];const p=kR(3,15),pay=p<10?10:20;out.push({q:`💵 A customer buys a $${p} item and pays $${pay}. Change?`,o:[`$${pay-p}`,`$${pay-p+1}`,`$${pay-p+2}`],a:0});return out}
   if(kind==="inv")return[pick("inv"),pick("eng2"),pick("inv")];return[pick(m),pick(m),pick(m)]}
+
+/* One combined Genius Quiz instead of 13 separate topic quizzes: picks the weakest topics so every badge grows. */
+function kGeniusPick(){const k=KS(),h=k.hero||{};const L=KHERO.map(H=>[H[0],(h[H[0]]||{c:0}).c+Math.random()*3]).sort((a,b)=>a[1]-b[1]);return L[Math.floor(Math.random()*Math.min(5,L.length))][0]}
+const KHEROIDS=new Set();
+
 
 /* ---------- 🎖️ Air Force, 🛰️ Space Force, 🛡️ Cyber Defender: skills + realistic Sky Pilot missions (formation, sound barrier, search & rescue) ---------- */
 KHERO.push(["af","🎖️","Air Force Pilot","sci","Jets, speed, G-force, radio talk"],["sf","🛰️","Space Force","sci","Satellites, orbits, GPS"],["cyb","🛡️","Cyber Defender","code","Passwords, phishing, encryption"]);
@@ -11445,6 +11457,11 @@ function kMzClick(d){if(!MZ)kMzNew();
   if(d.kmz==="ans"&&MZ.phase==="q"){const i=+d.i;if(MZ.pick!=null)return;MZ.pick=i;if(i===MZ.q.a){kBeep("yes");kT("⛽ Fueled! Launching…");setTimeout(()=>{if(MZ&&MZ.phase==="q"){MZ.pick=null;kMzLaunch();render()}},700)}else kBeep("no");return}
   if(d.kmz==="newq"){MZ.q=kMzQ(MZ.lv);MZ.pick=null;return}
   if(d.kmz==="next"){const lv=MZ.phase==="caught"?Math.min(9,MZ.lv+1):MZ.lv;kMzNew(lv);return}}
+
+/* Runs after every topic file has loaded: one Genius Quiz replaces the separate topic quizzes in the rotation. */
+(function(){const ids=new Set(KHERO.map(H=>H[0]));ids.forEach(x=>KHEROIDS.add(x));for(let i=KROT.length-1;i>=0;i--){if(KROT[i][3]==="kcat"&&ids.has(KROT[i][4]))KROT.splice(i,1)}
+  KCATS.splice(Math.max(1,KCATS.length-1),0,["genius","🧠","Genius Quiz","Lawyer, doctor, inventor, pilot, history and more, mixed","sci"]);
+  KROT.push(["q:genius","🧠","Genius Quiz","kcat","genius"])})();
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -15905,7 +15922,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 148 · Nov 20";
+const BUILD="Version 149 · Nov 20";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
