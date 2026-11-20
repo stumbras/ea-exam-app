@@ -274,7 +274,7 @@ body.kidsmode .top,body.kidsmode .tabs{display:none}
 .kpow{font-size:13px;line-height:1.45;background:rgba(255,255,255,.06);border-radius:12px;padding:8px;margin-top:8px}
 .klcard h2{margin:6px 0}.kltext{font-size:19px;line-height:1.5}.kopts{display:grid;gap:8px;margin:10px 0}.kbar{display:block;height:6px;background:rgba(255,255,255,.15);border-radius:3px;margin-top:4px;overflow:hidden}.kbar u{display:block;height:100%;background:#2ec27e}
 .kbtn.red{background:#ff4d6d;color:#fff}.kstaff{display:block;margin:6px 0}.kbignote{font:900 40px/1 system-ui;text-align:center;margin:6px 0}.kbignote small{font-size:14px;opacity:.7}
-.kpiano{position:relative;height:130px;margin:10px 0;user-select:none}.kpw{position:absolute;top:0;height:130px;background:#fff;border:1px solid #333;border-radius:0 0 8px 8px;color:#555;font:700 12px system-ui;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;cursor:pointer}.kpw.on{background:#fde68a}.kpb{position:absolute;top:0;height:80px;background:#111;border:0;border-radius:0 0 6px 6px;z-index:2;cursor:pointer}.kpb.on{background:#b45309}
+.kpiano{position:relative;height:130px;margin:10px 0;user-select:none}.kpw{position:absolute;top:0;height:130px;background:#fff;border:1px solid #333;border-radius:0 0 8px 8px;color:#555;font:700 12px system-ui;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;cursor:pointer}.kpw.on{background:#fde68a}.kpk{position:absolute;top:0;height:80px;background:#111;border:0;border-radius:0 0 6px 6px;z-index:2;cursor:pointer}.kpk.on{background:#b45309}
 .kletters{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:8px 0}.kletters .kbtn{padding:12px 0;min-width:0}
 .kcgrid{display:grid;gap:3px;margin:8px 0}.kcrow{display:grid;grid-template-columns:26px repeat(8,1fr);gap:3px;align-items:center}.kcrow b{font-size:12px}.kcc{height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:#111827;cursor:pointer}.kcc.on{background:#ffd23f}.kcc.sel{outline:2px solid #2ec27e}
 .ledger{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
@@ -10191,7 +10191,7 @@ function kStaff(notes,hi,w){w=w||300;const H=120,top=30,gap=10,y=s=>top+40-s*5;l
   notes.forEach((n,i)=>{if(!n)return;const s=kStep(n),x=66+i*sp+sp/2,yy=y(s);for(let l=-2;l>=s;l-=2)h+=`<line x1="${x-12}" x2="${x+12}" y1="${y(l)}" y2="${y(l)}" stroke="#334155" stroke-width="1.5"/>`;for(let l=10;l<=s;l+=2)h+=`<line x1="${x-12}" x2="${x+12}" y1="${y(l)}" y2="${y(l)}" stroke="#334155" stroke-width="1.5"/>`;
     const col=i===hi?"#e31937":"#111";h+=`<ellipse cx="${x}" cy="${yy}" rx="7.5" ry="5.5" fill="${col}" transform="rotate(-20 ${x} ${yy})"/><line x1="${s<4?x+7:x-7}" x2="${s<4?x+7:x-7}" y1="${yy}" y2="${s<4?yy-34:yy+34}" stroke="${col}" stroke-width="1.8"/>`;if(n.includes("#"))h+=`<text x="${x-22}" y="${yy+5}" font-size="16" fill="${col}">♯</text>`});return h+"</svg>"}
 function kPiano(lo,hi,mark){const wk=[];for(let m=kMid(lo);m<=kMid(hi);m++)if(!kNote(m).includes("#"))wk.push(m);const W=100/wk.length;let h=`<div class="kpiano">`;
-  wk.forEach((m,i)=>{const n=kNote(m);h+=`<button class="kpw ${mark===n?"on":""}" style="left:${i*W}%;width:${W}%" data-kpk="${n}"><span>${n[0]}</span></button>`;const b=m+1;if(b<=kMid(hi)&&kNote(b).includes("#"))h+=`<button class="kpb ${mark===kNote(b)?"on":""}" style="left:${(i+1)*W-W*.3}%;width:${W*.6}%" data-kpk="${kNote(b)}"></button>`});return h+"</div>"}
+  wk.forEach((m,i)=>{const n=kNote(m);h+=`<button class="kpw ${mark===n?"on":""}" style="left:${i*W}%;width:${W}%" data-kpk="${n}"><span>${n[0]}</span></button>`;const b=m+1;if(b<=kMid(hi)&&kNote(b).includes("#"))h+=`<button class="kpk ${mark===kNote(b)?"on":""}" style="left:${(i+1)*W-W*.3}%;width:${W*.6}%" data-kpk="${kNote(b)}"></button>`});return h+"</div>"}
 function kMusic(){const k=KS();k.music=k.music||{lv:1,best:0,rounds:0,songs:{},comp:Array(8).fill(null)};return k.music}
 const KMLV=[["C4","D4","E4","F4","G4"],["C4","D4","E4","F4","G4","A4","B4","C5"],["C4","D4","E4","F4","G4","A4","B4","C5","D5","E5","F5","G5"],["A3","B3","C4","D4","E4","F4","G4","A4","B4","C5","D5","E5","F5","G5","A5"]];
 let kMicOn=null;
@@ -14180,7 +14180,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 133 · Nov 20";
+const BUILD="Version 134 · Nov 20";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
