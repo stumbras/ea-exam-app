@@ -34,6 +34,7 @@ borrowing, step-up and estate basics (Part 1); employee vs independent contracto
 Every subject adapts to the player: three right answers in a row (with 70%+ recent accuracy) moves a
 subject up a level, two misses move it down. Hints are always available but never earn points.
 
+- **Calculations like the real exam (Version 145):** the SEE is all multiple choice, so every calculation is now 1 of 4 choices. Wrong choices are the usual mistakes (an in-between number from the working, a slipped rate). Stuck? Open a worked example with other numbers, reveal one step at a time (a right answer then counts as practice), or tap "I don't know, teach me": you get the full working and a fresh problem of the same kind right after.
 - **Smart drill v2 (Version 144):** the home Smart drill no longer repeats facts you just got right. Each 10-question round mixes misses, a few due reviews, your 3 weakest areas at a climbing level (only hard questions once an area is at 75%+), and 2–3 calculations. Facts drop to about 1 in 4. 53 new hard scenario questions were added for Parts 2 and 3.
 - **Smart drills (Version 143):** every drill question has its own memory (spaced-repetition boxes: missed
   questions come back right away, then after 1, 3, 7 and 21 days as they stick). Each round asks missed and

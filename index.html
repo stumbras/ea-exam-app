@@ -5505,7 +5505,7 @@ U(4,"Self-employed and small business taxes",/Schedule C|self-employ|1099-NEC|10
   b:["Net profit goes to Schedule 1 and into total income.","It also goes to Schedule SE for self-employment tax."]},
  {h:"Gross receipts: count everything once",b:["Include all business income: by 1099-NEC, by 1099-K, by check, by cash, by app.","A 1099 is evidence of part of the income, not a second amount to add.","Leave out: loans received, the owner's own deposits, transfers between accounts."],
   v:{k:"calc",r:[["Client payments on Form 1099-NEC","$8,500"],["Other customer payments, no form","$3,500"],["Bank loan deposited","not income"],["Gross receipts","$12,000",1]]}},
- {h:"Business expenses",b:["Deductible when ordinary and necessary for the business, and backed by a record.","Meals with a business purpose: 50%. Entertainment: not deductible.","Vehicle: business miles × the standard rate (70¢ for 2025, 72.5¢ for 2026), or actual costs. Either way a mileage log is required. Commuting does not count.","Home office: space used regularly and only for the business. Simple method: $5 per square foot, up to 300 square feet.","Not business expenses: owner draws, personal costs, loan principal."]},
+ {h:"Business expenses",b:["Deductible when ordinary and necessary for the business, and backed by a record.","Meals with a business purpose: 50%. Entertainment: not deductible.","Vehicle: business miles × the standard rate (70¢ for 2025; for 2026, 72.5¢ to June 30 and 76¢ from July 1), or actual costs. Either way a mileage log is required. Commuting does not count.","Home office: space used regularly and only for the business. Simple method: $5 per square foot, up to 300 square feet.","Not business expenses: owner draws, personal costs, loan principal."]},
  {h:"Self-employment tax",b:["Social Security and Medicare for the self-employed, figured on Schedule SE.","Half of it is an adjustment to income."],
   v:{k:"calc",r:[["Net profit","$10,000"],["× 92.35%","$9,235"],["× 15.3%: self-employment tax","$1,413",1],["Adjustment for half","$706"]]},
   ex:"A person can owe self-employment tax even when the standard deduction brings income tax to zero."},
@@ -5760,7 +5760,7 @@ F(4,5,"When must a self-employed person file a return?","When net self-employmen
 F(4,5,"Gross receipts on Schedule C","All business income from every source, whether or not a 1099 was issued.");
 F(4,5,"Deductible business expense: the test","Ordinary and necessary for the business, and supported by a record.");
 F(4,5,"Business meals","50% deductible when there is a business purpose. Entertainment is not deductible.");
-F(4,5,"Standard mileage rate for business driving","70 cents a mile for 2025; 72.5 cents for 2026. A mileage log is required.");
+F(4,5,"Standard mileage rate for business driving","70 cents a mile for 2025. For 2026: 72.5 cents to June 30, then 76 cents from July 1 (IRS Announcement 2026-11). A mileage log is required.");
 F(4,5,"Is commuting from home to a regular workplace deductible?","No.");
 F(4,5,"Simplified home office deduction","$5 per square foot, up to 300 square feet, for space used regularly and only for business.");
 F(4,5,"Are owner draws a business expense?","No. They are the owner taking out profit.");
@@ -5929,7 +5929,7 @@ Q(4,5,1,"Cash sales are $20,000, deductible expenses $7,000 and owner draws $3,0
 Q(4,5,1,"Net profit is $10,000. What are net earnings for self-employment tax?","$9,235",["$10,000","$1,530","$7,650"],"$10,000 × 92.35%.");
 Q(4,5,1,"Self-employment tax on $9,235 of net earnings is about:","$1,413",["$706","$923","$2,826"],"$9,235 × 15.3%. Half, about $706, is an adjustment to income.");
 Q(4,5,1,"Supplies cost $120 and 75% is documented business use. How much is deductible?","$90",["$120","$30","$60"],"Only the business part.");
-Q(4,5,1,"A client drives 2,000 business miles in 2025 and keeps a log. What is the deduction at the standard rate?","$1,400",["$2,000","$700","$1,450"],"2,000 × $0.70. The 2026 rate is 72.5 cents.");
+Q(4,5,1,"A client drives 2,000 business miles in 2025 and keeps a log. What is the deduction at the standard rate?","$1,400",["$2,000","$700","$1,450"],"2,000 × $0.70. For 2026 the rate is 72.5 cents to June 30 and 76 cents from July 1.");
 Q(4,5,1,"Which of these is deductible on Schedule C?","Advertising for the business",["The owner's draws","Commuting to a regular office","Tickets to a concert for a client"],"Entertainment, commuting and draws are not deductible.");
 Q(4,5,1,"A $1,000 deposit in a freelancer's account is a bank loan. How is it treated on Schedule C?","It is left out; a loan is not income",["As gross receipts","As other income","As a negative expense"],"Loans, owner deposits and transfers are not income.");
 Q(4,5,1,"A business controls a worker's hours, tools and methods. How is the worker most likely classified?","Employee",["Independent contractor","Partner","Vendor"],"Control over how the work is done points to employment.");
@@ -15036,6 +15036,67 @@ GX("ssi",6,1,"SSI payment with earned and unearned income",()=>{const un=PK([0,0
 GX("ssdi1",6,1,"First month SSDI is payable",()=>{const M=["January","February","March","April","May","June","July","August","September","October","November","December"],m=R(0,11),day=PK([1,3,10,15,20,28]),first=day===1?m:m+1,pay=(first+5)%12,a=pay+1;return{q:`Disability began on ${M[m]} ${day}, 2025. The application was filed promptly. Which month is the first month of SSDI entitlement? (Answer with the month number, 1 to 12.)`,a,dp:0,tol:0.4,w:[`The waiting period is 5 full calendar months.${day===1?` Onset on the 1st means ${M[m]} counts as a full month.`:` ${M[m]} is not a full month, so the waiting period starts in ${M[(m+1)%12]}.`}`,`Waiting months: ${[0,1,2,3,4].map(k=>M[(first+k)%12]).join(", ")}`,`First month of benefits: ${M[pay]} (month ${a})`],n:"Only full calendar months of disability count toward the waiting period."}});
 GX("left",6,4,"Days left to appeal",()=>{const d=R(10,58),a=65-d;return{q:`A reconsideration denial notice is dated ${d} days ago. Counting the presumed 5 days for mail, how many days are left to request a hearing?`,a,dp:0,tol:0.4,w:[`Receipt is presumed 5 days after the notice date; the 60 days run from receipt: 65 days from the notice date`,`65 − ${d} = ${a} days left`],n:"The client can show later receipt, but never plan on it: file early."}});
 
+/* ================= Calculations the way the exam asks them: pick 1 of 4, with teaching =================
+   The SEE has no typed answers: every question, calculations too, is multiple choice with 4 options.
+   Wrong choices are built from the usual mistakes: an in-between number from the working (stopping a step
+   early) and near misses. A learner can open a worked example with other numbers, reveal the steps one at
+   a time, or say "I don't know, teach me" and get the full working plus a fresh one of the same kind. */
+function calcKind(key){return /%$/.test(key)?"%":/^\$/.test(key)?"$":"n"}
+function calcDp(key){const m=String(key).replace("%","").split(".");return m[1]?m[1].length:0}
+function calcFmt(key,v){const k=calcKind(key),dp=calcDp(key);
+  if(k==="%")return v.toFixed(dp)+"%";
+  if(k==="$")return "$"+v.toLocaleString("en-US",{minimumFractionDigits:dp,maximumFractionDigits:dp});
+  return dp?v.toFixed(dp):String(Math.round(v))}
+function calcNums(text,kind){const out=[];const re=/(-?)(\$?)(\d[\d,]*(?:\.\d+)?)(%?)/g;let m;
+  while((m=re.exec(text))){const v=parseFloat(m[3].replace(/,/g,""))*(m[1]?-1:1);if(!isFinite(v))continue;
+    const k=m[4]?"%":m[2]?"$":"n";if(k===kind)out.push(v)}return out}
+function calcMC(c){if(c.opts)return c;const a=c.ans,key=c.key,kind=calcKind(key),dp=calcDp(key);
+  const unit=dp?Math.pow(10,-dp):1,gap=Math.max(c.tol||0,Math.abs(a)*0.02,unit*1.01);
+  const opts=[key],why=[""],seen=new Set([key]);
+  const add=(v,w)=>{if(opts.length>=4||!isFinite(v))return;if(a>0&&v<0)return;const s=calcFmt(key,v);if(seen.has(s)||Math.abs(v-a)<gap)return;seen.add(s);opts.push(s);why.push(w)};
+  const lines=String(c.steps||"").split("\n").filter(x=>x&&!x.startsWith("Watch out:"));
+  const given=new Set(calcNums(c.stem||"",kind).map(v=>calcFmt(key,v)));
+  // 1) numbers from the working that are not the final answer: the "stopped one step early" mistake
+  const mids=[];lines.forEach((ln,k)=>calcNums(ln,kind).forEach(v=>{const s=calcFmt(key,v);
+    if(given.has(s)||mids.some(x=>x[1]===s))return;const r=a?Math.abs(v/a):1;if(a&&(r<0.15||r>8))return;mids.push([v,s,k+1])}));
+  shuffle(mids).slice(0,2).forEach(([v,,k])=>add(v,`That amount appears in step ${k} of the working. It's an in-between number, not the final answer the question asks for.`));
+  // 2) near misses, the way a slip with a rate or a limit looks
+  const mult=shuffle([0.85,1.15,0.9,1.1,0.8,1.2,0.75,1.25,0.5,2]);
+  for(const m of mult){if(opts.length>=4)break;let v=a*m;if(!dp&&Math.abs(v)>=1000)v=Math.round(v/10)*10;add(v,"Close, but not right. Go back through each step and check the rate, limit or base amount used.")}
+  // 3) answer is zero, or still short of choices: use the given numbers, then simple steps away
+  if(opts.length<4)calcNums(c.stem||"",kind).forEach(v=>add(v,"That's one of the numbers given in the question, not the result."));
+  for(let k=1;opts.length<4&&k<40;k++)add(a+(a?Math.abs(a)*0.07*k:unit*k*(kind==="$"?500:5)),"Not right. Work the steps again.");
+  c.opts=opts;c.why=why;return c}
+function calcLines(c){return String(c.steps||"").split("\n").filter(x=>x&&!x.startsWith("Watch out:"))}
+function calcTeachHook(){const s=sess;if(!s||view!=="session")return;const cur=s.queue[s.pos];if(!cur||!cur.calc)return;
+  const it=BYID[cur.id],card=document.querySelector("#view .card");if(!card||!it)return;const e=esc;
+  const r=S.it&&S.it[it.id],isNew=!r||r[4]===0;
+  if(s.phase==="ask"){
+    if(!cur.exm){const x=calcMC(it.make());cur.exm=x.key===cur.calc.key?calcMC(it.make()):x}
+    if(cur.exOpen===undefined)cur.exOpen=isNew||!!cur.like;
+    const L=calcLines(cur.calc),h=cur.hint||0,shown=L.slice(0,Math.min(h,L.length-1));
+    const box=document.createElement("div");box.className="calcteach";
+    box.innerHTML=`<div class="small muted" style="margin:4px 0 6px">Method: <b>${e(it.name||it.s)}</b>. On the exam this is 1 of 4 choices, like here.</div>
+      ${cur.exOpen?`<div class="related" style="margin:6px 0"><b>📖 Worked example, other numbers</b><div class="small" style="margin:4px 0">${e(cur.exm.stem)}</div>${stepsHtml(cur.exm.steps)}<div class="small"><b>Answer: ${e(cur.exm.key)}</b>. Same method for the question above, new numbers.</div></div>`
+        :`<button class="btn ghost small" data-calc="ex">📖 Show a worked example first</button>`}
+      ${shown.length?`<div class="related" style="margin:6px 0"><b>💡 Steps so far</b><ol class="steps">${shown.map(x=>`<li>${e(x)}</li>`).join("")}</ol>${h>=L.length-1?`<div class="small">Now do the last step yourself and pick the answer.</div>`:""}</div>`:""}
+      <div class="row" style="margin:6px 0">${h<L.length-1?`<button class="btn small" data-calc="hint">💡 ${h?"Next step":"Show the first step"}</button>`:""}<button class="btn ghost small" data-calc="teach">🤷 I don't know, teach me</button></div>
+      ${h?`<div class="small muted">With steps shown, a right answer counts as practice, not mastered.</div>`:""}`;
+    const o=card.querySelector(".opts");if(o)o.parentNode.insertBefore(box,o);else card.appendChild(box)}
+  else if(s.phase==="shown"){const ex=card.querySelector(".explain");if(!ex)return;
+    const ok=s.lastOk,pick=s.sel,w=!ok&&pick!=null&&pick>0&&cur.calc.why?cur.calc.why[pick]:"";
+    const top=document.createElement("div");top.innerHTML=`<div style="margin:6px 0"><b>${ok?"Right":"The answer"}: ${e(cur.calc.key)}</b>${!ok&&pick!=null&&pick>=0&&cur.calc.opts[pick]?` · you picked ${e(cur.calc.opts[pick])}`:""}</div>${w?`<div class="small" style="margin-bottom:6px">${e(w)}</div>`:""}<div class="small muted">How to work it:</div>`;
+    ex.insertBefore(top,ex.children[1]||null);
+    if(!ok&&!cur.likeQueued&&!QUICK.includes(s.mode)&&s.mode!=="mock"){cur.likeQueued=1;s.queue.splice(Math.min(s.queue.length,s.pos+2),0,Object.assign(mkEntry(it),{like:1}));s.total++}
+    const row=card.querySelector("#next");if(row&&!cur.like2){const b=document.createElement("button");b.className="btn small";b.dataset.calc="like";b.textContent="🔁 Try one like it now";row.parentNode.insertBefore(b,row.nextSibling)}}}
+function calcTeachClick(b){const d=b.dataset;if(view!=="session"||!sess)return false;const s=sess,cur=s.queue[s.pos];if(!cur||!cur.calc)return false;
+  if(d.calc==="ex"){cur.exOpen=true;render();return true}
+  if(d.calc==="hint"){cur.hint=(cur.hint||0)+1;cur.hinted=1;render();return true}
+  if(d.calc==="teach"){cur.hinted=1;s.sel=-1;record(false,false);if(!cur.likeQueued){cur.likeQueued=1;s.queue.splice(s.pos+1,0,Object.assign(mkEntry(BYID[cur.id]),{like:1}));s.total++}return true}
+  if(d.calc==="like"){cur.like2=1;s.queue.splice(s.pos+1,0,Object.assign(mkEntry(BYID[cur.id]),{like:1}));s.total++;advance();return true}
+  if(d.conf!==undefined&&cur.hinted&&s.phase==="ask"){submitAnswer(false);return true}
+  return false}
+
 GENS.forEach(g=>BYID[g.id]=g);
 // Topical order: related facts sit next to each other so they are learned as a group (chunking)
 const STOPW=new Set("2025 the and for with from that this when what which who how does not are can per amount rule rules test form forms".split(" "));
@@ -15108,7 +15169,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 144 · Nov 20";
+const BUILD="Version 145 · Nov 20";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -15335,7 +15396,7 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
       <button class="mode" data-mode="audio"><span class="lvl">Audio · hands-free</span><b>Listen and review</b><p>${recOn()?"Recorded voice that keeps playing with the phone locked or another app open. ":""}For driving or the gym: 5, 10 or 15 minutes. You hear a question, a short pause, the answer, then the answer again in short form. Picks facts from your misses and due reviews first, or random.</p><span class="cnt">All parts or this part</span></button>
       <button class="mode" data-mode="medium"><span class="lvl">Medium · exam wording</span><b>Practice questions</b><p>Rule application, EXCEPT questions and traps, with explanations after each answer.</p><span class="cnt">${lv2} questions</span></button>
       <button class="mode" data-mode="hard"><span class="lvl">Hard · calculations</span><b>Exam-style scenarios</b><p>Multi-step calculations and fact patterns in real exam style. Timed per question.</p><span class="cnt">${lv3+lv2} questions</span></button>
-      ${!P.x&&(part==1||part==2||part==3)&&typeof PDRL!=="undefined"&&PDRL[part]?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>${esc(PDRL[part].t)}</b><p>${part==1?"Real return preparation for 2025: filing status and dependents, the child tax credit, tips and overtime on Schedule 1-A, the senior deduction and a home sale.":part==3?"Real EA representation work: Forms 2848, the exam and IDRs, the 30-day and 90-day letters, Tax Court, collection due process and the trust fund penalty.":"Real EA advice for businesses: entity and S election, 2025 bonus and §179 choices, listed property, and payroll setup."}</p><span class="cnt">${PDRL[part].cases().length} cases${(()=>{const B=S.w7b||{};const d=PDRL[part].cases().filter(c=>B[part+"-"+c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="s65"?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>Advise a client step by step</b><p>Real IAR situations: suitability, the brochure and contract, performance fees, discretion, custody, state or SEC registration, wash sales and conflicts.</p><span class="cnt">${typeof S65C!=="undefined"?S65C.length:0} cases${(()=>{const B=S.w7b||{};const d=(typeof S65C!=="undefined"?S65C:[]).filter(c=>B["5-"+c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="edpna"?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>Work a claim step by step</b><p>Real representative work with 2026 amounts: appointment and deadlines, the SGA test, hearing preparation, the fee and the direct-payment assessment, and an SSI payment.</p><span class="cnt">${typeof EDC!=="undefined"?EDC.length:0} cases${(()=>{const B=S.w7b||{};const d=(typeof EDC!=="undefined"?EDC:[]).filter(c=>B["6-"+c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="notary"?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>Notarize step by step</b><p>Real notary work for invented signers: choose the act, check ID and presence, fix blanks, pick the certificate wording, fill in the stamp and journal, charge the right fee. Includes a remote notarization.</p><span class="cnt">${typeof NTC!=="undefined"?NTC.length:0} cases${(()=>{const B=S.w7b||{};const d=(typeof NTC!=="undefined"?NTC:[]).filter(c=>B["n-"+c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="caa"?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>Fill a Form W-7</b><p>Real CAA work, line by line: reason box, foreign address, documents, date of entry, who signs, the W-7-COA and the package, for eleven invented clients.</p><span class="cnt">${W7C.length} cases${(()=>{const B=S.w7b||{};const d=W7C.filter(c=>B[c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="caa"||P.x==="notary"?"":`<button class="mode" data-mode="calc"><span class="lvl">Hard · calculation trainer</span><b>Practice the math</b><p>${P.x==="s65"?"Yields, ratios, NAV and offering price, returns, CAPM, Sharpe, duration, parity, margin and more":P.x==="caa"?"No calculations in this section":P.x==="edpna"?"Fee agreement amounts, the direct-payment assessment, SGA countable earnings, SSI payments, the waiting period and appeal deadlines":"Social Security, phase-outs, basis, SE tax, penalties and more with fresh numbers every time and the worked steps after each answer."}</p><span class="cnt">${GENS.filter(g=>g.p==part&&(filt==="all"||g.d==filt)).length} problem types</span></button>`}
+      ${!P.x&&(part==1||part==2||part==3)&&typeof PDRL!=="undefined"&&PDRL[part]?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>${esc(PDRL[part].t)}</b><p>${part==1?"Real return preparation for 2025: filing status and dependents, the child tax credit, tips and overtime on Schedule 1-A, the senior deduction and a home sale.":part==3?"Real EA representation work: Forms 2848, the exam and IDRs, the 30-day and 90-day letters, Tax Court, collection due process and the trust fund penalty.":"Real EA advice for businesses: entity and S election, 2025 bonus and §179 choices, listed property, and payroll setup."}</p><span class="cnt">${PDRL[part].cases().length} cases${(()=>{const B=S.w7b||{};const d=PDRL[part].cases().filter(c=>B[part+"-"+c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="s65"?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>Advise a client step by step</b><p>Real IAR situations: suitability, the brochure and contract, performance fees, discretion, custody, state or SEC registration, wash sales and conflicts.</p><span class="cnt">${typeof S65C!=="undefined"?S65C.length:0} cases${(()=>{const B=S.w7b||{};const d=(typeof S65C!=="undefined"?S65C:[]).filter(c=>B["5-"+c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="edpna"?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>Work a claim step by step</b><p>Real representative work with 2026 amounts: appointment and deadlines, the SGA test, hearing preparation, the fee and the direct-payment assessment, and an SSI payment.</p><span class="cnt">${typeof EDC!=="undefined"?EDC.length:0} cases${(()=>{const B=S.w7b||{};const d=(typeof EDC!=="undefined"?EDC:[]).filter(c=>B["6-"+c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="notary"?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>Notarize step by step</b><p>Real notary work for invented signers: choose the act, check ID and presence, fix blanks, pick the certificate wording, fill in the stamp and journal, charge the right fee. Includes a remote notarization.</p><span class="cnt">${typeof NTC!=="undefined"?NTC.length:0} cases${(()=>{const B=S.w7b||{};const d=(typeof NTC!=="undefined"?NTC:[]).filter(c=>B["n-"+c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="caa"?`<button class="mode" data-mode="w7"><span class="lvl">Hard · practice cases</span><b>Fill a Form W-7</b><p>Real CAA work, line by line: reason box, foreign address, documents, date of entry, who signs, the W-7-COA and the package, for eleven invented clients.</p><span class="cnt">${W7C.length} cases${(()=>{const B=S.w7b||{};const d=W7C.filter(c=>B[c.id]===c.s.length).length;return d?` · ${d} perfect`:""})()}</span></button>`:""}${P.x==="caa"||P.x==="notary"?"":`<button class="mode" data-mode="calc"><span class="lvl">Hard · calculation trainer</span><b>Practice the math</b><p>${P.x==="s65"?"Yields, ratios, NAV and offering price, returns, CAPM, Sharpe, duration, parity, margin and more":P.x==="caa"?"No calculations in this section":P.x==="edpna"?"Fee agreement amounts, the direct-payment assessment, SGA countable earnings, SSI payments, the waiting period and appeal deadlines":"Social Security, phase-outs, basis, SE tax, penalties and more. Pick 1 of 4, like the real exam. Stuck? Open a worked example, reveal one step at a time, or tap Teach me and get a fresh one right after."}</p><span class="cnt">${GENS.filter(g=>g.p==part&&(filt==="all"||g.d==filt)).length} problem types</span></button>`}
       <button class="mode" data-mode="mock"><span class="lvl">Mock exam · timed</span><b>Simulate the test</b><p>Questions weighted by the official domain percentages. No feedback until you finish.</p><span class="cnt">10 · 20 · 25 · 50 · 100 questions</span></button>
       <button class="mode" data-mode="weak"><span class="lvl">Targeted</span><b>Fix weak spots</b><p>Drills your weakest domain (now: ${esc(P.doms[wd][0])}), focusing on what you missed.</p><span class="cnt">mixed levels</span></button>
       <button class="mode" data-mode="traps" ${traps?"":"disabled"}><span class="lvl">Misconceptions</span><b>Confident mistakes</b><p>Items you answered wrong while sure. These are the most dangerous on exam day.</p><span class="cnt">${traps} items</span></button>
@@ -16107,7 +16168,7 @@ function whyTag(it){const r=S.it[it.id],t=today(),weak=String(it.d)===String(wea
   if(!r)return weak?["weak","New · from your weakest area"]:["","New for you"];
   if(r[1]<=t)return["","Due for review today"];
   return weak?["weak","Extra practice · your weakest area"]:["","Extra practice"]}
-function mkEntry(i,force){return i.t==="g"?{id:i.id,calc:i.make()}:i.t==="f"?{id:i.id,fx:genFact(i,force)}:{id:i.id,order:i.fixed?[...i.opts.keys()]:shuffle([...i.opts.keys()])}}
+function mkEntry(i,force){if(i.t==="g"&&typeof calcMC==="function"){const c=calcMC(i.make());return{id:i.id,calc:c,order:shuffle([...c.opts.keys()])}}return i.t==="g"?{id:i.id,calc:i.make()}:i.t==="f"?{id:i.id,fx:genFact(i,force)}:{id:i.id,order:i.fixed?[...i.opts.keys()]:shuffle([...i.opts.keys()])}}
 function numEq(a,k){const n=x=>x.replace(/[^0-9.]/g,"").replace(/\.0+$/,"").replace(/^0+(?=\d)/,"");return n(a)!==""&&n(a)===n(k)}
 function startSession(mode,n){reviewAll=false;
   const sz=qdOver||S.set.size;let q=[];
@@ -16213,7 +16274,7 @@ function stepsHtml(t){t=String(t||"");let L=t.indexOf("\n")>=0?t.split("\n").fil
   if(!L){if(!/[=×÷]/.test(t))return esc(t);L=splitSteps(t);if(L.length<2)return esc(t)}
   const note=L.filter(x=>x.startsWith("Watch out:")),st=L.filter(x=>!x.startsWith("Watch out:"));
   return `<ol class="steps">${st.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>${note.map(x=>`<div class="trap"><b>Watch out:</b>${esc(x.slice(10))}</div>`).join("")}`}
-function view4(cur,it){if(cur.calc)return{kind:"typed",stem:cur.calc.stem,key:cur.calc.key,ex:cur.calc.steps,tol:cur.calc.tol,ansNum:cur.calc.ans,label:"Type your answer (numbers only)"};const m=cur.fx;return m?{cmp:m.cmp,label:m.label,kind:m.kind,step:m.step,opts:m.opts,ans:m.ans,order:m.order,stem:m.stem,cloze:m.cloze,key:m.key,rev:m.rev,ex:m.ex}:{kind:"mcq",opts:it.opts,ans:it.ans,order:cur.order,stem:it.s,ex:it.ex}}
+function view4(cur,it){if(cur.calc&&typeof calcMC==="function"){calcMC(cur.calc);if(!cur.order||cur.order.length!==cur.calc.opts.length)cur.order=shuffle([...cur.calc.opts.keys()]);return{kind:"mcq",opts:cur.calc.opts,ans:0,order:cur.order,stem:cur.calc.stem,ex:cur.calc.steps}}if(cur.calc)return{kind:"typed",stem:cur.calc.stem,key:cur.calc.key,ex:cur.calc.steps,tol:cur.calc.tol,ansNum:cur.calc.ans,label:"Type your answer (numbers only)"};const m=cur.fx;return m?{cmp:m.cmp,label:m.label,kind:m.kind,step:m.step,opts:m.opts,ans:m.ans,order:m.order,stem:m.stem,cloze:m.cloze,key:m.key,rev:m.rev,ex:m.ex}:{kind:"mcq",opts:it.opts,ans:it.ans,order:cur.order,stem:it.s,ex:it.ex}}
 function clozeHtml(c){return esc(c).replace("____",'<span class="blank">______</span>')}
 function howHtml(it,ok){const t=EXPL[it.id]||(S.ex&&S.ex[it.id]);
   if(t)return `<div class="related"><b>How it works${EXPL[it.id]?"":" (AI)"}</b><div style="font-size:14px">${esc(t)}</div></div>`;
@@ -16285,13 +16346,14 @@ function renderSession(){
   <div class="row"><span class="timer" id="timer"></span><button class="btn ghost small" id="quit">${mock?"Submit now":"End session"}</button></div></div>
   <div class="progress"><i style="width:${Math.round(Math.min(1,pct)*100)}%"></i></div>${mock?"":`<div class="small muted mono" style="margin-top:6px">${liveLine()}</div>`}<div class="card">${body}</div></section>`;
   const inp=$("#typed");if(inp){inp.focus();inp.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();submitTyped(inp.value)}}}
+  if(typeof calcTeachHook==="function")calcTeachHook();
 }
 function requeue(){const s=sess,cur=s.queue[s.pos];s.requeued[cur.id]=(s.requeued[cur.id]||0)+1;
   if(QUICK.includes(s.mode)&&s.requeued[cur.id]<=3){const at=Math.min(s.queue.length,s.pos+4);s.queue.splice(at,0,mkEntry(BYID[cur.id]));s.total++}}
 function record(ok,conf){const s=sess,cur=s.queue[s.pos],it=BYID[cur.id];s.lastOk=ok;s.lastConf=!!conf;(s.log=s.log||[]).push([ok?1:0,it.d]);
   const retry=(s.requeued[cur.id]||0)>0; // a correct retry in the same session confirms the fact but doesn't climb the ladder
   const rt=(Date.now()-s.qstart)/1000,typed=view4(cur,it).kind==="typed",fast=rt<(typed?10:6),slow=rt>(typed?40:25);
-  let q=ok?(conf?(retry?1:2):1):0;if(q===2&&QUICK.includes(s.mode)&&it.t!=="g"){if(fast)q=3;else if(slow)q=1}s.lastSpeed=ok&&!retry?(q===3?"fast":q===1&&slow?"slow":""):"";
+  let q=ok?(conf?(retry?1:2):1):0;if(cur.hinted&&q>1)q=1;if(q===2&&QUICK.includes(s.mode)&&it.t!=="g"){if(fast)q=3;else if(slow)q=1}s.lastSpeed=ok&&!retry?(q===3?"fast":q===1&&slow?"slow":""):"";
   if(!QUICK.includes(s.mode)){const c=S.cal=S.cal||[0,0,0,0];if(conf){c[0]++;if(ok)c[1]++}else{c[2]++;if(ok)c[3]++}if(it.lv===3){const k=it.p+"-hard";S.tm=S.tm||{};const m=S.tm[k]||[0,0];m[0]++;m[1]+=Math.min(600,rt);S.tm[k]=m}}
   grade(it,q);markConf(it,!QUICK.includes(s.mode)&&!ok&&conf);persist();
   s.done++;if(ok)s.correct++;else{s.missed.push(it.id);requeue()}
@@ -16347,7 +16409,7 @@ function renderResults(){
   <div class="domains">${Object.entries(byDom).map(([d,v])=>`<div class="dom"><div class="name">${d}. ${esc(PARTS[part].doms[d][0])}</div><span class="mono small">${v.c}/${v.n}</span><div class="bar"><i class="m" style="width:${Math.round(v.c/v.n*100)}%"></i></div></div>`).join("")}</div>
   <div class="row"><button class="btn pri" id="home">Back to ${pl(part)}</button>${missed.length?`<button class="btn" id="redo">Drill the ${missed.length} missed</button>`:""}</div></div></section>
   ${s.mode==="mock"?mockReview(s):""}
-  ${s.mode!=="mock"&&missed.length?`<section class="section"><h3>Review your misses</h3><div class="list">${missed.map(it=>`<div class="item"><div class="q">${esc(it.t==="f"?it.f:it.s)}</div><div><b>Answer:</b> ${esc(it.t==="f"?it.b:it.t==="g"?"New numbers each time. Redo it in the Calculation trainer to see the worked steps.":it.opts[it.ans])}</div>${it.ex?`<div class="muted">${it.t==="f"?esc(it.ex):stepsHtml(it.ex)}</div>`:""}</div>`).join("")}</div></section>`:""}
+  ${s.mode!=="mock"&&missed.length?`<section class="section"><h3>Review your misses</h3><div class="list">${missed.map(it=>`<div class="item"><div class="q">${esc(it.t==="f"?it.f:it.s)}</div><div><b>Answer:</b> ${esc(it.t==="f"?it.b:it.t==="g"?"New numbers each time. Redo it in the Calculation trainer: 4 choices, worked example and step-by-step hints.":it.opts[it.ans])}</div>${it.ex?`<div class="muted">${it.t==="f"?esc(it.ex):stepsHtml(it.ex)}</div>`:""}</div>`).join("")}</div></section>`:""}
   ${s.newIds&&s.newIds.length?`<section class="section"><h3>New facts you learned this session</h3><p class="small muted">Read them once more now. They come back tomorrow.</p><div class="list">${s.newIds.filter(id=>S.it[id]).map(id=>BYID[id]).map(i=>`<div class="item"><div class="q">${esc(i.f)}</div><div>${esc(i.b)}</div></div>`).join("")}</div></section>`:""}`;
 }
 
@@ -16419,6 +16481,7 @@ document.addEventListener("click",e=>{
   if(b.id==="learned"){sess.pos++;sess.qstart=Date.now();render();window.scrollTo(0,0);return}
   if(b.id==="flagitem"){const id=sess.queue[sess.pos].id;S.flag[id]=S.flag[id]?0:1;persist();b.textContent=S.flag[id]?"Flagged for checking":"Flag: looks wrong";return}
   if(b.id==="check"){submitTyped($("#typed").value);return}
+  if(typeof calcTeachClick==="function"&&calcTeachClick(b))return;
   if(b.id==="dontknow"){submitTyped("");return}
   if(b.dataset.jump!==undefined){sess.pos=+b.dataset.jump;render();return}
   if(b.id==="prev"){sess.pos=Math.max(0,sess.pos-1);render();return}
