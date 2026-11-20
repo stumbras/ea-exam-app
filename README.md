@@ -34,6 +34,15 @@ borrowing, step-up and estate basics (Part 1); employee vs independent contracto
 Every subject adapts to the player: three right answers in a row (with 70%+ recent accuracy) moves a
 subject up a level, two misses move it down. Hints are always available but never earn points.
 
+- **Guided everywhere, Career Labs and Genius Hospital (Version 154):**
+  - *Study apps:* every home page now starts with one red pulsing **Do this next** button (course: the next lesson, cards, quiz or practice job; exam parts: misses, then the new exam-style drill, then Smart drill). Everything else is folded under one line, so the guided path is the default and free choice is one tap away.
+  - *EA Part 1:* 69 new exam-style questions (form and schedule routing, exact 2025 thresholds, timing and deadline rules, "which taxpayer" comparisons), written after a 2-of-10 on an outside practice set. New **Exam-style** drill button.
+  - *Colorado notary:* an 11-step path to the commission with tappable and copyable official links (SOC Learns sign-up and login, training, exam, affirmation form, application, handbook, rules), with checkboxes and the current step marked.
+  - *Kids, Career Labs:* real jobs instead of questions. **Genius Hospital** (living body map with 61 parts in 4 layers and a back view, heartbeat that speeds up with Rest/Walk/Run, Find It scans, ER patients examined by tapping the body, Body Systems Tours, Germ Lab on viruses, immunity, vaccines and medicine, Pharmacy, Operating Room; rooms open as rank climbs from Med Student to Surgeon General), **Cyber Inbox**, **Courtroom**, **Business Boss** with a profit report, **Circuit Lab**. Ranks Rookie to Legend; labs open one at a time.
+  - *Kids, Desktop Lab:* 12 real point-and-click tasks each on Windows 11, macOS and Linux Mint (folders, move, rename, trash and restore, Wi-Fi, dark mode, app store, frozen app, search, updates).
+  - *Kids, structure with freedom:* warm-up step 1 is now a choice of three (lesson, computer task, career lab), each picked from what he has not touched. A one-question access check opens each game once per session (5 passes = a ticket). Brick Bay hospital, courthouse and workshop open the matching lab and keep their quick job.
+  - *Kids, content:* 7 body and medicine topics (105 questions), 7 computer topics, a 10-lesson Human Body track; Explorer map covers labs, desktop tasks and shortcuts.
+  - *Progress safety:* daily snapshots, an IndexedDB copy, automatic restore if progress ever looks smaller, and Save/Load progress file in the grown-up panel.
 - **Realistic Sky Pilot (Version 153):**
   - **Honest landings:** the throttle-off trick is gone. Flaps and gear add real drag, a hands-off idle glide stalls, and the easy-mode cushion only helps a powered approach. Stalled touchdowns, nose-first touchdowns and touchdowns above 2× stall speed crash. Above 1.6× the plane bounces, and running off the runway end crashes. A STALL warning flashes with a stall horn.
   - **Weather every flight:** clear, cloudy, rain with turbulence, or a thunderstorm (dark low clouds, lightning and thunder, gusts, crosswind drift). Flying into a cloud whites out the view.
