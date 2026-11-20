@@ -34,6 +34,7 @@ borrowing, step-up and estate basics (Part 1); employee vs independent contracto
 Every subject adapts to the player: three right answers in a row (with 70%+ recent accuracy) moves a
 subject up a level, two misses move it down. Hints are always available but never earn points.
 
+- **Smart drill v2 (Version 144):** the home Smart drill no longer repeats facts you just got right. Each 10-question round mixes misses, a few due reviews, your 3 weakest areas at a climbing level (only hard questions once an area is at 75%+), and 2–3 calculations. Facts drop to about 1 in 4. 53 new hard scenario questions were added for Parts 2 and 3.
 - **Smart drills (Version 143):** every drill question has its own memory (spaced-repetition boxes: missed
   questions come back right away, then after 1, 3, 7 and 21 days as they stick). Each round asks missed and
   due questions first and re-asks any miss at the end. A ⚡ Smart Review pulls the most-due questions from
