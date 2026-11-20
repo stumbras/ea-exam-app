@@ -93,6 +93,14 @@ subject up a level, two misses move it down. Hints are always available but neve
   with auto-throttle), 💥 Sound Barrier (afterburner to Mach 1 = 343 m/s with a sonic boom), and
   🚁 Search & Rescue (find orange signal smoke and pass low to drop supplies). Jets show a Mach number
   and a G-meter with a G-LOC warning. In Rocket Watch, the booster now flies back and lands.
+  More aircraft: a 🚁 helicopter (throttle is the collective: 50% hovers) for Helicopter Rescue (hover
+  over signal smoke to hoist a hiker), an MQ-9 Reaper 🛩️ drone for Drone Recon (photograph three
+  targets from 150 to 700 m), and 🎯 Missile Defense (lock on to practice target drones with a radar
+  scope, then fire heat-seeking practice missiles).
+- **🏛️ History:** USA, Europe, Asia and World history as four leveled Quiz Show subjects that also feed
+  Mix, the rotation and the Daily Genius meters.
+- **Stricter rotation:** three winning rounds in a row of the same quiz stop paying tickets until he
+  switches, and the brain-mix picks put his weakest skills first.
 - **🧠 Genius Path:** nine hero skills, each a Quiz Show subject with four difficulty tiers and endless
   generators where it fits: ⚖️ Lawyer Brain, 💼 Entrepreneur, 🔬 Scientist, ⚙️ Engineer, 🩺 Doctor,
   💡 Inventor, 🎖️ Air Force Pilot, 🛰️ Space Force and 🛡️ Cyber Defender. They show up in the rotation,
