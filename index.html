@@ -500,6 +500,104 @@ details summary{cursor:pointer;font-weight:600}
 .why{display:inline-block;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
 .why.miss{background:var(--bad-soft);color:var(--bad)}.why.weak{background:var(--warn-soft);color:var(--warn)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---- Foundation course: welcome screen ---- */
+.bkl{max-width:760px;margin:0 auto}
+.bkl-hero{position:relative;overflow:hidden;border-radius:22px;padding:22px 18px 18px;margin:12px 0 18px;color:#fff;background:radial-gradient(120% 90% at 100% 0%,#22b36a 0%,rgba(34,179,106,0) 55%),linear-gradient(150deg,#0f7a3d 0%,#0a5c33 55%,#083f2a 100%);box-shadow:0 18px 40px -18px rgba(8,63,42,.75)}
+.bkl-hero:after{content:"";position:absolute;right:-60px;bottom:-70px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.06)}
+.bkl-hi{font-weight:700;opacity:.92;font-size:15px}
+.bkl-hero h1{font-size:26px;line-height:1.15;margin:6px 0 8px;letter-spacing:-.01em;color:#fff}
+.bkl-hero p{margin:0 0 14px;opacity:.9;font-size:15px;line-height:1.45}
+.bkl-ringrow{display:flex;align-items:center;gap:16px;margin:4px 0 16px;position:relative;z-index:1}
+.bkl-ringw{position:relative;width:112px;height:112px;flex:none}
+.bkl-ringt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.bkl-ringt b{font-size:28px;line-height:1}.bkl-ringt span{font-size:12px;opacity:.85}
+.bkl-stats{display:grid;gap:8px;flex:1}
+.bkl-stats div{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:6px 10px;display:flex;align-items:baseline;gap:6px}
+.bkl-stats b{font-size:18px}.bkl-stats span{font-size:12.5px;opacity:.9}
+.bkl-go{position:relative;z-index:1;display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;border-radius:16px;padding:14px 14px;background:#fff;color:#0a4d2b;font:inherit;cursor:pointer;box-shadow:0 10px 24px -12px rgba(0,0,0,.5);transition:transform .15s}
+.bkl-go:active{transform:scale(.98)}
+.bkl-go>span:last-child{display:flex;flex-direction:column;gap:2px;min-width:0}
+.bkl-go b{font-size:17px;line-height:1.25}.bkl-go .small{color:#3d6b52}
+.bkl-play{flex:none;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#16a35a,#0f7a3d);color:#fff;font-size:18px;animation:bklpulse 2.4s infinite}
+@keyframes bklpulse{0%{box-shadow:0 0 0 0 rgba(22,163,90,.5)}70%{box-shadow:0 0 0 12px rgba(22,163,90,0)}100%{box-shadow:0 0 0 0 rgba(22,163,90,0)}}
+.bkl-h{margin:20px 2px 10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.bkl-plan{display:grid;gap:8px}
+.bkl-pl{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;font:inherit;color:var(--fg);text-align:left;cursor:pointer}
+.bkl-pn{flex:none;width:26px;height:26px;border-radius:50%;background:#e3f4ea;color:#0f7a3d;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.bkl-arrow{margin-left:auto;color:var(--muted);font-size:20px}
+.bkl-road{position:relative;display:grid;gap:10px;padding-left:4px}
+.bkl-road:before{content:"";position:absolute;left:25px;top:22px;bottom:22px;width:3px;border-radius:3px;background:linear-gradient(#0f7a3d,var(--line))}
+.bkl-st{position:relative;display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:12px 12px 12px 8px;font:inherit;color:var(--fg);text-align:left;cursor:pointer}
+.bkl-node{flex:none;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--surface);border:2px solid var(--line);font-size:17px;z-index:1}
+.bkl-st.done .bkl-node{background:#0f7a3d;border-color:#0f7a3d;color:#fff;font-weight:800}
+.bkl-st.here{border-color:#16a35a;box-shadow:0 0 0 3px rgba(22,163,90,.15)}
+.bkl-st.here .bkl-node{border-color:#16a35a;background:#e3f4ea}
+.bkl-stb{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}.bkl-stb b{font-size:15px}
+.bkl-stb .small,.bkl-sk .small,.bkl-tool .small{color:var(--muted)}
+.bkl-bar{display:block;height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin-top:3px}
+.bkl-bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#16a35a,#0f7a3d)}
+.bkl-chip{flex:none;font-size:11px;font-weight:800;padding:4px 8px;border-radius:20px;background:#16a35a;color:#fff;white-space:nowrap}
+.bkl-chip.ok{background:#e3f4ea;color:#0f7a3d}
+.bkl-skills{display:grid;gap:8px}
+@media(min-width:620px){.bkl-skills{grid-template-columns:1fr 1fr}.bkl-tools{grid-template-columns:1fr 1fr 1fr!important}}
+.bkl-sk{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 12px}
+.bkl-sk>span:nth-child(2){display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}.bkl-sk b{font-size:14px}
+.bkl-ski{flex:none;width:38px;height:38px;border-radius:12px;background:var(--sunk,#f1f4f2);display:flex;align-items:center;justify-content:center;font-size:19px;filter:grayscale(.6);opacity:.8}
+.bkl-sk.got{border-color:#9fd8b6;background:linear-gradient(0deg,rgba(22,163,90,.06),rgba(22,163,90,.06)),var(--surface)}
+.bkl-sk.got .bkl-ski{filter:none;opacity:1;background:#e3f4ea}
+.bkl-skv{flex:none;font-weight:800;font-size:13px;color:var(--muted);min-width:34px;text-align:right}.bkl-sk.got .bkl-skv{color:#0f7a3d;font-size:18px}
+.bkl-tools{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bkl-tool{display:flex;flex-direction:column;gap:5px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:14px 12px;font:inherit;color:var(--fg);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.bkl-tool:hover{transform:translateY(-2px);box-shadow:0 10px 22px -16px rgba(0,0,0,.45)}
+.bkl-ti{font-size:26px}.bkl-tool b{font-size:15px;line-height:1.2}
+.bkl-tc{margin-top:auto;font-size:12px;font-weight:700;color:#0f7a3d;background:#e3f4ea;padding:3px 8px;border-radius:20px}
+.bkl-foot{display:flex;flex-direction:column;gap:8px;align-items:stretch;margin:18px 0 0}
+.bkl-back{display:block;width:100%;margin:12px 0 0;border:0;border-radius:14px;padding:12px 14px;font:inherit;font-weight:700;color:#fff;text-align:left;cursor:pointer;background:linear-gradient(135deg,#0f7a3d,#0a5c33)}
+/* ---- Journal Entry Lab ---- */
+.jdoc{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:0 6px 16px -12px rgba(0,0,0,.4);margin:8px 0;overflow:hidden;font-size:14px}
+.jdh{display:flex;justify-content:space-between;gap:8px;padding:8px 12px;background:var(--sunk,#f3f5f4);border-bottom:1px dashed var(--line);font-weight:700}
+.jdoc-bank .jdh{background:#e8f0fb}.jdoc-inv .jdh{background:#eef7f1}.jdoc-bill .jdh{background:#fdf3e6}.jdoc-memo .jdh{background:#f4f1fb}.jdoc-pay .jdh{background:#eaf6f6}
+.jdr{display:flex;justify-content:space-between;gap:10px;padding:6px 12px;border-bottom:1px solid var(--line)}.jdr:last-child{border-bottom:0}
+.jdr b{font-family:var(--mono);white-space:nowrap}
+.jq{margin:12px 0 8px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.jside{font-size:12.5px;padding:4px 10px;border-radius:20px;color:#fff;font-weight:800}.jside.dr{background:#2563c9}.jside.cr{background:#c2410c}
+.jrule{margin-top:10px;font-size:14px}.jrule summary{cursor:pointer;color:var(--muted)}
+.jts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.jt{border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--surface)}
+.jth{font-weight:800;font-size:14px;border-bottom:2px solid var(--fg);padding-bottom:4px;display:flex;flex-direction:column}.jth .small{font-weight:500;color:var(--muted)}
+.jtb{display:grid;grid-template-columns:1fr 1fr;min-height:34px}.jtb>div{padding:4px;display:flex;flex-direction:column;gap:2px;font-family:var(--mono);font-size:13px}.jtb>div:first-child{border-right:2px solid var(--fg)}
+.jtb em{font-style:normal;font-family:var(--font);font-size:11px;color:var(--muted)}
+.jtb .new{background:#fff3c4;color:#5b4300;border-radius:6px;padding:1px 4px;animation:jpop .5s}
+@keyframes jpop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+.jtf{font-size:12.5px;color:var(--muted);margin-top:4px}.jtf b{color:var(--fg)}
+.jeq{display:flex;align-items:flex-end;justify-content:center;gap:8px;margin:10px 0 4px}
+.jeqc{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:78px}.jeqc b{font-family:var(--mono);font-size:13px}.jeqc span{font-size:12px;color:var(--muted)}
+.jeqb{width:46px;border-radius:8px 8px 3px 3px;transition:height .5s}.jeqb.a{background:linear-gradient(#3b82f6,#2563c9)}.jeqb.l{background:linear-gradient(#f59e0b,#c2410c)}.jeqb.e{background:linear-gradient(#22b36a,#0f7a3d)}
+.jeqs{font-size:22px;font-weight:800;color:var(--muted);padding-bottom:30px}
+.jelend{text-align:center}.jbig{font-size:54px}
+.jcats{display:grid;gap:6px;margin:12px 0;text-align:left}.jcats div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:4px 2px}.jcats b.ok{color:var(--good)}
+body.course .top{background:linear-gradient(135deg,#0f7a3d 0%,#0a5c33 100%);padding-right:16px}
+body.course .kidsbtn{display:none}
+.tabs:empty{display:none}
+.opt.jopt{grid-template-columns:minmax(0,1fr) auto;align-items:center}
+/* ---- Run Solving Life LLC ---- */
+.fmet{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.fm{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.fm>span:first-child{font-size:12.5px;color:var(--muted)}.fm b{font-size:17px;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.fm em{font-style:normal;font-size:12.5px;font-weight:800;padding:1px 6px;border-radius:10px;animation:jpop .5s}.fm em.up{background:#e3f4ea;color:#0f7a3d}.fm em.dn{background:#fde8e4;color:#b42318}
+.fm-rep .bkl-bar i{background:linear-gradient(90deg,#f5b301,#e08600)}.fm-comp .bkl-bar i{background:linear-gradient(90deg,#3b82f6,#2563c9)}.fm-cl .bkl-bar i{background:linear-gradient(90deg,#a78bfa,#7c3aed)}
+.fcal{display:flex;gap:8px;overflow-x:auto;margin:6px 0 10px;padding-bottom:2px}
+.fcm{flex:none;display:flex;align-items:center;font-weight:800;padding:8px 12px;border-radius:12px;background:#0f7a3d;color:#fff}
+.fcd{flex:none;display:flex;flex-direction:column;border:1px dashed #9fd8b6;border-radius:12px;padding:6px 10px;background:var(--surface);max-width:220px}.fcd b{font-size:13px;color:#0f7a3d}.fcd span{font-size:12.5px}
+.fmonths{display:flex;gap:4px;margin:8px 0 2px}.fmonths span{flex:1;text-align:center;font-size:10.5px;font-weight:700;padding:4px 0;border-radius:6px;background:var(--line);color:var(--muted)}
+.fmonths span.done{background:#9fd8b6;color:#0a4d2b}.fmonths span.cur{background:#0f7a3d;color:#fff}
+.fsrc{display:inline-block;font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--sunk,#f1f4f2);color:var(--muted)}
+.fpick{display:flex;flex-direction:column;gap:2px;border-left:4px solid var(--line);padding:6px 10px;margin:8px 0}
+.fhero{font-size:56px;text-align:center}.firmintro p{line-height:1.5}
+.flog{display:grid;gap:4px;margin:10px 0;text-align:left;font-size:14px}.flog div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding:4px 2px}.flog .ok b{color:var(--good)}.flog .mid b{color:var(--warn)}.flog .bad b{color:var(--bad)}
+body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
+.ftitle{font-size:19px;font-weight:800;margin:8px 0 6px;line-height:1.3}
 </style>
 
 </head><body>
@@ -13674,6 +13772,380 @@ F(4,5,"WISP in one breath","Written Information Security Plan required by the FT
 F(4,5,"Section 7216 consent","Signed permission before return information is used or disclosed for anything other than preparing the return, including sharing with a preparer outside the U.S. Separate document, wording from Rev. Proc. 2013-14, both spouses, dated, one year.");
 F(4,5,"Data theft: who to tell","Coordinator at once → IRS Stakeholder Liaison → states (StateAlert@taxadmin.org) → FTC within 30 days if 500+ people → clients and state authorities under state law → software provider, bank, insurer, police if theft.");
 
+/* ================= Foundation course: welcome screen, job-ready skills map, Journal Entry Lab =================
+   Open with ?course (and &name=Cristy) to install it as its own app, "Foundation Course".
+   All companies, people and numbers in the lab are invented. */
+function CLOCK(){try{return localStorage.getItem("courseLock")==="1"}catch(_){return false}}
+function CNAME(){try{return localStorage.getItem("courseName")||""}catch(_){return ""}}
+function courseUI(){try{document.title="Foundation Course";const m=document.querySelector('link[rel="manifest"]');if(m)m.setAttribute("href","manifest-course.webmanifest");
+  const at=document.querySelector('meta[name="apple-mobile-web-app-title"]');if(at)at.setAttribute("content","Foundation");
+  const ic=document.querySelector('link[rel="apple-touch-icon"]');if(ic)ic.setAttribute("href","apple-touch-icon-course.png");
+  const tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.setAttribute("content","#0f7a3d")}catch(_){}}
+(function(){try{const q=new URLSearchParams(location.search);
+  if(q.has("study"))localStorage.removeItem("courseLock");
+  else if(q.has("course")){localStorage.setItem("courseLock","1");localStorage.removeItem("kidsLock");const n=(q.get("name")||"").replace(/[^A-Za-zÀ-ž' -]/g,"").slice(0,30);if(n)localStorage.setItem("courseName",n)}
+  if(CLOCK()){courseUI();setTimeout(()=>{if(typeof KLOCK==="function"&&KLOCK())return;part=BK;view="bkland";render()},0)}}catch(_){}})();
+
+/* ---------- views and clicks added to the app ---------- */
+function extraView(){try{document.body.classList.toggle("course",CLOCK());const bb=document.querySelector(".bkback");if(bb&&CLOCK())bb.textContent="‹ Course home"}catch(_){}
+  if(view==="bkland"){renderBkLand();return true}
+  if(view==="jelab"){renderJel();return true}
+  if(view==="firm"&&typeof renderFirm==="function"){renderFirm();return true}
+  return false}
+function extraClick(b){const d=b.dataset;
+  if(d.sec==="start"&&CLOCK()&&view!=="bkland"){hush();view="bkland";render();window.scrollTo(0,0);return true}
+  if(d.mode==="bkland"){part=BK;view="bkland";render();window.scrollTo(0,0);return true}
+  if(d.mode==="jelab"){jel=null;view="jelab";render();window.scrollTo(0,0);return true}
+  if(d.mode==="firm"&&typeof renderFirm==="function"){view="firm";render();window.scrollTo(0,0);return true}
+  if(d.mode==="workout"){part=BK;filt="all";startSession("calc",10);return true}
+  if(d.bkl!==undefined)return bklClick(d);
+  if(d.jel!==undefined)return jelClick(d);
+  if(d.firm!==undefined&&typeof firmClick==="function")return firmClick(d);
+  return false}
+
+/* ---------- progress helpers ---------- */
+function bkRatio(a,b){return b?Math.max(0,Math.min(1,a/b)):0}
+function bkJel(){S.set.jel=S.set.jel||{ok:0,n:0,adj:0,pay:0,rounds:0,miss:{}};return S.set.jel}
+function bkLabRatio(re){const L=LABS.filter(o=>re.test(o.t));if(!L.length)return 0;return L.filter(o=>{const r=labDone(o);return r&&r[0]/r[1]>=0.7}).length/L.length}
+function bkQt(re){try{const t=qtasks().filter(x=>re.test(x[0]));return t.length?t.filter(x=>x[1]).length/t.length:0}catch(_){return 0}}
+function bkTax(){try{return bkRatio(TC.filter(c=>(TS().r[c.id]||{}).ack==="Accepted").length,TC.length)}catch(_){return 0}}
+function bkP10(){try{const pt=TS().p10||{};return bkRatio(P10.filter((c,i)=>pt[i]).length,5)}catch(_){return 0}}
+function bkMod(m){const s=bkStats(m);return s}
+function bkQuiz(m){const s=bkStats(m);return bkRatio(s.right,Math.ceil(s.qs*0.7))}
+function bkFirm(){const f=S.set.firm||{};return f.best?bkRatio(f.best,80):f.m?bkRatio(f.m,12)*0.5:0}
+function bkGen(re){let ok=0,n=0;for(const g of GENS){if(g.p!=BK||!re.test(g.id))continue;n++;const r=S.it[g.id];if(r&&r[4])ok++}return n?bkRatio(ok,Math.min(n,3)):0}
+const BKSKILLS=[
+ ["🧾","Read a paycheck and the U.S. tax system","Gross to net, FICA, W-4, who collects what.",()=>bkQuiz(1)],
+ ["⚖️","Debits and credits","Record any business event as a balanced journal entry.",()=>bkRatio(bkJel().ok,12)],
+ ["📆","Month-end adjusting entries","Prepaids, accruals, depreciation, unearned revenue.",()=>bkRatio(bkJel().adj,5)],
+ ["🏦","Bank reconciliation","Match the books to the bank statement, find the difference.",()=>Math.max(bkLabRatio(/reconcile/i),bkQt(/reconcil/i))],
+ ["💻","QuickBooks Online daily work","Invoices, bills, payments, bank feed, rules, deposits.",()=>bkQt(/./)],
+ ["💵","Payroll","Gross pay, withholding, employer taxes, deposits.",()=>Math.max(bkRatio(bkJel().pay,3),bkLabRatio(/payday/i),bkGen(/^g4-pay/))],
+ ["📊","Financial statements","Profit and loss, balance sheet, what they tell an owner.",()=>bkQuiz(2)],
+ ["🧮","Individual returns (Form 1040)","Wages, credits, deductions, refund or balance due.",()=>Math.max(bkTax(),bkLabRatio(/Mock return [123]/i))],
+ ["🛠️","Self-employed clients (Schedule C)","Business income, expenses, SE tax, estimates.",()=>Math.max(bkP10(),bkLabRatio(/freelancer/i),bkGen(/^g4-se/))],
+ ["🗣️","Client interviews and documents","Ask the right questions, spot what's missing.",()=>bkLabRatio(/Client/i)],
+ ["🔒","Ethics, privacy and security","Circular 230, consent to disclose, the office security plan.",()=>bkQuiz(5)],
+ ["🏢","Run Solving Life LLC","Deadlines, pricing, compliance and cash for a year.",()=>bkFirm()]];
+function bkSkillVals(){return BKSKILLS.map(s=>{let v=0;try{v=s[3]()}catch(_){}return Math.max(0,Math.min(1,v||0))})}
+function bkRing(p,sz,col){const r=sz/2-7,c=2*Math.PI*r;return `<svg class="bklring" viewBox="0 0 ${sz} ${sz}" width="${sz}" height="${sz}" aria-hidden="true"><circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="10"/><circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="${col||"#fff"}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${(c*p).toFixed(1)} ${c.toFixed(1)}" ${p<0.005?'opacity="0"':""} transform="rotate(-90 ${sz/2} ${sz/2})"/></svg>`}
+
+/* ---------- what to do next: one button that always knows ---------- */
+function bkNextLesson(m){const U=UNITS[BK]||[];for(let k=0;k<U.length;k++){const u=U[k];if(u.d!=m)continue;const pos=(S.set.les||{})["u"+BK+"-"+k];if(pos===undefined||pos<u.s.length-1)return k}return -1}
+function bkNext(){const J=bkJel();
+  for(let m=1;m<=5;m++){const s=bkStats(m),u=bkNextLesson(m),U=UNITS[BK]||[];
+    if(u>=0){const pos=(S.set.les||{})["u"+BK+"-"+u];return{k:"les",u,m,t:`Lesson: ${U[u].t}`,d:`Module ${m} · ${U[u].s.length} slides · about ${Math.max(5,Math.round(U[u].s.length*1.2))} min${pos!==undefined?" · pick up where you stopped":""}`}}
+    if(s.known<s.cards*0.5)return{k:"cards",m,t:`Flashcards: ${PARTS[BK].doms[m][0]}`,d:`Module ${m} · ${s.known} of ${s.cards} known · 10 min`};
+    if(s.right<s.qs*0.7)return{k:"quiz",m,t:`Quiz: ${PARTS[BK].doms[m][0]}`,d:`Module ${m} · ${s.right} of ${s.qs} right · aim for 70% · 8 min`};
+    if(m===2&&J.ok<12)return{k:"jel",t:"Journal Entry Lab",d:`Record real business events · ${J.ok} of 12 right · 10 min`};
+    if(m===3&&bkQt(/./)<1)return{k:"qbo",t:"QuickBooks practice company",d:"Keep a month of books for a real-looking company · 20 min"};
+    if(m===4&&bkTax()<1)return{k:"tax",t:"Practice tax software",d:"Run a client file from intake to e-file · 25 min"}}
+  if(bkFirm()<1)return{k:"firm",t:"Run Solving Life LLC for a year",d:"Deadlines, clients, pricing and compliance · 20 min"};
+  return{k:"workout",t:"Daily workout",d:"Fresh numbers every time: payroll, reconciliations, Schedule C · 10 min"}}
+function bkGo(n){if(n.k==="les"){part=BK;les={unit:null,topic:null,idx:0};view="lessons";lesOpen("u",n.u);return}
+  if(n.k==="cards"||n.k==="quiz"){part=BK;filt=n.m;startSession(n.k,10);return}
+  if(n.k==="jel"){jel=null;view="jelab";render();window.scrollTo(0,0);return}
+  if(n.k==="qbo"){qv={tab:"home",form:null,msg:"",doc:-1};view="qbo";render();window.scrollTo(0,0);return}
+  if(n.k==="tax"){view="taxsim";render();window.scrollTo(0,0);return}
+  if(n.k==="firm"){view="firm";render();window.scrollTo(0,0);return}
+  if(n.k==="review"){part=BK;filt="all";startSession("cards",15);return}
+  part=BK;filt="all";startSession("calc",10)}
+
+/* ---------- the welcome screen ---------- */
+const BKSTAGES=[[1,"💵","Money, paychecks and the tax system","How money moves, gross to net pay, who collects which tax."],[2,"📒","Bookkeeping","Debits and credits, the five account types, month-end, statements."],[3,"💻","QuickBooks Online","The screens a bookkeeper uses every day, start to finish."],[4,"🧾","Individual tax returns","Form 1040: income, deductions, credits, refund or balance due."],[5,"🏢","Business taxes and the tax office","Schedule C, payroll forms, ethics, privacy and security."],[6,"🚀","Real work","Simulators, practice returns, and running Solving Life LLC."]];
+function renderBkLand(){if(typeof touchDay==="function")touchDay();const t=$("#tabs");if(t)t.innerHTML="";const e=esc,a=bkStats("all"),nm=CNAME(),sk=bkSkillVals(),earned=sk.filter(v=>v>=1).length;
+  const n=bkNext(),due=dueList(BK,"all").length,started=a.read+a.known+a.right>0;
+  const stagePct=m=>m<6?bkStats(m).pct/100:(bkTax()+bkQt(/./)+bkFirm()+bkP10())/4;
+  const cur=n.m||6;
+  const road=BKSTAGES.map(([m,ic,t,d])=>{const p=stagePct(m),done=p>=0.85,here=!done&&m===cur;
+    return `<button class="bkl-st${done?" done":""}${here?" here":""}" data-bkl="mod" data-m="${m}"><span class="bkl-node">${done?"✓":ic}</span><span class="bkl-stb"><b>${m<6?"Module "+m+" · ":""}${e(t)}</b><span class="small">${e(d)}</span><span class="bkl-bar"><i style="width:${Math.round(p*100)}%"></i></span></span>${here?`<span class="bkl-chip">You are here</span>`:done?`<span class="bkl-chip ok">Done</span>`:""}</button>`}).join("");
+  const skills=BKSKILLS.map((s,k)=>{const v=sk[k];return `<div class="bkl-sk${v>=1?" got":""}"><span class="bkl-ski">${s[0]}</span><span><b>${e(s[1])}</b><span class="small">${e(s[2])}</span><span class="bkl-bar"><i style="width:${Math.round(v*100)}%"></i></span></span><span class="bkl-skv">${v>=1?"✓":Math.round(v*100)+"%"}</span></div>`}).join("");
+  const tools=[["jelab","⚖️","Journal Entry Lab","Real receipts and bills → a balanced entry. Watch the T-accounts and the accounting equation move.",`${bkJel().ok} entries right`],
+    ["qbo","💻","QuickBooks practice company","A working copy of the daily screens: invoices, bills, bank feed, reconcile, reports.",`${(()=>{try{const q=qtasks();return q.filter(x=>x[1]).length+" of "+q.length}catch(_){return "13"}})()} jobs`],
+    ["taxsim","🧾","Practice tax software","Client files from intake to e-file, with real-looking W-2s and diagnostics.","5 files + 20 returns"],
+    ["firm","🏢","Run Solving Life LLC","A year of the business: deadlines, clients, pricing, compliance. Can you finish with happy clients and cash?",S.set.firm&&S.set.firm.best?`best score ${S.set.firm.best}`:"12 months"],
+    ["workout","🏋️","Daily workout","Payroll, reconciliations, sales tax, Schedule C. New numbers each time, 4 choices, taught step by step.","10 min"],
+    ["cards","🧠","Flashcards",due?`${due} cards are due today. Two minutes keeps them in memory.`:"Recall, flip, rate. Missed cards come back sooner.",`${a.known} of ${a.cards} known`]]
+   .map(([k,ic,t,d,c])=>`<button class="bkl-tool" data-bkl="tool" data-k="${k}"><span class="bkl-ti">${ic}</span><b>${e(t)}</b><span class="small">${e(d)}</span><span class="bkl-tc">${e(c)}</span></button>`).join("");
+  const plan=[due?["🧠",`Review ${Math.min(due,15)} due flashcards`,"review"]:null,["▶",n.t,"next"],bkJel().ok<12&&n.k!=="jel"?["⚖️","Record 5 entries in the Journal Entry Lab","jel"]:["🏋️","One workout round","workout"]].filter(Boolean);
+  $("#view").innerHTML=`<section class="bkl">
+   <div class="bkl-hero">
+    <div class="bkl-hi">${nm?`${started?"Welcome back":"Welcome"}, ${e(nm)} 👋`:started?"Welcome back 👋":"Welcome 👋"}</div>
+    <h1>Bookkeeping, QuickBooks and taxes, from zero to job-ready</h1>
+    <p>Real skills, step by step: keep a company's books, run payroll, prepare tax returns, and help run Solving Life LLC.</p>
+    <div class="bkl-ringrow"><div class="bkl-ringw">${bkRing(a.pct/100,112)}<div class="bkl-ringt"><b>${Math.round(a.pct)}%</b><span>course</span></div></div>
+     <div class="bkl-stats"><div><b>${earned}</b><span>of ${BKSKILLS.length} job skills</span></div><div><b>${a.read}</b><span>of ${a.slides} slides</span></div><div><b>${a.labsDone}</b><span>of ${a.labs} real tasks</span></div></div></div>
+    <button class="bkl-go" data-bkl="go"><span class="bkl-play">▶</span><span><span class="small">${started?"Continue":"Start here"}</span><b>${e(n.t)}</b><span class="small">${e(n.d)}</span></span></button>
+   </div>
+   <h3 class="bkl-h">Today · about 20 minutes</h3>
+   <div class="bkl-plan">${plan.map(([ic,t,k],i)=>`<button class="bkl-pl" data-bkl="plan" data-k="${k}"><span class="bkl-pn">${i+1}</span><span>${ic} ${e(t)}</span><span class="bkl-arrow">›</span></button>`).join("")}</div>
+   <h3 class="bkl-h">Your path</h3>
+   <div class="bkl-road">${road}</div>
+   <h3 class="bkl-h">Skills you can show an employer</h3>
+   <div class="small muted" style="margin:-4px 0 8px">Each skill fills up as you prove it in the quizzes, labs and simulators. ${earned} earned so far.</div>
+   <div class="bkl-skills">${skills}</div>
+   <h3 class="bkl-h">Practice like it's a real job</h3>
+   <div class="bkl-tools">${tools}</div>
+   <div class="bkl-foot"><button class="btn" data-bkl="menu">All course tools and modules</button><button class="btn ghost small" data-bkl="sections">Other sections (EA exam and more)</button></div>
+   <div class="small muted" style="text-align:center;margin:10px 0 24px">Works offline · saved on this device · amounts for 2025 and 2026</div>
+  </section>`}
+function bklClick(d){
+  if(d.bkl==="go"||d.k==="next"){bkGo(bkNext());return true}
+  if(d.bkl==="plan"){if(d.k==="review")bkGo({k:"review"});else if(d.k==="jel")bkGo({k:"jel"});else bkGo({k:d.k});return true}
+  if(d.bkl==="mod"){const m=+d.m;if(m<6){part=BK;filt=m;view="home"}else{part=BK;filt="all";view="home"}render();window.scrollTo(0,0);return true}
+  if(d.bkl==="tool"){const k=d.k;if(k==="cards"){part=BK;filt="all";startSession("cards",15);return true}
+    if(k==="jelab")return bkGo({k:"jel"}),true;if(k==="qbo")return bkGo({k:"qbo"}),true;if(k==="taxsim")return bkGo({k:"tax"}),true;if(k==="firm")return bkGo({k:"firm"}),true;bkGo({k:"workout"});return true}
+  if(d.bkl==="menu"){part=BK;filt="all";view="home";render();window.scrollTo(0,0);return true}
+  if(d.bkl==="sections"){view="start";render();window.scrollTo(0,0);return true}
+  return false}
+
+/* ================= Journal Entry Lab ================= */
+// type: A asset, CA contra asset, L liability, E owner's capital, D owner's draws, R revenue, X expense
+const JACC={"Checking":"A","Accounts Receivable":"A","Supplies":"A","Prepaid Insurance":"A","Inventory":"A","Equipment":"A","Accumulated Depreciation":"CA",
+ "Accounts Payable":"L","Credit Card Payable":"L","Wages Payable":"L","Payroll Liabilities":"L","Sales Tax Payable":"L","Unearned Revenue":"L","Loan Payable":"L",
+ "Owner's Capital":"E","Owner's Draws":"D","Service Revenue":"R","Sales":"R",
+ "Rent Expense":"X","Wages Expense":"X","Payroll Tax Expense":"X","Utilities Expense":"X","Insurance Expense":"X","Supplies Expense":"X","Depreciation Expense":"X","Software Subscriptions":"X","Bank Fees":"X","Interest Expense":"X","Cost of Goods Sold":"X","Bad Debt Expense":"X","Advertising":"X"};
+const JTYPE={A:"an asset",CA:"a contra asset (it reduces an asset)",L:"a liability",E:"owner's equity",D:"owner's draws (reduces equity)",R:"revenue",X:"an expense"};
+const JUP={A:"debit",CA:"credit",L:"credit",E:"credit",D:"debit",R:"credit",X:"debit"};
+const JCO="Bright Path Cleaning LLC";
+const jr=(a,b,s)=>R(a,b,s||10);
+const JEV=[
+ {c:"owner",f:()=>{const a=jr(2000,10000,500);return{doc:["memo","Owner contribution",[["From","Ana Reyes, owner"],["Deposited to","Business checking"],["Amount",$$(a)]]],t:`The owner moves ${$$(a)} of her own money into the business checking account.`,L:[["Checking",a],["Owner's Capital",-a]],w:"Cash (an asset) goes up: debit Checking. The owner's stake goes up: credit Owner's Capital. It is not revenue, because the business didn't earn it."}}},
+ {c:"cash",f:()=>{const a=jr(800,4000,50);return{doc:["rcpt","Receipt · Metro Equipment Supply",[["Commercial floor scrubber",$$(a)],["Paid","Debit card, business checking"]]],t:`Buys a floor scrubber for ${$$(a)}, paid from checking. It will last several years.`,L:[["Equipment",a],["Checking",-a]],w:"A long-lasting item is an asset, not an expense: debit Equipment. Cash went down: credit Checking. Its cost becomes an expense over time through depreciation."}}},
+ {c:"credit",f:()=>{const a=jr(60,400,5);return{doc:["rcpt","Receipt · CleanCo Supplies",[["Mops, sprays, cloths",$$(a)],["Paid","Business credit card"]]],t:`Buys cleaning supplies for ${$$(a)} on the business credit card.`,L:[["Supplies",a],["Credit Card Payable",-a]],w:"Supplies on the shelf are an asset until used: debit Supplies. Nothing left the bank yet; the business owes the card company: credit Credit Card Payable."}}},
+ {c:"cash",f:()=>{const a=jr(900,2400,50);return{doc:["bank","Bank statement line",[["ACH · Oakridge Properties · rent","−"+$$(a)]]],t:`Pays this month's office rent, ${$$(a)}, from checking.`,L:[["Rent Expense",a],["Checking",-a]],w:"Rent for this month is used up this month: debit Rent Expense. Cash goes down: credit Checking."}}},
+ {c:"sale",f:()=>{const a=jr(300,2500,25);return{doc:["inv","Invoice #"+R(1040,1099,1),[["Customer","Lakeside Dental"],["Office cleaning, 4 visits",$$(a)],["Terms","Net 30"]]],t:`Sends Lakeside Dental an invoice for ${$$(a)} of cleaning already done, due in 30 days.`,L:[["Accounts Receivable",a],["Service Revenue",-a]],w:"The work is done, so the revenue is earned now (accrual basis): credit Service Revenue. The customer owes the money: debit Accounts Receivable, an asset."}}},
+ {c:"sale",f:()=>{const a=jr(300,2500,25);return{doc:["bank","Bank deposit",[["Check from Lakeside Dental · invoice paid","+"+$$(a)]]],t:`Lakeside Dental pays its ${$$(a)} invoice by check. The revenue was recorded when the invoice was sent.`,L:[["Checking",a],["Accounts Receivable",-a]],w:"Cash goes up: debit Checking. The customer no longer owes it: credit Accounts Receivable. Don't credit revenue again; it was recorded with the invoice."}}},
+ {c:"sale",f:()=>{const a=jr(120,600,10);return{doc:["rcpt","Sales receipt",[["Move-out deep clean",$$(a)],["Paid","On the spot, card"]]],t:`A homeowner pays ${$$(a)} on the spot for a move-out clean.`,L:[["Checking",a],["Service Revenue",-a]],w:"Paid when the work is done, so no receivable: debit Checking, credit Service Revenue. In QuickBooks this is a sales receipt, not an invoice."}}},
+ {c:"credit",f:()=>{const a=jr(90,380,5);return{doc:["bill","Bill · Xcel Energy",[["Electricity, office",$$(a)],["Due","in 21 days"]]],t:`The electric bill arrives: ${$$(a)}, due in three weeks. Recorded now, paid later.`,L:[["Utilities Expense",a],["Accounts Payable",-a]],w:"This month's power is a cost of this month: debit Utilities Expense. The business owes it: credit Accounts Payable."}}},
+ {c:"cash",f:()=>{const a=jr(90,380,5);return{doc:["bank","Bank statement line",[["Online bill pay · Xcel Energy","−"+$$(a)]]],t:`Pays the ${$$(a)} electric bill that was already entered as a bill.`,L:[["Accounts Payable",a],["Checking",-a]],w:"The debt is gone: debit Accounts Payable. Cash goes down: credit Checking. No new expense; it was recorded with the bill."}}},
+ {c:"cash",f:()=>{const m=R(80,250,10),a=m*12;return{doc:["rcpt","Policy invoice · Front Range Insurance",[["General liability, 12 months",$$(a)],["Paid","From checking"]]],t:`Pays ${$$(a)} for a 12-month liability policy that starts today.`,L:[["Prepaid Insurance",a],["Checking",-a]],w:"Coverage for future months is an asset now: debit Prepaid Insurance. Each month-end, one month moves to Insurance Expense."}}},
+ {c:"adj",f:()=>{const m=R(80,250,10);return{doc:["memo","Month-end adjustment",[["Prepaid policy",$$(m*12)+" for 12 months"],["Used this month","1 month"]]],t:`Month-end: one month of the ${$$(m*12)} insurance policy has been used.`,L:[["Insurance Expense",m],["Prepaid Insurance",-m]],w:`${$$(m*12)} ÷ 12 = ${$$(m)} used up: debit Insurance Expense, credit Prepaid Insurance. The asset shrinks as time passes.`}}},
+ {c:"credit",f:()=>{const a=jr(500,3000,100);return{doc:["bank","Bank deposit",[["Deposit from Summit Offices · for next quarter's cleaning","+"+$$(a)]]],t:`Summit Offices pays ${$$(a)} in advance for cleaning that will be done over the next three months.`,L:[["Checking",a],["Unearned Revenue",-a]],w:"Cash is in, but the work isn't done, so it isn't revenue yet. The business owes the service: credit Unearned Revenue, a liability."}}},
+ {c:"adj",f:()=>{const a=R(2,10,1)*300,p=a/3;return{doc:["memo","Month-end adjustment",[["Prepaid by Summit Offices",$$(a)+" for 3 months"],["Cleaning done this month","1 month"]]],t:`Month-end: one of the three prepaid months for Summit Offices is done (${$$(a)} ÷ 3).`,L:[["Unearned Revenue",p],["Service Revenue",-p]],w:"The liability shrinks as the work is done: debit Unearned Revenue. Now it is earned: credit Service Revenue."}}},
+ {c:"adj",f:()=>{const c=R(30,90,6)*100,y=PK([3,5]),m=c/y/12;return{doc:["memo","Month-end adjustment",[["Equipment cost",$$(c)],["Useful life",y+" years, straight line"],["Period","1 month"]]],t:`Month-end depreciation on ${$$(c)} of equipment with a ${y}-year life (straight line).`,L:[["Depreciation Expense",Math.round(m)],["Accumulated Depreciation",-Math.round(m)]],w:`${$$(c)} ÷ ${y} years ÷ 12 = ${$$(m)} a month. Debit Depreciation Expense. Credit Accumulated Depreciation, the contra asset that holds the total so far. The Equipment account itself stays at cost.`}}},
+ {c:"adj",f:()=>{const b=jr(300,900,10),l=jr(60,b-150,10);return{doc:["memo","Month-end supply count",[["Supplies on the books",$$(b)],["Counted on the shelf",$$(l)]]],t:`The books show ${$$(b)} of supplies, but only ${$$(l)} are left on the shelf.`,L:[["Supplies Expense",b-l],["Supplies",-(b-l)]],w:`Used up: ${$$(b)} − ${$$(l)} = ${$$(b-l)}. Debit Supplies Expense, credit Supplies so the asset matches the count.`}}},
+ {c:"adj",f:()=>{const a=jr(600,2400,20);return{doc:["memo","Month-end adjustment",[["Wages earned Dec 29–31",$$(a)],["Payday","January 5"]]],t:`The crew earned ${$$(a)} in the last days of the month, but payday is next month.`,L:[["Wages Expense",a],["Wages Payable",-a]],w:"The work happened this month, so the cost belongs to this month: debit Wages Expense. Not paid yet: credit Wages Payable."}}},
+ {c:"owner",f:()=>{const a=jr(300,2000,50);return{doc:["bank","Bank statement line",[["Transfer to Ana Reyes personal account","−"+$$(a)]]],t:`The owner transfers ${$$(a)} from the business account to her personal account.`,L:[["Owner's Draws",a],["Checking",-a]],w:"Money taken out by the owner of an LLC taxed as a sole proprietorship is a draw, not a wage or an expense: debit Owner's Draws, credit Checking."}}},
+ {c:"cash",f:()=>{const a=PK([12,15,18,25,30]);return{doc:["bank","Bank statement line",[["Monthly service fee","−"+$$(a)]]],t:`The bank statement shows a ${$$(a)} monthly service fee that isn't in the books yet.`,L:[["Bank Fees",a],["Checking",-a]],w:"Found while reconciling: debit Bank Fees, credit Checking. Then the books match the bank."}}},
+ {c:"loan",f:()=>{const a=R(5,30,1)*1000;return{doc:["bank","Bank deposit",[["Loan proceeds · First Peak Bank","+"+$$(a)]]],t:`The business borrows ${$$(a)} from the bank; the money lands in checking.`,L:[["Checking",a],["Loan Payable",-a]],w:"Cash up: debit Checking. The business owes it back: credit Loan Payable. A loan is not income."}}},
+ {c:"loan",f:()=>{const p=jr(250,800,10),i=jr(30,150,1);return{doc:["bank","Loan statement",[["Payment",$$(p+i)],["Principal",$$(p)],["Interest",$$(i)]]],t:`Makes a ${$$(p+i)} loan payment: ${$$(p)} principal and ${$$(i)} interest.`,L:[["Loan Payable",p],["Interest Expense",i],["Checking",-(p+i)]],w:"Only the principal reduces the loan (debit Loan Payable). Interest is the cost of borrowing (debit Interest Expense). Cash goes down by the full payment (credit Checking)."}}},
+ {c:"tax",f:()=>{const a=jr(200,900,10),r=8,t=Math.round(a*r/100);return{doc:["rcpt","Sales receipt",[["Cleaning products sold",$$(a)],["Sales tax 8%",$$(t)],["Total paid",$$(a+t)]]],t:`Sells cleaning products for ${$$(a)} plus 8% sales tax (${$$(t)}); the customer pays ${$$(a+t)}.`,L:[["Checking",a+t],["Sales",-a],["Sales Tax Payable",-t]],w:"Only the price is revenue (credit Sales). The tax belongs to the state; the business just collects it (credit Sales Tax Payable). Cash is the full amount (debit Checking)."}}},
+ {c:"tax",f:()=>{const t=jr(150,700,1);return{doc:["bank","Bank statement line",[["Colorado Dept. of Revenue · sales tax","−"+$$(t)]]],t:`Pays the ${$$(t)} of sales tax collected last month to the state.`,L:[["Sales Tax Payable",t],["Checking",-t]],w:"Paying collected sales tax clears the liability: debit Sales Tax Payable, credit Checking. It was never the business's expense."}}},
+ {c:"pay",f:()=>{const g=jr(1500,4000,10),w=Math.round(g*PK([0.18,0.2,0.22]));return{doc:["pay","Payroll summary · payday",[["Gross wages",$$(g)],["Withheld (income tax and employee FICA)",$$(w)],["Net pay by direct deposit",$$(g-w)]]],t:`Payday: gross wages ${$$(g)}, withholding ${$$(w)}, net pay ${$$(g-w)} sent to the crew.`,L:[["Wages Expense",g],["Checking",-(g-w)],["Payroll Liabilities",-w]],w:"The full gross wage is the expense (debit Wages Expense). Only net pay leaves the bank today (credit Checking). Withholding is held for the IRS and state until deposited (credit Payroll Liabilities)."}}},
+ {c:"pay",f:()=>{const g=jr(1500,4000,10),t=Math.round(g*0.0765);return{doc:["pay","Payroll summary · employer taxes",[["Gross wages",$$(g)],["Employer Social Security and Medicare 7.65%",$$(t)]]],t:`Records the employer's own share of Social Security and Medicare on ${$$(g)} of wages: ${$$(t)}.`,L:[["Payroll Tax Expense",t],["Payroll Liabilities",-t]],w:"The employer's matching FICA (6.2% + 1.45%) is a business expense (debit Payroll Tax Expense) owed to the IRS until deposited (credit Payroll Liabilities)."}}},
+ {c:"pay",f:()=>{const a=jr(500,1600,1);return{doc:["bank","Bank statement line",[["EFTPS · IRS federal tax deposit","−"+$$(a)]]],t:`Deposits ${$$(a)} of payroll taxes with the IRS through EFTPS.`,L:[["Payroll Liabilities",a],["Checking",-a]],w:"The deposit clears the liability that built up on payday: debit Payroll Liabilities, credit Checking. No new expense."}}},
+ {c:"cash",f:()=>{const a=jr(200,1200,10);return{doc:["bank","Bank statement line",[["Payment to business credit card","−"+$$(a)]]],t:`Pays ${$$(a)} on the business credit card balance.`,L:[["Credit Card Payable",a],["Checking",-a]],w:"The purchases were already recorded when charged. Paying the card only moves money: debit Credit Card Payable, credit Checking."}}},
+ {c:"credit",f:()=>{const a=PK([30,45,60,75,99]);return{doc:["rcpt","Card charge · QuickBooks Online",[["Monthly subscription",$$(a)],["Paid","Business credit card"]]],t:`The monthly ${$$(a)} bookkeeping-software subscription is charged to the credit card.`,L:[["Software Subscriptions",a],["Credit Card Payable",-a]],w:"A monthly service used up this month is an expense: debit Software Subscriptions. Charged, not yet paid: credit Credit Card Payable."}}},
+ {c:"inv",f:()=>{const a=jr(400,2000,25);return{doc:["bill","Bill · Prairie Wholesale",[["Cleaning products for resale",$$(a)],["Terms","Net 15"]]],t:`Buys ${$$(a)} of cleaning products to resell to customers, on account (pay in 15 days).`,L:[["Inventory",a],["Accounts Payable",-a]],w:"Goods held for sale are an asset: debit Inventory. Owed to the vendor: credit Accounts Payable. They become Cost of Goods Sold when sold."}}},
+ {c:"inv",f:()=>{const a=jr(100,600,5);return{doc:["memo","Sale recorded · cost side",[["Cost of products just sold",$$(a)]]],t:`Products that cost ${$$(a)} were just sold. Record the cost side of the sale.`,L:[["Cost of Goods Sold",a],["Inventory",-a]],w:"The goods left the shelf: credit Inventory. Their cost is now an expense matched to the sale: debit Cost of Goods Sold."}}},
+ {c:"adj",f:()=>{const a=jr(150,900,10);return{doc:["memo","Collections note",[["Customer","Grandview Fitness (closed)"],["Unpaid invoice",$$(a)],["Decision","Write off, can't be collected"]]],t:`A former customer went out of business; its ${$$(a)} invoice will never be paid. Write it off (direct method).`,L:[["Bad Debt Expense",a],["Accounts Receivable",-a]],w:"The receivable is worthless: credit Accounts Receivable. The loss is an expense: debit Bad Debt Expense."}}},
+ {c:"cash",f:()=>{const a=jr(100,600,10);return{doc:["rcpt","Card charge · Meta Ads",[["Local ad campaign",$$(a)],["Paid","Debit card, business checking"]]],t:`Pays ${$$(a)} for a local online ad campaign from checking.`,L:[["Advertising",a],["Checking",-a]],w:"Advertising is a cost of running the business: debit Advertising, credit Checking."}}}];
+const JCAT={owner:"Owner money",cash:"Paying cash",credit:"Buying on credit",sale:"Sales and customers",adj:"Month-end adjustments",loan:"Loans",tax:"Sales tax",pay:"Payroll",inv:"Inventory"};
+let jel=null;
+function jelStart(){const J=bkJel(),w=JEV.map((v,k)=>1+(J.miss[k]||0)*2);const pick=[];const pool=JEV.map((v,k)=>k);
+  while(pick.length<8&&pool.length){let s=0;pool.forEach(k=>s+=w[k]);let r=Math.random()*s,i=0;for(;i<pool.length;i++){r-=w[pool[i]];if(r<=0)break}pick.push(pool.splice(Math.min(i,pool.length-1),1)[0])}
+  const bal={"Checking":15000,"Equipment":6000,"Owner's Capital":-21000};
+  jel={list:pick,i:0,ev:null,li:0,ok:0,first:true,miss:0,bal,pick:null,phase:"q",opts:null,done:[]};jelLoad()}
+function jelLoad(){const k=jel.list[jel.i];jel.k=k;jel.ev=JEV[k].f();jel.li=0;jel.pick=null;jel.phase="q";jel.first=true;jel.opts=jelOpts();jel.before=Object.assign({},jel.bal)}
+function jelOpts(){const ln=jel.ev.L[jel.li],acc=ln[0],ty=JACC[acc],used=jel.ev.L.map(x=>x[0]);
+  const same=shuffle(Object.keys(JACC).filter(a=>a!==acc&&JACC[a]===ty&&!used.includes(a))),other=shuffle(Object.keys(JACC).filter(a=>a!==acc&&JACC[a]!==ty&&!used.includes(a)));
+  const opp=jel.ev.L.find(x=>(x[1]>0)!==(ln[1]>0));const o=[acc];if(opp&&!o.includes(opp[0])&&jel.li===0)o.push(opp[0]);
+  for(const a of same){if(o.length>=3)break;o.push(a)}for(const a of other){if(o.length>=4)break;if(!o.includes(a))o.push(a)}return shuffle(o)}
+function jm(x){x=Math.round(x)||0;return x<0?"−"+$$(-x):$$(x)}
+function jelSide(v){return v>0?"Debit":"Credit"}
+function jelDoc(d){const e=esc,[k,t,rows]=d;const ic={memo:"📝",rcpt:"🧾",bank:"🏦",inv:"📄",bill:"📨",pay:"💵"}[k]||"📄";
+  return `<div class="jdoc jdoc-${k}"><div class="jdh"><span>${ic} ${e(t)}</span><span class="small">${e(JCO)}</span></div>${rows.map(r=>`<div class="jdr"><span>${e(r[0])}</span><b>${e(r[1])}</b></div>`).join("")}</div>`}
+function jelEq(bal){let A=0,L=0,E=0,NI=0;for(const a in bal){const t=JACC[a],v=bal[a];if(t==="A"||t==="CA")A+=v;else if(t==="L")L+=-v;else if(t==="E"||t==="D")E+=-v;else if(t==="R"||t==="X"){E+=-v;NI+=-v}}
+  const mx=Math.max(A,L+E,1),h=x=>Math.max(4,Math.round(Math.abs(x)/mx*100));
+  return `<div class="jeq"><div class="jeqc"><div class="jeqb a" style="height:${h(A)}px"></div><b>${jm(A)}</b><span>Assets</span></div><div class="jeqs">=</div><div class="jeqc"><div class="jeqb l" style="height:${h(L)}px"></div><b>${jm(L)}</b><span>Liabilities</span></div><div class="jeqs">+</div><div class="jeqc"><div class="jeqb e" style="height:${h(E)}px"></div><b>${jm(E)}</b><span>Equity</span></div></div><div class="small muted" style="text-align:center">${Math.abs(A-L-E)<1?"✓ Balanced, as it always must be.":"Not balanced"} Profit so far this round: ${jm(NI)}.</div>`}
+function jelTs(ev,before,after){const e=esc;return `<div class="jts">${ev.L.map(([a,v])=>{const t=JACC[a],nb=JUP[t]==="debit"?1:-1,b0=(before[a]||0)*nb,b1=(after[a]||0)*nb;
+   return `<div class="jt"><div class="jth">${e(a)}<span class="small">${e(JTYPE[t].split(" (")[0])} · grows with a ${JUP[t]}</span></div><div class="jtb"><div><em>Debit</em>${v>0?`<span class="new">${$$(v)}</span>`:""}</div><div><em>Credit</em>${v<0?`<span class="new">${$$(-v)}</span>`:""}</div></div><div class="jtf">${jm(b0)} → <b>${jm(b1)}</b> ${b1>b0?"▲":b1<b0?"▼":""}</div></div>`}).join("")}</div>`}
+function renderJel(){if(!jel)jelStart();const e=esc,J=bkJel(),ev=jel.ev,n=jel.list.length;
+  if(jel.i>=n){J.rounds++;persist();const cats={};jel.done.forEach(x=>{const c=JEV[x[0]].c;cats[c]=cats[c]||[0,0];cats[c][1]++;if(x[1])cats[c][0]++});
+    $("#view").innerHTML=`<section class="section"><div class="card jelend"><div class="jbig">${jel.ok===n?"🏆":jel.ok>=n*0.75?"🎉":"💪"}</div><h2>${jel.ok} of ${n} entries right on the first try</h2>
+      <div class="small muted">All-time: ${J.ok} entries right${J.adj?` · ${J.adj} month-end adjustments`:""}${J.pay?` · ${J.pay} payroll entries`:""}</div>
+      <div class="jcats">${Object.keys(cats).map(c=>`<div><span>${e(JCAT[c])}</span><b class="${cats[c][0]===cats[c][1]?"ok":""}">${cats[c][0]}/${cats[c][1]}</b></div>`).join("")}</div>
+      ${jelEq(jel.bal)}
+      <div class="small" style="margin:8px 0">Events you miss come back more often in the next rounds.</div>
+      <div class="row"><button class="btn pri" data-jel="again">Another 8 entries</button><button class="btn ghost" data-jel="home">Back</button></div></div></section>`;return}
+  const head=`<div class="sesshead"><div><h2>⚖️ Journal Entry Lab</h2><div class="small muted">${e(JCO)}, a Solving Life LLC bookkeeping client · entry ${jel.i+1} of ${n} · ${jel.ok} right</div></div><button class="btn ghost small" data-jel="home">Exit</button></div><div class="progress"><i style="width:${Math.round(jel.i/n*100)}%"></i></div>`;
+  const doneLines=ev.L.slice(0,jel.li).map(([a,v])=>[a,v>0?$$(v):"",v<0?$$(-v):""]);
+  if(jel.phase==="done"){const ok1=jel.first;
+    $("#view").innerHTML=`<section class="section">${head}<div class="card"><div class="small muted">${e(JCAT[JEV[jel.k].c])}</div>${jelDoc(ev.doc)}<div class="stem" style="margin:8px 0">${e(ev.t)}</div>
+      <div class="explain"><b style="color:var(--${ok1?"good":"warn"})">${ok1?"Perfect entry.":"Entry complete, with help."}</b> ${e(ev.w)}</div>
+      ${visHtml({k:"je",r:ev.L.map(([a,v])=>[a,v>0?$$(v):"",v<0?$$(-v):""]),n:"Debits equal credits: "+$$(ev.L.filter(x=>x[1]>0).reduce((s,x)=>s+x[1],0))})}
+      <div class="small muted" style="margin:10px 0 4px">What it did to each account</div>${jelTs(ev,jel.before,jel.bal)}
+      <div class="small muted" style="margin:10px 0 4px">The accounting equation after this entry</div>${jelEq(jel.bal)}
+      <div class="row" style="margin-top:10px"><button class="btn pri" data-jel="next">${jel.i+1<n?"Next entry":"See my results"}</button></div></div></section>`;return}
+  const ln=ev.L[jel.li],sideCount=ev.L.filter(x=>(x[1]>0)===(ln[1]>0)).length,sideIdx=ev.L.filter((x,k)=>k<jel.li&&(x[1]>0)===(ln[1]>0)).length+1;
+  const rule=`<details class="jrule"><summary>💡 The rule</summary><div class="small">Debits increase assets, expenses and draws. Credits increase liabilities, owner's equity and revenue. Every entry has equal debits and credits.</div></details>`;
+  $("#view").innerHTML=`<section class="section">${head}<div class="card"><div class="small muted">${e(JCAT[JEV[jel.k].c])}</div>${jelDoc(ev.doc)}<div class="stem" style="margin:8px 0">${e(ev.t)}</div>
+    ${doneLines.length?visHtml({k:"je",r:doneLines}):""}
+    <div class="jq"><span class="jside ${ln[1]>0?"dr":"cr"}">${jelSide(ln[1])}${sideCount>1?` ${sideIdx} of ${sideCount}`:""} · ${$$(Math.abs(ln[1]))}</span> Which account?</div>
+    <div class="opts">${jel.opts.map(a=>{let c="";if(jel.pick){if(a===ln[0])c="right";else if(a===jel.pick)c="wrong"}return `<button class="opt jopt ${c}" data-jel="pick" data-a="${e(a)}" ${jel.pick?"disabled":""}><span>${e(a)}</span><span class="small muted" style="margin-left:auto">${e(JTYPE[JACC[a]].split(" (")[0])}</span></button>`}).join("")}</div>
+    ${jel.pick&&jel.pick!==ln[0]?`<div class="explain"><b style="color:var(--bad)">Not ${e(jel.pick)}.</b> ${e(jel.pick)} is ${e(JTYPE[JACC[jel.pick]])}; it grows with a ${JUP[JACC[jel.pick]]}. Here the ${jelSide(ln[1]).toLowerCase()} goes to <b>${e(ln[0])}</b>, ${e(JTYPE[JACC[ln[0]]])}.<div class="row" style="margin-top:8px"><button class="btn pri" data-jel="cont">Got it</button></div></div>`:rule}
+  </div></section>`}
+function jelClick(d){const J=bkJel();
+  if(d.jel==="home"){jel=null;view=CLOCK()?"bkland":"home";render();window.scrollTo(0,0);return true}
+  if(d.jel==="again"){jel=null;render();window.scrollTo(0,0);return true}
+  if(!jel)return false;const ev=jel.ev,ln=ev.L[jel.li];
+  if(d.jel==="pick"&&!jel.pick){const a=d.a;if(a===ln[0]){jelAdv()}else{jel.pick=a;jel.first=false;render()}return true}
+  if(d.jel==="cont"){jelAdv();return true}
+  if(d.jel==="next"){jel.i++;if(jel.i<jel.list.length)jelLoad();render();window.scrollTo(0,0);return true}
+  return false}
+function jelAdv(){const ev=jel.ev;jel.pick=null;jel.li++;
+  if(jel.li>=ev.L.length){const J=bkJel(),c=JEV[jel.k].c;ev.L.forEach(([a,v])=>{jel.bal[a]=(jel.bal[a]||0)+v});
+    jel.done.push([jel.k,jel.first]);J.n++;if(jel.first){jel.ok++;J.ok++;if(c==="adj")J.adj++;if(c==="pay")J.pay++;J.miss[jel.k]=Math.max(0,(J.miss[jel.k]||0)-1)}else J.miss[jel.k]=(J.miss[jel.k]||0)+1;
+    persist();jel.phase="done"}else jel.opts=jelOpts();
+  render()}
+
+/* ================= Run Solving Life LLC: one year of the business, December 2026 to November 2027 =================
+   Each month brings real deadlines and real client situations. Every choice moves four meters (cash, clients,
+   reputation, compliance) and is explained with the rule behind it. Clients and numbers are invented.
+   Dates: Jan 31, 2027 is a Sunday (W-2 and 1099-NEC due Feb 1); Mar 15 Monday; Apr 15 Thursday; Jun 15 Tuesday;
+   Jul 31 Saturday (Form 941 due Aug 2); Sep 15 Wednesday; Oct 15 Friday. */
+const FIRM=[
+ {m:"December 2026",cal:[["Dec 31","Your PTIN expires"],["Any day","Yearly review of the office security plan"]],ev:[
+  {src:"📧 Email from the IRS",t:"Renew your PTIN",q:"Your Preparer Tax Identification Number expires December 31. Tax season starts in January.",o:[
+   ["Renew it online now for 2027",{cash:-20},2,"Every paid preparer needs a valid PTIN for the year a return is prepared. Renewal opens in mid-October and a PTIN that isn't renewed lapses on December 31."],
+   ["Wait until the first client shows up",{comp:-15},0,"Preparing returns for pay without a current PTIN breaks IRS rules, and the first busy week is the worst time to be blocked."],
+   ["Use your partner's PTIN when needed",{comp:-30,rep:-10},0,"A PTIN is personal: each preparer signs with their own. Using someone else's is misconduct."]]},
+  {src:"📋 To-do",t:"The office security plan",q:"Your written information security plan (WISP) is due for its yearly review. The office laptop holds client tax files.",o:[
+   ["Review the plan, turn on multi-factor login everywhere, encrypt the laptop, train everyone",{cash:-100,comp:5},2,"Tax preparers must keep a WISP under the FTC Safeguards Rule, with safeguards such as multi-factor authentication and encryption, and review it regularly. IRS Publication 4557 walks through it."],
+   ["Install antivirus and call it done",{comp:-8},1,"Antivirus helps, but the rule asks for a written plan, access controls, encryption and training."],
+   ["Skip it: it's a small office",{comp:-20},0,"Size doesn't matter: the Safeguards Rule covers every paid preparer, even a one-person office."]]}]},
+ {m:"January 2027",cal:[["Jan 15","Q4 2026 estimated tax"],["Feb 1","W-2s and 1099-NEC due (Jan 31 is a Sunday)"]],ev:[
+  {src:"📧 Mike, Pine Ridge Landscaping (bookkeeping client)",t:"Who gets a 1099-NEC?",q:"\"In 2026 I paid Leo (lawn crew, sole proprietor) $2,400, Ana (helper, sole proprietor) $1,800, and Quick Print Inc., a corporation, $3,000 for flyers. Who gets a 1099-NEC?\"",o:[
+   ["Only Leo",{rep:3},2,"For payments made in 2026 the 1099-NEC threshold is $2,000 (One Big Beautiful Bill Act), so Ana is under it. Payments to corporations generally don't get a 1099-NEC (legal fees are an exception). Leo's form goes to him and the IRS by February 1, 2027."],
+   ["Leo and Ana",{rep:-2,comp:-3},0,"That's the old $600 rule. It still applies to 2025 payments, but 2026 payments use $2,000."],
+   ["All three",{comp:-3},0,"Payments to a corporation for printing generally aren't reported on a 1099-NEC, and Ana is under the 2026 threshold of $2,000."]]},
+  {src:"📋 To-do",t:"Your own estimated tax",q:"Solving Life LLC had a good fall. Your fourth-quarter estimated tax payment for 2026 is due January 15.",o:[
+   ["Pay it by January 15 through IRS Direct Pay",{cash:-600},2,"Self-employed owners pay estimated tax in four installments when they expect to owe $1,000 or more. Paying on time avoids the underpayment penalty."],
+   ["Skip it and pay everything in April",{cash:-60,comp:-6},0,"The full amount is still due, plus an underpayment penalty figured like interest for the late quarter."]]}]},
+ {m:"February 2027",cal:[["Mid-Feb","First refunds with earned income credit arrive"],["Feb 1","Last day for W-2s and 1099s"]],ev:[
+  {src:"📧 Rosa, new client",t:"A 1099-K for used furniture",q:"\"PayPal sent me a 1099-K for $3,200. I sold my old couch, a bike and baby things, all for less than I paid. Do I owe tax?\"",o:[
+   ["Report it as personal items sold at a loss so it nets to zero, and note what she paid",{rep:3,cl:1},2,"Selling personal things at a loss isn't taxable, but the IRS has the form. IRS instructions show how to report it so it nets to zero (Schedule 1, lines 8z and 24z). The return then matches the 1099-K."],
+   ["Leave it off: it isn't income",{comp:-5,rep:-3},0,"The IRS matching system sees a 1099-K with nothing on the return and sends a notice (CP2000). Report it and offset it."],
+   ["Report the $3,200 as income",{rep:-6},0,"She'd pay tax on money that isn't profit. A personal item sold for less than it cost is a nondeductible loss, not income."]]},
+  {src:"🧑 Walk-in",t:"Earned income credit",q:"Dana, single with two children, wants the earned income credit, the child tax credit and head of household status. She brought one W-2.",o:[
+   ["Ask the due diligence questions, write down her answers, complete Form 8867, keep the records",{comp:3,cash:250,cl:1},2,"Paid preparers have special due diligence for the earned income credit, child tax credit, American opportunity credit and head of household: ask, document, file Form 8867, keep records 3 years. Each failure can bring a penalty."],
+   ["She seems honest, just file it",{cash:250,comp:-15},0,"Trust isn't documentation. Without the questions and Form 8867, each missing step is a separate preparer penalty."],
+   ["Turn away all credit clients",{rep:-5,cl:-2},1,"Legal, but you lose the families who need help most. Due diligence is what makes these returns safe to prepare."]]}]},
+ {m:"March 2027",cal:[["Mar 15","S corporation and partnership returns due"],["Mar 15","Form 7004 extensions"]],ev:[
+  {src:"📧 Mike, Pine Ridge Landscaping",t:"The S corporation books aren't ready",q:"It's March 10. Pine Ridge's S corporation books for 2026 still aren't finished.",o:[
+   ["File Form 7004 by March 15 to extend to September 15",{comp:2},2,"Form 1120-S is due March 15, 2027. Form 7004 gives an automatic 6-month extension to file. A late S corporation return draws a penalty for each shareholder for each month."],
+   ["File on time with guessed numbers",{comp:-10,rep:-4},0,"A return you know is wrong isn't a fix: it means an amended return later and possible preparer penalties."],
+   ["Let it be a little late",{comp:-8,rep:-5},0,"The late-filing penalty starts the first month and is charged per shareholder. The extension was free."]]},
+  {src:"📧 Ken, client",t:"\"Just send it, I'll sign later\"",q:"Ken is traveling and wants his return e-filed today. He says he'll sign Form 8879 next week.",o:[
+   ["Send Form 8879 for e-signature and transmit only after he signs",{rep:1},2,"An electronic return originator may not transmit until the taxpayer signs Form 8879 (an electronic signature is fine). Keep it 3 years."],
+   ["Transmit now, collect the signature later",{comp:-15},0,"Filing without the signed authorization breaks e-file rules and can cost you your EFIN."],
+   ["Sign it for him",{comp:-30,rep:-10},0,"Signing for a client is forgery. It ends careers."]]}]},
+ {m:"April 2027",cal:[["Apr 15","Individual returns and Form 4868"],["Apr 15","Q1 2027 estimated tax"]],ev:[
+  {src:"🧑 Luis, client",t:"Balance due he can't pay",q:"Luis owes $4,800 for 2026 and has $1,000 today. It's April 12.",o:[
+   ["File on time, pay what he can, set up an online payment plan",{rep:4},2,"Failure to file costs 5% of the unpaid tax per month (up to 25%); failure to pay costs 0.5% per month. Filing on time avoids the big one, and a payment plan lowers the failure-to-pay rate while it's in effect."],
+   ["Wait to file until he has the money",{rep:-6,comp:-4},0,"Not filing adds the 5%-a-month penalty on top. Always file on time, even without payment."],
+   ["File an extension so he has more time to pay",{rep:-2},1,"Form 4868 gives more time to file, not to pay. Interest and the failure-to-pay penalty still run from April 15."]]},
+  {src:"🧑 Walk-in",t:"An offer you should refuse",q:"A man offers you $200 extra to list his nephew as a dependent. The nephew doesn't live with him.",o:[
+   ["Refuse, explain the rule, offer to prepare the return correctly",{rep:2,cl:-1},2,"Knowingly claiming someone who doesn't qualify is a willful understatement: preparer penalties under section 6694(b) and Circular 230 sanctions. Your PTIN and EFIN are your career."],
+   ["Do it this once",{cash:200,comp:-40,rep:-20},0,"Return preparer fraud. The IRS looks for patterns across a preparer's returns."],
+   ["Add him, but don't sign as the preparer",{cash:200,comp:-40,rep:-15},0,"Preparing a return for pay without signing it is itself a violation (a \"ghost preparer\")."]]}]},
+ {m:"May 2027",cal:[["May","Collect unpaid fees"],["Monthly","Reconcile your own bank account"]],ev:[
+  {src:"📋 To-do",t:"Unpaid invoices",q:"Eight clients still owe $2,400 from tax season.",o:[
+   ["Send friendly reminders with a pay-by-card link, then call; next year take payment before filing",{cash:1800},2,"Most unpaid fees are forgotten, not refused. A clear reminder and an easy way to pay collect most of it. Payment at pickup prevents it next year."],
+   ["Keep their W-2s and documents until they pay",{cash:600,comp:-10,rep:-5},0,"Circular 230 §10.28 says you must return a client's records when asked, even in a fee dispute."],
+   ["Write it off and say nothing",{},1,"Legal, but $2,400 is a month of rent. Ask first."]]},
+  {src:"📋 To-do",t:"Your own books",q:"Solving Life LLC's bank account hasn't been reconciled since January, and a few personal purchases went on the business card.",o:[
+   ["Reconcile every month, record personal charges as owner's draws, use a separate personal card",{comp:5},2,"A bookkeeper's own books should be the cleanest in town. Personal spending is a draw, never a business expense."],
+   ["Fix it all in December",{comp:-5},1,"Possible, but harder to remember what each charge was, and you can't see cash clearly all year."],
+   ["Deduct the personal charges as business expenses",{comp:-20},0,"Personal expenses aren't deductible. Doing it on your own return is the habit you're paid to catch in others."]]}]},
+ {m:"June 2027",cal:[["Jun 15","Q2 2027 estimated tax"]],ev:[
+  {src:"📧 Rosa, client",t:"A CP2000 notice",q:"Rosa got a CP2000: the IRS has a $900 1099-INT that wasn't on her return. She forgot to give it to you.",o:[
+   ["Check it with her, help her answer by the response date and pay the small extra tax",{rep:4},2,"A CP2000 proposes a change based on forms the IRS received. If it's right, agree and pay; if not, explain with documents. Answer by the date on the notice. An enrolled agent can represent her with Form 2848."],
+   ["Ignore it: notices go away",{rep:-6,comp:-4},0,"They don't. With no answer, the IRS assesses the tax and starts collection."],
+   ["Tell her to call the IRS herself",{rep:-4},1,"Allowed, but helping clients with notices is how you keep them for years."]]},
+  {src:"📋 To-do",t:"Hiring help",q:"You hire a part-time helper. She works set hours in your office on your computer, you train her, and you pay her by the hour.",o:[
+   ["Employee: Form W-4, Form I-9, payroll and payroll taxes",{cash:-400,comp:3},2,"You control how, when and where she works and provide the tools: under the common-law rules that's an employee. Misclassifying means back payroll taxes and penalties."],
+   ["Contractor: Form W-9 and a 1099-NEC in January",{comp:-12},0,"Behavioral and financial control point to an employee. Calling her a contractor doesn't change what she is."]]}]},
+ {m:"July 2027",cal:[["Aug 2","Form 941 for April to June (Jul 31 is a Saturday)"]],ev:[
+  {src:"📋 To-do",t:"Payroll's first quarter",q:"Your helper's first quarter on payroll ended June 30. Which return reports the withheld income tax and Social Security and Medicare?",o:[
+   ["Form 941, due August 2, 2027",{comp:3},2,"Form 941 is quarterly: April to June is due July 31, moved to August 2 because July 31, 2027 is a Saturday. Deposits go through EFTPS on schedule."],
+   ["Form 940",{comp:-6},0,"Form 940 is the yearly federal unemployment (FUTA) return, due January 31."],
+   ["Form W-3",{comp:-6},0,"Form W-3 goes to the Social Security Administration once a year, with the W-2s."]]},
+  {src:"📧 Bookkeeping client",t:"\"Should I be an S corporation?\"",q:"A client's sole proprietorship nets $95,000. A friend told him an S corporation saves tax.",o:[
+   ["Run the numbers: a reasonable salary through payroll, the extra costs, then decide",{rep:4,cash:300},2,"An S corporation can save self-employment tax on profit above a reasonable salary, but adds payroll, a separate return and fees. Advice built on his numbers is worth paying for."],
+   ["Elect now and pay himself a $10,000 salary",{comp:-10,rep:-3},0,"A salary that low for full-time work isn't reasonable. The IRS can recast distributions as wages."],
+   ["Tell him S corporations are a scam",{rep:-3},1,"They're a real tool for the right business. Your job is to show when it pays."]]}]},
+ {m:"August 2027",cal:[["Slow season","Study and plan"]],ev:[
+  {src:"📧 Email: \"IRS e-Services\"",t:"Urgent: your EFIN",q:"\"Your EFIN will be suspended. Log in within 24 hours.\" The link goes to an odd web address.",o:[
+   ["Don't click. Forward it to phishing@irs.gov and check e-Services by typing the address yourself",{comp:3},2,"Thieves target preparers for client data. The IRS doesn't threaten by email with a 24-hour deadline. Report it, and if data was ever exposed, contact your IRS Stakeholder Liaison."],
+   ["Click and log in, just to be safe",{comp:-30,rep:-12},0,"That hands over your login and possibly every client's data. A breach means notifying clients and the IRS."],
+   ["Delete it",{},1,"Safe for you, but reporting it helps the IRS shut the scam down."]]},
+  {src:"📋 Your calendar",t:"Ten free hours a week",q:"Tax season is over. How do you use the slow months?",o:[
+   ["Study for the EA exam and plan next season's marketing",{rep:4},2,"Becoming an enrolled agent lets you represent any taxpayer before the IRS, and planning now fills next season early."],
+   ["Take on two new monthly bookkeeping clients",{cash:1200,cl:2},2,"Monthly bookkeeping evens out the year's cash flow and feeds tax season."],
+   ["Rest and do nothing",{},1,"Rest matters, but some planning now pays off in January."]]}]},
+ {m:"September 2027",cal:[["Sep 15","Extended S corporation and partnership returns"],["Sep 15","Q3 2027 estimated tax"]],ev:[
+  {src:"📋 To-do",t:"The extended S corporation return",q:"Pine Ridge's books are finally done on September 3. The extended Form 1120-S is due September 15.",o:[
+   ["File by September 15 and send the shareholders their K-1s right away",{comp:3,cash:900},2,"The owners need their K-1s to finish their own extended returns by October 15."],
+   ["File it in October along with the owners' returns",{comp:-10,rep:-4},0,"The extension ran out September 15. Late means the per-shareholder penalty."]]},
+  {src:"📧 Colorado Secretary of State",t:"Periodic report",q:"Solving Life LLC's yearly periodic report is due.",o:[
+   ["File it online now and pay the fee",{cash:-10,comp:2},2,"Colorado LLCs file a periodic report every year around their anniversary month. Miss it and the LLC goes delinquent, which can block bank and contract changes until it's fixed."],
+   ["Ignore it",{comp:-15},0,"A delinquent LLC isn't in good standing. It costs more to fix later."]]}]},
+ {m:"October 2027",cal:[["Oct 15","Extended individual returns"],["Mid-Oct","PTIN renewal opens for 2028"]],ev:[
+  {src:"📧 Three extension clients",t:"October 13",q:"Three clients on extension finally send documents two days before the deadline.",o:[
+   ["Finish what's complete, get signed 8879s, file by October 15; tell anyone missing items in writing what's missing",{rep:3,comp:2,cash:900},2,"There's no further extension. Clear written notes protect you and the client."],
+   ["File all three with estimates for the missing items",{comp:-10,rep:-3},0,"Guessed numbers mean amended returns and possible penalties. Real documents first."]]},
+  {src:"📋 Next season's prices",t:"Are you charging enough?",q:"Simple returns that you price at $150 took three hours each this year.",o:[
+   ["Price by form and complexity, publish a fee list, use engagement letters",{cash:1200,rep:1},2,"Clear prices set expectations and cover your time. An engagement letter states the work, the fee and what the client must provide."],
+   ["Keep the prices and work longer hours",{},1,"It works until burnout. Your time is the product."],
+   ["Charge a percentage of each client's refund",{comp:-15},0,"Circular 230 §10.27 bars contingent fees for preparing an original return."]]}]},
+ {m:"November 2027",cal:[["Nov","Get bookkeeping clients ready for January"],["Nov","Plan the 2028 season"]],ev:[
+  {src:"📋 Bookkeeping clients",t:"Ready for January",q:"Your bookkeeping clients want January to go smoothly.",o:[
+   ["Collect Form W-9s from contractors now, check employee addresses, set up 1099 tracking in QuickBooks",{rep:3,comp:2},2,"With W-9s on file and payees tracked, 1099s and W-2s go out by the deadline without a scramble."],
+   ["Wait for January",{comp:-3},1,"Chasing W-9s in late January makes deadlines tight."]]},
+  {src:"📧 Former client",t:"\"Can I get a copy of my return?\"",q:"A client from the 2025 season asks for a copy of her return.",o:[
+   ["Pull it from your secure records and send it securely",{rep:2},2,"Preparers must keep a copy of each return, or a list of returns prepared, for at least 3 years. Send it through a secure portal, not plain email."],
+   ["You shredded it right after filing",{comp:-8,rep:-3},0,"Too early: the 3-year rule applies. Keep secure digital copies."]]}]}];
+const FSTART={cash:3000,cl:12,rep:60,comp:100};
+function firmS(){S.set.firm=S.set.firm||{};return S.set.firm}
+function firmNew(){const F=firmS();F.g={mi:0,ei:0,st:Object.assign({},FSTART),log:[],pick:null};persist()}
+function firmScore(st){const c=Math.max(0,Math.min(100,st.cash/120)),k=Math.max(0,Math.min(100,st.cl*4)),r=Math.max(0,Math.min(100,st.rep)),p=Math.max(0,Math.min(100,st.comp));return Math.round(0.3*r+0.35*p+0.2*c+0.15*k)}
+function firmMeters(st,fx){const e=esc,d=k=>fx&&fx[k]?`<em class="${fx[k]>0?"up":"dn"}">${fx[k]>0?"+":""}${k==="cash"?(fx[k]>0?"":"−")+$$(Math.abs(fx[k])).replace("-",""):fx[k]}</em>`:"";
+  const rows=[["cash","💵","Cash",$$(st.cash),Math.max(0,Math.min(1,st.cash/12000))],["cl","👥","Clients",String(st.cl),Math.max(0,Math.min(1,st.cl/25))],["rep","⭐","Reputation",st.rep+"/100",st.rep/100],["comp","🛡️","Compliance",st.comp+"/100",st.comp/100]];
+  return `<div class="fmet">${rows.map(([k,ic,n,v,p])=>`<div class="fm fm-${k}"><span>${ic} ${n}</span><b>${e(v)}${d(k)}</b><span class="bkl-bar"><i style="width:${Math.round(Math.max(0,p)*100)}%"></i></span></div>`).join("")}</div>`}
+function renderFirm(){const e=esc,F=firmS(),g=F.g;const t=$("#tabs");if(t&&CLOCK())t.innerHTML="";
+  const head=(sub)=>`<div class="sesshead"><div><h2>🏢 Run Solving Life LLC</h2><div class="small muted">${sub}</div></div><button class="btn ghost small" data-firm="exit">Exit</button></div>`;
+  if(!g){$("#view").innerHTML=`<section class="section">${head("One year of the business, December 2026 to November 2027")}<div class="card firmintro">
+     <div class="fhero">🏢</div><h2 style="margin:4px 0">You're running the office this year</h2>
+     <p>Twelve months, 24 decisions: deadlines, client emails, walk-ins, security, pricing and your own books. Each choice moves four meters and comes with the rule behind it.</p>
+     ${firmMeters(FSTART)}
+     <div class="small muted" style="margin:8px 0">Finish with good compliance, a strong reputation, happy clients and cash in the bank. 80 or more is an excellent year.${F.best?` Your best so far: <b>${F.best}</b>.`:""}</div>
+     <button class="btn pri" data-firm="start" style="width:100%">Start in December 2026</button></div></section>`;return}
+  if(g.mi>=FIRM.length){const sc=firmScore(g.st),best=g.log.filter(x=>x[2]===2).length;if(!F.best||sc>F.best)F.best=sc;F.m=12;persist();
+    const grade=sc>=85?["🏆","An excellent year: ready to run Solving Life LLC"]:sc>=70?["🎉","A solid year, with a few lessons"]:sc>=55?["💪","You got through it. Replay to sharpen your choices"]:["📚","A rough year. Read the explanations and try again"];
+    $("#view").innerHTML=`<section class="section">${head("Year-end report, November 2027")}<div class="card" style="text-align:center"><div class="jbig">${grade[0]}</div><h2>Score ${sc} of 100</h2><div>${grade[1]}</div>
+      ${firmMeters(g.st)}<div class="small muted" style="margin:6px 0">${best} of ${g.log.length} decisions were the best move.</div>
+      <div class="flog">${g.log.map(x=>`<div class="${x[2]===2?"ok":x[2]===1?"mid":"bad"}"><span>${e(x[0])}</span><b>${x[2]===2?"✓ best":x[2]===1?"okay":"✗"}</b></div>`).join("")}</div>
+      <div class="row" style="justify-content:center;margin-top:10px"><button class="btn pri" data-firm="again">Play the year again</button><button class="btn ghost" data-firm="exit">Back</button></div></div></section>`;return}
+  const M=FIRM[g.mi],E=M.ev[g.ei],n=FIRM.reduce((s,x)=>s+x.ev.length,0),done=FIRM.slice(0,g.mi).reduce((s,x)=>s+x.ev.length,0)+g.ei;
+  const strip=`<div class="fcal"><div class="fcm">📅 ${e(M.m)}</div>${M.cal.map(c=>`<div class="fcd"><b>${e(c[0])}</b><span>${e(c[1])}</span></div>`).join("")}</div>`;
+  const months=`<div class="fmonths">${FIRM.map((x,k)=>`<span class="${k<g.mi?"done":k===g.mi?"cur":""}">${x.m.slice(0,3)}</span>`).join("")}</div>`;
+  let body;
+  if(g.pick==null){body=`<div class="fsrc">${e(E.src)}</div><div class="ftitle">${e(E.t)}</div><div class="stem">${e(E.q)}</div><div class="opts" style="margin-top:10px">${E.o.map((o,k)=>`<button class="opt jopt" data-firm="pick" data-k="${k}"><span>${e(o[0])}</span><span></span></button>`).join("")}</div>`}
+  else{const o=E.o[g.pick],v=o[2],bi=E.o.findIndex(x=>x[2]===2);
+    body=`<div class="fsrc">${e(E.src)}</div><div class="ftitle">${e(E.t)}</div><div class="fpick"><span class="small muted">You chose</span><b>${e(o[0])}</b></div>
+      <div class="explain"><b style="color:var(--${v===2?"good":v===1?"warn":"bad"})">${v===2?"✓ Best move.":v===1?"Okay, but there's a better move.":"✗ That causes problems."}</b> ${e(o[3])}${v<2&&bi>=0?`<div style="margin-top:6px"><b>Best move:</b> ${e(E.o[bi][0])}. ${e(E.o[bi][3])}</div>`:""}</div>
+      <button class="btn pri" data-firm="next" style="margin-top:10px">${g.ei+1<M.ev.length?"Next":"On to "+(FIRM[g.mi+1]?FIRM[g.mi+1].m:"the year-end report")}</button>`}
+  $("#view").innerHTML=`<section class="section">${head(`Decision ${done+1} of ${n} · score so far ${firmScore(g.st)}`)}${months}${firmMeters(g.st,g.pick!=null?E.o[g.pick][1]:null)}${strip}<div class="card">${body}</div></section>`}
+function firmClick(d){const F=firmS();
+  if(d.firm==="exit"){view=CLOCK()?"bkland":"home";part=BK;render();window.scrollTo(0,0);return true}
+  if(d.firm==="start"||d.firm==="again"){firmNew();render();window.scrollTo(0,0);return true}
+  const g=F.g;if(!g)return false;
+  if(d.firm==="pick"&&g.pick==null){const k=+d.k,M=FIRM[g.mi],E=M.ev[g.ei],o=E.o[k];g.pick=k;for(const key in o[1])g.st[key]=(g.st[key]||0)+o[1][key];g.st.rep=Math.max(0,Math.min(100,g.st.rep));g.st.comp=Math.max(0,Math.min(100,g.st.comp));g.st.cl=Math.max(0,g.st.cl);g.log.push([E.t,k,o[2]]);persist();render();return true}
+  if(d.firm==="next"){const M=FIRM[g.mi];g.pick=null;g.ei++;if(g.ei>=M.ev.length){g.ei=0;g.mi++;g.st.cash+=Math.round(g.st.cl*(g.mi<=5?160:60)-450)}persist();render();window.scrollTo(0,0);return true}
+  return false}
+
 /* EA Part 1: balanced answer choices. Law as of December 31, 2025. */
 const BAL1={
 p1qtmdtd:{c:"The child tax credit and the dependency claim",w:["Head of household status and the dependency claim","The earned income credit for a qualifying child","The child and dependent care credit and exclusion"]},
@@ -15036,6 +15508,87 @@ GX("ssi",6,1,"SSI payment with earned and unearned income",()=>{const un=PK([0,0
 GX("ssdi1",6,1,"First month SSDI is payable",()=>{const M=["January","February","March","April","May","June","July","August","September","October","November","December"],m=R(0,11),day=PK([1,3,10,15,20,28]),first=day===1?m:m+1,pay=(first+5)%12,a=pay+1;return{q:`Disability began on ${M[m]} ${day}, 2025. The application was filed promptly. Which month is the first month of SSDI entitlement? (Answer with the month number, 1 to 12.)`,a,dp:0,tol:0.4,w:[`The waiting period is 5 full calendar months.${day===1?` Onset on the 1st means ${M[m]} counts as a full month.`:` ${M[m]} is not a full month, so the waiting period starts in ${M[(m+1)%12]}.`}`,`Waiting months: ${[0,1,2,3,4].map(k=>M[(first+k)%12]).join(", ")}`,`First month of benefits: ${M[pay]} (month ${a})`],n:"Only full calendar months of disability count toward the waiting period."}});
 GX("left",6,4,"Days left to appeal",()=>{const d=R(10,58),a=65-d;return{q:`A reconsideration denial notice is dated ${d} days ago. Counting the presumed 5 days for mail, how many days are left to request a hearing?`,a,dp:0,tol:0.4,w:[`Receipt is presumed 5 days after the notice date; the 60 days run from receipt: 65 days from the notice date`,`65 − ${d} = ${a} days left`],n:"The client can show later receipt, but never plan on it: file early."}});
 
+/* ================= Foundation course workout: job math with fresh numbers (shown as 4 choices with teaching) =================
+   2026 amounts: Social Security wage base $184,500 (SSA); standard deduction single $16,100 and brackets 10% to $12,400,
+   12% to $50,400 (Rev. Proc. 2025-32); business mileage 72.5¢ to June 30 and 76¢ from July 1 (IRS Announcement 2026-11);
+   Form 1099-NEC threshold $2,000 for payments made in 2026 (One Big Beautiful Bill Act). Names and numbers invented. */
+const m2=x=>"$"+(Math.round(x*100)/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+/* ---- Module 1: paychecks and payroll ---- */
+GX("pay-net",4,1,"Net pay on a paycheck",()=>{const g=R(600,1800,10),f=R(30,160,1),st=R(15,60,1),ss=g*0.062,md=g*0.0145,a=g-f-ss-md-st;
+  return{q:`Weekly gross pay ${m2(g)}. Federal income tax withheld ${m2(f)}, state income tax withheld ${m2(st)}. No other deductions. What is the net pay?`,a,u:"$",
+  w:[`Social Security: 6.2% × ${m2(g)} = ${m2(ss)}`,`Medicare: 1.45% × ${m2(g)} = ${m2(md)}`,`Net = gross − federal − Social Security − Medicare − state = ${m2(g)} − ${m2(f)} − ${m2(ss)} − ${m2(md)} − ${m2(st)} = ${m2(a)}`],
+  n:"Employee FICA is 7.65% of gross pay (6.2% + 1.45%). Net pay is what lands in the bank."}});
+G("pay-ss",4,1,"Social Security near the 2026 wage base",()=>{const w=R(150,240,1)*1000,b=184500,a=Math.min(w,b)*0.062;
+  return{q:`An employee earns ${$$(w)} in wages in 2026. How much Social Security tax is withheld from her pay for the year?`,a,
+  w:[`2026 wage base: ${$$(b)}. Wages taxed: the smaller of ${$$(w)} and ${$$(b)} = ${$$(Math.min(w,b))}`,`6.2% × ${$$(Math.min(w,b))} = ${$$(a)}`],
+  n:w>b?"Social Security stops at the wage base; Medicare (1.45%) has no cap.":"Under the wage base, all wages are taxed at 6.2%."}});
+G("pay-er",4,1,"What an employee really costs",()=>{const w=R(30,90,1)*1000,fica=w*0.0765,futa=42,a=w+fica+futa;
+  return{q:`A business pays one employee ${$$(w)} in wages for 2026. Count the employer's Social Security and Medicare and federal unemployment tax (0.6% of the first $7,000). Ignore state unemployment tax and benefits. Total cost?`,a,
+  w:[`Employer Social Security and Medicare: 7.65% × ${$$(w)} = ${$$(fica)}`,`Federal unemployment: 0.6% × $7,000 = $42`,`Total = ${$$(w)} + ${$$(fica)} + $42 = ${$$(a)}`],
+  n:"The employer matches the employee's 7.65%. That's on top of the wage, not taken out of it."}});
+GX("pay-ot",4,1,"Overtime pay",()=>{const r=R(32,60,1)/2,h=R(41,52,1),a=40*r+(h-40)*r*1.5;
+  return{q:`An hourly employee earns ${m2(r)} an hour and works ${h} hours this week. Overtime is time and a half over 40 hours. Gross pay?`,a,u:"$",
+  w:[`Regular: 40 × ${m2(r)} = ${m2(40*r)}`,`Overtime: ${h-40} × ${m2(r)} × 1.5 = ${m2((h-40)*r*1.5)}`,`Gross = ${m2(40*r)} + ${m2((h-40)*r*1.5)} = ${m2(a)}`],n:"Only the hours over 40 get the 1.5 rate."}});
+/* ---- Module 2: bookkeeping ---- */
+G("brec",4,2,"Bank reconciliation: adjusted bank balance",()=>{const b=R(4000,15000,10),d=R(300,2500,10),c1=R(80,900,5),c2=R(80,900,5),a=b+d-c1-c2;
+  return{q:`Bank statement ending balance ${$$(b)}. A deposit of ${$$(d)} is in transit. Checks #1043 for ${$$(c1)} and #1046 for ${$$(c2)} haven't cleared. Adjusted bank balance?`,a,
+  w:[`Start with the bank: ${$$(b)}`,`Add the deposit in transit: + ${$$(d)} = ${$$(b+d)}`,`Subtract outstanding checks: − ${$$(c1)} − ${$$(c2)} = ${$$(a)}`],n:"Deposits in transit and outstanding checks fix the BANK side. Bank fees and interest fix the BOOK side."}});
+G("brec2",4,2,"Bank reconciliation: adjusted book balance",()=>{const b=R(4000,15000,10),f=PK([12,15,25,35]),i=R(2,18,1),n=R(60,450,5),a=b-f+i-n;
+  return{q:`The books show ${$$(b)} in checking. The bank statement shows a ${$$(f)} service fee, ${$$(i)} of interest earned, and a customer's ${$$(n)} check that bounced (NSF). Adjusted book balance?`,a,
+  w:[`Start with the books: ${$$(b)}`,`Subtract the fee: − ${$$(f)} = ${$$(b-f)}`,`Add interest: + ${$$(i)} = ${$$(b-f+i)}`,`Subtract the bounced check: − ${$$(n)} = ${$$(a)}`],n:"Each of these needs a journal entry, because the books didn't know about them yet."}});
+G("dep",4,2,"Straight-line depreciation for a year",()=>{const c=R(8,60,1)*1000,s=R(0,8,1)*500,l=PK([3,5,7]),a=(c-s)/l;
+  return{q:`Equipment cost ${$$(c)}, expected salvage value ${$$(s)}, useful life ${l} years. Yearly straight-line depreciation (book method)?`,a,
+  w:[`Depreciable amount: ${$$(c)} − ${$$(s)} = ${$$(c-s)}`,`Per year: ${$$(c-s)} ÷ ${l} = ${$$(a)}`],n:"Subtract salvage first. (Tax depreciation uses MACRS, a different method.)"}});
+G("prepaid",4,2,"Prepaid insurance left after some months",()=>{const m=R(80,300,10),p=m*12,k=R(2,10,1),a=p*(12-k)/12;
+  return{q:`A business paid ${$$(p)} on January 1 for 12 months of insurance. After the adjusting entry at the end of month ${k}, what's left in Prepaid Insurance?`,a,
+  w:[`One month: ${$$(p)} ÷ 12 = ${$$(m)}`,`Used: ${k} × ${$$(m)} = ${$$(m*k)}`,`Left: ${$$(p)} − ${$$(m*k)} = ${$$(a)}`],n:"Each month-end moves one month from the asset to Insurance Expense."}});
+GX("gm",4,2,"Gross margin percent",()=>{const s=R(40,200,1)*1000,c=Math.round(s*R(35,70,1)/100),a=(s-c)/s*100;
+  return{q:`Sales ${$$(s)}, cost of goods sold ${$$(c)}. Gross margin as a percent of sales?`,a,u:"%",dp:1,
+  w:[`Gross profit: ${$$(s)} − ${$$(c)} = ${$$(s-c)}`,`Margin: ${$$(s-c)} ÷ ${$$(s)} = ${a.toFixed(1)}%`],n:"Margin divides by sales. Markup divides by cost: same dollars, different percent."}});
+G("cogs",4,2,"Cost of goods sold",()=>{const b=R(5,30,1)*1000,p=R(20,90,1)*1000,e=R(4,30,1)*1000,a=b+p-e;
+  return{q:`Beginning inventory ${$$(b)}, purchases during the year ${$$(p)}, ending inventory (counted) ${$$(e)}. Cost of goods sold?`,a,
+  w:[`Goods available: ${$$(b)} + ${$$(p)} = ${$$(b+p)}`,`COGS = available − ending: ${$$(b+p)} − ${$$(e)} = ${$$(a)}`],n:"Ending inventory is still on the shelf, so it's not a cost yet."}});
+G("ar",4,2,"Accounts receivable at month end",()=>{const b=R(3,20,1)*1000,s=R(5,40,1)*1000,c=R(3,Math.floor((b+s)/1000)-1,1)*1000,w=PK([0,0,250,400,600]),a=b+s-c-w;
+  return{q:`Accounts receivable started the month at ${$$(b)}. Credit sales were ${$$(s)}, customer payments ${$$(c)}${w?`, and a ${$$(w)} invoice was written off`:""}. Ending balance?`,a,
+  w:[`${$$(b)} + credit sales ${$$(s)} = ${$$(b+s)}`,`− payments ${$$(c)} = ${$$(b+s-c)}`,w?`− write-off ${$$(w)} = ${$$(a)}`:`No write-offs: ${$$(a)}`],n:"Cash sales never touch receivables."}});
+/* ---- Module 3: QuickBooks money work ---- */
+GX("stax",4,3,"Sales tax on a sale",()=>{const p=R(20,900,1)+PK([0,0.5,0.99,0.25]),r=PK([7.5,8,8.31,8.81,4.9]),a=p*r/100;
+  return{q:`A customer buys ${m2(p)} of taxable products. The combined sales tax rate is ${r}%. How much sales tax does the business collect?`,a,u:"$",
+  w:[`${m2(p)} × ${r}% = ${m2(a)}`,`The customer pays ${m2(p+a)}; the tax part goes to Sales Tax Payable, not revenue.`],n:"Sales tax isn't income. The business holds it for the state."}});
+GX("disc",4,3,"Paying a bill early: 2/10, net 30",()=>{const b=R(500,9000,10),a=b*0.98;
+  return{q:`A vendor bill for ${m2(b)} has terms 2/10, net 30. You pay on day 8. How much do you pay?`,a,u:"$",
+  w:[`2/10 means 2% off if paid within 10 days`,`Discount: 2% × ${m2(b)} = ${m2(b*0.02)}`,`Pay: ${m2(b)} − ${m2(b*0.02)} = ${m2(a)}`],n:"After day 10 the full amount is due by day 30."}});
+/* ---- Module 4: individual returns ---- */
+G("ti",4,4,"Taxable income, single, 2026",()=>{const w=R(28,90,1)*1000,i=R(0,900,10),a=w+i-16100;
+  return{q:`A single filer in 2026 has wages of ${$$(w)} and ${$$(i)} of bank interest. No adjustments, takes the standard deduction. Taxable income?`,a,
+  w:[`Total income: ${$$(w)} + ${$$(i)} = ${$$(w+i)}`,`2026 standard deduction, single: $16,100`,`Taxable income: ${$$(w+i)} − $16,100 = ${$$(a)}`],n:"The standard deduction comes off after AGI."}});
+G("tax2",4,4,"Tax on taxable income, single, 2026",()=>{const t=R(14,50,1)*1000,a=1240+0.12*(t-12400);
+  return{q:`A single filer's 2026 taxable income is ${$$(t)}. Using the 2026 brackets (10% up to $12,400, 12% up to $50,400), what is the regular income tax?`,a,
+  w:[`First $12,400 at 10% = $1,240`,`The rest: (${$$(t)} − $12,400) × 12% = ${$$(0.12*(t-12400))}`,`Tax = $1,240 + ${$$(0.12*(t-12400))} = ${$$(a)}`],n:"Brackets tax each slice at its own rate; the whole income isn't taxed at 12%."}});
+G("mile",4,4,"2026 business mileage: two rates",()=>{const h1=R(800,6000,50),h2=R(800,6000,50),a=h1*0.725+h2*0.76;
+  return{q:`A self-employed client logged ${h1.toLocaleString()} business miles from January to June 2026 and ${h2.toLocaleString()} from July to December. Standard mileage deduction?`,a,
+  w:[`January to June: ${h1.toLocaleString()} × $0.725 = ${$$(h1*0.725)}`,`July to December: ${h2.toLocaleString()} × $0.76 = ${$$(h2*0.76)}`,`Total: ${$$(a)}`],n:"The IRS raised the 2026 rate to 76¢ from July 1, so each half of the year uses its own rate. A mileage log is required."}});
+G("ctc",4,4,"Child tax credit, 2025",()=>{const k=R(1,4,1),a=k*2200;
+  return{q:`A married couple's 2025 return has ${k} qualifying ${k>1?"children":"child"} under 17, and income well under the phase-out. How much is the child tax credit before any limit by tax owed?`,a,
+  w:[`2025 child tax credit: $2,200 per qualifying child (One Big Beautiful Bill Act)`,`${k} × $2,200 = ${$$(a)}`],n:"The child must be under 17 at the end of the year and have a valid SSN."}});
+/* ---- Module 5: self-employed clients and the office ---- */
+G("se-tax",4,5,"Self-employment tax",()=>{const p=R(20,120,1)*1000,b=p*0.9235,a=b*0.153;
+  return{q:`A sole proprietor's 2026 Schedule C net profit is ${$$(p)}. No wages from a job. Self-employment tax?`,a,
+  w:[`Net earnings: ${$$(p)} × 92.35% = ${$$(b)}`,`SE tax: ${$$(b)} × 15.3% = ${$$(a)}`,`Half of it (${$$(a/2)}) is an adjustment to income on Schedule 1.`],n:"Multiply by 92.35% first. 15.3% is both halves of Social Security and Medicare."}});
+G("se-schc",4,5,"Schedule C net profit",()=>{const g=R(40,140,1)*1000,s=R(2,9,1)*1000,m=R(4,20,1)*100,ad=R(5,30,1)*100,a=g-s-m*0.5-ad;
+  return{q:`A consultant's 2026 gross receipts are ${$$(g)}. Expenses: software and supplies ${$$(s)}, business meals ${$$(m)}, advertising ${$$(ad)}. Net profit?`,a,
+  w:[`Meals are 50% deductible: ${$$(m)} × 50% = ${$$(m*0.5)}`,`Expenses: ${$$(s)} + ${$$(m*0.5)} + ${$$(ad)} = ${$$(s+m*0.5+ad)}`,`Net profit: ${$$(g)} − ${$$(s+m*0.5+ad)} = ${$$(a)}`],n:"Business meals are only half deductible. Entertainment isn't deductible at all."}});
+G("se-est",4,5,"Quarterly estimated tax, safe harbor",()=>{const t=R(4,24,1)*1000,a=t/4;
+  return{q:`A self-employed client's total 2026 tax was ${$$(t)}; her AGI was under $150,000. To be safe from the underpayment penalty for 2027 using the prior-year rule, how much is each quarterly payment?`,a,
+  w:[`Prior-year safe harbor: pay 100% of last year's tax (110% if AGI was over $150,000)`,`${$$(t)} ÷ 4 = ${$$(a)} each, due April 15, June 15, September 15 and January 15`],n:"Paying 100% of last year's tax in four equal installments avoids the penalty even if this year's tax is higher."}});
+G("ftp",4,5,"Failure-to-pay penalty",()=>{const u=R(2,20,1)*500,m=R(1,8,1),a=u*0.005*m;
+  return{q:`A client filed on time but paid ${$$(u)} of tax ${m} month${m>1?"s":""} late. Failure-to-pay penalty (0.5% per month)? Ignore interest.`,a,
+  w:[`0.5% × ${m} month${m>1?"s":""} = ${(0.5*m).toFixed(1)}%`,`${$$(u)} × ${(0.5*m).toFixed(1)}% = ${$$(a)}`],n:"Failure to FILE is 5% a month: ten times worse. Always file on time."}});
+G("n1099",4,5,"How many 1099-NEC forms? (2026 payments)",()=>{const ppl=[["Leo, sole proprietor",R(21,40,1)*100,0],["Ana, sole proprietor",R(5,19,1)*100,0],["Kim, sole proprietor",R(20,60,1)*100,0],["Quick Print Inc.",R(20,50,1)*100,1],["Dan, sole proprietor",R(10,30,1)*100,0]];
+  const need=ppl.filter(p=>!p[2]&&p[1]>=2000),a=need.length;
+  return{q:`In 2026 a client paid these contractors for services: ${ppl.map(p=>`${p[0]} ${$$(p[1])}`).join("; ")}. How many need a Form 1099-NEC?`,a,u:"",
+  w:[`2026 threshold: $2,000 or more to one payee`,`Corporations generally don't get one: Quick Print Inc. is out`,`Sole proprietors at $2,000 or more: ${need.map(p=>p[0].split(",")[0]).join(", ")||"none"}`,`Count: ${a}`],n:"The old $600 rule applies only to payments made in 2025 and earlier."}});
+
 /* ================= Calculations the way the exam asks them: pick 1 of 4, with teaching =================
    The SEE has no typed answers: every question, calculations too, is multiple choice with 4 options.
    Wrong choices are built from the usual mistakes: an in-between number from the working (stopping a step
@@ -15051,9 +15604,10 @@ function calcNums(text,kind){const out=[];const re=/(-?)(\$?)(\d[\d,]*(?:\.\d+)?
   while((m=re.exec(text))){const v=parseFloat(m[3].replace(/,/g,""))*(m[1]?-1:1);if(!isFinite(v))continue;
     const k=m[4]?"%":m[2]?"$":"n";if(k===kind)out.push(v)}return out}
 function calcMC(c){if(c.opts)return c;const a=c.ans,key=c.key,kind=calcKind(key),dp=calcDp(key);
-  const unit=dp?Math.pow(10,-dp):1,gap=Math.max(c.tol||0,Math.abs(a)*0.02,unit*1.01);
+  const unit=dp?Math.pow(10,-dp):1,gap=Math.max(c.tol||0,Math.abs(a)*0.02,unit*0.99);
   const opts=[key],why=[""],seen=new Set([key]);
   const add=(v,w)=>{if(opts.length>=4||!isFinite(v))return;if(a>0&&v<0)return;const s=calcFmt(key,v);if(seen.has(s)||Math.abs(v-a)<gap)return;seen.add(s);opts.push(s);why.push(w)};
+  if(kind==="n"&&!dp&&Number.isInteger(a)&&Math.abs(a)<=20)for(const d of shuffle([1,-1,2,-2,3])){if(a+d>=0)add(a+d,"Count again, item by item, against the rule in the first step.")}
   const lines=String(c.steps||"").split("\n").filter(x=>x&&!x.startsWith("Watch out:"));
   const given=new Set(calcNums(c.stem||"",kind).map(v=>calcFmt(key,v)));
   // 1) numbers from the working that are not the final answer: the "stopped one step early" mistake
@@ -15169,7 +15723,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 145 · Nov 20";
+const BUILD="Version 146 · Nov 20";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -15333,7 +15887,7 @@ function renderStart(){const b=bkStats("all"),e=[1,2,3].map(p=>Math.round(partSt
     ${[5,6,7,8].map(p=>{const X=PARTS[p],ps=partStats(p),n=BANK.filter(i=>i.p==p);return `<button class="startcard x${p}" data-sec="${X.x}"><span class="lvl">${p===7?"Certification training":p===8?"State commission course":"Exam preparation"}</span><b>${X.short} · ${esc(X.name)}</b><p>${p===8?"Become a Colorado notary: qualifications and the exam, acknowledgments, jurats, copy certifications, ID rules, the stamp and journal, fees, prohibited acts, and electronic and remote notarization.":p===7?"ITINs and Form W-7 for a Certifying Acceptance Agent: program rules, the 13 documents, the Certificate of Accuracy, exceptions, records and compliance.":p===5?"Investment adviser representative exam: economics, investment vehicles, client strategies, and securities law and ethics.":"Social Security disability representation: the programs, the five-step evaluation, evidence, appeals, fees and conduct."}</p><span class="sbar"><i style="width:${Math.round(ps.readyX)}%"></i></span><em>${Math.round(ps.readyX)}% ready · ${n.filter(i=>i.t==="f").length} flashcards · ${n.filter(i=>i.t==="q").length} questions</em></button>`}).join("")}
   </div><div class="statusline" style="margin-top:14px">${BUILD}${HOSTED?` · <button class="linkbtn" id="updcheck">Check for update</button>${updMsg?" · "+esc(updMsg):""}`:""}</div>
   ${updateReady?`<div class="ledger" style="border:2px solid var(--accent);margin-top:10px"><b>A newer version is ready: ${esc(updateReady)}.</b><div class="row"><button class="btn pri" id="updnow" ${updating?"disabled":""}>${updating?"Updating…":"Update now"}</button></div></div>`:""}</section>`}
-function render(){if(typeof KLOCK==="function"&&KLOCK())view="kids";document.body.classList.toggle("kidsmode",view==="kids");document.body.classList.toggle("onstart",view==="start");if(view==="kids")return renderKids();renderTabs();if(view==="start")return renderStart();if(view==="labs")return renderLabs();if(view==="qbo")return renderQbo();if(view==="taxsim")return renderTax();if(view==="w7")return renderW7();if(view==="lessons")return renderLessons();if(view==="audio")return renderAudio();if(view==="session")return renderSession();if(view==="results")return renderResults();renderHome()}
+function render(){if(typeof KLOCK==="function"&&KLOCK())view="kids";document.body.classList.toggle("kidsmode",view==="kids");document.body.classList.toggle("onstart",view==="start");if(view==="kids")return renderKids();renderTabs();if(view==="start")return renderStart();if(typeof extraView==="function"&&extraView())return;if(view==="labs")return renderLabs();if(view==="qbo")return renderQbo();if(view==="taxsim")return renderTax();if(view==="w7")return renderW7();if(view==="lessons")return renderLessons();if(view==="audio")return renderAudio();if(view==="session")return renderSession();if(view==="results")return renderResults();renderHome()}
 
 function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},0);
   const P=PARTS[part],ps=partStats(part);
@@ -15500,7 +16054,7 @@ function renderBk(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},0)
   const mods=Object.entries(P.doms).map(([d,[n]])=>{const m=bkStats(d);return `<div class="dom"><div class="name">${d}. ${esc(n)}</div><span class="pill ${m.pct>=80?"strong":m.pct>=40?"mid":"new"}">${Math.round(m.pct)}%</span>
     <div class="bar" title="Module progress"><i style="width:${m.pct.toFixed(1)}%;background:var(--good)"></i></div>
     <div class="small muted" style="grid-column:1/-1">Slides ${m.read}/${m.slides} · flashcards known ${m.known}/${m.cards} · quiz right ${m.right}/${m.qs} · practical ${m.labsDone}/${m.labs}</div></div>`}).join("");
-  $("#view").innerHTML=upd+introHtml("bk")+`<section class="section" style="margin-top:12px"><div class="ledger dash bkdash">
+  $("#view").innerHTML=upd+`<button class="bkl-back" data-mode="bkland">✨ Course home · your path, skills and next step</button>`+introHtml("bk")+`<section class="section" style="margin-top:12px"><div class="ledger dash bkdash">
       <div class="row" style="justify-content:space-between"><h2>Course progress</h2>${S.streak.n?`<span class="chip">${S.streak.n}-day streak</span>`:""}</div>
       <div class="gauge"><div class="gnum"><b>${Math.round(a.pct)}%</b><span>of the course done</span></div><div class="gbar" title="Course progress"><i style="width:${Math.min(100,a.pct).toFixed(1)}%;background:var(--good)"></i></div></div>
       <div class="stats3"><div class="stat"><b>${a.read}<span class="muted small">/${a.slides}</span></b><span>Slides read</span></div><div class="stat"><b>${a.known}<span class="muted small">/${a.cards}</span></b><span>Flashcards known</span></div><div class="stat"><b>${a.right}<span class="muted small">/${a.qs}</span></b><span>Quiz right</span></div></div>
@@ -15521,6 +16075,9 @@ function renderBk(){const _dn=doneNote;setTimeout(()=>{if(_dn)doneNote=false},0)
       <button class="mode bkm sim" data-mode="taxsim"><span class="lvl">4 · Simulator</span><b>Practice tax software</b><p>Run five client files the way our office does: intake, signed documents, portal, realistic W-2s, input screens, Form 1040, diagnostics, invoice, Form 8879, e-file, an ITIN paper filing, records. Plus our office's 10 practice returns for tax year 2026 with documents, steps and answer keys. Ask the client questions, tap boxes on the W-2, get instant feedback, or play the reviewer and find planted mistakes.</p><span class="cnt">${TC.filter(c=>(TS().r[c.id]||{}).ack==="Accepted").length} of ${TC.length} guided files · ${P10.filter((c,i)=>(TS().p10||{})[i]).length} of ${P10.length} office practice returns</span></button>
       <button class="mode bkm sim" data-mode="qbo"><span class="lvl">5 · Simulator</span><b>Practice QuickBooks company</b><p>Keep a month of books for Oak Studio: invoices, bills, payments, bank feed, reconcile, reports, month-end close and the hand-off to the tax return. Real double entry. Try each job yourself and get checked on save, or tap Show me.</p><span class="cnt">${qtasks().filter(t=>t[1]).length} of ${qtasks().length} jobs done</span></button>
       <button class="mode bkm" data-mode="labs"><span class="lvl">6 · Check your skills</span><b>Cases</b><p>Mock tax returns, mock QuickBooks, bookkeeping jobs and client conversations, step by step.</p><span class="cnt">${LABS.length} cases</span></button>
+      <button class="mode bkm sim" data-mode="jelab"><span class="lvl">New · Practice</span><b>Journal Entry Lab</b><p>Real receipts, bills and bank lines. Pick the debit and credit, then watch the T-accounts and the accounting equation move.</p><span class="cnt">${(S.set.jel||{}).ok||0} entries right</span></button>
+      <button class="mode bkm sim" data-mode="firm"><span class="lvl">New · Simulator</span><b>Run Solving Life LLC</b><p>A year of the business from December to November: deadlines, clients, pricing, security and cash. Every choice explained.</p><span class="cnt">${(S.set.firm||{}).best?"best score "+S.set.firm.best:"12 months"}</span></button>
+      <button class="mode bkm" data-mode="workout"><span class="lvl">New · Daily workout</span><b>Job math, taught</b><p>Payroll, bank reconciliations, sales tax, Schedule C, estimates. New numbers each time, 4 choices, worked steps.</p><span class="cnt">about 10 minutes</span></button>
       <button class="mode bkm" data-mode="audio"><span class="lvl">7 · Listen</span><b>Audio review</b><p>Hands-free: hear a question, a pause, then the answer.</p><span class="cnt">5, 10 or 15 minutes</span></button>
     </div>
     ${HOSTED?`<a class="btn" href="course-book.pdf" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin:10px 0">📘 Open the course book (PDF, 116 pages)</a>`:""}
@@ -16421,6 +16978,7 @@ document.addEventListener("click",e=>{
   if(b.dataset.part&&aud){aud.stop=true;hush();aud=null;view="home"}
   if(b.dataset.part&&view==="lessons"){hush();part=+b.dataset.part;try{sessionStorage.setItem("ea-part",part)}catch(_){}les={unit:null,topic:null,idx:0};render();return}
   if(b.dataset.mode==="lessons"){les={unit:null,topic:null,idx:0};view="lessons";render();window.scrollTo(0,0);return}
+  if(typeof extraClick==="function"&&extraClick(b))return;
   if(qboClick(b)||taxClick(b))return;
   if(labClick(b))return;
   if(w7Click(b))return;
