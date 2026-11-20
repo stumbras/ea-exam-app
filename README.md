@@ -97,6 +97,10 @@ subject up a level, two misses move it down. Hints are always available but neve
   over signal smoke to hoist a hiker), an MQ-9 Reaper 🛩️ drone for Drone Recon (photograph three
   targets from 150 to 700 m), and 🎯 Missile Defense (lock on to practice target drones with a radar
   scope, then fire heat-seeking practice missiles).
+  Navigation: a live 📍 GPS grid square (A–H, 1–8) and a toggle 🗺️ map with runways, the island,
+  mountains and the launch pad. The 🧭 Navigator mission has no arrow: air traffic control radios a
+  compass heading, a grid square and an altitude to hold for three legs. The menu has a pilot-instruments
+  card (compass, altimeter, airspeed, vertical speed, GPS grid, runway numbers, wind).
 - **🏛️ History:** USA, Europe, Asia and World history as four leveled Quiz Show subjects that also feed
   Mix, the rotation and the Daily Genius meters.
 - **Stricter rotation:** three winning rounds in a row of the same quiz stop paying tickets until he
