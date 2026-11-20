@@ -101,6 +101,12 @@ subject up a level, two misses move it down. Hints are always available but neve
   Mix, the rotation and the Daily Genius meters.
 - **Stricter rotation:** three winning rounds in a row of the same quiz stop paying tickets until he
   switches, and the brain-mix picks put his weakest skills first.
+- **🔴 Skipped activities:** the three learning activities he has skipped longest (3+ days or never) and
+  one skipped game pulse red on the home screen. Coming back to a skipped learning activity pays a
+  🔴 comeback bonus ticket, and every Sky Pilot mission pays +1 🎟️ the first time it's finished.
+- **♟️ Chess ramps up faster:** 3 of every 4 steps are puzzles, 2 first-try solves in a row level up
+  (3 in a row double), harder mates and forks arrive by level 5 to 7, and from level 10 only the first
+  try counts.
 - **🧠 Genius Path:** nine hero skills, each a Quiz Show subject with four difficulty tiers and endless
   generators where it fits: ⚖️ Lawyer Brain, 💼 Entrepreneur, 🔬 Scientist, ⚙️ Engineer, 🩺 Doctor,
   💡 Inventor, 🎖️ Air Force Pilot, 🛰️ Space Force and 🛡️ Cyber Defender. They show up in the rotation,
