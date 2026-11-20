@@ -747,6 +747,9 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 @keyframes dnpulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.75)}50%{box-shadow:0 0 0 14px rgba(239,68,68,0)}}
 @media (prefers-reduced-motion:reduce){.donext{animation:none}}
 .npath{display:flex;flex-direction:column;gap:8px}.nstep{border:1px solid var(--line,rgba(148,163,184,.35));border-radius:14px;padding:10px 12px}.nstep.done{opacity:.65}.nstep.now{border:2px solid #ef4444}.nsh{display:flex;gap:10px;align-items:flex-start}.nsh input{width:24px;height:24px;flex:none;margin-top:2px}.nsh b{display:block}.nlinks{display:flex;flex-direction:column;gap:6px;margin-top:8px}.nlink{display:flex;gap:6px;align-items:center}.nlink a{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}.nlink button{flex:none}
+/* ---- trip computer ---- */
+.ktrip{background:linear-gradient(160deg,#0b1020,#111827);border:1px solid rgba(148,163,184,.35);border-radius:14px;padding:10px 12px;margin:10px 0;color:#e5e7eb;text-align:left}.ktriph{font-size:11px;font-weight:900;letter-spacing:.14em;color:#93c5fd}
+.ktripg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}.ktripg div{background:rgba(148,163,184,.12);border-radius:10px;padding:6px 2px;text-align:center}.ktripg b{display:block;font-size:19px;color:#fff;font-variant-numeric:tabular-nums}.ktripg span{font-size:10px;opacity:.8}.ktripr{font-weight:800;margin-bottom:4px}
 </style>
 
 </head><body>
@@ -8794,7 +8797,7 @@ function renderKids(){const v=$("#view"),k=KS();
   if(!k.setup||KV.scr==="setup"){kSetupView(v);return kThemeOn(v)}
   if((k.trophyQ||[]).length&&(KV.scr==="home"||KV.scr==="reward"||(KV.scr==="show"&&KV.stage==="done"))){kCertView(v,k.trophyQ[0],true);kThemeOn(v);return kAfterRender()}
   const R={gui:v=>kGuiView(v),body:v=>kBodyView(v),hosp:v=>kHospView(v),jobs:v=>kJobsView(v),cyber:v=>kCyView(v),court:v=>kCourtView(v),biz:v=>kBizView(v),circ:v=>kCirView(v),learnhub:v=>kHome(v,"learn"),gameroom:v=>kHome(v,"games"),prog:v=>kHome(v,"prog"),genius:v=>kHome(v,"genius"),chessbot:v=>kCbView(v),tworld:kTworldView,mj:kMjView,pschool:kPilotView,fly:kFlyView,learn:kLearnView,music:kMusicView,powers:kPowersView,city:kCityView,derby:kDerbyView,col:kColView,land:kLandView,poker:kPokerView,desk:kDeskView,drive:kDriveView,show:kShowView,mine:kMineView,chess:kChessView,term:kTermView,base:kBaseView,badges:kBadgesView,grown:kGrownView,reward:kRewardView,brain:kBrainView,trophies:kTrophyHall,cert:v=>kCertView(v,KV.id,false),sounds:kSoundView}[KV.scr];
-  R?R(v):kHome(v);kRotNextHook(v);kNegHook(v);if(typeof kFlowHook==="function")kFlowHook(v);if(typeof kWarmHook==="function")kWarmHook(v);kWindOn(KV.scr==="col"&&KV.mode!=="ast");const root=v.querySelector(".kids");if(root)root.classList.add("th-"+(k.theme||"galaxy"));kAfterRender()}
+  R?R(v):kHome(v);if(typeof kHdHook==="function")kHdHook(v);kRotNextHook(v);kNegHook(v);if(typeof kFlowHook==="function")kFlowHook(v);if(typeof kWarmHook==="function")kWarmHook(v);kWindOn(KV.scr==="col"&&KV.mode!=="ast");const root=v.querySelector(".kids");if(root)root.classList.add("th-"+(k.theme||"galaxy"));kAfterRender()}
 let kWarm=false;function kAfterRender(){const k=KS(),g=KV;if(!kWarm&&navigator.onLine&&typeof KVREC!=="undefined"&&HOSTED){kWarm=true;const vv=kNatural(k)?k.voice:"max",list=(KVREC[vv]||[]).slice();let i=0;const step=()=>{if(i>=list.length)return;fetch(`voice/${vv}/${list[i++]}.mp3`).catch(()=>{}).finally(()=>setTimeout(step,120))};setTimeout(step,4000)}
   if(k.lessonQ&&$(".klesson")&&k.lessonSaid!==k.lessonQ){k.lessonSaid=k.lessonQ;const L=KLES[k.lessonQ];kSpeak(`Power-up! ${L[0]}. ${L[1]} For example: ${L[2]}`,{read:true,force:k.voice!=="off"})}
   const Q=kCurQ();if(Q&&!$(".klesson")){const fresh=g.scr==="show"?g.ans==null:g.scr==="chess"?g.ans==null:g.P&&g.P.labAns==null;
@@ -9334,16 +9337,16 @@ function kDriveLoop(ts){const D=kDrv,cv=$("#kdrv");if(!D||KV.scr!=="drive"||!cv)
   const RW=W*.66,RX=(W-RW)/2,LW=RW/3,lx=i=>RX+LW*i+LW/2,C=D.car,R=D.mode==="roadster",SP=R&&D.t>=30,carY=H-110;if(D.x==null)D.x=lx(1);
   if(!D.over){if(R&&!D.space&&D.t>=30){D.space=1;D.obs=[];kBeep("launch");kLine("Launching to space! Thrusters on!",4);D.shake=.6;kVib([60,40,60])}
     D.t+=dt;D.fly=Math.max(0,D.fly-dt);D.plaid=Math.max(0,D.plaid-dt);D.ap=Math.max(0,D.ap-dt);D.apT=Math.max(0,D.apT-dt);
-    let base=Math.min(380,205+D.t*2.8)*C[4]*(D.eg.track?1.1:1);if(D.gate&&!D.gate.done)base=Math.min(base,210);if(D.bat<=0)base=Math.min(base,150);D.v+=((D.brake?150:D.plaid?base*1.45:base)-D.v)*Math.min(1,dt*(D.brake?3:2));
+    let base=Math.min(380,205+D.t*2.8)*C[4]*(D.eg.track?1.1:1);if(D.gate&&!D.gate.done)base=Math.min(base,210);if(D.bat<=0)base=Math.min(base,150);D.v+=((D.brake?150:D.plaid?base*1.45:base)-D.v)*Math.min(1,dt*(D.brake?3*(typeof kDrvGrip==="function"?kDrvGrip(D):1):2));
     D.bat=Math.max(0,D.bat-dt*1.05*C[5]*(D.plaid?1.5:1));D.jump=Math.max(0,D.jump-dt);D.hintT=Math.max(0,D.hintT-dt);D.tipT=Math.max(0,D.tipT-dt);if(D.bat<25&&!D.lowSC&&!SP){D.lowSC=1;D.scT=Math.min(D.scT,2);D.tip="🔋 Low battery! Supercharger coming up";D.tipT=2.5}if(D.bat>45)D.lowSC=0;if(D.brake)D.bat=Math.min(100,D.bat+dt*3);D.dist+=D.v*dt/1500;
     if(k.drive.tilt&&D.gRaw!=null){D.gS=D.gS==null?D.gRaw:D.gS+(D.gRaw-D.gS)*Math.min(1,dt*8);if(D.g0==null){D.gN=(D.gN||0)+1;D.gSum=(D.gSum||0)+D.gS;if(D.gN>=15)D.g0=D.gSum/D.gN}else{const t=D.gS-D.g0;D.tz=D.tz||1;if(D.tz===1){if(t<-13)D.tz=0;else if(t>13)D.tz=2}else if(D.tz===0&&t>-6)D.tz=1;else if(D.tz===2&&t<6)D.tz=1;if(D.tz!==D.lane&&!D.tiltLock){D.lane=D.tz;D.tiltLock=.3}}}D.tiltLock=Math.max(0,(D.tiltLock||0)-dt);
     if(D.ap&&!D.apT&&!(D.gate&&!D.gate.done)){const danger=ln=>D.obs.some(o=>o.ln===ln&&!o.done&&(o.k==="cone"||o.k==="car")&&o.y>carY-200&&o.y<carY+30);if(danger(D.lane)){const opts=[D.lane-1,D.lane+1].filter(l=>l>=0&&l<=2&&!danger(l));if(opts.length){D.lane=kPick(opts);D.apT=.45}}}
-    D.x+=(lx(D.lane)-D.x)*Math.min(1,dt*12);D.inv=Math.max(0,D.inv-dt);D.shake=Math.max(0,D.shake-dt);
+    kDrvLat(D,lx(D.lane),dt,carY);D.inv=Math.max(0,D.inv-dt);D.shake=Math.max(0,D.shake-dt);
     D.scT-=dt;if(D.scT<=0&&!SP){D.scT=14;D.obs.push({ln:kR(0,2),y:-80,k:"sc"})}
     D.spawn-=dt;if(D.spawn<=0){D.spawn=Math.max(.6,1-D.t*.006);const r=Math.random(),ln=kR(0,2),rp=D.eg.ramp?.82:.9;let kd=r<.44?"bolt":r<.6?"cone":r<.79?"car":r<.86?"boost":r<rp?"ramp":r<.95?"ap":"bolt";
       if((kd==="cone"||kd==="car")&&new Set(D.obs.filter(o=>(o.k==="cone"||o.k==="car"||o.k==="ramp")&&!o.done&&o.y<170&&o.ln!==ln).map(o=>o.ln)).size>=2)kd="bolt";if(D.gate&&!D.gate.done&&kd!=="bolt")kd="bolt";if(SP&&kd==="ramp")kd="bolt";
       D.obs.push({ln,y:-60,k:kd,col:kPick(["#1d3f8f","#f4f6ff","#4b5563","#16181d","#c8102e","#16a34a"]),sh:kPick(["sedan","suv","sedan"])})}
-    for(const o of D.obs){o.y+=D.v*dt*(o.k==="car"?.55:1);const hit=o.ln===D.lane&&Math.abs(o.y-carY)<(o.k==="car"?70:o.k==="sc"?60:42);if(hit&&!o.done){
+    for(const o of D.obs){kDrvTraffic(D,o,dt,carY,SP);o.y+=D.v*dt*(o.k==="car"?.55:1);const hit=o.ln===D.lane&&Math.abs(o.y-carY)<(o.k==="car"?70:o.k==="sc"?60:42);if(hit&&!o.done){
       if(o.k==="bolt"){o.done=1;D.combo=(D.t-(D.lastBolt||-9)<1.6)?(D.combo||1)+1:1;D.lastBolt=D.t;const add=(SP||D.fly||D.plaid?2:1)*(D.combo>=5?3:D.combo>=3?2:1);D.bolts+=add;D.bat=Math.min(100,D.bat+6);kBeep(D.combo>=3?"spark":"coin");D.fx=(D.fx||[]).concat([{x:lx(o.ln),y:carY-30,t:0,k:"spark",txt:D.combo>=3?`x${D.combo>=5?3:2} COMBO`:""}])}
       else if(o.k==="sc"){o.done=1;D.sc++;D.bat=Math.min(100,D.bat+45);kBeep("charge");kLine("Supercharging! Battery boost!",2);kVib(40)}
       else if(o.k==="ramp"){o.done=1;D.jump=1.15;D.bolts+=3;kBeep("whoosh");kVib(30);D.fx=(D.fx||[]).concat([{x:lx(o.ln),y:carY-40,t:0,k:"spark",txt:"🦘 JUMP! +3"}])}
@@ -9355,11 +9358,11 @@ function kDriveLoop(ts){const D=kDrv,cv=$("#kdrv");if(!D||KV.scr!=="drive"||!cv)
     D.obs=D.obs.filter(o=>o.y<H+90&&!(o.done&&o.k!=="car"&&o.k!=="cone"));if(D.t>=60){D.over=true;kDriveEnd()}}
   const biome=D.t<20?0:D.t<40?1:2,night=Math.max(0,Math.min(1,(D.t-24)/4))*Math.max(0,Math.min(1,(46-D.t)/4));
   const sx=D.shake?(Math.random()-.5)*8:0;c.save();c.translate(sx,0);
-  if(SP){kSpaceBg(c,W,H,D)}else{c.fillStyle=D.eg.santa?"#e8eef5":["#3c8d3c","#d9b46b","#e8eef5"][biome];c.fillRect(0,0,W,H);const off=(D.dist*1500)%80;c.font="22px serif";c.textAlign="left";c.textBaseline="alphabetic";
+  if(SP){kSpaceBg(c,W,H,D)}else{c.fillStyle=D.eg.santa?"#e8eef5":["#3c8d3c","#d9b46b","#e8eef5"][biome];c.fillRect(0,0,W,H);kDrvGround(c,D,W,H,RX,RW,biome);const off=(D.dist*1500)%80;c.font="22px serif";c.textAlign="left";c.textBaseline="alphabetic";
     const dec=D.eg.santa?["🎄","⛄"]:[["🌲","🌳"],["🌵","🪨"],["⛄","🌲"]][biome],rn=Math.floor(D.dist*1500/80);for(let y=-80+off,r=0;y<H;y+=80,r++){c.fillText(dec[0],RX-34,y);c.fillText((rn-r)%9===4?"🤖":dec[1],RX+RW+10,y+40)}
-    kRoadFill(c,D,RX,RW,H);c.fillStyle="#f4f4f4";c.fillRect(RX-4,0,4,H);c.fillRect(RX+RW,0,4,H);c.fillStyle="#ffd23f";for(let i=1;i<3;i++)for(let y=-40+(D.dist*1500*1.5)%40;y<H;y+=40)c.fillRect(RX+LW*i-2,y,4,20)}
+    kRoadFill(c,D,RX,RW,H);c.fillStyle="#f4f4f4";c.fillRect(RX-4,0,4,H);c.fillRect(RX+RW,0,4,H);c.fillStyle="#ffd23f";for(let i=1;i<3;i++)for(let y=-40+(D.dist*1500)%40;y<H;y+=40){c.fillRect(RX+LW*i-1.5,y,3,20);c.fillStyle="rgba(255,255,255,.55)";c.fillRect(RX+LW*i-1.5,y+29,3,3);c.fillStyle="#ffd23f"}}
   c.textAlign="center";c.textBaseline="middle";
-  for(const o of D.obs){const x=lx(o.ln);if(o.k==="car"){if(SP){c.font="34px serif";c.fillText("☄️",x,o.y)}else kCar(c,x,o.y,40,74,o.col,o.sh)}
+  for(const o of D.obs){const x=lx(o.ln);if(o.k==="car"){if(SP){c.font="34px serif";c.fillText("☄️",x,o.y)}else kCar3(c,x,o.y,o,D,LW,night)}
     else if(o.k==="sc"){c.fillStyle="#c8102e";c.beginPath();c.roundRect(x-LW/2+6,o.y-34,LW-12,68,10);c.fill();c.fillStyle="#fff";c.font="bold 13px system-ui";c.fillText("⚡ SUPER",x,o.y-10);c.fillText("CHARGER",x,o.y+10)}
     else if(o.k==="ramp")kRampDraw(c,x,o.y,LW);
     else{c.font=o.k==="boost"?"30px serif":"28px serif";c.fillText(SP?(o.k==="bolt"?"⭐":o.k==="cone"?"🪨":o.k==="ap"?"🤖":"🔋"):(o.k==="bolt"?"⚡":o.k==="cone"?"🚧":o.k==="ap"?"🤖":"🔋"),x,o.y)}}
@@ -9380,7 +9383,7 @@ function kDriveLoop(ts){const D=kDrv,cv=$("#kdrv");if(!D||KV.scr!=="drive"||!cv)
   if(D.gateMsgT>0){c.fillStyle="rgba(255,77,109,.92)";c.fillRect(W/2-90,60,180,24);c.fillStyle="#fff";c.font="bold 13px system-ui";c.textAlign="center";c.fillText(`🧠 ${D.gateMsg}`,W/2,72)}
   const mp=kDMisProg(D);c.font="11px system-ui";c.textAlign="center";c.fillStyle=mp.done?"#2ec27e":"#c7cbe6";c.fillText(`🎯 ${D.mis[1]}${mp.txt}`,W/2,36);
   c.textAlign="right";c.font="bold 14px system-ui";c.fillStyle=D.bat>40?"#2ec27e":D.bat>20?"#ffb703":"#ff4d6d";c.fillText(`🔋 ${Math.round(D.bat)}%`,W-10,20);c.fillStyle="rgba(255,255,255,.25)";c.fillRect(10,48,W-20,3);c.fillStyle="#ffd23f";c.fillRect(10,48,(W-20)*Math.min(1,D.t/60),3);
-  kDriveHum(D.over?0:D.v);if(!D.over)requestAnimationFrame(kDriveLoop);else setTimeout(()=>{if(KV.scr==="drive")render()},500)}
+  kDrvHud(c,D,W,H);kDriveHum(D.over?0:D.v);if(!D.over)requestAnimationFrame(kDriveLoop);else setTimeout(()=>{if(KV.scr==="drive")render()},500)}
 function kDMisProg(D){const m=D.mis;if(m[0]==="bolts")return{done:D.bolts>=15,txt:` (${Math.min(15,D.bolts)}/15)`};if(m[0]==="dist")return{done:D.dist>=2.5,txt:` (${Math.min(2.5,D.dist).toFixed(1)}/2.5)`};if(m[0]==="sc")return{done:D.sc>=1,txt:D.sc?" ✓":""};return{done:D.crashes===0&&D.t>=60,txt:D.crashes?" ✗":""}}
 let kHum=null;function kDriveHum(v){try{const k=S.kids;if(!v||!k||k.sound===false){if(kHum){kHum.g.gain.setTargetAtTime(0,kAC.currentTime,.05);const h=kHum;kHum=null;setTimeout(()=>{try{h.o.stop()}catch(_){}},300)}return}
   if(!kAudio())return;if(!kHum){const o=kAC.createOscillator(),g=kAC.createGain();o.type="sine";g.gain.value=0;o.connect(g);g.connect(kMaster);o.start();kHum={o,g}}kHum.o.frequency.setTargetAtTime(120+v*.9,kAC.currentTime,.1);kHum.g.gain.setTargetAtTime(.035,kAC.currentTime,.1)}catch(_){}}
@@ -10473,7 +10476,7 @@ const KFLYG=[[106,170,74],[126,186,82],[96,158,66],[176,190,92],[140,176,80],[11
 function kFlyDraw0(cv,F){const c=cv.getContext("2d"),W=cv.width,H=cv.height,C=F.cam,P=F.P,Fo=W*.85,cy0=H*.42,RG=3600,S=300;
   c.save();c.translate(W/2,cy0);c.rotate(-C.ro);const hy=Fo*Math.tan(C.th);
   const sky=c.createLinearGradient(0,hy-H,0,hy);sky.addColorStop(0,(F.wx&&F.wx.s0)||"#2f7fd8");sky.addColorStop(1,(F.wx&&F.wx.s1)||"#bfe1f7");c.fillStyle=sky;c.fillRect(-W*1.5,hy-H*2,W*3,H*2);
-  c.fillStyle=kFlyMix(KFLYG[0],KFLYHAZE,.85);c.fillRect(-W*1.5,hy,W*3,H*2);
+  c.fillStyle=kFlyMix(KFLYG[0],KFLYHAZE,.85);c.fillRect(-W*1.5,hy,W*3,H*2);if(typeof kFly3Sky==="function")kFly3Sky(c,F,C,Fo,W,H,hy);
   const gx0=Math.floor((C.x-RG)/S),gz0=Math.floor((C.z-RG)/S),n=Math.ceil(RG*2/S)+1,V=[];
   for(let i=0;i<=n;i++){V[i]=[];for(let j=0;j<=n;j++)V[i][j]=kFlyTf(C,(gx0+i)*S,0,(gz0+j)*S)}
   for(let i=0;i<n;i++)for(let j=0;j<n;j++){const a=V[i][j],b=V[i+1][j],d=V[i+1][j+1],e=V[i][j+1];if(a[2]<1.2&&b[2]<1.2&&d[2]<1.2&&e[2]<1.2)continue;const tx=(gx0+i+.5)*S,tz=(gz0+j+.5)*S,dist=Math.hypot(tx-C.x,tz-C.z);if(dist>RG)continue;
@@ -10481,6 +10484,7 @@ function kFlyDraw0(cv,F){const c=cv.getContext("2d"),W=cv.width,H=cv.height,C=F.
   for(const r of KFLYRW){const s=Math.sin(r.hd),co=Math.cos(r.hd),L=r.len/2,Wd=r.w/2,pt=(al,sd)=>kFlyTf(C,r.cx+s*al+co*sd,.05,r.cz+co*al-s*sd);if(Math.hypot(r.cx-C.x,r.cz-C.z)>RG+r.len)continue;
     kFlyPoly(c,[pt(-L,-Wd),pt(-L,Wd),pt(L,Wd),pt(L,-Wd)],Fo,"#3b3f48");for(let al=-L+60;al<L-60;al+=50)kFlyPoly(c,[pt(al,-.6),pt(al,.6),pt(al+25,.6),pt(al+25,-.6)],Fo,"#f5f5f5");
     for(const e of[-1,1])for(let k=-5;k<=5;k++)if(k)kFlyPoly(c,[pt(e*(L-8),k*2.4-.7),pt(e*(L-8),k*2.4+.7),pt(e*(L-32),k*2.4+.7),pt(e*(L-32),k*2.4-.7)],Fo,"#f5f5f5")}
+  if(typeof kFly3Ground==="function")kFly3Ground(c,F,C,Fo,RG);
   const items=[];for(const o of kFlyWorld()){const d=Math.hypot(o.x-C.x,o.z-C.z);if(d>RG*(o.k==="mt"||o.k==="cloud"?2.6:1))continue;const t=kFlyTf(C,o.x,o.k==="cloud"?o.y:0,o.z);if(t[2]<2)continue;items.push([t[2],o,t])}
   for(const g of F.rings){const t=kFlyTf(C,g.x,g.y,g.z);if(t[2]>2)items.push([t[2],g,t,1])}
   {const t=kFlyTf(C,KFLYPAD.x,0,KFLYPAD.z);if(t[2]>2)items.push([t[2],{k:"pad"},t])}kFlyMilItems(F,C,items,kFlyTf);kFlyMissItems(F,C,items,kFlyTf);
@@ -10490,6 +10494,7 @@ function kFlyDraw0(cv,F){const c=cv.getContext("2d"),W=cv.width,H=cv.height,C=F.
       for(let a=0;a<=24;a++){const an=a/24*6.283,p=kFlyTf(C,o.x+nx*Math.cos(an)*o.R,o.y+Math.sin(an)*o.R,o.z+nz*Math.cos(an)*o.R);if(p[2]<1.2){c.stroke();c.beginPath();continue}const X=p[0]/p[2]*Fo,Y=-p[1]/p[2]*Fo;a?c.lineTo(X,Y):c.moveTo(X,Y)}c.stroke();continue}
     if((o.k==="lead"||o.k==="smoke"||o.k==="booster")&&kFlyMilDraw(c,o,sx,sy,sc,F,C))continue;
     if((o.k==="tgt"||o.k==="boom"||o.k==="rec")&&kFlyMissDraw(c,o,sx,sy,sc,F,C,Fo))continue;
+    if(o.k==="box"){kFly3Box(c,o,C,Fo,z,RG);continue}
     if(o.k==="mt"){const r=o.r*sc,h=o.h*sc,fog=Math.min(.8,z/(RG*2.6));c.fillStyle=kFlyMix([92,110,96],KFLYHAZE,fog);c.beginPath();c.moveTo(sx-r,sy);c.lineTo(sx,sy-h);c.lineTo(sx+r,sy);c.closePath();c.fill();c.fillStyle=kFlyMix([70,86,76],KFLYHAZE,fog);c.beginPath();c.moveTo(sx,sy-h);c.lineTo(sx+r,sy);c.lineTo(sx+r*.15,sy);c.closePath();c.fill();
       c.fillStyle=kFlyMix([250,250,255],KFLYHAZE,fog*.6);c.beginPath();c.moveTo(sx,sy-h);c.lineTo(sx-r*.24,sy-h*.76);c.lineTo(sx-r*.08,sy-h*.8);c.lineTo(sx+r*.05,sy-h*.72);c.lineTo(sx+r*.24,sy-h*.76);c.closePath();c.fill();continue}
     if(o.k==="cloud"){const r=o.s*sc;c.fillStyle=o.col||"rgba(255,255,255,.85)";for(const [ox,oy,rr] of[[-.5,0,.55],[0,-.2,.7],[.55,0,.5],[0,.1,.6]]){c.beginPath();c.arc(sx+ox*r,sy+oy*r,rr*r,0,7);c.fill()}continue}
@@ -10498,9 +10503,9 @@ function kFlyDraw0(cv,F){const c=cv.getContext("2d"),W=cv.width,H=cv.height,C=F.
       c.font=`${Math.max(8,55*sc)}px serif`;c.textAlign="center";c.textBaseline="bottom";c.save();c.translate(sx,ty);c.rotate(-Math.PI/4);c.fillText("🚀",0,0);c.restore();continue}
     const fs=o.s*sc;if(fs<3||fs>420)continue;c.font=`${fs}px serif`;c.textAlign="center";c.textBaseline="bottom";c.fillText(o.ic,sx,sy)}
   {const t=kFlyTf(C,P.x,.1,P.z);if(!F.cock&&t[2]>1.2&&P.y<300){const sc=Fo/t[2];c.fillStyle=`rgba(0,0,0,${Math.max(.08,.35-P.y/900)})`;c.beginPath();c.ellipse(t[0]/t[2]*Fo,-t[1]/t[2]*Fo,5.5*sc,1.4*sc,0,0,7);c.fill()}}
-  if(F.ms&&F.ms.length)kFlyMissTrails(c,F,C,Fo,kFlyTf);
+  if(typeof kFly3Trails==="function")kFly3Trails(c,F,C,Fo);if(F.ms&&F.ms.length)kFlyMissTrails(c,F,C,Fo,kFlyTf);
   const pt=kFlyTf(C,P.x,P.y+1.5,P.z),psx=pt[0]/pt[2]*Fo,psy=-pt[1]/pt[2]*Fo,ps=Fo/pt[2];if(!F.cock){c.save();c.translate(psx,psy);c.rotate(P.ph-C.ro);if(P.heli)kFlyHeli(c,ps,P,F);else if(P.drone)kFlyDrone(c,ps,P,F);else if(P.jet)kFlyJet(c,ps,P,F);else if(P.ac==="b737")kFlyAirliner(c,ps,P,F);else kFlyPlane(c,ps,P,F);c.restore()}
-  c.restore();
+  c.restore();if(typeof kFly3Post==="function")kFly3Post(c,F,C,Fo,W,H);
   if(F.crashT>0){c.fillStyle=`rgba(255,255,255,${Math.min(.6,F.crashT/3)})`;c.fillRect(0,0,W,H);c.font="900 40px system-ui";c.textAlign="center";c.fillStyle="#ff4d6d";c.strokeStyle="#fff";c.lineWidth=5;c.strokeText("BONK! 💥",W/2,H*.4);c.fillText("BONK! 💥",W/2,H*.4)}
   kFlyHud(c,F,W,H)}
 function kFlyPlane(c,s,P,F){const t=F.t;c.lineJoin="round";
@@ -10544,7 +10549,7 @@ function kFlyView(v){const k=KS();k.fly=k.fly||{lv:0,done:{},stars:{},flights:0,
     <div class="kcard"><div class="kh">🧲 The four forces of flight</div><div class="kdbr"><span>🟢</span><div><b>LIFT</b> (up): wings make it. More speed = more lift.</div></div><div class="kdbr"><span>🔴</span><div><b>WEIGHT</b> (down): gravity pulls the plane.</div></div><div class="kdbr"><span>🟡</span><div><b>THRUST</b> (forward): the propeller pushes.</div></div><div class="kdbr"><span>🔵</span><div><b>DRAG</b> (back): air pushes against you. Flaps and gear add drag.</div></div></div>
     <div class="kcard"><div class="kh">🎮 How to fly</div><div class="kdbr"><span>🕹️</span><div><b>Stick</b> (bottom-left): left/right tilts (rolls) the wings to turn. ${f.real?"Pull DOWN to climb, like a real pilot.":"Push UP to climb."}</div></div><div class="kdbr"><span>⬆️</span><div><b>Throttle</b> (right): slide up for more thrust.</div></div><div class="kdbr"><span>📱</span><div>Or turn on <b>Tilt to fly</b> and steer by tilting the phone (see 📱 Phone Powers).</div></div></div>
     ${KFLYM.map((m,i)=>{const lock=i<=4?i>f.lv:i<=6?!f.done[4]:!f.done[i-1],st=f.stars[i]||0;return `<div class="kcard ${lock?"klock":!f.done[i]?"kneg kneg-l":""}"><div class="kh">${m.ic} ${i+1}. ${esc(m.n)} ${f.done[i]?"⭐".repeat(st)+"☆".repeat(3-st):""}</div><div class="ksmall"><b>Goal:</b> ${esc(m.goal)}${m.ac?` · <b>Aircraft:</b> ${KAC[m.ac].ic} ${esc(KAC[m.ac].n)}`:" · <b>Aircraft:</b> your choice"}</div><div class="ksmall">🎓 ${esc(m.lesson)}</div><button class="kbtn ${lock?"ghost":"green"}" data-kflym="${i}" ${lock||tix<1?"disabled":""}>${lock?"🔒 Finish the mission before":tix<1?"Earn a 🎟️ ticket first":"Fly! (🎟️ 1 = 7 minutes)"}</button></div>`}).join("")}
-    <div class="kcard"><div class="kh">🧭 Pilot instruments</div><div class="kdbr"><span>🧭</span><div><b>Compass / heading:</b> 000 north, 090 east, 180 south, 270 west.</div></div><div class="kdbr"><span>⛰️</span><div><b>Altimeter:</b> how high you are (meters).</div></div><div class="kdbr"><span>🏎️</span><div><b>Airspeed:</b> m/s × 3.6 = km/h. Too slow = stall!</div></div><div class="kdbr"><span>↕</span><div><b>Vertical speed:</b> how fast you climb or sink.</div></div><div class="kdbr"><span>📍</span><div><b>GPS grid:</b> your square on the 🗺️ map, like D5 (column D, row 5).</div></div><div class="kdbr"><span>🛬</span><div><b>Runway numbers:</b> heading ÷ 10. Runway 36 points north, 09 points east.</div></div><div class="kdbr"><span>🌬️</span><div><b>Wind:</b> take off and land INTO the wind.</div></div></div><div class="kcard"><div class="kh">⚙️ Pilot settings</div><div class="kpad"><button class="kbtn ${f.real?"green":"ghost"}" data-kfly="real">✈️ Real pilot controls: ${f.real?"ON":"OFF"}</button><button class="kbtn ${f.pro?"green":"ghost"}" data-kfly="pro">🎖️ Pro mode (no helpers): ${f.pro?"ON":"OFF"}</button><div class="ksmall" style="width:100%">🌤️ Free Flight aircraft (fly a mission to unlock):</div>${Object.keys(KAC).filter(id=>id!=="heli").map(id=>{const un=id==="c172"||(f.acs||{})[id];return `<button class="kbtn small ${(f.ac||"c172")===id?"green":"ghost"}" data-kfac="${id}" ${un?"":"disabled"}>${un?"":"🔒 "}${KAC[id].ic} ${esc(KAC[id].n)}</button>`}).join("")}<button class="kbtn ${f.forces!==false?"green":"ghost"}" data-kfly="forces">🧲 Forces panel: ${f.forces!==false?"ON":"OFF"}</button></div><div class="ksmall">🎟️ ${tix} ticket${tix===1?"":"s"} · 🏆 ${f.pts||0} pilot points · ✈️ ${f.flights||0} flights</div></div></div>`;return}
+    <div class="kcard"><div class="kh">🧭 Pilot instruments</div><div class="kdbr"><span>🧭</span><div><b>Compass / heading:</b> 000 north, 090 east, 180 south, 270 west.</div></div><div class="kdbr"><span>⛰️</span><div><b>Altimeter:</b> how high you are (meters).</div></div><div class="kdbr"><span>🏎️</span><div><b>Airspeed:</b> m/s × 3.6 = km/h. Too slow = stall!</div></div><div class="kdbr"><span>↕</span><div><b>Vertical speed:</b> how fast you climb or sink.</div></div><div class="kdbr"><span>📍</span><div><b>GPS grid:</b> your square on the 🗺️ map, like D5 (column D, row 5).</div></div><div class="kdbr"><span>🛬</span><div><b>Runway numbers:</b> heading ÷ 10. Runway 36 points north, 09 points east.</div></div><div class="kdbr"><span>🌬️</span><div><b>Wind:</b> take off and land INTO the wind.</div></div><div class="kdbr"><span>🚦</span><div><b>PAPI lights:</b> 4 lights beside the runway. 2 white + 2 red = perfect glide path. More red = too low, more white = too high.</div></div><div class="kdbr"><span>🧗</span><div><b>Climb rule:</b> pitch + power = performance. Too steep and the speed bleeds away until the wing stalls. Lower the nose to get speed back.</div></div></div><div class="kcard"><div class="kh">⚙️ Pilot settings</div><div class="kpad"><button class="kbtn ${f.real?"green":"ghost"}" data-kfly="real">✈️ Real pilot controls: ${f.real?"ON":"OFF"}</button><button class="kbtn ${f.pro?"green":"ghost"}" data-kfly="pro">🎖️ Pro mode (no helpers): ${f.pro?"ON":"OFF"}</button><div class="ksmall" style="width:100%">🌤️ Free Flight aircraft (fly a mission to unlock):</div>${Object.keys(KAC).filter(id=>id!=="heli").map(id=>{const un=id==="c172"||(f.acs||{})[id];return `<button class="kbtn small ${(f.ac||"c172")===id?"green":"ghost"}" data-kfac="${id}" ${un?"":"disabled"}>${un?"":"🔒 "}${KAC[id].ic} ${esc(KAC[id].n)}</button>`}).join("")}<button class="kbtn ${f.forces!==false?"green":"ghost"}" data-kfly="forces">🧲 Forces panel: ${f.forces!==false?"ON":"OFF"}</button></div><div class="ksmall">🎟️ ${tix} ticket${tix===1?"":"s"} · 🏆 ${f.pts||0} pilot points · ✈️ ${f.flights||0} flights</div></div></div>`;return}
   if(F.over){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("✈️ Sky Pilot","pschool")}<div class="kcard kend"><div class="kbig2">✈️</div><h2>Great flying, Captain!</h2><div class="kscore">🏆 ${F.pts}</div><p>✅ Missions: ${F.done.length?F.done.map(i=>KFLYM[i].ic).join(" "):"keep practicing!"}</p><div class="kpad">${(k.tix||0)>0?`<button class="kbtn big green" data-kfly="again">Fly again ✈️</button>`:""}<button class="kbtn ghost" data-k="home">Home</button></div><p class="ksmall">🎟️ ${k.tix||0} ticket${(k.tix||0)===1?"":"s"} left</p></div></div>`;kDriveHum(0);return}
   const W=Math.min(380,v.clientWidth||360)-4,H=Math.round(W*1.5),Q=F.q;
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("✈️ Sky Pilot","pschool")}<div class="kdrvbox kdbbox"><canvas id="kfly" width="${W}" height="${H}" aria-label="Sky Pilot flight simulator" style="touch-action:none"></canvas>
@@ -11982,13 +11987,13 @@ function kFlyDraw(cv,F){const c=cv.getContext("2d"),W=cv.width,H=cv.height,fx=F.
   if(fx.deb)for(const d of fx.deb){const p=kFxProj(F,W,H,d.x,d.y,d.z);if(!p)continue;c.save();c.translate(p[0],p[1]);c.rotate(d.r);c.fillStyle=d.c;const s=Math.max(2,d.s*p[2]);c.fillRect(-s,-s/2.5,s*2,s/1.25);c.restore()}
   c.restore();
   const Wx=F.wx||{};
-  if(Wx.rain){c.strokeStyle=Wx.t==="storm"?"rgba(200,210,230,.55)":"rgba(210,220,235,.5)";c.lineWidth=1.2;c.beginPath();const sl=(Wx.wx||0)*.8;for(let i=0;i<Wx.rain;i++){const x=Math.random()*W,y=Math.random()*H;c.moveTo(x,y);c.lineTo(x+sl-2,y+16)}c.stroke();c.fillStyle=Wx.t==="storm"?"rgba(30,35,50,.22)":"rgba(80,90,105,.12)";c.fillRect(0,0,W,H)}
+  if(Wx.rain){c.strokeStyle=Wx.t==="storm"?"rgba(200,210,230,.55)":"rgba(210,220,235,.5)";c.lineWidth=1.2;c.beginPath();const sl=(Wx.wx||0)*.8;for(let i=0;i<Wx.rain;i++){const x=Math.random()*W,y=54+Math.random()*(H-54);c.moveTo(x,y);c.lineTo(x+sl-2,y+16)}c.stroke();c.fillStyle=Wx.t==="storm"?"rgba(30,35,50,.22)":"rgba(80,90,105,.12)";c.fillRect(0,52,W,H-52)}
   if(F.inCloud){c.fillStyle="rgba(235,238,242,.78)";c.fillRect(0,0,W,H);c.fillStyle="#334155";c.font="bold 15px system-ui";c.textAlign="center";c.fillText("☁️ IN THE CLOUD: trust your instruments!",W/2,H*.5)}
   if(fx.flash>0){c.fillStyle=`rgba(255,255,255,${fx.flash*.85})`;c.fillRect(0,0,W,H)}
   if(fx.crack>0){c.strokeStyle=`rgba(255,255,255,${Math.min(.8,fx.crack)})`;c.lineWidth=2;c.beginPath();const cx=W*.62,cy=H*.38;for(let i=0;i<9;i++){const a=i*.7;c.moveTo(cx,cy);c.lineTo(cx+Math.cos(a)*kFxR(40,120),cy+Math.sin(a)*kFxR(40,120))}c.stroke()}
   const P=F.P;if(F.crashT<=0&&!P.gnd&&!P.heli&&!P.drone&&P.v<kFlyStall(P)*1.06&&Math.floor(F.t*4)%2){c.fillStyle="rgba(220,38,38,.92)";c.fillRect(W/2-70,H*.2,140,30);c.fillStyle="#fff";c.font="bold 17px system-ui";c.textAlign="center";c.textBaseline="middle";c.fillText("⚠️ STALL",W/2,H*.2+15)}
   const E=F.em;if(E&&E.on&&F.crashT<=0){c.fillStyle="rgba(127,29,29,.88)";c.fillRect(8,H-92,W-16,26);c.fillStyle="#fff";c.font="bold 13px system-ui";c.textAlign="left";c.textBaseline="middle";c.fillText(`${E.title}${E.type==="fuel"&&E.fuel>0?` ⛽ ${Math.ceil(E.fuel)} s`:""}${E.type==="gear"&&E.need>0?" · tap GEAR ×"+E.need:""}`,16,H-79)}
-  if(Wx.nm&&F.t<8){c.fillStyle="rgba(5,8,24,.7)";c.fillRect(W-150,H*.26,142,24);c.fillStyle="#fff";c.font="bold 12px system-ui";c.textAlign="center";c.textBaseline="middle";c.fillText(Wx.nm,W-79,H*.26+12)}
+  if(Wx.nm&&F.t<8){c.fillStyle="rgba(5,8,24,.7)";c.font="bold 11px system-ui";const tw=Math.min(W-12,c.measureText(Wx.nm).width+18);c.beginPath();c.roundRect(6,94,tw,20,9);c.fill();c.fillStyle="#fff";c.textAlign="left";c.textBaseline="middle";c.fillText(Wx.nm,15,104.5)}
   kFxAtcDom(cv,F)}
 function kFxAtcDom(cv,F){const host=cv.parentElement;if(!host)return;let el=host.querySelector(".kfatc");const q=F.atc&&F.atc.q;
   if(!q){if(el)el.remove();return}if(!el){el=document.createElement("div");el.className="kfatc";if(getComputedStyle(host).position==="static")host.style.position="relative";host.appendChild(el)}
@@ -12751,6 +12756,215 @@ function kLoadFile(){const i=document.createElement("input");i.type="file";i.acc
     if(!k||!k.setup){kT("That file has no Rocket Genius progress.");return}const now=kProgScore(S.kids),f2=kProgScore(k);
     if(f2<now&&!KV.loadSure){KV.loadSure=1;kT("That file has LESS progress than this phone. Tap Load again to use it anyway.");return}KV.loadSure=0;kSnap();S.kids=k;persist();kSnap();kT("📂 Progress loaded ✅");try{render()}catch(_){}};r.readAsText(f)};i.click()}
 function kSaveHtml(){const k=KS(),d=k.bkT?Math.floor((Date.now()-k.bkT)/86400000):null;return `<div class="small" style="margin-top:8px">💾 Progress is saved on this phone automatically, with backup copies. ${d===null?"Save a progress file once so it survives a new phone or a deleted app.":d>7?`Last progress file: ${d} days ago. Save a fresh one.`:`Last progress file: ${d===0?"today":d+" days ago"}.`}</div><button class="kbtn ghost" data-k="kSaveFile">💾 Save progress file</button> <button class="kbtn ghost" data-k="kLoadFile">📂 Load progress file</button>`}
+
+/* ================= Tesla Drive 3: real car feel =================
+   Physics: the car has sideways momentum (spring + damping), so it leans into lane changes and slides wider on wet
+   and snowy roads; regen braking is weaker on low grip. Traffic thinks: cars signal with a blinker for a second, then
+   change lanes only when there is room; a car you come up behind shows brake lights. Looking ahead is rewarded
+   (Smooth Pass for moving over early). Visuals: worn asphalt, rumble strips, guard rails, ground detail, skid marks,
+   tire spray, brake-light glow, speed streaks. Sound: wind noise that rises with speed. A trip computer at the end
+   shows efficiency, regen recovered, top speed and a driver rating. */
+function kDrvSurf(D){if(!D||D.mode==="roadster"&&D.t>=30)return"dry";if(D.t>=38&&D.t<46)return"dry";if(D.eg&&D.eg.santa||D.t>=46)return"snow";if(D.rain)return"wet";return"dry"}
+function kDrvGrip(D){const s=kDrvSurf(D);let g=s==="snow"?.5:s==="wet"?.64:1;if(g<1&&D.car&&(D.car[0]==="tk"||D.car[0]==="ct"))g=Math.min(1,g+.14);return g}
+function kDrvLat(D,tx,dt,carY){const g=kDrvGrip(D),s=kDrvSurf(D);
+  if(D._ln===undefined)D._ln=D.lane;
+  if(D.lane!==D._ln){D.prevLane=D._ln;D.lastLaneT=D.t;
+    if(!D.ap){let near=null;for(const o of D.obs)if(!o.done&&o.ln===D._ln&&(o.k==="car"||o.k==="cone")&&o.y<carY&&carY-o.y<430&&(!near||o.y>near.y))near=o;
+      if(near){const gap=carY-near.y;if(gap>185)near.safe=1;else if(gap<115&&!D.lateSaid&&D.t>6){D.lateSaid=1;D.tip="👀 Close one! Look far ahead and move over early.";D.tipT=3}}}
+    D._ln=D.lane}
+  if(g<1&&D.surfSaid!==s){D.surfSaid=s;D.tip=s==="snow"?"❄️ Snow: the car slides. Steer and brake early.":"🌧️ Wet road: less grip. Steer early, brake early.";D.tipT=3.5}
+  const k=260*g,cd=2*Math.sqrt(k)*(g<1?.5:.9);D.vx=D.vx||0;D.vx+=((tx-D.x)*k-D.vx*cd)*dt;D.x+=D.vx*dt;
+  const yt=Math.max(-.2,Math.min(.2,D.vx/Math.max(200,D.v)*.42))*(g<1?1.35:1);D.yaw=(D.yaw||0)+(yt-(D.yaw||0))*Math.min(1,dt*14);
+  D.skid=D.skid||[];const slide=g<1&&Math.abs(D.vx)>95,hard=D.brake&&D.v>250;
+  if((slide||hard)&&!(D.jump>0)){const a=slide?.5:.3;D.skid.push({x:D.x-13,y:carY+34,a},{x:D.x+13,y:carY+34,a});if(D.skid.length>160)D.skid.splice(0,D.skid.length-160);
+    if(slide&&!(D.slideS>0)){D.slideS=.5;try{kBeep("whoosh")}catch(_){}}}
+  D.slideS=Math.max(0,(D.slideS||0)-dt);
+  // trip computer
+  D.top=Math.max(D.top||0,D.v);D.used=(D.used||0)+dt*1.05*D.car[5]*(D.plaid?1.5:1);if(D.brake&&D.bat<100)D.regen=(D.regen||0)+dt*3}
+function kDrvTraffic(D,o,dt,carY,SP){
+  if(o.k==="car"&&!SP&&!o.done){
+    if(o.ai===undefined){o.ai=Math.random()<.36?1:0;o.sigY=30+Math.random()*90;o.dxf=0;o._ln=o.ln}
+    if(o._ln!==o.ln){if(!o.dxf)o.dxf=o._ln-o.ln;o._ln=o.ln}                      // honked over: slide instead of jumping
+    if(o.dxf){o.dxf+=(0-o.dxf)*Math.min(1,dt*4.5);if(Math.abs(o.dxf)<.02)o.dxf=0}
+    const free=l=>l>=0&&l<=2&&!D.obs.some(q=>q!==o&&q.ln===l&&!q.done&&q.k!=="bolt"&&Math.abs(q.y-o.y)<150),gate=D.gate&&!D.gate.done;
+    if(o.ai===1&&o.y>o.sigY&&o.y<carY-270&&!gate){const opts=[o.ln-1,o.ln+1].filter(free);if(opts.length){o.tg=kPick(opts);o.sig=o.tg>o.ln?1:-1;o.sigT=1;o.ai=2}else o.ai=0}
+    else if(o.ai===2){o.sigT-=dt;if(o.sigT<=0){if(o.y<carY-180&&free(o.tg)&&!gate){o.dxf=o.ln-o.tg;o.ln=o.tg;o._ln=o.ln;o.ai=3;o.sigT=.6}else{o.ai=0;o.sig=0}}}
+    else if(o.ai===3){o.sigT-=dt;if(o.sigT<=0){o.sig=0;o.ai=0}}
+    o.brk=o.ln===D.lane&&o.y<carY&&carY-o.y<190?1:0}
+  if((o.k==="car"||o.k==="cone")&&!o.done&&!o.cc&&o.y>carY+(o.k==="car"?74:46)){o.cc=1;
+    if(o.safe&&!SP&&o.ln!==D.lane){D.smooth=(D.smooth||0)+1;D.bolts+=1;D.fx=(D.fx||[]).concat([{x:D.x,y:carY-56,t:0,k:"spark",txt:"👍 SMOOTH PASS +1"}]);try{kBeep("coin")}catch(_){}}}}
+function kCar3(c,x,y,o,D,LW,night){const dx=(o.dxf||0)*LW,X=x+dx,rot=-(o.dxf||0)*.28,blink=Math.floor(D.t*5.5)%2===0;
+  if(night>.3){const g=c.createLinearGradient(0,y-40,0,y-150);g.addColorStop(0,`rgba(255,250,210,${.22*night})`);g.addColorStop(1,"rgba(255,250,210,0)");c.fillStyle=g;c.beginPath();c.moveTo(X-14,y-36);c.lineTo(X-34,y-150);c.lineTo(X+34,y-150);c.lineTo(X+14,y-36);c.closePath();c.fill()}
+  c.save();c.translate(X,y);if(rot)c.rotate(rot);kCar(c,0,0,40,74,o.col,o.sh);
+  if(o.brk||night>.3){c.fillStyle=o.brk?"rgba(255,40,40,.95)":"rgba(255,60,60,.7)";c.fillRect(-17,33,10,4);c.fillRect(7,33,10,4);
+    if(o.brk){const g=c.createRadialGradient(0,40,2,0,40,30);g.addColorStop(0,"rgba(255,40,40,.5)");g.addColorStop(1,"rgba(255,40,40,0)");c.fillStyle=g;c.fillRect(-32,22,64,40)}}
+  if(o.sig&&blink){const sx=o.sig*19;c.fillStyle="#ffb703";c.beginPath();c.arc(sx,-33,4,0,7);c.arc(sx,33,4,0,7);c.fill();const g=c.createRadialGradient(sx,0,2,sx,0,26);g.addColorStop(0,"rgba(255,183,3,.45)");g.addColorStop(1,"rgba(255,183,3,0)");c.fillStyle=g;c.fillRect(sx-26,-44,52,88)}
+  c.restore();
+  if(o.sig&&o.ai===2){c.fillStyle="rgba(255,183,3,.95)";c.font="900 15px system-ui";c.textAlign="center";c.textBaseline="middle";c.fillText(o.sig>0?"▶":"◀",X+o.sig*34,y)}}
+function kDrvHash(n){n=(n^61)^(n>>>16);n=n+(n<<3);n=n^(n>>>4);n=Math.imul(n,0x27d4eb2d);n=n^(n>>>15);return(n>>>0)/4294967296}
+function kDrvGround(c,D,W,H,RX,RW,biome){const snow=D.eg&&D.eg.santa||biome===2,px=D.dist*1500,off=px%120,n0=Math.floor(px/120);
+  const dk=snow?"rgba(120,150,190,.16)":biome===1?"rgba(150,105,40,.16)":"rgba(0,60,0,.16)",lt=snow?"rgba(255,255,255,.55)":biome===1?"rgba(255,235,180,.22)":"rgba(170,230,120,.16)";
+  for(let r=-1;r<Math.ceil(H/120)+1;r++){const n=n0-r,y=r*120+off;for(const side of[0,1]){const h1=kDrvHash(n*7+side*3+1),h2=kDrvHash(n*13+side*5+2),bx=side?RX+RW+6:0,bw=side?W-RX-RW-6:RX-6;
+      c.fillStyle=h1<.5?dk:lt;c.beginPath();c.ellipse(bx+bw*(.25+h2*.5),y+h1*80,bw*(.25+h1*.3),14+h2*22,0,0,7);c.fill();
+      if(biome===1&&!snow&&h2>.7){c.strokeStyle="rgba(140,95,40,.25)";c.lineWidth=1.5;for(let i=0;i<3;i++){c.beginPath();c.moveTo(bx+4,y+20+i*9);c.quadraticCurveTo(bx+bw/2,y+12+i*9,bx+bw-4,y+22+i*9);c.stroke()}}}}
+  // shoulders and guard rails
+  c.fillStyle=snow?"#d5dde8":biome===1?"#bf9a55":"#6f7a5c";c.fillRect(RX-12,0,8,H);c.fillRect(RX+RW+4,0,8,H);
+  c.fillStyle="rgba(0,0,0,.18)";c.fillRect(RX-15,0,3,H);c.fillRect(RX+RW+12,0,3,H);
+  c.fillStyle="#c9ced8";c.fillRect(RX-11,0,2,H);c.fillRect(RX+RW+9,0,2,H);c.fillStyle="#8b93a3";const po=px%40;for(let y=-40+po;y<H;y+=40){c.fillRect(RX-12,y,4,6);c.fillRect(RX+RW+8,y,4,6)}
+  // speed streaks outside the road
+  const sp=Math.max(0,Math.min(1,(D.v-235)/260));if(sp>0){c.strokeStyle=`rgba(255,255,255,${.1+sp*.22})`;c.lineWidth=1.5;c.beginPath();for(let i=0;i<10;i++){const side=i%2,x=(side?RX+RW+16:4)+kDrvHash(i*31+7)*(RX-22),y=((kDrvHash(i*17+3)*H)+px*1.6)%(H+80)-40,L=18+sp*46;c.moveTo(x,y);c.lineTo(x,y+L)}c.stroke()}
+  const vg=c.createLinearGradient(0,0,W,0);vg.addColorStop(0,"rgba(0,0,0,.22)");vg.addColorStop(.12,"rgba(0,0,0,0)");vg.addColorStop(.88,"rgba(0,0,0,0)");vg.addColorStop(1,"rgba(0,0,0,.22)");c.fillStyle=vg;c.fillRect(0,0,W,H)}
+const kRoadFill0=kRoadFill;
+kRoadFill=function(c,D,RX,RW,H){if(D.eg&&D.eg.rainbow)return kRoadFill0(c,D,RX,RW,H);const LW=RW/3,px=D.dist*1500,s=kDrvSurf(D);
+  const g=c.createLinearGradient(RX,0,RX+RW,0);g.addColorStop(0,"#262a34");g.addColorStop(.5,"#30343f");g.addColorStop(1,"#262a34");c.fillStyle=g;c.fillRect(RX,0,RW,H);
+  c.fillStyle="rgba(0,0,0,.13)";for(let i=0;i<3;i++){const cx=RX+LW*i+LW/2;c.fillRect(cx-16,0,9,H);c.fillRect(cx+7,0,9,H)}
+  // seams and patched asphalt that scroll with the road
+  const off=px%170,n0=Math.floor(px/170);for(let r=-1;r<Math.ceil(H/170)+1;r++){const y=r*170+off,n=n0-r,h=kDrvHash(n*11+5);c.fillStyle="rgba(255,255,255,.045)";c.fillRect(RX,y,RW,1.5);
+    if(h>.55){c.fillStyle="rgba(0,0,0,.16)";c.fillRect(RX+10+h*(RW-70),y+30+h*60,34+h*30,22+h*26)}}
+  if(s==="wet"){const w=c.createLinearGradient(0,0,0,H);w.addColorStop(0,"rgba(150,185,255,.05)");w.addColorStop(.5,"rgba(170,200,255,.16)");w.addColorStop(1,"rgba(150,185,255,.05)");c.fillStyle=w;c.fillRect(RX,0,RW,H);
+    c.fillStyle="rgba(200,220,255,.10)";for(let i=0;i<5;i++){const x=RX+12+kDrvHash(i*5+1)*(RW-24),y=((kDrvHash(i*9+2)*H)+px)%(H+60)-30;c.beginPath();c.ellipse(x,y,16+kDrvHash(i)*14,7,0,0,7);c.fill()}}
+  if(s==="snow"){c.fillStyle="rgba(255,255,255,.2)";for(let i=0;i<=3;i++)c.fillRect(RX+LW*i-9,0,18,H);c.fillStyle="rgba(255,255,255,.1)";for(let i=0;i<3;i++)c.fillRect(RX+LW*i+LW/2-5,0,10,H)}
+  // rumble strips
+  c.fillStyle="rgba(255,255,255,.07)";const ro=px%10;for(let y=-10+ro;y<H;y+=10){c.fillRect(RX+2,y,5,4);c.fillRect(RX+RW-7,y,5,4)}
+  // skid marks
+  const dy=(D.dist-(D._sd===undefined?D.dist:D._sd))*1500;D._sd=D.dist;if(D.skid&&D.skid.length){for(const m of D.skid){m.y+=dy;c.fillStyle=s==="snow"?`rgba(60,70,90,${m.a*.5})`:`rgba(8,8,10,${m.a})`;c.fillRect(m.x-3,m.y-4,6,dy+9)}D.skid=D.skid.filter(m=>m.y<H+20)}};
+const kDriveCar0=kDriveCar;
+kDriveCar=function(c,D,carY,SP,night){const sz=KCSZ[D.car[3]]||[48,92],s=kDrvSurf(D),yaw=SP?0:(D.yaw||0),air=D.jump>0||SP;
+  // tire spray and snow dust
+  if(!air&&(s==="wet"||s==="snow")&&D.v>120){const n=s==="wet"?9:6;for(let i=0;i<n;i++){const side=i%2?1:-1,t=Math.random(),x=D.x+side*(sz[0]/2-6)+side*t*16+(D.vx||0)*-.03*t*10,y=carY+sz[1]/2-8+t*46;c.fillStyle=s==="wet"?`rgba(205,225,255,${.32*(1-t)})`:`rgba(255,255,255,${.5*(1-t)})`;c.beginPath();c.arc(x,y,2+t*6,0,7);c.fill()}}
+  c.save();c.translate(D.x,carY);c.rotate(yaw);c.translate(-D.x,-carY);
+  if(D.brake&&!SP){const g=c.createRadialGradient(D.x,carY+sz[1]/2+6,3,D.x,carY+sz[1]/2+6,46);g.addColorStop(0,"rgba(255,30,30,.6)");g.addColorStop(1,"rgba(255,30,30,0)");c.fillStyle=g;c.fillRect(D.x-48,carY+sz[1]/2-30,96,84)}
+  kDriveCar0(c,D,carY,SP,night);
+  if(D.brake&&!SP){c.fillStyle="#ff2020";c.fillRect(D.x-sz[0]/2+4,carY+sz[1]/2-5,sz[0]-8,3.5);
+    c.strokeStyle="rgba(46,194,126,.9)";c.lineWidth=2.5;c.lineCap="round";for(let i=0;i<3;i++){const p=((D.t*2.4+i/3)%1),y=carY+sz[1]/2+34-p*40;c.globalAlpha=1-p;c.beginPath();c.moveTo(D.x-7,y+5);c.lineTo(D.x,y-2);c.lineTo(D.x+7,y+5);c.stroke()}c.globalAlpha=1;c.lineCap="butt"}
+  c.restore()};
+function kDrvHud(c,D,W,H){if(D.mode==="roadster"&&D.t>=30)return;c.save();c.textBaseline="middle";
+  c.textAlign="right";c.font="10px system-ui";c.fillStyle="#c7cbe6";c.fillText(`≈ ${Math.round(D.bat*3.1)} mi range`,W-10,38);
+  const bx=46,bw=58,by=37,mid=bx+bw*.3;c.fillStyle="rgba(255,255,255,.16)";c.fillRect(bx,by,bw,6);
+  if(D.brake){const f=Math.min(1,D.v/300);c.fillStyle="#2ec27e";c.fillRect(mid-(mid-bx)*f,by,(mid-bx)*f,6)}else{const f=Math.max(0,Math.min(1,(D.v-120)/430));c.fillStyle=D.plaid?"#ff9f1c":"#e5e7eb";c.fillRect(mid,by,(bx+bw-mid)*f,6)}
+  c.fillStyle="#fff";c.fillRect(mid-.75,by-2,1.5,10);
+  const g=kDrvGrip(D);if(g<1){const s=kDrvSurf(D),t=`${s==="snow"?"❄️":"🌧️"} GRIP ${Math.round(g*100)}%`;c.font="bold 10px system-ui";c.textAlign="left";c.fillStyle="rgba(5,8,24,.78)";c.beginPath();c.roundRect(6,58,78,18,8);c.fill();c.fillStyle=s==="snow"?"#bfe1ff":"#9fc5ff";c.fillText(t,12,67.5)}
+  c.restore()}
+// wind noise that rises with speed (shared by every vehicle that hums)
+let kWnd=null;const kDriveHum0=kDriveHum;
+kDriveHum=function(v){kDriveHum0(v);try{const k=S.kids;if(!v||!k||k.sound===false){if(kWnd)kWnd.g.gain.setTargetAtTime(0,kAC.currentTime,.08);return}if(!kAudio())return;
+  if(!kWnd){const n=kAC.sampleRate*2,b=kAC.createBuffer(1,n,kAC.sampleRate),d=b.getChannelData(0);let l=0;for(let i=0;i<n;i++){l=l*.985+(Math.random()*2-1)*.12;d[i]=l}
+    const s=kAC.createBufferSource();s.buffer=b;s.loop=true;const f=kAC.createBiquadFilter();f.type="lowpass";f.frequency.value=400;const g=kAC.createGain();g.gain.value=0;s.connect(f);f.connect(g);g.connect(kMaster);s.start();kWnd={s,f,g}}
+  const a=Math.max(0,Math.min(1,(v-150)/300));kWnd.g.gain.setTargetAtTime(a*.07,kAC.currentTime,.15);kWnd.f.frequency.setTargetAtTime(280+a*1100,kAC.currentTime,.15)}catch(_){}};
+// trip computer on the end screen
+function kDrvRate(D){let s=3;if(D.t>=60)s++;if(!D.crashes)s++;else if(D.crashes>=3)s--;if((D.smooth||0)>=3)s++;if((D.regen||0)>=6)s++;if(D.crashes>=5)s--;return Math.max(1,Math.min(5,s-1))}
+const kDriveView0=kDriveView;
+kDriveView=function(v){kDriveView0(v);try{const D=kDrv;if(!D||!D.over||KV.pick||KV.cartoon)return;const end=v.querySelector(".kend"),pad=end&&end.querySelector(".kpad");if(!pad||end.querySelector(".ktrip"))return;
+  const net=Math.max(1,(D.used||0)-(D.regen||0)),wh=Math.round(net/Math.max(.3,D.dist)*11),st=kDrvRate(D),k=KS();if(!D.rated){D.rated=1;k.drive.rate=Math.max(k.drive.rate||0,st);persist()}
+  pad.insertAdjacentHTML("beforebegin",`<div class="ktrip"><div class="ktriph">🖥️ TRIP COMPUTER</div><div class="ktripg">
+    <div><b>${Math.round((D.top||0)/4.5)}</b><span>top mph</span></div><div><b>${wh}</b><span>Wh per mile</span></div><div><b>+${Math.round(D.regen||0)}%</b><span>regen recovered</span></div><div><b>${D.smooth||0}</b><span>smooth passes</span></div></div>
+    <div class="ktripr">Driver rating ${"⭐".repeat(st)}${"☆".repeat(5-st)}</div><div class="ksmall">${D.crashes?`Tip: ${D.crashes} crash${D.crashes>1?"es":""}. Look far ahead and move over early for 👍 Smooth Passes.`:(D.regen||0)<6?"Tip: hold 🛑 Regen before a slow car. Braking puts energy back in the battery.":"Smooth, efficient driving. That is how real EV drivers get the most range."}</div></div>`)}catch(_){}};
+
+/* ================= Sky Pilot 3: closer to a real cockpit =================
+   Physics: a propeller's pull fades as speed builds, so a too-steep climb bleeds speed and stalls; banked turns need
+   back pressure (some lift points sideways) and raise the stall speed; a G meter shows the load. Buildings are solid.
+   World: a real airport (apron, taxiway, terminal, control tower, hangars), the town of Brick Bay with 3D buildings
+   and roads, runway edge lights, green/red threshold lights and working PAPI lights. Sun in the sky, sunset flights,
+   wingtip vapor trails in hard turns. Approach aid: PAPI + centerline needle, and radio-altimeter callouts
+   (100, 50, 20, 10) like an airliner. */
+const KF3={az:2.25,el:.52};
+// ---------- physics ----------
+const kFlyThr0=kFlyThr;kFlyThr=function(P){let t=kFlyThr0(P);if((P.ac||"c172")==="c172"&&!P.jet&&!P.heli&&!P.drone)t*=Math.max(.5,Math.min(1.05,1-P.v/75));return t};
+const kFlyStall0=kFlyStall;kFlyStall=function(P){const s=kFlyStall0(P);if(P.heli||P.gnd||s<0)return s;const n=1/Math.max(.55,Math.cos(P.ph||0)),easy=typeof kFly!=="undefined"&&kFly&&kFly.easy;return s*(1+(Math.sqrt(n)-1)*(easy?.5:1))};
+function kFly3Boxes(){return kFlyWorld().filter(o=>o.k==="box")}
+const kFlyStep2=kFlyStep;
+kFlyStep=function(F,dt){const y0=F.P.y;kFlyStep2(F,dt);const P=F.P;F.tr=F.tr||[];for(const t of F.tr)t.a+=dt;if(F.tr.length&&F.tr[0].a>1.5)F.tr=F.tr.filter(t=>t.a<=1.5);
+  if(F.crashT>0||P.heli)return;const n=1/Math.max(.3,Math.cos(P.ph));F.gl=P.gnd?1:n;
+  if(!P.gnd&&!P.drone){const stall=P.v<kFlyStall(P);
+    if((P.ac||"c172")==="c172"&&!P.jet){const vs0=kFlyStall0(P),r=vs0/Math.max(P.v,vs0*.8);P.v=Math.max(0,P.v-.5*(F.easy?n:n*n)*r*r*dt)}   // induced drag: slow flight and steep turns cost speed
+    if(!stall&&Math.abs(P.ph)>.3){P.th-=(n-1)*(F.easy?.1:.34)*dt;if(!F.turnSaid&&Math.abs(P.ph)>.5&&F.t>18&&!F.q){F.turnSaid=1;kFlySay("↪️ In a turn, some lift points sideways. Pull back a little to hold your altitude.",3.5)}}
+    // wingtip vapor in hard turns, contrails for jets up high
+    if((Math.abs(P.ph)>.48&&P.v>27)||(P.jet&&P.y>450)){F.trT=(F.trT||0)-dt;if(F.trT<=0){F.trT=.045;const hs=P.jet?4.2:5.4,cx=Math.cos(P.psi),sz=-Math.sin(P.psi);for(const s of[-1,1])F.tr.push({x:P.x+cx*hs*s*Math.cos(P.ph),y:P.y+1.5-Math.sin(P.ph)*hs*s,z:P.z+sz*hs*s*Math.cos(P.ph),s,a:0})}}
+    for(const b of kFly3Boxes()){if(P.y<(b.y0||0)+b.h+1&&P.y>=(b.y0||0)-1&&Math.abs(P.x-b.x)<b.w/2+2&&Math.abs(P.z-b.z)<b.d/2+2){kFlyCrash(F,"🏢 BONK! You hit a building. Stay on the runway and climb before you turn.");return}}
+    // radio-altimeter callouts on the way down, like an airliner
+    const A=kFly3Appr(F);F.ap3=A;if(P.y>130)F.gp=999;if(A&&(F.vy||0)<-.5){for(const h of[100,50,20,10])if(y0>=h&&P.y<h&&(F.gp||999)>h){F.gp=h;F.call={t:h,a:0};try{kFxSpeak(String(h))}catch(_){}}
+      if(!P.gear&&P.y<70&&!F.gearSaid){F.gearSaid=1;kFlySay("⚠️ TOO LOW, GEAR! Put the landing gear DOWN.",3);try{kFxSpeak("Too low. Gear.")}catch(_){}}
+      if(!F.papiSaid&&A.dist<2600){F.papiSaid=1;kFlySay("🚦 PAPI lights by the runway: 2 white + 2 red = perfect glide path. All red = too low!",4.5)}}}
+  else if(P.gnd){F.ap3=null;for(const b of kFly3Boxes()){if(Math.abs(P.x-b.x)<b.w/2+3&&Math.abs(P.z-b.z)<b.d/2+3&&!(b.y0>0)&&P.v>2){kFlyCrash(F,"🏢 BONK! You drove into a building. Taxi on the pavement.");return}}}
+  if(F.call){F.call.a+=dt;if(F.call.a>1.1)F.call=null}};
+const kFlyReset3=kFlyReset;kFlyReset=function(F){kFlyReset3(F);F.tr=[];F.gp=999;F.call=null;F.gearSaid=0;F.ap3=null};
+const kFxWeather0=kFxWeather;kFxWeather=function(F){const W=kFxWeather0(F);try{if((W.t==="clear"||W.t==="clouds")&&Math.random()<.22&&((KS().fly||{}).flights||0)>2&&F.lv!==0){W.dusk=1;W.s0="#27306b";W.s1="#ffb36b";W.col="rgba(255,205,175,.9)";W.nm="🌇 Sunset, "+(W.t==="clear"?"clear":"cloudy")}}catch(_){}return W};
+// ---------- approach geometry ----------
+function kFly3Appr(F){const P=F.P;if(P.gnd||P.y>520||P.heli)return null;let best=null;for(const r of KFLYRW)for(const e of[-1,1]){const s=Math.sin(r.hd),co=Math.cos(r.hd),L=r.len/2,d=-e,ax=r.cx+s*e*(L-150),az=r.cz+co*e*(L-150),dx=P.x-ax,dz=P.z-az,
+    along=(dx*s+dz*co)*d,lat=(dx*co-dz*s)*d,hd=r.hd+(d<0?Math.PI:0),dh=Math.abs(Math.atan2(Math.sin(P.psi-hd),Math.cos(P.psi-hd)));
+    if(along>-60||along<-4500||Math.abs(lat)>110+(-along)*.2||dh>.7)continue;const dist=-along,ang=Math.atan2(P.y,Math.hypot(dist,lat))*57.2958,nW=ang>4.6?4:ang>3.6?3:ang>2.3?2:ang>1.5?1:0;if(!best||dist<best.dist)best={r,e,dist,lat,ang,nW}}return best}
+// ---------- world: airport and the town of Brick Bay ----------
+function kFly3Build(){const r=kFlyRand(31),B=[],box=(x,z,w,d,h,col,roof,y0)=>B.push({k:"box",x,z,w,d,h,col,roof:roof||col.map(v=>v*.7),y0:y0||0});
+  box(-150,420,56,120,13,[214,218,226],[120,128,142]);box(-150,420,30,50,7,[150,190,225],[90,110,140],13);                 // terminal + glass hall
+  box(-128,585,11,11,30,[226,228,232]);box(-128,585,19,19,7,[70,110,150],[230,60,60],30);                                    // control tower + cab
+  box(-152,690,56,60,15,[188,194,204],[96,104,118]);box(-152,770,56,60,15,[176,184,196],[96,104,118]);                        // hangars
+  box(-120,300,12,12,10,[240,240,240]);box(-104,300,12,12,10,[240,240,240]);                                                  // fuel tanks
+  const pal=[[196,96,74],[222,206,170],[150,168,190],[206,180,140],[176,84,66],[232,232,226],[134,150,128]];
+  for(let i=0;i<6;i++)for(let j=0;j<5;j++){const cx=640+i*112,cz=-960+j*118;if(i===3||j===2){continue}const n=1+Math.floor(r()*2);for(let q=0;q<n;q++){const w=26+r()*34,d=26+r()*30,core=Math.abs(i-2.5)<1.6&&Math.abs(j-2)<1.6,h=core&&r()<.45?30+r()*34:7+r()*13;
+      box(cx+(q?28:-18)+(r()-.5)*10,cz+(r()-.5)*22,w,d,h,pal[Math.floor(r()*pal.length)])}}
+  box(KFLYISL.x-120,KFLYISL.z-78,34,26,7,[226,210,170],[150,90,60]);
+  return B}
+const KF3ROADS=[[-160,300,-262,300],[-262,300,-262,-246],[-262,-246,1260,-246],[976,-1020,976,-420],[600,-724,1260,-724]];
+function kFly3InTown(x,z){return x>560&&x<1300&&z>-1040&&z<-200||x>-190&&x<-36&&z>230&&z<880||Math.abs(x+262)<14&&z>-260&&z<310||Math.abs(z+246)<14&&x>-270&&x<1270}
+const kFlyWorld3=kFlyWorld;
+kFlyWorld=function(){if(kFlyWorld.w3)return kFlyWorld.w3;const base=kFlyWorld3().filter(o=>!(o.k==="bld"&&(o.ic==="🏢"||o.ic==="🗼"&&o.x===-75))&&!(o.k==="tree"&&kFly3InTown(o.x,o.z))&&!(o.k==="bld"&&o.ic==="🚜"));
+  return kFlyWorld.w3=base.concat(kFly3Build())};
+function kFly3Shade(col,f){return[col[0]*f,col[1]*f,col[2]*f]}
+function kFly3Box(c,o,C,Fo,z,RG){const hw=o.w/2,hd=o.d/2,x0=o.x-hw,x1=o.x+hw,z0=o.z-hd,z1=o.z+hd,y0=o.y0||0,y1=y0+o.h,fog=Math.min(.85,Math.pow(Math.min(1,z/RG),1.6)),P=(x,y,zz)=>kFlyTf(C,x,y,zz),
+   face=(ax,az,bx,bz,sh)=>{kFlyPoly(c,[P(ax,y0,az),P(bx,y0,bz),P(bx,y1,bz),P(ax,y1,az)],Fo,kFlyMix(kFly3Shade(o.col,sh),KFLYHAZE,fog));
+     if(z<650&&o.h>9){const fl=Math.min(8,Math.floor(o.h/5)),wc=kFlyMix([40,56,84],KFLYHAZE,fog);for(let i=0;i<fl;i++){const a=y0+o.h*(i+.35)/fl,b=y0+o.h*(i+.72)/fl;kFlyPoly(c,[P(ax+(bx-ax)*.08,a,az+(bz-az)*.08),P(ax+(bx-ax)*.92,a,az+(bz-az)*.92),P(ax+(bx-ax)*.92,b,az+(bz-az)*.92),P(ax+(bx-ax)*.08,b,az+(bz-az)*.08)],Fo,wc)}}};
+  if(C.x<x0)face(x0,z0,x0,z1,.7);if(C.x>x1)face(x1,z0,x1,z1,.92);if(C.z<z0)face(x0,z0,x1,z0,.82);if(C.z>z1)face(x0,z1,x1,z1,.6);
+  if(C.y>y1)kFlyPoly(c,[P(x0,y1,z0),P(x1,y1,z0),P(x1,y1,z1),P(x0,y1,z1)],Fo,kFlyMix(o.roof,KFLYHAZE,fog))}
+function kFly3Ground(c,F,C,Fo,RG){const q=(x0,z0,x1,z1,col)=>{const d=Math.hypot((x0+x1)/2-C.x,(z0+z1)/2-C.z);if(d>RG*1.1)return;const y=.04;kFlyPoly(c,[kFlyTf(C,x0,y,z0),kFlyTf(C,x1,y,z0),kFlyTf(C,x1,y,z1),kFlyTf(C,x0,y,z1)],Fo,kFlyMix(col,KFLYHAZE,Math.min(.85,Math.pow(d/RG,1.6))))};
+  for(const [a,b,d,e] of KF3ROADS){const w=5,n=Math.max(1,Math.ceil(Math.hypot(d-a,e-b)/260));for(let i=0;i<n;i++){const xa=a+(d-a)*i/n,za=b+(e-b)*i/n,xb=a+(d-a)*(i+1)/n,zb=b+(e-b)*(i+1)/n;q(Math.min(xa,xb)-(za===zb?0:w),Math.min(za,zb)-(xa===xb?0:w),Math.max(xa,xb)+(za===zb?0:w),Math.max(za,zb)+(xa===xb?0:w),[84,88,98])}}
+  q(590,-1030,1280,-410,[150,170,120]);                                                              // town lawn
+  for(let i=0;i<6;i++)if(i!==3)q(640+i*112-52,-1010,640+i*112+52,-430,[128,132,140]);                // block pavement
+  q(-185,236,-38,872,[92,97,108]);q(-36,20,-24,1180,[78,83,94]);for(const z of[40,600,1150])q(-24,z-7,-15,z+7,[78,83,94]);      // apron, taxiway, connectors
+  for(let z=40;z<1170;z+=40)q(-30.4,z,-29.6,z+18,[240,200,60])}
+function kFly3Sky(c,F,C,Fo,W,H,hy){const wx=F.wx||{},dusk=wx.dusk,hz=dusk?[226,160,122]:wx.t==="storm"?[110,118,132]:wx.t==="rain"?[160,172,184]:[178,206,226];KFLYHAZE[0]=hz[0];KFLYHAZE[1]=hz[1];KFLYHAZE[2]=hz[2];
+  if(wx.t==="rain"||wx.t==="storm")return;const az=dusk?-1.35:KF3.az,el=dusk?.07:KF3.el,t=kFlyTf(C,C.x+Math.sin(az)*Math.cos(el)*1e5,C.y+Math.sin(el)*1e5,C.z+Math.cos(az)*Math.cos(el)*1e5);if(t[2]<1e3)return;
+  const sx=t[0]/t[2]*Fo,sy=-t[1]/t[2]*Fo,R=dusk?150:110,g=c.createRadialGradient(sx,sy,2,sx,sy,R);g.addColorStop(0,dusk?"rgba(255,220,150,.95)":"rgba(255,255,235,.95)");g.addColorStop(.12,dusk?"rgba(255,170,90,.55)":"rgba(255,250,210,.5)");g.addColorStop(1,"rgba(255,220,160,0)");
+  c.fillStyle=g;c.fillRect(sx-R,Math.min(sy-R,hy),R*2,Math.max(0,Math.min(sy+R,hy)-Math.min(sy-R,hy)));c.fillStyle=dusk?"#ffd9a0":"#fffbe6";if(sy<hy+10){c.beginPath();c.arc(sx,sy,dusk?15:11,0,7);c.fill()}
+  F.sunS=[sx,sy]}
+function kFly3Trails(c,F,C,Fo){const T=F.tr;if(!T||T.length<3)return;c.lineCap="round";for(const s of[-1,1]){let prev=null;for(const t of T){if(t.s!==s)continue;const p=kFlyTf(C,t.x,t.y,t.z);if(p[2]<1.5){prev=null;continue}const X=p[0]/p[2]*Fo,Y=-p[1]/p[2]*Fo;
+      if(prev&&t.a<1.5){c.strokeStyle=`rgba(255,255,255,${.5*(1-t.a/1.5)})`;c.lineWidth=Math.max(1,Math.min(5,.7*Fo/p[2]));c.beginPath();c.moveTo(prev[0],prev[1]);c.lineTo(X,Y);c.stroke()}prev=[X,Y]}}c.lineCap="butt"}
+function kFly3Post(c,F,C,Fo,W,H){const wx=F.wx||{},dusk=!!wx.dusk,P=F.P,dim=dusk||wx.t==="storm"||wx.t==="rain";c.save();c.translate(W/2,H*.42);c.rotate(-C.ro);
+  if(dusk){c.fillStyle="rgba(22,22,70,.26)";c.fillRect(-W*1.6,-H*1.6,W*3.2,H*3.2)}
+  const L=(x,y,z,col,r)=>{const t=kFlyTf(C,x,y,z);if(t[2]<3||t[2]>3400)return;const X=t[0]/t[2]*Fo,Y=-t[1]/t[2]*Fo,s=Math.max(dim?1.1:.9,Math.min(6,r*Fo/t[2]));if(dim&&r*Fo/t[2]>1.1){c.globalAlpha=.25;c.fillStyle=col;c.beginPath();c.arc(X,Y,s*2.4,0,7);c.fill();c.globalAlpha=1}c.fillStyle=col;c.beginPath();c.arc(X,Y,s,0,7);c.fill()};
+  for(const r of KFLYRW){if(Math.hypot(r.cx-C.x,r.cz-C.z)>3600)continue;const s=Math.sin(r.hd),co=Math.cos(r.hd),Lh=r.len/2,Wd=r.w/2,pt=(al,sd)=>[r.cx+s*al+co*sd,r.cz+co*al-s*sd],ca=(C.x-r.cx)*s+(C.z-r.cz)*co;
+    if(dim||Math.hypot(r.cx-C.x,r.cz-C.z)<1900)for(let al=-Lh;al<=Lh;al+=60)for(const sd of[-Wd-2,Wd+2]){const p=pt(al,sd);L(p[0],.5,p[1],dim?"#fff6d0":"rgba(255,255,255,.8)",.5)}
+    for(const e of[-1,1]){const out=e*ca>Lh;for(let sd=-Wd;sd<=Wd;sd+=5){const p=pt(e*Lh,sd);L(p[0],.5,p[1],out?"#3dff8a":"#ff4040",.55)}
+      if(out){const dx=P.x-(r.cx+s*e*(Lh-150)),dz=P.z-(r.cz+co*e*(Lh-150)),ang=Math.atan2(P.y,Math.hypot(dx,dz))*57.2958,nW=P.gnd?2:ang>4.6?4:ang>3.6?3:ang>2.3?2:ang>1.5?1:0;for(let i=0;i<4;i++){const p=pt(e*(Lh-150),e*(Wd+10+i*6));L(p[0],1,p[1],i>=4-nW?"#ffffff":"#ff2a2a",1.5)}}}}
+  if(dim)for(const b of kFly3Boxes()){if(b.h>25&&!b.y0)L(b.x,b.h+2,b.z,Math.floor(F.t*1.2)%2?"#ff3030":"#801010",.9)}
+  c.restore();
+  // approach aid: PAPI + centerline needle
+  const A=F.ap3;if(A&&!F.q&&!F.chk&&!(F.crashT>0)){const pw=152,ph=46,px=F.cock?12:W/2-pw/2+16,py=F.cock?H-98:H-148;c.fillStyle="rgba(5,8,24,.8)";c.beginPath();c.roundRect(px,py,pw,ph,10);c.fill();
+    c.textBaseline="middle";c.textAlign="left";c.font="bold 9px system-ui";c.fillStyle="#9fb4d8";c.fillText("PAPI",px+8,py+12);for(let i=0;i<4;i++){c.fillStyle=i<A.nW?"#ffffff":"#ff3030";c.beginPath();c.arc(px+40+i*12,py+12,4.2,0,7);c.fill()}
+    const msg=["TOO LOW!","LOW","ON PATH ✓","HIGH","TOO HIGH"][A.nW];c.textAlign="right";c.font="900 9.5px system-ui";c.fillStyle=A.nW===2?"#2ec27e":A.nW===0?"#ff4d6d":"#ffd23f";c.fillText(msg,px+pw-7,py+12);
+    const bx=px+10,bw=pw-20,by=py+31;c.fillStyle="rgba(255,255,255,.25)";c.fillRect(bx,by,bw,2);c.fillStyle="#fff";c.fillRect(bx+bw/2-.75,by-5,1.5,12);const off=Math.max(-1,Math.min(1,-A.lat/160));c.fillStyle=Math.abs(A.lat)<22?"#2ec27e":"#ffd23f";c.beginPath();const dxp=bx+bw/2+off*bw/2;c.moveTo(dxp,by-6);c.lineTo(dxp+5,by+1);c.lineTo(dxp,by+8);c.lineTo(dxp-5,by+1);c.closePath();c.fill();
+    c.font="8.5px system-ui";c.textAlign="center";c.fillStyle="#c7cbe6";c.fillText(Math.abs(A.lat)<22?`centerline ✓ · ${(A.dist/1000).toFixed(1)} km`:A.lat>0?"◀ runway is to your left":"runway is to your right ▶",px+pw/2,py+41.5)}
+  if(F.call){c.textAlign="center";c.textBaseline="middle";c.font="900 44px system-ui";c.fillStyle=`rgba(255,210,63,${1-F.call.a/1.1})`;c.fillText(String(F.call.t),W/2,H*.3)}
+  const g=F.gl||1;if(!P.gnd&&g>1.08){c.textAlign="left";c.textBaseline="middle";c.fillStyle="rgba(5,8,24,.78)";c.beginPath();c.roundRect(6,70,56,18,8);c.fill();c.font="bold 10px system-ui";c.fillStyle=g>1.35?"#ffd23f":"#c7cbe6";c.fillText(`G ${g.toFixed(1)}`,13,79.5)}}
+// the radio panel never sits on top of the mission quiz or the checklist
+const kFxAtcDom0=kFxAtcDom;kFxAtcDom=function(cv,F){if(F.q||F.chk||F.over){try{const el=cv.parentElement&&cv.parentElement.querySelector(".kfatc");if(el)el.remove();if(F.q&&F.atc&&F.atc.q&&F.atc.q.ans==null)F.atc.q=null}catch(_){}return}kFxAtcDom0(cv,F)};
+
+/* ================= Retina-sharp game canvases =================
+   Every game canvas was drawn at 1 pixel per CSS pixel, so it looked soft on an iPhone (3 device pixels per CSS pixel).
+   This gives each canvas a backing store at up to 2x, keeps its logical size for the game code (cv.width still
+   answers the logical width), and scales the drawing once. No game loop needs to change. */
+let KHD_MAX=2;try{if(localStorage.getItem("kHdLow")==="1")KHD_MAX=1.5}catch(_){}
+function kHdSetup(cv){try{if(!cv||cv._hd)return;const d=Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,"width"),dh=Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,"height");if(!d||!d.set)return;
+  const W=cv.width,H=cv.height,r=Math.max(1,Math.min(KHD_MAX,window.devicePixelRatio||1));if(r<=1.01||!W||!H){cv._hd=1;return}
+  d.set.call(cv,Math.round(W*r));dh.set.call(cv,Math.round(H*r));Object.defineProperty(cv,"width",{get:()=>W,configurable:true});Object.defineProperty(cv,"height",{get:()=>H,configurable:true});
+  if(!cv.style.width){cv.style.width=W+"px";cv.style.height="auto";cv.style.aspectRatio=W+" / "+H}
+  const c=cv.getContext("2d");c.setTransform(r,0,0,r,0,0);c.imageSmoothingQuality="high";cv._hd=r}catch(_){}}
+function kHdHook(v){try{(v||document).querySelectorAll("canvas[id]").forEach(cv=>{if(/^k(drv|dby|fly|land|msn|ast|cty)$/.test(cv.id))kHdSetup(cv)})}catch(_){}}
+// safety valve: if a phone cannot hold a smooth frame rate at this sharpness, step the canvas down once and remember it
+function kHdWatch(cv){if(!cv||cv._hdw||!(cv._hd>1))return;cv._hdw=1;let n=0,slow=0,last=0;const tick=ts=>{if(!cv.isConnected||document.visibilityState!=="visible")return;if(last){const d=ts-last;if(d<200){n++;if(d>27)slow++}}last=ts;
+    if(n>=150){if(slow/n>.45){try{const d=Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,"width"),dh=Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,"height"),W=cv.width,H=cv.height,r=cv._hd>1.5?1.5:1;
+        d.set.call(cv,Math.round(W*r));dh.set.call(cv,Math.round(H*r));cv.getContext("2d").setTransform(r,0,0,r,0,0);cv._hd=r;KHD_MAX=r;localStorage.setItem("kHdLow","1")}catch(_){}}return}
+    requestAnimationFrame(tick)};setTimeout(()=>requestAnimationFrame(tick),1500)}
+const kHdHook0=kHdHook;kHdHook=function(v){kHdHook0(v);try{(v||document).querySelectorAll("canvas[id]").forEach(cv=>kHdWatch(cv))}catch(_){}};
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -17211,7 +17425,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 154 · Nov 21";
+const BUILD="Version 155 · Nov 21";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");

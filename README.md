@@ -34,6 +34,16 @@ borrowing, step-up and estate basics (Part 1); employee vs independent contracto
 Every subject adapts to the player: three right answers in a row (with 70%+ recent accuracy) moves a
 subject up a level, two misses move it down. Hints are always available but never earn points.
 
+- **Sky Pilot 3, Tesla Drive 3 and retina-sharp games (Version 155):**
+  - *Every game canvas is now retina sharp:* drawn at up to 2x pixels (it was 1x and looked soft on an iPhone). If a phone cannot hold a smooth frame rate, the game steps the sharpness down by itself and remembers it.
+  - *Sky Pilot physics:* propeller thrust fades with speed and slow flight adds induced drag, so a too-steep climb bleeds speed and stalls (Cessna climbs about 5 m/s at 8 degrees, glides about 6.6:1 with no engine). Banked turns need back pressure and raise the stall speed; a G meter shows the load. Buildings are solid.
+  - *Sky Pilot world:* a real airport (apron, taxiway, terminal, control tower, hangars), the town of Brick Bay with 3D buildings and roads, runway edge lights, green/red threshold lights, working PAPI lights, a sun, sunset flights with lit runways, wingtip vapor trails.
+  - *Sky Pilot approach aid:* PAPI + centerline needle panel on final approach, radio-altimeter callouts (100, 50, 20, 10), "too low, gear" warning.
+  - *Sky Pilot fixes:* the radio panel no longer covers the mission quiz or checklist; rain no longer draws over the instruments; the weather badge no longer overlaps messages.
+  - *Tesla Drive physics:* sideways momentum, so the car leans into lane changes and slides wider on wet (64% grip) and snowy (50% grip) roads; regen braking is weaker on low grip. Lane dashes now scroll at the same speed as the road objects.
+  - *Tesla Drive traffic:* cars signal with a blinker for a second before changing lanes, only move when there is room, and show brake lights when you close in. Moving over early earns a Smooth Pass bonus.
+  - *Tesla Drive look and sound:* worn asphalt, guard rails, ground detail, skid marks, tire spray, brake glow with regen arrows, speed streaks, wind noise that rises with speed, power/regen meter, range estimate, grip badge.
+  - *Tesla Drive trip computer* at the end: top speed, Wh per mile, regen recovered, smooth passes and a 5-star driver rating with one coaching tip.
 - **Guided everywhere, Career Labs and Genius Hospital (Version 154):**
   - *Study apps:* every home page now starts with one red pulsing **Do this next** button (course: the next lesson, cards, quiz or practice job; exam parts: misses, then the new exam-style drill, then Smart drill). Everything else is folded under one line, so the guided path is the default and free choice is one tap away.
   - *EA Part 1:* 69 new exam-style questions (form and schedule routing, exact 2025 thresholds, timing and deadline rules, "which taxpayer" comparisons), written after a 2-of-10 on an outside practice set. New **Exam-style** drill button.
