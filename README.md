@@ -90,10 +90,13 @@ subject up a level, two misses move it down. Hints are always available but neve
   After First Takeoff, a ⚡ fighter jet unlocks: twice the thrust, takes off at 35 m/s and needs a
   longer landing.
   One ticket = a 5-minute visit. No crime or violence: everything is cartoon mischief.
-- **🔄 Smart rotation:** a daily "brain mix" suggests three activities he hasn't done yet; the first win at each Every play game's end screen (Brick Bay, Sky Pilot, Booster Landing, Space Mission, Derby, Tesla Drive) shows an "Earn your next ticket" card with two fresh learning picks from the rotation; chess promotions and Hacker/Termux missions now count toward it too.
+- **🔄 Smart rotation:** a daily "brain mix" suggests three activities he hasn't done yet; the first win at each
   one each day gives a bonus ticket (up to 4), and after three rounds of the same thing it suggests switching.
-- **🎓 Genius Lessons:** bite-size tracks from Kid to Elite (3 cards + 2 questions each): Money & Economy, Tracks include ⚖️ Law & Courts (rights, the courtroom, civil vs criminal cases and contracts, and the path to becoming a lawyer).
-  Government & Law, Crypto & Blockchain, How Hacks Happen (ethical cyber defense), Medicine & Body,
+  Every play game's end screen (Brick Bay, Sky Pilot, Booster Landing, Space Mission, Derby, Tesla Drive) shows
+  an "Earn your next ticket" card with two fresh learning picks. Chess promotions and Hacker/Termux missions count too.
+- **🎓 Genius Lessons:** bite-size tracks from Kid to Elite (3 cards + 2 questions each): Money & Economy,
+  Government & Law, ⚖️ Law & Courts (rights, the courtroom, civil vs criminal cases, contracts, becoming a lawyer),
+  Crypto & Blockchain, How Hacks Happen (ethical cyber defense), Medicine & Body,
   Engineering & Space, and Science Careers, each ending with real career paths.
 - **🎵 Music Lab:** note reading on the treble staff (4 adaptive levels), an on-screen piano, play-along songs
   (Hot Cross Buns, Mary Had a Little Lamb, Twinkle Twinkle, Ode to Joy) where the microphone checks each
