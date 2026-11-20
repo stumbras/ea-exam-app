@@ -598,6 +598,8 @@ body.course .kidsbtn{display:none}
 .flog{display:grid;gap:4px;margin:10px 0;text-align:left;font-size:14px}.flog div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding:4px 2px}.flog .ok b{color:var(--good)}.flog .mid b{color:var(--warn)}.flog .bad b{color:var(--bad)}
 body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 .ftitle{font-size:19px;font-weight:800;margin:8px 0 6px;line-height:1.3}
+.kpassov{position:fixed;inset:0;z-index:60;background:rgba(10,20,40,.55);display:flex;align-items:center;justify-content:center;padding:20px}
+.kpassc{background:#fff;color:#1b2440;border-radius:22px;padding:20px 18px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 50px -20px rgba(0,0,0,.6);animation:jpop .3s}
 </style>
 
 </head><body>
@@ -8833,7 +8835,7 @@ function kGrownView(v){const k=KS(),g=k.goal,gi=kGoalInfo(),b=kBrain(),age=kAge(
   const rows=Object.entries(KSUB).map(([s,[n,ic]])=>{const st=k.st[s],r=st.h.length?Math.round(st.h.reduce((a,c)=>a+c,0)/st.h.length*100):null;return `<div class="kgr">${ic} <b>${n}</b>: level ${k.lv[s]} of ${KMAXLV[s]||20} (about ${kOrd(kGrade(k.lv[s]))} grade) · ${st.c} right of ${st.n} · ${st.n?Math.round(st.c/st.n*100)+"%":"–"}${r!==null?` · recent ${r}%`:""}</div>`}).join("");
   const cs=k.chess.st,T=Object.values(k.troph||{}).sort((a,c)=>c.d-a.d);
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Grown-up corner","home")}
-   <div class="kcard"><div class="kh">🧭 Guided mode</div><div class="ksmall">ON: each day his most-skipped activity is step 1 of the Mission Path, and he must win one round of it before other activities open. The rest of the path stays suggested.</div><button class="kbtn ${k.guided===false?"ghost":"green"}" data-k="tGuided">🧭 Guided mode: ${k.guided===false?"OFF":"ON"}</button></div>
+   <div class="kcard"><div class="kh">🧭 Guided mode</div><div class="ksmall">ON: each day his most-skipped activity is step 1 of the Mission Path, and he must win one round of it before other activities open. The rest of the path stays suggested.</div><button class="kbtn ${k.guided===false?"ghost":"green"}" data-k="tGuided">🧭 Guided mode: ${k.guided===false?"OFF":"ON"}</button> <button class="kbtn ghost" data-k="tUnlock30">🔓 Unlock free play 30 min${(k.passUntil||0)>Date.now()?` (${Math.ceil((k.passUntil-Date.now())/60000)} min left)`:""}</button><div class="small" style="margin-top:6px">🎫 Free Passes saved: ${k.pass===undefined?1:k.pass} of 2. He earns one by finishing a whole Mission Path; each opens 10 minutes of free play. Tickets still count during free play.</div></div>
    <div class="kcard"><div class="kh">🧠 Brain report</div><div class="kgr">${b.known?`Overall about <b>${kOrd(b.g)}-grade</b> level${age!=null?` at age ${age} (expected ${kOrd(b.exp)})`:""}: <b>${b.ahead>0?b.ahead+" grade"+(b.ahead>1?"s":"")+" ahead":b.ahead===0?"on track":Math.abs(b.ahead)+" behind"}</b>.`:"Not enough answers yet. A Brain Scan gives a quick reading."}</div>${rows}
     <div class="kgr">🃏 <b>Poker</b>: level ${k.poker.lv} of 16 · ${k.poker.st.c} right of ${k.poker.st.n} · ${k.poker.hands} hands played, ${k.poker.won} won (play chips only)</div><div class="kgr">♟️ <b>Chess</b>: level ${k.chess.lv} · ${k.chess.solved} puzzles · ${k.chess.mates} checkmates · ${k.chess.forks} forks · ${k.chess.promos} promotions · ${cs.n?Math.round(cs.c/cs.n*100)+"% solved without help":"–"}</div>
     <div class="ksmall">Each subject adapts on its own: 3 right in a row (70%+ recent accuracy) moves up a level, 2 misses in a row moves down one. Math goes to level 25 (algebra and geometry); levels map to grades: 1–3 = 2nd, 4–6 = 3rd, 7–9 = 4th, 10–12 = 5th, 13–15 = 6th, 16–18 = 7th, 19–21 = 8th, 22+ = high school. Hints never earn points or count toward levels. Missed questions come back later until he gets them right twice (${k.rev.length} waiting, ${k.fixed} fixed).</div></div>
@@ -11263,6 +11265,32 @@ function kMust(){const k=KS();if(k.guided===false)return null;const r=kRot(),P=k
 function kGate(d){const m=kMust();if(!m)return false;const id=kPlayKey(d);if(!id||id===m)return false;const I=kPathInfo(m);if(!I)return false;kT(`🧭 Step 1 first: ${I.x[1]} ${I.x[2]}! Win one round of it, then everything opens.`);kBeep("no");kLine(`First, ${I.x[2]}! Then everything opens.`,2);return true}
 
 KROT.push(["mine","⛏️","Block Miner","k","mine"],["mc","📡","Mission Control","k","mc"],["ast","☄️","Asteroid Defense","k","ast"]);
+
+/* ================= Guided mode stays strict, with two limited overrides =================
+   Free Pass: earned by finishing the whole daily Mission Path (+1, hold at most 2; a new player starts with 1).
+   Using one opens free play for 10 minutes. Grown-up unlock: 30 minutes from the grown-up screen.
+   During either, tickets are still earned normally, and step 1 stays required afterwards with its bonus waiting. */
+function kPassLeft(){const k=KS();return Math.max(0,(k.passUntil||0)-Date.now())}
+function kPassN(){const k=KS();if(k.pass===undefined){k.pass=1;persist()}return k.pass}
+function kPathCheck(lines){const r=kRot();if(r.pathBon)return;const P=kPath();if(P.length===3&&P.every(id=>r.done[id])){r.pathBon=1;kTix(2,"🧭 Mission path complete");if(lines)lines.push("🧭 Mission path complete: +2 🎟️ bonus!");kTrophy("path1","🧭","Path finder!","Finished a daily Mission Path.");
+  const k=KS(),n=kPassN();if(n<2){k.pass=n+1;persist();if(lines)lines.push("🎫 +1 Free Pass! Use it to skip step 1 for 10 minutes another day.");kLine("Mission path complete! Two bonus tickets and a Free Pass!",3)}else kLine("Mission path complete! Two bonus tickets!",3)}}
+function kGate(d){
+  if(d&&d.kpass==="use"){const k=KS();if(kPassN()>0){k.pass--;k.passUntil=Date.now()+10*60000;persist();kT("🎫 Free Pass on: 10 minutes of free play. Step 1 is still waiting, with its bonus tickets.");kBeep("yes");const sv=KV.passD;KV.passD=null;KV.passAsk=null;if(sv)setTimeout(()=>{const fb=document.createElement("button");Object.assign(fb.dataset,sv);kidsClick(fb)},0)}return true}
+  if(d&&d.kpass==="go"){const I=KV.passAsk&&kPathInfo(KV.passAsk);KV.passAsk=null;KV.passD=null;if(I)setTimeout(()=>{const fb=document.createElement("button");if(I.x[3]==="kcat")fb.dataset.kcat=I.x[4];else fb.dataset.k=I.x[4];kidsClick(fb)},0);return true}
+  if(d&&d.kpass==="no"){KV.passAsk=null;KV.passD=null;return true}
+  if(d&&d.k==="tUnlock30"){const k=KS();k.passUntil=Date.now()+30*60000;persist();kT("🔓 Free play for 30 minutes. Guided mode comes back after.");return true}
+  const m=kMust();if(!m)return false;const id=kPlayKey(d);if(!id||id===m)return false;const I=kPathInfo(m);if(!I)return false;
+  if(kPassLeft()>0)return false;
+  kBeep("no");kLine(`First, ${I.x[2]}! Then everything opens.`,2);
+  KV.passAsk=m;KV.passD=Object.assign({},d);setTimeout(kPassShow,0);return true}
+function kPassShow(){const m=KV.passAsk;if(!m)return;const I=kPathInfo(m);if(!I)return;const n=kPassN();document.querySelectorAll(".kpassov").forEach(x=>x.remove());
+  const o=document.createElement("div");o.className="kpassov";
+  o.innerHTML=`<div class="kpassc"><div style="font-size:44px">🧭</div><div class="kh" style="margin:4px 0">Step 1 first: ${I.x[1]} ${esc(I.x[2])}</div>
+   <div class="small" style="margin-bottom:12px">Win one round of it and everything opens, with bonus tickets.</div>
+   <button class="kbtn green" data-kpass="go" style="width:100%">▶ Do step 1 now</button>
+   ${n>0?`<button class="kbtn" data-kpass="use" style="width:100%;margin-top:8px">🎫 Use a Free Pass · 10 min (you have ${n})</button>`:`<div class="small" style="margin-top:10px">🎫 No Free Pass right now. Finish a whole Mission Path to earn one.</div>`}
+   <button class="kbtn ghost" data-kpass="no" style="width:100%;margin-top:8px">Not now</button></div>`;
+  (document.getElementById("view")||document.body).appendChild(o)}
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -15723,7 +15751,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 146 · Nov 20";
+const BUILD="Version 147 · Nov 20";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
