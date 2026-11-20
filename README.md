@@ -34,6 +34,13 @@ borrowing, step-up and estate basics (Part 1); employee vs independent contracto
 Every subject adapts to the player: three right answers in a row (with 70%+ recent accuracy) moves a
 subject up a level, two misses move it down. Hints are always available but never earn points.
 
+- **Smart drills (Version 143):** every drill question has its own memory (spaced-repetition boxes: missed
+  questions come back right away, then after 1, 3, 7 and 21 days as they stick). Each round asks missed and
+  due questions first and re-asks any miss at the end. A ⚡ Smart Review pulls the most-due questions from
+  every drill in the part. The drill list shows mastered questions and accuracy, with weak drills in red.
+- **📽️ Drills by course video:** 20 drill sets, 8 questions each, one per video of the free EA Tax Training
+  2026 course (Part 1: 7 videos, Part 2: 9, Part 3: 4), written fresh with tax-year-2025 law including OBBBA.
+
 - **🎤 Quiz Show:** 5-question game-show rounds with a timer and speed bonus. Categories: mix,
   flags, maps (world and U.S.), space (planets, Moon phases), Tesla & EVs, SpaceX & rockets, math
   pictures (clocks, fractions, graphs, coordinates), science, spelling bee (spoken, typed answers),

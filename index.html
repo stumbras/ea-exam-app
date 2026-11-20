@@ -7432,6 +7432,170 @@ rep:{t:"Representation: who can do what",q:[
  ["Client asks the EA to return their original records after a fee dispute.",["Must return the client's records on request","May keep them until paid"],0,"Under Circular 230 a practitioner must promptly return client records needed to comply with tax obligations (with limited exceptions for the practitioner's own work product)."]]}});
 Object.assign(DRILLP,{earn:[1],sch:[1],txb:[1],loss:[1],wealth:[1],work:[2],acct:[2],pen:[3],rep:[3]});
 
+/* ================= Drills by course video (topics follow the free EA Tax Training 2026 slides by Tom Norton CPA, EA; questions written fresh, tax year 2025 law incl. OBBBA) ================= */
+Object.assign(DRILL,{
+v11:{t:"P1·V1 Filing, status & penalties",q:[["Joey, 21, single, not a dependent: 2025 wages $12,000, dividends $2,500, interest $1,000. Must he file?",["No: $15,500 is under the $15,750 filing threshold","Yes"],0,"Gross income below the standard deduction amount for his status, and no self-employment income."],
+ ["Monica, 21, single: $12,000 net profit from her lawn-mowing business in 2025. Must she file?",["Yes: net self-employment earnings of $400 or more","No: she's under $15,750"],0,"SE tax filing rule: $400 of net earnings from self-employment."],
+ ["What does Form 4868 extend for a 2025 Form 1040?",["Time to FILE only, to October 15, 2026","Time to file and to pay","Time to pay only"],0,"Interest and failure-to-pay penalty still run on unpaid tax after April 15."],
+ ["Failure-to-file penalty (no fraud)?",["5% of the unpaid tax per month or part of a month, up to 25%","0.5% per month, up to 25%","15% per month, up to 75%"],0,"Fraud raises it to 15% per month, up to 75%. Failure to pay is 0.5% per month."],
+ ["A 2025 return is filed more than 60 days late with $300 of tax due. Minimum failure-to-file penalty?",["$300: the smaller of $525 or 100% of the tax due","$525","$0"],0,"For 2025 returns due in 2026 the minimum is the smaller of $525 or 100% of the unpaid tax."],
+ ["Substantial presence: 120 days in each of 2025, 2024 and 2023. Result?",["120 + 40 + 20 = 180 days: not a resident (needs 183)","360 days: resident","183 days: resident"],0,"Current year in full, 1/3 of last year, 1/6 of the year before, and at least 31 days this year."],
+ ["Spouse died in June 2025 and the survivor hasn't remarried. 2025 filing status can be…",["Married filing jointly","Qualifying surviving spouse","Single only"],0,"Married all year for the year of death. QSS can apply for the next 2 years with a dependent child."],
+ ["Married, living apart: she paid over half the cost of the home for her son all year; her husband was out of the home the last 6 months. Her status?",["Head of household (considered unmarried)","Married filing separately only","Single"],0,"The considered-unmarried rules let her use HOH."]]},
+v12:{t:"P1·V2 Income: taxable or excluded",q:[["Employer pays $8,000 of an employee's student loans in 2025.",["Up to $5,250 is excludable (shared with educational assistance)","Fully taxable","Fully excluded"],0,"Qualified student loan payments share the $5,250 educational assistance limit."],
+ ["Employer-provided group-term life insurance of $80,000.",["The cost of coverage over $50,000 is taxable on the W-2","All excluded","All taxable"],0,"Uses an IRS table cost for the excess coverage."],
+ ["2025 dependent care FSA exclusion limit (MFJ)?",["$5,000","$7,500","$3,000"],0,"It rises to $7,500 in 2026 under OBBBA."],
+ ["2025 Form 1099-K reporting threshold for payment apps and marketplaces?",["More than $20,000 AND more than 200 transactions","$600","$2,500"],0,"OBBBA restored the $20,000 / 200 thresholds. Income is taxable even without a form."],
+ ["A $500 state refund; last year the taxpayer took the standard deduction.",["Not taxable","Taxable $500"],0,"Only taxable to the extent it gave a tax benefit as an itemized deduction."],
+ ["Stock held 50 days during the 121-day window around the ex-dividend date.",["Ordinary (not qualified) dividends: needs more than 60 days","Qualified dividends"],0,"Qualified dividend holding period: more than 60 days in the 121-day period."],
+ ["Interest and dividends must go on Schedule B when either exceeds…",["$1,500","$600","$10"],0,"Also required for nominee amounts and certain other situations."],
+ ["Unemployment compensation received in 2025 is…",["Fully taxable","Not taxable","Taxable only over $10,200"],0,"The $10,200 exclusion applied only to 2020."]]},
+v13:{t:"P1·V3 Basis & capital gains",q:[["Holding period for a long-term capital gain?",["More than 1 year","At least 6 months","Exactly 1 year"],0,"Held one year or less is short-term, taxed at ordinary rates."],
+ ["Basis of inherited stock (no alternate valuation election)?",["Fair market value on the date of death","The decedent's cost","Zero"],0,"Step-up (or down) under §1014. Inherited property is always long-term."],
+ ["Basis of gifted stock later sold at a gain?",["The donor's adjusted basis (carryover basis)","FMV on the gift date","Zero"],0,"For a loss, use the lower of donor basis or FMV at the gift date."],
+ ["Net capital loss deductible against ordinary income each year?",["$3,000 ($1,500 MFS); the rest carries forward","Unlimited","$1,500 for everyone"],0,"Individual capital loss carryovers never expire."],
+ ["Main home sale exclusion for MFJ who meet the tests?",["$500,000","$250,000","$1,000,000"],0,"$250,000 for single filers."],
+ ["Home sale ownership and use test?",["Owned and lived in it 2 of the last 5 years","1 of the last 3 years","5 of the last 10 years"],0,"Partial exclusions exist for job moves, health or unforeseen circumstances."],
+ ["Sold stock at a loss and bought the same stock 20 days later.",["Wash sale: the loss is disallowed and added to the new shares' basis","The loss is allowed","Half the loss is allowed"],0,"Window: 30 days before or after the sale."],
+ ["2025 0% long-term capital gain rate applies to taxable income up to (single)…",["$48,350","$96,700","$10,000"],0,"$96,700 for MFJ. Then 15%, and 20% at high incomes."]]},
+v14:{t:"P1·V4 Adjustments & deductions (OBBBA)",q:[["2025 standard deduction, single?",["$15,750","$15,000","$14,600"],0,"OBBBA raised it. MFJ is $31,500 and HOH $23,625."],
+ ["New 2025 senior deduction?",["$6,000 per person 65+, reduced by 6% of MAGI over $75,000 ($150,000 MFJ)","$2,000 flat","$6,000 with no phase-out"],0,"For 2025–2028, on top of the extra standard deduction for age."],
+ ["2025 SALT itemized cap (MFJ, MAGI under $500,000)?",["$40,000","$10,000","Unlimited"],0,"It phases down toward $10,000 above $500,000 MAGI."],
+ ["No-tax-on-overtime deduction (2025–2028) covers…",["Only the extra 'half' of time-and-a-half, up to $12,500 ($25,000 MFJ)","All overtime pay","Overtime for salaried executives"],0,"Phases out above $150,000 MAGI ($300,000 MFJ)."],
+ ["Qualified tips deduction maximum (2025–2028)?",["$25,000, phased out above $150,000 MAGI ($300,000 MFJ)","Unlimited","$12,500"],0,"Tips in occupations that customarily receive tips."],
+ ["Which loan qualifies for the new car-loan interest deduction?",["A new, US-assembled personal vehicle bought after 2024: up to $10,000 of interest","Any used car loan","Business vehicle leases"],0,"Phases out above $100,000 MAGI ($200,000 MFJ). Available whether or not you itemize."],
+ ["Medical expenses are deductible (itemized) above…",["7.5% of AGI","10% of AGI","2% of AGI"],0,"Only unreimbursed qualified medical and dental costs."],
+ ["Educator expense deduction (above the line), 2025 maximum per educator?",["$300","$250","$500"],0,"K–12 teachers, counselors and aides with 900+ hours."]]},
+v15:{t:"P1·V5 Tax calculation & credits",q:[["2025 Child Tax Credit per qualifying child?",["$2,200","$2,000","$3,000"],0,"OBBBA raised it. The refundable part (ACTC) is limited."],
+ ["Credit for other dependents (e.g., a 19-year-old non-student relative)?",["$500","$2,200","$0"],0,"Nonrefundable."],
+ ["Kiddie tax applies to a child's unearned income over (2025)…",["$2,700","$1,350","$5,000"],0,"Taxed at the parent's rate above that amount."],
+ ["Standard deduction for a dependent (2025)?",["The greater of $1,350 or earned income + $450 (capped at the regular amount)","$15,750","$0"],0,"Dependent filers get a limited standard deduction."],
+ ["American Opportunity Credit maximum and refundable part?",["$2,500 per student, up to $1,000 refundable","$2,000, not refundable","$2,500, fully refundable"],0,"First 4 years of college, at least half-time."],
+ ["Lifetime Learning Credit maximum?",["$2,000 per RETURN (20% of $10,000)","$2,000 per student","$2,500"],0,"Nonrefundable. No limit on years."],
+ ["Net investment income tax?",["3.8% on investment income above $200,000 MAGI ($250,000 MFJ)","0.9% on wages","3.8% on all wages"],0,"Form 8960."],
+ ["Additional Medicare tax on wages above $200,000 (single)?",["0.9%","3.8%","2.9%"],0,"$250,000 threshold for MFJ. Form 8959."]]},
+v16:{t:"P1·V6 Retirement & Social Security",q:[["2025 IRA contribution limit at age 52?",["$8,000","$7,000","$23,500"],0,"$7,000 plus a $1,000 catch-up at 50+."],
+ ["Deadline for a 2025 IRA contribution?",["April 15, 2026 (no extension)","October 15, 2026","December 31, 2025"],0,"You can file claiming it before you actually contribute, as long as you contribute by the due date."],
+ ["Nondeductible IRA contributions (basis) are tracked on…",["Form 8606","Form 5329","Form 1099-R"],0,"Required even if no return is otherwise required."],
+ ["Traditional IRA withdrawal at 45, no exception applies.",["Taxable income plus a 10% additional tax","Tax-free","Only the 10%, no income tax"],0,"Form 5329 for the additional tax."],
+ ["Roth IRA earnings come out tax-free when…",["The Roth is 5+ years old AND you're 59½, disabled, deceased, or a first-time homebuyer ($10,000)","Any time","Only after 73"],0,"Contributions themselves always come out tax-free."],
+ ["Required minimum distributions start at…",["Age 73 (born 1951–1959)","70½","65"],0,"SECURE 2.0 moves it to 75 for people born 1960 or later."],
+ ["Maximum taxable share of Social Security benefits?",["85%","50%","100%"],0,"Depends on provisional income."],
+ ["MFJ, one spouse has no job but joint compensation covers both contributions.",["The non-working spouse can contribute the full limit (spousal IRA)","Cannot contribute","Only $2,000"],0,"Combined compensation must cover both."]]},
+v17:{t:"P1·V7 Foreign, rental, gift & estate",q:[["2025 foreign earned income exclusion maximum?",["$130,000","$126,500","$120,000"],0,"Needs the bona fide residence or physical presence (330 days) test. Form 2555."],
+ ["FBAR is required if foreign accounts total more than…",["$10,000 at any time during the year","$50,000 at year-end","$600"],0,"FinCEN Form 114, filed electronically, due April 15 with an automatic extension to October 15."],
+ ["A home rented out for fewer than 15 days in the year.",["Rental income isn't reported (and rental expenses aren't deducted)","All taxable","Report half"],0,"The 14-day rule."],
+ ["Passive rental loss allowance for active participants?",["Up to $25,000, phased out between $100,000 and $150,000 MAGI","Unlimited","$3,000"],0,"Real estate professionals can avoid passive treatment altogether."],
+ ["2025 annual gift tax exclusion per recipient?",["$19,000","$18,000","$15,000"],0,"Spouses can split gifts for $38,000 per recipient."],
+ ["2025 basic exclusion amount for estate and gift tax?",["$13,990,000","$15,000,000","$5,000,000"],0,"OBBBA sets $15,000,000 starting in 2026."],
+ ["Form to report gifts above the annual exclusion?",["Form 709","Form 706","Form 1041"],0,"Form 706 is the estate tax return."],
+ ["Residential rental building MACRS recovery period?",["27.5 years straight-line","39 years","5 years"],0,"Land is never depreciated."]]},
+v21:{t:"P2·V1 Business entities",q:[["Federal income tax rate for a C corporation?",["Flat 21%","Graduated 15–35%","The owner's rate"],0,"Then shareholders pay tax again on dividends."],
+ ["Form to elect S corporation status?",["Form 2553","Form 8832","Form 1065"],0,"Form 8832 is the entity classification election."],
+ ["S corporation shareholder limit?",["100 shareholders and one class of stock","Unlimited","35"],0,"Family members can count as one shareholder."],
+ ["2025 Social Security wage base?",["$176,100","$168,600","$200,000"],0,"Medicare has no wage base."],
+ ["Self-employment tax?",["15.3% on 92.35% of net earnings (12.4% part stops at the wage base)","7.65%","12.4% only"],0,"Half of SE tax is an adjustment to income."],
+ ["How does a partnership tell partners their shares?",["Schedule K-1 (Form 1065)","Form W-2","Form 1099-NEC"],0,"Partners report it on their own returns."],
+ ["An LLC wants to be taxed as a C corporation. Form?",["Form 8832","Form 2553","Form SS-4"],0,"To be an S corp it files Form 2553."],
+ ["Two-member LLC, no elections.",["Partnership: Form 1065","Two Schedule Cs","Form 1120"],0,"Default classification."]]},
+v22:{t:"P2·V2 Accounting methods & periods",q:[["2025 gross receipts test to use the cash method?",["Average $31 million or less over the prior 3 years","$5 million","$1 million"],0,"Same test frees small businesses from some inventory and §263A rules."],
+ ["Changing an accounting method requires…",["Form 3115 (IRS consent)","Form 8822","Nothing"],0,"Many changes are 'automatic' but still need Form 3115."],
+ ["Cash method: income is reported when…",["Actually or constructively received","Earned","Billed"],0,"A check received Dec 31 is income that year even if deposited in January."],
+ ["Accrual method: an expense is deducted when…",["The all-events test is met and economic performance occurs","It's paid","The invoice arrives"],0,"Recurring item exceptions exist."],
+ ["Most individuals use which tax year?",["Calendar year","Fiscal year ending June 30","52–53 week year"],0,"A fiscal year needs books kept on that year."],
+ ["A partnership's required tax year is usually…",["The majority partners' tax year","Any year it likes","September 30"],0,"Section 444 elections allow limited deferral."],
+ ["Form to elect LIFO inventory?",["Form 970","Form 3115","Form 4562"],0,"LIFO conformity: financial statements must use LIFO too."],
+ ["A sole proprietor bills $5,000 in December 2025 and is paid in January 2026 (cash method).",["2026 income","2025 income"],0,"Cash method follows receipt."]]},
+v23:{t:"P2·V3 Assets & depreciation",q:[["2025 Section 179 limit under OBBBA?",["$2,500,000, phasing out above $4,000,000 of purchases","$1,250,000","$500,000"],0,"Limited to business taxable income; the excess carries forward."],
+ ["Bonus depreciation for qualified property acquired after January 19, 2025?",["100%","40%","60%"],0,"OBBBA restored 100% bonus permanently."],
+ ["De minimis safe harbor per item without an applicable financial statement?",["$2,500","$5,000","$500"],0,"$5,000 with an AFS. Elect annually on the return."],
+ ["Nonresidential real property MACRS recovery period?",["39 years","27.5 years","15 years"],0,"Mid-month convention."],
+ ["Land is…",["Never depreciated","Depreciated over 39 years","Section 179 property"],0,"Allocate purchase price between land and building."],
+ ["Mid-quarter convention applies when…",["More than 40% of the year's personal property is placed in service in Q4","Always for buildings","Never"],0,"Otherwise half-year convention."],
+ ["Depreciation and Section 179 are reported on…",["Form 4562","Form 4797","Schedule D"],0,"Form 4797 reports sales of business property."],
+ ["Gain on sold equipment, up to the depreciation taken, is…",["Ordinary income (§1245 recapture)","Long-term capital gain","Tax-free"],0,"Gain above original cost can be §1231 gain."]]},
+v24:{t:"P2·V4 Business deductions & credits",q:[["2025 business standard mileage rate?",["70 cents a mile","67 cents","65.5 cents"],0,"Parking and tolls are added on top."],
+ ["Business meal with a client at a restaurant?",["50% deductible","100% deductible","Not deductible"],0,"Must be business-related and not lavish."],
+ ["Sports tickets for a client?",["Not deductible (entertainment)","50%","100%"],0,"Entertainment has been nondeductible since 2018."],
+ ["Business gifts: deduction limit per recipient per year?",["$25","$75","$100"],0,"Incidental costs like engraving don't count toward it."],
+ ["Startup costs in the first year?",["Up to $5,000, reduced by costs above $50,000; the rest over 180 months","All in year 1","None"],0,"Same structure for organizational costs."],
+ ["Qualified business income deduction rate?",["20% (made permanent by OBBBA)","23%","10%"],0,"Form 8995 or 8995-A."],
+ ["2025 QBI threshold where wage and property limits start (single)?",["$197,300","$394,600","$100,000"],0,"$394,600 for MFJ."],
+ ["Home office simplified method?",["$5 a square foot, up to 300 square feet","$10 a square foot","$2, no limit"],0,"Regular and exclusive business use still required."]]},
+v25:{t:"P2·V5 Sole props & partnerships",q:[["A sole proprietor reports business income on…",["Schedule C","Form 1065","Form 1120"],0,"And pays SE tax on Schedule SE."],
+ ["A partner's basis goes UP with…",["Contributions and their share of income","Distributions","Their share of losses"],0,"Distributions and losses reduce basis."],
+ ["Guaranteed payments to a partner are…",["Ordinary income subject to SE tax","Tax-free","Capital gain"],0,"Deductible by the partnership."],
+ ["Calendar-year Form 1065 due date?",["March 15","April 15","October 15"],0,"Extension: Form 7004 for 6 months."],
+ ["Order of limits on a partner's loss?",["Basis, then at-risk, then passive activity rules","Unlimited","$3,000"],0,"Excess business loss rules can apply after that."],
+ ["2025 SEP-IRA contribution limit?",["25% of compensation, up to $70,000","$23,500","$7,000"],0,"For the self-employed, about 20% of net SE earnings."],
+ ["2025 SIMPLE IRA employee deferral limit?",["$16,500","$23,500","$7,000"],0,"Plus catch-ups for 50+."],
+ ["Does a partnership pay federal income tax?",["No: income flows through to the partners","Yes, 21%","Yes, at the top partner's rate"],0,"Partners pay even if no cash is distributed."]]},
+v26:{t:"P2·V6 C corporations",q:[["Dividends received deduction, corporation owns under 20% of the payer?",["50%","65%","100%"],0,"65% for 20%+ ownership; 100% for affiliated groups."],
+ ["2025 corporate charitable deduction limit?",["10% of taxable income","60% of AGI","Unlimited"],0,"Carryover 5 years. OBBBA adds a 1% floor starting in 2026."],
+ ["Corporate capital losses can offset…",["Only capital gains (back 3 years, forward 5)","$3,000 of ordinary income","Anything"],0,"Unlike individuals, no $3,000 ordinary offset."],
+ ["Calendar-year Form 1120 due date?",["April 15","March 15","May 15"],0,"Extension with Form 7004."],
+ ["Reconciling book income to taxable income on Form 1120?",["Schedule M-1 (M-3 for $10 million+ in assets)","Schedule K-1","Schedule L only"],0,"Schedule L is the balance sheet."],
+ ["Accumulated earnings tax rate?",["20%","21%","39.6%"],0,"Applies to earnings kept beyond business needs."],
+ ["§351: property for stock is tax-free if transferors control at least…",["80% right after the transfer","50%","100%"],0,"Boot received can trigger gain."],
+ ["A corporation must make estimated payments if it expects tax of…",["$500 or more","$1,000 or more","Any amount"],0,"Form 2220 computes the underpayment penalty."]]},
+v27:{t:"P2·V7 S corporations",q:[["Deadline for Form 2553 to count for the current year?",["2 months and 15 days after the tax year begins","April 15","Any time"],0,"Late-election relief is available in many cases."],
+ ["S corp shareholder-employees must take…",["Reasonable compensation as W-2 wages","No salary","Only distributions"],0,"The IRS can recharacterize distributions as wages."],
+ ["Distributions to a shareholder within stock basis are…",["Tax-free, reducing stock basis","Taxable dividends","Subject to SE tax"],0,"Above basis they're capital gain."],
+ ["Calendar-year Form 1120-S due date?",["March 15","April 15","January 31"],0,"Same as partnerships."],
+ ["Who can own S corporation stock?",["US citizens and residents, estates and certain trusts","Nonresident aliens","Partnerships and C corps"],0,"An ineligible shareholder terminates the election."],
+ ["Built-in gains tax hits…",["A former C corp selling appreciated assets within 5 years of converting","Every S corp","Partnerships"],0,"Taxed at 21% at the corporate level."],
+ ["Shareholder loss deduction limit?",["Stock basis plus debt basis (loans made to the corporation)","Unlimited","$25,000"],0,"Then at-risk and passive rules."],
+ ["S corporation income reaches shareholders on…",["Schedule K-1 (Form 1120-S)","W-2 only","1099-DIV"],0,"Taxed whether or not it's distributed."]]},
+v28:{t:"P2·V8 Trusts & estates",q:[["Income tax return for an estate or trust?",["Form 1041","Form 706","Form 709"],0,"706 is the estate tax return; 709 is gift tax."],
+ ["An estate must file Form 1041 if gross income is…",["$600 or more (or any nonresident alien beneficiary)","$10,000 or more","Any amount"],0,"Trusts: any taxable income, or $600+ gross income."],
+ ["A simple trust must…",["Distribute all income currently, with no charitable gifts or principal distributions","Accumulate income","Pay 21%"],0,"Complex trusts can accumulate."],
+ ["Distributable net income (DNI) caps…",["The distribution deduction and what beneficiaries are taxed on","Estate tax","Gift tax"],0,"It keeps income from being taxed twice."],
+ ["A revocable grantor trust's income is taxed to…",["The grantor","The trust","The beneficiaries"],0,"Reported on the grantor's own return."],
+ ["Calendar-year Form 1041 due date?",["April 15","March 15","June 15"],0,"Estates can choose a fiscal year."],
+ ["Beneficiaries get their shares on…",["Schedule K-1 (Form 1041)","W-2","1099-R"],0,"They report the income on their own returns."],
+ ["Form 706 is due…",["9 months after death (6-month extension available)","April 15","1 year after death"],0,"Portability of a deceased spouse's unused exclusion requires a timely 706."]]},
+v29:{t:"P2·V9 Exempt orgs, payroll & farms",q:[["Most tax-exempt charities file…",["The Form 990 series","Form 1120","Form 1065"],0,"990, 990-EZ, 990-N or 990-PF."],
+ ["A small exempt organization (normally $50,000 or less in gross receipts) files…",["Form 990-N (e-Postcard)","Form 990-PF","Nothing ever"],0,"Missing 3 years in a row revokes exemption."],
+ ["An exempt org with $1,000+ of gross unrelated business income files…",["Form 990-T","Form 1120-S","Form 1041"],0,"UBIT is taxed at corporate or trust rates."],
+ ["Quarterly employer payroll tax return?",["Form 941","Form 940","Form W-3"],0,"Small employers may qualify for annual Form 944."],
+ ["Annual federal unemployment (FUTA) return?",["Form 940","Form 941","Form 944"],0,"Due January 31."],
+ ["FUTA wage base per employee?",["$7,000","$176,100","$10,000"],0,"Net rate 0.6% with full state credit."],
+ ["W-2s must reach employees by…",["January 31","February 28","March 15"],0,"Same date for filing with the SSA."],
+ ["Farm income and expenses go on…",["Schedule F","Schedule C","Schedule E"],0,"Farmers have special estimated tax rules."]]},
+v31:{t:"P3·V1 Practices, procedures & penalties",q:[["Due diligence penalty (EIC, CTC, AOTC, HOH), returns filed in 2026?",["$650 per failure","$635","$1,000"],0,"It was $635 for returns filed in 2025."],
+ ["Penalty for endorsing or negotiating a client's refund check (filed in 2026)?",["$650 per check","$50","No penalty"],0,"§6695(f)."],
+ ["The due diligence checklist for refundable credits and HOH is…",["Form 8867","Form 8879","Form 2848"],0,"Keep it with records for 3 years."],
+ ["§6694(a) preparer penalty for an unreasonable position?",["Greater of $1,000 or 50% of the fee from that return","$50","$10,000"],0,"Willful or reckless conduct: greater of $5,000 or 75%."],
+ ["Normal assessment statute of limitations?",["3 years from filing (or the due date, if later)","2 years","10 years"],0,"6 years for a 25%+ omission of income; unlimited for fraud or no return."],
+ ["Collection statute expiration date (CSED)?",["10 years from assessment","3 years","6 years"],0,"Certain events suspend it."],
+ ["Deadline to claim a refund?",["The later of 3 years from filing or 2 years from payment","1 year","7 years"],0,"Use Form 1040-X for individuals."],
+ ["Records supporting income and deductions should generally be kept…",["At least 3 years after filing (longer for property and some cases)","1 year","Only until the refund arrives"],0,"Keep property records until the statute closes on the year you sell it."]]},
+v32:{t:"P3·V2 Representation & Circular 230",q:[["Form that authorizes someone to represent a taxpayer?",["Form 2848","Form 8821","Form 4506"],0,"Only practitioners like EAs, CPAs and attorneys can be named."],
+ ["Form 8821 allows…",["Receiving and inspecting tax information only, not representing","Full representation","Signing returns"],0,"Anyone can be a designee."],
+ ["Who has unlimited practice rights before the IRS?",["Enrolled agents, CPAs and attorneys","Any paid preparer","AFSP record holders"],0,"AFSP holders have limited rights for returns they prepared."],
+ ["EA continuing education requirement?",["72 hours every 3 years, at least 16 a year (2 of ethics)","40 hours a year","None"],0,"Renew enrollment every 3 years."],
+ ["Contingent fees are allowed for…",["An IRS exam of an original return, penalty/interest refund claims, and court cases","Preparing an original return","Never"],0,"Circular 230 §10.27."],
+ ["You discover a client left income off a prior-year return. You must…",["Promptly advise the client of the error and its consequences","Amend it without asking","Report the client to the IRS"],0,"§10.21. You can't fix it without the client's consent."],
+ ["Client asks for their records during a fee dispute.",["Return records needed for their tax obligations promptly (limited exceptions)","Keep them until paid","Destroy them"],0,"§10.28."],
+ ["Circular 230 best practices include…",["Clear terms, establishing the facts, and advising on penalties","Guaranteeing refunds","Unconscionable fees"],0,"§10.33."]]},
+v33:{t:"P3·V3 Exams, appeals & collection",q:[["A notice of deficiency (90-day letter): to go to Tax Court, petition within…",["90 days (150 if addressed outside the US)","30 days","1 year"],0,"No need to pay first in Tax Court."],
+ ["Deadline to request a Collection Due Process hearing after a final notice of intent to levy?",["30 days","90 days","10 days"],0,"An equivalent hearing is available within 1 year."],
+ ["Collection Due Process hearing request form?",["Form 12153","Form 9465","Form 656"],0,"Filed with the office on the notice."],
+ ["Offer in compromise form?",["Form 656 (with Form 433-A/B)","Form 843","Form 1040-X"],0,"Grounds: doubt as to collectibility, liability, or effective tax administration."],
+ ["Installment agreement request?",["Form 9465 or the Online Payment Agreement","Form 1040-X","Form 8857"],0,"Streamlined agreements for balances up to $50,000."],
+ ["Innocent spouse relief form?",["Form 8857","Form 8379","Form 2848"],0,"Usually within 2 years of the first collection activity."],
+ ["Refund offset by a spouse's past-due debt: the other spouse files…",["Form 8379 (injured spouse)","Form 8857","Form 843"],0,"Injured spouse is different from innocent spouse."],
+ ["A 30-day letter after an exam lets the taxpayer…",["Agree, or request an Appeals conference","Only pay","Ignore it safely"],0,"Then a 90-day letter if unresolved."]]},
+v34:{t:"P3·V4 E-file & the filing process",q:[["Taxpayer's e-file signature authorization?",["Form 8879","Form 2848","Form 8821"],0,"The ERO keeps it; it's not sent to the IRS."],
+ ["To e-file for clients, a firm needs…",["An EFIN from the IRS e-file application","Only an EIN","A state license"],0,"Each person who prepares for pay also needs a PTIN."],
+ ["Every paid preparer must have…",["A PTIN, renewed every year","A CPA license","An EFIN of their own"],0,"PTINs expire December 31."],
+ ["A rejected e-filed return: to keep the original timely date, fix and retransmit within…",["10 calendar days","30 days","1 day"],0,"Or file on paper within the allowed period with an explanation."],
+ ["How long does the ERO keep signed Forms 8879?",["3 years","7 years","Forever"],0,"Paper or electronic copies are fine."],
+ ["A preparer who expects to file 11+ individual returns must…",["E-file them (unless an exception applies)","Paper-file","Become a CPA"],0,"Clients can choose paper with Form 8948."],
+ ["A refund can be split into up to how many accounts?",["3 (Form 8888)","10","1"],0,"Or used to buy Series I savings bonds."],
+ ["After e-filing, the ERO must give the taxpayer…",["A copy of the return","Nothing","Their PTIN application"],0,"Paper or electronic."]]}});
+Object.assign(DRILLP,{v11:[1],v12:[1],v13:[1],v14:[1],v15:[1],v16:[1],v17:[1],v21:[2],v22:[2],v23:[2],v24:[2],v25:[2],v26:[2],v27:[2],v28:[2],v29:[2],v31:[3],v32:[3],v33:[3],v34:[3]});
+
 /* ================= Study page: quick drill, decision drills and practice cases, with progress ================= */
 const OPEN={};let qdOver=0;
 document.addEventListener("toggle",e=>{const t=e.target;if(t&&t.matches&&t.matches("details.more"))OPEN[t.id]=t.open},true);
@@ -7474,6 +7638,44 @@ function quickClick(b){const d=b.dataset;
     if(d.qd==="smart"){startSession("qd",n);return true}
     qdOver=n;startSession(d.qd==="new"?"easy":d.qd);qdOver=0;return true}
   return false}
+
+/* ================= Smart drills: per-question memory (Leitner boxes + spaced review), missed-first ordering, in-round re-asks, cross-drill Smart Review, accuracy per drill ================= */
+const DRBOX=[0,1,3,7,21];
+function DQ(){const d=TD();d._q=d._q||{};return d._q}
+function dqId(k,i){return k+"#"+i}
+function dqGet(k,i){return DQ()[dqId(k,i)]||null}
+function dqDue(k,i,now){const r=dqGet(k,i);if(!r)return true;return now-r.t>=DRBOX[Math.min(4,r.b)]*864e5-36e5}
+function dqScore(k,i,now){const r=dqGet(k,i);if(!r)return 2;let s=(4-r.b)*2+(r.n-r.c)/(r.n||1)*3;if(dqDue(k,i,now))s+=3;if(r.lastWrong)s+=4;return s}
+function dqMark(k,i,ok){const Q=DQ(),id=dqId(k,i),r=Q[id]||{b:0,n:0,c:0,t:0};r.n++;if(ok){r.c++;r.b=Math.min(4,r.b+(r.lastWrong?0:1));r.lastWrong=0}else{r.b=0;r.lastWrong=1}r.t=Date.now();Q[id]=r}
+function drillKeys(){return Object.keys(DRILL).filter(x=>typeof DRILLP==="undefined"||!DRILLP[x]||DRILLP[x].includes(+part))}
+function drAcc(k){const D=DRILL[k];let n=0,c=0;D.q.forEach((q,i)=>{const r=dqGet(k,i);if(r){n+=Math.min(r.n,4);c+=Math.min(r.n,4)*(r.c/r.n)}});return n?Math.round(c/n*100):null}
+function drMastered(k){return DRILL[k].q.filter((q,i)=>{const r=dqGet(k,i);return r&&r.b>=3}).length}
+function drSmartOrder(k){const now=Date.now();return DRILL[k].q.map((q,i)=>[i,dqScore(k,i,now)+Math.random()*.8]).sort((a,b)=>b[1]-a[1]).map(x=>[k,x[0]])}
+function drReviewSet(n){const now=Date.now(),all=[];drillKeys().forEach(k=>DRILL[k].q.forEach((q,i)=>{const r=dqGet(k,i);if(r&&(dqDue(k,i,now)||r.lastWrong))all.push([k,i,dqScore(k,i,now)+Math.random()])}));all.sort((a,b)=>b[2]-a[2]);return all.slice(0,n||12).map(x=>[x[0],x[1]])}
+function drDueCount(){const now=Date.now();let n=0;drillKeys().forEach(k=>DRILL[k].q.forEach((q,i)=>{const r=dqGet(k,i);if(r&&(dqDue(k,i,now)||r.lastWrong))n++}));return n}
+function renderDrill(){const e=esc,k=tv.dr,rev=k==="_rev";if(!tv.dord)tv.dord=rev?drReviewSet(12):drSmartOrder(k);const ord0=tv.dord,i=tv.dri||0,a=tv.dra,title=rev?"⚡ Smart review":DRILL[k].t;
+  if(i>=ord0.length||!ord0.length){const sc=tv.drs||0,tot=ord0.length,d=TD();if(!rev){const base=DRILL[k].q.length,first=Math.min(base,tv.drsFirst!=null?tv.drsFirst:sc);if(!d[k]||first>d[k])d[k]=first}persist();
+    const ks=drillKeys(),ix=ks.indexOf(k),weak=ks.map(x=>[x,drAcc(x)]).filter(x=>x[1]!=null&&x[0]!==k).sort((a,b)=>a[1]-b[1])[0],due=drDueCount();
+    $("#view").innerHTML=`<section class="section"><h2>${e(title)}: ${sc} of ${tot}</h2><p>${!tot?"Nothing is due right now. Run a drill to build your review queue.":sc===tot?"Every decision right. These move to a longer review interval.":"Missed ones come back first next time, and again tomorrow, until they stick."}</p>${!rev?`<p class="small muted">Mastered (3+ correct reviews): ${drMastered(k)}/${DRILL[k].q.length} · accuracy ${drAcc(k)??"–"}%</p>`:""}
+     <div class="row"><button class="btn pri" data-tdr="${rev?"_rev":k}">${rev?"Review more":"Again"}</button>${due?`<button class="btn" data-tdr="_rev">⚡ Smart review (${due} due)</button>`:""}${weak&&weak[1]<85?`<button class="btn" data-tdr="${weak[0]}">Weakest: ${e(DRILL[weak[0]].t)} (${weak[1]}%)</button>`:""}<button class="btn" data-tdr="">${tv.from==="home"?"Back to study":"Back to the tax software"}</button>${!rev&&ix>=0&&ix+1<ks.length?`<button class="btn" data-tdr="${ks[ix+1]}">Next drill: ${e(DRILL[ks[ix+1]].t)}</button>`:""}</div></section>`;return}
+  const [dk,qi]=ord0[i],q=DRILL[dk].q[qi],r=dqGet(dk,qi),ord=q[1]===DR_AB?q[1].map((x,j)=>j):p10Ord({q:q[0],o:q[1]});
+  $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>${e(title)}</h2><div class="small muted">Question ${i+1} of ${ord0.length} · ${tv.drs||0} right${rev?` · ${e(DRILL[dk].t)}`:""}${r?` · ${r.lastWrong?"🔁 missed last time":"box "+r.b+"/4"}`:" · new"}</div></div><button class="btn ghost small" data-tdr="">Back</button></div>
+   <div class="card"><b>${e(q[0])}</b><div class="dpo" style="flex-direction:column;align-items:stretch">${ord.map(o=>`<button class="btn ${a==null?"":o===q[2]?"good":o===a?"bad":""}" data-tdra="${o}" ${a!=null?"disabled":""}>${e(q[1][o])}</button>`).join("")}</div>
+   ${a==null?"":`<div class="${a===q[2]?"okt":"badt"}"><b>${a===q[2]?"✓ Right.":"Answer: "+e(q[1][q[2]])+"."}</b> ${e(q[3])}${a!==q[2]?`<div class="small muted" style="margin-top:4px">🔁 This one comes back at the end of this round.</div>`:""}</div><div class="row" style="margin-top:8px"><button class="btn pri" data-tdrn="1">Next</button></div>`}</div></section>`}
+function drillClick(d){
+  if(d.tdr!==undefined){if(d.tdr){tv.dr=d.tdr;tv.dri=0;tv.drs=0;tv.dra=null;tv.dord=null;tv.drsFirst=null;tv.dredo={}}else{tv.dr=null;tv.dord=null;if(tv.from==="home"){view="home";window.scrollTo(0,0)}}return true}
+  if(d.tdra!==undefined&&tv.dr&&tv.dord){if(tv.dra==null){const [dk,qi]=tv.dord[tv.dri],ok=+d.tdra===DRILL[dk].q[qi][2];tv.dra=+d.tdra;const redo=tv.dredo&&tv.dredo[dk+"#"+qi];if(ok)tv.drs=(tv.drs||0)+1;dqMark(dk,qi,ok);if(!ok&&!redo){tv.dredo=tv.dredo||{};tv.dredo[dk+"#"+qi]=1;tv.dord.push([dk,qi])}if(tv.dri===tv.dord.length-1||tv.drsFirst==null&&tv.dri===(DRILL[tv.dr]?DRILL[tv.dr].q.length-1:-1)){}persist()}return true}
+  if(d.tdrn&&tv.dr){if(tv.dr!=="_rev"&&DRILL[tv.dr]&&tv.dri===DRILL[tv.dr].q.length-1)tv.drsFirst=tv.drs||0;tv.dri++;tv.dra=null;return true}
+  return false}
+function drillsHtml(){if(PARTS[part].x||typeof DRILL==="undefined")return "";const e=esc,ks=drillKeys();if(!ks.length)return "";
+  const B=TD(),perfect=ks.filter(k=>B[k]===DRILL[k].q.length).length,due=drDueCount(),vid=ks.filter(k=>/^v\d/.test(k)),base=ks.filter(k=>!/^v\d/.test(k));
+  const row=k=>{const t=DRILL[k].q.length,b=B[k],acc=drAcc(k),m=drMastered(k),pct=Math.round(m/t*100);return `<button class="drow" data-tdrgo="${k}"><span class="dn">${e(DRILL[k].t)}</span><span class="db"><i style="width:${pct}%;background:${m===t?"var(--good)":acc!=null&&acc<70?"var(--bad,#e5484d)":"var(--accent)"}"></i></span><span class="ds">${b==null?"Start":`${m}/${t}${acc!=null?" · "+acc+"%":""}`}</span></button>`};
+  return `<section class="section"><div class="ledger">
+    <div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">Quick decisions</h3><span class="chip">${perfect}/${ks.length} perfect</span></div>
+    <div class="small muted">One-tap rounds on the calls the exam tests constantly. Smart order: missed and due questions first. The bar shows questions mastered (3+ correct reviews); red means accuracy under 70%.</div>
+    <button class="btn ${due?"pri":""}" data-tdrgo="_rev" style="width:100%;margin:8px 0" ${due?"":"disabled"}>⚡ Smart review: ${due?due+" question"+(due===1?"":"s")+" due":"nothing due yet"}</button>
+    <div class="dlist">${base.map(row).join("")}</div>${vid.length?`<h4 style="margin:12px 0 4px">📽️ By course video (EA Tax Training 2026 slides)</h4><div class="dlist">${vid.map(row).join("")}</div>`:""}
+  </div></section>`}
 
 /* ================= Kids · content: science, computers, English, geography (levels 1–20 in 5 tiers) ================= */
 // Bank rows: [tier 1-5, question, correct, wrong1, wrong2, wrong3, did-you-know]
@@ -14851,7 +15053,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 142 · Nov 20";
+const BUILD="Version 143 · Nov 20";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
