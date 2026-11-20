@@ -115,6 +115,15 @@ subject up a level, two misses move it down. Hints are always available but neve
 - **🧭 Today's Mission Path:** the home screen leads with three daily steps picked from his weakest skills,
   each showing level-up progress. Finishing all three pays +2 🎟️. Tapping a game before the path is done
   shows a friendly reminder, but free play is never blocked.
+- **🀄 Filipino Mahjong (Manila style):** six lessons (tiles, sets, the 5-sets-plus-a-pair winning hand, turns and
+  claims, which tile wins, smart discards) with generated questions, then full games against Dragon, Panda and
+  Fox: 16 tiles each (dealer 17), flowers set aside and replaced, chow only from the player on your left, pung
+  and kong from anyone, Mahjong claims first, self-drawn wins, concealed kongs, a 'waiting for' helper, a
+  💡 discard hint, and simple scoring (self-drawn, flowers, concealed, all pungs, one suit). A win pays 🎟️.
+- **🔗 One chain:** every learning activity (quizzes and hero skills, lessons, music, chess, hacker missions,
+  Poker Academy, mahjong, Block Miner, Mission Control, Asteroid Defense) feeds the rotation, the Mission Path,
+  the skipped-activity bonus and the ticket economy. In guided mode (on by default; switch in the Grown-up
+  corner), the day's most-skipped activity is Mission Path step 1 and must be won once before anything else opens.
 - **✈️🚀 Pilot School hub:** Sky Pilot, Booster Landing and Space Mission now live in one hub on the home
   screen, with a ground school (Pilot Basics and Air & Space Force lessons, Air Force, Space Force and SpaceX
   quizzes) that earns the tickets the flying costs.
