@@ -623,6 +623,28 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 .ktwgames{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ktwg{display:flex;flex-direction:column;gap:3px;align-items:flex-start;text-align:left;border:0;border-radius:18px;padding:14px 12px;min-height:118px;background:var(--g);color:#fff;font:inherit;cursor:pointer;box-shadow:0 10px 20px -12px rgba(0,0,0,.6);transition:transform .15s}
 .ktwg:active{transform:scale(.97)}.ktwg>span{font-size:32px}.ktwg b{font-size:15px;line-height:1.2}.ktwg em{font-style:normal;font-size:12px;opacity:.92;margin-top:auto}
+/* ---- kids hubs ---- */
+.khubs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.khub{position:relative;display:flex;flex-direction:column;gap:6px;align-items:flex-start;text-align:left;border:0;border-radius:22px;padding:16px 14px;min-height:150px;color:#fff;font:inherit;cursor:pointer;background:var(--hg);box-shadow:0 14px 28px -16px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.25);overflow:hidden;transition:transform .15s}
+.khub:active{transform:scale(.97)}.khub.big{grid-column:span 2;min-height:120px;flex-direction:row;align-items:center;gap:14px}
+.khub:before{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.12)}
+.khubic{font-size:44px;line-height:1;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}.khub.big .khubic{font-size:54px}
+.khubt{display:flex;flex-direction:column;gap:3px;position:relative;z-index:1}.khubt b{font-size:18px;letter-spacing:.01em}.khubt span{font-size:12.5px;opacity:.92;line-height:1.35}
+.khubt em{font-style:normal;font-size:12px;font-weight:800;background:rgba(0,0,0,.25);padding:3px 8px;border-radius:12px;width:max-content;max-width:100%;margin-top:2px}
+.khub.neg{animation:khubneg 1.4s infinite}@keyframes khubneg{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.0),0 14px 28px -16px rgba(0,0,0,.7)}50%{box-shadow:0 0 0 5px rgba(239,68,68,.85),0 14px 28px -16px rgba(0,0,0,.7)}}
+.khubneg{position:absolute;top:10px;right:10px;font-size:11px;font-weight:900;background:#ef4444;color:#fff;padding:3px 8px;border-radius:12px;z-index:2}
+.khubhero{display:flex;flex-direction:column;gap:4px;border-radius:20px;padding:16px;margin:10px 0;color:#fff}.khubhero b{font-size:22px;letter-spacing:.06em}.khubhero span{font-size:13px;opacity:.92}
+.kh-learn{background:linear-gradient(135deg,#22c55e,#0f766e)}.kh-games{background:linear-gradient(135deg,#a855f7,#4338ca)}.kh-prog{background:linear-gradient(135deg,#334155,#0f172a)}
+.kgenbtn{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0;border:0;border-radius:20px;padding:14px;cursor:pointer;font:inherit;text-align:left;color:#fff;background:linear-gradient(135deg,#312e81,#6d28d9 60%,#db2777);box-shadow:0 12px 24px -14px rgba(109,40,217,.8)}
+.kgenbtn.all{background:linear-gradient(135deg,#065f46,#16a34a)}.kgbic{font-size:38px}.kgbt{display:flex;flex-direction:column;gap:4px;flex:1}.kgbt b{font-size:18px}.kgbt>span{font-size:12.5px;opacity:.95}
+.kgbdots{display:flex;gap:6px}.kgbdots i{font-style:normal;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.15);font-size:14px}.kgbdots i.on{background:#22c55e;font-weight:900}
+.kgbgo{width:36px;height:36px;border-radius:50%;background:#fff;color:#6d28d9;display:flex;align-items:center;justify-content:center;flex:none}
+.kgstat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}.kgstat div{background:rgba(255,255,255,.08);border-radius:14px;padding:10px;text-align:center;display:flex;flex-direction:column}.kgstat b{font-size:22px}.kgstat span{font-size:11.5px;opacity:.85}
+.kgrow{display:grid;grid-template-columns:26px 1fr 70px;gap:4px 8px;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06)}.kgrow>span{font-size:18px;grid-row:span 2}.kgrow b{font-size:13.5px}.kgrow em{font-style:normal;font-size:12px;opacity:.85;text-align:right;grid-row:span 2}.kgrow i{display:block}
+.kcbhero{background:linear-gradient(135deg,#4c1d95,#7c3aed 60%,#c026d3)!important;color:#fff}.kcbh{display:flex;align-items:center;gap:12px}.kcbbot{font-size:44px;animation:kcbb 2.5s ease-in-out infinite}@keyframes kcbb{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.kcbh b{font-size:18px}.kcbrec{margin-left:auto;font-weight:800;font-size:13px;background:rgba(0,0,0,.25);padding:6px 10px;border-radius:14px}
+.kcbladder{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:10px}.kcbladder span{height:26px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}.kcbladder span.on{background:#22c55e}.kcbladder span.cur{background:#fde047;color:#1b2440;font-size:14px}
+.kpassc .kbtn.ghost{color:#1b2440!important;background:#eef2f7!important;border:1px solid #cbd5e1!important}
 </style>
 
 </head><body>
@@ -8551,7 +8573,7 @@ function kThemeOn(v){const r=v.querySelector(".kids");if(r)r.classList.add("th-"
 function renderKids(){const v=$("#view"),k=KS();
   if(!k.setup||KV.scr==="setup"){kSetupView(v);return kThemeOn(v)}
   if((k.trophyQ||[]).length&&(KV.scr==="home"||KV.scr==="reward"||(KV.scr==="show"&&KV.stage==="done"))){kCertView(v,k.trophyQ[0],true);kThemeOn(v);return kAfterRender()}
-  const R={tworld:kTworldView,mj:kMjView,pschool:kPilotView,fly:kFlyView,learn:kLearnView,music:kMusicView,powers:kPowersView,city:kCityView,derby:kDerbyView,col:kColView,land:kLandView,poker:kPokerView,desk:kDeskView,drive:kDriveView,show:kShowView,mine:kMineView,chess:kChessView,term:kTermView,base:kBaseView,badges:kBadgesView,grown:kGrownView,reward:kRewardView,brain:kBrainView,trophies:kTrophyHall,cert:v=>kCertView(v,KV.id,false),sounds:kSoundView}[KV.scr];
+  const R={learnhub:v=>kHome(v,"learn"),gameroom:v=>kHome(v,"games"),prog:v=>kHome(v,"prog"),genius:v=>kHome(v,"genius"),chessbot:v=>kCbView(v),tworld:kTworldView,mj:kMjView,pschool:kPilotView,fly:kFlyView,learn:kLearnView,music:kMusicView,powers:kPowersView,city:kCityView,derby:kDerbyView,col:kColView,land:kLandView,poker:kPokerView,desk:kDeskView,drive:kDriveView,show:kShowView,mine:kMineView,chess:kChessView,term:kTermView,base:kBaseView,badges:kBadgesView,grown:kGrownView,reward:kRewardView,brain:kBrainView,trophies:kTrophyHall,cert:v=>kCertView(v,KV.id,false),sounds:kSoundView}[KV.scr];
   R?R(v):kHome(v);kRotNextHook(v);kNegHook(v);kWindOn(KV.scr==="col"&&KV.mode!=="ast");const root=v.querySelector(".kids");if(root)root.classList.add("th-"+(k.theme||"galaxy"));kAfterRender()}
 let kWarm=false;function kAfterRender(){const k=KS(),g=KV;if(!kWarm&&navigator.onLine&&typeof KVREC!=="undefined"&&HOSTED){kWarm=true;const vv=kNatural(k)?k.voice:"max",list=(KVREC[vv]||[]).slice();let i=0;const step=()=>{if(i>=list.length)return;fetch(`voice/${vv}/${list[i++]}.mp3`).catch(()=>{}).finally(()=>setTimeout(step,120))};setTimeout(step,4000)}
   if(k.lessonQ&&$(".klesson")&&k.lessonSaid!==k.lessonQ){k.lessonSaid=k.lessonQ;const L=KLES[k.lessonQ];kSpeak(`Power-up! ${L[0]}. ${L[1]} For example: ${L[2]}`,{read:true,force:k.voice!=="off"})}
@@ -8655,7 +8677,7 @@ function kBoard(P){const b=P.state==="play"?P.b:P.b2,last=P.last||[],hint=(P.tri
   return `<div class="kboard">${b.map((p,i)=>{const r=i>>3,c=i&7,cls=["ksq",(r+c)%2?"d":"l"];if(i===P.sel)cls.push("sel");if(last.includes(i))cls.push("last");if(i===hint)cls.push("hint");if(P.state==="play"&&P.dots.includes(i))cls.push(p?"dot cap":"dot");
     return `<button class="${cls.join(" ")}" data-ksq="${i}" aria-label="${"abcdefgh"[c]}${8-r}${p?" "+(cWhite(p)?"white ":"black ")+KPN[p.toUpperCase()]:""}">${p?`<span class="${cWhite(p)?"wp":"bp"}">${KGL[p.toUpperCase()]}&#xFE0E;</span>`:""}${c===0?`<em class="krk1">${8-r}</em>`:""}${r===7?`<em class="kfl">${"abcdefgh"[c]}</em>`:""}</button>`}).join("")}</div>`}
 function kChessView(v){const g=KV,k=KS(),P=g.P;
-  const track=`<div class="kostabs"><button class="kostab on" data-k="chess">♞ Chess Quest</button><button class="kostab" data-k="poker">🃏 Poker School</button></div><div class="kcard"><div class="kh">♟️ Push your pawn to the end to make a queen!</div><div class="kptrack">${Array.from({length:g.need+1},(_,i)=>`<span class="${i<g.pawn?"on":""}">${i===g.pawn?"♙":i===g.need?"👑":""}</span>`).join("")}</div><div class="ksmall">Chess puzzles and questions take turns. Each right answer (without a hint) moves your pawn.</div></div>`;
+  const track=`<div class="kostabs"><button class="kostab on" data-k="chess">♞ Chess Quest</button><button class="kostab" data-k="chessbot">🤖 Robot Chess</button><button class="kostab" data-k="poker">🃏 Poker</button></div><div class="kcard"><div class="kh">♟️ Push your pawn to the end to make a queen!</div><div class="kptrack">${Array.from({length:g.need+1},(_,i)=>`<span class="${i<g.pawn?"on":""}">${i===g.pawn?"♙":i===g.need?"👑":""}</span>`).join("")}</div><div class="ksmall">Chess puzzles and questions take turns. Each right answer (without a hint) moves your pawn.</div></div>`;
   if(k.lessonQ&&((P&&P.state==="play")||(!P&&g.ans==null))){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Chess Quest","home")}${track}${kLessonCard()}</div>`;return}
   if(!P){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Chess Quest","home")}${track}${kQuestion(g.Q,g.ans,"cnext")}</div>`;return}
   const done=P.state!=="play",why=P.state==="won"?(P.hinted?"✅ Solved! (hint used, so no points)":P.tries<2?`✅ ${P.cheer||"Great move!"}`:"✅ You found it!"):P.state==="shown"?"Here's the answer. You'll get the next one!":"";
@@ -8818,29 +8840,43 @@ function kTermView(v){kHackRetro();const k=KS(),T=KV.T,os=tOS(),cp=kCompPower(),
 
 /* ---------- home ---------- */
 function kSkill(ic,n,col,lv,st,up,mx){const acc=st.n?Math.round(st.c/st.n*100):null;return `<div class="ksrow" style="--sc:${col}"><span class="ksi">${ic}</span><span class="ksn">${n}</span><span class="kslv">Lv ${lv}</span><span class="ksbar"><i style="width:${Math.max(4,lv/mx*100)}%"></i></span><span class="ksup">${up>0?"⬆ +"+up+" this week":st.n>=8?kOrd(kGrade(lv))+" grade":acc!==null?acc+"% right":"new"}</span></div>`}
-function kHome(v){const k=KS(),ri=kRank(k.xp),cur=KRANKS[ri],next=KRANKS[ri+1],pct=next?(k.xp-cur[0])/(next[0]-cur[0])*100:100,age=kAge(k),q=kQuests(),gi=kGoalInfo(),g=k.goal,yr=new Date().getFullYear(),b=kBrain();
+function kHome(v,sec){const k=KS(),ri=kRank(k.xp),cur=KRANKS[ri],next=KRANKS[ri+1],pct=next?(k.xp-cur[0])/(next[0]-cur[0])*100:100,age=kAge(k),q=kQuests(),gi=kGoalInfo(),g=k.goal,yr=new Date().getFullYear(),b=kBrain();
   const dest=KDEST[Math.min(k.rocket.dest,KDEST.length-1)],chestReady=k.chest.d!==kToday(),bdayGift=kIsBday(k)&&k.bdayDone!==yr,nT=Object.keys(k.troph||{}).length;
   const ms=[[25,"🥉","+25 ⚡ and gold"],[50,"🥈","🚗 Tesla for your base"],[75,"🥇","+40 ⚡ and diamonds"],[100,"🏆","Your prize!"]];
   const subs=Object.entries(KSUB).map(([s,[n,ic,col]])=>kSkill(ic,n,col,k.lv[s],k.st[s],k.lv[s]-(k.week.start[s]||k.lv[s]),KMAXLV[s]||20)).join("")+kSkill("♟️","Chess","#ff9f1c",k.chess.lv,k.chess.st,k.chess.lv-(k.week.chess||k.chess.lv),25)+kSkill("🃏","Poker","#e31937",k.poker.lv,k.poker.st,0,16);
   const bads=KBAD.slice().sort((a,c)=>(k.badges[c[0]]?1:0)-(k.badges[a[0]]?1:0)).slice(0,14),nb=KBAD.filter(x=>k.badges[x[0]]).length;
-  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop(k.name?`Hi, ${k.name}!`:"Rocket Genius")}${kUpdBtn()}
-   ${kIsBday(k)?`<div class="kcard kbday">🎂 <b>Happy Birthday, ${esc(k.name)}!</b>${age!=null?` You're ${age} today!`:""}</div>`:""}${bdayGift?`<button class="kchest" data-k="bday">🎁 Open your birthday present!</button>`:""}
+  const HUBT={learn:"🎓 Learning Center",games:"🎮 Game Room",prog:"📈 My Progress",genius:"🧠 Daily Genius"};
+  if(sec==="genius"){v.innerHTML=`<div class="kids">${kToastHtml()}${kTop(HUBT.genius,"home")}${kGeniusHtml()}${typeof kGeniusStats==="function"?kGeniusStats():""}</div>`;return}
+  v.innerHTML=`<div class="kids">${kToastHtml()}${sec?kTop(HUBT[sec],"home"):kTop(k.name?`Hi, ${k.name}!`:"Rocket Genius")}${sec?"":kUpdBtn()}
+  ${!sec?`   ${kIsBday(k)?`<div class="kcard kbday">🎂 <b>Happy Birthday, ${esc(k.name)}!</b>${age!=null?` You're ${age} today!`:""}</div>`:""}${bdayGift?`<button class="kchest" data-k="bday">🎁 Open your birthday present!</button>`:""}
    ${g.ms[100]?`<div class="kcard kwin"><div class="kh">🏆 You finished your prize goal!</div><div>Show a grown-up to get your prize${g.prize?`: <b>${esc(g.prize)}</b>`:""}.</div></div>`:""}
    <button class="kcard kpilot" data-k="profile"><div class="kav">${KAV[k.avatar||0]}</div><div><div class="kname">${esc(k.name)}${age!=null?` <span class="ksmall">· age ${age}</span>`:""}</div><div class="krank">${esc(cur[1])}</div>${kBar(pct)}<div class="ksmall">${k.xp} XP${next?` · ${next[0]-k.xp} XP to ${esc(next[1])}`:" · top rank!"}</div></div></button>
    ${chestReady?`<button class="kchest" data-k="chest">🎁 Open today's chest!</button>`:""}
-   ${kRotHtml()}${typeof kTwBanner==="function"?kTwBanner():""}${kGeniusHtml()}
+   ${kRotHtml()}${typeof kTwBanner==="function"?kTwBanner():""}${typeof kGeniusBtn==="function"?kGeniusBtn():kGeniusHtml()}${typeof kHubTiles==="function"?kHubTiles():""}
+   <div class="kbotrow"><button class="kbtn ghost small" data-k="kcheck">🔄 Update app</button><button class="kbtn ghost small" data-k="sounds">🔊 Sounds</button><button class="kbtn ghost small" data-k="grown">👨 Grown-ups</button></div>
+   <div class="ksmall kver">${esc(typeof BUILD!=="undefined"?BUILD:"")} · progress saves automatically</div>`:""}
+  ${sec==="learn"?`<div class="khubhero kh-learn"><b>🎓 LEARNING CENTER</b><span>Every round here earns 🎟️ tickets and levels you up.</span></div>
    <div class="kgym"><button class="kgymb" data-kcat="bee"><span>🐝</span><b>Spelling Bee</b></button><button class="kgymb" data-k="music"><span>🎵</span><b>Music Lab</b></button><button class="kgymb" data-k="learn"><span>🎓</span><b>Genius Lessons</b></button><button class="kgymb" data-k="powers"><span>📱</span><b>Phone Powers</b></button></div>
    <div class="kgames">
     <button class="kgame g1" data-k="show"><span class="kgi">🎤</span><b>Quiz Show</b><span>${k.rocket.dest>=KDEST.length?"All planets visited!":`Next stop: ${dest[1]} ${esc(dest[0])}`}</span><em>5 questions · flags, maps, planets, spelling bee</em></button>
-    <button class="kgame g2" data-k="mine"><span class="kgi">⛏️</span><b>Block Miner</b><span>Map level ${k.mine.lvl} · 💎 ${k.mine.dia}</span><em>Code your bot to the diamond</em></button>
-    <button class="kgame g3" data-k="club"><span class="kgi">♞🃏</span><b>Strategy Club</b><span>Chess Lv ${k.chess.lv} · Poker Lv ${k.poker.lv}</span><em>Chess puzzles & Texas Hold'em</em></button>
     <button class="kgame g4" data-k="term"><span class="kgi">💻</span><b>Computer Academy</b><span>Power ${kCompPower().got}/${kCompPower().max} · ${kCRank(kCompPower().got)}</span><em>Linux, Windows, Mac & shortcuts</em></button>
+    <button class="kgame g2" data-k="mine"><span class="kgi">⛏️</span><b>Block Miner</b><span>Map level ${k.mine.lvl} · 💎 ${k.mine.dia}</span><em>Code your bot to the diamond</em></button>
    </div>
+   <button class="kcard kbrainb" data-k="brain">${kGauge(b.known?b.avgLv:1,b.known?kOrd(b.g)+" grade":"scanning…")}<div><div class="kh">🧠 Brain Power</div><div class="ksmall">${b.known?(b.ahead>=1?`${b.ahead} grade${b.ahead>1?"s":""} ahead${age!=null?" for age "+age:""}! Tap for details.`:"Right on track. Level up to pull ahead! Tap for details."):"Take a Brain Scan to see your level!"}</div></div></button>
+`:""}
+  ${sec==="games"?`<div class="khubhero kh-games"><b>🎮 GAME ROOM</b><span>Strategy games that make your brain stronger.</span></div>
+   <div class="kgames">
+    <button class="kgame g3" data-k="chess"><span class="kgi">♞</span><b>Chess Quest</b><span>Puzzles · Lv ${k.chess.lv}</span><em>Captures, forks, checkmates</em></button>
+    <button class="kgame g4" data-k="chessbot"><span class="kgi">🤖</span><b>Robot Chess</b><span>Robot Lv ${(k.cbot||{}).lv||1}</span><em>Play full games. The robot gets smarter!</em></button>
+    <button class="kgame g1 wide" data-k="poker"><span class="kgi">🃏</span><b>Poker Academy</b><span>Lv ${k.poker.lv}</span><em>No-Limit Texas Hold'em</em></button>
+   </div>
+   <button class="kgame g5 wide" data-k="mj"><span class="kgi">🀄</span><b>Filipino Mahjong (Manila) <i class="knew">NEW!</i></b><span>${k.mj?`${Object.keys(k.mj.steps||{}).length}/6 steps · ${k.mj.wins||0} wins`:"Learn it step by step, then play!"}</span><em>Tiles, sets, chow/pung/kong, flowers · full games vs 3 bots</em></button>
    <button class="kgame g5 wide" data-k="col"><span class="kgi">🔴</span><b>Mars Colony Tycoon</b><span>${k.col?`💠 ${Math.floor(k.col.cr)} · +${kColRate(k.col)}/min · 👨‍🚀 ${kColPop(k.col)}`:"Build your own Mars base!"}</span><em>Learn for credits · defend with fast math · earns while you're away</em></button>
    <button class="kgame g6 wide" data-k="city"><span class="kgi">🌴</span><b>Brick Bay <i class="knew">NEW!</i></b><span>${k.city?`💵 $${k.city.money||0} · 💎 ${(k.city.gems||[]).length}/10 gems`:"A silly toy-brick beach city!"}</span><em>🚶 hop out · 🏦 career buildings · 🤖 robber bots · ⚡ combos · 🍪 cookie capers · 🎈 balloon grabs · 🕵️ undercover chases · 🎟️ 1 = 5 minutes</em></button>
-   <button class="kgame g5 wide" data-k="mj"><span class="kgi">🀄</span><b>Filipino Mahjong (Manila) <i class="knew">NEW!</i></b><span>${k.mj?`${Object.keys(k.mj.steps||{}).length}/6 steps · ${k.mj.wins||0} wins`:"Learn it step by step, then play!"}</span><em>Tiles, sets, chow/pung/kong, flowers · full games vs 3 bots</em></button>
+   ${typeof kTwBanner==="function"?kTwBanner():""}
    <button class="kgame g2 wide" data-k="pschool"><span class="kgi">✈️</span><b>Pilot School <i class="knew">NEW!</i></b><span>${k.fly?`🏆 ${k.fly.pts||0} pilot points · ✅ ${Object.keys(k.fly.done||{}).length}/${KFLYM.length} missions`:"Fly planes, jets, helicopters, rockets!"}</span><em>✈️ Sky Pilot · 🚀 Booster Landing · 🌍 Space Mission · 🎓 pilot lessons</em></button>
-   <button class="kcard kbrainb" data-k="brain">${kGauge(b.known?b.avgLv:1,b.known?kOrd(b.g)+" grade":"scanning…")}<div><div class="kh">🧠 Brain Power</div><div class="ksmall">${b.known?(b.ahead>=1?`${b.ahead} grade${b.ahead>1?"s":""} ahead${age!=null?" for age "+age:""}! Tap for details.`:"Right on track. Level up to pull ahead! Tap for details."):"Take a Brain Scan to see your level!"}</div></div></button>
+`:""}
+  ${sec==="prog"?`<div class="khubhero kh-prog"><b>📈 MY PROGRESS</b><span>Prize goal, quests, skills, badges and your base.</span></div>
    <div class="kcard kprize"><div class="kh">🎁 Prize goal: ${g.prize?esc(g.prize):"ask a grown-up to pick your prize!"}</div>
     <div class="kpbar"><i style="width:${Math.round(gi.f*100)}%"></i>${ms.map(([m,ic])=>`<span class="kms ${g.ms[m]?"on":""}" style="left:${m===100?97:m}%">${ic}</span>`).join("")}</div>
     <div class="ksmall">⏱️ ${Math.min(gi.mins,g.mins)} of ${g.mins} minutes · ✅ ${Math.min(gi.cor,g.correct)} of ${g.correct} right answers</div><div class="kmsl">${ms.map(([m,ic,t])=>`<span class="${g.ms[m]?"on":""}">${ic} ${m}%: ${t}</span>`).join("")}</div></div>
@@ -8849,15 +8885,15 @@ function kHome(v){const k=KS(),ri=kRank(k.xp),cur=KRANKS[ri],next=KRANKS[ri+1],p
    <div class="kcard"><div class="kh">Your skill levels</div>${subs}<div class="ksmall">3 right in a row (without hints) = level up. Misses bring it down a little, so it always fits you. Old mistakes come back later so you master them.</div></div>
    <div class="kgames two"><button class="kcard kbadges" data-k="badges"><div class="kh">🏅 Badges ${nb}/${KBAD.length}</div><div class="kbrow">${bads.slice(0,8).map(x=>`<span class="kb ${k.badges[x[0]]?"on":""}">${x[1]}</span>`).join("")}</div></button>
     <button class="kcard kbadges" data-k="trophies"><div class="kh">🏆 Trophy Hall</div><div class="ksmall">${nT} certificate${nT===1?"":"s"}. Screenshot them for Dad!</div></button></div>
-   <div class="kbotrow"><button class="kbtn ghost small" data-k="kcheck">🔄 Update app</button><button class="kbtn ghost small" data-k="sounds">🔊 Sounds</button><button class="kbtn ghost small" data-k="grown">👨 Grown-ups</button></div>
-   <div class="ksmall kver">${esc(typeof BUILD!=="undefined"?BUILD:"")} · progress saves automatically</div></div>`}
+`:""}
+  </div>`}
 /* ---------- grown-up corner ---------- */
 function kMinsOn(k,off){return Math.round((k.daySecs[kToday(off)]||0)/60)}
 function kGrownView(v){const k=KS(),g=k.goal,gi=kGoalInfo(),b=kBrain(),age=kAge(k),wk=Array.from({length:7},(_,i)=>kMinsOn(k,i-6)),wkSum=wk.reduce((a,c)=>a+c,0),ansWk=Array.from({length:7},(_,i)=>k.days[kToday(i-6)]||0);
   const rows=Object.entries(KSUB).map(([s,[n,ic]])=>{const st=k.st[s],r=st.h.length?Math.round(st.h.reduce((a,c)=>a+c,0)/st.h.length*100):null;return `<div class="kgr">${ic} <b>${n}</b>: level ${k.lv[s]} of ${KMAXLV[s]||20} (about ${kOrd(kGrade(k.lv[s]))} grade) · ${st.c} right of ${st.n} · ${st.n?Math.round(st.c/st.n*100)+"%":"–"}${r!==null?` · recent ${r}%`:""}</div>`}).join("");
   const cs=k.chess.st,T=Object.values(k.troph||{}).sort((a,c)=>c.d-a.d);
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("Grown-up corner","home")}
-   <div class="kcard"><div class="kh">🧭 Guided mode</div><div class="ksmall">ON: each day his most-skipped activity is step 1 of the Mission Path, and he must win one round of it before other activities open. The rest of the path stays suggested.</div><button class="kbtn ${k.guided===false?"ghost":"green"}" data-k="tGuided">🧭 Guided mode: ${k.guided===false?"OFF":"ON"}</button> <button class="kbtn ghost" data-k="tUnlock30">🔓 Unlock free play 30 min${(k.passUntil||0)>Date.now()?` (${Math.ceil((k.passUntil-Date.now())/60000)} min left)`:""}</button><div class="small" style="margin-top:6px">🎫 Free Passes saved: ${k.pass===undefined?1:k.pass} of 2. He earns one by finishing a whole Mission Path; each opens 10 minutes of free play. Tickets still count during free play.</div></div>
+   <div class="kcard"><div class="kh">🧭 Guided mode</div><div class="ksmall">ON: each day his most-skipped activity is step 1 of the Mission Path, and he must win one round of it before other activities open. The rest of the path stays suggested.</div><button class="kbtn ${k.guided===false?"ghost":"green"}" data-k="tGuided">🧭 Guided mode: ${k.guided===false?"OFF":"ON"}</button> <button class="kbtn ghost" data-k="tLimit">⏳ Game limit: ${k.glimit===0?"off":(k.glimit||12)+" min"}</button> <button class="kbtn ghost" data-k="tUnlock30">🔓 Unlock free play 30 min${(k.passUntil||0)>Date.now()?` (${Math.ceil((k.passUntil-Date.now())/60000)} min left)`:""}</button><div class="small" style="margin-top:6px">🎫 Free Passes saved: ${k.pass===undefined?1:k.pass} of 2. He earns one by finishing a whole Mission Path; each opens 10 minutes of free play. Tickets still count during free play.</div></div>
    <div class="kcard"><div class="kh">🧠 Brain report</div><div class="kgr">${b.known?`Overall about <b>${kOrd(b.g)}-grade</b> level${age!=null?` at age ${age} (expected ${kOrd(b.exp)})`:""}: <b>${b.ahead>0?b.ahead+" grade"+(b.ahead>1?"s":"")+" ahead":b.ahead===0?"on track":Math.abs(b.ahead)+" behind"}</b>.`:"Not enough answers yet. A Brain Scan gives a quick reading."}</div>${rows}
     <div class="kgr">🃏 <b>Poker</b>: level ${k.poker.lv} of 16 · ${k.poker.st.c} right of ${k.poker.st.n} · ${k.poker.hands} hands played, ${k.poker.won} won (play chips only)</div><div class="kgr">♟️ <b>Chess</b>: level ${k.chess.lv} · ${k.chess.solved} puzzles · ${k.chess.mates} checkmates · ${k.chess.forks} forks · ${k.chess.promos} promotions · ${cs.n?Math.round(cs.c/cs.n*100)+"% solved without help":"–"}</div>
     <div class="ksmall">Each subject adapts on its own: 3 right in a row (70%+ recent accuracy) moves up a level, 2 misses in a row moves down one. Math goes to level 25 (algebra and geometry); levels map to grades: 1–3 = 2nd, 4–6 = 3rd, 7–9 = 4th, 10–12 = 5th, 13–15 = 6th, 16–18 = 7th, 19–21 = 8th, 22+ = high school. Hints never earn points or count toward levels. Missed questions come back later until he gets them right twice (${k.rev.length} waiting, ${k.fixed} fixed).</div></div>
@@ -8927,7 +8963,7 @@ function kidsClick(b){const d=b.dataset;try{if(kGate(d)){render();return true}kP
   if(d.mj!==undefined||d.mja!==undefined||d.mjd!==undefined)return mjClick(d);
   if(d.k==="mj"){KV={scr:"mj"};kBeep("click");return top()}
   if(d.k==="fly"){kFly=null;KV={scr:"fly"};kBeep("click");return top()}
-  if(d.k==="tworld"){KV={scr:"tworld",co:null};kBeep("click");return top()}if(d.ktw==="hack"){tInit();try{tSwitch("tesla");tInit()}catch(_){}kBeep("click");return top()}if(d.ktw){KV={scr:"tworld",co:d.ktw};if(d.ktw==="mz")MZ=null;kBeep("click");return top()}if(d.kmz&&typeof kMzClick==="function"){kMzClick(d);return top()}if(d.k==="pschool"){kFly=null;KV={scr:"pschool"};kBeep("click");return top()}
+  if(["learnhub","gameroom","prog","genius"].includes(d.k)){KV={scr:d.k};kBeep("click");return top()}if(d.k==="chessbot"){kCbStart();kBeep("click");return top()}if(d.kcb!==undefined&&typeof kCbClick==="function"){kCbClick(d);return top()}if(d.k==="tworld"){KV={scr:"tworld",co:null};kBeep("click");return top()}if(d.ktw==="hack"){tInit();try{tSwitch("tesla");tInit()}catch(_){}kBeep("click");return top()}if(d.ktw){KV={scr:"tworld",co:d.ktw};if(d.ktw==="mz")MZ=null;kBeep("click");return top()}if(d.kmz&&typeof kMzClick==="function"){kMzClick(d);return top()}if(d.k==="pschool"){kFly=null;KV={scr:"pschool"};kBeep("click");return top()}
   if(d.kflym!==undefined||d.kfq!==undefined||d.kfly!==undefined||d.kfchk!==undefined||d.kfac!==undefined)return kFlyClick(d,top);
   if(d.kqd!==undefined){kCtQdAns(+d.kqd);return true}
   if(d.kin!==undefined){kCtInAns(+d.kin);return true}
@@ -10592,7 +10628,7 @@ function kPlayMark(d){const id=kPlayKey(d);if(!id)return;const k=KS(),t=kToday()
 function kNeglected(id){const k=KS(),p=(k.play||{})[id],t=kToday();if(!p||!p.last)return true;const ref=p.last===t?p.prev:p.last;return !ref||kDayDiff(ref,t)>=3}
 function kNegBonus(id,lines){const k=KS(),t=kToday(),key=id;if(!(k.play&&k.play[key]))return;const p=k.play[key];if(p.bon===t)return;const ref=p.prev;if(ref&&kDayDiff(ref,t)<3)return;p.bon=t;kTix(1,"🔴 comeback bonus");if(lines)lines.push("🔴 Comeback bonus: +1 🎟️ for doing something you skipped lately!");kT("🔴 Comeback bonus! +1 🎟️")}
 function kNegScore(id){const k=KS(),p=(k.play||{})[id],t=kToday();if(!p||!p.last)return 500+((id.length*7+t.charCodeAt(9))%13);const ref=p.last===t?p.prev:p.last;return ref?kDayDiff(ref,t):400}
-function kNegHook(v){try{if(!["home","show"].includes(KV.scr||"home")||KV.stage==="play")return;const seen=new Set(),L=[],G=[];v.querySelectorAll("[data-k],[data-kcat]").forEach(b=>{if(b.closest(".kgenius,.krot")&&!b.classList.contains("kgq"))return;const id=kPlayKey(b.dataset);if(!id||seen.has(id)||!kNeglected(id))return;seen.add(id);(KNEGPLAY.includes(id)?G:L).push([kNegScore(id),b])});
+function kNegHook(v){try{if(!["home","show","learnhub","gameroom","genius"].includes(KV.scr||"home")||KV.stage==="play")return;const seen=new Set(),L=[],G=[];v.querySelectorAll("[data-k],[data-kcat]").forEach(b=>{if(b.closest(".kgenius,.krot")&&!b.classList.contains("kgq"))return;const id=kPlayKey(b.dataset);if(!id||seen.has(id)||!kNeglected(id))return;seen.add(id);(KNEGPLAY.includes(id)?G:L).push([kNegScore(id),b])});
   L.sort((a,b)=>b[0]-a[0]).slice(0,3).forEach(x=>x[1].classList.add("kneg","kneg-l"));G.sort((a,b)=>b[0]-a[0]).slice(0,1).forEach(x=>x[1].classList.add("kneg","kneg-p"))}catch(_){}}
 
 /* ---------- 🎵 Music Lab: piano, note reading, play your real instrument (mic pitch check), tuner, composer ---------- */
@@ -11307,6 +11343,8 @@ function kGate(d){
   if(d&&d.kpass==="go"){const I=KV.passAsk&&kPathInfo(KV.passAsk);KV.passAsk=null;KV.passD=null;if(I)setTimeout(()=>{const fb=document.createElement("button");if(I.x[3]==="kcat")fb.dataset.kcat=I.x[4];else fb.dataset.k=I.x[4];kidsClick(fb)},0);return true}
   if(d&&d.kpass==="no"){KV.passAsk=null;KV.passD=null;return true}
   if(d&&d.k==="tUnlock30"){const k=KS();k.passUntil=Date.now()+30*60000;persist();kT("🔓 Free play for 30 minutes. Guided mode comes back after.");return true}
+  if(d&&d.k==="tLimit"){const k=KS(),seq=[12,20,30,0,8],cur=k.glimit===0?0:(k.glimit||12);k.glimit=seq[(seq.indexOf(cur)+1)%seq.length];if(k.glimit===0)k.rest={};persist();kT(k.glimit?`⏳ Game limit: ${k.glimit} minutes per game between learning rounds.`:"⏳ Game limit off.");return true}
+  if(typeof kRestCheck==="function"&&kRestCheck(d))return true;
   const m=kMust();if(!m)return false;const id=kPlayKey(d);if(!id||id===m)return false;const I=kPathInfo(m);if(!I)return false;
   if(kPassLeft()>0)return false;
   kBeep("no");kLine(`First, ${I.x[2]}! Then everything opens.`,2);
@@ -11477,6 +11515,117 @@ function kMzClick(d){if(!MZ)kMzNew();
 
 function kTwBanner(){const k=KS(),n=KTW.filter(c=>(k.tw||{})[c.id]).length,mz=(k.mz||{}).best||0;
   return `<button class="ktwban" data-k="tworld"><span class="ktwbi">⚡🚀🚇🤖</span><span class="ktwbt"><b>TESLA WORLD</b><span>Tesla Drive · Mechazilla Catch · Tesla Hacker · SpaceX · Boring tunnels · robots</span><span class="ktwbs">${n<KTW.length?`🔎 ${n}/${KTW.length} explored`:"✅ all explored"}${mz?` · 🦾 level ${mz}`:" · NEW game!"}</span></span><span class="ktwbgo">▶</span></button>`}
+
+/* ================= Calmer kids home: big hub tiles + one-button Daily Genius with performance ================= */
+const KHUBS=[
+ {k:"city",ic:"🌴",n:"Brick Bay City",sub:"Walk into buildings: chess, poker, mahjong, arcade, game show, hacker HQ, airport, bank vault",g:"linear-gradient(135deg,#f97316,#db2777 55%,#7c3aed)",keys:["city"]},
+ {k:"pschool",ic:"✈️",n:"Pilot School",sub:"Planes, jets, helicopters, rockets",g:"linear-gradient(135deg,#0ea5e9,#1d4ed8 60%,#1e1b4b)",keys:["pschool"]},
+ {k:"learnhub",ic:"🎓",n:"Learning Center",sub:"Quiz Show, Spelling Bee, lessons, Computer Academy",g:"linear-gradient(135deg,#22c55e,#0f766e)",keys:["music","learn","term","mine"]},
+ {k:"gameroom",ic:"🎮",n:"Game Room",sub:"Chess, Robot Chess, poker, mahjong, Mars Colony",g:"linear-gradient(135deg,#a855f7,#4338ca)",keys:["chess","poker","mj","col"]},
+ {k:"prog",ic:"📈",n:"My Progress",sub:"Prize goal, quests, skills, badges",g:"linear-gradient(135deg,#334155,#0f172a)",keys:[]}];
+function kHubNeg(H){try{return H.keys.some(id=>kNeglected(id))}catch(_){return false}}
+function kHubTiles(){const k=KS(),gi=kGoalInfo(),q=kQuests(),qd=q.ids.filter(id=>q.cl[id]).length;
+  const info={city:k.city?`💵 $${k.city.money||0} · 💎 ${(k.city.gems||[]).length}/10`:"NEW buildings!",pschool:k.fly?`🏆 ${k.fly.pts||0} pts · ✅ ${Object.keys(k.fly.done||{}).length}/${KFLYM.length}`:"Take off!",
+   learnhub:`🎤 Quiz Show · next: ${KDEST[Math.min(k.rocket.dest,KDEST.length-1)][1]}`,gameroom:`♞ Lv ${k.chess.lv} · 🤖 Lv ${(k.cbot||{}).lv||1} · 🃏 Lv ${k.poker.lv}`,prog:`🎁 ${Math.round(gi.f*100)}% · 📜 ${qd}/${q.ids.length} quests`};
+  return `<div class="khubs">${KHUBS.map((H,i)=>{const neg=!KNEGPLAY.includes(H.k)&&kHubNeg(H);return `<button class="khub${i<2||i===4?" big":""}${neg?" neg":""}" data-k="${H.k}" style="--hg:${H.g}"><span class="khubic">${H.ic}</span><span class="khubt"><b>${H.n}</b><span>${H.sub}</span><em>${info[H.k]}</em></span>${neg?`<span class="khubneg">🔴 +🎟️</span>`:""}</button>`}).join("")}</div>`}
+function kGenToday(){const g=kGenDay(),r=kRot();return{c:g.cur?1:0,r:g.cre?1:0,t:g.tea?1:0,q:r.done["q:genius"]?1:0}}
+function kGenStreak(){const k=KS(),d=k.genDays||{};let n=0;for(let i=0;i<400;i++){if(d[kToday(-i)])n++;else if(i>0)break}return n}
+function kGenAcc(){const h=KS().hero||{};let n=0,c=0;for(const id in h){n+=h[id].n||0;c+=h[id].c||0}return{n,c,p:n?Math.round(c/n*100):null}}
+function kGeniusBtn(){const k=KS(),T=kGenToday(),done=T.c+T.r+T.t+T.q;if(done===4){k.genDays=k.genDays||{};if(!k.genDays[kToday()]){k.genDays[kToday()]=1;persist()}}
+  const A=kGenAcc(),st=kGenStreak();
+  return `<button class="kgenbtn${done===4?" all":""}" data-k="genius"><span class="kgbic">🧠</span><span class="kgbt"><b>Daily Genius</b><span>${done===4?"✅ All done today!":`${done} of 4 done today`}${A.p!=null?` · 🎯 ${A.p}% right`:""}${st?` · 🔥 ${st} day${st>1?"s":""}`:""}</span><span class="kgbdots">${[["🤔",T.c],["🎨",T.r],["🧩",T.t],["🧠",T.q]].map(([e,x])=>`<i class="${x?"on":""}">${x?"✓":e}</i>`).join("")}</span></span><span class="kgbgo">▶</span></button>`}
+function kGeniusStats(){const k=KS(),h=k.hero||{},A=kGenAcc(),st=kGenStreak(),g=kGenDay();
+  const rows=KHERO.map(H=>{const x=h[H[0]]||{n:0,c:0};return{H,n:x.n||0,c:x.c||0,p:x.n?Math.round(x.c/x.n*100):null,lv:Math.floor((x.c||0)/5)+1}}).sort((a,b)=>(a.p??-1)-(b.p??-1));
+  return `<div class="kcard"><div class="kh">📊 Your Genius performance</div>
+   <div class="kgstat"><div><b>${A.p!=null?A.p+"%":"–"}</b><span>right in Genius Quiz</span></div><div><b>${A.c}</b><span>right answers</span></div><div><b>${st}</b><span>day streak</span></div></div>
+   <div class="ksmall" style="margin:6px 0">🤔 ${g.curN} curious · 🎨 ${g.creN} creative · 🧩 ${g.teaN} teasers so far</div>
+   ${rows.map(r=>`<div class="kgrow"><span>${r.H[1]}</span><b>${esc(r.H[2])}</b><i class="kbar sm"><u style="width:${r.p||0}%;background:${r.p==null?"#64748b":r.p>=80?"#22c55e":r.p>=60?"#eab308":"#ef4444"}"></u></i><em>${r.p==null?"new":r.p+"%"} · Lv ${r.lv}</em></div>`).join("")}
+   <div class="ksmall" style="margin-top:6px">Red topics come up more often in the Genius Quiz until they turn green.</div></div>`}
+
+/* ================= Robot Chess: full games against a robot that gets smarter level by level =================
+   Uses the app's move rules (cPseudo, cMove, cInCheck, cMoves). Robot strength by level:
+   1 random-ish · 2-3 looks 1 move ahead · 4-6 looks 2 moves ahead · 7-9 looks 3 moves ahead · 10-12 deeper with captures checked.
+   Beat it: level up and a ticket. Lose twice in a row: it steps down one level. */
+const CBV={P:100,N:320,B:330,R:500,Q:900,K:0};
+const CBPST={P:[0,0,0,0,0,0,0,0,50,50,50,50,50,50,50,50,10,10,20,30,30,20,10,10,5,5,10,25,25,10,5,5,0,0,0,20,20,0,0,0,5,-5,-10,0,0,-10,-5,5,5,10,10,-20,-20,10,10,5,0,0,0,0,0,0,0,0],
+ N:[-50,-40,-30,-30,-30,-30,-40,-50,-40,-20,0,0,0,0,-20,-40,-30,0,10,15,15,10,0,-30,-30,5,15,20,20,15,5,-30,-30,0,15,20,20,15,0,-30,-30,5,10,15,15,10,5,-30,-40,-20,0,5,5,0,-20,-40,-50,-40,-30,-30,-30,-30,-40,-50],
+ B:[-20,-10,-10,-10,-10,-10,-10,-20,-10,0,0,0,0,0,0,-10,-10,0,5,10,10,5,0,-10,-10,5,5,10,10,5,5,-10,-10,0,10,10,10,10,0,-10,-10,10,10,10,10,10,10,-10,-10,5,0,0,0,0,5,-10,-20,-10,-10,-10,-10,-10,-10,-20],
+ R:[0,0,0,0,0,0,0,0,5,10,10,10,10,10,10,5,-5,0,0,0,0,0,0,-5,-5,0,0,0,0,0,0,-5,-5,0,0,0,0,0,0,-5,-5,0,0,0,0,0,0,-5,-5,0,0,0,0,0,0,-5,0,0,0,5,5,0,0,0],
+ Q:[-20,-10,-10,-5,-5,-10,-10,-20,-10,0,0,0,0,0,0,-10,-10,0,5,5,5,5,0,-10,-5,0,5,5,5,5,0,-5,0,0,5,5,5,5,0,-5,-10,5,5,5,5,5,0,-10,-10,0,5,0,0,0,0,-10,-20,-10,-10,-5,-5,-10,-10,-20],
+ K:[-30,-40,-40,-50,-50,-40,-40,-30,-30,-40,-40,-50,-50,-40,-40,-30,-30,-40,-40,-50,-50,-40,-40,-30,-30,-40,-40,-50,-50,-40,-40,-30,-20,-30,-30,-40,-40,-30,-30,-20,-10,-20,-20,-20,-20,-20,-20,-10,20,20,0,0,0,0,20,20,20,30,10,0,0,10,30,20]};
+function cbEval(b){let s=0;for(let i=0;i<64;i++){const p=b[i];if(!p)continue;const w=cWhite(p),t=p.toUpperCase(),sq=w?i:(7-(i>>3))*8+(i&7);const v=CBV[t]+CBPST[t][sq];s+=w?v:-v}return s} // + good for white
+function cbPseudoAll(b,w){const out=[];for(let i=0;i<64;i++){const p=b[i];if(!p||cWhite(p)!==w)continue;for(const t of cPseudo(b,i))if(b[t]!==(w?"k":"K"))out.push([i,t,b[t]?CBV[b[t].toUpperCase()]*10-CBV[p.toUpperCase()]:0])}return out.sort((x,y)=>y[2]-x[2])}
+let cbNodes=0,cbStop=0;
+function cbSearch(b,w,d,al,be,q){cbNodes++;if(cbNodes>cbStop)return (w?1:-1)*cbEval(b);
+  if(d<=0){const sp=(w?1:-1)*cbEval(b);if(!q)return sp;if(sp>=be)return sp;if(sp>al)al=sp;const caps=cbPseudoAll(b,w).filter(m=>b[m[1]]);for(const m of caps){const n=cMove(b,m[0],m[1]);if(cInCheck(n,w))continue;const v=-cbSearch(n,!w,0,-be,-al,q-1);if(v>=be)return v;if(v>al)al=v}return al}
+  let any=false;for(const m of cbPseudoAll(b,w)){const n=cMove(b,m[0],m[1]);if(cInCheck(n,w))continue;any=true;const v=-cbSearch(n,!w,d-1,-be,-al,q);if(v>al)al=v;if(al>=be)break}
+  if(!any)return cInCheck(b,w)?-100000-d:0;return al}
+function cbBest(b,w,lv){const ms=cMoves(b,w);if(!ms.length)return null;
+  if(lv<=1){const caps=ms.filter(m=>b[m[1]]);return Math.random()<.35&&caps.length?kPick(caps):kPick(ms)}
+  const cfg=[null,null,[1,0,140],[1,0,60],[2,0,90],[2,0,40],[2,2,25],[3,0,35],[3,0,15],[3,2,10],[3,3,0],[4,2,0],[4,3,0]][Math.min(12,lv)];
+  const [d,q,noise]=cfg;cbNodes=0;cbStop=lv>=11?60000:35000;
+  let best=null,bv=-1e9;const scored=[],per=Math.floor(cbStop/ms.length);cbStop=0;for(const m of ms){cbStop=cbNodes+per;const n=cMove(b,m[0],m[1]);const v=-cbSearch(n,!w,d-1,-1e9,1e9,q)+(noise?(Math.random()*2-1)*noise:0);scored.push([v,m]);if(v>bv){bv=v;best=m}}
+  if(lv<=3&&Math.random()<(lv===2?.3:.12))return kPick(ms);return best}
+function kCbS(){const k=KS();k.cbot=k.cbot||{lv:1,w:0,l:0,d:0,lossRun:0,best:1};return k.cbot}
+function kCbStart(){const C=kCbS();KV={scr:"chessbot",b:cFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"),turn:"w",sel:null,dots:[],last:[],ply:0,over:null,hints:0,think:false,lv:C.lv,msg:""}}
+function kCbMat(b){const V={P:1,N:3,B:3,R:5,Q:9,K:0};let w=0,bl=0;for(const p of b){if(!p)continue;if(cWhite(p))w+=V[p];else bl+=V[p.toUpperCase()]}return[w,bl]}
+function kCbEnd(g){const b=g.b,side=g.turn==="w";const ms=cMoves(b,side);if(!ms.length)return cInCheck(b,side)?(side?"lost":"won"):"draw";if(b.filter(p=>p&&p.toUpperCase()!=="K").length===0||g.ply>=200)return "draw";return null}
+function kCbFinish(res){const g=KV,C=kCbS();g.over=res;if(res==="won"){C.w++;C.lossRun=0;const old=C.lv;C.lv=Math.min(12,C.lv+1);C.best=Math.max(C.best,C.lv);kTix(g.hints?1:2,"beat Robot Lv "+old);try{kRotDone("chess")}catch(_){}k_cbTrophy(old);kBeep("mate");kLine(`Checkmate! You beat robot level ${old}!`,3);g.msg=`🏆 You beat Robot Lv ${old}! The robot is now level ${C.lv}. +${g.hints?1:2} 🎟️`}
+  else if(res==="lost"){C.l++;C.lossRun++;g.msg="🤖 The robot won this time.";if(C.lossRun>=2&&C.lv>1){C.lv--;C.lossRun=0;g.msg+=` It steps down to level ${C.lv} so you can practice.`}else g.msg+=" Lose one more and it steps down a level.";kBeep("no")}
+  else{C.d++;g.msg="🤝 Draw! Nobody can win.";kBeep("chime")}persist()}
+function k_cbTrophy(lv){if(lv>=1)kTrophy("cb1","🤖","Robot beater!","Beat the chess robot.");if(lv>=5)kTrophy("cb5","🦾","Robot master!","Beat the chess robot at level 5.");if(lv>=10)kTrophy("cb10","👑","Grandmaster in training!","Beat the chess robot at level 10.")}
+function kCbRobot(){const g=KV;if(g.over||g.turn!=="b")return;g.think=true;render();setTimeout(()=>{if(KV!==g||g.over)return;const m=cbBest(g.b,false,g.lv);g.think=false;if(m){const cap=g.b[m[1]];g.b=cMove(g.b,m[0],m[1]);g.last=[m[0],m[1]];g.ply++;kBeep(cap?"spark":"move");g.msg=cap?`🤖 Robot took your ${KPN[cap.toUpperCase()]}!`:cInCheck(g.b,true)?"⚠️ Check! Protect your king.":""}g.turn="w";const e=kCbEnd(g);if(e)kCbFinish(e);render()},280)}
+function kCbClick(d){const g=KV;if(KV.scr!=="chessbot")return;
+  if(d.kcb==="new"){kCbStart();return}
+  if(d.kcb==="resign"){if(!g.over)kCbFinish("lost");return}
+  if(d.kcb==="hint"&&!g.over&&g.turn==="w"){g.hints++;const m=cbBest(g.b,true,Math.min(8,g.lv+2));if(m){g.sel=m[0];g.dots=[m[1]];g.msg="💡 Try this move (the glowing square). Hints give 1 ticket instead of 2 when you win."}return}
+  if(d.kcb==="sq"&&!g.over&&g.turn==="w"&&!g.think){const i=+d.i,p=g.b[i];
+    if(p&&cWhite(p)){g.sel=i;g.dots=cMoves(g.b,true).filter(m=>m[0]===i).map(m=>m[1]);kBeep("click");return}
+    if(g.sel!=null&&g.dots.includes(i)){const cap=g.b[i];g.b=cMove(g.b,g.sel,i);g.last=[g.sel,i];g.sel=null;g.dots=[];g.ply++;g.msg=cap?`Nice! You took the ${KPN[cap.toUpperCase()]}.`:"";kBeep(cap?"coin":"move");g.turn="b";const e=kCbEnd(g);if(e){kCbFinish(e);return}setTimeout(kCbRobot,60);return}
+    g.sel=null;g.dots=[]}}
+function kCbView(v){const g=KV,C=kCbS();if(!g.b)kCbStart();const G=KV,[mw,mb]=kCbMat(G.b),chk=!G.over&&cInCheck(G.b,G.turn==="w");
+  const board=`<div class="kboard">${G.b.map((p,i)=>{const r=i>>3,c=i&7,cls=["ksq",(r+c)%2?"d":"l"];if(i===G.sel)cls.push("sel");if(G.last.includes(i))cls.push("last");if(G.dots.includes(i))cls.push(p?"dot cap":"dot");if(chk&&p===(G.turn==="w"?"K":"k"))cls.push("hint");
+    return `<button class="${cls.join(" ")}" data-kcb="sq" data-i="${i}">${p?`<span class="${cWhite(p)?"wp":"bp"}">${KGL[p.toUpperCase()]}&#xFE0E;</span>`:""}${c===0?`<em class="krk1">${8-r}</em>`:""}${r===7?`<em class="kfl">${"abcdefgh"[c]}</em>`:""}</button>`}).join("")}</div>`;
+  const ladder=Array.from({length:12},(_,i)=>`<span class="${i+1<C.lv?"on":i+1===C.lv?"cur":""}">${i+1===C.lv?"🤖":i+1<C.lv?"✓":i+1}</span>`).join("");
+  v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("🤖 Robot Chess","gameroom")}
+   <div class="kcard kcbhero"><div class="kcbh"><span class="kcbbot">🤖</span><div><b>Robot level ${G.lv}</b><div class="ksmall">${["","Just learning","Looks 1 move ahead","Looks 1 move ahead","Looks 2 moves ahead","Looks 2 moves ahead","Checks captures","Looks 3 moves ahead","Looks 3 moves ahead","Sharp tactics","Strong club player","Thinks deep","Robot grandmaster"][G.lv]}</div></div><div class="kcbrec">🏆 ${C.w} · 🤖 ${C.l} · 🤝 ${C.d}</div></div>
+    <div class="kcbladder">${ladder}</div></div>
+   <div class="kq" style="--sc:#7c3aed"><div class="kqh"><span class="ksub">${G.over?"Game over":G.think?"🤖 Robot is thinking…":G.turn==="w"?"Your move (white)":"Robot's move"}</span><span class="klife">⚖️ ${mw===mb?"Even material":mw>mb?`You +${mw-mb}`:`Robot +${mb-mw}`}</span></div>
+    ${chk&&G.turn==="w"?`<div class="kfb no"><b>⚠️ Your king is in check! Move it, block, or capture the attacker.</b></div>`:""}
+    ${board}
+    ${G.msg?`<div class="kfb ${G.over==="won"?"ok":G.over?"no":""}" style="margin-top:8px"><b>${esc(G.msg)}</b></div>`:""}
+    <div class="kpad" style="margin-top:8px">${G.over?`<button class="kbtn big green" data-kcb="new">▶ ${G.over==="won"?"Next robot level":"Play again"}</button>`:`<button class="kbtn ghost" data-kcb="hint">💡 Hint</button><button class="kbtn ghost" data-kcb="resign">🏳️ Give up</button>`}</div>
+    <div class="ksmall" style="margin-top:6px;color:#475569">Win to level up the robot (+2 🎟️, +1 with hints). Every level it looks further ahead, up to level 12.</div></div></div>`}
+
+/* ================= Game time limits and game-to-game flow =================
+   Each game gets a set number of minutes (default 12) since the last learning round. Then it rests, and opens
+   again after any learning round (quiz, Genius Quiz, lesson, chess puzzle, hacker mission...). A Free Pass or the
+   grown-up unlock still works. Warnings come 2 minutes before. */
+const KGSCR={city:"city",fly:"fly",land:"fly",drive:"drive",derby:"drive",col:"col",chessbot:"chessbot"};
+const KGNAME={city:"Brick Bay",fly:"Pilot School flying",drive:"Tesla Drive",col:"Mars Colony",chessbot:"Robot Chess",mz:"Mechazilla Catch"};
+const KGDK={city:"city",fly:"fly",land:"fly",drive:"drive",derby:"drive",col:"col",chessbot:"chessbot"};
+function kGLimit(){const k=KS();return k.glimit===0?0:(k.glimit||12)}
+function kGKeyNow(){if(KV.scr==="tworld"&&KV.co==="mz")return "mz";return KGSCR[KV.scr]||null}
+function kGLearnSum(){try{const r=kRot(),L=["music","learn","term","chess","poker","mj","mc","ast"];let n=0;for(const id in r.done)if(id.startsWith("q:")||L.includes(id))n+=r.done[id];return n+":"+kToday()}catch(_){return "0"}}
+function kGState(){const k=KS();k.gt=k.gt||{};k.rest=k.rest||{};return k}
+setInterval(()=>{try{if(typeof KS!=="function"||document.visibilityState!=="visible"||!document.querySelector(".kids"))return;const k=kGState(),ls=kGLearnSum();
+  if(k.gls!==ls){if(k.gls)k.gt={},k.rest={};k.gls=ls}
+  const key=kGKeyNow(),lim=kGLimit();if(!key||!lim)return;if(kPassLeft&&kPassLeft()>0)return;
+  k.gt[key]=(k.gt[key]||0)+5;const left=lim*60-k.gt[key];
+  if(left<=120&&left>115){kT(`⏳ 2 minutes left in ${KGNAME[key]}. Then do a learning round to unlock it again.`);kLine("Two minutes left!",2)}
+  if(left<=0&&!k.rest[key]){k.rest[key]=1;persist();try{if(typeof kCt!=="undefined"&&kCt&&key==="city")kCt.over=kCt.over||0}catch(_){}KV={scr:"home"};render();setTimeout(()=>kRestShow(key),60)}
+  if(k.gt[key]%30===0)persist()}catch(_){}},5000);
+function kRestKey(d){if(!d)return null;if(d.ktw==="mz")return "mz";if(d.k&&KGDK[d.k])return KGDK[d.k];return null}
+function kRestShow(key){document.querySelectorAll(".kpassov").forEach(x=>x.remove());const k=KS(),n=kPassN(),P=kPath(),r=kRot(),nx=P.find(id=>!r.done[id]),I=nx&&kPathInfo(nx);
+  const o=document.createElement("div");o.className="kpassov";
+  o.innerHTML=`<div class="kpassc"><div style="font-size:46px">⏸️</div><div class="kh" style="margin:4px 0">${esc(KGNAME[key]||"This game")} is resting</div>
+   <div class="small" style="margin-bottom:12px">You played ${kGLimit()} minutes. Win one learning round and it opens again, plus you earn 🎟️ tickets!</div>
+   ${I?`<button class="kbtn green" data-kpass="go" style="width:100%">▶ Next: ${I.x[1]} ${esc(I.x[2])}</button>`:`<button class="kbtn green" data-k="learnhub" style="width:100%">🎓 Learning Center</button>`}
+   <button class="kbtn" data-k="genius" style="width:100%;margin-top:8px">🧠 Daily Genius</button>
+   ${n>0?`<button class="kbtn" data-kpass="use" style="width:100%;margin-top:8px">🎫 Use a Free Pass · 10 min (you have ${n})</button>`:""}
+   <button class="kbtn ghost" data-kpass="no" style="width:100%;margin-top:8px">OK</button></div>`;
+  KV.passAsk=nx||null;KV.passD=null;(document.getElementById("view")||document.body).appendChild(o)}
+function kRestCheck(d){const key=kRestKey(d);if(!key)return false;const k=kGState();if(!k.rest[key]||!kGLimit())return false;if(kPassLeft()>0)return false;kBeep("no");kLine(`${KGNAME[key]} is resting. Do a learning round first!`,2);setTimeout(()=>kRestShow(key),0);return true}
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -15937,7 +16086,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 150 · Nov 20";
+const BUILD="Version 151 · Nov 20";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
