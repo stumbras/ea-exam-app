@@ -8931,7 +8931,7 @@ function kBar(p){return `<div class="kbar"><i style="width:${Math.max(0,Math.min
 function kLessonCard(){const k=KS(),L=KLES[k.lessonQ];if(!L)return "";return `<div class="klesson"><div class="klt">⚡ POWER-UP UNLOCKED</div><h2>${esc(L[0])}</h2><p class="klx">${esc(L[1])}</p><div class="kex">Example: <b>${esc(L[2])}</b></div>
   <div class="kpad"><button class="kbtn ghost" data-k="lessonSay">🔊 Read it</button><button class="kbtn big" data-k="lessonOk">Got it! Let's go 👍</button></div></div>`}
 function kQuestion(Q,ans,nk="next",show=false){if(Q.kind==="bee")return kBeeHtml(Q,ans,nk);const sb=KSUB[Q.s]||["Poker","🃏","#e31937"],done=ans!=null;if(!Q.t0)Q.t0=Date.now();const el=(Date.now()-Q.t0)/1000,lock=KV.lock;
-  const head=`<div class="kqh"><span class="ksub">${sb[1]} ${esc(Q.cat||sb[0])} · Lv ${Q.lv}${Q.rv?" · 🔁 review":""}</span><span class="klife">${!done&&!Q.rm&&lock==null?`<button class="kbtn ghost small" data-k="hint">💡 Hint</button>`:""}${KSR&&!done&&lock==null?`<button class="kbtn ghost small" data-k="mic" aria-label="Answer by voice">🎤</button>`:""}<button class="kbtn ghost small" data-k="say" aria-label="Read aloud">🔊</button></span></div>`;
+  const head=`<div class="kqh"><span class="ksub">${sb[1]} ${esc(Q.cat||sb[0])} · Lv ${Q.lv||1}${Q.rv?" · 🔁 review":""}</span><span class="klife">${!done&&!Q.rm&&lock==null?`<button class="kbtn ghost small" data-k="hint">💡 Hint</button>`:""}${KSR&&!done&&lock==null?`<button class="kbtn ghost small" data-k="mic" aria-label="Answer by voice">🎤</button>`:""}<button class="kbtn ghost small" data-k="say" aria-label="Read aloud">🔊</button></span></div>`;
   const opts=`<div class="kopts ${Q.big?"big":""} ${Q.oh?"pics":""}">${Q.o.map((o,i)=>{const gone=Q.rm&&Q.rm.includes(i),cls=done?(i===Q.a?"good":i===ans?"bad":"dim"):lock===i?"lock":gone?"gone":"";
     return `<button class="kopt c${i} ${cls}" data-ka="${i}" ${done||gone||lock!=null?"disabled":""} aria-label="${esc(o)}"><em>${"ABCD"[i]}</em><span>${Q.oh?Q.oh[i]:esc(o)}</span></button>`}).join("")}</div>`;
   const fb=done?`<div class="kfb ${ans===Q.a?"ok":"no"}"><b>${ans===Q.a?(Q.rm?"✅ Right! (hint used, so no points)":`✅ ${Q.cheer||"Correct!"}${Q.speed?` ⚡ +${Q.speed} speed bonus`:""}`):"❌ Not quite. Answer: "+esc(Q.o[Q.a])}</b>${Q.f?`<div>💡 ${esc(Q.f)}</div>`:""}</div><button class="kbtn big" data-k="${nk}">Next ▶</button>`:"";
@@ -11773,6 +11773,9 @@ function kGate0(d){
   if(d&&typeof kCt3Click==="function"&&kCt3Click(d))return true;
   if(d&&d.k==="tLimit"){const k=KS(),seq=[12,20,30,0,8],cur=k.glimit===0?0:(k.glimit||12);k.glimit=seq[(seq.indexOf(cur)+1)%seq.length];if(k.glimit===0)k.rest={};persist();kT(k.glimit?`⏳ Game limit: ${k.glimit} minutes per game between learning rounds.`:"⏳ Game limit off.");return true}
   if(typeof kRestCheck==="function"&&kRestCheck(d))return true;
+  /* The warm-up comes before the Mission Path. While it is still needed, the warm-up gate above has already stopped the games,
+     so the path gate must stay out of the way: otherwise the warm-up says "step 1 first" and step 1 says "warm-up first". */
+  if(typeof kWarmNeeded==="function"&&kWarmNeeded())return false;
   const m=kMust();if(!m)return false;const id=kPlayKey(d);if(!id||id===m)return false;const I=kPathInfo(m);if(!I)return false;
   if(kPassLeft()>0)return false;
   kBeep("no");kLine(`First, ${I.x[2]}! Then everything opens.`,2);
@@ -12833,7 +12836,7 @@ function kCovMark(ok){try{const g=KV,Q=g.Q;if(!Q)return;const id=Q.area||(Q.hero
 function kWarmPick(){const k=KS(),w=k.warm||{last:[]},A=kCovAreas().filter(a=>a.kind==="quiz"||a.kind==="hero");
   const sc=A.map(a=>{const s=kCovStat(a);let x=s.st===0?8:s.n<5?3:1;if(s.p!=null&&s.p<60)x*=2.5;if((w.last||[]).includes(a.id))x*=.05;return x});let t=sc.reduce((p,c)=>p+c,0)*Math.random(),i=0;for(;i<A.length;i++){t-=sc[i];if(t<=0)break}
   const a=A[Math.min(i,A.length-1)];w.last=(w.last||[]).concat(a.id).slice(-4);return a}
-function kWarmQ(){const g=KV,a=kWarmPick();let Q;if(a.kind==="hero")Q=kHeroQ(a.hero);else{const sc=["flags","maps","space","bee","tesla","spacex"].includes(a.cat)?a.cat:"";Q=kQ(a.sub,sc)}Q.area=a.id;Q.areaN=a.ic+" "+a.n;g.Q=Q;g.ans=null;KV.lock=null;g.Q.t0=0}
+function kWarmQ(){const g=KV,a=kWarmPick();let Q;if(a.kind==="hero"){Q=kHeroQ(a.hero);if(Q.lv==null)Q.lv=Math.floor((((KS().hero||{})[a.hero]||{}).c||0)/5)+1}else{const sc=["flags","maps","space","bee","tesla","spacex"].includes(a.cat)?a.cat:"";Q=kQ(a.sub,sc)}Q.area=a.id;Q.areaN=a.ic+" "+a.n;g.Q=Q;g.ans=null;KV.lock=null;g.Q.t0=0}
 function kWarmHook(v){try{if(["learn","gui","term","body","hosp","cyber","court","biz","circ"].includes(KV.scr)&&kWarmNeeded()){const host=v.querySelector(".kids");if(host&&!host.querySelector(".kwarmtop")){const w=KS().warm,d=document.createElement("div");d.className="kwarmtop";d.innerHTML=kWarmBar()+(w.les?`<button class="kbtn green" data-kcat="warm" style="width:100%;margin:6px 0">✅ Lesson done! ▶ Step 2: mixed warm-up questions</button>`:`<div class="kwarea">${KV.scr==="learn"?"📖 Warm-up step 1: pass this lesson (3 cards + 2 questions)":KV.scr==="gui"?"🖥️ Warm-up step 1: finish one real task below":KV.scr==="term"?"💻 Warm-up step 1: finish one terminal mission":"🧑‍🚀 Warm-up step 1: finish one round of this job"}</div>`);const t=host.querySelector(".ktop");t?t.after(d):host.prepend(d)}}
   if(KV.scr==="show"&&KV.cat==="warm"){const host=v.querySelector(".kids");if(host&&!host.querySelector(".kwarmtop")){const d=document.createElement("div");d.className="kwarmtop";d.innerHTML=(kWarmNeeded()?kWarmBar():`<div class="kwarmbar done"><span>🌅 Warm-up done!</span><b>Extra rounds still count 🎟️</b></div>`)+(KV.Q&&KV.Q.areaN&&KV.stage==="play"?`<div class="kwarea">🧭 ${esc(KV.Q.areaN)}</div>`:"");const t=host.querySelector(".ktop");t?t.after(d):host.prepend(d)}}}catch(_){}}
 /* ---------- report card (home) and coverage map (Learning Center) ---------- */
@@ -18624,7 +18627,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 160 · Nov 21";
+const BUILD="Version 161 · Nov 21";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
