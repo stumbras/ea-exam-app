@@ -787,10 +787,10 @@ body.course .tabs.bk{display:flex}
 .chero{background:linear-gradient(135deg,#0f7a3d,#0a5c33);color:#fff;border-radius:18px;padding:16px 18px}.chero h2{margin:2px 0 6px;color:#fff}.chero p{margin:0 0 10px;font-size:15px;opacity:.95}.chero .cbar{background:rgba(255,255,255,.3)}.chero .cbar i{background:#fff}
 .cbar{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden;margin:8px 0 4px}.cbar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .25s}
 .cpath{display:grid;gap:8px;margin-top:14px}.cstep{display:grid;grid-template-columns:42px minmax(0,1fr);gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px}.cstep.ok{border-color:var(--good)}.cstep.cur{border:2px solid #ef4444}
-.cic{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:20px;background:var(--sunk)}.cstep.ok .cic{background:var(--good);color:#fff;font-weight:900}.cst b{display:block}.cst .small{display:block;color:var(--muted);margin:2px 0 6px}.cbtns{display:flex;gap:6px;flex-wrap:wrap}
+.cic{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:20px;background:var(--sunk)}.cstep.ok .cic{background:var(--good);color:#fff;font-weight:900}.cst b{display:block}.cst>span.small{display:block;color:var(--muted);margin:2px 0 6px}.cbtns{display:flex;gap:6px;flex-wrap:wrap}
 .chead{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.chead h2{margin:0;font-size:19px}.chead .btn{flex:none;white-space:nowrap}.cstep.mini{grid-template-columns:34px minmax(0,1fr);padding:8px 10px;align-items:center}.cstep.mini .cic{width:34px;height:34px;font-size:16px}.cstep.mini .cst{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:center}.cstep.mini .cst b{font-size:14.5px}.cstep.mini .cbtns{flex-wrap:nowrap}.cstep.mini .cbtns .btn{padding:6px 8px;font-size:12.5px;min-height:36px}
 .cslide .clist{margin:0;padding-left:20px;display:grid;gap:8px;font-size:16.5px;line-height:1.45}.cex{background:var(--sunk);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;font-size:15px}
-.cnav{margin-top:12px;gap:8px}.cnav .btn{flex:1;min-height:48px}
+.cnav{margin-top:12px;gap:8px;flex-wrap:wrap}.cnav .btn{flex:1 1 40%;min-height:48px}button.cstep{font:inherit;color:inherit;text-align:left;cursor:pointer;width:100%}.cstep.mini .cst{grid-template-columns:minmax(0,1fr) auto}.cstat{font-size:12.5px;color:var(--muted);white-space:nowrap}.cstep.ok .cstat{color:var(--good);font-weight:800}
 .cex1{gap:12px}.cq1{margin:0;font-size:17px;font-weight:700;line-height:1.4}.cbig{margin:4px 0;font-size:24px;font-weight:900;text-align:center}.cbig span{display:block;color:var(--accent)}
 .copts{display:grid;gap:8px}.copts.c2{grid-template-columns:1fr 1fr}.copts.c5{grid-template-columns:1fr 1fr}.copts.c5 .cchip:last-child{grid-column:1/-1}.copts.cacc{grid-template-columns:1fr 1fr}
 .cchip{min-height:48px;justify-content:center;text-align:center;white-space:normal}.cchip.left{justify-content:flex-start;text-align:left}.cchip.big{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:76px;font-size:19px}.cchip.big small{font-weight:500;opacity:.75;font-size:12.5px}
@@ -801,6 +801,7 @@ body.course .tabs.bk{display:flex}
 .cfb{border-radius:12px;padding:10px 12px;font-size:15.5px;line-height:1.45}.cfb.ok{background:color-mix(in srgb,var(--good) 16%,var(--surface));border:1.5px solid var(--good)}.cfb.bad{background:color-mix(in srgb,var(--bad) 13%,var(--surface));border:1.5px solid var(--bad)}
 .cnext{width:100%;min-height:50px;font-size:17px}
 .cres{text-align:center;border-radius:18px;padding:18px;color:#fff}.cres.ok{background:linear-gradient(135deg,#0f7a3d,#0a5c33)}.cres.no{background:linear-gradient(135deg,#475569,#1e293b)}.cres h2{color:#fff;margin:4px 0}.cres p{margin:4px 0}.cbig2{font-size:54px;font-weight:900;line-height:1}
+.explain.ebhide{display:none}.ebq{display:grid;gap:8px;margin:10px 0}.ebq .cchip{font-weight:500;font-size:15px;line-height:1.4;padding:10px 12px}
 /* ---- study extras ---- */
 .pstrip{display:flex;gap:8px;margin:10px 0 0}.pstrip .btn{flex:1;justify-content:center}.pstrip b{background:#ef4444;color:#fff;border-radius:99px;padding:0 7px;font-size:12px;margin-left:4px}
 .pq{width:100%;margin:12px 0 8px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;font-size:16px}
@@ -16548,9 +16549,9 @@ function firmClick(d){const F=firmS();
      ["mc",  prompt, [correct, wrong, wrong...], why, visual?]
      ["je",  event, visual|null, [["D"|"C", account, amount]...], [extra accounts to choose from], why]
      ["tap", prompt, [[account, debit, credit]...], index of the wrong line, why] */
-const CAMPCO="Cedar & Clay Studio";
+let CAMPCO="Cedar & Clay Studio";
 const cdoc=(n,s,r,foot)=>({k:"doc",n,s,r,foot});
-const CAMP=[
+let CAMP=[
 {id:"eq",ic:"⚖️",t:"The equation that never breaks",goal:"Say what any business event does to assets, liabilities and equity.",
  slides:[
   {h:"What a bookkeeper does",b:["A business has money events all day: a sale, a bill, a paycheck, a loan payment.","Bookkeeping records each one, in order, sorted into named accounts.","From those records anyone can see four things: what the business owns, what it owes, what it earned and what it spent."],
@@ -16848,6 +16849,7 @@ const CAMP=[
   ["tap","This trial balance is out by $1,000. One account is in the wrong column. Tap it.",[["Checking","5,000",""],["Accounts receivable","600",""],["Accounts payable","500",""],["Owner's capital","","4,000"],["Class revenue","","2,400"],["Rent expense","1,300",""]],2,"Accounts payable is a liability and belongs in the credit column. The difference (1,000) is twice the misplaced amount (500), which is the usual sign of a wrong-side entry."],
   ["mc","The trial balance totals agree. Does that prove the books are right?",["No: an entry in the wrong account or a missing entry still balances","Yes: equal totals mean no errors","Yes, if the bank is also reconciled","Only at year end"],"Equal totals prove debits equal credits, nothing more."]]}
 ];
+const CAMP_BK=CAMP;
 /* ---------- Capstone: close December for Cedar & Clay ---------- */
 const CAMPCAP={
  docs:[
@@ -16888,20 +16890,26 @@ const CAMPACC={"Checking":"A","Accounts receivable":"A","Inventory":"A","Prepaid
    then a profit and loss and a balance sheet that are computed from the entries, so every number ties out.
    Progress: S.set.camp = {st:{stepId:{l,ok,best,n}}, miss:{exerciseId:count}, seen:{exerciseId:1}, cap:{i,ok,n,best,done}}. */
 let cv=null;
-function campS(){const s=S.set.camp=S.set.camp||{};s.st=s.st||{};s.miss=s.miss||{};s.seen=s.seen||{};s.cap=s.cap||{};return s}
+function campS(){const s=S.set[CT.key]=S.set[CT.key]||{};s.st=s.st||{};s.miss=s.miss||{};s.seen=s.seen||{};s.cap=s.cap||{};return s}
 function campCents(a){return Math.round(parseFloat(String(a).replace(/,/g,"").replace("−","-"))*100)}
 function campFm(c,plain){const neg=c<0;const t=(Math.abs(c)/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});return (neg?"−":"")+(plain?"":"$")+t}
 function campShuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-const CAMPN=CAMP.length+1;
+/* tracks: the same engine runs every Bootcamp. CAMP always points at the current track's steps. */
+const CAMPS={bk:{id:"bk",key:"camp",mod:2,name:"Bookkeeping Bootcamp",short:"Bootcamp",tag:"Module 2 · rebuilt",co:"Cedar & Clay Studio",steps:CAMP_BK,cap:true,
+  blurb:"Keep the books of one small studio, Cedar & Clay Studio, from its first deposit to its first month-end close. Short lesson, then you do it."}};
+let CT=CAMPS.bk;
+function campT(id){CT=CAMPS[id]||CAMPS.bk;CAMP=CT.steps;CAMPCO=CT.co||CAMPCO;return CT}
+function campIn(id,fn){const prev=CT.id;campT(id);try{return fn()}finally{campT(prev)}}
+function campN(){return CAMP.length+(CT.cap?1:0)}
 function campSlidesN(){return CAMP.reduce((n,s)=>n+s.slides.length,0)}
-function campPassed(){const st=campS().st;return CAMP.filter(s=>(st[s.id]||{}).ok).length+(campS().cap.done?1:0)}
-function campDone(){return campPassed()>=CAMPN}
+function campPassed(){const st=campS().st;return CAMP.filter(s=>(st[s.id]||{}).ok).length+(CT.cap&&campS().cap.done?1:0)}
+function campDone(){return campPassed()>=campN()}
 function campNextInfo(){const st=campS().st;
-  for(let i=0;i<CAMP.length;i++){const s=CAMP[i],r=st[s.id]||{};if(!r.ok)return{i,phase:r.l?"do":"learn",t:`Bootcamp step ${i+1} of ${CAMPN}: ${s.t}`,d:r.l?`Practice · ${r.n?"best so far "+Math.round((r.best||0)*100)+"% · ":""}80% passes the step`:`${s.slides.length} short slides, then hands-on practice · about ${Math.round(s.slides.length*1.2+6)} min`}}
-  if(!campS().cap.done){const c=campS().cap;return{cap:1,t:`Bootcamp step ${CAMPN} of ${CAMPN}: Close December for ${CAMPCO}`,d:c.i?`Pick up at item ${c.i+1} · your own entries become the statements`:"16 documents, a bank reconciliation, adjusting entries and the statements · about 25 min"}}
+  for(let i=0;i<CAMP.length;i++){const s=CAMP[i],r=st[s.id]||{};if(!r.ok)return{i,tr:CT.id,phase:r.l?"do":"learn",t:`${CT.short} step ${i+1} of ${campN()}: ${s.t}`,d:r.l?`Practice · ${r.n?"best so far "+Math.round((r.best||0)*100)+"% · ":""}80% passes the step`:`${s.slides.length} short slides, then hands-on practice · about ${Math.round(s.slides.length*1.2+6)} min`}}
+  if(CT.cap&&!campS().cap.done){const c=campS().cap;return{cap:1,tr:CT.id,t:`${CT.short} step ${campN()} of ${campN()}: Close December for ${CAMPCO}`,d:c.i?`Pick up at item ${c.i+1} · your own entries become the statements`:"16 documents, a bank reconciliation, adjusting entries and the statements · about 25 min"}}
   return null}
-function campOpen(){part=BK;cv={scr:"hub"};view="camp";render();window.scrollTo(0,0)}
-function campGoNext(){const n=campNextInfo();if(!n){campOpen();return}part=BK;view="camp";if(n.cap)campCapStart();else if(n.phase==="learn")cv={scr:"learn",step:n.i,idx:0};else campStartDo(n.i);render();window.scrollTo(0,0)}
+function campOpen(tr){campT(tr||"bk");part=BK;cv={scr:"hub",tr:CT.id};view="camp";render();window.scrollTo(0,0)}
+function campGoNext(tr){campT(tr||(cv&&cv.tr)||"bk");const n=campNextInfo();if(!n){campOpen(CT.id);return}part=BK;view="camp";if(n.cap)campCapStart();else if(n.phase==="learn")cv={scr:"learn",tr:CT.id,step:n.i,idx:0};else campStartDo(n.i);render();window.scrollTo(0,0)}
 
 /* ---------- ledger and statements (used by the capstone) ---------- */
 function campLedger(entries){const L={};entries.forEach(lines=>lines.forEach(([side,acc,amt])=>{L[acc]=(L[acc]||0)+(side==="D"?1:-1)*campCents(amt)}));return L}
@@ -16920,7 +16928,7 @@ function campPick(si){const s=CAMP[si],S0=campS(),ids=s.ex.map((x,k)=>k),N=Math.
   if(first){if(ids.length<=N)return ids;const out=[];for(let j=0;j<N;j++)out.push(ids[Math.round(j*(ids.length-1)/(N-1))]);return[...new Set(out)]}
   const miss=campShuf(ids.filter(k=>S0.miss[campExId(si,k)]>0)),fresh=campShuf(ids.filter(k=>!S0.seen[campExId(si,k)]&&!miss.includes(k))),rest=campShuf(ids.filter(k=>!miss.includes(k)&&!fresh.includes(k)));
   return campShuf(miss.concat(fresh,rest).slice(0,N))}
-function campStartDo(si){const ks=campPick(si);cv={scr:"do",step:si,items:ks.map(k=>({x:CAMP[si].ex[k],id:campExId(si,k)})),i:0,ok:0,total:ks.length,redo:{},cur:null};campCur()}
+function campStartDo(si){const ks=campPick(si);cv={scr:"do",tr:CT.id,step:si,items:ks.map(k=>({x:CAMP[si].ex[k],id:campExId(si,k)})),i:0,ok:0,total:ks.length,redo:{},cur:null};campCur()}
 function campCur(){const it=cv.items[cv.i];if(!it){cv.cur=null;return}const x=it.x,c={done:false,ok:true};
   if(x[0]==="mc")c.ord=x[2].length===2&&/^(Income statement|Balance sheet)$/.test(x[2][0])?(x[2][0]==="Income statement"?[0,1]:[1,0]):campShuf(x[2].map((_,k)=>k));
   if(x[0]==="eq")c.pick=[null,null,null];
@@ -16931,7 +16939,7 @@ function campAnswer(ok){const c=cv.cur,it=cv.items[cv.i],S0=campS();c.done=true;
   if(!ok&&!it.redo&&cv.scr==="do"&&!cv.redo[cv.i]){cv.redo[cv.i]=1;cv.items.push({x:it.x,id:it.id,redo:1})}
   if(cv.scr==="cap"){const cp=S0.cap;cp.i=cv.i+1;cp.ok=cv.ok}
   persist()}
-function campFinish(){const s=CAMP[cv.step],S0=campS(),r=S0.st[s.id]=S0.st[s.id]||{},pct=cv.ok/cv.total;r.n=(r.n||0)+1;r.best=Math.max(r.best||0,pct);r.l=1;const was=r.ok;if(pct>=0.8)r.ok=1;persist();cv={scr:"res",step:cv.step,ok:cv.ok,total:cv.total,pct,first:!was&&!!r.ok}}
+function campFinish(){const s=CAMP[cv.step],S0=campS(),r=S0.st[s.id]=S0.st[s.id]||{},pct=cv.ok/cv.total;r.n=(r.n||0)+1;r.best=Math.max(r.best||0,pct);r.l=1;const was=r.ok;if(pct>=0.8)r.ok=1;persist();cv={scr:"res",tr:CT.id,step:cv.step,ok:cv.ok,total:cv.total,pct,first:!was&&!!r.ok}}
 
 /* ---------- capstone ---------- */
 function campCapItems(){const C=CAMPCAP,items=[],ent=[];const lab=[];
@@ -16956,8 +16964,8 @@ function campCapItems(){const C=CAMPCAP,items=[],ent=[];const lab=[];
   lab.push("Statements","Statements","Statements","Statements","Statements");
   return{items,lab,F,L2}}
 function campCapStart(){const B=campCapItems(),cp=campS().cap,at=cp.i&&cp.i<B.items.length?cp.i:0;if(!at){cp.i=0;cp.ok=0}
-  cv={scr:"cap",items:B.items,lab:B.lab,i:at,ok:at?cp.ok||0:0,total:B.items.length,redo:{},cur:null,F:B.F};campCur()}
-function campCapFinish(){const cp=campS().cap,pct=cv.ok/cv.total;cp.n=(cp.n||0)+1;cp.best=Math.max(cp.best||0,pct);cp.i=0;cp.ok=0;const was=cp.done;if(pct>=0.8)cp.done=1;persist();cv={scr:"capres",ok:cv.ok,total:cv.total,pct,F:cv.F,first:!was&&!!cp.done}}
+  cv={scr:"cap",tr:CT.id,items:B.items,lab:B.lab,i:at,ok:at?cp.ok||0:0,total:B.items.length,redo:{},cur:null,F:B.F};campCur()}
+function campCapFinish(){const cp=campS().cap,pct=cv.ok/cv.total;cp.n=(cp.n||0)+1;cp.best=Math.max(cp.best||0,pct);cp.i=0;cp.ok=0;const was=cp.done;if(pct>=0.8)cp.done=1;persist();cv={scr:"capres",tr:CT.id,ok:cv.ok,total:cv.total,pct,F:cv.F,first:!was&&!!cp.done}}
 
 /* ---------- drawing ---------- */
 function campSlide(sl){const e=esc;return `<h3 style="margin:0">${e(sl.h)}</h3>${sl.b?`<ul class="clist">${sl.b.map(x=>`<li>${e(x)}</li>`).join("")}</ul>`:""}${sl.v?visHtml(sl.v):""}${sl.ex?`<div class="cex">${e(sl.ex)}</div>`:""}`}
@@ -16972,20 +16980,22 @@ function campExHtml(){const e=esc,it=cv.items[cv.i],x=it.x,c=cv.cur,k=x[0];let h
   else if(k==="sort"){const T=[["A","Asset"],["L","Liability"],["E","Equity"],["R","Revenue"],["X","Expense"]];
     h=`<div class="small muted">Which kind of account is this?</div><p class="cbig">${e(x[1])}</p><div class="copts c5">${T.map(([v,n])=>`<button class="btn cchip${c.done&&x[2]===v?" good":""}${c.done&&c.pk===v&&x[2]!==v?" bad":""}" data-camp="pick" data-v="${v}" ${c.done?"disabled":""}>${n}</button>`).join("")}</div>${fb(x[3],c.done?`<b>${T.find(t=>t[0]===x[2])[1]}.</b> `:"")}`}
   else if(k==="dc"){h=`<div class="small muted">Which side does it?</div><p class="cbig">${e(x[1])} <span>${e(x[2])}</span></p><div class="copts c2">${[["D","Debit","left side"],["C","Credit","right side"]].map(([v,n,s])=>`<button class="btn cchip big${c.done&&x[3]===v?" good":""}${c.done&&c.pk===v&&x[3]!==v?" bad":""}" data-camp="pick" data-v="${v}" ${c.done?"disabled":""}><b>${n}</b><small>${s}</small></button>`).join("")}</div>${fb(x[4])}`}
-  else if(k==="mc"){const tall=x[4]&&x[4].r&&x[4].r.length>8;h=`${tall?`<p class="cq1">${e(x[1])}</p>`:""}${x[4]?visHtml(x[4]):""}${tall?`<div class="small muted">${e(x[1])}</div>`:`<p class="cq1">${e(x[1])}</p>`}<div class="copts c1">${c.ord.map(o=>`<button class="btn cchip left${c.done&&o===0?" good":""}${c.done&&c.pk===o&&o!==0?" bad":""}" data-camp="pick" data-v="${o}" ${c.done?"disabled":""}>${e(x[2][o])}</button>`).join("")}</div>${fb(x[3])}`}
+  else if(k==="mc"){const tall=x[4]&&x[4].r&&x[4].r.length>8;h=`${tall?`<p class="cq1">${e(x[1])}</p>`:""}${x[4]?visHtml(x[4]):""}${tall?`<div class="small muted">${e(x[1])}</div>`:`<p class="cq1">${e(x[1])}</p>`}${cv.scr==="do"&&CAMP[cv.step].ask&&!/\?$/.test(x[1])?`<div class="small muted">${e(CAMP[cv.step].ask)}</div>`:""}<div class="copts c1">${c.ord.map(o=>`<button class="btn cchip left${c.done&&o===0?" good":""}${c.done&&c.pk===o&&o!==0?" bad":""}" data-camp="pick" data-v="${o}" ${c.done?"disabled":""}>${e(x[2][o])}</button>`).join("")}</div>${fb(x[3])}`}
   else if(k==="tap"){h=`<p class="cq1">${e(x[1])}</p><div class="vis vje cje ctap"><div class="jh"><span>Account</span><span>Debit</span><span>Credit</span></div>${x[2].map((r,j)=>`<button class="jr${r[2]?" cr":""}${c.done&&j===x[3]?" good":""}${c.done&&c.pk===j&&j!==x[3]?" bad":""}" data-camp="pick" data-v="${j}" ${c.done?"disabled":""}><span>${e(r[0])}</span><span>${e(r[1]||"")}</span><span>${e(r[2]||"")}</span></button>`).join("")}</div>${fb(x[4])}`}
   else if(k==="je"){const l=x[3][c.line];
     h=`${x[2]?visHtml(x[2]):""}<p class="cq1">${e(x[1])}</p>${campJeTable(x,c,c.done)}
      ${c.done?"":`<div class="cask">${l[0]==="D"?"<b>Debit</b>":"<b>Credit</b>"} ${e(l[2])}: which account?</div><div class="copts cacc">${c.opts.map(a=>`<button class="btn cchip left" data-camp="acc" data-v="${e(a)}">${e(a)}</button>`).join("")}</div>`}${fb(x[5])}`}
   return h}
-function campHead(title,sub,pct){return `<div class="chead"><div><h2>${esc(title)}</h2><div class="small muted">${sub}</div></div><button class="btn small ghost" data-camp="cheat">📎 Cheat sheet</button></div>${pct!=null?`<div class="cbar"><i style="width:${Math.round(pct*100)}%"></i></div>`:""}`}
-function renderCamp(){if(!cv)cv={scr:"hub"};const e=esc,S0=campS();let h="";
+function campHead(title,sub,pct){return `<div class="chead"><div><h2>${esc(title)}</h2><div class="small muted">${sub}</div></div>${CT.cheat===false?"":`<button class="btn small ghost" data-camp="cheat">📎 Cheat sheet</button>`}</div>${pct!=null?`<div class="cbar"><i style="width:${Math.round(pct*100)}%"></i></div>`:""}`}
+function renderCamp(){if(!cv)cv={scr:"hub",tr:"bk"};campT(cv.tr||"bk");const e=esc,S0=campS();let h="";
   if(cv.scr==="hub"){const n=campNextInfo(),done=campPassed();
-    h=`<section class="section"><div class="chero"><div class="small">Module 2 · rebuilt</div><h2>Bookkeeping Bootcamp</h2><p>Keep the books of one small studio, ${e(CAMPCO)}, from its first deposit to its first month-end close. Short lesson, then you do it.</p><div class="cbar"><i style="width:${Math.round(done/CAMPN*100)}%"></i></div><div class="small">${done} of ${CAMPN} steps passed</div></div>
-     ${n?`<button class="donext" data-camp="go"><span class="dn1">👉 DO THIS NEXT</span><b>${e(n.t.replace(/^Bootcamp s/,"S"))}</b><span class="dn2">${e(n.d)}</span><span class="dn3">Tap here ▶</span></button>`:`<div class="cfb ok" style="margin-top:10px"><b>✓ Bootcamp complete.</b> Every step is passed. Redo any step below to keep it sharp, or move on to QuickBooks.</div>`}
-     <div class="cpath">${CAMP.map((s,i)=>{const r=S0.st[s.id]||{},cur=n&&!n.cap&&n.i===i;return `<div class="cstep${r.ok?" ok":""}${cur?" cur":" mini"}"><span class="cic">${r.ok?"✓":s.ic}</span><div class="cst"><b>${i+1}. ${e(s.t)}</b>${cur?`<span class="small">${e(s.goal)}</span>`:""}<div class="cbtns"><button class="btn small" data-camp="learn" data-i="${i}">📖 Lesson${r.l?" ✓":""}</button><button class="btn small${cur&&r.l?" pri":""}" data-camp="do" data-i="${i}">✍️ Practice${r.n?" · best "+Math.round((r.best||0)*100)+"%":""}</button></div></div></div>`}).join("")}
-      <div class="cstep${S0.cap.done?" ok":""}${n&&n.cap?" cur":" mini"}"><span class="cic">${S0.cap.done?"✓":"🏁"}</span><div class="cst"><b>${CAMPN}. Close December for ${e(CAMPCO)}</b>${n&&n.cap?`<span class="small">Sixteen documents, the bank reconciliation, four adjusting entries, then the statements built from your own entries.</span>`:""}<div class="cbtns"><button class="btn small${n&&n.cap?" pri":""}" data-camp="cap">🏁 ${S0.cap.i?"Continue":"Start"} the close${S0.cap.best?" · best "+Math.round(S0.cap.best*100)+"%":""}</button></div></div></div></div>
-     <div class="small muted" style="margin:10px 2px">You can open any step in any order. The red button always shows the recommended next one. The studio, its people and every number are invented for practice.</div></section>`}
+    h=`<section class="section"><div class="chero"><div class="small">${e(CT.tag)}</div><h2>${e(CT.name)}</h2><p>${e(CT.blurb)}</p><div class="cbar"><i style="width:${Math.round(done/campN()*100)}%"></i></div><div class="small">${done} of ${campN()} steps passed</div></div>
+     ${n?`<button class="donext" data-camp="go"><span class="dn1">👉 DO THIS NEXT</span><b>${e(n.t.replace(/^.*? step /,"Step "))}</b><span class="dn2">${e(n.d)}</span><span class="dn3">Tap here ▶</span></button>`:`<div class="cfb ok" style="margin-top:10px"><b>✓ ${e(CT.name)} complete.</b> Every step is passed. Redo any step below to keep it sharp.</div>${CT.after?`<button class="btn pri pcert" data-camp="after">${e(CT.after.t)} ▶</button>`:""}`}
+     <div class="cpath">${CAMP.map((s,i)=>{const r=S0.st[s.id]||{},cur=n&&!n.cap&&n.i===i;
+      if(!cur)return `<button class="cstep mini${r.ok?" ok":""}" data-camp="open" data-i="${i}"><span class="cic">${r.ok?"✓":s.ic}</span><span class="cst"><b>${i+1}. ${e(s.t)}</b><span class="cstat">${r.ok?Math.round((r.best||0)*100)+"%":r.n?"best "+Math.round((r.best||0)*100)+"%":r.l?"lesson read":""} ›</span></span></button>`;
+      return `<div class="cstep cur"><span class="cic">${s.ic}</span><div class="cst"><b>${i+1}. ${e(s.t)}</b><span class="small">${e(s.goal)}</span><div class="cbtns"><button class="btn small" data-camp="learn" data-i="${i}">📖 Lesson${r.l?" ✓":""}</button><button class="btn small${r.l?" pri":""}" data-camp="do" data-i="${i}">✍️ Practice${r.n?" · best "+Math.round((r.best||0)*100)+"%":""}</button></div></div></div>`}).join("")}
+${CT.cap?`      <div class="cstep${S0.cap.done?" ok":""}${n&&n.cap?" cur":" mini"}"><span class="cic">${S0.cap.done?"✓":"🏁"}</span><div class="cst"><b>${campN()}. Close December for ${e(CAMPCO)}</b>${n&&n.cap?`<span class="small">Sixteen documents, the bank reconciliation, four adjusting entries, then the statements built from your own entries.</span>`:""}<div class="cbtns"><button class="btn small${n&&n.cap?" pri":""}" data-camp="cap">🏁 ${S0.cap.i?"Continue":"Start"} the close${S0.cap.best?" · best "+Math.round(S0.cap.best*100)+"%":""}</button></div></div></div>`:""}</div>
+     <div class="small muted" style="margin:10px 2px">Tap any step to open it. The red button always shows the recommended next one. People, companies and numbers in the examples are invented for practice.</div></section>`}
   else if(cv.scr==="learn"){const s=CAMP[cv.step],sl=s.slides[cv.idx],last=cv.idx>=s.slides.length-1;
     h=`<section class="section">${campHead(`Step ${cv.step+1} · ${s.t}`,`Lesson · slide ${cv.idx+1} of ${s.slides.length}`,(cv.idx+1)/s.slides.length)}
      <div class="card slide cslide">${campSlide(sl)}</div>
@@ -16996,7 +17006,8 @@ function renderCamp(){if(!cv)cv={scr:"hub"};const e=esc,S0=campS();let h="";
      <div class="card cex1">${campExHtml()}</div><button class="btn ghost small" data-camp="hub" style="margin-top:10px">${cap?"Save and leave (you can continue later)":"Leave practice"}</button></section>`}
   else if(cv.scr==="res"){const s=CAMP[cv.step],pass=cv.pct>=0.8,n=campNextInfo();
     h=`<section class="section"><div class="cres ${pass?"ok":"no"}"><div class="cbig2">${Math.round(cv.pct*100)}%</div><h2>${pass?"Step passed":"Not yet: 80% passes"}</h2><p>${cv.ok} of ${cv.total} right on the first try · ${e(s.t)}</p>${pass?`<p class="small">You can now: ${e(s.goal.charAt(0).toLowerCase()+s.goal.slice(1))}</p>`:`<p class="small">The ones you missed come first next time, mixed with new ones.</p>`}</div>
-     ${pass&&n?`<button class="donext" data-camp="go"><span class="dn1">👉 DO THIS NEXT</span><b>${e(n.t.replace(/^Bootcamp s/,"S"))}</b><span class="dn2">${e(n.d)}</span><span class="dn3">Tap here ▶</span></button>`:""}
+     ${pass&&n?`<button class="donext" data-camp="go"><span class="dn1">👉 DO THIS NEXT</span><b>${e(n.t.replace(/^.*? step /,"Step "))}</b><span class="dn2">${e(n.d)}</span><span class="dn3">Tap here ▶</span></button>`:""}
+     ${pass&&!n&&CT.after?`<button class="btn pri pcert" data-camp="after">${e(CT.after.t)} ▶</button>`:""}
      <div class="row cnav">${pass?"":`<button class="btn pri" data-camp="do" data-i="${cv.step}">Try again ▶</button>`}<button class="btn" data-camp="learn" data-i="${cv.step}">📖 Reread the lesson</button>${pass?`<button class="btn" data-camp="do" data-i="${cv.step}">Practice again</button>`:""}<button class="btn" data-camp="hub">All steps</button></div></section>`}
   else if(cv.scr==="capres"){const pass=cv.pct>=0.8,F=cv.F;
     h=`<section class="section"><div class="cres ${pass?"ok":"no"}"><div class="cbig2">${Math.round(cv.pct*100)}%</div><h2>${pass?"December is closed":"Close again: 80% passes"}</h2><p>${cv.ok} of ${cv.total} right on the first try</p><p class="small">${pass?"You recorded a month of documents, tied the books to the bank, adjusted, and produced the statements. That is the monthly job of a bookkeeper.":"The entries are the same next time, so use the feedback you just saw."}</p></div>
@@ -17011,11 +17022,14 @@ function campCheat(){if(typeof glClose==="function")glClose();const o=document.c
    <p style="margin-top:10px"><b>Three questions:</b> Which accounts are touched? What type is each, and did it go up or down? Is that a debit or a credit?</p>
    <p><b>Not income:</b> owner money in, loans, customer prepayments, sales tax collected.<br><b>Not an expense:</b> equipment, loan principal, owner draws, paying a card or a bill already recorded.</p>
    <button class="btn pri" id="glok" style="width:100%">Got it</button></div>`;document.body.appendChild(o);document.body.classList.add("glopen")}
-function campClick(d){const a=d.camp,c=cv&&cv.cur;
-  if(a==="hub"){cv={scr:"hub"};window.scrollTo(0,0);return true}
+function campClick(d){campT((cv&&cv.tr)||"bk");const a=d.camp,c=cv&&cv.cur;
+  if(a==="track"){campOpen(d.tr);return true}
+  if(a==="after"){const g=CT.after&&CT.after.go;if(g)bkGo({k:g});return true}
+  if(a==="hub"){cv={scr:"hub",tr:CT.id};window.scrollTo(0,0);return true}
   if(a==="go"){campGoNext();return true}
   if(a==="cheat"){campCheat();return true}
-  if(a==="learn"){cv={scr:"learn",step:+d.i,idx:0};window.scrollTo(0,0);return true}
+  if(a==="open"){const r=campS().st[CAMP[+d.i].id]||{};if(r.l||r.ok){campStartDo(+d.i)}else cv={scr:"learn",tr:CT.id,step:+d.i,idx:0};window.scrollTo(0,0);return true}
+  if(a==="learn"){cv={scr:"learn",tr:CT.id,step:+d.i,idx:0};window.scrollTo(0,0);return true}
   if(a==="prev"){cv.idx=Math.max(0,cv.idx-1);window.scrollTo(0,0);return true}
   if(a==="fwd"){cv.idx++;if(cv.idx>=CAMP[cv.step].slides.length-1){const r=campS().st[CAMP[cv.step].id]=campS().st[CAMP[cv.step].id]||{};r.l=1;persist()}window.scrollTo(0,0);return true}
   if(a==="do"){const i=+d.i,r=campS().st[CAMP[i].id]=campS().st[CAMP[i].id]||{};r.l=1;persist();campStartDo(i);window.scrollTo(0,0);return true}
@@ -17029,13 +17043,15 @@ function campClick(d){const a=d.camp,c=cv&&cv.cur;
   return true}
 
 /* ---------- wiring into the course ---------- */
+function campTrackOf(m){return Object.values(CAMPS).find(t=>t.mod===m)||null}
 const campExtraView0=extraView;extraView=function(){if(view==="camp"){try{document.body.classList.toggle("course",CLOCK())}catch(_){}renderCamp();return true}return campExtraView0()};
-const campExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.camp!==undefined){const r=campClick(d);if(view==="camp")render();return r}if(d.mode==="camp"){campOpen();return true}return campExtraClick0(b)};
-const campBklClick0=bklClick;bklClick=function(d){if(d.bkl==="mod"&&+d.m===2){campOpen();return true}if(d.bkl==="tool"&&d.k==="camp"){campOpen();return true}return campBklClick0(d)};
-/* next step: the Bootcamp is module 2's lesson path; the three older module-2 units stay available as reference reading */
+const campExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.camp!==undefined){const r=campClick(d);if(view==="camp")render();return r}return campExtraClick0(b)};
+const campBklClick0=bklClick;bklClick=function(d){if(d.bkl==="mod"){const t=campTrackOf(+d.m);if(t&&(t.id==="bk"||!campIn(t.id,campDone))){campOpen(t.id);return true}}if(d.bkl==="tool"&&d.k==="camp"){campOpen("bk");return true}return campBklClick0(d)};
+/* next step: each module starts with its Bootcamp track (learn a step, then do it). The older reading units stay as reference:
+   module 2's three units are replaced by its track; modules 3 to 5 keep their units after the track. */
 bkNext=function(){const J=bkJel();
-  for(let m=1;m<=5;m++){const s=bkStats(m),U=UNITS[BK]||[];
-    if(m===2&&!campDone()){const n=campNextInfo();return{k:"camp",m:2,t:n.t,d:n.d}}
+  for(let m=1;m<=5;m++){const s=bkStats(m),U=UNITS[BK]||[],T=campTrackOf(m);
+    if(T){const n=campIn(T.id,()=>campDone()?null:campNextInfo());if(n)return{k:"camp",tr:T.id,m,t:n.t,d:n.d}}
     const u=m===2?-1:bkNextLesson(m);
     if(u>=0){const pos=(S.set.les||{})["u"+BK+"-"+u];return{k:"les",u,m,t:`Lesson: ${U[u].t}`,d:`Module ${m} · ${U[u].s.length} slides · about ${Math.max(5,Math.round(U[u].s.length*1.2))} min${pos!==undefined?" · pick up where you stopped":""}`}}
     if(s.known<s.cards*0.5)return{k:"cards",m,t:`Flashcards: ${PARTS[BK].doms[m][0]}`,d:`Module ${m} · ${s.known} of ${s.cards} known · 10 min`};
@@ -17045,19 +17061,311 @@ bkNext=function(){const J=bkJel();
     if(m===4&&bkTax()<1)return{k:"tax",t:"Practice tax software",d:"Run a client file from intake to e-file · 25 min"}}
   if(bkFirm()<1)return{k:"firm",t:"Run Solving Life LLC for a year",d:"Deadlines, clients, pricing and compliance · 20 min"};
   return{k:"workout",t:"Daily workout",d:"Fresh numbers every time: payroll, reconciliations, Schedule C · 10 min"}};
-const campBkGo0=bkGo;bkGo=function(n){if(n&&n.k==="camp"){campGoNext();return}return campBkGo0(n)};
-/* module 2 progress now counts the Bootcamp's slides and practice steps in place of the three older reading units */
-const campBkStats0=bkStats;bkStats=function(d){const r=campBkStats0(d);if(d!=="all"&&d!=2)return r;try{const o=campBkStats0(2),st=campS().st,slTot=campSlidesN(),slRead=CAMP.reduce((n,s)=>n+((st[s.id]||{}).l||(st[s.id]||{}).ok?s.slides.length:0),0);
-    const slides=r.slides-o.slides+slTot,read=r.read-o.read+slRead,labs=r.labs+CAMPN,labsDone=r.labsDone+campPassed(),pc=(a,b)=>b?a/b:0;
-    return Object.assign({},r,{slides,read,labs,labsDone,pct:(0.2*pc(read,slides)+0.35*pc(r.known,r.cards)+0.25*pc(r.right,r.qs)+0.2*pc(labsDone,labs))*100})}catch(_){return r}};
-/* skills map: passing Bootcamp steps proves the same skills */
-(function(){const ok=id=>id==="cap"?(campS().cap.done?1:0):((campS().st[id]||{}).ok?1:0),avg=ids=>ids.reduce((n,i)=>n+ok(i),0)/ids.length,add=(k,ids)=>{const f=BKSKILLS[k][3];BKSKILLS[k][3]=()=>{let a=0,b=0;try{a=f()||0}catch(_){}try{b=avg(ids)}catch(_){}return Math.max(a,b)}};
-  try{add(1,["eq","acct","dc","je1","sales","buy"]);add(2,["adj","cap"]);add(3,["rec"]);add(5,["pay"]);add(6,["stmt","cap"]);BKSTAGES[1]=[2,"📒","Bookkeeping Bootcamp","12 hands-on steps with one studio's books, then you close its first month."]}catch(_){}})();
+const campBkGo0=bkGo;bkGo=function(n){if(n&&n.k==="camp"){campGoNext(n.tr||"bk");return}return campBkGo0(n)};
+/* progress: module 2 counts the Bookkeeping Bootcamp's slides in place of its three older units; every track's steps count as real tasks */
+const campBkStats0=bkStats;bkStats=function(d){const r=campBkStats0(d);try{const pc=(a,b)=>b?a/b:0;let slides=r.slides,read=r.read,labs=r.labs,labsDone=r.labsDone,touched=false;
+    Object.values(CAMPS).forEach(T=>{if(d!=="all"&&d!=T.mod)return;touched=true;campIn(T.id,()=>{labs+=campN();labsDone+=campPassed();
+      if(T.id==="bk"){const o=campBkStats0(2),st=campS().st;slides+=campSlidesN()-o.slides;read+=CAMP.reduce((n,s)=>n+((st[s.id]||{}).l||(st[s.id]||{}).ok?s.slides.length:0),0)-o.read}})});
+    if(!touched)return r;return Object.assign({},r,{slides,read,labs,labsDone,pct:(0.2*pc(read,slides)+0.35*pc(r.known,r.cards)+0.25*pc(r.right,r.qs)+0.2*pc(labsDone,labs))*100})}catch(_){return r}};
+/* skills map: passing Bootcamp steps proves the same skills. Entries are [track, step id] or [track, "cap"]. */
+(function(){const ok=(tr,id)=>CAMPS[tr]?campIn(tr,()=>id==="cap"?(campS().cap.done?1:0):id==="all"?campPassed()/campN():((campS().st[id]||{}).ok?1:0)):0,avg=ids=>ids.reduce((n,x)=>n+ok(x[0],x[1]),0)/ids.length,add=(k,ids)=>{const f=BKSKILLS[k][3];BKSKILLS[k][3]=()=>{let a=0,b=0;try{a=f()||0}catch(_){}try{b=avg(ids)}catch(_){}return Math.max(a,b)}};
+  try{const B=x=>["bk",x];add(1,["eq","acct","dc","je1","sales","buy"].map(B));add(2,["adj","cap"].map(B));add(3,[B("rec")]);add(5,[B("pay")]);add(6,["stmt","cap"].map(B));BKSTAGES[1]=[2,"📒","Bookkeeping Bootcamp","12 hands-on steps with one studio's books, then you close its first month."]}catch(_){}})();
 /* course home: a Bootcamp tile first in the practice grid, and the long skills list folds away */
 const campRenderBkLand0=renderBkLand;renderBkLand=function(){campRenderBkLand0();try{const v=document.getElementById("view"),g=v.querySelector(".bkl-tools");
-    if(g&&!g.querySelector('[data-k="camp"]')){const b=document.createElement("button");b.className="bkl-tool";b.dataset.bkl="tool";b.dataset.k="camp";b.innerHTML=`<span class="bkl-ti">📒</span><b>Bookkeeping Bootcamp</b><span class="small">One studio's books from the first deposit to the month-end close. Learn a step, then do it.</span><span class="bkl-tc">${campPassed()} of ${CAMPN} steps</span>`;g.insertBefore(b,g.firstChild)}
+    if(g&&!g.querySelector('[data-camp="track"]')){Object.values(CAMPS).slice().reverse().forEach(T=>{const b=document.createElement("button");b.className="bkl-tool";b.dataset.camp="track";b.dataset.tr=T.id;const st=campIn(T.id,()=>campPassed()+" of "+campN()+" steps");b.innerHTML=`<span class="bkl-ti">${T.ic||"📒"}</span><b>${esc(T.name)}</b><span class="small">${esc(T.tile||T.blurb)}</span><span class="bkl-tc">${st}</span>`;g.insertBefore(b,g.firstChild)})}
     const sk=v.querySelector(".bkl-skills");if(sk&&!sk.closest("details")){const hd=sk.previousElementSibling,h3=hd&&hd.previousElementSibling,got=sk.querySelectorAll(".bkl-sk.got").length,d=document.createElement("details");d.className="more";d.id="bkskills";if(OPEN.bkskills)d.open=true;
       d.innerHTML=`<summary><b>Skills you can show an employer</b><span>${got} of ${BKSKILLS.length} earned · tap to see each one</span></summary>`;sk.parentNode.insertBefore(d,sk);const box=document.createElement("div");box.style.padding="0 12px 12px";d.appendChild(box);if(hd&&hd.classList.contains("small"))box.appendChild(hd);box.appendChild(sk);if(h3&&h3.tagName==="H3")h3.remove()}}catch(_){}};
+
+/* ================= More Bootcamp tracks: QuickBooks, the individual return, business taxes =================
+   Same engine and the same "short lesson, then do it" shape as the Bookkeeping Bootcamp, kept small on purpose:
+   three or four slides and seven to ten questions a step. Dollar figures are the ones already used and checked elsewhere
+   in this course (2025 standard deductions, $2,200 child tax credit, 70 cents a mile, 1099-NEC $600 for 2025 payments and
+   $2,000 for 2026 payments). QuickBooks screens are described by what each form does, not by where a menu sits, because
+   Intuit moves menus. People and companies are invented. */
+const CAMP_QB=[
+{id:"q1",ic:"🧭",ask:"Which QuickBooks form do you use?",t:"Pick the right form",goal:"Choose the QuickBooks form that fits what happened.",
+ slides:[
+  {h:"QuickBooks does the debits and credits",b:["In QuickBooks you rarely type a journal entry. You fill in a form, and the form posts the entry for you.","Your skill is choosing the right form for what really happened.","Choose the wrong one and the books still balance, but the reports are wrong."]},
+  {h:"From the event to the form",v:{k:"tiers",r:[["Customer will pay later","Invoice",55],["Customer pays that invoice","Receive payment",55],["Customer pays on the spot","Sales receipt",55],["Supplier bill to pay later","Bill",75],["Paying that bill","Pay bills",75],["Paid on the spot by card or bank","Expense",75],["Money moved between the company's own accounts","Transfer",100]]},
+   ex:"The most common beginner error is recording one event twice: an invoice, and then a new sale when the money arrives."},
+  {h:"Forms that post nothing",b:["Estimate: a price quote for a customer.","Purchase order: an order sent to a supplier.","Neither changes the books. The books change when the estimate becomes an invoice, or when the supplier's bill arrives."]},
+  {h:"When a journal entry is right",b:["Use a journal entry for adjustments that have no form: depreciation, moving prepaid insurance to expense, fixing an account.","Do not use it for daily sales and bills. Forms keep the customer and vendor records correct; a journal entry does not."]}],
+ ex:[
+  ["mc","Birch & Co. takes a workshop today and will pay in 15 days.",["Invoice","Sales receipt","Bank deposit","Bill"],"The customer owes money, so an invoice records the sale and the amount due."],
+  ["mc","A walk-in customer buys two mugs and pays by card on the spot.",["Sales receipt","Invoice","Receive payment","Expense"],"Sale and payment happen together, so nothing is owed. That is a sales receipt."],
+  ["mc","Birch & Co.'s check arrives for the invoice sent last week.",["Receive payment","Sales receipt","Invoice","Journal entry"],"The sale is already recorded. Receive payment applies the money to the open invoice."],
+  ["mc","The clay supplier's bill arrives. It is due in 30 days.",["Bill","Expense","Pay bills","Purchase order"],"It will be paid later, so it is entered as a bill and sits in accounts payable."],
+  ["mc","It is time to pay that supplier's bill.",["Pay bills","Expense","Bill","Journal entry"],"Pay bills clears the bill. A new expense would count the cost a second time."],
+  ["mc","Glaze is bought at a shop with the business debit card.",["Expense","Bill","Pay bills","Sales receipt"],"Paid on the spot, with no bill entered first."],
+  ["mc","$500 is moved from business checking to business savings.",["Transfer","Expense","Bank deposit","Journal entry"],"Money moved between the company's own accounts is a transfer. It is neither income nor expense."],
+  ["mc","A customer asks what a private party for ten people would cost.",["Estimate","Invoice","Sales receipt","Purchase order"],"A quote posts nothing. It can be turned into an invoice if the customer says yes."],
+  ["mc","It is month end and the kiln's depreciation must be recorded.",["Journal entry","Expense","Bill","Transfer"],"There is no form for depreciation, so this is one of the proper uses of a journal entry."],
+  ["mc","A customer pays an invoice. The bookkeeper enters a new sales receipt for the money. What is wrong now?",["Income is counted twice and the invoice still shows as unpaid","Nothing: the money is in the bank either way","Income is too low","The customer was charged twice by the bank"],"The invoice already recorded the sale. The payment should have been applied to it."]]},
+
+{id:"q2",ic:"🧾",t:"Money in: invoice, payment, deposit",goal:"Follow a sale from the invoice to the bank and see what each form posts.",
+ slides:[
+  {h:"Three forms, one sale",v:{k:"flow",r:["Invoice: records the sale and what the customer owes","Receive payment: applies the customer's money to that invoice","Payments to deposit: holds money that is not at the bank yet","Bank deposit: moves it into Checking in the same total the bank will show"]},
+   ex:"Older company files call the holding account Undeposited Funds. It is the same thing."},
+  {h:"What each one posts",v:{k:"je",r:[["Accounts receivable","400.00",""],["Class revenue","","400.00"],["Payments to deposit","400.00",""],["Accounts receivable","","400.00"],["Checking","400.00",""],["Payments to deposit","","400.00"]],n:"Invoice, then Receive payment, then Bank deposit. Income is recorded once, by the invoice."}},
+  {h:"Make the deposit match the bank",b:["If three checks go to the bank in one trip, the bank statement shows one line for the total.","Record one bank deposit that contains all three payments.","Then the bank feed and the reconciliation match line for line."]},
+  {h:"Items do the filing",b:["Each product or service item points to an income account.","Choosing the item on an invoice puts the sale in the right place automatically.","A sales receipt skips accounts receivable: it posts straight to the bank or to Payments to deposit, and to income."]}],
+ ex:[
+  ["je","You save a $400 invoice for a class. What does QuickBooks post?",null,[["D","Accounts receivable","400.00"],["C","Class revenue","400.00"]],["Checking","Payments to deposit","Unearned revenue"],"The customer owes $400 and the income is earned. No money has moved yet."],
+  ["je","The customer pays the $400. You record Receive payment into Payments to deposit. What is posted?",null,[["D","Payments to deposit","400.00"],["C","Accounts receivable","400.00"]],["Class revenue","Checking","Product sales"],"The money is in hand, not yet at the bank, and the customer no longer owes it. Income does not change."],
+  ["je","You take the money to the bank and record the Bank deposit. What is posted?",null,[["D","Checking","400.00"],["C","Payments to deposit","400.00"]],["Class revenue","Accounts receivable","Owner's capital"],"The holding account empties into Checking."],
+  ["mc","Three customer checks ($400, $150 and $250) go to the bank in one trip. How do you record the deposit?",["One bank deposit of $800 containing all three payments","Three separate deposits","One journal entry to income for $800","Nothing: the bank feed will handle it"],"The bank shows one $800 line. One deposit of $800 matches it."],
+  ["mc","The balance sheet shows $9,000 in Payments to deposit, but no money is waiting to go to the bank. What probably happened?",["Payments were received into it, but the bank deposits were added as new income instead","Customers have not paid their invoices","The bank lost the deposits","The account is working as intended"],"The holding account was never emptied, and the same money was counted as income a second time. This is the classic cleanup job."],
+  ["mc","What does a sales receipt post?",["Money in (bank or Payments to deposit) and income, with no accounts receivable","Accounts receivable and income","Accounts payable and expense","Nothing until it is deposited"],"The customer paid at once, so nothing is owed."],
+  ["mc","Why set up product and service items instead of typing a description each time?",["Each item points to an income account, so the sale is filed correctly every time","Items make invoices print faster","Items are required by the IRS","Items replace the chart of accounts"],"The item carries the account, the price and the tax setting."],
+  ["mc","A customer was invoiced $400 but should have been charged $350. What reduces what the customer owes?",["A credit memo for $50","A new invoice for $350 as well","An expense for $50","A bank deposit of −$50"],"A credit memo lowers the customer's balance and the income by the same amount."]]},
+
+{id:"q3",ic:"💳",t:"Money out: bills, expenses and cards",goal:"Record purchases once, in the right place.",
+ slides:[
+  {h:"Two roads for a purchase",v:{k:"cmp",a:["Pay later",["Enter a Bill when it arrives","It sits in accounts payable","Use Pay bills when you pay it"]],b:["Paid on the spot",["Enter an Expense","Pick the payment account: bank or credit card","Nothing goes to accounts payable"]]},
+   ex:"Entering a bill and then, later, an expense for the same payment counts the cost twice and leaves the bill open."},
+  {h:"Credit cards",b:["The card is its own account in QuickBooks, a liability.","Each charge is an Expense with the card as the payment account.","Paying the card statement from checking is a transfer from Checking to the card account. It is not a new expense."]},
+  {h:"What is not an expense account",b:["Owner takes money or pays something personal: Owner's draw, an equity account.","Loan payment: split it. Principal to Loan payable, interest to Interest expense.","Equipment that lasts for years: an asset account.","Sales tax sent to the state: Sales tax payable."]},
+  {h:"Vendors who are contractors",b:["Keep a Form W-9 for each contractor before the first payment.","Mark the vendor for 1099 tracking so the year-end forms are easy.","Put their payments in one account, such as Contract labor."]}],
+ ex:[
+  ["je","You enter a $260 bill for clay, due in 30 days. What does QuickBooks post?",null,[["D","Supplies expense","260.00"],["C","Accounts payable","260.00"]],["Checking","Credit card payable","Inventory"],"The cost is recorded now. Nothing has left the bank."],
+  ["je","You use Pay bills to pay that $260 from Checking. What is posted?",null,[["D","Accounts payable","260.00"],["C","Checking","260.00"]],["Supplies expense","Credit card payable","Owner's draw"],"The bill is cleared. The expense was already recorded."],
+  ["mc","A bill was entered last week. Today someone records a new Expense for the payment instead of using Pay bills. What happens?",["The cost is counted twice and the bill still shows as unpaid","Nothing: both ways are the same","The bill is deleted automatically","The bank balance doubles"],"Always pay an entered bill through Pay bills."],
+  ["mc","A $120 ad is charged to the business credit card. How is it entered?",["An Expense, with the credit card as the payment account","A Bill","A Transfer","An Expense paid from Checking"],"The card balance goes up. Checking is not touched until the card is paid."],
+  ["mc","The $420 credit card statement is paid from checking. How is that recorded?",["As a transfer from Checking to the credit card account","As an Expense to Supplies","As a Bill","As a journal entry to income"],"Every charge was already an expense. The payment only lowers the card balance."],
+  ["mc","Mara pays her dentist with the business card. Which account?",["Owner's draw","Insurance expense","Supplies expense","Contract labor"],"A personal cost paid by the business is a draw."],
+  ["mc","A $250 loan payment is $220 principal and $30 interest. How is it entered?",["Two lines: $220 to Loan payable and $30 to Interest expense","One line: $250 to Interest expense","One line: $250 to Loan payable","As a Transfer"],"Only the interest is an expense. The principal reduces the loan."],
+  ["mc","A new contractor will photograph products. What should be on file before the first payment?",["A Form W-9, and the vendor marked for 1099 tracking","A Form W-4","A Form I-9","Nothing until year end"],"The W-9 gives the name and tax number needed for a Form 1099-NEC."]]},
+
+{id:"q4",ic:"🏦",ask:"What do you do with this bank line?",t:"The bank feed: match, add, transfer, exclude",goal:"Clear downloaded bank lines without creating duplicates.",
+ slides:[
+  {h:"What the bank feed is",b:["QuickBooks downloads each line from the bank and card accounts and lists it for review.","A downloaded line is not in the books yet. You decide what it is.","Your goal: every line ends up in the books exactly once."]},
+  {h:"Four choices for every line",v:{k:"tiers",r:[["Already entered in QuickBooks","Match",40],["Not entered yet","Add: choose the payee and the account",60],["Money moved between your own accounts","Record as transfer",80],["A duplicate or not this company's","Exclude",100]]},
+   ex:"Adding a line that was already entered is how duplicates are made. Look for a match first."},
+  {h:"Rules save time",b:["A bank rule tells QuickBooks how to file a line that keeps coming back, such as the monthly power bill.","Check rules now and then. A rule that is too broad files things in the wrong account, quietly."]},
+  {h:"When you do not know",b:["Do not guess an account to make the list empty.","Ask the owner what it was and get the receipt.","An honest question today is cheaper than a cleanup at tax time."]}],
+ ex:[
+  ["mc","The feed shows a deposit of $800. You already recorded a bank deposit of $800 for three customer checks.",["Match","Add as new income","Record as transfer","Exclude"],"It is already in the books. Matching ties the bank line to your deposit."],
+  ["mc","The feed shows $1,500 paid to Harbor Property. Nothing has been entered for it.",["Add, with payee Harbor Property and account Rent expense","Match","Record as transfer","Exclude"],"It is new to the books, so it is added with the right payee and account."],
+  ["mc","The feed shows $420 from checking to the business credit card, which is also connected.",["Record as transfer to the credit card account","Add as Supplies expense","Exclude","Add as Owner's draw"],"Paying your own card is a movement between two of the company's accounts."],
+  ["mc","The feed shows check 1006 for $260 to Kiln Supply. You used Pay bills for it last week.",["Match","Add as Supplies expense","Record as transfer","Exclude"],"The payment exists already. Adding it again would count the clay twice."],
+  ["mc","Because of a bank glitch, the same $85 charge downloaded twice. Only one is real.",["Exclude the extra line","Add both","Match both to the same expense","Record one as a transfer"],"Excluding removes the duplicate line from review without touching the books."],
+  ["mc","The feed shows a $1,000 deposit from a customer who has an open $1,000 invoice. The payment has not been recorded yet.",["Match it to the open invoice","Add it as new income","Exclude it","Record it as a transfer"],"Matching to the invoice records the payment and closes the invoice. Adding it as income would count the sale twice."],
+  ["mc","City Power is paid every month and always goes to Utilities expense. What saves time?",["A bank rule for that payee","A journal entry each month","Excluding it each month","A new bank account"],"A rule fills in the payee and account for you. You still review it."],
+  ["mc","You click Add on a customer's deposit and choose an income account, but the payment was already recorded against the invoice. What happens?",["The income is counted twice","Nothing: QuickBooks removes duplicates","The invoice reopens","The bank balance is corrected"],"Now the same money is in the books twice, and the reconciliation will not agree."],
+  ["mc","One line has no clue what it was for. What do you do?",["Ask the owner and get the receipt before filing it","Add it to Supplies expense","Add it to Owner's draw","Exclude it"],"Guessing an account hides the problem."]]},
+
+{id:"q5",ic:"🔒",t:"Reconcile and close the month",goal:"Prove the bank account and lock the finished month.",
+ slides:[
+  {h:"Reconciling in QuickBooks",v:{k:"flow",r:["Take the bank statement: ending balance and ending date","Tick each QuickBooks line that is on the statement","Anything on the statement that is missing in QuickBooks: enter it","The difference must reach $0.00","Finish, and keep the reconciliation report"]}},
+  {h:"If the difference is not zero",b:["Look for a missing fee or interest line.","Look for a duplicate, or an amount typed with two digits swapped.","Do not press finish with a difference. QuickBooks would post the gap to an account called Reconciliation Discrepancies, and the real error would still be there."]},
+  {h:"Closing the books",b:["After the month is reconciled and reviewed, set a closing date.","QuickBooks then warns, or asks for a password, before anyone changes a transaction dated in the closed period.","It protects reports and tax returns that were already given out."]},
+  {h:"The audit log",b:["The audit log lists who added, changed or deleted each transaction, and when.","Use it when a number that was right last week is different today."]}],
+ ex:[
+  ["mc","What two things from the bank statement do you need to start a reconciliation?",["The ending balance and the ending date","The account number and the bank's phone number","The first and last check numbers","The interest rate and the fees"],"QuickBooks compares its own cleared total with the statement's ending balance on that date."],
+  ["mc","Everything is ticked and the difference shows $0.00. What now?",["Finish, and keep the reconciliation report","Post an adjustment to be safe","Start again from the beginning","Delete the uncleared items"],"Zero means the books and the bank agree for that period."],
+  ["mc","The difference is $15. The statement shows a $15 service fee that is not in QuickBooks. What do you do?",["Enter the fee as an expense, then finish","Finish anyway and let QuickBooks adjust","Change the statement balance you typed","Untick a $15 item"],"The bank already took the fee. Recording it brings the difference to zero."],
+  ["mc","You press finish with a $40 difference. What does QuickBooks do?",["Posts $40 to an account called Reconciliation Discrepancies","Refuses to save","Emails the bank","Fixes the wrong transaction for you"],"The books now carry a made-up entry, and the real error is still hidden. Find the $40 instead."],
+  ["mc","After a month is reconciled, someone changes the amount of one of its cleared transactions. What is the effect?",["Next month's beginning balance will not agree, and the change must be found","Nothing: reconciled items cannot change","The bank is notified","The closing date moves"],"That is why finished months get a closing date."],
+  ["mc","What does setting a closing date do?",["Warns or blocks changes to transactions dated in the closed period","Deletes old transactions","Files the tax return","Stops the bank feed"],"It guards periods that are already reported."],
+  ["mc","An invoice total is different from last week and nobody admits changing it. Where do you look?",["The audit log","The chart of accounts","The bank feed","The products and services list"],"The audit log shows who changed what, and when."],
+  ["mc","Which month-end order is right?",["Enter everything, clear the bank feed, reconcile, review reports, set the closing date","Set the closing date, then enter everything","Review reports, then reconcile, then enter bills","Reconcile first, then clear the bank feed"],"Each step depends on the one before it."]]},
+
+{id:"q6",ic:"📊",t:"Reports: read them and spot trouble",goal:"Pick the report that answers the question, and notice warning signs.",
+ slides:[
+  {h:"Four reports for four questions",v:{k:"tiers",r:[["Did we make money this month?","Profit and Loss",40],["What do we own and owe today?","Balance Sheet",60],["Which customers owe us, and how late?","Accounts receivable aging",80],["Which bills must we pay?","Accounts payable aging",100]]}},
+  {h:"Cash or accrual",b:["Reports can be shown on the cash basis or the accrual basis.","Accrual counts invoices when sent and bills when received.","Cash counts money only when it moves, so unpaid invoices and unpaid bills drop out."]},
+  {h:"Warning signs on a balance sheet",b:["A bank account with a negative balance while the real bank shows money: duplicates or missing deposits.","A large Payments to deposit balance that never goes down: deposits added as new income.","A customer with a negative balance in accounts receivable: a payment that was never applied to an invoice.","An account called Uncategorized or Ask My Accountant with a balance: unfinished work."]},
+  {h:"Before giving reports to the owner",b:["The bank and cards are reconciled to the report date.","Nothing is left in the bank feed for that period.","The numbers make sense next to last month's."]}],
+ ex:[
+  ["mc","The owner asks: did we make money in January?",["Profit and Loss","Balance Sheet","Accounts receivable aging","Audit log"],"Profit and Loss shows income and expenses for a period."],
+  ["mc","The owner asks: how much is in the bank and what do we owe right now?",["Balance Sheet","Profit and Loss","Accounts payable aging only","Sales by customer"],"The Balance Sheet is a snapshot of assets, liabilities and equity on one date."],
+  ["mc","The owner asks: which customers are late paying?",["Accounts receivable aging","Accounts payable aging","Profit and Loss","Balance Sheet"],"It lists open invoices by how many days they are past due."],
+  ["mc","The owner asks: which bills are coming due?",["Accounts payable aging","Accounts receivable aging","Profit and Loss","Audit log"],"It lists unpaid bills by due date."],
+  ["mc","QuickBooks shows Checking at −$2,300. The real bank balance is $4,000. What does that tell you?",["The books are wrong: look for duplicate payments or deposits that were never recorded","The bank made an error","The company is overdrawn","Nothing: these two never agree"],"A reconciled account agrees with the bank. A large gap means entries are duplicated or missing."],
+  ["mc","The Profit and Loss has a large line called Uncategorized Expense. What does that mean?",["Bank lines were added without choosing a real account, and need to be recategorized","The business has an unusual expense","QuickBooks found fraud","The line is a tax"],"It is unfinished bookkeeping, not a real category."],
+  ["mc","You switch the Profit and Loss from accrual to cash basis. What happens to invoices that customers have not paid?",["They drop out of income","They are counted twice","They move to expenses","Nothing changes"],"Cash basis counts income only when money is received."],
+  ["mc","Accounts receivable aging shows a customer with a negative balance. What is the usual cause?",["A payment was recorded but never applied to an invoice","The customer is owed a prize","The invoice was sent twice","The bank returned a check"],"An unapplied payment sits as a credit. Apply it to the right invoice."]]}
+];
+
+const CAMP_T1=[
+{id:"t1",ic:"🧮",t:"The whole return in one line",goal:"Say the order of a Form 1040 from income to refund.",
+ slides:[
+  {h:"One road, top to bottom",v:{k:"flow",r:["Income: everything taxable that came in","Minus adjustments = adjusted gross income (AGI)","Minus the standard or itemized deduction = taxable income","Tax is figured on taxable income","Minus credits, plus any other taxes = total tax","Minus payments already made = refund or amount owed"]}},
+  {h:"Five kinds of numbers",v:{k:"tiers",r:[["Income","Wages, interest, business profit",30],["Adjustment","Comes off income before AGI",45],["Deduction","Standard or itemized, after AGI",60],["Credit","Comes off the tax itself",80],["Payment","Withholding and estimated payments",100]]},
+   ex:"Ask of every paper the client brings: which of these five is it?"},
+  {h:"Why AGI matters",b:["AGI is the measuring stick for many limits and credits.","A higher AGI can shrink or remove a credit.","That is why adjustments are valuable: they lower AGI itself."]}],
+ ex:[
+  ["mc","Total income minus adjustments equals",["adjusted gross income (AGI)","taxable income","total tax","the refund"],"AGI is the first big subtotal on the return."],
+  ["mc","AGI minus the standard or itemized deduction equals",["taxable income","total income","total tax","the refund"],"The tax is figured on taxable income."],
+  ["mc","Credits are subtracted from",["the tax","total income","AGI","the standard deduction"],"That is why a credit is worth more than a deduction of the same size."],
+  ["mc","Tax after credits is $3,000. Withholding was $3,600. What is the result?",["A refund of $600","A balance due of $600","A refund of $3,600","A balance due of $3,000"],"Payments of 3,600 minus tax of 3,000."],
+  ["mc","Tax after credits is $5,200. Payments were $4,000. What is the result?",["A balance due of $1,200","A refund of $1,200","A refund of $4,000","A balance due of $5,200"],"Tax of 5,200 minus payments of 4,000."],
+  ["mc","Wages on a Form W-2 are",["income","an adjustment","a credit","a payment"],"Box 1 wages start the return."],
+  ["mc","The student loan interest deduction is",["an adjustment","a credit","a payment","income"],"It comes off income before AGI, on Schedule 1."],
+  ["mc","The child tax credit is",["a credit","a deduction","an adjustment","a payment"],"It reduces the tax itself."],
+  ["mc","Federal income tax withheld, shown in box 2 of the W-2, is",["a payment","a deduction","a credit","income"],"It is tax already paid during the year."]]},
+{id:"t2",ic:"👪",t:"Filing status and dependents",goal:"Choose the filing status and know who counts as a dependent.",
+ slides:[
+  {h:"Five filing statuses",b:["Single.","Married filing jointly (MFJ).","Married filing separately (MFS).","Head of household (HOH).","Qualifying surviving spouse (QSS).","Marital status on December 31 counts for the whole year."]},
+  {h:"2025 standard deduction",v:{k:"calc",r:[["Single or married filing separately","$15,750"],["Head of household","$23,625"],["Married filing jointly or qualifying surviving spouse","$31,500",1]]},
+   ex:"People 65 or older, or blind, get more. The status sets the starting amount."},
+  {h:"Head of household",b:["Unmarried, or treated as unmarried, on December 31.","Paid more than half the cost of keeping up the home.","A qualifying person lived there more than half the year.","A paid preparer must check and document this (Form 8867)."]},
+  {h:"Who is a dependent",v:{k:"cmp",a:["Qualifying child",["Relationship: child, stepchild, sibling or their child","Age: under 19, or under 24 if a full-time student","Lived with the taxpayer more than half the year","Did not pay more than half of their own support"]],b:["Qualifying relative",["A relative, or anyone who lived in the home all year","Gross income under the yearly limit","Taxpayer paid more than half of their support","Not anyone's qualifying child"]]}}],
+ ex:[
+  ["mc","A couple marries on December 31. For that tax year they are treated as",["married for the whole year","single for the whole year","married for one day","able to choose either"],"Status on the last day of the year applies to the whole year."],
+  ["mc","A single mother pays all the costs of her home. Her 8-year-old lives with her all year. Her best status is",["Head of household","Single","Married filing separately","Qualifying surviving spouse"],"Unmarried, pays more than half of the home, and a qualifying child lives there."],
+  ["mc","What is the 2025 standard deduction for married filing jointly?",["$31,500","$15,750","$23,625","$30,000"],"Joint filers get twice the single amount."],
+  ["mc","What is the 2025 standard deduction for a single filer?",["$15,750","$23,625","$31,500","$14,600"],"$15,750 for single and married filing separately."],
+  ["mc","Which of these is NOT a test for a qualifying child?",["A gross income limit","Relationship","Age","Living with the taxpayer more than half the year"],"The gross income limit belongs to the qualifying relative rules."],
+  ["mc","For the age test, a qualifying child must be",["under 19, or under 24 if a full-time student","under 21","under 18 only","under 26"],"There is no age limit if the child is permanently and totally disabled."],
+  ["mc","A man's wife died last year. He has not remarried and keeps a home for their dependent son. This year his status is",["Qualifying surviving spouse","Single","Head of household","Married filing jointly"],"For two years after the year of death, with a dependent child, the joint rates still apply."],
+  ["mc","A paid preparer claims head of household for a client. What must the preparer do?",["Ask the questions, document the answers and complete Form 8867","Nothing extra","Get a notarized letter","File on paper"],"Head of household is one of the items covered by the due diligence rules."]]},
+{id:"t3",ic:"📄",t:"Income documents",goal:"Know what each form in the client's envelope is and where it goes.",
+ slides:[
+  {h:"The W-2",v:{k:"form",n:"Form W-2",s:"Wage and Tax Statement",r:[["1","Wages for income tax","",1],["2","Federal income tax withheld","",1],["3 and 4","Social Security wages and tax",""],["5 and 6","Medicare wages and tax",""],["12","Coded items such as retirement plan deferrals",""],["17","State income tax withheld",""]]}},
+  {h:"The 1099 family",v:{k:"tiers",r:[["1099-NEC","Self-employment pay: Schedule C",30],["1099-INT and 1099-DIV","Interest and dividends",45],["1099-G","Unemployment pay, state refunds",60],["1099-R","Pensions and retirement accounts",75],["SSA-1099","Social Security benefits",90],["1099-K","Card and payment-app receipts",100]]}},
+  {h:"Forms that support credits",b:["Form 1095-A: Marketplace health insurance. Needed for Form 8962.","Form 1098-T: tuition. Needed for education credits.","Form 1098: home mortgage interest, for people who itemize.","A missing form is the usual reason for an IRS letter later."]}],
+ ex:[
+  ["mc","Which W-2 box holds the wages that go on the income tax return?",["Box 1","Box 2","Box 3","Box 5"],"Box 1 is wages for income tax. Boxes 3 and 5 are the Social Security and Medicare wage bases."],
+  ["mc","Which W-2 box shows federal income tax already paid?",["Box 2","Box 1","Box 4","Box 17"],"Box 2 is federal income tax withheld."],
+  ["mc","A client has a Form 1099-NEC for $9,000 of freelance work. Where does it go?",["Schedule C, and self-employment tax applies","The wages line, like a W-2","Schedule B","It is not taxable"],"Non-employee pay is business income."],
+  ["mc","Unemployment compensation on Form 1099-G is",["taxable income","never taxable","a credit","a deduction"],"It is reported on Schedule 1."],
+  ["mc","A client had Marketplace health insurance. Which form must you have before filing?",["Form 1095-A","Form 1098-T","Form W-2G","Form 1099-K"],"Form 8962 cannot be completed without it, and the return will be held up."],
+  ["mc","Form 1098-T is used for",["education credits","mortgage interest","health insurance","retirement income"],"It reports tuition billed or paid."],
+  ["mc","Form SSA-1099 reports Social Security benefits. Are they taxable?",["Part may be, depending on the client's other income","Always fully taxable","Never taxable","Only if the client is under 65"],"A worksheet compares other income with the benefits."],
+  ["mc","In January a client brings a last pay stub and wants to file today. What do you do?",["Wait for the actual Form W-2","File from the pay stub","Estimate the numbers","File now and amend later"],"A return is prepared from the W-2, not from a pay stub."]]},
+{id:"t4",ic:"✂️",t:"Deductions and credits",goal:"Tell a deduction from a credit and know what each is worth.",
+ slides:[
+  {h:"A deduction and a credit are not the same",v:{k:"cmp",a:["Deduction",["Reduces income","Worth the amount times the tax rate","$1,000 in the 12% bracket saves $120"]],b:["Credit",["Reduces the tax itself","Worth its full amount","$1,000 saves $1,000"]]}},
+  {h:"Standard or itemized",b:["Everyone may take the standard deduction.","Itemizing means adding up certain costs instead: state and local taxes, mortgage interest, gifts to charity, large medical bills.","Take whichever is bigger. Most people take the standard deduction."]},
+  {h:"Refundable or not",b:["A nonrefundable credit can bring the tax down to zero and stops there.","A refundable credit can also be paid out as a refund.","The earned income credit and the additional child tax credit are refundable."]},
+  {h:"Family credits for 2025",v:{k:"calc",r:[["Child tax credit, each qualifying child under 17","$2,200"],["Credit for other dependents, each","$500"],["Earned income credit","By income and number of children"]]},
+   ex:"For these credits a paid preparer must complete Form 8867."}],
+ ex:[
+  ["mc","A $1,000 deduction for a client in the 12% bracket saves about",["$120","$1,000","$12","$880"],"1,000 × 12%."],
+  ["mc","A $1,000 tax credit saves",["$1,000","$120","$220","Nothing unless the client itemizes"],"A credit comes straight off the tax."],
+  ["mc","A single client's itemized deductions total $11,000 for 2025. What do you use?",["The $15,750 standard deduction","The $11,000 of itemized deductions","Both","Neither"],"Use whichever is larger."],
+  ["mc","A nonrefundable credit can",["reduce the tax to zero, but not below","create a refund larger than the tax paid","be carried to the standard deduction","only be used by businesses"],"Any unused part is lost, unless a carryforward rule applies."],
+  ["mc","Which of these is a refundable credit?",["The earned income credit","The credit for other dependents","The standard deduction","The lifetime learning credit"],"The earned income credit can be paid out even when no tax is owed."],
+  ["mc","For 2025, the child tax credit for each qualifying child under 17 is up to",["$2,200","$500","$1,000","$3,600"],"The child must be under 17 at the end of the year."],
+  ["mc","A client's dependent is a 19-year-old full-time student. Which credit applies?",["The $500 credit for other dependents","The $2,200 child tax credit","Both","Neither"],"The child tax credit stops at age 17. Older dependents get the smaller credit."],
+  ["mc","Itemized deductions are claimed on",["Schedule A","Schedule C","Schedule 1","Form 8867"],"Schedule A lists them."]]},
+{id:"t5",ic:"📬",t:"Payments, refund or balance due",goal:"Finish the return: what was paid, what is owed, and the deadlines.",
+ slides:[
+  {h:"Tax is paid during the year",b:["Employees pay through withholding. The amount comes from their Form W-4.","People without withholding, such as the self-employed, pay estimated tax four times a year.","Estimates are generally needed when a person expects to owe $1,000 or more."],
+   v:{k:"time",r:[["Apr 15","1st estimate"],["Jun 15","2nd"],["Sep 15","3rd"],["Jan 15","4th"]]}},
+  {h:"The deadline and the extension",b:["The individual return is due April 15.","Form 4868 gives six more months to file.","It gives no extra time to pay. Tax not paid by April 15 draws interest and a penalty."]},
+  {h:"When the client cannot pay",b:["File on time anyway. The penalty for not filing is much larger than the penalty for not paying.","Pay what is possible now.","Ask for a monthly payment plan."]},
+  {h:"Refunds",b:["E-file with direct deposit is the fastest way to a refund.","A large refund every year means too much was withheld. A new Form W-4 fixes that."]}],
+ ex:[
+  ["mc","What does an extension on Form 4868 give?",["More time to file, but not more time to pay","More time to file and to pay","A smaller tax bill","Nothing unless the IRS approves it by letter"],"The tax is still due April 15."],
+  ["mc","A client files on time but pays the balance in July. What is charged?",["Interest and a late-payment penalty from April 15","Nothing, because the return was on time","Only a late-filing penalty","A flat $50 fee"],"Filing and paying are separate duties."],
+  ["mc","Who generally must make estimated tax payments?",["A self-employed person who expects to owe $1,000 or more","Every employee","Only corporations","Anyone who got a refund last year"],"With no employer withholding, tax is paid in four estimates."],
+  ["mc","When are the four estimated payments due?",["April 15, June 15, September 15 and January 15","The 15th of every month","March 31, June 30, September 30 and December 31","Once, on April 15"],"The periods are not equal quarters."],
+  ["mc","What is the fastest way for a client to get a refund?",["E-file with direct deposit","Paper return and a mailed check","An extension","Filing in October"],"Electronic filing and deposit avoid mail and manual handling."],
+  ["mc","A client gets a $5,000 refund every year and is short of money each month. What do you suggest?",["Give the employer a new Form W-4 so less is withheld","Stop filing returns","Claim more dependents than there are","Nothing can be changed"],"A refund is the client's own money coming back."],
+  ["mc","A client owes $3,000 and cannot pay it now. What is the right advice?",["File on time, pay what is possible, and ask for a payment plan","Do not file until the money is there","File an extension to delay the payment","Leave the amount off the return"],"Not filing adds a much larger penalty."]]},
+{id:"t6",ic:"🖊️",t:"The preparer's duties",goal:"Know what a paid preparer must do before, during and after filing.",
+ slides:[
+  {h:"Before you transmit",b:["The return shows your name and PTIN, and you sign it.","The client reviews the return and signs Form 8879, the e-file authorization. Then you transmit.","Give the client a complete copy."]},
+  {h:"Due diligence",b:["For the earned income credit, child tax credits, the American opportunity credit and head of household, ask enough questions to be sure.","Write down what was asked and answered.","Complete Form 8867 and keep the records.","If an answer does not make sense, ask more. You may not ignore what you know."]},
+  {h:"Protecting the client",b:["Tax return information is confidential. Using or disclosing it for anything else needs the client's written consent (Section 7216).","Every preparer needs a written information security plan.","Keep a copy of each return, or a list of the returns, for three years."]},
+  {h:"What you will not do",b:["You will not put a number on a return that you know is false.","You will not file from a pay stub in place of a W-2.","You will not sign a blank return, or let a client sign one."]}],
+ ex:[
+  ["mc","What must you have before transmitting an e-filed return?",["The client's signed Form 8879","A Form 2848","A Form W-9","Nothing: e-file needs no signature"],"Form 8879 is the client's signature authorization."],
+  ["mc","What must a paid preparer put on every return prepared?",["Name, PTIN and signature","Only the firm's logo","The preparer's Social Security number","Nothing if the client e-files"],"The PTIN identifies the preparer."],
+  ["mc","A client wants to deduct a family vacation as a business trip. What do you do?",["Refuse to claim it and explain why","Claim it if the client signs a note","Claim half of it","Claim it and add a disclaimer"],"A preparer may not sign a return they know contains a false item."],
+  ["mc","How long must a preparer keep a copy of each return, or a list of returns prepared?",["Three years","One year","Ten years","Until the client dies"],"Three years after the close of the return period."],
+  ["mc","You want to use clients' tax information to offer them insurance. What is needed first?",["Each client's written consent","Nothing: they are your clients","A notice on the office wall","Approval from the state"],"Section 7216 bars using return information for other purposes without consent."],
+  ["mc","A client claims two children but the answers about where they lived do not add up. What do you do?",["Ask more questions and document the answers before claiming anything","Claim the credits: it is the client's return","Drop the children without asking","File on paper so it is the client's problem"],"Due diligence means resolving what does not make sense."],
+  ["mc","An e-filed return is rejected because a dependent's number does not match IRS records. What now?",["Tell the client, correct the number and transmit again","Ignore it: the IRS will fix it","Mail the same return without checking","Remove the dependent"],"A rejected return has not been filed. Fix the cause and resend."],
+  ["mc","Which written document must every tax preparer have for client data?",["A written information security plan","A chart of accounts","A Form 2553","An audit log"],"It is required by the FTC Safeguards Rule."]]}
+];
+
+const CAMP_T2=[
+{id:"b1",ic:"🏢",t:"Which return does the business file?",goal:"Match each kind of business to its tax return and due date.",
+ slides:[
+  {h:"The form follows the entity",v:{k:"tiers",r:[["Sole proprietor, or one-owner LLC","Schedule C with the owner's Form 1040",40],["Partnership, or LLC with two or more owners","Form 1065, a K-1 to each partner",60],["S corporation","Form 1120-S, a K-1 to each shareholder",80],["C corporation","Form 1120: the corporation pays its own tax",100]]},
+   ex:"An LLC is a state-law label. For tax it is treated as one of these, by its number of owners or by an election."},
+  {h:"Pass-through",b:["A partnership and an S corporation usually pay no income tax themselves.","The profit passes through to the owners, who pay tax on their own returns.","Schedule K-1 tells each owner their share."]},
+  {h:"Due dates for calendar-year businesses",v:{k:"time",r:[["Mar 15","Form 1065 and Form 1120-S"],["Apr 15","Form 1120 and Form 1040 with Schedule C"]]},
+   ex:"Pass-through returns come first so the owners have their K-1 in time for their own returns."}],
+ ex:[
+  ["mc","A sole proprietor reports the business on",["Schedule C, with Form 1040","Form 1065","Form 1120-S","Form 1120"],"The business and the owner are one taxpayer."],
+  ["mc","A one-owner LLC that made no election reports on",["Schedule C, with the owner's Form 1040","Form 1065","Form 1120","Form 1120-S"],"It is disregarded for income tax and treated like a sole proprietorship."],
+  ["mc","An LLC with two owners that made no election files",["Form 1065, and each owner gets a Schedule K-1","Schedule C","Form 1120","Two Schedule Cs"],"Two or more owners make it a partnership by default."],
+  ["mc","A calendar-year S corporation files Form 1120-S by",["March 15","April 15","January 31","October 15"],"The 15th day of the third month."],
+  ["mc","Which business pays income tax on its own profit?",["A C corporation","A partnership","An S corporation","A sole proprietorship"],"It files Form 1120 and pays the corporate tax."],
+  ["mc","Does a partnership pay income tax on its profit?",["No: the profit passes through to the partners","Yes, at the corporate rate","Yes, at the partners' average rate","Only if it has more than ten partners"],"Form 1065 is an information return."],
+  ["mc","Which form elects S corporation status?",["Form 2553","Form 8832","Form SS-4","Form 1065"],"Form 2553 is the S election."],
+  ["mc","What is a Schedule K-1?",["An owner's share of the business's income, deductions and credits","The business's bank statement","A payroll form","A sales tax return"],"The owner copies the K-1 amounts to their own return."]]},
+{id:"b2",ic:"📒",t:"Schedule C: finding the profit",goal:"Get from receipts to net profit and know what counts as an expense.",
+ slides:[
+  {h:"The shape of Schedule C",v:{k:"calc",r:[["Gross receipts","$60,000"],["Cost of goods sold","− $10,000"],["Gross profit","$50,000",1],["Business expenses","− $20,000"],["Net profit","$30,000",1]]},
+   ex:"Net profit is what the owner is taxed on, whether or not the money was taken out."},
+  {h:"What is deductible",b:["An expense must be ordinary (common in that line of work) and necessary (helpful to the business).","It must be for business, not personal.","There must be records: receipts, invoices, a mileage log."]},
+  {h:"Three with special rules",b:["Business meals: 50% is deductible.","Car: either actual costs, or the standard mileage rate, 70 cents a mile for 2025. Commuting does not count.","Home office: the space must be used regularly and only for business."]},
+  {h:"Never deductible",b:["Personal and family costs.","Owner draws.","Fines and penalties paid to a government.","All income counts, including cash and amounts with no Form 1099."]}],
+ ex:[
+  ["mc","Gross receipts $60,000, cost of goods sold $10,000, expenses $20,000. What is the net profit?",["$30,000","$50,000","$40,000","$60,000"],"60,000 − 10,000 − 20,000."],
+  ["mc","A client drove 2,000 business miles in 2025. At 70 cents a mile, the deduction is",["$1,400","$140","$2,000","$700"],"2,000 × 0.70."],
+  ["mc","A business meal with a client cost $80. How much is deductible?",["$40","$80","$0","$20"],"Business meals are 50% deductible."],
+  ["mc","The owner took $25,000 out of the business for herself. On Schedule C that is",["not deductible","a wage expense","a contract labor expense","a cost of goods sold"],"Owner draws are not expenses."],
+  ["mc","To deduct a home office, the space must be used",["regularly and only for business","at least once a week","by the whole family","for storage of personal items too"],"Mixed use of the room fails the test."],
+  ["mc","Driving from home to the regular place of business each morning is",["commuting, and not deductible","deductible at the mileage rate","deductible at half the rate","deductible only in winter"],"Commuting is personal."],
+  ["mc","A delivery driver pays a $150 speeding ticket while working. It is",["not deductible","fully deductible","50% deductible","deductible if paid by card"],"Fines paid to a government are not deductible."],
+  ["mc","A client has a Form 1099-NEC for $9,000 and also took $3,000 in cash jobs. How much income is reported?",["$12,000","$9,000","$3,000","$6,000"],"All income is reported, with or without a form."]]},
+{id:"b3",ic:"🧾",t:"Self-employment tax and estimates",goal:"Figure self-employment tax and know when estimates are due.",
+ slides:[
+  {h:"Why there is a second tax",b:["An employee pays 7.65% for Social Security and Medicare, and the employer pays another 7.65%.","A self-employed person is both, so pays 15.3%.","It is figured on Schedule SE, on top of income tax."]},
+  {h:"The calculation",v:{k:"calc",r:[["Net profit from Schedule C","$50,000"],["× 92.35%","$46,175"],["× 15.3% = self-employment tax","$7,065",1],["Half is an adjustment to income","$3,532"]]},
+   ex:"Always multiply by 92.35% first. No self-employment tax is due if net earnings are under $400."},
+  {h:"Estimated payments",b:["With no employer withholding, tax is paid in four estimates: April 15, June 15, September 15 and January 15.","To avoid a penalty, pay at least 90% of this year's tax, or 100% of last year's tax.","If last year's AGI was over $150,000, the second test is 110% of last year's tax."]}],
+ ex:[
+  ["mc","Net profit is $50,000. What are net earnings for self-employment tax (× 92.35%)?",["$46,175","$50,000","$42,350","$7,650"],"50,000 × 0.9235."],
+  ["mc","Self-employment tax on $46,175 at 15.3% is about",["$7,065","$3,532","$4,618","$707"],"46,175 × 0.153 = 7,064.78."],
+  ["mc","How much of a $7,065 self-employment tax is deductible, and where?",["Half, about $3,532, as an adjustment to income","All of it, on Schedule C","None of it","Half, as an itemized deduction"],"The employer-equivalent half is an adjustment on Schedule 1."],
+  ["mc","Why does a self-employed person pay 15.3% when an employee pays 7.65%?",["They pay both the employee's and the employer's share","Their rate is a penalty","They earn more","It includes income tax"],"There is no employer to pay the other half."],
+  ["mc","Net earnings from self-employment are $350 for the year. Is self-employment tax due?",["No: it starts at $400 of net earnings","Yes, on all $350","Yes, at half the rate","Only if the person is over 65"],"Under $400 of net earnings there is no self-employment tax. The income is still taxable for income tax."],
+  ["mc","Last year's tax was $8,000 and last year's AGI was $90,000. What total of estimates this year is safe from a penalty under the prior-year test?",["$8,000","$7,200","$8,800","$4,000"],"100% of last year's tax. The 110% test applies only when last year's AGI was over $150,000."],
+  ["mc","When is the fourth estimated payment for a year due?",["January 15 of the next year","December 31","April 15 of the next year","December 15"],"The four dates are April 15, June 15, September 15 and January 15."]]},
+{id:"b4",ic:"👷",t:"Workers: payroll forms and 1099s",goal:"Know the forms for employees and for contractors, and when they are due.",
+ slides:[
+  {h:"When someone is hired as an employee",b:["Form W-4: the employee sets income tax withholding.","Form I-9: the employer checks identity and permission to work.","Each payday: withhold income tax, Social Security and Medicare, and pay the employer's share."]},
+  {h:"The employer's returns",v:{k:"tiers",r:[["Form 941","Every quarter: income tax withheld, Social Security and Medicare",40],["Form 940","Once a year: federal unemployment tax",60],["Forms W-2 and W-3","By January 31: to each employee and to the Social Security Administration",100]]},
+   ex:"Form 941 is due the last day of the month after the quarter ends. The first quarter is due April 30."},
+  {h:"Contractors",b:["Get a Form W-9 before the first payment.","Nothing is withheld from their pay.","A Form 1099-NEC is due by January 31 for each contractor paid $600 or more for services in 2025. For payments made in 2026 the line is $2,000.","Payments to corporations generally need no Form 1099."]}],
+ ex:[
+  ["mc","Which two forms does a new employee's file need on the first day?",["Form W-4 and Form I-9","Form W-9 and Form 1099-NEC","Form 941 and Form 940","Form W-2 and Form W-3"],"W-4 for withholding, I-9 for identity and permission to work."],
+  ["mc","Which form reports withheld income tax, Social Security and Medicare every quarter?",["Form 941","Form 940","Form W-3","Form 1099-NEC"],"Form 941 is the employer's quarterly return."],
+  ["mc","Which form reports federal unemployment tax once a year?",["Form 940","Form 941","Form W-4","Form 1065"],"Form 940 is the yearly FUTA return."],
+  ["mc","By what date must employees receive their Form W-2?",["January 31","April 15","February 28","March 15"],"The same date applies to filing with the Social Security Administration."],
+  ["mc","Form 941 for January through March is due",["April 30","April 15","March 31","May 15"],"The last day of the month after the quarter ends."],
+  ["mc","A contractor was paid $1,500 for services during 2025. Is a Form 1099-NEC required?",["Yes: the 2025 line is $600","No: the line is $2,000","Only if they ask","Only if paid by check"],"The $2,000 line applies to payments made in 2026 and later."],
+  ["mc","What should be collected from a contractor before the first payment?",["A Form W-9","A Form W-4","A Form I-9","A Form 940"],"It gives the name and tax number for the 1099."],
+  ["mc","The business paid $3,000 to an incorporated plumbing company (a corporation). Is a Form 1099-NEC generally required?",["No: payments to corporations are generally exempt","Yes, always","Only if over $5,000","Only in the first year"],"The main exceptions are payments to attorneys and for medical care."]]},
+{id:"b5",ic:"💼",t:"How owners get paid",goal:"Know how each kind of owner takes money out and how it is taxed.",
+ slides:[
+  {h:"Owner pay depends on the entity",v:{k:"tiers",r:[["Sole proprietor","Draws. Taxed on the profit, with self-employment tax",40],["Partner","Draws and guaranteed payments, reported on the K-1",60],["S corporation owner who works there","A reasonable salary through payroll, then distributions",80],["C corporation owner","Salary through payroll; dividends are taxed again",100]]}},
+  {h:"Profit, not draws",b:["A sole proprietor or partner is taxed on their share of the profit.","It does not matter how much they took out.","Taking nothing does not lower the tax. Taking everything does not raise it."]},
+  {h:"The S corporation salary rule",b:["Wages carry Social Security and Medicare tax. Distributions do not.","So an owner who works in the business must first be paid a reasonable salary through payroll.","Paying only distributions to avoid payroll tax is a well-known audit issue."]}],
+ ex:[
+  ["mc","How does a sole proprietor pay herself?",["With owner draws: no paycheck and no Form W-2","With a salary through payroll","With dividends","With a Form 1099-NEC to herself"],"She is taxed on the profit and pays self-employment tax."],
+  ["mc","A sole proprietor's profit is $40,000. She took $25,000 in draws. On how much is she taxed?",["$40,000","$25,000","$15,000","$65,000"],"Tax follows the profit, not the draws."],
+  ["mc","An S corporation owner works full time in the business. Before taking distributions, the owner must",["be paid a reasonable salary through payroll","file Form 1065","take a loan from the company","pay a dividend"],"Wages carry payroll taxes. Distributions do not."],
+  ["mc","A partner's guaranteed payment is reported on",["Schedule K-1, and it is subject to self-employment tax","Form W-2","Form 1099-NEC","Nothing: it is not taxable"],"Partners are not employees of their partnership."],
+  ["mc","Why are C corporation dividends said to be taxed twice?",["The corporation pays tax on the profit, then the shareholder pays tax on the dividend","They are taxed by two states","They are taxed in two years","The IRS bills them twice by mistake"],"That is the main tax cost of a C corporation."],
+  ["mc","Where does a partner report the income from a Schedule K-1?",["On the partner's own Form 1040","On Form 1065 again","On a Form W-2","Nowhere: the partnership already paid"],"The partnership reports; the partners pay."],
+  ["mc","Why does the IRS care about an S corporation owner's salary?",["Distributions avoid Social Security and Medicare tax, so the salary must be reasonable","Salaries are not deductible","Distributions are illegal","Salaries reduce the corporation's stock"],"Too little salary shifts income away from payroll taxes."]]}
+];
+Object.assign(CAMPACC,{"Payments to deposit":"A"});
+Object.assign(CAMPS,{
+ qb:{id:"qb",key:"campqb",mod:3,ic:"💻",name:"QuickBooks Bootcamp",short:"QuickBooks Bootcamp",tag:"Module 3 · learn it, then do it",co:"Cedar & Clay Studio",steps:CAMP_QB,cap:false,
+  blurb:"The same studio, now in QuickBooks. Six short steps: pick the right form, money in, money out, the bank feed, reconciling and reports.",tile:"Which form to use and what it posts, in six short steps.",after:{t:"Now do it for real in the QuickBooks practice company",go:"qbo"}},
+ t1:{id:"t1",key:"campt1",mod:4,ic:"🧾",cheat:false,name:"Tax Return Bootcamp",short:"Tax Return Bootcamp",tag:"Module 4 · learn it, then do it",co:"",steps:CAMP_T1,cap:false,
+  blurb:"The individual return from the first document to the signature, in six short steps.",tile:"Form 1040 from income to refund, in six short steps.",after:{t:"Now do it for real in the practice tax software",go:"tax"}},
+ t2:{id:"t2",key:"campt2",mod:5,ic:"🏢",cheat:false,name:"Business Tax Bootcamp",short:"Business Tax Bootcamp",tag:"Module 5 · learn it, then do it",co:"",steps:CAMP_T2,cap:false,
+  blurb:"Which return a business files, Schedule C, self-employment tax, payroll forms and how owners are paid, in five short steps.",tile:"Entities, Schedule C, self-employment tax, payroll forms, owner pay.",after:{t:"Now do it for real in the practice tax software",go:"tax"}}});
 
 /* ================= Study extras: glossary page, my terms, mistake notebook, Bootcamp certificate =================
    - Terms page (view "gloss"): every term the tap-to-explain glossary knows, searchable, plus the list of terms this learner
@@ -17114,7 +17422,8 @@ try{document.addEventListener("input",e=>{const t=e.target;if(t&&t.id==="plusq"&
 
 /* ---------- certificate ---------- */
 function plusCertName(){let n="";try{n=localStorage.getItem("certName")||""}catch(_){}return n||CNAME()||""}
-function plusCertDraw(){const c=document.getElementById("certcv");if(!c)return;const x=c.getContext("2d"),W=c.width,H=c.height,cp=campS().cap,nm=plusCertName()||"Your name";
+function plusCertDraw(){campIn("bk",plusCertDraw1)}
+function plusCertDraw1(){const c=document.getElementById("certcv");if(!c)return;const x=c.getContext("2d"),W=c.width,H=c.height,cp=campS().cap,nm=plusCertName()||"Your name";
   x.fillStyle="#fbf8f1";x.fillRect(0,0,W,H);x.strokeStyle="#0f5c3a";x.lineWidth=14;x.strokeRect(28,28,W-56,H-56);x.lineWidth=2;x.strokeStyle="#c9a227";x.strokeRect(50,50,W-100,H-100);
   x.textAlign="center";x.fillStyle="#0f5c3a";x.font="700 26px Georgia,serif";x.fillText("SOLVING LIFE LLC · FOUNDATION COURSE",W/2,128);
   x.fillStyle="#1b1b1b";x.font="700 64px Georgia,serif";x.fillText("Certificate of Completion",W/2,220);
@@ -17122,14 +17431,15 @@ function plusCertDraw(){const c=document.getElementById("certcv");if(!c)return;c
   let fs=74;x.font=`700 ${fs}px Georgia,serif`;while(x.measureText(nm).width>W-260&&fs>36){fs-=4;x.font=`700 ${fs}px Georgia,serif`}x.fillStyle="#0f5c3a";x.fillText(nm,W/2,380);
   x.strokeStyle="#c9a227";x.lineWidth=2;x.beginPath();x.moveTo(W/2-330,404);x.lineTo(W/2+330,404);x.stroke();
   x.fillStyle="#1b1b1b";x.font="28px Georgia,serif";x.fillText("completed the Bookkeeping Bootcamp",W/2,456);
-  x.font="22px Georgia,serif";x.fillStyle="#444";x.fillText(`${CAMPN} steps · ${CAMP.reduce((n,s)=>n+s.ex.length,0)} hands-on exercises · a full month-end close for a practice company`,W/2,496);
+  x.font="22px Georgia,serif";x.fillStyle="#444";x.fillText(`${campN()} steps · ${CAMP.reduce((n,s)=>n+s.ex.length,0)} hands-on exercises · a full month-end close for a practice company`,W/2,496);
   const sk=["The accounting equation · Chart of accounts · Debits and credits · Journal entries","Receivables and payables · Inventory and cost of goods sold · Payroll entries","Depreciation and loans · Bank reconciliation · Adjusting entries · Financial statements"];x.font="21px Georgia,serif";x.fillStyle="#1b1b1b";sk.forEach((t,i)=>x.fillText(t,W/2,556+i*34));
   x.font="700 24px Georgia,serif";x.fillStyle="#0f5c3a";x.textAlign="left";x.fillText(`Month-end close score: ${Math.round((cp.best||0)*100)}%`,120,H-128);x.textAlign="right";x.fillText(`Completed: ${new Date(cp.when||Date.now()).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})}`,W-120,H-128);
   x.textAlign="center";x.font="18px Georgia,serif";x.fillStyle="#666";x.fillText("Internal training record of Solving Life LLC. Not a license, degree or accredited credential.",W/2,H-84)}
-function plusCert(){const cp=campS().cap;if(!cp.done)return;if(!cp.when){cp.when=Date.now();persist()}const old=document.getElementById("certpop");if(old)old.remove();
+function plusCert(){campIn("bk",plusCert1)}
+function plusCert1(){const cp=campS().cap;if(!cp.done)return;if(!cp.when){cp.when=Date.now();persist()}const old=document.getElementById("certpop");if(old)old.remove();
   const o=document.createElement("div");o.id="certpop";o.innerHTML=`<div class="certsheet"><b style="font-size:18px">Your certificate</b><label class="small" style="display:grid;gap:4px">Name on the certificate<input id="certname" class="pq" style="margin:0" value="${esc(plusCertName())}" placeholder="First and last name" autocomplete="name"></label>
     <canvas id="certcv" width="1400" height="990"></canvas><div class="row"><button class="btn pri" data-plus="certsave" style="flex:1">⬇ Save picture</button>${navigator.canShare?`<button class="btn" data-plus="certshare" style="flex:1">Share</button>`:""}</div><button class="btn ghost small" data-plus="certclose">Close</button></div>`;
-  document.body.appendChild(o);plusCertDraw()}
+  document.body.appendChild(o);plusCertDraw1()}
 function plusCertSave(share){const c=document.getElementById("certcv");if(!c)return;c.toBlob(async b=>{if(!b)return;const f=new File([b],"bookkeeping-bootcamp-certificate.png",{type:"image/png"});
   if(share){try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Bookkeeping Bootcamp certificate"});return}}catch(_){return}}
   const u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(u)},500)},"image/png")}
@@ -17141,8 +17451,22 @@ const plusDoNext0=doNextHtml;doNextHtml=function(){return plusDoNext0()+plusStri
 const plusRenderBk0=renderBk;renderBk=function(){plusRenderBk0();try{const dn=document.querySelector("#view .donext");if(dn&&!document.querySelector("#view .pstrip"))dn.insertAdjacentHTML("afterend",plusStrip())}catch(_){}};
 const plusRenderBkLand0=renderBkLand;renderBkLand=function(){plusRenderBkLand0();try{const pl0=document.querySelector("#view .bkl-plan");if(pl0&&!document.querySelector("#view .pstrip"))pl0.insertAdjacentHTML("afterend",plusStrip())}catch(_){}};
 /* certificate buttons on the Bootcamp screens */
-const plusRenderCamp0=renderCamp;renderCamp=function(){plusRenderCamp0();try{if(!campS().cap.done)return;const v=document.getElementById("view"),btn=`<button class="btn pri pcert" data-plus="cert">🎓 Get your certificate</button>`;
+const plusRenderCamp0=renderCamp;renderCamp=function(){plusRenderCamp0();try{if(cv.tr&&cv.tr!=="bk")return;if(!campS().cap.done)return;const v=document.getElementById("view"),btn=`<button class="btn pri pcert" data-plus="cert">🎓 Get your certificate</button>`;
   if(cv.scr==="capres"){const n=v.querySelector(".cres");if(n)n.insertAdjacentHTML("afterend",btn)}else if(cv.scr==="hub"&&campDone()){const n=v.querySelector(".chero");if(n)n.insertAdjacentHTML("afterend",btn)}}catch(_){}};
+
+/* ---------- Explain it back: after a wrong answer, one tap to pick the reason that fits ----------
+   The reason is hidden until she chooses between it and two reasons that belong to other questions in the same topic.
+   One tap, can be skipped, never changes the score. Not shown in mock exams or when the question has no short reason. */
+function ebPool(it){const out=[],seen={};seen[it.ex]=1;const c=BANK.filter(x=>x.t==="q"&&x.p==it.p&&x.d==it.d&&x.id!==it.id&&x.ex&&x.ex.length>=25&&x.ex.length<=220);
+  for(let k=0;k<60&&out.length<2&&c.length;k++){const x=c[Math.floor(Math.random()*c.length)];if(!seen[x.ex]){seen[x.ex]=1;out.push(x.ex)}}return out}
+function ebHook(){try{const s=sess;if(view!=="session"||!s||s.mode==="mock"||s.phase==="ask"||s.lastOk)return;const cur=s.queue[s.pos];if(!cur)return;const it=BYID[cur.id];
+  if(!it||it.t!=="q"||!it.ex||it.ex.length<25||it.ex.length>220)return;const box=document.querySelector("#view .explain");if(!box||box.dataset.eb)return;
+  if(!s.eb||s.eb.pos!==s.pos||s.eb.id!==it.id){const w=ebPool(it);if(w.length<2)return;const o=[it.ex].concat(w).map((t,k)=>[t,k===0]);for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]]}s.eb={pos:s.pos,id:it.id,o,pick:null}}
+  box.dataset.eb="1";const e=s.eb;
+  if(e.pick===null){box.classList.add("ebhide");const d=document.createElement("div");d.className="ebq";d.innerHTML=`<b>One tap before you move on: which reason fits this question?</b>${e.o.map((x,k)=>`<button class="btn cchip left" data-plus="eb" data-v="${k}">${esc(x[0])}</button>`).join("")}<button class="btn ghost small" data-plus="eb" data-v="-1">Skip, just show me</button>`;box.parentNode.insertBefore(d,box)}
+  else if(e.pick>=0){const d=document.createElement("div");d.className="cfb "+(e.o[e.pick][1]?"ok":"bad");d.style.marginBottom="8px";d.innerHTML=e.o[e.pick][1]?"<b>✓ That is the reason.</b> Here it is again with the answer:":"<b>✗ That reason belongs to a different question.</b> Read the right one:";box.parentNode.insertBefore(d,box)}}catch(_){}}
+const plusRenderSession0=renderSession;renderSession=function(){plusRenderSession0();ebHook()};
+const plusClick0=plusClick;plusClick=function(d){if(d.plus==="eb"){try{if(sess&&sess.eb){sess.eb.pick=+d.v;const E=S.set.ebs=S.set.ebs||{n:0,ok:0};if(+d.v>=0){E.n++;if(sess.eb.o[+d.v][1])E.ok++;persist()}}}catch(_){}render();return true}return plusClick0(d)};
 
 /* EA Part 1: balanced answer choices. Law as of December 31, 2025. */
 const BAL1={
@@ -18721,7 +19045,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 162 · Nov 21";
+const BUILD="Version 163 · Nov 21";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
