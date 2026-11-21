@@ -801,6 +801,14 @@ body.course .tabs.bk{display:flex}
 .cfb{border-radius:12px;padding:10px 12px;font-size:15.5px;line-height:1.45}.cfb.ok{background:color-mix(in srgb,var(--good) 16%,var(--surface));border:1.5px solid var(--good)}.cfb.bad{background:color-mix(in srgb,var(--bad) 13%,var(--surface));border:1.5px solid var(--bad)}
 .cnext{width:100%;min-height:50px;font-size:17px}
 .cres{text-align:center;border-radius:18px;padding:18px;color:#fff}.cres.ok{background:linear-gradient(135deg,#0f7a3d,#0a5c33)}.cres.no{background:linear-gradient(135deg,#475569,#1e293b)}.cres h2{color:#fff;margin:4px 0}.cres p{margin:4px 0}.cbig2{font-size:54px;font-weight:900;line-height:1}
+/* ---- study extras ---- */
+.pstrip{display:flex;gap:8px;margin:10px 0 0}.pstrip .btn{flex:1;justify-content:center}.pstrip b{background:#ef4444;color:#fff;border-radius:99px;padding:0 7px;font-size:12px;margin-left:4px}
+.pq{width:100%;margin:12px 0 8px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;font-size:16px}
+.plist{display:grid;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}.prow{display:grid;grid-template-columns:minmax(72px,auto) minmax(0,1fr);gap:10px;align-items:baseline;text-align:left;padding:11px 14px;border:0;border-top:1px solid var(--line);background:transparent;color:var(--fg);font:inherit;cursor:pointer}.prow:first-child{border-top:0}.prow span{color:var(--muted);font-size:14px}
+.pchips{display:flex;flex-wrap:wrap;gap:6px}.pchips i{font-style:normal;opacity:.6;font-size:11px}
+.pmg{gap:10px}.pmh{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center}.pmi{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:4px}.pmq{font-weight:700}.pmq i{font-style:normal;font-weight:600;font-size:12px;color:var(--bad);white-space:nowrap}.pma{color:var(--good);font-weight:700}
+.pcert{width:100%;min-height:50px;margin-top:10px;font-size:16px}
+#certpop{position:fixed;inset:0;z-index:290;background:rgba(5,10,20,.6);display:flex;align-items:flex-end;justify-content:center}.certsheet{width:min(560px,100%);max-height:92vh;overflow:auto;background:var(--surface);color:var(--fg);border-radius:20px 20px 0 0;padding:16px;display:grid;gap:10px}#certcv{width:100%;height:auto;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.25)}
 </style>
 
 </head><body>
@@ -13613,7 +13621,7 @@ const GLP={
  5:{"ADV":["Form ADV","The registration and disclosure form for investment advisers. Part 2 is the plain-language brochure given to clients."],"IA":["Investment adviser","A person or firm paid to give advice about securities. Registers with the SEC or with the state."],"BD":["Broker-dealer","A firm that buys and sells securities for customers (broker) or for its own account (dealer)."]},
  3:{"IA":["Installment agreement","A monthly payment plan for a tax debt. Requested online or on Form 9465."]}};
 const GLOFF={7:{"K-1":1}}; // in the ITIN section "K-1" can be a visa class, so it is not explained there
-let glRe=null,glOn=true;const glSeen=new WeakSet();
+let glRe=null,glOn=true,glQuiet=false;const glSeen=new WeakSet();
 function glBuild(){try{const keys=new Set(Object.keys(GL));Object.values(GLP).forEach(o=>Object.keys(o).forEach(k=>keys.add(k)));const alt=[];
   keys.forEach(k=>{alt.push(k);if(/^Section /.test(k)){alt.push(k.replace(/^Section /,"§"));alt.push(k.replace(/^Section /,"§ "))}if(/^[a-z]/.test(k))alt.push(k[0].toUpperCase()+k.slice(1))});
   alt.sort((a,b)=>b.length-a.length);glRe=new RegExp("(?<![A-Za-z0-9§])(?:"+alt.map(k=>k.replace(/[.*+?^${}()|[\]\\\/]/g,"\\$&")).join("|")+")(?![A-Za-z0-9])","g")}catch(_){glRe=null}}
@@ -13634,12 +13642,13 @@ function glT(s){const t=document.createTextNode(s);glSeen.add(t);return t}
 function glClose(){const p=document.getElementById("glpop");if(p)p.remove();document.body.classList.remove("glopen")}
 function glOpen(key,shown){const g=glGet(key);if(!g)return;glClose();const o=document.createElement("div");o.id="glpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");
   const other=glPart(key)&&GL[key]?GL[key]:null;
-  o.innerHTML=`<div class="glsheet"><div class="glgrab"></div><div class="glt">${esc(shown||key)}</div>${g[0].toLowerCase()!==String(shown||key).toLowerCase()?`<div class="gln">${esc(g[0])}</div>`:""}<p>${esc(g[1])}</p>${other?`<p class="glalt"><b>In other sections:</b> ${esc(other[0])}. ${esc(other[1])}</p>`:""}<button class="btn pri" id="glok" style="width:100%">Got it</button></div>`;
+  o.innerHTML=`<div class="glsheet"><div class="glgrab"></div><div class="glt">${esc(shown||key)}</div>${g[0].toLowerCase()!==String(shown||key).toLowerCase()?`<div class="gln">${esc(g[0])}</div>`:""}<p>${esc(g[1])}</p>${other?`<p class="glalt"><b>In other sections:</b> ${esc(other[0])}. ${esc(other[1])}</p>`:""}<button class="btn pri" id="glok" style="width:100%">Got it</button>${typeof plusOpen==="function"?`<button class="btn ghost small" data-glgo="1" style="width:100%;margin-top:8px">All terms and my looked-up list ›</button>`:""}</div>`;
+  try{if(!glQuiet){const G=S.set.gls=S.set.gls||{},r=G[key]=G[key]||{n:0};r.n++;r.t=Date.now();r.p=part;delete r.k;persist()}}catch(_){}
   document.body.appendChild(o);document.body.classList.add("glopen");const b=document.getElementById("glok");if(b)try{b.focus({preventScroll:true})}catch(_){}}
 (function(){glBuild();
   document.addEventListener("click",e=>{const t=e.target;if(!t||!t.closest)return;const g=t.closest(".gl");
     if(g){e.preventDefault();e.stopPropagation();glOpen(g.dataset.gl,g.textContent);return}
-    if(document.getElementById("glpop")){if(t.id==="glok"||!t.closest(".glsheet")){e.preventDefault();e.stopPropagation();glClose()}else e.stopPropagation()}},true);
+    if(document.getElementById("glpop")){if(t.closest("[data-glgo]")){e.preventDefault();e.stopPropagation();glClose();if(typeof plusOpen==="function")plusOpen("gloss")}else if(t.id==="glok"||!t.closest(".glsheet")){e.preventDefault();e.stopPropagation();glClose()}else e.stopPropagation()}},true);
   document.addEventListener("keydown",e=>{if(e.key==="Escape")glClose();else if((e.key==="Enter"||e.key===" ")&&e.target&&e.target.classList&&e.target.classList.contains("gl")){e.preventDefault();glOpen(e.target.dataset.gl,e.target.textContent)}},true);
   let tm=0;const run=()=>{tm=0;try{mo.disconnect()}catch(_){}try{glWrap()}catch(_){}try{const v=document.getElementById("view");if(v)mo.observe(v,{childList:true,subtree:true,characterData:true})}catch(_){}};
   const mo=new MutationObserver(()=>{if(!tm)tm=setTimeout(run,40)});
@@ -17050,6 +17059,91 @@ const campRenderBkLand0=renderBkLand;renderBkLand=function(){campRenderBkLand0()
     const sk=v.querySelector(".bkl-skills");if(sk&&!sk.closest("details")){const hd=sk.previousElementSibling,h3=hd&&hd.previousElementSibling,got=sk.querySelectorAll(".bkl-sk.got").length,d=document.createElement("details");d.className="more";d.id="bkskills";if(OPEN.bkskills)d.open=true;
       d.innerHTML=`<summary><b>Skills you can show an employer</b><span>${got} of ${BKSKILLS.length} earned · tap to see each one</span></summary>`;sk.parentNode.insertBefore(d,sk);const box=document.createElement("div");box.style.padding="0 12px 12px";d.appendChild(box);if(hd&&hd.classList.contains("small"))box.appendChild(hd);box.appendChild(sk);if(h3&&h3.tagName==="H3")h3.remove()}}catch(_){}};
 
+/* ================= Study extras: glossary page, my terms, mistake notebook, Bootcamp certificate =================
+   - Terms page (view "gloss"): every term the tap-to-explain glossary knows, searchable, plus the list of terms this learner
+     has looked up, with a two-minute self-check that removes a term once it is known.
+   - Mistake notebook (view "mistakes"): every question currently marked as missed in this section, grouped by topic, showing
+     the right answer and the reason, with a button to drill just those.
+   - Certificate: a picture made on the device when the Bookkeeping Bootcamp is passed. It is an internal training record
+     of Solving Life LLC and says so; it is not a license or an accredited credential. */
+let pv=null;
+function plusOpen(k){pv={k,q:"",open:{}};view=k;render();window.scrollTo(0,0)}
+function plusTerms(){const m=Object.assign({},GL);try{Object.assign(m,GLP[part]||{})}catch(_){}try{Object.keys(GLOFF[part]||{}).forEach(k=>delete m[k])}catch(_){}return m}
+function plusMine(){const G=S.set.gls||{};return Object.keys(G).filter(k=>!G[k].k&&glGet(k)).sort((a,b)=>(G[b].t||0)-(G[a].t||0))}
+function plusMiss(){const D=PARTS[part].doms,all=missedPool(part,"all"),g={};all.forEach(i=>{(g[i.d]=g[i.d]||[]).push(i)});return{all,groups:Object.keys(g).map(d=>({d,name:(D[d]||["Other"])[0],items:g[d]})).sort((a,b)=>b.items.length-a.items.length)}}
+function plusStrip(){try{const nm=missedPool(part,"all").length,nt=plusMine().length;return `<div class="pstrip"><button class="btn small" data-plus="mistakes">📓 My mistakes${nm?` <b>${nm}</b>`:""}</button><button class="btn small" data-plus="gloss">📖 Terms${nt?` <b>${nt}</b>`:""}</button></div>`}catch(_){return ""}}
+function plusItemText(i){return i.t==="q"?i.s:i.t==="f"?i.f:(i.name||i.s||"Calculation")}
+function plusItemAns(i){return i.t==="q"?(i.opts?i.opts[i.ans]:""):i.t==="f"?i.b:""}
+function plusListHtml(){const T=plusTerms(),q=(pv.q||"").trim().toLowerCase(),keys=Object.keys(T).filter(k=>!q||k.toLowerCase().includes(q)||T[k][0].toLowerCase().includes(q)).sort((a,b)=>a.toLowerCase()<b.toLowerCase()?-1:1);
+  if(!keys.length)return `<div class="small muted" style="padding:12px">No term matches "${esc(pv.q)}".</div>`;
+  return keys.map(k=>`<button class="prow" data-plus="term" data-k="${esc(k)}"><b>${esc(k)}</b><span>${esc(T[k][0])}</span></button>`).join("")}
+function renderPlus(){const e=esc;let h="";if(!pv)pv={k:view,q:"",open:{}};
+  if(view==="gloss"){const mine=plusMine(),G=S.set.gls||{};
+    if(pv.rev){const k=pv.rev.list[pv.rev.i],g=glGet(k);
+      h=`<section class="section"><div class="sesshead"><div><h2>My terms · self-check</h2><div class="small muted">Term ${pv.rev.i+1} of ${pv.rev.list.length}</div></div></div>
+       <div class="card" style="text-align:center"><div style="font-size:30px;font-weight:900">${e(k)}</div>${pv.rev.show?`<div style="font-weight:800;color:var(--accent)">${e(g[0])}</div><p style="margin:0;text-align:left">${e(g[1])}</p>
+        <div class="row"><button class="btn pri" data-plus="revk" style="flex:1">I knew it · remove from my list</button><button class="btn" data-plus="revn" style="flex:1">Keep it on my list</button></div>`
+        :`<div class="small muted">Say what it means, then check.</div><button class="btn pri" data-plus="revshow" style="width:100%;min-height:50px">Show the meaning</button>`}</div>
+       <button class="btn ghost small" data-plus="revend" style="margin-top:10px">Stop</button></section>`}
+    else h=`<section class="section"><div class="sesshead"><div><h2>Terms and abbreviations</h2><div class="small muted">${Object.keys(plusTerms()).length} terms for this section. Tap one for its meaning. In lessons and questions they have a dotted underline.</div></div></div>
+      ${mine.length?`<div class="card" style="gap:8px"><b>Looked up by you · ${mine.length}</b><div class="pchips">${mine.slice(0,40).map(k=>`<button class="btn small" data-plus="term" data-k="${e(k)}">${e(k)}${G[k].n>1?` <i>${G[k].n}×</i>`:""}</button>`).join("")}</div><button class="btn pri" data-plus="rev">Check myself on these · about ${Math.max(1,Math.round(mine.length*0.2))} min</button></div>`:`<div class="notice" style="margin-top:10px">Terms you tap while studying are collected here, so you can check yourself on them later.</div>`}
+      <input id="plusq" class="pq" type="search" placeholder="Search: MAGI, basis, 8867…" value="${e(pv.q||"")}" autocomplete="off">
+      <div class="plist" id="pluslist">${plusListHtml()}</div></section>`}
+  else if(view==="mistakes"){const M=plusMiss();
+    h=`<section class="section"><div class="sesshead"><div><h2>My mistakes · ${e(pl(part))}</h2><div class="small muted">${M.all.length?`${M.all.length} question${M.all.length===1?"":"s"} you missed and have not yet answered right. Each one leaves this list when you get it right.`:"Nothing open. A question you miss lands here until you answer it right."}</div></div></div>
+     ${M.all.length?`<button class="donext" data-plus="fix" data-d="all"><span class="dn1">👉 FIX THESE</span><b>Redo your misses · ${Math.min(10,M.all.length)} question${Math.min(10,M.all.length)===1?"":"s"}</b><span class="dn2">Most-missed first. Then the list below gets shorter.</span><span class="dn3">Tap here ▶</span></button>`:""}
+     ${M.groups.map(g=>{const op=pv.open[g.d],show=op?g.items:g.items.slice(0,3);return `<div class="card pmg"><div class="pmh"><b>${e(g.name)}</b><span class="small muted">${g.items.length} open</span><button class="btn small" data-plus="fix" data-d="${g.d}">Drill these</button></div>
+       ${show.map(i=>{const how=i.ex||EXPL[i.id]||(S.ex&&S.ex[i.id])||"",n=(S.it[i.id]||[])[6]||1,a=plusItemAns(i);return `<div class="pmi"><div class="pmq">${e(plusItemText(i))}${n>1?` <i>missed ${n}×</i>`:""}</div>${a?`<div class="pma">✓ ${e(a)}</div>`:`<div class="pma">A calculation: the numbers change each time, the method is the same.</div>`}${how?`<div class="small">${e(how)}</div>`:""}</div>`}).join("")}
+       ${g.items.length>3?`<button class="btn ghost small" data-plus="more" data-d="${g.d}">${op?"Show fewer":"Show all "+g.items.length}</button>`:""}</div>`}).join("")}</section>`}
+  $("#view").innerHTML=h}
+function plusClick(d){const a=d.plus;
+  if(a==="mistakes"||a==="gloss"){plusOpen(a);return true}
+  if(a==="term"){glQuiet=view==="gloss"&&!!(pv&&pv.rev);glOpen(d.k,d.k);glQuiet=false;return true}
+  if(a==="more"){pv.open[d.d]=!pv.open[d.d];render();return true}
+  if(a==="fix"){filt=d.d==="all"?"all":(isNaN(+d.d)?d.d:+d.d);startSession("missed",10);return true}
+  if(a==="rev"){pv.rev={list:plusMine().slice(0,25),i:0,show:false};render();window.scrollTo(0,0);return true}
+  if(a==="revshow"){pv.rev.show=true;render();return true}
+  if(a==="revk"||a==="revn"){if(a==="revk"){const G=S.set.gls||{},k=pv.rev.list[pv.rev.i];if(G[k]){G[k].k=1;persist()}}pv.rev.i++;pv.rev.show=false;if(pv.rev.i>=pv.rev.list.length)pv.rev=null;render();window.scrollTo(0,0);return true}
+  if(a==="revend"){pv.rev=null;render();return true}
+  if(a==="cert"){plusCert();return true}
+  if(a==="certsave"){plusCertSave(false);return true}
+  if(a==="certshare"){plusCertSave(true);return true}
+  if(a==="certclose"){const o=document.getElementById("certpop");if(o)o.remove();return true}
+  return false}
+try{document.addEventListener("input",e=>{const t=e.target;if(t&&t.id==="plusq"&&pv){pv.q=t.value;const l=document.getElementById("pluslist");if(l)l.innerHTML=plusListHtml()}if(t&&t.id==="certname"){try{localStorage.setItem("certName",t.value)}catch(_){}plusCertDraw()}})}catch(_){}
+
+/* ---------- certificate ---------- */
+function plusCertName(){let n="";try{n=localStorage.getItem("certName")||""}catch(_){}return n||CNAME()||""}
+function plusCertDraw(){const c=document.getElementById("certcv");if(!c)return;const x=c.getContext("2d"),W=c.width,H=c.height,cp=campS().cap,nm=plusCertName()||"Your name";
+  x.fillStyle="#fbf8f1";x.fillRect(0,0,W,H);x.strokeStyle="#0f5c3a";x.lineWidth=14;x.strokeRect(28,28,W-56,H-56);x.lineWidth=2;x.strokeStyle="#c9a227";x.strokeRect(50,50,W-100,H-100);
+  x.textAlign="center";x.fillStyle="#0f5c3a";x.font="700 26px Georgia,serif";x.fillText("SOLVING LIFE LLC · FOUNDATION COURSE",W/2,128);
+  x.fillStyle="#1b1b1b";x.font="700 64px Georgia,serif";x.fillText("Certificate of Completion",W/2,220);
+  x.font="italic 28px Georgia,serif";x.fillStyle="#444";x.fillText("This certifies that",W/2,290);
+  let fs=74;x.font=`700 ${fs}px Georgia,serif`;while(x.measureText(nm).width>W-260&&fs>36){fs-=4;x.font=`700 ${fs}px Georgia,serif`}x.fillStyle="#0f5c3a";x.fillText(nm,W/2,380);
+  x.strokeStyle="#c9a227";x.lineWidth=2;x.beginPath();x.moveTo(W/2-330,404);x.lineTo(W/2+330,404);x.stroke();
+  x.fillStyle="#1b1b1b";x.font="28px Georgia,serif";x.fillText("completed the Bookkeeping Bootcamp",W/2,456);
+  x.font="22px Georgia,serif";x.fillStyle="#444";x.fillText(`${CAMPN} steps · ${CAMP.reduce((n,s)=>n+s.ex.length,0)} hands-on exercises · a full month-end close for a practice company`,W/2,496);
+  const sk=["The accounting equation · Chart of accounts · Debits and credits · Journal entries","Receivables and payables · Inventory and cost of goods sold · Payroll entries","Depreciation and loans · Bank reconciliation · Adjusting entries · Financial statements"];x.font="21px Georgia,serif";x.fillStyle="#1b1b1b";sk.forEach((t,i)=>x.fillText(t,W/2,556+i*34));
+  x.font="700 24px Georgia,serif";x.fillStyle="#0f5c3a";x.textAlign="left";x.fillText(`Month-end close score: ${Math.round((cp.best||0)*100)}%`,120,H-128);x.textAlign="right";x.fillText(`Completed: ${new Date(cp.when||Date.now()).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})}`,W-120,H-128);
+  x.textAlign="center";x.font="18px Georgia,serif";x.fillStyle="#666";x.fillText("Internal training record of Solving Life LLC. Not a license, degree or accredited credential.",W/2,H-84)}
+function plusCert(){const cp=campS().cap;if(!cp.done)return;if(!cp.when){cp.when=Date.now();persist()}const old=document.getElementById("certpop");if(old)old.remove();
+  const o=document.createElement("div");o.id="certpop";o.innerHTML=`<div class="certsheet"><b style="font-size:18px">Your certificate</b><label class="small" style="display:grid;gap:4px">Name on the certificate<input id="certname" class="pq" style="margin:0" value="${esc(plusCertName())}" placeholder="First and last name" autocomplete="name"></label>
+    <canvas id="certcv" width="1400" height="990"></canvas><div class="row"><button class="btn pri" data-plus="certsave" style="flex:1">⬇ Save picture</button>${navigator.canShare?`<button class="btn" data-plus="certshare" style="flex:1">Share</button>`:""}</div><button class="btn ghost small" data-plus="certclose">Close</button></div>`;
+  document.body.appendChild(o);plusCertDraw()}
+function plusCertSave(share){const c=document.getElementById("certcv");if(!c)return;c.toBlob(async b=>{if(!b)return;const f=new File([b],"bookkeeping-bootcamp-certificate.png",{type:"image/png"});
+  if(share){try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Bookkeeping Bootcamp certificate"});return}}catch(_){return}}
+  const u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(u)},500)},"image/png")}
+
+/* ---------- wiring ---------- */
+const plusExtraView0=extraView;extraView=function(){if(view==="gloss"||view==="mistakes"){try{document.body.classList.toggle("course",CLOCK())}catch(_){}renderPlus();return true}return plusExtraView0()};
+const plusExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.plus!==undefined&&plusClick(d))return true;return plusExtraClick0(b)};
+const plusDoNext0=doNextHtml;doNextHtml=function(){return plusDoNext0()+plusStrip()};
+const plusRenderBk0=renderBk;renderBk=function(){plusRenderBk0();try{const dn=document.querySelector("#view .donext");if(dn&&!document.querySelector("#view .pstrip"))dn.insertAdjacentHTML("afterend",plusStrip())}catch(_){}};
+const plusRenderBkLand0=renderBkLand;renderBkLand=function(){plusRenderBkLand0();try{const pl0=document.querySelector("#view .bkl-plan");if(pl0&&!document.querySelector("#view .pstrip"))pl0.insertAdjacentHTML("afterend",plusStrip())}catch(_){}};
+/* certificate buttons on the Bootcamp screens */
+const plusRenderCamp0=renderCamp;renderCamp=function(){plusRenderCamp0();try{if(!campS().cap.done)return;const v=document.getElementById("view"),btn=`<button class="btn pri pcert" data-plus="cert">🎓 Get your certificate</button>`;
+  if(cv.scr==="capres"){const n=v.querySelector(".cres");if(n)n.insertAdjacentHTML("afterend",btn)}else if(cv.scr==="hub"&&campDone()){const n=v.querySelector(".chero");if(n)n.insertAdjacentHTML("afterend",btn)}}catch(_){}};
+
 /* EA Part 1: balanced answer choices. Law as of December 31, 2025. */
 const BAL1={
 p1qtmdtd:{c:"The child tax credit and the dependency claim",w:["Head of household status and the dependency claim","The earned income credit for a qualifying child","The child and dependent care credit and exclusion"]},
@@ -18627,7 +18721,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 161 · Nov 21";
+const BUILD="Version 162 · Nov 21";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
