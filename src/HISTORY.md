@@ -267,6 +267,7 @@ topic spread in Quick 10, this file and `src/` added to the repository.
    - Part 1 at the start: 409 of 757 (Income and assets 160 of 272, Deductions and credits 90 of 195,
      Specialized returns 68 of 118, Preliminary work 44 of 87, Taxation 28 of 56, Advising 19 of 29)
    - Part 1 after Version 184 (`bank_p1_gap4.js`, 76 questions): 327; Income and assets 87
+   - Part 1 after Version 185 (`bank_p1_gap5.js`, 43 questions): 293; Deductions and credits 54
    - `node tmp/t741.js` writes the rules still untested to `/tmp/un_p1.json` (and p2, p3)
    - Part 2: 131 of 281. Part 3: 139 of 277.
    - Method: about 30 to 40 questions per session, own wording, long story style for at least a
