@@ -275,16 +275,24 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 201 = the gap work: 721 new exam-style questions in eighteen files (Part 1 375, Part 2 167, Part 3 179), with `bank_p2_gap4.js` and `bank_p3_gap4.js` (Version 201, 43 Part 3 stories)
+Versions 184 to 202 = the gap work: 754 new exam-style questions in nineteen files (Part 1 408, Part 2 167, Part 3 179), with `bank_p2_gap4.js`, `bank_p3_gap4.js` (Version 201, 43 Part 3 stories) and `bank_p1_gap13.js` (Version 202, 33 worked calculations on deductions and credits)
 (`bank_p1_gap4.js` to `gap12`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. Second-reader review so far: `bank_p1_gap4.js` and `gap5.js` (Version 198, 119
 questions, no errors), `gap6.js` and `gap7.js` (Version 200, 90 questions, two fixes) and `gap8.js` and `gap9.js`
 (Version 201, 76 questions, no errors; one stem has a deposit on Saturday January 3, 2026, left as it is because a
-Saturday deposit is possible). Still to review the same way: `gap10` to `gap12`, the four Part 2 files and the
-four Part 3 files. Confirmed on irs.gov on November 23, 2026 (Version 201 round): 0% capital gain bracket $48,350
+Saturday deposit is possible). `gap10.js` and `gap11.js` were reviewed in Version 202 (60 questions, no errors). Still to review the same way:
+`gap12`, `gap13`, the four Part 2 files and the four Part 3 files. Confirmed on irs.gov on November 23, 2026 (Version 201 round): 0% capital gain bracket $48,350
 single / $96,700 joint / $64,750 head of household, ABLE limit $19,000, 24% gambling withholding on winnings over
 $5,000 less the wager, Form 8938 thresholds abroad ($200,000 last day or $300,000 any time; $400,000 or $600,000
-joint); from secondary sources citing Rev. Proc. 2024-40: AMT exemption $88,100 and $137,000, QCD $108,000. Re-checked against irs.gov on
+joint); from secondary sources citing Rev. Proc. 2024-40: AMT exemption $88,100 and $137,000, QCD $108,000.
+Confirmed for Version 202 (irs.gov pages and Rev. Proc. 2024-40 summaries): SALT limit $40,000 less 30% of modified
+AGI over $500,000, floor $10,000; senior deduction $6,000 less 6% over $75,000 / $150,000; tips $25,000; car loan
+interest $10,000, new vehicles only, phase-out from $100,000 / $200,000; child tax credit $2,200, refundable part
+$1,700, $50 per $1,000 over $200,000 / $400,000; QBI thresholds $197,300 to $247,300 and $394,600 to $494,600;
+excess business loss $313,000 / $626,000; foreign earned income exclusion $130,000; IRA phase-out $79,000 to
+$89,000 single and $126,000 to $146,000 joint; lifetime learning phase-out from $80,000 / $160,000; home
+improvement credit 30% with $1,200, $600 windows and $2,000 heat pump limits, ending after 2025.
+Owner asked on November 23 "ok so leave it on github?": answered yes, unchanged until shortly before selling. Re-checked against irs.gov on
 November 23, 2026, the items the 2025 law changed: adoption credit ($17,280, up to $5,000 refundable, rest carried
 5 years), clean vehicle credit (binding contract and a payment by September 30, 2025), residential clean energy
 credit (must be installed by December 31, 2025, paying early is not enough), overtime deduction ($12,500 or $25,000
@@ -453,7 +461,7 @@ Recommended path, cheapest first. Nothing here is built yet unless marked done.
    with the provider's license API. A free part (for example the diagnostic and one topic) sells the rest. A
    web app that holds all content in one file can be copied by a determined buyer; if that matters later, serve
    paid content from a small backend after sign-in (Cloudflare Workers has a free tier).
-   - **The owner's Wix plan (checked November 23, 2026):** Wix Core, prepaid 3 years, bought about November 11,
+   - **The owner's Wix plan (checked November 23, 2026):** Wix Core, prepaid for 2 to 3 years (the owner said 3 years earlier in November and "like 2 years" on November 23; the exact end date is on the Wix billing page), bought about November 11,
      2026, in the Wix account under the business mailbox (site shown as "my-site-3" in Wix emails). Core is the
      lowest plan that accepts online payments, so Pricing Plans (one-time or recurring) and members-only pages
      work without an upgrade. A session has no Wix login: the `wix:*` skills need a Wix API key or OAuth, and
@@ -501,6 +509,7 @@ One line per shipped version, newest first. Written by `tmp/ship.sh` from the gi
 
 <!-- VERSION-LOG -->
 
+- 2026-11-22 Version 202: Version 202: review of Part 1 sets 10 and 11 (no errors), 33 Part 1 calculation stories (bank_p1_gap13.js)
 - 2026-11-22 Version 201: Version 201: review of Part 1 sets 8 and 9 (no errors), 43 Part 3 stories (bank_p3_gap4.js), Wix plan notes in HISTORY
 - 2026-11-22 Version 200: EA: second-reader review of sets 6 and 7 (two fixes); 31 Part 2 worked story questions
 - 2026-11-22 Version 199: Forms and acronyms drill with a gauge (all EA parts); product plan recorded in HISTORY.md
