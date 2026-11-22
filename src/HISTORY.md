@@ -269,6 +269,8 @@ topic spread in Quick 10, this file and `src/` added to the repository.
    - Part 1 after Version 184 (`bank_p1_gap4.js`, 76 questions): 327; Income and assets 87
    - Part 1 after Version 185 (`bank_p1_gap5.js`, 43 questions): 293; Deductions and credits 54
    - Part 1 after Version 186 (`bank_p1_gap6.js`, 45 questions on topics 1, 4 and 5): 266
+   - Part 1 after Version 187 (`bank_p1_gap7.js`, 45 questions on Specialized returns): 242. What is left in
+     Part 1 is mostly form names and definitions. The measure credits at most two rules per question.
    - `node tmp/t741.js` writes the rules still untested to `/tmp/un_p1.json` (and p2, p3)
    - Part 2: 131 of 281. Part 3: 139 of 277.
    - Method: about 30 to 40 questions per session, own wording, long story style for at least a
