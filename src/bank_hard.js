@@ -1,0 +1,93 @@
+// Forum-reported hardest areas, extra depth.
+// Part 1 (lowest pass rate, ~58%): credits & limitations memorization, basis, carryovers, inherited IRAs, AMT.
+// Part 2: "basis, basis, basis" (partner/shareholder, repossession, termination, partner leaving), entity conversions, getting into/out of S status, deadlines & late-filing penalties, retirement plans, depreciation practice.
+// Part 3: Circular 230 nuance, collections detail (lien vs levy, OIC vs IA), 2848 vs 8821, TFRP, innocent spouse, appeals.
+
+// ===== PART 2: partnerships =====
+F(2,1,"Liquidating distribution: when does a partner recognize gain?","Only when cash received (including relief of liabilities) exceeds the partner's outside basis");
+F(2,1,"Liquidating distribution: when does a partner recognize a loss?","Only if the partner receives nothing but cash, unrealized receivables and inventory, and the outside basis exceeds what those total");
+F(2,1,"Liquidating distribution: basis of property received","Outside basis minus cash; then unrealized receivables and inventory take the partnership's basis (limited); all remaining basis goes to the other property received");
+F(2,1,"Sale of a partnership interest: amount realized","Cash + FMV of property + the selling partner's share of partnership liabilities relieved");
+F(2,1,"Sale of a partnership interest: character","Capital gain or loss, except the part attributable to §751 hot assets (unrealized receivables, inventory), which is ordinary");
+F(2,1,"Partner's share of liabilities","Recourse debt: by economic risk of loss. Nonrecourse debt: generally by profit-sharing ratio");
+F(2,1,"Partnership tax year for a partner who sells the entire interest","Closes for that partner on the date of sale");
+F(2,1,"When a partnership terminates","Only when no part of its business continues to be carried on by any partner in a partnership (technical terminations were repealed for 2018 on)");
+F(2,1,"Converting a partnership to a corporation","Generally tax-free under §351 if transferors control 80%+ after the transfer; partnership then liquidates");
+F(2,1,"LLC electing S corporation status","Files Form 2553 only; it's deemed to have elected to be classified as a corporation (no separate Form 8832 needed)");
+F(2,1,"Late S election relief","Rev. Proc. 2013-30: request within 3 years and 75 days of the intended effective date, with reasonable cause; file Form 2553 with the relief statement");
+F(2,1,"S election revocation","Shareholders holding more than 50% of the shares consent. Made by the 15th day of the 3rd month: effective that year (unless a later date is chosen); otherwise next year");
+F(2,1,"S termination by a disqualifying event","Effective on the date of the event (e.g., ineligible shareholder, second class of stock); the year splits into S and C short years");
+F(2,1,"Re-electing S after termination","Generally must wait 5 tax years unless the IRS consents; inadvertent terminations can get relief");
+F(2,1,"LIFO recapture on C to S conversion","The C corp includes its LIFO reserve in income in its last C year; the tax is paid in 4 equal installments");
+F(2,1,"S corp debt basis restoration","Later net income restores debt basis before stock basis. Repaying a loan whose basis was reduced triggers gain");
+F(2,1,"Suspended S corp losses","Carry forward indefinitely while the person remains a shareholder; usable in the post-termination transition period (generally 1 year) if basis is restored");
+F(2,1,"C corporation complete liquidation","Corporation recognizes gain/loss as if it sold assets at FMV (§336); shareholders recognize gain/loss on FMV received minus stock basis (§331): double taxation");
+F(2,1,"Late filing penalty: Form 1065 and 1120-S (2025 returns)","$255 per partner or shareholder per month (or part), up to 12 months. Inflation-adjusted");
+F(2,1,"Late filing penalty: Form 1120","Same as individuals: 5% of unpaid tax per month up to 25%, with a minimum for returns over 60 days late. Form 2220 for underpaid corporate estimated tax");
+F(2,2,"Repossession of personal property sold on installment","Gain or loss = FMV of the property repossessed − (basis in the installment obligation + repossession costs). Basis of repossessed property = its FMV");
+F(2,2,"Repossession of real property (§1038)","Gain limited to cash and other property received before repossession minus gain already reported (and capped by the remaining gross profit minus repossession costs). New basis = basis of the installment obligation + gain recognized + repossession costs");
+F(2,2,"Basis in an installment obligation","Unpaid balance × (1 − gross profit percentage)");
+F(2,2,"MACRS first-year rates (half-year convention)","5-year: 20%, then 32%. 7-year: 14.29%, then 24.49%");
+F(2,2,"MACRS real property first-year rate (placed in service in January)","27.5-year residential: 3.485%. 39-year nonresidential: 2.461%");
+F(2,2,"Mid-quarter convention first-year rate, 5-year property placed in service in Q4","5%");
+F(2,3,"Employer deduction limit: profit-sharing and SEP","25% of total eligible compensation of participants");
+F(2,3,"Vesting of employer contributions","3-year cliff or 2-to-6-year graded (20% per year after year 1). Employee deferrals are always 100% vested");
+F(2,3,"Form 5500 due date","Last day of the 7th month after plan year end (July 31 for calendar plans); extension 2½ months with Form 5558");
+F(2,3,"Top-heavy plan","Over 60% of account balances or benefits belong to key employees; requires minimum contributions for non-key employees");
+F(2,3,"Deadline to adopt a new SEP or profit-sharing plan","By the employer's return due date, including extensions, for that year");
+F(2,3,"Prohibited transactions (IRAs and plans)","Self-dealing such as borrowing from an IRA, selling property to it, or using it as security. IRA: treated as distributed on Jan 1 of that year. Plans: excise taxes on the disqualified person");
+
+Q(2,1,2,"In a liquidating distribution, Partner A (outside basis $30,000) receives $10,000 cash and land (partnership basis $5,000). A's basis in the land is:","$20,000",["$5,000","$30,000","$25,000"],"Liquidating: remaining outside basis after cash ($20,000) goes to the land. No gain or loss.");
+Q(2,1,2,"In a liquidating distribution, Partner B (outside basis $30,000) receives only $18,000 cash. Result:","$12,000 capital loss",["No loss; basis carries over","$12,000 ordinary loss","$18,000 gain"],"Only cash received and basis exceeds it: loss recognized.");
+Q(2,1,2,"Partner C (outside basis $15,000) receives a nonliquidating distribution of land with a partnership basis of $20,000 and FMV of $25,000. C's basis in the land:","$15,000",["$20,000","$25,000","$5,000 gain recognized"],"Nonliquidating: lesser of partnership basis or the partner's outside basis. No gain; C's outside basis drops to $0.");
+Q(2,1,2,"Which correctly describes the tax result of an S corporation election made by an LLC?","Filing Form 2553 alone treats the LLC as a corporation electing S status",["The LLC must first file Form 8832 and wait 60 months","The LLC must dissolve and reincorporate","An LLC can never be an S corporation"],"Deemed classification election.");
+QX(2,1,2,"All of the following terminate a partnership, EXCEPT:",["No partner continues the business in partnership form","The sale of 60% of the partnership interests within 12 months","All partners withdraw and wind up the business","The partnership becomes a single-member entity"],1,"The technical termination rule (50%+ sale) was repealed starting 2018.");
+Q(2,1,2,"An S corporation revokes its election with consent of 60% of shares on February 10, 2025, with no date specified. Effective:","January 1, 2025",["February 10, 2025","January 1, 2026","On IRS approval"],"Revocation by the 15th day of the 3rd month is effective for the current year.");
+Q(2,1,3,"A partner sells her 25% interest for $90,000 cash; her share of partnership liabilities is $30,000; outside basis $70,000 (including the liabilities). Her share of §751 ordinary income items is $8,000. Character of the gain:","$8,000 ordinary and $42,000 capital",["$50,000 capital","$20,000 capital","$8,000 ordinary and $12,000 capital"],"Amount realized = 90,000 + 30,000 = 120,000. Gain = 120,000 − 70,000 = 50,000; $8,000 ordinary (§751), $42,000 capital.");
+Q(2,1,3,"Calendar-year partnership with 4 partners files Form 1065 for 2025 three months and a few days late (no reasonable cause). Penalty:","$4,080",["$3,060","$1,020","$12,240"],"$255 × 4 partners × 4 months (part of a month counts) = $4,080.");
+Q(2,1,3,"S corp shareholder: stock basis $0, loan basis $10,000 reduced to $4,000 by prior losses. This year: $5,000 of income, no distributions. Ending debt and stock basis:","Debt $9,000; stock $0",["Debt $4,000; stock $5,000","Debt $10,000; stock $0","Debt $4,000; stock $1,000"],"Income restores debt basis first, up to its original $10,000.");
+Q(2,2,2,"Equipment (7-year MACRS, half-year, no §179 or bonus) cost $10,000. First-year depreciation:","$1,429",["$2,000","$1,000","$714"],"14.29% × $10,000.");
+Q(2,2,2,"A residential rental building with a $275,000 basis was placed in service in January 2025. 2025 depreciation:","$9,584",["$10,000","$9,167","$7,051"],"3.485% × $275,000 = $9,584 (mid-month convention).");
+Q(2,2,3,"A seller repossessed a car sold on installment. Installment obligation balance $6,000; gross profit percentage 30%; repossession costs $300; FMV of the car $5,000. Gain or loss on repossession:","$500 gain",["$1,000 loss","$700 gain","$1,300 loss"],"Obligation basis = 6,000 × 70% = 4,200 + 300 costs = 4,500. FMV 5,000 − 4,500 = $500 gain.");
+Q(2,3,2,"A profit-sharing plan uses a 2-to-6-year graded vesting schedule. After 4 years of service an employee is vested:","60%",["40%","80%","100%"],"20% per year starting after year 2: 20% at 2, 40% at 3, 60% at 4.");
+Q(2,3,2,"Form 5500 for a calendar-year plan is due:","July 31",["March 15","April 15","October 15"],"Last day of the 7th month; extend 2½ months with Form 5558.");
+Q(2,3,3,"An employer's eligible payroll is $400,000. Maximum deductible profit-sharing contribution:","$100,000",["$70,000","$80,000","$400,000"],"25% of total eligible compensation (individual allocations still limited to $70,000 each).");
+
+QX(2,1,3,"An S corporation liquidates, distributing land (FMV $100,000, corporate basis $40,000) to its sole shareholder, whose stock basis is $50,000. Result for the shareholder:",["$60,000 passed-through gain only","$50,000 capital gain on the stock only","$60,000 passed-through gain and a $10,000 capital loss on the stock","No gain or loss"],2,"The corporation's §336 gain of $60,000 passes through and raises stock basis to $110,000. The shareholder receives $100,000 of property: $10,000 capital loss. Net effect $50,000.");
+
+// ===== PART 3: hardest procedures =====
+F(3,3,"Lien vs levy","A lien is a legal claim securing the debt (it doesn't take property). A levy actually seizes property (bank accounts, wages, receivables)");
+F(3,3,"Installment agreement vs Offer in Compromise","IA: pay the full balance over time. OIC: settle for less than owed, based on doubt as to collectibility/liability or effective tax administration");
+F(3,3,"Form 2848 vs Form 8821 (one line)","2848 lets an eligible practitioner represent and act for the taxpayer. 8821 only lets someone receive and inspect information");
+F(3,3,"Trust fund recovery penalty: who is 'responsible'","Anyone with the duty and authority to collect, account for and pay over trust fund taxes (officers, owners, check signers, sometimes bookkeepers) who acted willfully (knew and paid other creditors instead)");
+F(3,3,"Trust fund taxes","Income tax withheld from employees and the employee share of FICA. Not the employer's FICA share or FUTA");
+F(3,3,"Wage levy","Continuous until released; exempt amount based on the standard deduction and exemptions on Form 668-W statement");
+F(3,3,"Bank levy holding period","Bank holds the funds 21 days before sending them to the IRS, giving time to resolve errors");
+F(3,3,"Levy release","IRS must release a levy if the tax is paid, the CSED has expired, it creates an economic hardship, or an IA is entered (unless the agreement says otherwise)");
+F(3,3,"Collection while an OIC or IA request is pending","Levy is generally prohibited while pending, for 30 days after rejection, and during an appeal of the rejection");
+F(3,2,"Appeals and new issues","Appeals won't raise new issues or reopen issues agreed with Exam; it weighs the hazards of litigation");
+F(3,2,"Docketed vs non-docketed Appeals cases","Non-docketed: before a Tax Court petition (after a 30-day letter). Docketed: after a Tax Court petition; usually sent to Appeals for settlement first");
+F(3,1,"Circular 230 §10.29 vs §10.21","10.29 conflicts: need informed written consent. 10.21 errors: must advise the client of the error and consequences; no duty to fix it or tell the IRS");
+F(3,1,"Circular 230: what's 'willful, reckless, or gross incompetence'","The standard for sanctioning most violations (§10.52); simple negligence alone generally isn't sanctionable under Circular 230 (but can trigger §6694 penalties)");
+
+Q(3,3,2,"The IRS filed a Notice of Federal Tax Lien on Joe's house. Which is true?","The lien secures the debt but doesn't take the house",["The IRS now owns the house","Joe must sell the house within 30 days","The lien is a levy on the house"],"A levy seizes property; a lien is a claim against it.");
+Q(3,3,2,"A business owner's company didn't pay withheld payroll taxes. Which amount can be assessed against the owner personally as a TFRP?","Withheld income tax and the employees' share of FICA",["The employer's share of FICA","FUTA tax","All penalties and interest of the company"],"Only trust fund taxes.");
+Q(3,3,2,"A taxpayer can pay in full over 5 years but wants to pay less than owed. Which is most likely?","An installment agreement, because the IRS can collect the full amount",["An OIC based on doubt as to collectibility","Currently not collectible status","An innocent spouse claim"],"OIC (collectibility) requires that the full amount can't be collected within the CSED.");
+Q(3,3,2,"After the IRS levies a bank account, the bank must hold the funds for:","21 days",["10 days","30 days","45 days"],"Then it sends them to the IRS.");
+Q(3,3,3,"Which bookkeeper is most likely a 'responsible person' for the TFRP?","One with check-signing authority who chose to pay suppliers instead of payroll taxes while knowing taxes were due",["One who prepares payroll but has no authority to sign checks or decide payments","A part-time clerk who files invoices","An outside CPA who prepared the annual return"],"Responsibility requires authority over payments plus willfulness.");
+Q(3,2,2,"Which is true about the IRS Independent Office of Appeals?","It considers hazards of litigation when settling",["It raises new issues not raised by Exam","It can't settle docketed cases","It's part of the Examination division"],"Appeals is independent and settles based on litigation hazards.");
+QX(3,2,2,"All of the following can be done under Form 8821, EXCEPT:",["Receive copies of IRS notices","Inspect the taxpayer's account transcripts","Sign a consent to extend the statute of limitations","Discuss the information received with the taxpayer"],2,"Signing agreements or consents requires a Form 2848.");
+Q(3,1,2,"A practitioner negligently (not willfully or recklessly) makes one error on a return. Under Circular 230:","Sanctions generally require willful, reckless, or grossly incompetent conduct",["Disbarment is automatic","A monetary penalty equal to the fee is mandatory","Circular 230 doesn't apply to returns"],"§10.52; separate §6694 preparer penalties may still apply.");
+Q(3,1,3,"An EA learns that a client's prior-year return, which the EA did not prepare, overstated deductions. The client refuses to amend. The EA:","Must advise the client of the consequences and may decide whether to withdraw; no duty to notify the IRS",["Must notify the IRS within 30 days","Must amend the return","Must report the client to OPR"],"§10.21; the EA must also not repeat the error on future returns.");
+
+// ===== PART 1: credits & limitations memorization drills =====
+Q(1,3,2,"Which disqualifies a taxpayer from the 2025 EIC?","$12,500 of investment income",["Filing as Head of Household","Having no qualifying child at age 30","Receiving unemployment"],"Investment income limit $11,950 for 2025.");
+Q(1,3,2,"Which student can be claimed for the AOTC in 2025?","A sophomore enrolled half-time in a degree program",["A grad student in her 5th year of college","A student with a felony drug conviction","A student taking a single course for job skills"],"AOTC: first 4 years, at least half-time, degree program, no felony drug conviction.");
+Q(1,3,3,"MFJ, AGI $165,000, one freshman with $4,000 of tuition. AOTC allowed:","$1,875",["$2,500","$1,250","$0"],"Phase-out $160,000–$180,000: 25% reduction (5,000 / 20,000). $2,500 × 75% = $1,875.");
+Q(1,3,3,"Single, AGI $85,000, LLC expenses $10,000. Lifetime Learning Credit:","$1,000",["$2,000","$0","$1,500"],"Phase-out $80,000–$90,000: 50% reduction. $2,000 × 50% = $1,000.");
+Q(1,3,3,"Single, AGI $90,000, paid $2,500 of student loan interest in 2025. Deduction:","$1,667",["$2,500","$0","$833"],"Phase-out $85,000–$100,000: (90,000 − 85,000) / 15,000 = 1/3 reduction. $2,500 × 2/3 = $1,667.");
+Q(1,3,3,"Single, covered by a workplace plan, MAGI $84,000, contributed $7,000 to a traditional IRA. Deductible amount:","$3,500",["$7,000","$0","$2,800"],"Phase-out $79,000–$89,000: halfway → $3,500 (rounded up to $10 increments).");
+Q(1,3,3,"MFJ couple, one spouse 66 and one 63, MAGI $170,000. 2025 senior deduction:","$4,800",["$6,000","$12,000","$0"],"Only one qualifies: $6,000 − 6% × (170,000 − 150,000) = $4,800.");
+Q(1,4,3,"Single, 2025 AMTI $700,000. AMT exemption:","$69,688",["$88,100","$0","$18,413"],"$88,100 − 25% × (700,000 − 626,350) = 88,100 − 18,412.50 = $69,687.50.");
+Q(1,2,3,"Joe (single) died in 2025 at 60 before his RMD age; his 30-year-old daughter inherits his IRA. She must:","Empty it by the end of 2035, with no annual RMDs required",["Take annual RMDs over her life expectancy","Empty it within 5 years","Take annual RMDs and empty it by 2035"],"Died before the RBD: 10-year rule only; annual RMDs apply only when death occurs after the RBD.");
+Q(1,3,2,"An individual's 2025 net capital loss is $10,000 (all long-term). How is it treated?","$3,000 deducted; $7,000 long-term carryover to 2026",["$10,000 deducted","$3,000 deducted; $7,000 short-term carryover","Carried back 3 years"],"Carryover keeps its character; individuals don't carry back.");

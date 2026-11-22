@@ -1,0 +1,10 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/');await p.waitForTimeout(1500);
+const r=await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";view="kids";const out=[];
+ k.lv.math=5;for(let i=0;i<12;i++){const Q=kQ("math");kAnswer("math",true,Q)}out.push("math lv "+k.lv.math);
+ k.lv.sci=5;let ok=1;for(let i=0;i<6;i++)kAnswer("sci",i!==3,kQ("sci"));out.push("sci lv "+k.lv.sci);
+ k.chess.lv=16;for(let i=0;i<10;i++)kChessAnswer({lv:16},true);out.push("chess lv "+k.chess.lv);
+ for(let L=14;L<=25;L+=3){const P=kPuzzle(L);out.push(L+":"+P.type)}return out});
+console.log(r.join(" | "));await p.evaluate(()=>{KV={scr:"home"};render()});await p.evaluate(()=>{KV={scr:"chess"};kChessStart();render()});
+console.log('errors',JSON.stringify(errs));await b.close()})();

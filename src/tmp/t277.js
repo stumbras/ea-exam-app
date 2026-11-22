@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.stack.slice(0,300)));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1000);
+await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";k.tix=3;k.play={"q:math":{last:"2026-10-01"}};view="kids";KV={scr:"home"};render()});await p.waitForTimeout(200);
+const must=await p.evaluate(()=>kMust());console.log('must',must,await p.evaluate(()=>kPath().join(',')));
+await p.click('[data-k="pschool"]');await p.waitForTimeout(150);console.log('blocked ->',await p.evaluate(()=>KV.scr||'home'));
+await p.screenshot({path:'k44gate.png',clip:{x:0,y:0,width:390,height:700}});
+await p.click('.kpathb.next');await p.waitForTimeout(200);console.log('must opens ->',await p.evaluate(()=>KV.scr));
+await p.evaluate(m=>{kRotDone(m);KV={scr:"home"};render()},must);await p.click('[data-k="pschool"]');await p.waitForTimeout(150);console.log('after win ->',await p.evaluate(()=>KV.scr));
+await p.evaluate(()=>{KV={scr:"grown"};render()});console.log('guided btn',await p.evaluate(()=>!!document.querySelector('[data-k="tGuided"]')));
+await p.evaluate(()=>{KV={scr:"mj"};render()});console.log('mj home',await p.evaluate(()=>document.body.innerText.includes('MANILA')));
+console.log('errors',JSON.stringify(errs));await b.close()})();

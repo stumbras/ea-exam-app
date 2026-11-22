@@ -1,0 +1,17 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/');await p.waitForTimeout(1500);
+await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";k.tix=5;k.lv.math=5;k.hack={paint_cherry:1,bb_goat:1,rainbow:1,bb_fart:1,santa:1,glow:1};view="kids";KV={scr:"home"};render()});
+await p.click('[data-k="drive"]');await p.waitForTimeout(300);await p.screenshot({path:'k13pick.png',fullPage:true});
+await p.click('[data-kcar="ct"]');await p.click('[data-kride="ct"]');await p.waitForTimeout(2500);
+await p.evaluate(()=>{kDrv.obs.push({ln:kDrv.lane,y:-40,k:"ramp"})});await p.waitForTimeout(900);await p.screenshot({path:'k13road.png'});
+await p.click('[data-k="dhint"]');await p.waitForTimeout(500);await p.screenshot({path:'k13hint.png'});
+await p.evaluate(()=>{kDrv.t=39});await p.waitForTimeout(700);await p.screenshot({path:'k13tunnel.png'});
+console.log('state',await p.evaluate(()=>[kDrv.bolts,kDrv.bat|0,kDrv.crashes,kDrv.over]));
+await p.evaluate(()=>{kDrv.t=59.9});await p.waitForTimeout(1500);console.log('end',await p.evaluate(()=>kDrv.over));
+await p.evaluate(()=>{KV={scr:"drive",pick:1,dm:"derby"};render()});await p.click('[data-kcar="mx"]');await p.click('[data-kderby="mx"]');await p.waitForTimeout(2500);await p.screenshot({path:'k13derby.png'});
+await p.evaluate(()=>{const me=kDby.cars[0];kDby.pw.push({k:"brain",x:me.x,y:me.y,alive:1,t:0})});await p.waitForTimeout(600);await p.screenshot({path:'k13dq.png'});
+const q=await p.evaluate(()=>kDby.q&&{q:kDby.q.q,a:kDby.q.a,o:kDby.q.opts});console.log('q',JSON.stringify(q));
+if(q){await p.click(`[data-kdq="${q.o.indexOf(q.a)}"]`);await p.waitForTimeout(400)}console.log('mega',await p.evaluate(()=>kDby.cars[0].mega>0));
+await p.evaluate(()=>{for(const o of kDby.cars)if(o.ai)o.hp=1});await p.waitForTimeout(4000);console.log('derby',await p.evaluate(()=>[kDby.over,kDby.res,kDby.ko,S.kids.derby.lv]));await p.screenshot({path:'k13dend.png'});
+console.log('errors',JSON.stringify(errs));await b.close()})();

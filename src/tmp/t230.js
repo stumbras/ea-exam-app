@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/');await p.waitForTimeout(1500);
+await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";k.tix=3;view="kids";KV={scr:"drive",pick:1,dm:"derby"};render()});
+await p.click('[data-k="dbhow"]');await p.waitForTimeout(200);await p.screenshot({path:'k16how.png',fullPage:true});
+await p.click('[data-kderby="m3"]');await p.waitForTimeout(1500);await p.screenshot({path:'k16rules.png'});
+console.log('paused',await p.evaluate(()=>[kDby.rules,kDby.cd.toFixed(1)]));
+await p.click('[data-k="dbgo"]');await p.waitForTimeout(4200);
+const box=await p.locator('#kdby').boundingBox();const cx=box.x+box.width*.5,cy=box.y+box.height*.75;await p.mouse.move(cx,cy);await p.mouse.down();await p.mouse.move(cx,cy-60,{steps:4});await p.waitForTimeout(1600);
+await p.screenshot({path:'k16coach.png'});await p.mouse.up();console.log('coach',await p.evaluate(()=>[kDby.coach,kDby.t.toFixed(1)]));
+await p.click('[data-k="dbcoach"]');await p.waitForTimeout(200);console.log('coach off',await p.evaluate(()=>[kDby.coach,S.kids.derby.coach]));await p.click('[data-k="dbrules"]');await p.waitForTimeout(300);console.log('rules again',await p.evaluate(()=>kDby.rules));await p.click('[data-k="dbgo"]');await p.waitForTimeout(500);
+console.log('errors',JSON.stringify(errs));await b.close()})();

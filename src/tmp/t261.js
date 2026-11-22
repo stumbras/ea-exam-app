@@ -1,0 +1,10 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.stack.slice(0,300)));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1500);
+await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";view="kids";KV={scr:"home"};render()});await p.waitForTimeout(300);
+await p.click('[data-k="term"]');await p.waitForTimeout(300);await p.click('[data-kos="termux"]');await p.waitForTimeout(300);
+await p.fill('#tin','pkg update');await p.click('#tgo');await p.waitForTimeout(800);
+console.log('rot',await p.evaluate(()=>JSON.stringify(S.kids.rot.done)),await p.evaluate(()=>S.kids.tix));
+await p.evaluate(()=>{KV={scr:"home"};render()});await p.waitForTimeout(300);await p.screenshot({path:'k32home.png',fullPage:true});
+await p.evaluate(()=>{kFly={lv:0,over:1,pts:120,done:[0],P:{}};KV={scr:"fly"};render()});await p.waitForTimeout(300);console.log('flyend card',await p.evaluate(()=>document.querySelector('.krotnext')&&document.querySelector('.krotnext').innerText.slice(0,120)));
+console.log('errors',JSON.stringify(errs));await b.close()})();

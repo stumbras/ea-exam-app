@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const U='http://localhost:8765/ea-exam-app/';
+ const mk=async()=>{const c=await b.newContext();const p=await c.newPage();await p.goto(U);await p.waitForTimeout(1500);return p};
+ const p=await mk(),q=await mk();
+ await p.evaluate(()=>{for(let k=0;k<15;k++){const it=BANK[k];grade(it,2);logDomain(it,true)}persist()});
+ console.log('d1 dom',await p.evaluate(()=>JSON.stringify(S.dom)),'grade logs domain itself?',await p.evaluate(()=>/logDomain/.test(grade.toString())));
+ const code=await p.evaluate(()=>backupText());
+ await q.evaluate(()=>{for(let k=30;k<35;k++){const it=BANK[k];grade(it,2);logDomain(it,true)}persist()});
+ console.log('d2 before',await q.evaluate(()=>JSON.stringify(S.dom)));
+ await q.evaluate(c=>restoreFrom(c),code);console.log('d2 after 1',await q.evaluate(()=>JSON.stringify(S.dom)));
+ await q.evaluate(c=>restoreFrom(c),code);console.log('d2 after 2',await q.evaluate(()=>JSON.stringify(S.dom)));
+ await b.close()})();

@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage();
+await p.goto('http://localhost:8765/ea-exam-app/?study');await p.waitForTimeout(1500);
+const r=await p.evaluate(()=>{const q=BANK.filter(i=>i.t==="q"&&i.opts.length===4);
+ const cue=i=>{const l=i.opts.map(x=>String(x).length),c=l[i.ans],o=l.filter((_,k)=>k!==i.ans),mx=Math.max(...o);return c>=mx*1.3&&c-mx>=8};
+ const atom=/^(\$?[\d,.]+%?|\d+ (?:days?|months?|years?|hours?|weeks?)|(?:January|February|March|April|May|June|July|August|September|October|November|December) \d+(?:, \d{4})?|Form [\w-]+|Schedule \w+|Yes|No|True|False)$/i;
+ const lead=/^(\$?[\d,.]+%?|\d+ (?:days?|months?|years?|hours?|weeks?)|(?:January|February|March|April|May|June|July|August|September|October|November|December) \d+(?:, \d{4})?|Yes|No)(?=[\s.,:;(])/i;
+ const out={};const samples=[];let trimN=0;
+ Object.keys(PARTS).forEach(pt=>{const qq=q.filter(i=>i.p==pt),c=qq.filter(cue);let t=0;c.forEach(i=>{const others=i.opts.filter((_,k)=>k!==i.ans),cor=String(i.opts[i.ans]);if(others.every(o=>atom.test(String(o).trim()))&&lead.test(cor)){const m=cor.match(lead)[0];if(!others.some(o=>String(o).trim().toLowerCase()===m.toLowerCase())){t++;if(samples.length<14)samples.push(i.s.slice(0,80)+' || '+cor+' -> '+m+' || '+others.join(' | '))}}});
+  out[pt]={n:qq.length,strongCue:c.length,pct:Math.round(c.length/qq.length*100),atomTrim:t};trimN+=t});
+ return{out,trimN,samples}});
+console.log(JSON.stringify(r.out),'trimmable',r.trimN);console.log(r.samples.join('\n'));await b.close()})();

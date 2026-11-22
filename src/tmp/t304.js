@@ -1,0 +1,11 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.stack.slice(0,300)));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1500);
+await p.evaluate(()=>{const k=KS();k.setup=1;k.name="Tomas";k.guided=false;k.tix=9;k.fly={lv:5,done:{0:1,1:1,2:1,3:1,4:1},stars:{},flights:0,pts:0};persist();kFlyStart(2);render()});await p.waitForTimeout(1200);
+const run=(cfg)=>p.evaluate(cfg=>new Promise(res=>{const F=kFly,P=F.P,rw=KFLYRW[0];F.chk=null;F.q=null;F.crashT=0;F.atc.q=null;F.atc.said={tko:1,climb:1,land:1,traffic:1,wx:1};F.em={on:false};F.wx.turb=0;F.wx.wx=0;F.wx.wz=0;F.easy=1;const vs=kFlyStall(P);
+  Object.assign(P,{x:rw.cx,z:rw.cz-700,y:cfg.y,gnd:0,v:vs*cfg.v,thr:cfg.thr,th:cfg.th,ph:0,gear:1,flaps:1,psi:rw.hd});let n=0,minv=99;const iv=setInterval(()=>{n++;minv=Math.min(minv,P.v);if(cfg.flare&&P.y<cfg.flare)F.stick.y=cfg.pull||.35;else F.stick.y=cfg.push||0;
+   if(F.crashT>0||P.gnd||n>400){clearInterval(iv);F.stick.y=0;res(`${cfg.name}: `+(F.crashT>0?"CRASH "+F.crashMsg.slice(0,60):P.gnd?"LANDED sink "+(F.sink||0).toFixed(1)+" m/s":"still flying y"+P.y.toFixed(0))+` (vs ${vs}, min v ${minv.toFixed(1)})`)}},50)}),cfg);
+console.log(await run({name:"power approach 30%, hands off",y:30,v:1.3,thr:.3,th:-.05}));await p.waitForTimeout(4200);
+console.log(await run({name:"idle glide, gentle nose down, flare at 10 m",y:40,v:1.35,thr:0,th:-.09,push:-.03,flare:10,pull:.25}));await p.waitForTimeout(4200);
+console.log(await run({name:"too fast power dive",y:30,v:2.8,thr:.8,th:-.12}));await p.waitForTimeout(4200);
+console.log('errors',JSON.stringify(errs));await b.close()})();

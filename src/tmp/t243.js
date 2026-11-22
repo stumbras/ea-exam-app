@@ -1,0 +1,13 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.stack.slice(0,300)));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1500);
+await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";k.tix=5;k.derby={lv:2,wins:1,ko:0,best:0,plays:4,rules:1};view="kids";KV={scr:"drive",pick:1};render()});
+await p.click('[data-kcar="tk"]');await p.waitForTimeout(200);await p.screenshot({path:'k24pick.png'});await p.click('[data-kride="tk"]');await p.waitForTimeout(3800);
+await p.evaluate(()=>{kDrv.obs.push({ln:kDrv.lane,y:60,k:"car",col:"#1d3f8f",sh:"sedan"},{ln:kDrv.lane,y:-80,k:"cone"})});await p.click('[data-k="honk"]');await p.waitForTimeout(250);await p.screenshot({path:'k24road.png'});await p.waitForTimeout(500);
+console.log('road',await p.evaluate(()=>[kDrv.bolts,kDrv.crashes,kDrv.obs.filter(o=>o.k==="car"||o.k==="cone").length]));
+await p.evaluate(()=>{kDrv.obs.push({ln:kDrv.lane,y:250,k:"car",col:"#16a34a",sh:"suv"})});await p.waitForTimeout(800);console.log('crush',await p.evaluate(()=>[kDrv.bolts,kDrv.crashes]));
+await p.evaluate(()=>{KV={scr:"drive",pick:1,dm:"derby"};render()});await p.click('[data-kcar="tk"]');await p.click('[data-kderby="tk"]');await p.waitForTimeout(4000);
+await p.evaluate(()=>{const me=kDby.cars[0],o=kDby.cars[1];o.x=me.x;o.y=me.y-170;o.ai.back=5});await p.evaluate(()=>kDbZap());await p.waitForTimeout(200);await p.screenshot({path:'k24derby.png'});await p.waitForTimeout(600);
+console.log('derby',await p.evaluate(()=>[kDby.cars[1].hp|0,kDby.cars[1].max,kDby.score,kDby.cars[0].sh]));
+await p.evaluate(()=>{S.kids.drive.car="tk";S.kids.tix=2;kCtStart();render()});await p.waitForTimeout(800);await p.screenshot({path:'k24city.png'});
+console.log('errors',JSON.stringify(errs));await b.close()})();

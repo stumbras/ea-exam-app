@@ -1,0 +1,13 @@
+const {chromium}=require('playwright');const fs=require('fs');
+(async()=>{const b=await chromium.launch();const errs=[];const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();p.on('pageerror',e=>errs.push(e.message));
+ await p.goto('http://localhost:8765/ea-exam-app/');await p.waitForTimeout(2500);await p.click('[data-sec="ea"]').catch(()=>{});
+ console.log('tiles:',await p.evaluate(()=>[...document.querySelectorAll('.modes.tiles .mode b')].slice(0,4).map(x=>x.textContent)));
+ await p.click('#updcheck');await p.waitForTimeout(600);console.log('check (same):',await p.evaluate(()=>document.querySelector('.statusline').innerText.replace(/\n/g,' | ')));
+ fs.writeFileSync('site/ea-exam-app/version.json','{"v":"Version 99 · test"}');
+ await p.click('#updcheck');await p.waitForTimeout(600);console.log('check (newer):',await p.evaluate(()=>[(document.querySelector('#updnow')||{}).textContent,scrollY]));
+ fs.writeFileSync('site/ea-exam-app/version.json','{"v":"Version 48 · Nov 17"}');
+ await p.evaluate(()=>{updateReady="";render()});
+ await p.click('[data-mode="lessons"]');await p.waitForTimeout(200);console.log('slides:',await p.evaluate(()=>[document.querySelector('#view h2').textContent,document.querySelectorAll('[data-lesunit]').length]));
+ await p.evaluate(()=>{les=null;view="home";render();window.scrollTo(0,0)});await p.screenshot({path:'home48.png',fullPage:false});
+ await p.evaluate(()=>window.scrollTo(0,560));await p.screenshot({path:'home48b.png'});
+ console.log('errors',errs);await b.close()})();

@@ -1,0 +1,5 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage();
+await p.goto("http://localhost:8765/ea-exam-app/?kids");await p.waitForTimeout(1500);await p.evaluate(()=>{const k=KS();k.setup=1;k.name="Tomas";k.sound=false;k.tix=40;k.xp=900;k.adultUntil=Date.now()+9e6;k.passUntil=Date.now()+9e6;k.guided=false;persist();KV={scr:"home"};render()});await p.waitForTimeout(500);
+const r=await p.evaluate(()=>{const out=[];for(const t of document.querySelectorAll('#view .kids *')){const cs=getComputedStyle(t);if(t.children.length<3&&/missed you|next:/.test(t.textContent)&&t.textContent.length<60){const r=t.getBoundingClientRect();out.push(t.tagName+'.'+t.className+' ['+Math.round(r.left)+','+Math.round(r.top)+','+Math.round(r.width)+'x'+Math.round(r.height)+'] sw='+t.scrollWidth+' pos='+cs.position+' ws='+cs.whiteSpace+' ov='+cs.overflow+' | '+t.textContent+' || parent '+t.parentElement.className+' pov='+getComputedStyle(t.parentElement).overflow)}}return out});
+console.log(r.join('\n'));await b.close()})();

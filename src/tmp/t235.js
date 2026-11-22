@@ -1,0 +1,10 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1500);
+await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";k.tix=3;k.derby={lv:2,wins:1,ko:0,best:0,plays:9,rules:1};view="kids";KV={scr:"home"};kDerbyStart("m3");render()});await p.waitForTimeout(4000);
+console.log(await p.evaluate(()=>{const me=kDby.cars[0];kDby.pw.push({k:"rocket",x:me.x,y:me.y,alive:1,t:0});return [kDby.pw.length,kDby.rockets]}));
+await p.waitForTimeout(200);console.log('after pick',await p.evaluate(()=>[kDby.pw.map(x=>x.k).join(),kDby.rockets,kDby.q?1:0,kDby.rules,kDby.over]));
+await p.evaluate(()=>kDbZap());await p.waitForTimeout(100);console.log('fired',await p.evaluate(()=>[kDby.rockets,kDby.shots.map(s=>s.k).join()]));
+await p.waitForTimeout(2000);console.log('hit',await p.evaluate(()=>[kDby.score,kDby.shots.length]));
+await p.waitForTimeout(8000);console.log('ai',await p.evaluate(()=>[kDby.cars[0].hp|0,kDby.cars.filter(o=>o.ai).map(o=>(o.ai.shT||0).toFixed(1)).join()]));
+console.log('errors',JSON.stringify(errs));await b.close()})();

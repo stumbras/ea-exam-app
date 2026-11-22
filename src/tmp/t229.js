@@ -1,0 +1,16 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844},hasTouch:true});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/');await p.waitForTimeout(1500);
+await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";k.tix=3;k.lv.math=5;k.derby={lv:3,wins:2,ko:0,best:0,plays:0};view="kids";KV={scr:"drive",pick:1,dm:"derby"};render()});
+await p.click('[data-kcar="ct"]');await p.click('[data-kderby="ct"]');await p.waitForTimeout(800);await p.screenshot({path:'k15cd.png'});
+await p.waitForTimeout(3000);
+const box=await p.locator('#kdby').boundingBox();const cx=box.x+box.width*.3,cy=box.y+box.height*.7;
+await p.mouse.move(cx,cy);await p.mouse.down();await p.mouse.move(cx,cy-50,{steps:5});await p.waitForTimeout(1500);await p.mouse.move(cx+40,cy-30,{steps:5});await p.waitForTimeout(800);
+await p.screenshot({path:'k15play.png'});await p.mouse.up();
+console.log('me',await p.evaluate(()=>{const m=kDby.cars[0];return [Math.round(m.x),Math.round(m.y),Math.round(m.hp),kDby.score,kDby.t.toFixed(1)]}));
+await p.evaluate(()=>{const me=kDby.cars[0];kDby.pw.push({k:"bomb",x:me.x,y:me.y,alive:1,t:0});for(const o of kDby.cars)if(o.ai){o.x=me.x+50;o.y=me.y-40}});await p.waitForTimeout(500);await p.screenshot({path:'k15bomb.png'});
+await p.evaluate(()=>{for(const o of kDby.cars)if(o.ai)o.hp=1;const me=kDby.cars[0];me.hp=1;kDbDmg(kDby,me,50,kDby.cars[1],me.x,me.y)});await p.waitForTimeout(3500);
+console.log('after',await p.evaluate(()=>[kDby.cars[0].alive,kDby.deaths,kDby.ko,kDby.cars.filter(o=>o.ai&&o.alive).length,kDby.score]));
+await p.evaluate(()=>{kDby.score=kDby.goal+10;kDby.t=74.9});await p.waitForTimeout(2000);await p.screenshot({path:'k15end.png'});
+console.log('end',await p.evaluate(()=>[kDby.over,kDby.res,kDby.stars,S.kids.derby.lv]));
+console.log('errors',JSON.stringify(errs));await b.close()})();

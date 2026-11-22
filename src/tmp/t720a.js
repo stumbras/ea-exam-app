@@ -1,0 +1,13 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,deviceScaleFactor:2});const p=await ctx.newPage();
+p.on('pageerror',e=>console.log('PAGEERROR '+e.message.slice(0,220)));p.on('console',m=>{if(m.type()==='error')console.log('CONSOLE '+m.text().slice(0,160))});
+await p.goto('http://localhost:8765/ea-exam-app/?study');await p.waitForTimeout(1500);
+await p.evaluate(()=>{part=1;view="home";render()});await p.waitForTimeout(500);
+console.log(JSON.stringify(await p.evaluate(()=>({entry:!!document.querySelector('.fventry'),links:document.querySelectorAll('#view .frm').length,red:Math.round((document.querySelector('.donext')||document.body).getBoundingClientRect().bottom)}))));
+await p.screenshot({path:'tmp/g_f_home.png'});
+await (await p.$('.fventry [data-k="f1040"]')).tap();await p.waitForTimeout(1500);
+console.log(JSON.stringify(await p.evaluate(()=>({view,boxes:document.querySelectorAll('.fvf').length,img:(document.querySelector('.fvpage img')||{}).naturalWidth,z:fv.z}))));
+await p.screenshot({path:'tmp/g_f_1040.png'});
+await p.evaluate(()=>{document.querySelector('.fvf[data-i="87"]').click()});await p.waitForTimeout(400);
+await p.screenshot({path:'tmp/g_f_1040b.png'});
+await b.close()})();

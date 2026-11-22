@@ -1,0 +1,14 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:2})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.stack.slice(0,300)));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1500);
+await p.evaluate(()=>{const k=KS();k.setup=1;k.name="Tomas";k.guided=false;k.glimit=12;persist();KV={scr:"chessbot"};kCbStart();render()});
+await p.evaluate(()=>{const k=kGState();k.gls=kGLearnSum();k.gt={chessbot:12*60-5}});await p.waitForTimeout(6500);
+console.log('after limit: scr',await p.evaluate(()=>KV.scr),'rest',await p.evaluate(()=>JSON.stringify(KS().rest)),'overlay',!!await p.$('.kpassov'));
+await p.screenshot({path:'tmp/rest.png'});
+await p.click('[data-kpass="no"]');await p.waitForTimeout(200);
+await p.evaluate(()=>{KV={scr:"gameroom"};render()});await p.waitForTimeout(200);await p.click('[data-k="chessbot"]');await p.waitForTimeout(300);
+console.log('blocked tap → scr',await p.evaluate(()=>KV.scr),'overlay',!!await p.$('.kpassov'));
+await p.evaluate(()=>{document.querySelectorAll('.kpassov').forEach(x=>x.remove());kRotDone("q:math")});await p.waitForTimeout(5600);
+console.log('after learning: rest',await p.evaluate(()=>JSON.stringify(KS().rest)));
+await p.click('[data-k="chessbot"]').catch(()=>{});await p.waitForTimeout(300);console.log('now opens →',await p.evaluate(()=>KV.scr));
+console.log('errors',JSON.stringify(errs));await b.close()})();

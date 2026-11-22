@@ -1,0 +1,14 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage();
+const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1200);
+const K=async o=>{await p.evaluate(o=>{const b=document.createElement("button");Object.assign(b.dataset,o);kidsClick(b)},o);await p.waitForTimeout(300)};
+await p.evaluate(()=>{const k=KS();k.setup=1;k.name="Tomas";k.sound=false;k.tix=5;k.adultUntil=Date.now()+9e5;k.warm={day:kToday(),start:Date.now(),sec:400,n:12,ok:10,done:1,les:1,last:[],p0:0};k.lastSeen=Date.now();k.guided=false;persist();KV={scr:"home"};render()});
+await K({k:"city"});await p.screenshot({path:'tmp/c0.png'});
+console.log('btns',await p.evaluate(()=>[...document.querySelectorAll('#view button')].slice(0,14).map(b=>JSON.stringify(b.dataset)).join(' ')));
+await K({k:"cityGo"});await p.waitForTimeout(800);
+console.log('kCt',await p.evaluate(()=>typeof kCt!=="undefined"&&kCt?Object.keys(kCt).slice(0,12).join(','):'none'));
+const ok=await p.evaluate(()=>{if(typeof kCt==="undefined"||!kCt||!kCt.blds)return 'no blds';const B=kCt.blds.find(x=>x.k==="hosp");if(!B)return 'no hosp';kCtEnter(B);render();return 'in '+JSON.stringify(Object.keys(B))});console.log(ok);await p.waitForTimeout(300);await p.screenshot({path:'tmp/c1.png'});
+console.log('menu',await p.evaluate(()=>[...document.querySelectorAll('.kctmenu button')].map(b=>b.innerText).join(' | ')));
+await p.evaluate(()=>{const b=document.querySelector('.kctmenu [data-k="hosp"]');if(b)b.click()});await p.waitForTimeout(400);console.log('scr',await p.evaluate(()=>KV.scr));await p.screenshot({path:'tmp/c2.png'});
+await K({k:'cityback'});await p.waitForTimeout(500);console.log('back scr',await p.evaluate(()=>KV.scr));const q=await p.evaluate(()=>{const B=kCt.blds.find(x=>x.k==='court');kCtEnter(B);render();const b=document.querySelector('[data-kctjob]');if(!b)return 'no job btn';b.click();return 'clicked'});await p.waitForTimeout(400);console.log(q,await p.evaluate(()=>JSON.stringify({inside:!!kCt.inside,menu:kCt.inside&&kCt.inside.menu,q:!!(kCt.inside&&(kCt.inside.q||kCt.inside.Q||kCt.inside.qs))})));await p.screenshot({path:'tmp/c3.png'});console.log('errors',errs.slice(0,6));await b.close()})();

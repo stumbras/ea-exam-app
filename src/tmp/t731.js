@@ -1,0 +1,8 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message.slice(0,200)));
+await p.goto('http://localhost:8765/ea-exam-app/?study');await p.waitForTimeout(1500);
+const r=await p.evaluate(()=>{const want=["NOT added back or adjusted on Form 6251","the standard deduction is:","capital gain distribution from a mutual fund (Form 1099-DIV, box 2a)","Two active-duty service members marry","Ana, 45, earned $2,500","lent his 16-year-old son","Tom delivers parts in his own car","Paul and Rita divorced in 2021"];const out=want.map(w=>{const q=BANK.filter(i=>i.p==1&&i.t==="q"&&i.s.includes(w));return q.length===1?{id:q[0].id,d:q[0].d,n:q[0].opts.length,uniq:new Set(q[0].opts).size,exam:typeof xaExam==="function"?xaExam(q[0]):null,dup:BANK.filter(i=>i.id===q[0].id).length}:{miss:w,n:q.length}});
+  const ids=BANK.map(i=>i.id);return{out,dupIds:ids.length-new Set(ids).size,total:BANK.filter(i=>i.p==1&&i.t==="q").length}});
+console.log(JSON.stringify(r));console.log(r.out.every(x=>x.id&&x.n===4&&x.uniq===4&&x.dup===1&&x.exam)&&r.dupIds===0&&!errs.length?'PASS the new questions are in Part 1, four choices each, counted as exam-type, no id clashes':'FAIL');
+await p.evaluate(id=>{part=1;view="home";render();startSession("qd",10);sess.queue[sess.pos]=mkEntry(BYID[id]);sess.phase="ask";render()},r.out[6].id);await p.waitForTimeout(300);
+const v=await p.evaluate(()=>({n:document.querySelectorAll('.opt').length,sw:document.documentElement.scrollWidth}));console.log((v.n===4&&v.sw<=392?'PASS':'FAIL')+' shows in a drill');await b.close()})();

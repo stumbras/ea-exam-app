@@ -2101,7 +2101,15 @@ function storyMix(){if(!sess||!sess.queue||sess.queue.length<6)return;const inq=
   let top=0;try{top=xaAll().top.d}catch(e){}const tg=(sess.quick&&sess.quick.tag)||{};
   const used=new Set(),slot=()=>{for(const wantTop of [false,true])for(let k=sess.queue.length-1;k>sess.pos;k--){const e=sess.queue[k],i=BYID[e.id];if(used.has(k)||!i||e.pre||i.t==="g"||tg[e.id]!=="new")continue;if((i.d==top)===wantTop)return k}return -1};
   const cnt={};for(const [nm,it] of pick){const k=slot();if(k<0)break;used.add(k);const old=sess.queue[k].id;sess.queue[k]=mkEntry(it);delete tg[old];tg[it.id]=S.it[it.id]?"miss":"new";cnt[nm]=(cnt[nm]||0)+1}
-  const lab=Object.keys(cnt).map(n=>cnt[n]+" "+n).join(" · ");if(lab&&sess.note)sess.note+=" · "+lab}
+  /* Topic spread (Version 183), asked for: "quick 10 should try to push all topic ... faster more topic better". No more than two
+     of a drill's new questions come from one topic; the others are swapped for unseen questions from the topics with the least
+     cover that the drill does not have yet, so every topic is reached within a few drills. */
+  let sp=0;try{const A=xaAll(),isNew=e=>tg[e.id]==="new"&&BYID[e.id]&&BYID[e.id].t==="q",inD=()=>{const m={};sess.queue.forEach(e=>{const i=BYID[e.id];if(i)m[i.d]=(m[i.d]||0)+1});return m};
+    const order=A.D.slice().sort((a,b)=>(a.cov||0)-(b.cov||0)).map(x=>String(x.d));
+    for(let guard=0;guard<8;guard++){const newBy={};sess.queue.forEach((e,k)=>{if(isNew(e)){const d=String(BYID[e.id].d);(newBy[d]=newBy[d]||[]).push(k)}});const over=Object.keys(newBy).filter(d=>newBy[d].length>2&&newBy[d].some(k=>!used.has(k))).sort((a,b)=>newBy[b].length-newBy[a].length)[0];if(!over)break;
+      const have=inD(),inq2=new Set(sess.queue.map(e=>e.id)),tgt=order.filter(d=>d!==over&&(newBy[d]||[]).length<2&&BANK.some(i=>i.p==part&&String(i.d)===d&&xaExam(i)&&!S.it[i.id]&&!inq2.has(i.id))).sort((a,b)=>(have[a]||0)-(have[b]||0))[0];if(!tgt)break;
+      const cand=shuffle(BANK.filter(i=>i.p==part&&String(i.d)===tgt&&xaExam(i)&&!S.it[i.id]&&!inq2.has(i.id))).sort((a,b)=>(a.lv||2)-(b.lv||2))[0],k=newBy[over].filter(k=>!used.has(k)).pop(),old=sess.queue[k].id;sess.queue[k]=mkEntry(cand);delete tg[old];tg[cand.id]="new";sp++}}catch(e){}
+  const lab=Object.keys(cnt).map(n=>cnt[n]+" "+n).join(" · ");if(sess.note){if(lab)sess.note+=" · "+lab;const nd=new Set(sess.queue.map(e=>BYID[e.id]&&BYID[e.id].d)).size;sess.note+=" · "+nd+" topics"}}
 /* Outside practice (Version 182): enter results from other practice sets on the Diagnosis page; readiness is pulled toward them. */
 function xaExtHtml(){try{const A=xaAll(),e=A.ext,pc=v=>Math.round(v*100)+"%";return `<div class="card xaext"><b>Practice outside this app</b><div class="small">${e?`${e.c} right of ${e.n} in the last 45 days (${pc(e.c/e.n)}). ${e.w?`It carries ${pc(e.w)} of the readiness figure, which would be ${pc(e.before)} without it.`:"It starts to count from 10 questions."}`:"Enter each outside set you do. The readiness figure is then pulled toward what you really score there."}</div>
    <div class="row" style="align-items:center;flex-wrap:nowrap"><input id="xaec" class="fvin" inputmode="numeric" placeholder="right" style="max-width:80px"><span>of</span><input id="xaen" class="fvin" inputmode="numeric" placeholder="total" style="max-width:80px"><button class="btn pri small" data-ext="add">Add</button>${e?`<button class="btn ghost small" data-ext="clear">Clear</button>`:""}</div></div>`}catch(_){return""}}
@@ -17961,9 +17969,15 @@ function xaRaw(d){let w=0,g=0,n=0;for(const i of BANK){if(i.p!=part||i.t!=="q"||
 const XAC={k:null,v:null};
 const xaPersist0=persist;persist=function(){XAC.k=null;return xaPersist0.apply(this,arguments)};
 function xaAll(){if(XAC.k===part&&XAC.v)return XAC.v;const v=xaAll1();XAC.k=part;XAC.v=v;return v}
+function XCOV(d){let t=0,n=0;for(const i of BANK){if(i.p==part&&String(i.d)===String(d)&&xaExam(i)){t++;if(S.it[i.id]&&S.it[i.id][2])n++}}return t?n/t:0}
 function xaAll1(){const D=Object.keys(PARTS[part].doms).map(d=>Object.assign({d,name:PARTS[part].doms[d][0],w:PARTS[part].doms[d][1]},xaRaw(d)));let W=0,G=0,n=0,T=0;
   D.forEach(x=>{T+=x.w;n+=x.n;if(x.n){W+=x.w;G+=x.w*x.raw}});const prior=W?G/W:null;let P=0,V=0;
-  D.forEach(x=>{if(prior==null){x.p=null;x.se=null;x.gain=null;return}x.p=(x.g+8*XATHIN*prior)/(x.wt+8);x.se=Math.sqrt(Math.max(.02,x.p*(1-x.p))/(x.n+4));x.gain=x.w*(1-x.p);x.nodata=!x.n;P+=x.w*x.p;V+=x.w*x.w*x.se*x.se});
+  D.forEach(x=>{if(prior==null){x.p=null;x.se=null;x.gain=null;return}x.p=(x.g+8*XATHIN*prior)/(x.wt+8);
+    /* Version 183, asked for: "readiness score must weight if some topics not touched, learned yet". The topic figure is now a forecast
+       for the whole topic: the share of its exam questions already answered counts at the measured rate, the share never seen counts
+       at 75% of it (seen questions come from the units already studied, so the rest is likely weaker). A topic not started counts at
+       65% of the 85% already applied, about 55% of the average. Every new question answered raises cover. */
+    x.cov=XCOV(x.d);x.p=x.p*(x.n?0.75+0.25*x.cov:0.65);x.se=Math.sqrt(Math.max(.02,x.p*(1-x.p))/(x.n+4));x.gain=x.w*(1-x.p);x.nodata=!x.n;P+=x.w*x.p;V+=x.w*x.w*x.se*x.se});
   /* Version 181, reported: "readiness at 60 percent but i fail all these" (long story questions on an outside set). A quarter of the
      figure now rests on the long story questions, first try. Unanswered ones are assumed at 60% of the rest (8 phantom answers), so
      the figure starts 10% lower and moves with real story results. A right answer can still only raise it and a wrong one lower it. */
@@ -20929,7 +20943,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 182 · Nov 23";
+const BUILD="Version 183 · Nov 23";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");

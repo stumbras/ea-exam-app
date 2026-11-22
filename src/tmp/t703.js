@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:375,height:667},hasTouch:true,isMobile:true,deviceScaleFactor:2});const p=await ctx.newPage();
+await p.goto('http://localhost:8765/ea-exam-app/old164.html?study');await p.waitForTimeout(1200);
+await p.evaluate(()=>{let seed=5;Math.random=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};const run=(mode,n)=>{try{startSession(mode,n)}catch(e){return}const s=sess;if(!s||view!=="session")return;let g=0;while(view==="session"&&sess===s&&g++<300){const cur=s.queue[s.pos];if(!cur){finish();break}s.cp=false;if(cur.learn){advance();continue}record(Math.random()<0.7,true);advance()}if(view==="session"&&sess===s)finish()};
+  for(const pt of [1,2,3]){part=pt;filt="all";for(const m of ["easy","easy","quiz","qd","mix","hard","easy","quiz","missed","medium","qd","exam","quiz","hard"])run(m)}sess=null;view="home";persist()});
+await p.goto('http://localhost:8765/ea-exam-app/?study');await p.waitForTimeout(1500);
+await p.evaluate(()=>{part=1;view="home";render();scrollTo(0,0)});await p.waitForTimeout(300);await p.screenshot({path:'tmp/g_home.png'});
+await p.evaluate(()=>scrollTo(0,620));await p.waitForTimeout(200);await p.screenshot({path:'tmp/g_home2.png'});
+await p.evaluate(()=>{scrollTo(0,0);document.querySelector('.xaquick').click()});await p.waitForTimeout(400);await p.screenshot({path:'tmp/g_q.png'});
+await p.evaluate(()=>{const cur=sess.queue[sess.pos],V=view4(cur,BYID[cur.id]);[...document.querySelectorAll('.opt')].find(x=>+x.dataset.opt!==V.ans).click()});await p.waitForTimeout(400);await p.screenshot({path:'tmp/g_wrong.png',fullPage:true});
+console.log(JSON.stringify(await p.evaluate(()=>({ex:document.querySelector('.explain').innerText.slice(0,160),btns:[...document.querySelectorAll('#view .row .btn, #view #next')].map(b=>b.innerText.trim()).slice(0,8)}))));
+await b.close()})();

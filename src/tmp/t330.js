@@ -1,0 +1,17 @@
+const {chromium}=require('playwright');const tag=process.argv[2]||'a';
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:3})).newPage();
+const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1200);
+await p.evaluate(()=>{const k=KS();k.setup=1;k.name="Tomas";k.sound=false;k.tix=20;k.adultUntil=Date.now()+9e5;k.guided=false;k.rocket.dest=3;k.derby={lv:3,wins:2,ko:3,best:0,plays:3,seen:1,rules:1};k.warm={day:kToday(),start:Date.now(),sec:400,n:12,ok:10,done:1,les:1,last:[],p0:0};k.lastSeen=Date.now();persist();KV={scr:"home"};render()});
+await p.evaluate(()=>{kLandStart(0);KV={scr:"land"};render()});await p.waitForTimeout(600);
+console.log('land keys',await p.evaluate(()=>JSON.stringify(Object.keys(kLnd))+' pre:'+kLnd.pre+' L:'+JSON.stringify(kLnd.L).slice(0,200)));
+console.log('land btns',await p.evaluate(()=>[...document.querySelectorAll('#view button')].map(b=>JSON.stringify(b.dataset)+b.innerText.slice(0,14)).join(' ')));
+await p.evaluate(()=>{const D=kLnd;D.pre=0;D.q=null;render()});await p.waitForTimeout(2500);await p.evaluate(()=>{kLnd.thr=1});await p.waitForTimeout(700);await p.screenshot({path:`tmp/g_${tag}land.png`});
+await p.evaluate(()=>{kDerbyStart("m3");KV={scr:"derby"};render()});await p.waitForTimeout(500);
+console.log('derby btns',await p.evaluate(()=>[...document.querySelectorAll('#view button')].map(b=>JSON.stringify(b.dataset)+b.innerText.slice(0,14)).join(' ')));
+await p.evaluate(()=>{const b=[...document.querySelectorAll('#view button')].find(x=>/smash/i.test(x.innerText));if(b)b.click()});await p.waitForTimeout(600);
+await p.evaluate(()=>{const D=kDby;if(D&&D.cars){D.gx=D.cars[1].x;D.gy=D.cars[1].y;D.goT=3}});await p.waitForTimeout(3500);await p.screenshot({path:`tmp/g_${tag}derby.png`});
+console.log('derby keys',await p.evaluate(()=>kDby?JSON.stringify(Object.keys(kDby))+' car:'+JSON.stringify(Object.keys(kDby.cars[0])):null));
+await p.evaluate(()=>{kCbStart();render()});await p.waitForTimeout(800);await p.screenshot({path:`tmp/g_${tag}chess.png`,fullPage:true});
+console.log('chess KV',await p.evaluate(()=>JSON.stringify(Object.keys(KV))+' '+JSON.stringify(Object.keys(KV.cb||KV.G||{}))));
+console.log('errors',errs.slice(0,6));await b.close()})();

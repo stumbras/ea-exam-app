@@ -1,0 +1,115 @@
+// High-yield additions (forum-reported heavy topics). All questions are original or from public-domain IRS sample questions.
+// QX(part, domain, level, stem, [options in fixed order], correctIndex, explanation) — options NOT shuffled (EXCEPT / "All of the above" formats)
+
+// ---------- Part 1: gift tax, FBAR (user-supplied exam-style examples) ----------
+F(1,6,"FBAR: when an owner of an entity has a 'financial interest' in its foreign accounts","Owns more than 50% of the corporation's stock (vote or value), partnership's profits or capital, or a trust's present beneficial interest");
+F(1,6,"FBAR: spouses","A spouse need not file a separate FBAR if all of their foreign accounts are jointly owned with the filing spouse, the filing spouse reports them timely, and both sign FinCEN Form 114a");
+F(1,6,"FBAR: trust beneficiaries","A beneficiary with more than 50% present beneficial interest has a financial interest, but needn't file if the trust, trustee or agent is a U.S. person that files an FBAR");
+F(1,6,"FBAR: a U.S. mutual fund holding foreign stock","Not a foreign financial account; no FBAR. (Foreign-registered mutual funds are reportable)");
+F(1,6,"Gift splitting consent deadline","Must be signed by April 15 of the year after the gift (Form 709 due date). If neither spouse files by then, consent can be on the first 709 filed (before any deficiency notice)");
+F(1,6,"Joint gift tax return?","Not allowed. Each spouse who must file files a separate Form 709");
+F(1,6,"Gift of a future interest","Doesn't qualify for the annual exclusion (except §2503(c) trusts for minors and Crummey powers); requires Form 709 at any amount");
+F(1,6,"529 plan 5-year election","Contribute up to 5 years of annual exclusions at once ($95,000 in 2025; $190,000 with gift splitting), elected on Form 709");
+F(1,6,"Basis for property received as a gift where gift tax was paid","Donor's basis + gift tax attributable to the appreciation (net appreciation ÷ taxable gift × gift tax paid)");
+QX(1,6,2,"All of the following gifts qualify for the 2025 annual exclusion, EXCEPT:",["$15,000 cash to a niece","A $10,000 remainder interest in a trust that begins after the grantor's death","$19,000 of stock to a friend","$5,000 cash to a neighbor"],1,"A remainder interest is a future interest and gets no annual exclusion.");
+
+F(1,6,"Estate tax marital deduction (§2056)","Unlimited for property passing to a U.S.-citizen surviving spouse. Non-citizen spouse: only through a qualified domestic trust (QDOT). Terminable interests generally don't qualify, except QTIP property (elected on Form 706)");
+F(1,6,"Estate tax charitable deduction (§2055)","Unlimited for bequests to qualified charities");
+F(1,6,"Gross estate includes","All property owned at death at FMV, half of jointly owned property with a spouse, life insurance owned by the decedent or payable to the estate, retirement accounts, revocable trust assets, gifts of life insurance within 3 years of death");
+F(1,6,"Deductions from the gross estate","Funeral expenses, administration expenses, debts and mortgages, casualty losses during administration, marital and charitable deductions");
+
+
+QX(1,6,2,"All of the following statements about gift splitting are true, EXCEPT:",["Both spouses must consent to split gifts","The election covers all gifts either spouse made during the year while married","Spouses may file one combined Form 709 covering both of them","The spouses must be married when the gift is made"],2,"There is no joint gift tax return. Each spouse who must file uses a separate Form 709; the consent is generally signed by April 15 of the following year, and an executor can consent for a deceased spouse.");
+QX(1,6,2,"Which situation requires filing Form 709 for 2025?",["A $25,000 cash gift to a cousin","Giving a grandchild a remainder interest worth $5,000","Electing to split a $30,000 gift to a son with a spouse","All of the answer choices are correct"],3,"Gifts over $19,000 to one donee, any gift of a future interest, and any gift-splitting election all require Form 709.");
+QX(1,6,3,"Which statement about FBAR filing is correct?",["Omar, a U.S. citizen, owns 40% of a foreign corporation with no signature authority. Its account peaked at $90,000, so Omar must file an FBAR for his share","Lena owns a U.S.-listed ETF holding only foreign stocks worth $30,000, so she must file an FBAR","Paul is sole beneficiary of a trust whose U.S. trustee files an FBAR for the trust's $25,000 Bermuda account, so Paul must file one too","Nina's only foreign account is jointly owned with her husband Tom. Tom files one FBAR listing it with his own accounts and both sign Form 114a, so Nina has no separate filing requirement"],3,"A spouse is excused when all of their foreign accounts are joint with the filing spouse and both sign Form 114a. A financial interest through a corporation needs more than 50% ownership. A U.S. fund isn't a foreign account. A beneficiary is excused when a U.S. trust or trustee files.");
+QX(1,6,2,"Property passing at death to which person qualifies for the unlimited estate tax marital deduction without using a special trust?",["A surviving spouse who is a U.S. citizen","A surviving spouse who is not a U.S. citizen","The decedent's adult children","A surviving unmarried partner"],0,"§2056 applies to a U.S.-citizen surviving spouse. A non-citizen spouse needs a qualified domestic trust (QDOT). Children and unmarried partners never qualify.");
+QX(1,6,3,"In 2025 Maria paid $15,000 directly to a hospital for her friend Ken's surgery and gave her nephew Leo $9,000 to use for his college tuition. Later she gave Ken $12,000 cash and Leo $9,500 cash. No other gifts. Must Maria file Form 709?",["Yes, because her gifts to Ken total $27,000","Yes, because her total gifts for the year exceed $19,000","No, because no one donee received more than $19,000 of countable gifts","No, because every single transfer was under $19,000"],2,"Medical bills paid directly to the provider are excluded, so Ken's countable gifts are $12,000. Leo's tuition money was given to Leo, not paid to the school, so it counts: $9,000 + $9,500 = $18,500. Neither donee exceeds $19,000. The test is per donee per year, not per transfer.");
+
+// ---------- Part 1: inherited IRAs (heavily tested) ----------
+F(1,2,"Surviving spouse beneficiary options","(1) Treat the IRA as their own (or roll it over); (2) remain a beneficiary (inherited IRA, no 10% penalty at any age, life expectancy payouts, may delay RMDs until the deceased would have reached RMD age); (3) elect the 10-year rule");
+F(1,2,"Inherited IRA: owner died after the required beginning date (non-spouse designated beneficiary)","Annual RMDs in years 1–9 based on the beneficiary's life expectancy AND full distribution by the end of year 10");
+F(1,2,"Inherited IRA: minor child of the decedent","Life expectancy payouts until age 21, then the 10-year rule applies");
+F(1,2,"Inherited IRA: non-designated beneficiary (estate, charity)","Owner died before RBD: 5-year rule. Owner died on/after RBD: owner's remaining life expectancy");
+F(1,2,"Inherited Roth IRA","Distributions are tax-free if the 5-year period is met (counting the owner's years). Non-spouse beneficiaries still follow the 10-year rule, but no annual RMDs");
+F(1,2,"Can a non-spouse beneficiary roll an inherited IRA into their own IRA?","No. Only a trustee-to-trustee transfer to an inherited IRA titled in the decedent's name for the beneficiary. A 60-day rollover isn't allowed");
+F(1,2,"Year-of-death RMD","If the owner died after the RBD without taking that year's RMD, the beneficiary must take it by year end");
+F(1,2,"Qualified charitable distribution (QCD)","From an IRA at age 70½+; up to $108,000 for 2025; paid directly to charity; counts toward the RMD and is excluded from income (no charitable deduction)");
+F(1,2,"Excess IRA contribution","6% excise tax each year until corrected; avoid by withdrawing the excess plus earnings by the return due date (with extensions)");
+F(1,2,"Roth conversion 5-year rule (penalty)","Each conversion has its own 5-year period; converted amounts withdrawn before 5 years and before 59½ are subject to the 10% penalty (not tax)");
+F(1,2,"Nondeductible IRA contributions","Tracked on Form 8606; create basis. Distributions are prorated between basis and pre-tax amounts (pro-rata rule) across all traditional IRAs");
+Q(1,2,2,"Jane, 40, inherited her late husband's traditional IRA and kept it as an inherited IRA. She takes $15,000 in 2025. Which is correct?","It is taxable but not subject to the 10% penalty",["It is taxable and subject to the 10% penalty","It is tax-free","It must be rolled over to her own IRA first"],"Death distributions are exempt from the 10% penalty.");
+Q(1,2,2,"Sam (not an eligible designated beneficiary) inherited his father's IRA in 2025. His father, 80, had already been taking RMDs. Which is required?","Annual RMDs in years 1–9 and full distribution by the end of the 10th year",["Only full distribution by year 10","Distribution within 5 years","Life expectancy payouts with no deadline"],"Owner died after the RBD.");
+Q(1,2,2,"Which beneficiary is an eligible designated beneficiary?","The decedent's sibling who is 6 years younger",["The decedent's adult child","The decedent's grandson age 10","The decedent's estate"],"EDBs include beneficiaries not more than 10 years younger. Only the decedent's own minor child counts as a minor-child EDB.");
+QX(1,2,2,"All of the following are true about a non-spouse beneficiary of a traditional IRA, EXCEPT:",["Distributions are not subject to the 10% penalty","The beneficiary may make a 60-day rollover into the beneficiary's own IRA","Distributions are taxable as ordinary income","A trustee-to-trustee transfer to an inherited IRA is allowed"],1,"Non-spouse beneficiaries cannot roll an inherited IRA into their own IRA.");
+Q(1,2,3,"Lisa, 75, made a $20,000 QCD from her IRA in 2025; her RMD was $25,000 and she withdrew $5,000 more for herself. Amount included in income:","$5,000",["$25,000","$20,000","$0"],"The QCD satisfies $20,000 of the RMD and is excluded.");
+
+// ---------- Part 1: basis (heavily tested) ----------
+F(1,2,"Basis of stock received in a non-taxable stock split or stock dividend","Spread the original basis over all shares (old + new); holding period of new shares includes the old");
+F(1,2,"Reinvested dividends","Taxable when paid and added to basis of the fund shares");
+F(1,2,"Return of capital distribution","Reduces basis; amounts above basis are capital gain");
+F(1,2,"Mutual fund basis methods","Specific identification, FIFO, or average basis (average cost single category)");
+F(1,2,"Personal residence converted to rental: depreciable basis","Lower of adjusted basis or FMV on the conversion date");
+F(1,2,"Loss on sale of personal-use property (car, home)","Not deductible. Gains are taxable (except §121)");
+F(1,2,"Related-party sale at a loss (§267)","Loss is disallowed. The buyer may use the disallowed loss to offset gain on a later sale");
+F(1,2,"Worthless securities","Treated as sold on the last day of the tax year; refund claim period is 7 years");
+F(1,2,"Holding period: gifted property with loss basis (FMV)","Begins on the date of the gift (no tacking)");
+F(1,2,"Basis of property received for services","FMV included in income");
+F(1,2,"Section 1244 small business stock (individuals)","Ordinary loss up to $50,000 ($100,000 MFJ) per year on original-issue stock of a small business corporation");
+F(1,2,"Adjusted basis of a home","Cost + settlement fees + improvements − casualty losses, insurance reimbursements and depreciation. Repairs don't add to basis");
+Q(1,2,2,"Ron bought 100 shares for $3,000. After a 2-for-1 split he has 200 shares. He sells 50 shares for $1,200. His gain is:","$450",["$0","$1,200","$600"],"Basis per share $15 → 50 × $15 = $750. $1,200 − $750 = $450.");
+Q(1,2,2,"Kim converted her home to a rental. Adjusted basis $250,000 (land $50,000); FMV at conversion $230,000 (land $50,000). Depreciable basis of the building:","$180,000",["$200,000","$230,000","$250,000"],"Lower of adjusted basis ($200,000) or FMV ($180,000) for the building.");
+Q(1,2,2,"Ted sells stock to his brother for $6,000 (basis $10,000). Later the brother sells it for $11,000. The brother's gain is:","$1,000",["$5,000","$0","$4,000 loss"],"Ted's $4,000 loss is disallowed. The brother's $5,000 gain is reduced by it.");
+Q(1,2,3,"A mutual fund shareholder bought shares for $10,000 and reinvested $1,500 of taxable dividends. She sold all shares for $13,000. Her capital gain is:","$1,500",["$3,000","$4,500","$13,000"],"Basis = 10,000 + 1,500 = 11,500.");
+
+// ---------- Carryforwards / carrybacks (heavily tested) ----------
+F(1,3,"Carryover cheat sheet: individuals","Capital loss: forward indefinitely. Charitable excess: 5 years. Investment interest: indefinitely. Passive losses: indefinitely. §179 excess (income limit): indefinitely. Home office excess: indefinitely. NOL (post-2020): forward indefinitely, 80% limit. Excess business loss: becomes NOL next year");
+F(1,3,"Credit carryovers","Foreign tax credit: back 1, forward 10. General business credit: back 1, forward 20. AMT credit: forward indefinitely. Residential clean energy credit: forward. Adoption credit nonrefundable part: forward 5 years");
+F(2,1,"Carryover cheat sheet: C corporations","Capital loss: back 3, forward 5 (short-term, only vs gains). Charitable: forward 5. NOL: forward indefinitely, 80% limit (no carryback except farm 2 years). Business interest disallowed: forward indefinitely. General business credit: back 1, forward 20");
+Q(1,3,2,"Which carryover can be carried back for an individual?","Foreign tax credit (1 year back)",["Capital loss","Charitable contribution excess","Post-2020 nonfarm NOL"],"FTC: back 1, forward 10.");
+QX(1,3,2,"All of the following can be carried forward indefinitely by an individual, EXCEPT:",["Net capital loss","Excess charitable contributions","Disallowed passive activity losses","Excess investment interest expense"],1,"Charitable excess carries forward only 5 years.");
+
+// ---------- Part 1 extra coverage ----------
+F(1,1,"EIC qualifying child vs CTC qualifying child","EIC: under 19 (24 student) or disabled, younger than taxpayer, no support test, lived with taxpayer in U.S. over half the year. CTC: under 17");
+F(1,2,"Combat zone pay","Excluded for enlisted (officers up to a cap); may elect to include it to increase EIC");
+F(1,2,"U.S. Treasury interest","Taxable federally, exempt from state tax");
+F(1,2,"Municipal bond interest","Exempt federally (except private activity bond interest is an AMT preference); included in provisional income for Social Security");
+F(1,2,"Series EE/I bond interest timing","Cash-basis taxpayers report at redemption/maturity unless they elect to report annually");
+F(1,2,"Original issue discount (OID)","Reported as interest each year as it accrues (Form 1099-OID), even though not received");
+F(1,2,"Constructive receipt","Income credited or made available without restriction is taxable even if not taken (e.g., interest credited to an account)");
+F(1,2,"HSA last-month rule","If eligible on December 1, treated as eligible all year for contribution purposes; must remain eligible through a 13-month testing period");
+F(1,2,"ABLE account annual contribution limit (2025)","$19,000 (equal to the gift tax annual exclusion)");
+F(1,3,"Long-term care premiums","Medical expense, limited by age-based caps");
+F(1,3,"Medical: not deductible","Cosmetic surgery (unless to correct a deformity), nonprescription drugs (except insulin), gym memberships for general health, funeral costs");
+F(1,3,"Reservists, performing artists, fee-basis officials","May still deduct unreimbursed employee business expenses as adjustments (Form 2106)");
+F(1,4,"Ministers: dual status","Employee for income tax (W-2, no FICA withholding) but self-employed for Social Security (SE tax) unless exempt via Form 4361");
+Q(1,2,2,"Which interest is taxable on the federal return?","Interest on U.S. Treasury bonds",["Interest on municipal bonds of the taxpayer's state","Interest on general obligation bonds of another state","Interest on qualified savings bonds used for tuition (eligible)"],"Treasury interest is federally taxable, state exempt.");
+Q(1,2,2,"The taxpayer has a child under 24 who is a full-time student. Tuition $8,000; room and board $4,000; a $5,000 tuition-only scholarship and a $2,500 unrestricted scholarship; parent paid $4,500. Which is correct?","The parent can claim the AOTC on $3,000 of tuition when the student reports the $2,500 scholarship as income",["The student can claim the AOTC on $3,000","The parent claims the AOTC and no one reports the $2,500","The parent reports the $2,500 as income"],"IRS sample question: the student includes the unrestricted scholarship in income (applied to room and board), freeing $3,000 of tuition for the parent's AOTC.");
+Q(1,3,2,"Which payment must be reported on Form 1099-MISC?","$600 or more paid to a physician or health care provider in your trade or business",["$600 of nonemployee compensation","$400 of rent","$5 of royalties"],"Nonemployee comp is on 1099-NEC; rent threshold $600; royalties $10.");
+Q(1,3,3,"A sole proprietor paid in 2025: attorneys' fees to an incorporated law firm $600; sign painter $800 ($600 labor, $200 materials); web designer $500; incorporated janitorial $800; Consultant A $1,000 ($400 cash, $600 check); Consultant B $500 cash; Consultant C $400 check. Total reportable on 1099-NEC:","$2,400",["$1,400","$1,600","$2,000"],"IRS sample: $600 law firm + $800 painter + $1,000 Consultant A. Payment method doesn't matter; corporations excluded except attorneys.");
+
+// ---------- Part 2 extra coverage ----------
+F(2,1,"S corp election termination","Voluntary revocation (more than 50% of shares consent) or by ceasing to qualify. Generally can't re-elect for 5 years without IRS consent");
+F(2,1,"Corporate liquidation","Shareholders: §331 gain/loss = FMV received − stock basis. Corporation: §336 gain/loss as if sold at FMV. Parent liquidating an 80%+ subsidiary: §332 nonrecognition");
+F(2,1,"Stock redemption (§302)","Treated as a sale (capital gain/loss) if a complete termination, substantially disproportionate, or not essentially equivalent to a dividend; otherwise a dividend");
+F(2,1,"Earnings and profits (E&P)","Measures a corporation's ability to pay dividends; differs from taxable income (adds tax-exempt income, subtracts federal income tax, uses slower depreciation)");
+F(2,1,"Constructive dividends","Personal expenses paid for shareholders, excessive compensation to shareholder-employees, bargain sales, below-market loans");
+F(2,1,"Limited partner self-employment tax","Limited partners' distributive shares aren't subject to SE tax; guaranteed payments for services are");
+F(2,1,"Partnership: Schedule K-1 due","To partners by the 1065 due date (March 15, or extended date)");
+F(2,2,"Section 197 intangibles","Goodwill, going concern value, covenants not to compete, customer lists, licenses, franchises: amortized over 15 years");
+F(2,2,"Depletion","Cost depletion (basis × units sold ÷ units estimated) or percentage depletion (statutory % of gross income; limited); use whichever is larger where allowed");
+F(2,2,"General business credit","Form 3800; carryback 1, carryforward 20 years. Includes work opportunity, small employer health insurance (Form 8941), retirement plan startup, employer-provided childcare credits");
+F(2,2,"Small employer health insurance credit","Under 25 FTEs, average wages below an indexed limit, pay at least 50% of premiums through SHOP: up to 50% of premiums (35% for exempt orgs), for 2 consecutive years");
+F(2,2,"Retirement plan startup credit","Small employers (100 or fewer employees): credit for startup costs of a new plan for 3 years, plus an employer contribution credit");
+F(2,2,"Employer-provided snacks and on-premises meals (2025)","50% deductible for 2025; not deductible at all after 2025. Entertainment is 0%; a company-wide holiday party is 100%");
+F(2,2,"Business use of a vehicle: actual expenses","Gas, repairs, insurance, depreciation, registration × business-use %. Commuting is never business");
+QX(2,1,2,"All of the following increase a partner's basis in a partnership interest, EXCEPT:",["The partner's share of tax-exempt income","An increase in the partner's share of partnership liabilities","A cash distribution to the partner","The partner's share of ordinary income"],2,"Distributions reduce basis.");
+QX(2,1,2,"All of the following would terminate an S election, EXCEPT:",["A partnership buys shares","The corporation issues a second class of stock with different liquidation rights","Shareholders holding 60% of the shares consent to revoke","The corporation issues nonvoting common stock with identical distribution rights"],3,"Differences in voting rights alone don't create a second class of stock.");
+QX(2,2,2,"Which of the following is depreciable?",["Land","Inventory","A rental building","All of the answer choices are correct"],2,"Land and inventory are never depreciable.");
+Q(2,1,3,"Corporation: book net income $100,000; federal income tax expense $21,000; tax-exempt interest $5,000; 50% of meals not deductible $2,000. Taxable income (before special deductions):","$118,000",["$121,000","$100,000","$116,000"],"100,000 + 21,000 (tax) − 5,000 (exempt) + 2,000 (meals) = 118,000.");
+
+// ---------- Part 3 extra coverage ----------
+QX(3,1,2,"All of the following are permitted under Circular 230, EXCEPT:",["Charging a contingent fee for a claim solely for interest","Endorsing a client's federal refund check to collect a fee","Publishing a fixed-fee schedule","Representing two clients with a conflict after written informed consent"],1,"§10.31 prohibits negotiating clients' refund checks.");
+QX(3,1,2,"Which of the following is a sanction available under Circular 230?",["Censure","Suspension","Monetary penalty","All of the answer choices are correct"],3,"Plus disbarment.");
+QX(3,2,2,"All of the following are true regarding Form 2848, EXCEPT:",["It may name a firm as the representative","Each spouse on a joint return files a separate 2848","It authorizes the representative to sign consents to extend the statute","It can cover years up to 3 years after the year received"],0,"Only individuals may be named.");
+QX(3,3,2,"Which of the following is required for an Offer in Compromise to be processed?",["All required returns have been filed","Current-year estimated tax payments have been made","The taxpayer is not in an open bankruptcy","All of the answer choices are correct"],3,"Compliance requirements for OIC processing.");
+QX(3,4,2,"All of the following are correct about Form 8879, EXCEPT:",["The ERO keeps it for 3 years","It must be signed before the return is transmitted","It must be attached to the electronic return","It authorizes the use of a PIN signature"],2,"It is not sent to the IRS unless requested.");

@@ -1,0 +1,16 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage();
+const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/');await p.waitForTimeout(1500);
+console.log('xs',await p.evaluate(()=>BANK.filter(i=>i.xs).length,0),'total p1',await p.evaluate(()=>BANK.filter(i=>i.p==1).length));
+await p.evaluate(()=>{part=1;view="home";render()});await p.waitForTimeout(300);await p.screenshot({path:'tmp/e1.png'});
+console.log('donext',await p.evaluate(()=>{const b=document.querySelector('.donext');return b?b.innerText.replace(/\n/g,' | '):null}));
+await p.click('.donext');await p.waitForTimeout(500);await p.screenshot({path:'tmp/e2.png'});
+console.log('sess',await p.evaluate(()=>typeof sess!=="undefined"&&sess?JSON.stringify({mode:sess.mode,n:(sess.q||sess.entries||[]).length}):view));
+await p.evaluate(()=>{sess=null;part=8;view="home";render()});await p.waitForTimeout(300);await p.screenshot({path:'tmp/e3.png',fullPage:true});
+console.log('npath steps',await p.evaluate(()=>document.querySelectorAll('.nstep').length),'links',await p.evaluate(()=>[...document.querySelectorAll('.nlink a')].map(a=>a.href).join('\n')));
+await p.click('[data-np="0"]');await p.waitForTimeout(200);console.log('now',await p.evaluate(()=>document.querySelector('.nstep.now b').innerText));
+await p.evaluate(()=>{part=BK;view="home";render()});await p.waitForTimeout(300);await p.screenshot({path:'tmp/e4.png'});
+console.log('bk donext',await p.evaluate(()=>{const b=document.querySelector('.donext');return b?b.innerText.replace(/\n/g,' | '):null}));
+await p.click('.donext');await p.waitForTimeout(500);console.log('view after',await p.evaluate(()=>view));
+console.log('errors',errs.slice(0,6));await b.close()})();

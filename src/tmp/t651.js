@@ -1,0 +1,21 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();
+const errs=[];p.on('pageerror',e=>errs.push(e.message.slice(0,200)));const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);
+await p.goto('http://localhost:8765/ea-exam-app/?study');await p.waitForTimeout(1500);await p.evaluate(()=>{S.set.pace="steady"});
+await p.evaluate(()=>{part=1;view="home";render();scrollTo(0,0)});await p.waitForTimeout(200);
+let r=await p.evaluate(()=>{const a=document.querySelector('.xaready'),d=document.querySelector('.donext');return{ry:a?Math.round(a.getBoundingClientRect().top):-1,dy:Math.round(d.getBoundingClientRect().top),dbottom:Math.round(d.getBoundingClientRect().bottom),txt:a?a.innerText.replace(/\s+/g,' '):'',skip:!!document.querySelector('[data-xp="nodx"]'),sw:document.documentElement.scrollWidth}});console.log(' ',JSON.stringify(r));
+ok('new learner: readiness card is on top, red button right under it, both on the first screen',r.ry>0&&r.ry<r.dy&&r.dbottom<844&&/no estimate yet/.test(r.txt)&&/Take the 24-question diagnostic/.test(r.txt)&&r.skip&&r.sw<=392);
+await p.screenshot({path:'tmp/r_new.png'});
+r=await p.evaluate(()=>{S.set.xp={nodx1:1};const T=today();const seed=(d,acc,n)=>{BANK.filter(i=>i.p==1&&i.d==d&&i.t==="q").slice(0,n).forEach((i,k)=>{const okk=(k%10)<Math.round(acc*10)?1:0;S.it[i.id]=[okk?2:0,T+2,1,okk,okk,okk?0:(k%3===0?1:0),okk?0:1,Date.now()]})};
+  seed(1,0.9,30);seed(2,0.7,40);seed(3,0.5,40);seed(4,0.6,30);seed(5,0.8,20);seed(6,0.7,25);BANK.filter(i=>i.p==1&&i.t==="f").slice(0,12).forEach(i=>{S.it[i.id]=[2,T-1,1,1,1,0]});persist();view="home";render();scrollTo(0,0);
+  const a=document.querySelector('.xaready'),sg=[...document.querySelectorAll('.xasg .btn')].map(b=>b.innerText.trim()),d=document.querySelector('.donext');
+  return{txt:a.innerText.replace(/\s+/g,' '),sg,dn:d.innerText.replace(/\s+/g,' ').slice(0,80),order:[...document.querySelectorAll('#view .xaready, #view .donext, #view .xasg, #view .plusstrip, #view .xp')].map(e=>e.className.split(' ')[0]),gauge:(document.querySelector('.gnum span')||{innerText:''}).innerText,sw:document.documentElement.scrollWidth,sgBottom:Math.round(document.querySelector('.xasg').getBoundingClientRect().bottom)}});console.log(' ',JSON.stringify(r));
+ok('with answers: predicted score, range, verdict and biggest gain on top',/\d+% predicted score ± \d+ aim for 75% or more/.test(r.txt)&&/(Close|Not yet|Early estimate|Ready)/.test(r.txt)&&/biggest gain: Deductions & credits/.test(r.txt));
+ok('order on the page: readiness, red button, more suggestions, then the path',r.order[0]==="xaready"&&r.order[1]==="donext"&&r.order[2]==="xasg"&&r.order.length>=4&&r.sgBottom<1000);
+ok('two more suggestions under the red button, different from it',r.sg.length===2&&!r.sg.some(x=>r.dn.includes(x.replace(/ ›$/,''))));
+ok('the old gauge lower down no longer calls itself "ready"',/path covered/.test(r.gauge));
+await p.screenshot({path:'tmp/r_data.png'});
+await p.click('.xasg .btn');await p.waitForTimeout(250);ok('a suggestion starts its session with one tap',await p.evaluate(()=>view==="session"&&!!sess));
+await p.evaluate(()=>{clearInterval(timerId);sess=null;view="home";render()});await p.click('.xaready');await p.waitForTimeout(200);ok('tapping the readiness card opens the Diagnosis page',await p.evaluate(()=>view==="xadiag"&&/left on the path|Every step/.test(document.querySelector('#view').innerText)));
+for(const pt of [4,5,7,8]){const q=await p.evaluate(pt=>{sess=null;part=pt;view=PARTS[pt].bk?"bkland":"home";render();return{rd:!!document.querySelector('.xaready')}},pt);ok(`part ${pt}: unchanged, no readiness card`,!q.rd)}
+ok('no page errors',errs.length===0);if(errs.length)console.log(errs.slice(0,5));await b.close()})();

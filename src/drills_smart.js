@@ -1,0 +1,41 @@
+/* ================= Smart drills: per-question memory (Leitner boxes + spaced review), missed-first ordering, in-round re-asks, cross-drill Smart Review, accuracy per drill ================= */
+const DRBOX=[0,1,3,7,21];
+function DQ(){const d=TD();d._q=d._q||{};return d._q}
+function dqId(k,i){return k+"#"+i}
+function dqGet(k,i){return DQ()[dqId(k,i)]||null}
+const DRCOOL=6e5; // a question just answered rests 10 minutes before Smart review may ask it again
+function dqBox(r){return r.b===0&&!r.lastWrong&&r.c>0?1:r.b} // older saves parked "missed, then right" in box 0, which was due forever: treat it as box 1
+function dqDue(k,i,now){const r=dqGet(k,i);if(!r)return true;if(r.lastWrong)return now-r.t>=DRCOOL;return now-r.t>=DRBOX[Math.min(4,dqBox(r))]*864e5-36e5}
+function dqRev(k,i,now){const r=dqGet(k,i);return !!r&&now-r.t>=DRCOOL&&dqDue(k,i,now)} // eligible for Smart review right now
+function drCool(){const now=Date.now();let n=0,soon=1e15;drillKeys().forEach(k=>DRILL[k].q.forEach((q,i)=>{const r=dqGet(k,i);if(r&&r.lastWrong&&now-r.t<DRCOOL){n++;soon=Math.min(soon,r.t+DRCOOL-now)}}));return{n,min:n?Math.max(1,Math.ceil(soon/6e4)):0}}
+function dqScore(k,i,now){const r=dqGet(k,i);if(!r)return 2;let s=(4-dqBox(r))*2+(r.n-r.c)/(r.n||1)*3;if(dqDue(k,i,now))s+=3;if(r.lastWrong)s+=4;return s}
+function dqMark(k,i,ok){const Q=DQ(),id=dqId(k,i),r=Q[id]||{b:0,n:0,c:0,t:0};r.n++;if(ok){const b0=dqBox(r);r.c++;r.b=r.lastWrong?1:Math.min(4,b0+1);r.lastWrong=0}else{r.b=0;r.lastWrong=1}r.t=Date.now();Q[id]=r}
+function drillKeys(){return Object.keys(DRILL).filter(x=>typeof DRILLP==="undefined"||!DRILLP[x]||DRILLP[x].includes(+part))}
+function drAcc(k){const D=DRILL[k];let n=0,c=0;D.q.forEach((q,i)=>{const r=dqGet(k,i);if(r){n+=Math.min(r.n,4);c+=Math.min(r.n,4)*(r.c/r.n)}});return n?Math.round(c/n*100):null}
+function drMastered(k){return DRILL[k].q.filter((q,i)=>{const r=dqGet(k,i);return r&&dqBox(r)>=3}).length}
+function drSmartOrder(k){const now=Date.now();return DRILL[k].q.map((q,i)=>[i,dqScore(k,i,now)+Math.random()*.8]).sort((a,b)=>b[1]-a[1]).map(x=>[k,x[0]])}
+function drReviewSet(n){const now=Date.now(),all=[];drillKeys().forEach(k=>DRILL[k].q.forEach((q,i)=>{if(dqRev(k,i,now))all.push([k,i,dqScore(k,i,now)+Math.random()])}));all.sort((a,b)=>b[2]-a[2]);return all.slice(0,n||12).map(x=>[x[0],x[1]])}
+function drDueCount(){const now=Date.now();let n=0;drillKeys().forEach(k=>DRILL[k].q.forEach((q,i)=>{if(dqRev(k,i,now))n++}));return n}
+function renderDrill(){const e=esc,k=tv.dr,rev=k==="_rev";if(!tv.dord)tv.dord=rev?drReviewSet(12):drSmartOrder(k);const ord0=tv.dord,i=tv.dri||0,a=tv.dra,title=rev?"⚡ Smart review":DRILL[k].t;
+  if(i>=ord0.length||!ord0.length){const sc=tv.drs||0,tot=ord0.length,d=TD();if(!rev){const base=DRILL[k].q.length,first=Math.min(base,tv.drsFirst!=null?tv.drsFirst:sc);if(!d[k]||first>d[k])d[k]=first}persist();
+    const cool=drCool(),ks=drillKeys(),ix=ks.indexOf(k),weak=ks.map(x=>[x,drAcc(x)]).filter(x=>x[1]!=null&&x[0]!==k).sort((a,b)=>a[1]-b[1])[0],due=drDueCount();
+    $("#view").innerHTML=`<section class="section"><h2>${e(title)}: ${sc} of ${tot}</h2><p>${!tot?"Nothing is due right now."+(cool.n?" "+cool.n+" missed question"+(cool.n===1?"":"s")+" come"+(cool.n===1?"s":"")+" back in about "+cool.min+" min.":" Run a drill to build your review queue."):sc===tot?"Every decision right. These move to a longer review interval.":"You saw each missed one again in this round. Got it right the second time: it returns tomorrow. Missed twice: it returns after a 10-minute break, never straight away."}</p>${!rev?`<p class="small muted">Mastered (3+ correct reviews): ${drMastered(k)}/${DRILL[k].q.length} · accuracy ${drAcc(k)??"–"}%</p>`:""}
+     <div class="row">${rev?(due?`<button class="btn pri" data-tdr="_rev">Review ${due} more (new ones)</button>`:""):`<button class="btn pri" data-tdr="${k}">Again</button>`}${!rev&&due?`<button class="btn" data-tdr="_rev">⚡ Smart review (${due} due)</button>`:""}${weak&&weak[1]<85?`<button class="btn" data-tdr="${weak[0]}">Weakest: ${e(DRILL[weak[0]].t)} (${weak[1]}%)</button>`:""}<button class="btn" data-tdr="">${tv.from==="home"?"Back to study":"Back to the tax software"}</button>${!rev&&ix>=0&&ix+1<ks.length?`<button class="btn" data-tdr="${ks[ix+1]}">Next drill: ${e(DRILL[ks[ix+1]].t)}</button>`:""}</div></section>`;return}
+  const [dk,qi]=ord0[i],q=DRILL[dk].q[qi],r=dqGet(dk,qi),ord=q[1]===DR_AB?q[1].map((x,j)=>j):p10Ord({q:q[0],o:q[1]});
+  $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>${e(title)}</h2><div class="small muted">Question ${i+1} of ${ord0.length} · ${tv.drs||0} right${rev?` · ${e(DRILL[dk].t)}`:""}${r?` · ${r.lastWrong?"🔁 missed last time":"box "+dqBox(r)+"/4"}`:" · new"}</div></div><button class="btn ghost small" data-tdr="">Back</button></div>
+   <div class="card"><b>${e(q[0])}</b><div class="dpo" style="flex-direction:column;align-items:stretch">${ord.map(o=>`<button class="btn ${a==null?"":o===q[2]?"good":o===a?"bad":""}" data-tdra="${o}" ${a!=null?"disabled":""}>${e(q[1][o])}</button>`).join("")}</div>
+   ${a==null?"":`<div class="${a===q[2]?"okt":"badt"}"><b>${a===q[2]?"✓ Right.":"Answer: "+e(q[1][q[2]])+"."}</b> ${e(q[3])}${a!==q[2]?`<div class="small muted" style="margin-top:4px">🔁 This one comes back at the end of this round.</div>`:""}</div><div class="row" style="margin-top:8px"><button class="btn pri" data-tdrn="1">Next</button></div>`}</div></section>`}
+function drillClick(d){
+  if(d.tdr!==undefined){if(d.tdr){tv.dr=d.tdr;tv.dri=0;tv.drs=0;tv.dra=null;tv.dord=null;tv.drsFirst=null;tv.dredo={}}else{tv.dr=null;tv.dord=null;if(tv.from==="home"){view="home";window.scrollTo(0,0)}}return true}
+  if(d.tdra!==undefined&&tv.dr&&tv.dord){if(tv.dra==null){const [dk,qi]=tv.dord[tv.dri],ok=+d.tdra===DRILL[dk].q[qi][2];tv.dra=+d.tdra;const redo=tv.dredo&&tv.dredo[dk+"#"+qi];if(ok)tv.drs=(tv.drs||0)+1;dqMark(dk,qi,ok);if(!ok&&!redo){tv.dredo=tv.dredo||{};tv.dredo[dk+"#"+qi]=1;tv.dord.push([dk,qi])}if(tv.dri===tv.dord.length-1||tv.drsFirst==null&&tv.dri===(DRILL[tv.dr]?DRILL[tv.dr].q.length-1:-1)){}persist()}return true}
+  if(d.tdrn&&tv.dr){if(tv.dr!=="_rev"&&DRILL[tv.dr]&&tv.dri===DRILL[tv.dr].q.length-1)tv.drsFirst=tv.drs||0;tv.dri++;tv.dra=null;return true}
+  return false}
+function drillsHtml(){if(PARTS[part].x||typeof DRILL==="undefined")return "";const e=esc,ks=drillKeys();if(!ks.length)return "";
+  const B=TD(),perfect=ks.filter(k=>B[k]===DRILL[k].q.length).length,due=drDueCount(),vid=ks.filter(k=>/^v\d/.test(k)),base=ks.filter(k=>!/^v\d/.test(k));
+  const row=k=>{const t=DRILL[k].q.length,b=B[k],acc=drAcc(k),m=drMastered(k),pct=Math.round(m/t*100);return `<button class="drow" data-tdrgo="${k}"><span class="dn">${e(DRILL[k].t)}</span><span class="db"><i style="width:${pct}%;background:${m===t?"var(--good)":acc!=null&&acc<70?"var(--bad,#e5484d)":"var(--accent)"}"></i></span><span class="ds">${b==null?"Start":`${m}/${t}${acc!=null?" · "+acc+"%":""}`}</span></button>`};
+  return `<section class="section"><div class="ledger">
+    <div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">Quick decisions</h3><span class="chip">${perfect}/${ks.length} perfect</span></div>
+    <div class="small muted">One-tap rounds on the calls the exam tests constantly. Smart order: missed and due questions first. A question you just answered rests at least 10 minutes. The bar shows questions mastered (3+ correct reviews); red means accuracy under 70%.</div>
+    <button class="btn ${due?"pri":""}" data-tdrgo="_rev" style="width:100%;margin:8px 0" ${due?"":"disabled"}>⚡ Smart review: ${due?due+" question"+(due===1?"":"s")+" due":(c=>c.n?c.n+" missed, back in "+c.min+" min":"nothing due yet")(drCool())}</button>
+    ${typeof foldRows==="function"?foldRows("dlall",base.map(k=>({done:drMastered(k)===DRILL[k].q.length,h:row(k)}))):`<div class="dlist">${base.map(row).join("")}</div>`}${vid.length?`<details class="more inner" id="dlvid" ${OPEN.dlvid?"open":""}><summary><b>📽️ By course video</b><span>${vid.length} rounds from the EA Tax Training 2026 slides</span></summary><div class="dlist" style="padding:0 8px 8px">${vid.map(row).join("")}</div></details>`:""}
+  </div></section>`}

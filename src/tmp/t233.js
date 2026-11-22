@@ -1,0 +1,12 @@
+const {chromium,devices}=require('playwright');
+(async()=>{const b=await chromium.launch();const ctx=await b.newContext({...devices['Pixel 7']});const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(2000);
+await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";k.tix=3;k.derby={lv:1,wins:0,ko:0,best:0,plays:0,rules:1};view="kids";KV={scr:"home"};render()});
+await p.tap('[data-k="drive"]');await p.waitForTimeout(300);await p.tap('[data-kdm="derby"]');await p.waitForTimeout(300);await p.tap('[data-kcar="ms"]');await p.waitForTimeout(200);await p.tap('[data-kderby="ms"]');await p.waitForTimeout(4200);
+const cdp=await ctx.newCDPSession(p);const box=await p.locator('#kdby').boundingBox();const sc=box.width/await p.evaluate(()=>$('#kdby').width);
+const tap=async(cx,cy)=>{await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:box.x+cx*sc,y:box.y+cy*sc}]});await p.waitForTimeout(80);await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]})};
+const st=()=>p.evaluate(()=>{const m=kDby.cars[0];return[m.x|0,m.y|0,Math.hypot(m.vx,m.vy)|0,kDby.coach]});
+console.log('start',await st());await p.waitForTimeout(1000);console.log('cruise',await st());
+await tap(60,200);await p.waitForTimeout(1500);console.log('after tap left-top',await st(),'goal',await p.evaluate(()=>[kDby.gx|0,kDby.gy|0]));
+const B=await p.evaluate(()=>kDbBtn(kDby));await tap(B.x,B.y);await p.waitForTimeout(150);console.log('boost',await p.evaluate(()=>[kDby.boostCd.toFixed(1),kDby.cars[0].boost>0]));
+await p.screenshot({path:'k18.png'});console.log('errors',JSON.stringify(errs));await b.close()})();

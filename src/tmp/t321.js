@@ -1,0 +1,15 @@
+const {chromium}=require('playwright');const tag=process.argv[2]||'a';
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:3})).newPage();
+const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1200);
+await p.evaluate(()=>{const k=KS();k.setup=1;k.name="Tomas";k.sound=false;k.tix=9;k.adultUntil=Date.now()+9e5;k.guided=false;k.fly={lv:9,done:{0:1,1:1,2:1,3:1,4:1},stars:{},flights:3,pts:0};k.warm={day:kToday(),start:Date.now(),sec:400,n:12,ok:10,done:1,les:1,last:[],p0:0};k.lastSeen=Date.now();persist();KV={scr:"home"};render()});
+const chk=async()=>{for(let i=0;i<8;i++){await p.evaluate(i=>{const b=document.querySelector(`[data-kfchk="${i}"]`);if(b)b.click()},i);await p.waitForTimeout(100)}};
+const atc=async()=>{await p.evaluate(()=>{const F=kFly;if(F&&F.atc&&F.atc.q&&F.atc.q.ans==null){const b=document.querySelector(`[data-katc="${F.atc.q.a}"]`);if(b)b.click()}})};
+await p.evaluate(()=>{kFlyStart(5);KV={scr:"fly"};render()});await p.waitForTimeout(500);await chk();await p.waitForTimeout(600);await atc();
+console.log('P',await p.evaluate(()=>JSON.stringify(kFly.P)));
+await p.screenshot({path:`tmp/fl_${tag}0.png`});
+await p.evaluate(()=>{kFly.P.thr=1});await p.waitForTimeout(8000);await atc();await p.evaluate(()=>{kFly.stick.y=kFly.real?-0.6:0.6});await p.waitForTimeout(6000);await atc();await p.evaluate(()=>{kFly.stick.y=0.05;kFly.stick.x=.5});await p.waitForTimeout(2500);await atc();await p.waitForTimeout(400);
+await p.screenshot({path:`tmp/fl_${tag}1.png`});console.log('P',await p.evaluate(()=>JSON.stringify(kFly.P)));
+await p.evaluate(()=>{kFly.stick.x=0;const b=document.createElement('button');b.dataset.kfly='cock';kidsClick(b)});await p.waitForTimeout(1200);await atc();await p.waitForTimeout(300);await p.screenshot({path:`tmp/fl_${tag}2.png`});
+const fps=await p.evaluate(()=>new Promise(r=>{let n=0;const t0=performance.now();const f=()=>{n++;if(performance.now()-t0<1000)requestAnimationFrame(f);else r(n)};requestAnimationFrame(f)}));console.log('fly fps',fps);
+console.log('errors',errs.slice(0,6));await b.close()})();

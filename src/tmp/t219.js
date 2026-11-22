@@ -1,0 +1,13 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/');await p.waitForTimeout(1500);
+await p.evaluate(()=>{delete S.kids;const k=KS();k.setup=true;k.name="Alex";k.tix=3;view="kids";KV={scr:"home"};render()});
+await p.click('[data-k="drive"]');await p.screenshot({path:'k6pick.png'});await p.click('[data-kride="roadster"]');console.log('locked',await p.evaluate(()=>[KV.pick,S.kids.tix]));
+await p.evaluate(()=>{S.kids.rocket.dest=1});await p.click('[data-k="home"]');await p.click('[data-k="drive"]');await p.click('[data-kride="roadster"]');await p.waitForTimeout(1200);
+await p.evaluate(()=>{kDrv.obs.push({ln:kDrv.lane,y:-40,k:"boost"})});await p.waitForTimeout(1500);await p.screenshot({path:'k6fly.png'});
+await p.evaluate(()=>{kDrv.t=31});await p.waitForTimeout(2500);await p.screenshot({path:'k6space.png'});
+console.log('roadster',await p.evaluate(()=>[kDrv.mode,!!kDrv.space,Math.round(kDrv.bat),kDrv.bolts]));
+await p.evaluate(()=>{kDrv.t=59.95;kDrv.bat=80});await p.waitForTimeout(1200);await p.screenshot({path:'k6end.png'});
+await p.click('[data-k="home"]');await p.click('[data-k="drive"]');await p.click('[data-k="cartoon"]');await p.waitForTimeout(1500);
+console.log('video',await p.evaluate(()=>{const v=document.querySelector('video');return v?[v.readyState,v.duration,v.videoWidth]:null}));
+console.log('errors',JSON.stringify(errs));await b.close()})();

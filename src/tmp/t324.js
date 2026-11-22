@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const p=await (await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:3})).newPage();
+const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(1200);
+await p.evaluate(()=>{const k=KS();k.setup=1;k.name="Tomas";k.sound=false;k.tix=20;k.adultUntil=Date.now()+9e5;k.guided=false;k.rocket.dest=3;k.warm={day:kToday(),start:Date.now(),sec:400,n:12,ok:10,done:1,les:1,last:[],p0:0};k.lastSeen=Date.now();persist();KV={scr:"home"};render()});
+const fps=()=>p.evaluate(()=>new Promise(r=>{let n=0;const t0=performance.now();const f=()=>{n++;if(performance.now()-t0<1000)requestAnimationFrame(f);else r(n)};requestAnimationFrame(f)}));
+const cvs=()=>p.evaluate(()=>[...document.querySelectorAll('canvas[id]')].map(c=>c.id+':'+c.width+'x'+c.height+' hd'+c._hd+' css'+Math.round(c.getBoundingClientRect().width)+'x'+Math.round(c.getBoundingClientRect().height)).join(' '));
+await p.evaluate(()=>{kCtStart();KV={scr:"city"};render()});await p.waitForTimeout(2500);await p.screenshot({path:'tmp/o_city.png'});console.log('city',await cvs(),await fps());
+await p.evaluate(()=>{kDerbyStart("m3");KV={scr:"derby"};render()});await p.waitForTimeout(2500);await p.screenshot({path:'tmp/o_derby.png'});console.log('derby',await cvs(),await fps(),await p.evaluate(()=>KV.scr));
+await p.evaluate(()=>{kLandStart(0);KV={scr:"land"};render()});await p.waitForTimeout(2500);await p.screenshot({path:'tmp/o_land.png'});console.log('land',await cvs(),await fps());
+await p.evaluate(()=>{kAstStart();render()});await p.waitForTimeout(2500);await p.screenshot({path:'tmp/o_ast.png'});console.log('ast',await cvs(),await fps());
+console.log('errors',errs.slice(0,6));await b.close()})();

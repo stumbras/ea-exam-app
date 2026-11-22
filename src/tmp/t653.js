@@ -1,0 +1,37 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();
+const errs=[];p.on('pageerror',e=>errs.push(e.message.slice(0,200)));const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);
+await p.goto('http://localhost:8765/ea-exam-app/?study');await p.waitForTimeout(1500);
+await p.evaluate(()=>{part=1;view="home";render();scrollTo(0,0)});await p.waitForTimeout(200);
+let r=await p.evaluate(()=>{const o=[...document.querySelectorAll('#view .xaready, #view .xaqrow, #view .xapace, #view .donext')].map(e=>[e.className.split(' ')[0],Math.round(e.getBoundingClientRect().bottom)]);return{o,pace:document.querySelector('.xaseg .on').innerText,line:document.querySelector('.xapace').innerText.replace(/\s+/g,' '),btn:[...document.querySelectorAll('.xaquick')].map(b=>b.innerText.replace(/\s+/g,' ')),sw:document.documentElement.scrollWidth}});console.log(' ',JSON.stringify(r));
+ok('top: readiness, Quick 10 and New 10 side by side, pace line, red button, all on the first screen',r.o.map(x=>x[0]).join()==="xaready,xaqrow,xapace,donext"&&r.o[3][1]<=844&&r.sw<=392);
+ok('pace starts on Fast, with today\'s count and how many questions are seen',r.pace==="Fast"&&/New today 0 of 40 · seen 0 of \d+/.test(r.line)&&/not seen/.test(r.btn[1])&&/Audio 10/.test(r.btn[2]));
+await p.screenshot({path:'tmp/p_top.png'});
+// learner with history
+await p.evaluate(()=>{S.set.xp={nodx1:1};const T=today();const seed=(d,acc,n)=>{BANK.filter(i=>i.p==1&&i.d==d&&i.t==="q").slice(0,n).forEach((i,k)=>{const okk=(k%10)<Math.round(acc*10)?1:0;S.it[i.id]=[okk?2:0,T+3,1,okk,okk,0,okk?0:1,Date.now()]})};seed(1,0.9,30);seed(2,0.8,40);seed(3,0.4,40);seed(4,0.7,30);seed(5,0.8,20);seed(6,0.8,25);BANK.filter(i=>i.p==1&&i.t==="f").slice(0,30).forEach((i,k)=>{S.it[i.id]=[2,k<8?T-1:T+4,1,1,1,0]});persist()});
+const comp=async pace=>p.evaluate(pace=>{S.set.pace=pace;const runs=[];for(let k=0;k<12;k++){startSession("qd",10);const q=sess.queue.map(e=>BYID[e.id]),tg=sess.quick.tag;runs.push({n:q.length,exam:q.every(i=>(i.t==="q"&&i.opts.length===4&&i.lv>=2)||i.t==="g"),facts:q.filter(i=>i.t==="f").length,nw:q.filter(i=>tg[i.id]==="new").length,miss:q.filter(i=>tg[i.id]==="miss").length,calc:q.filter(i=>i.t==="g").length,newD:q.filter(i=>tg[i.id]==="new"&&i.d==3).length,note:sess.note,title:sess.title});clearInterval(timerId);sess=null}return runs},pace);
+const avg=(l,k)=>l.reduce((a,x)=>a+x[k],0)/l.length;
+let st=await comp("steady"),fa=await comp("fast"),mx=await comp("max");console.log('  steady new',avg(st,'nw'),'miss',avg(st,'miss'),'| fast new',avg(fa,'nw'),'miss',avg(fa,'miss'),'| max new',avg(mx,'nw'),'miss',avg(mx,'miss'),'|',fa[0].note);
+ok('Quick 10 is exam-type questions only: no flash cards at any pace',[st,fa,mx].every(l=>l.every(x=>x.n===10&&x.exam&&x.facts===0)));
+ok('faster pace pushes more new questions: 2, then 5, then 8 of the 10',avg(st,'nw')===2&&avg(fa,'nw')===5&&avg(mx,'nw')===8&&avg(st,'miss')===3&&avg(fa,'miss')===2&&avg(mx,'miss')===1);
+console.log('  fast: new from the biggest-gain topic, average',avg(fa,'newD'));console.log('  FA',JSON.stringify(fa.map(x=>[x.newD,x.note.replace('Built for you now: ','')])));ok('new questions are spread: no more than two from one topic in a drill',fa.every(x=>x.newD<=2)&&fa[0].title==="Quick 10 · exam questions"&&/5 new · 2 misses/.test(fa[0].note));
+// New 10
+r=await p.evaluate(()=>{S.set.pace="fast";view="home";render();const before=xaUnseen().length;document.querySelector('[data-xa="new10"]').click();const q=sess.queue.map(e=>BYID[e.id]);return{before,n:q.length,allNew:q.every(i=>!S.it[i.id]&&i.t==="q"&&i.lv>=2),d3:q.filter(i=>i.d==3).length,doms:[...new Set(q.map(i=>i.d))].length,title:document.querySelector('.sesshead h2').innerText}});console.log(' ',JSON.stringify(r));
+ok('New 10: ten exam questions never seen, leaning to the biggest-gain topic but spread over topics',r.n===10&&r.allNew&&r.d3>=3&&r.doms>=3&&/New 10/.test(r.title));
+// one tap answering + auto advance
+r=await p.evaluate(()=>{const s=sess,cur=s.queue[0],V=view4(cur,BYID[cur.id]);const right=document.querySelector(`.opt[data-opt="${V.ans}"]`);right.click();return{phase:s.phase,done:s.done,ok:s.lastOk,conf:!!document.querySelector('.conf')}});
+ok('Fast: one tap answers, no Sure/Guessing step',r.phase==="shown"&&r.done===1&&r.ok&&!r.conf);
+await p.waitForTimeout(1200);const still=await p.evaluate(()=>sess.pos===0&&sess.phase==="shown");await p.waitForTimeout(1500);r=await p.evaluate(()=>({pos:sess.pos,phase:sess.phase}));ok('a right answer stays on screen about 2 seconds, then moves on by itself',still&&r.pos===1&&r.phase==="ask");await p.waitForTimeout(700);
+r=await p.evaluate(()=>{const s=sess,cur=s.queue[s.pos],V=view4(cur,BYID[cur.id]);const wrong=[...document.querySelectorAll('.opt')].find(o=>+o.dataset.opt!==V.ans);wrong.click();return{phase:s.phase,pos:s.pos}});await p.waitForTimeout(1100);
+ok('a wrong answer stops and shows the explanation until you tap Next',await p.evaluate(()=>sess.pos===1&&sess.phase==="shown"&&!!document.querySelector('.explain')));
+await p.evaluate(()=>{const s=sess;let g=0;document.querySelector('#next').click();while(view==="session"&&sess===s&&g++<30){const cur=s.queue[s.pos];if(!cur)break;s.cp=false;record(true,true);advance()}view="home";sess=null;render()});await p.waitForTimeout(150);
+r=await p.evaluate(()=>({line:document.querySelector('.xapace').innerText.replace(/\s+/g,' '),nt:xaNewToday()}));console.log(' ',r.line);ok('the top line counts the 10 new questions met today',r.nt===10&&/New today 10 of 40/.test(r.line));
+// steady keeps the two-step answer; diagnostic keeps it at any pace
+await p.click('.xaseg [data-v="steady"]');await p.waitForTimeout(150);ok('pace can be changed with one tap and is remembered',await p.evaluate(()=>S.set.pace==="steady"&&document.querySelector('.xaseg .on').innerText==="Steady"&&/of 20/.test(document.querySelector('.xapace').innerText)));
+r=await p.evaluate(()=>{document.querySelector('[data-xa="new10"]').click();document.querySelector('.opt').click();return{phase:sess.phase,conf:!!document.querySelector('.conf')}});ok('Steady: answer, then Sure or Guessing, as before',r.phase==="ask"&&r.conf);
+r=await p.evaluate(()=>{clearInterval(timerId);sess=null;S.set.pace="max";xpDxStart();document.querySelector('.opt').click();return{phase:sess.phase,conf:!!document.querySelector('.conf')}});ok('on Fast and Max the diagnostic answers with one tap as well',r.phase==="shown"&&!r.conf);
+// gates
+r=await p.evaluate(()=>{clearInterval(timerId);sess=null;const g=p=>{S.set.pace=p;return[xpGate("miss"),xpGate("due"),xpGate("ul")]};const o={steady:g("steady"),fast:g("fast"),max:g("max")};part=5;o.other=[xpGate("miss"),xpGate("due")];part=1;S.set.pace="fast";return o});console.log(' ',JSON.stringify(r));
+ok('faster pace lets more misses and reviews pile up before they interrupt new material; other sections unchanged',r.steady.join()==="8,25,2"&&r.fast.join()==="12,40,1"&&r.max.join()==="16,60,1"&&r.other.join()==="8,25");
+for(const pt of [5,8]){const q=await p.evaluate(pt=>{part=pt;view="home";render();startSession("quiz");document.querySelector('.opt').click();const o={conf:!!document.querySelector('.conf'),bar:!!document.querySelector('.xaqrow')};clearInterval(timerId);sess=null;view="home";return o},pt);ok(`part ${pt}: answering and main page unchanged`,q.conf&&!q.bar)}
+ok('no page errors',errs.length===0);if(errs.length)console.log(errs.slice(0,5));await b.close()})();
