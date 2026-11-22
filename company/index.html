@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Solving Life LLC — taxes, bookkeeping and learning apps</title>
+<meta name="description" content="Solving Life LLC prepares tax returns and keeps books for people and small businesses in all 50 states, and builds exam study apps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="./"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect x="1" y="1" width="34" height="34" rx="9" stroke="#0F1B2D" stroke-width="2"/><path d="M11 23c2 2 4 3 7 3 4 0 7-2 7-5 0-6-13-3-13-9 0-3 3-5 6-5 3 0 5 1 6 3" stroke="#0E7C66" stroke-width="2.4" stroke-linecap="round"/></svg>Solving Life LLC</a>
+<nav class="main" aria-label="Main"><a href="#ventures">Ventures</a><a href="#products">Products</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+<a class="btn btn-main" href="https://solvinglifellc.com">Get tax help</a>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+<p class="kicker">Taxes · Bookkeeping · Learning apps</p>
+<h1>Practical help with taxes, money and learning.</h1>
+<p class="lead">Solving Life LLC prepares tax returns and keeps books for people and small businesses across all 50 states, and builds study apps for the exams and skills behind that work.</p>
+<div class="row"><a class="btn btn-main" href="#ventures">See what we do</a><a class="btn btn-line" href="#products">Apps in development</a></div>
+</div></section>
+
+<section class="block" id="ventures"><div class="wrap">
+<div class="head"><h2>One company, four ventures</h2><p>Each venture has its own products. New ones slot in beside them.</p></div>
+<div class="grid" id="ventureGrid"></div>
+</div></section>
+
+<section class="block alt" id="products"><div class="wrap">
+<div class="head"><h2>Products</h2><p>Services open today, and the apps we are building. Every product shows where it stands.</p></div>
+<div class="tabs" role="tablist" aria-label="Filter by venture" id="tabs"></div>
+<div class="grid" id="productGrid"></div>
+<p class="note">All games are play-for-fun learning apps. No real-money gambling.</p>
+</div></section>
+
+<section class="block" id="about"><div class="wrap about">
+<div class="text">
+<h2>About</h2>
+<p>Solving Life LLC is a Colorado limited liability company. We work online with clients nationwide and meet in person only for ITIN document checks and special cases.</p>
+<p>The study apps grew out of our own exam preparation. Each one teaches only what the exam needs, with questions written in our own words.</p>
+</div>
+<div class="box"><h3>Tax services</h3><p>Prices, booking and the client portal are on our tax site, <a href="https://solvinglifellc.com">solvinglifellc.com</a>.</p></div>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+<div class="col">
+<h2>Contact</h2>
+<p>Every day, 5:00 AM to 11:00 PM Mountain Time. Online, all 50 states.</p>
+<a class="big" href="mailto:info@solvinglifellc.com">info@solvinglifellc.com</a>
+<a class="big" href="tel:+17204320981">(720) 432-0981 · call or text</a>
+</div>
+<div class="col">
+<h3>Follow @solvinglifellc</h3>
+<div class="row">
+<a class="btn btn-line" href="https://www.instagram.com/solvinglifellc">Instagram</a>
+<a class="btn btn-line" href="https://www.facebook.com/solvinglifellc">Facebook</a>
+<a class="btn btn-line" href="https://www.tiktok.com/@solvinglifellc">TikTok</a>
+<a class="btn btn-line" href="https://www.youtube.com/@solvinglifellc">YouTube</a>
+</div>
+</div>
+</div></section>
+</main>
+
+<footer class="bottom"><div class="wrap">
+<span>© 2026 Solving Life LLC, a Colorado limited liability company</span>
+<nav aria-label="Legal"><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms</a></nav>
+</div></footer>
+
+<script>
+(function(){
+  var S={'Open now':'st-open','In development':'st-dev','Planned':'st-plan'};
+  // To add a product: add one line here. To add a venture: add it to V.
+  var P=[
+    ['Tax & Books','Tax returns','Open now','Individuals, families, the self-employed and small businesses, with state returns included.'],
+    ['Tax & Books','ITIN applications and renewals','Open now','Form W-7 help, online or by mail, with in-person document checks when needed.'],
+    ['Tax & Books','International returns','Open now','U.S. citizens abroad, FBAR, and nonresident returns on Form 1040-NR.'],
+    ['Tax & Books','Bookkeeping and payroll','Open now','Monthly books in QuickBooks Online, payroll, cleanup and 1099 filing.'],
+    ['Tax & Books','IRS letters and payment plans','Open now','Notice reviews, payment plans and amended returns.'],
+    ['Tax & Books','IRS representation','Planned','Audits, appeals and settlements with the IRS, from March 2027.'],
+    ['Learning','EA Exam App','In development','All three parts of the IRS Special Enrollment Examination: lessons, drills and timed exams.'],
+    ['Learning','Series 65 edition','In development','The Uniform Investment Adviser Law Examination, same app, its own course.'],
+    ['Learning','Social Security edition','In development','Preparation for the Social Security representative exam sections.'],
+    ['Learning','CAA and ITIN training','In development','For tax professionals who want to become Certifying Acceptance Agents.'],
+    ['Learning','Notary edition','In development','Study for a state notary exam on your phone.'],
+    ['Learning','Bookkeeping foundations','In development','Bookkeeping, QuickBooks and tax basics for new bookkeepers.'],
+    ['Kids','Kids learning app','In development','Math, English, science and geography for ages 8 to 14, with games earned by learning.'],
+    ['Games','Poker school','Planned','Learn mixed poker games and practice with play chips.'],
+    ['Games','Mahjong','Planned','Rules, scoring and practice hands, for fun.'],
+    ['Games','Tongits and Pusoy','Planned','The Filipino card games, taught step by step and played for fun.']
+  ];
+  var V=[
+    ['Tax & Books','Tax & Books','Open now','Tax returns, ITINs, international returns, bookkeeping and IRS help.'],
+    ['Learning','Learning apps','In development','Exam study apps, one course per exam, sold separately.'],
+    ['Kids','Kids','In development','A learning app for children, where games are the reward for study.'],
+    ['Games','Games','Planned','Learn-and-play card and tile games. Play money only.']
+  ];
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+  function badge(s){return el('span','badge '+S[s],s)}
+  var tab='All',tabsBox=document.getElementById('tabs'),grid=document.getElementById('productGrid');
+  function draw(){
+    grid.innerHTML='';
+    P.filter(function(p){return tab==='All'||p[0]===tab}).forEach(function(p){
+      var c=el('article','card'),top=el('div','top');top.appendChild(el('span','label',p[0]));top.appendChild(badge(p[2]));
+      c.appendChild(top);c.appendChild(el('h3',null,p[1]));c.appendChild(el('p',null,p[3]));grid.appendChild(c);
+    });
+    Array.prototype.forEach.call(tabsBox.children,function(b){b.setAttribute('aria-selected',b.dataset.t===tab?'true':'false')});
+  }
+  function pick(t){tab=t;draw()}
+  ['All'].concat(V.map(function(v){return v[0]})).forEach(function(t){
+    var b=el('button','tab',t);b.type='button';b.setAttribute('role','tab');b.dataset.t=t;b.onclick=function(){pick(t)};tabsBox.appendChild(b);
+  });
+  var vg=document.getElementById('ventureGrid');
+  V.forEach(function(v){
+    var n=P.filter(function(p){return p[0]===v[0]}).length;
+    var a=el('a','card');a.href='#products';a.onclick=function(){pick(v[0])};
+    var top=el('div','top');top.appendChild(el('span','venture-name',v[1]));top.appendChild(badge(v[2]));
+    a.appendChild(top);a.appendChild(el('p',null,v[3]));a.appendChild(el('span','more',n+(n===1?' product':' products')+' →'));vg.appendChild(a);
+  });
+  draw();
+})();
+</script>
+</body>
+</html>
