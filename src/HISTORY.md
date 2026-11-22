@@ -275,14 +275,16 @@ topic spread in Quick 10, this file and `src/` added to the repository.
    - Part 1 after Version 187 (`bank_p1_gap7.js`, 45 questions on Specialized returns): 242. What is left in
      Part 1 is mostly form names and definitions. The measure credits at most two rules per question.
    - `node tmp/t741.js` writes the rules still untested to `/tmp/un_p1.json` (and p2, p3)
-   - Part 2: 131 of 281 at the start; 84 after Version 189 (`bank_p2_gap1.js`, 65 questions). Part 3: 139 of 277.
+   - Part 2: 131 of 281 at the start; 84 after Version 189 (`bank_p2_gap1.js`, 65 questions).
+   - Part 3: 139 of 277 at the start; 100 after Version 190 (`bank_p3_gap1.js`, 71 questions).
    - Gap questions in Parts 2 and 3 carry the flag `gp`; test `tmp/t734.js` checks them.
    - Method: about 30 to 40 questions per session, own wording, long story style for at least a
      third, start with Income and assets. Add them to `bank_p1_gap4.js` (or a new file listed in `build.py`). The measure matches words, so
      restate the rule in the explanation using the rule card's own words. Run t740 again and report the new numbers.
 2. Part 2 has 43 story questions since Version 189, so its readiness and Quick 10 use them. Keep adding.
-   Part 3 story questions: see the version log.
-3. Vary the position and length of right answers in new questions.
+   Part 3 has 45 story questions since Version 190.
+3. Keep the right answer from being the longest choice: after drafting a set, list the questions where it is
+   strictly longest and reword until under 30% (t733 and t734 fail above that).
 4. Outside misses still to explain and cover (ids from the owner's outside practice, no
    screenshot yet): #100709 Retirement Income, #100598 Gift Tax, #100172 Property.
 5. Plain box-by-box explanations for more forms: 1041, 1065, 1120-S, 706, 709, 8867 first.
