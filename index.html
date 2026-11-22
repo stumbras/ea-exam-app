@@ -810,6 +810,13 @@ body.course .tabs.bk{display:flex}
 .pmg{gap:10px}.pmh{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center}.pmi{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:4px}.pmq{font-weight:700}.pmq i{font-style:normal;font-weight:600;font-size:12px;color:var(--bad);white-space:nowrap}.pma{color:var(--good);font-weight:700}
 .pcert{width:100%;min-height:50px;margin-top:10px;font-size:16px}
 #certpop{position:fixed;inset:0;z-index:290;background:rgba(5,10,20,.6);display:flex;align-items:flex-end;justify-content:center}.certsheet{width:min(560px,100%);max-height:92vh;overflow:auto;background:var(--surface);color:var(--fg);border-radius:20px 20px 0 0;padding:16px;display:grid;gap:10px}#certcv{width:100%;height:auto;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+#sppop{position:fixed;inset:0;z-index:310;background:rgba(5,10,20,.55);display:flex;align-items:flex-end;justify-content:center}#spbox{gap:8px}.sprow{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line);padding-top:8px}.sprow i{font-style:normal;color:var(--muted);font-size:12.5px;margin-left:8px}
+/* ---- exam path ---- */
+.xp{display:grid;gap:8px}.xprow{display:block;width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;font:inherit;color:inherit}.xprow.ok{border-color:var(--good)}.xprow.now{border:2px solid #ef4444}
+.xprow>summary,.xprow.xpx{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;align-items:center;padding:10px 12px;cursor:pointer;list-style:none}.xprow>summary::-webkit-details-marker{display:none}
+.xprow b{font-size:15px}.xpw{font-size:12px;color:var(--muted);white-space:nowrap}.xpcs{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}
+.xpc{font-style:normal;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--sunk);color:var(--muted)}.xpc.on{background:color-mix(in srgb,var(--good) 20%,var(--surface));color:var(--good)}.xpc.now{background:#ef4444;color:#fff}
+.xpb{padding:0 12px 12px;display:grid;gap:8px}.xpb .row{gap:6px;flex-wrap:wrap}.xpb .btn{flex:1 1 30%}.xptl{padding:0 6px 8px}.xptl>.section:first-child{margin-top:4px}
 </style>
 
 </head><body>
@@ -1844,7 +1851,7 @@ Q(3,2,3,"Written conflict-of-interest consents must be kept for…","36 months a
 Q(3,1,3,"An EA misses the CE requirement for her renewal cycle. She is…","Placed in inactive status",["Disbarred immediately","Fined $10,000","Unaffected"],"Inactive EAs can't practice until they meet the requirements.");
 Q(3,3,3,"A taxpayer missed the 30-day CDP deadline. An equivalent hearing can be requested within…","1 year after the CDP notice",["90 days","3 years","Never"],"Equivalent hearing decisions can't be taken to Tax Court.");
 Q(3,3,3,"The trust fund recovery penalty equals…","100% of unpaid withheld income tax and employee FICA",["50% of all payroll taxes","Employer and employee FICA","25% of withheld tax"],"Assessed against each responsible person who willfully failed to pay.");
-Q(3,1,3,"Accuracy-related penalty rate for a substantial understatement?","20% of the underpayment",["40%","75%","10%"],"40% for gross valuation misstatements; civil fraud is 75%.");
+Q(3,1,3,"Accuracy-related penalty rate for a substantial understatement?","20%",["40%","75%","10%"],"20% of the underpayment. 40% for gross valuation misstatements; civil fraud is 75%.");
 Q(3,1,3,"Civil fraud penalty?","75% of the underpayment due to fraud",["20%","100% of all tax","$5,000"],"The IRS must prove fraud by clear and convincing evidence.");
 Q(3,4,3,"A paid preparer signs Form 1040 by…","Manual or approved electronic signature, with the PTIN entered",["Initials only","No signature if e-filed","The client signs for the preparer"],"Rubber stamps aren't allowed.");
 Q(3,3,3,"An exam isn't finished and the assessment statute ends in 4 months. The IRS will likely ask the taxpayer to sign…","Form 872 to extend the statute",["Form 2848","Form 9465","Form 656"],"Taxpayers can refuse, but the IRS may then issue a notice of deficiency.");
@@ -1852,10 +1859,10 @@ Q(3,3,3,"Interest on a tax underpayment…","Runs until paid; it's abated only i
 Q(3,2,3,"Under §10.34, a practitioner may sign a return with a position that lacks substantial authority if…","It has a reasonable basis and is adequately disclosed",["The client insists","It saves under $1,000","The IRS rarely audits it"],"Otherwise it must not be unreasonable or willful.");
 Q(3,1,3,"Practitioners must exercise due diligence in…","Preparing returns and checking the accuracy of statements to clients and the IRS",["Only electronic filing","Only when the IRS audits","Only for refunds over $5,000"],"§10.22. Relying in good faith on another's work is allowed with reasonable care.");
 Q(3,3,3,"Which notice gives Collection Due Process rights before a levy?","Letter 1058 or LT11 (final notice of intent to levy)",["CP14","CP2000","Letter 525"],"Request the hearing within 30 days.");
-Q(3,4,3,"A preparer must keep a copy of each return or a list of returns prepared (with names, TINs, years) for…","3 years after the close of the return period",["1 year","7 years","10 years"],"§6107. Keep Forms 8879 for 3 years too.");
-Q(2,1,3,"A partner contributes land: FMV $50,000, basis $20,000, no debt. The partnership's basis in the land?","$20,000 (carryover)",["$50,000","$30,000","$0"],"§723: the partnership takes the partner's basis. The partner's outside basis also rises by $20,000.");
+Q(3,4,3,"A preparer must keep a copy of each return or a list of returns prepared (with names, TINs, years) for…","3 years",["1 year","7 years","10 years"],"§6107: 3 years after the close of the return period. Keep Forms 8879 for 3 years too.");
+Q(2,1,3,"A partner contributes land: FMV $50,000, basis $20,000, no debt. The partnership's basis in the land?","$20,000",["$50,000","$30,000","$0"],"§723: a carryover basis. The partnership takes the partner's basis. The partner's outside basis also rises by $20,000.");
 Q(2,1,3,"Partner's outside basis is $10,000. She gets a $15,000 cash distribution (not liquidating).","$5,000 gain; basis reduced to $0",["$15,000 gain","No gain, basis becomes −$5,000","$5,000 loss"],"Cash over basis is gain. Basis can't go below zero.");
-Q(2,1,3,"S corp shareholder: stock basis $8,000, no loans; share of loss $12,000. Deductible now?","$8,000, with $4,000 suspended",["$12,000","$0","$4,000"],"Suspended losses carry forward until basis is restored.");
+Q(2,1,3,"S corp shareholder: stock basis $8,000, no loans; share of loss $12,000. Deductible now?","$8,000",["$12,000","$0","$4,000"],"The loss is limited to basis: $8,000 now, with $4,000 suspended. Suspended losses carry forward until basis is restored.");
 Q(2,2,3,"A business places $3,000,000 of qualifying equipment in service in 2025 and has plenty of income. Maximum §179?","$2,500,000",["$3,000,000","$1,250,000","$0"],"OBBBA: $2,500,000 limit, phased out dollar for dollar above $4,000,000. Bonus depreciation can cover the rest.");
 Q(2,2,3,"A C corporation has $100,000 of taxable income. Federal income tax?","$21,000",["$22,250","$15,000","$34,000"],"Flat 21%.");
 Q(2,2,3,"A vehicle is used 60% for business. Can it qualify for §179?","Yes: qualified business use is over 50%",["No: it needs 100%","No vehicles qualify","Only above 90%"],"Listed property must be used more than 50% for business. SUV limits may apply.");
@@ -1863,15 +1870,15 @@ Q(2,2,3,"Listed property's business use drops to 45% in year 3. Result?","Recapt
 Q(2,2,3,"Accrual C corp accrues a bonus for an unrelated employee on December 31 and pays it March 10. Deduction year?","The year accrued (paid within 2½ months)",["The year paid","Never","Split between years"],"Paid after 2½ months, it's deferred compensation, deducted when paid.");
 Q(2,2,3,"The same bonus goes to a 60% shareholder-employee (accrual corporation, cash-basis employee). Deduction?","When paid (when the related employee includes it)",["When accrued","Never","Half each year"],"§267 matching for related parties.");
 Q(2,1,3,"A corporation distributes property (FMV $40,000, basis $10,000) to a shareholder. The corporation…","Recognizes a $30,000 gain",["Recognizes nothing","Recognizes $40,000","Deducts $10,000"],"§311(b): gain as if sold at FMV. Losses aren't recognized.");
-Q(2,1,3,"The shareholder receiving that property (E&P is ample) has a dividend of…","$40,000 (FMV), with a $40,000 basis in the property",["$10,000","$30,000","$0"],"Dividend equals FMV less any liabilities assumed.");
+Q(2,1,3,"The shareholder receiving that property (E&P is ample) has a dividend of…","$40,000",["$10,000","$30,000","$0"],"Dividend equals FMV less any liabilities assumed. The shareholder's basis in the property is also its FMV, $40,000.");
 Q(2,1,3,"After 2017, a partnership terminates for tax purposes when…","No part of the business continues to be carried on by any partner in a partnership",["50% or more of interests are sold in 12 months","A partner dies","A new partner joins"],"TCJA repealed technical terminations.");
 Q(2,2,3,"Net §1231 gain for the year (after depreciation recapture, no prior §1231 losses) is treated as…","Long-term capital gain",["Ordinary income","Tax-free","Short-term gain"],"Net §1231 losses are ordinary. Watch the 5-year lookback.");
 Q(2,2,3,"2025 excess business loss threshold for a single taxpayer?","$313,000",["$250,000","$626,000","$500,000"],"$626,000 MFJ. Disallowed amounts become NOL carryforwards.");
 Q(2,1,3,"Which ends an S election?","A partnership becomes a shareholder",["Hiring 101 employees","Paying a salary","Making a distribution"],"Ineligible shareholders, over 100 shareholders or a second class of stock all terminate it.");
 Q(2,1,3,"After an S election terminates, a new election generally can't be made for…","5 years (without IRS consent)",["1 year","10 years","Ever"],"Inadvertent termination relief may be available.");
-Q(2,3,3,"A complex trust has DNI of $20,000 and distributes $30,000 to the beneficiary. The beneficiary's taxable amount?","$20,000 (limited to DNI)",["$30,000","$10,000","$0"],"Distributions above DNI are generally tax-free principal.");
+Q(2,3,3,"A complex trust has DNI of $20,000 and distributes $30,000 to the beneficiary. The beneficiary's taxable amount?","$20,000",["$30,000","$10,000","$0"],"The taxable amount is limited to DNI. Distributions above DNI are generally tax-free principal.");
 Q(2,3,3,"Portability lets a surviving spouse use…","The deceased spouse's unused exclusion amount (DSUE)",["The deceased spouse's IRA basis","Double the annual gift exclusion forever","Any unused capital losses"],"Requires a timely Form 706.");
-Q(2,3,3,"Calendar-year Form 990 due date?","May 15 (15th day of the 5th month)",["April 15","March 15","June 15"],"Automatic 6-month extension with Form 8868.");
+
 Q(2,2,3,"Self-employed health insurance deduction is limited to…","Net earnings from that business, and not for months eligible for an employer plan",["$5,000 a year","Premiums for the owner only","Nothing: it's itemized"],"Taken as an adjustment on Schedule 1.");
 Q(2,1,3,"A personal service corporation's federal income tax rate?","A flat 21%, like other C corporations",["35%","Graduated rates","The owner's rate"],"TCJA ended the separate PSC rate.");
 Q(2,2,3,"Since 2018, like-kind exchanges (§1031) apply only to…","Real property held for business or investment",["Vehicles","Equipment","Stocks"],"Personal property exchanges are taxable.");
@@ -2002,7 +2009,7 @@ Q(2,1,3,"For an S election to take effect for the current calendar year, Form 25
 Q(2,2,3,"A calendar-year corporation's estimated tax installments are due on the 15th day of…","April, June, September and December",["April, June, September and January","January, April, July and October","March, June, September and December"],"4th, 6th, 9th and 12th months. Individuals use April, June, September and January. Corporations must pay estimates if tax is expected to be $500 or more.");
 Q(2,2,3,"Forms W-2 must be furnished to employees and filed with the SSA by…","January 31",["February 28","March 31","April 15"],"January 31 for both. Form 1099-NEC is also due January 31.");
 Q(2,2,3,"Form 941 for the first quarter (January to March) is due…","April 30",["April 15","March 31","May 15"],"The last day of the month after the quarter ends: April 30, July 31, October 31, January 31.");
-Q(2,3,3,"A calendar-year exempt organization's Form 990 is due…","May 15",["March 15","April 15","June 15"],"15th day of the 5th month after year end. Failing to file for three consecutive years automatically revokes exempt status.");
+Q(2,3,3,"A calendar-year exempt organization's Form 990 is due…","May 15",["March 15","April 15","June 15"],"15th day of the 5th month after year end. Form 8868 gives an automatic 6-month extension. Failing to file for three consecutive years automatically revokes exempt status.");
 // ---- "which of the following" comparisons ----
 Q(2,1,3,"Which entity is NOT a pass-through entity?","C corporation",["S corporation","Partnership","Single-member LLC taxed as a sole proprietorship"],"A C corporation pays its own tax (21%); owners are taxed again on dividends. The others pass income through to owners.");
 Q(2,1,3,"Which is a requirement to be an S corporation?","No more than 100 shareholders and only one class of stock",["At least 2 shareholders","Shareholders may be nonresident aliens","It may be a foreign corporation"],"S corporation: domestic, 100 or fewer shareholders, one class of stock (voting differences allowed), eligible shareholders only (no nonresident aliens, partnerships or corporations).");
@@ -2039,7 +2046,7 @@ Q(3,3,3,"After a statutory notice of deficiency is mailed to a U.S. address, the
 Q(3,3,3,"A taxpayer must request a Collection Due Process hearing within how many days of the levy notice?","30 days",["10 days","60 days","90 days"],"30 days to keep the right to go to Tax Court. A late request (within 1 year) gets an equivalent hearing with no court review.");
 Q(3,3,3,"The IRS generally has how long to COLLECT a tax after it is assessed?","10 years",["3 years","6 years","No limit"],"The collection statute expiration date (CSED) is 10 years from assessment. Assessment itself is generally 3 years from filing.");
 Q(3,1,3,"A practitioner must keep copies of written conflict-of-interest consents for at least…","36 months after the representation ends",["12 months","6 years","Indefinitely"],"Circular 230 §10.29: informed consent confirmed in writing within 30 days, kept 36 months from the conclusion of the representation.");
-Q(3,1,3,"A tax return preparer must keep a copy of each return prepared, or a list of the taxpayers' names and identification numbers, for…","3 years after the close of the return period",["1 year","7 years","Until the client asks for it"],"3 years. The return period is the 12 months beginning July 1.");
+Q(3,1,3,"A tax return preparer must keep a copy of each return prepared, or a list of the taxpayers' names and identification numbers, for…","3 years",["1 year","7 years","Until the client asks for it"],"3 years after the close of the return period. The return period is the 12 months beginning July 1.");
 Q(3,1,3,"An enrolled agent's renewal of enrollment is required…","Every 3 years",["Every year","Every 2 years","Every 5 years"],"Every 3 years, on a cycle set by the last digit of the Social Security number, using Form 8554.");
 Q(3,4,3,"An e-filed return is rejected. The ERO must take reasonable steps to tell the taxpayer within…","24 hours",["48 hours","5 business days","10 days"],"24 hours. If the return cannot be fixed and re-transmitted, a paper return is timely if filed by the later of the due date or 10 calendar days after the rejection notice.");
 Q(3,2,3,"The third-party designee authorization (the checkbox on the return) expires…","One year from the due date of the return, without extensions",["When the return is processed","3 years from filing","When the taxpayer dies only"],"It lets the designee discuss processing of that return only. It is not a power of attorney.");
@@ -2342,7 +2349,7 @@ Q(3,1,1,"Under Circular 230, which is incompetence or disreputable conduct?","Co
 Q(3,1,1,"Which sanction can be imposed on an EA under Circular 230?","Censure",["Imprisonment up to 3 years","A monetary penalty exceeding the gross income from the conduct","Only one sanction at a time"],"Sanctions: censure, suspension, disbarment, monetary penalty (can be combined).");
 Q(3,1,1,"When advertising, an EA may describe the designation as:","Admitted to practice before the Internal Revenue Service",["Certified to practice before the IRS","Enrolled as a representative of the IRS","Licensed to practice before the IRS"],"§10.30(a)(1).");
 Q(3,1,1,"How many CE hours must an EA complete each 3-year cycle?","72, with at least 16 per year including 2 of ethics",["60, with 20 per year","72, with no annual minimum","48, with 16 per year"],"72 hours every 3 years, with at least 16 hours in each year, and 2 of those 16 must be ethics.");
-Q(3,1,1,"How long must a preparer keep a copy of each return or a list of returns prepared?","3 years after the close of the return period",["1 year","4 years","7 years"],"Section 6107: keep a copy of each return, or a list of taxpayers and returns, for 3 years after the close of the return period (the 12 months starting July 1).");
+Q(3,1,1,"How long must a preparer keep a copy of each return or a list of returns prepared?","3 years",["1 year","4 years","7 years"],"Section 6107: keep a copy of each return, or a list of taxpayers and returns, for 3 years after the close of the return period (the 12 months starting July 1).");
 Q(3,1,1,"Which is a source of substantial authority?","Treasury regulations",["IRS publications","IRS forms and instructions","www.irs.gov"],"Reg. §1.6662-4(d)(3)(iii).");
 Q(3,1,1,"What is the §6694(a) penalty for an unreasonable position?","Greater of $1,000 or 50% of the income derived",["$500 per return","Greater of $5,000 or 75%","20% of the understatement"],"§6694(b) willful/reckless: greater of $5,000 or 75%.");
 Q(3,1,1,"A conflict of interest consent must be confirmed in writing no later than:","30 days after informed consent is given",["60 days","At the end of the engagement","10 days"],"§10.29(b). Retain for 36 months after representation ends.");
@@ -3328,7 +3335,7 @@ Q(2,3,2,"What does the income distribution deduction on Form 1041 do?","Shifts t
 Q(2,3,2,"Who reports the income of a grantor trust where the grantor keeps the power to revoke it?","The grantor, on his or her own Form 1040",["The trust, at trust tax rates on Form 1041","The beneficiaries, as distributions are paid","Nobody until the grantor's death"],"A revocable trust is a grantor trust: the grantor is treated as the owner of the income and deductions. The trustee may use an optional reporting method instead of a full Form 1041.");
 Q(2,3,3,"Taxable income of a trust for 2025 is $20,000, all ordinary income kept by the trust. Which bracket fact matters most?","Trusts reach the 37% rate at only $15,650 of income",["Trusts use the same brackets as a single person","Trusts pay a flat 21% rate like a corporation","Trusts are taxed at 37% only above $626,350"],"Compressed brackets mean income kept in a trust is taxed at the top rate very quickly. For 2025 the 37% bracket for estates and trusts starts above $15,650. Distributing income moves it to the beneficiaries' usually lower brackets.");
 Q(2,3,1,"Which form does a small exempt organization with gross receipts normally of $50,000 or less file each year?","Form 990-N, the e-Postcard",["Form 990-EZ, the short form","Form 990-T, for business income","Form 1023-EZ, every year"],"Form 990-EZ is for gross receipts under $200,000 and assets under $500,000; larger organizations file Form 990. Missing three years in a row automatically revokes exempt status.");
-Q(2,3,2,"A calendar-year exempt organization's Form 990 is due:","May 15 of the following year",["April 15 of the following year","March 15 of the following year","October 15 of the following year"],"Form 990 is due by the 15th day of the 5th month after the year ends. Form 8868 gives an automatic 6-month extension.");
+
 Q(2,3,2,"A charity earns $15,000 of gross income from running a business unrelated to its exempt purpose. It must:","File Form 990-T, because unrelated business gross income is $1,000 or more",["Report it only on Form 990, because exempt groups owe no income tax","Lose its exempt status for the year in which it earned the income","File Form 1120 instead of Form 990 for the year of the activity"],"Unrelated business taxable income is taxed at corporate rates (21%) for a corporation. Form 990-T is required when gross income from an unrelated trade or business is $1,000 or more.");
 Q(2,3,2,"Which organization may use Form 1023-EZ to apply for 501(c)(3) status?","One projecting annual receipts of $50,000 or less and assets of $250,000 or less",["Any church or school, whatever its size, receipts or assets","Any organization with fewer than 25 members and no employees","One projecting annual receipts of $500,000 or less and no paid staff"],"Form 1023-EZ must be filed online through Pay.gov. Some organizations, such as those with foreign mailing addresses, cannot use it.");
 Q(2,3,2,"A farmer gets at least 2/3 of gross income from farming. How can the farmer avoid an estimated tax penalty for 2025?","Pay all estimated tax by January 15, 2026, or file and pay by March 2, 2026",["Make four equal payments on the same dates as every other taxpayer","Pay 50% by June 15, 2025 and the balance with the return in April","Farmers never owe an estimated tax penalty of any kind"],"Qualified farmers and fishermen can make one estimated payment by January 15 or skip it entirely by filing the return and paying the whole tax by March 1 (March 2 in 2026 because March 1 is a Sunday). Their required payment is 66⅔% of the current year's tax.");
@@ -16245,7 +16252,12 @@ function bkGo(n){if(n.k==="les"){part=BK;les={unit:null,topic:null,idx:0};view="
 
 /* ---------- the welcome screen ---------- */
 const BKSTAGES=[[1,"💵","Money, paychecks and the tax system","How money moves, gross to net pay, who collects which tax."],[2,"📒","Bookkeeping","Debits and credits, the five account types, month-end, statements."],[3,"💻","QuickBooks Online","The screens a bookkeeper uses every day, start to finish."],[4,"🧾","Individual tax returns","Form 1040: income, deductions, credits, refund or balance due."],[5,"🏢","Business taxes and the tax office","Schedule C, payroll forms, ethics, privacy and security."],[6,"🚀","Real work","Simulators, practice returns, and running Solving Life LLC."]];
-function renderBkLand(){if(typeof touchDay==="function")touchDay();const t=$("#tabs");if(t)t.innerHTML="";const e=esc,a=bkStats("all"),nm=CNAME(),sk=bkSkillVals(),earned=sk.filter(v=>v>=1).length;
+/* second item of today's plan: fits where the learner is. Before journal entries have been taught (Bootcamp step 4),
+   it is the current module's flashcards, not the Journal Entry Lab or the calculation workout. */
+function bkPlan2(n){let je=true;try{je=typeof campIn==="function"?!!campIn("bk",()=>(campS().st.je1||{}).ok):true}catch(_){}
+  if(!je){const m=n.m||1;return n.k==="cards"?null:["🃏",`10 flashcards · ${PARTS[BK].doms[m][0]}`,"cards"+m]}
+  return bkJel().ok<12&&n.k!=="jel"?["⚖️","Record 5 entries in the Journal Entry Lab","jel"]:["🏋️","One workout round","workout"]}
+function renderBkLand(){if(typeof touchDay==="function")touchDay();const t=$("#tabs");if(t&&CLOCK())t.innerHTML="";const e=esc,a=bkStats("all"),nm=CNAME(),sk=bkSkillVals(),earned=sk.filter(v=>v>=1).length;
   const n=bkNext(),due=dueList(BK,"all").length,started=a.read+a.known+a.right>0;
   const stagePct=m=>m<6?bkStats(m).pct/100:(bkTax()+bkQt(/./)+bkFirm()+bkP10())/4;
   const cur=n.m||6;
@@ -16259,7 +16271,7 @@ function renderBkLand(){if(typeof touchDay==="function")touchDay();const t=$("#t
     ["workout","🏋️","Daily workout","Payroll, reconciliations, sales tax, Schedule C. New numbers each time, 4 choices, taught step by step.","10 min"],
     ["cards","🧠","Flashcards",due?`${due} cards are due today. Two minutes keeps them in memory.`:"Recall, flip, rate. Missed cards come back sooner.",`${a.known} of ${a.cards} known`]]
    .map(([k,ic,t,d,c])=>`<button class="bkl-tool" data-bkl="tool" data-k="${k}"><span class="bkl-ti">${ic}</span><b>${e(t)}</b><span class="small">${e(d)}</span><span class="bkl-tc">${e(c)}</span></button>`).join("");
-  const plan=[due?["🧠",`Review ${Math.min(due,15)} due flashcards`,"review"]:null,["▶",n.t,"next"],bkJel().ok<12&&n.k!=="jel"?["⚖️","Record 5 entries in the Journal Entry Lab","jel"]:["🏋️","One workout round","workout"]].filter(Boolean);
+  const plan=[due?["🧠",`Review ${Math.min(due,15)} due flashcards`,"review"]:null,["▶",n.t,"next"],bkPlan2(n)].filter(Boolean);
   $("#view").innerHTML=`<section class="bkl">
    <div class="bkl-hero">
     <div class="bkl-hi">${nm?`${started?"Welcome back":"Welcome"}, ${e(nm)} 👋`:started?"Welcome back 👋":"Welcome 👋"}</div>
@@ -16283,7 +16295,7 @@ function renderBkLand(){if(typeof touchDay==="function")touchDay();const t=$("#t
   </section>`}
 function bklClick(d){
   if(d.bkl==="go"||d.k==="next"){bkGo(bkNext());return true}
-  if(d.bkl==="plan"){if(d.k==="review")bkGo({k:"review"});else if(d.k==="jel")bkGo({k:"jel"});else bkGo({k:d.k});return true}
+  if(d.bkl==="plan"){if(d.k==="review")bkGo({k:"review"});else if(d.k==="jel")bkGo({k:"jel"});else if(/^cards\d$/.test(d.k))bkGo({k:"cards",m:+d.k.slice(5)});else bkGo({k:d.k});return true}
   if(d.bkl==="mod"){const m=+d.m;if(m<6){part=BK;filt=m;view="home"}else{part=BK;filt="all";view="home"}render();window.scrollTo(0,0);return true}
   if(d.bkl==="tool"){const k=d.k;if(k==="cards"){part=BK;filt="all";startSession("cards",15);return true}
     if(k==="jelab")return bkGo({k:"jel"}),true;if(k==="qbo")return bkGo({k:"qbo"}),true;if(k==="taxsim")return bkGo({k:"tax"}),true;if(k==="firm")return bkGo({k:"firm"}),true;bkGo({k:"workout"});return true}
@@ -17367,6 +17379,63 @@ Object.assign(CAMPS,{
  t2:{id:"t2",key:"campt2",mod:5,ic:"🏢",cheat:false,name:"Business Tax Bootcamp",short:"Business Tax Bootcamp",tag:"Module 5 · learn it, then do it",co:"",steps:CAMP_T2,cap:false,
   blurb:"Which return a business files, Schedule C, self-employment tax, payroll forms and how owners are paid, in five short steps.",tile:"Entities, Schedule C, self-employment tax, payroll forms, owner pay.",after:{t:"Now do it for real in the practice tax software",go:"tax"}}});
 
+/* ================= Exam Path: a guided route through each exam section =================
+   Review finding: a new learner's red "Do this next" button started with exam-style questions, before any topic had been
+   learned, and the section main page showed drills but no map of the syllabus.
+   The path walks the section's topics in blueprint order. For each topic: Learn (meet at least 80% of its facts), then
+   Practice (at least 30 of its questions, or 30% of them if the topic is small, with 70% right). After every topic:
+   the exam-style pack (where one exists), a mock exam, then a Strong pass per topic (80% right with 60% of its questions seen).
+   Two daily jobs can come first: reviews that are due (25 or more) and open misses (8 or more).
+   Every row can be opened to start any stage out of order. Nothing here changes how answers are scored or scheduled. */
+function xpDom(d){const its=BANK.filter(i=>i.p==part&&i.d==d),f=its.filter(i=>i.t==="f"),q=its.filter(i=>i.t==="q"),fs=f.filter(i=>S.it[i.id]).length,qs=q.filter(i=>S.it[i.id]).length,st=domStats(part,d);
+  const need=Math.min(30,Math.max(8,Math.ceil(q.length*0.3))),acc=st.n>=8?st.acc:null,learned=!f.length||fs/f.length>=0.8,practiced=learned&&(!q.length||(qs>=Math.min(need,q.length)&&acc!=null&&acc>=0.7)),strong=practiced&&(!q.length||(qs/q.length>=0.6&&st.n>=20&&st.acc>=0.8));
+  return{d,name:PARTS[part].doms[d][0],w:PARTS[part].doms[d][1],f:f.length,fs,q:q.length,qs,need:Math.min(need,q.length),acc,learned,practiced,strong}}
+function xpState(){const D=Object.keys(PARTS[part].doms).map(xpDom),xs=BANK.filter(i=>i.p==part&&i.xs),xsNew=xs.filter(i=>!S.it[i.id]).length,mocks=S.hist.filter(h=>h.p==part&&h.m==="mock"),steps=[];
+  D.forEach(x=>{steps.push({k:"learn",x,done:x.learned});steps.push({k:"prac",x,done:x.practiced})});
+  if(xs.length)steps.push({k:"exam",done:!xsNew,xsNew,xs:xs.length});
+  steps.push({k:"mock",done:mocks.length>0,last:mocks.length?mocks[mocks.length-1]:null});
+  D.forEach(x=>steps.push({k:"strong",x,done:x.strong}));
+  return{D,steps,done:steps.filter(s=>s.done).length,xs:xs.length,xsNew,mocks}}
+function xpLabel(s){const pc=v=>Math.round(v*100)+"%";
+  if(s.k==="learn")return{t:`Learn: ${s.x.name}`,d:`${s.x.fs} of ${s.x.f} facts met · new facts are taught in small groups, then asked`,mode:"easy",filt:s.x.d};
+  if(s.k==="prac")return{t:`Practice: ${s.x.name}`,d:`${s.x.qs} of ${s.x.need} questions tried${s.x.acc!=null?" · "+pc(s.x.acc)+" right":""} · 70% moves you on`,mode:"quiz",filt:s.x.d};
+  if(s.k==="exam")return{t:"Exam-style pack",d:`${s.xsNew} of ${s.xs} questions written like the real test are still new`,mode:"exam",filt:"all"};
+  if(s.k==="mock")return{t:`Take a mock exam · ${xpMockN()} questions`,d:"Timed, mixed topics, scored like the real thing. It shows where to go back.",mock:1};
+  return{t:`Make it strong: ${s.x.name}`,d:`${s.x.acc!=null?pc(s.x.acc)+" right":"not enough answers yet"} · ${s.x.qs} of ${s.x.q} questions seen · aim for 80%`,mode:"hard",filt:s.x.d}}
+function xpNext(){const st=xpState(),due=dueList(part,"all").length,miss=missedPool(part,"all").length,i=st.steps.findIndex(s=>!s.done),tot=st.steps.length;
+  if(due>=25)return{first:1,t:`Review ${due} facts that are due`,d:"Do these before new material, so what you learned stays learned.",mode:"easy",filt:"all",st,i,tot};
+  if(miss>=8)return{first:1,t:`Fix your ${miss} misses`,d:"Questions you got wrong and have not yet answered right.",mode:"missed",filt:"all",st,i,tot};
+  if(i<0){const w=st.D.slice().sort((a,b)=>(a.acc??0)-(b.acc??0))[0];return{t:"Keep it sharp: smart drill",d:`Every step of the path is done. Weakest topic right now: ${w?w.name:""}.`,qd:"smart",st,i:tot,tot}}
+  return Object.assign({st,i,tot,step:st.steps[i]},xpLabel(st.steps[i]))}
+function xpRun(a){if(a.qd){const b=document.createElement("button");b.dataset.qd=a.qd;if(typeof quickClick==="function"&&quickClick(b))return;startSession("qd",S.set.qd||10);return}
+  if(a.mock){startSession("mock",xpMockN());return}
+  if(a.mode==="easy"&&a.filt!=="all"&&xpLearn(a.filt))return;
+  const f0=filt;filt=a.filt;try{startSession(a.mode,a.mode==="exam"?(S.set.qd||10):undefined)}finally{filt=f0}}
+/* a Learn step teaches facts: up to 8 due reviews of the topic, then up to 12 new facts in groups of four (shown first, then asked, then asked again in a harder form) */
+function xpLearn(d){try{const t=today(),pool=BANK.filter(i=>i.p==part&&i.d==d&&i.t==="f"),due=shuffle(pool.filter(i=>{const r=S.it[i.id];return r&&r[1]<=t})).slice(0,8),nw=pool.filter(i=>!S.it[i.id]).sort((a,b)=>ORDER[a.id]-ORDER[b.id]).slice(0,12);
+  if(!nw.length)return false;touchDay();const entries=due.map(i=>mkEntry(i));
+  for(let k=0;k<nw.length;k+=4){const ch=nw.slice(k,k+4);entries.push({learn:ch.map(i=>i.id),id:ch[0].id});shuffle(ch.slice()).forEach(i=>entries.push(mkEntry(i)))}
+  if(nw.length>=2)shuffle(nw.slice()).forEach(i=>entries.push({id:i.id,lazy:2,final:true}));
+  newSess("easy",null,0,entries,nw.map(i=>i.id));return true}catch(_){return false}}
+try{document.addEventListener("toggle",e=>{const t=e.target;if(t&&t.classList&&t.classList.contains("xprow")&&t.id)OPEN[t.id]=t.open},true)}catch(_){}
+function xpMockN(){return Math.min(25,BANK.filter(i=>i.p==part&&i.t==="q").length)}
+doNextHtml=function(){try{if(PARTS[part].bk)return"";const a=xpNext();return `<button class="donext" data-xp="go"><span class="dn1">👉 ${a.first?"DO THIS FIRST TODAY":"DO THIS NEXT"}</span><b>${a.first||a.i>=a.tot?"":`Step ${a.i+1} of ${a.tot} · `}${esc(a.t)}</b><span class="dn2">${esc(a.d)}</span><span class="dn3">Tap here ▶</span></button>`+(PARTS[part].x==="notary"&&typeof notaryPathHtml==="function"?notaryPathHtml():"")}catch(_){return""}};
+function xpHtml(){try{if(PARTS[part].bk)return"";const st=xpState(),cur=st.steps.findIndex(s=>!s.done),cs=cur>=0?st.steps[cur]:null,e=esc,chip=(on,now,t)=>`<i class="xpc${on?" on":""}${now?" now":""}">${on?"✓ ":""}${t}</i>`;
+  const row=x=>{const now=cs&&cs.x&&cs.x.d===x.d,op=OPEN["xp"+x.d]!==undefined?OPEN["xp"+x.d]:false;return `<details class="xprow${x.strong?" ok":""}${now?" now":""}" id="xp${x.d}" ${op?"open":""}><summary><b>${e(x.name)}</b><span class="xpw">${x.w}% of the exam</span><span class="xpcs">${chip(x.learned,now&&cs.k==="learn","Learn")}${chip(x.practiced,now&&cs.k==="prac","Practice")}${chip(x.strong,now&&cs.k==="strong","Strong")}</span></summary>
+    <div class="xpb"><div class="small muted">${x.fs} of ${x.f} facts met · ${x.qs} of ${x.q} questions tried${x.acc!=null?" · "+Math.round(x.acc*100)+"% right":""}</div><div class="row"><button class="btn small" data-xp="learn" data-d="${x.d}">Learn facts</button><button class="btn small" data-xp="prac" data-d="${x.d}">Practice questions</button><button class="btn small" data-xp="hard" data-d="${x.d}">Hard questions</button></div></div></details>`};
+  const ex=st.steps.find(s=>s.k==="exam"),mk=st.steps.find(s=>s.k==="mock");
+  return `<section class="section xp"><h3 style="margin:0">Your study path · ${e(PARTS[part].name||pl(part))}</h3><div class="small muted">${st.done} of ${st.steps.length} steps done. Topics are in the exam's own order. Tap a topic to study it out of turn.</div><div class="cbar"><i style="width:${Math.round(st.done/st.steps.length*100)}%"></i></div>
+   ${st.D.map(row).join("")}
+   ${ex?`<button class="xprow xpx${ex.done?" ok":""}${cs===ex?" now":""}" data-xp="exam"><b>${ex.done?"✓ ":""}Exam-style pack</b><span class="xpw">${ex.xs-ex.xsNew} of ${ex.xs} done</span></button>`:""}
+   <button class="xprow xpx${mk.done?" ok":""}${cs===mk?" now":""}" data-xp="mock"><b>${mk.done?"✓ ":""}Mock exam</b><span class="xpw">${mk.last?`last: ${mk.last.c} of ${mk.last.n} right`:"not taken yet"}</span></button></section>`}catch(_){return""}}
+function xpTools(inner){if(!inner)return"";try{if(PARTS[part].bk)return inner}catch(_){}return `<details class="more" id="xptools" ${OPEN.xptools?"open":""}><summary><b>More ways to practice</b><span>Quick drill, one-tap decision rounds, step-by-step returns</span></summary><div class="xptl">${inner}</div></details>`}
+const xpExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.xp===undefined)return xpExtraClick0(b);const a=d.xp;
+  if(a==="go"){xpRun(xpNext());return true}
+  if(a==="exam"){xpRun({mode:"exam",filt:"all"});return true}
+  if(a==="mock"){xpRun({mock:1});return true}
+  if(a==="learn"||a==="prac"||a==="hard"){xpRun({mode:a==="learn"?"easy":a==="prac"?"quiz":"hard",filt:isNaN(+d.d)?d.d:+d.d});return true}
+  return true};
+
 /* ================= Study extras: glossary page, my terms, mistake notebook, Bootcamp certificate =================
    - Terms page (view "gloss"): every term the tap-to-explain glossary knows, searchable, plus the list of terms this learner
      has looked up, with a two-minute self-check that removes a term once it is known.
@@ -17382,9 +17451,14 @@ function plusMiss(){const D=PARTS[part].doms,all=missedPool(part,"all"),g={};all
 function plusStrip(){try{const nm=missedPool(part,"all").length,nt=plusMine().length;return `<div class="pstrip"><button class="btn small" data-plus="mistakes">📓 My mistakes${nm?` <b>${nm}</b>`:""}</button><button class="btn small" data-plus="gloss">📖 Terms${nt?` <b>${nt}</b>`:""}</button></div>`}catch(_){return ""}}
 function plusItemText(i){return i.t==="q"?i.s:i.t==="f"?i.f:(i.name||i.s||"Calculation")}
 function plusItemAns(i){return i.t==="q"?(i.opts?i.opts[i.ans]:""):i.t==="f"?i.b:""}
-function plusListHtml(){const T=plusTerms(),q=(pv.q||"").trim().toLowerCase(),keys=Object.keys(T).filter(k=>!q||k.toLowerCase().includes(q)||T[k][0].toLowerCase().includes(q)).sort((a,b)=>a.toLowerCase()<b.toLowerCase()?-1:1);
+/* which glossary terms actually occur in this section's lessons, facts, questions and explanations (found once per section) */
+const plusUsedCache={};
+function plusUsed(){if(plusUsedCache[part])return plusUsedCache[part];const set={};try{if(!glRe)return set;const scan=t=>{if(!t)return;glRe.lastIndex=0;let m;while((m=glRe.exec(t))){const k=glKey(m[0]);if(k)set[k]=1}};
+  BANK.forEach(i=>{if(i.p!=part)return;scan(i.s);scan(i.f);scan(i.b);scan(i.ex);if(i.opts)i.opts.forEach(o=>scan(String(o)))});(UNITS[part]||[]).forEach(u=>scan(JSON.stringify(u.s)))}catch(_){}return plusUsedCache[part]=set}
+function plusListHtml(){const T=plusTerms(),q=(pv.q||"").trim().toLowerCase(),U=plusUsed(),all=Object.keys(T),some=all.filter(k=>U[k]).length>=3&&!pv.all&&!q;
+  const keys=all.filter(k=>(!some||U[k])&&(!q||k.toLowerCase().includes(q)||T[k][0].toLowerCase().includes(q))).sort((a,b)=>a.toLowerCase()<b.toLowerCase()?-1:1);
   if(!keys.length)return `<div class="small muted" style="padding:12px">No term matches "${esc(pv.q)}".</div>`;
-  return keys.map(k=>`<button class="prow" data-plus="term" data-k="${esc(k)}"><b>${esc(k)}</b><span>${esc(T[k][0])}</span></button>`).join("")}
+  return keys.map(k=>`<button class="prow" data-plus="term" data-k="${esc(k)}"><b>${esc(k)}</b><span>${esc(T[k][0])}</span></button>`).join("")+(some?`<button class="prow" data-plus="allterms" style="justify-items:start"><b>Show all ${all.length}</b><span>These ${keys.length} are the ones used in this section.</span></button>`:"")}
 function renderPlus(){const e=esc;let h="";if(!pv)pv={k:view,q:"",open:{}};
   if(view==="gloss"){const mine=plusMine(),G=S.set.gls||{};
     if(pv.rev){const k=pv.rev.list[pv.rev.i],g=glGet(k);
@@ -17393,7 +17467,7 @@ function renderPlus(){const e=esc;let h="";if(!pv)pv={k:view,q:"",open:{}};
         <div class="row"><button class="btn pri" data-plus="revk" style="flex:1">I knew it · remove from my list</button><button class="btn" data-plus="revn" style="flex:1">Keep it on my list</button></div>`
         :`<div class="small muted">Say what it means, then check.</div><button class="btn pri" data-plus="revshow" style="width:100%;min-height:50px">Show the meaning</button>`}</div>
        <button class="btn ghost small" data-plus="revend" style="margin-top:10px">Stop</button></section>`}
-    else h=`<section class="section"><div class="sesshead"><div><h2>Terms and abbreviations</h2><div class="small muted">${Object.keys(plusTerms()).length} terms for this section. Tap one for its meaning. In lessons and questions they have a dotted underline.</div></div></div>
+    else h=`<section class="section"><div class="sesshead"><div><h2>Terms and abbreviations</h2><div class="small muted">The terms used in this section. Tap one for its meaning. In lessons and questions they have a dotted underline.</div></div></div>
       ${mine.length?`<div class="card" style="gap:8px"><b>Looked up by you · ${mine.length}</b><div class="pchips">${mine.slice(0,40).map(k=>`<button class="btn small" data-plus="term" data-k="${e(k)}">${e(k)}${G[k].n>1?` <i>${G[k].n}×</i>`:""}</button>`).join("")}</div><button class="btn pri" data-plus="rev">Check myself on these · about ${Math.max(1,Math.round(mine.length*0.2))} min</button></div>`:`<div class="notice" style="margin-top:10px">Terms you tap while studying are collected here, so you can check yourself on them later.</div>`}
       <input id="plusq" class="pq" type="search" placeholder="Search: MAGI, basis, 8867…" value="${e(pv.q||"")}" autocomplete="off">
       <div class="plist" id="pluslist">${plusListHtml()}</div></section>`}
@@ -17408,6 +17482,7 @@ function plusClick(d){const a=d.plus;
   if(a==="mistakes"||a==="gloss"){plusOpen(a);return true}
   if(a==="term"){glQuiet=view==="gloss"&&!!(pv&&pv.rev);glOpen(d.k,d.k);glQuiet=false;return true}
   if(a==="more"){pv.open[d.d]=!pv.open[d.d];render();return true}
+  if(a==="allterms"){pv.all=true;const l=document.getElementById("pluslist");if(l)l.innerHTML=plusListHtml();return true}
   if(a==="fix"){filt=d.d==="all"?"all":(isNaN(+d.d)?d.d:+d.d);startSession("missed",10);return true}
   if(a==="rev"){pv.rev={list:plusMine().slice(0,25),i:0,show:false};render();window.scrollTo(0,0);return true}
   if(a==="revshow"){pv.rev.show=true;render();return true}
@@ -17467,6 +17542,41 @@ function ebHook(){try{const s=sess;if(view!=="session"||!s||s.mode==="mock"||s.p
   else if(e.pick>=0){const d=document.createElement("div");d.className="cfb "+(e.o[e.pick][1]?"ok":"bad");d.style.marginBottom="8px";d.innerHTML=e.o[e.pick][1]?"<b>✓ That is the reason.</b> Here it is again with the answer:":"<b>✗ That reason belongs to a different question.</b> Read the right one:";box.parentNode.insertBefore(d,box)}}catch(_){}}
 const plusRenderSession0=renderSession;renderSession=function(){plusRenderSession0();ebHook()};
 const plusClick0=plusClick;plusClick=function(d){if(d.plus==="eb"){try{if(sess&&sess.eb){sess.eb.pick=+d.v;const E=S.set.ebs=S.set.ebs||{n:0,ok:0};if(+d.v>=0){E.n++;if(sess.eb.o[+d.v][1])E.ok++;persist()}}}catch(_){}render();return true}return plusClick0(d)};
+
+/* ================= Study progress safety =================
+   Review finding: months of study progress lived in one browser storage entry, with only a manual export. If the browser
+   cleared its storage (low disk space, "clear site data", a reinstall) everything was gone.
+   Now: 1) the app asks the browser to keep its storage (persistent storage);
+        2) a copy of the whole progress goes into a second store (IndexedDB) once a day and whenever the app is closed,
+           and the last 7 days are kept;
+        3) on start, if a kept copy holds clearly more progress than what is on the device, a sheet offers to restore it;
+        4) Settings and history lists the copies with a Restore button each.
+   The kids' progress is never rolled back by a restore: whichever side has more is kept. */
+function spScore(s){try{const c=x=>Object.keys(x||{}).length,st=s.set||{};let n=c(s.it)+(s.hist||[]).length*2+c(st.les)*3+c(st.gls);["camp","campqb","campt1","campt2"].forEach(k=>{if(st[k])n+=c(st[k].st)*10});return n}catch(_){return 0}}
+function spDb(fn,fail){try{const r=indexedDB.open("studySave",1);r.onupgradeneeded=()=>{try{r.result.createObjectStore("s")}catch(_){}};r.onsuccess=()=>{try{fn(r.result)}catch(_){fail&&fail()}};r.onerror=()=>{fail&&fail()}}catch(_){fail&&fail()}}
+let spLast=0;
+function spSnap(force){try{if(!S.upd||(!force&&S.upd<=spLast))return;const sc=spScore(S);if(sc<5)return;const key="d"+today(),txt=JSON.stringify(S);spLast=S.upd;
+  spDb(db=>{const tx=db.transaction("s","readwrite"),os=tx.objectStore("s"),g=os.get(key);g.onsuccess=()=>{const old=g.result;if(old&&old.sc>sc*1.25+25&&old.t>((S.set&&S.set.spKeep)||0))return; /* a much smaller state never replaces today's copy unless the learner chose to keep it */
+    os.put({t:Date.now(),sc,s:txt},key)};const kq=os.getAllKeys();kq.onsuccess=()=>{const ks=(kq.result||[]).filter(k=>/^d\d+$/.test(k)).sort((a,b)=>+a.slice(1)-+b.slice(1));while(ks.length>7)os.delete(ks.shift())}})}catch(_){}}
+function spList(cb){spDb(db=>{const os=db.transaction("s").objectStore("s"),out=[],cq=os.openCursor();cq.onsuccess=()=>{const c=cq.result;if(c){out.push({k:c.key,t:c.value.t,sc:c.value.sc});c.continue()}else cb(out.sort((a,b)=>b.t-a.t))};cq.onerror=()=>cb([])},()=>cb([]))}
+function spRestore(key,done){spDb(db=>{const g=db.transaction("s").objectStore("s").get(key);g.onsuccess=()=>{try{const v=g.result,o=JSON.parse(v.s),kidsNow=S.kids;
+    try{localStorage.setItem("ea-drill-before-restore",JSON.stringify(S))}catch(_){}
+    S=Object.assign(blank(),o);try{if(kidsNow&&typeof kProgScore==="function"&&kProgScore(kidsNow)>=kProgScore(S.kids))S.kids=kidsNow}catch(_){}
+    persist();spLast=S.upd;done&&done(true)}catch(_){done&&done(false)}};g.onerror=()=>done&&done(false)},()=>done&&done(false))}
+function spWhen(t){const d=new Date(t);return d.toLocaleDateString("en-US",{month:"short",day:"numeric"})+", "+d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})}
+function spGuard(){spList(list=>{try{const cur=spScore(S),after=(S.set&&S.set.spKeep)||0,best=list.filter(x=>x.t>after).sort((a,b)=>b.sc-a.sc)[0];if(!best||best.sc<=cur*1.25+25)return;if(document.getElementById("sppop"))return;
+  const o=document.createElement("div");o.id="sppop";o.innerHTML=`<div class="glsheet"><div class="glgrab"></div><div class="glt" style="font-size:20px">A saved copy has more progress</div><p>This device shows <b>${cur}</b> points of study progress. An automatic copy from <b>${esc(spWhen(best.t))}</b> has <b>${best.sc}</b>. That usually means the browser cleared this app's storage.</p><button class="btn pri" data-sp="restore" data-k="${esc(best.k)}" style="width:100%;min-height:50px">Restore the saved copy</button><button class="btn ghost small" data-sp="keep" style="width:100%;margin-top:8px">Keep what is on this device</button></div>`;document.body.appendChild(o)}catch(_){}})}
+function spBox(){const box=document.getElementById("spbox");if(!box)return;spList(list=>{const b=document.getElementById("spbox");if(!b)return;
+  b.innerHTML=`<b>Automatic safety copies</b><div class="small muted">A copy of all progress is kept on this device once a day for 7 days, separate from the main save. It protects against the browser clearing storage. It does not replace a backup file when you change phones.</div>${list.length?list.map(x=>`<div class="sprow"><span>${esc(spWhen(x.t))}<i>${x.sc} points</i></span><button class="btn small" data-sp="ask" data-k="${esc(x.k)}">Restore</button></div>`).join(""):`<div class="small">No copy yet. The first one is made after a few answers.</div>`}`})}
+const spExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.sp===undefined)return spExtraClick0(b);const pop=()=>{const o=document.getElementById("sppop");if(o)o.remove()};
+  if(d.sp==="keep"){S.set.spKeep=Date.now();persist();pop();return true}
+  if(d.sp==="ask"){if(b.dataset.sure){spRestore(d.k,ok=>{view="home";render();window.scrollTo(0,0)})}else{b.dataset.sure="1";b.textContent="Tap again to restore";b.classList.add("pri")}return true}
+  if(d.sp==="restore"){spRestore(d.k,ok=>{pop();try{render()}catch(_){}});return true}
+  return true};
+const spRenderHome0=renderHome;renderHome=function(){spRenderHome0();try{const dt=[...document.querySelectorAll("#view details")].find(x=>/Settings and history/.test((x.querySelector("summary")||{}).textContent||""));if(dt&&!document.getElementById("spbox")){const c=document.createElement("div");c.id="spbox";c.className="card";c.style.margin="0 12px 12px";dt.appendChild(c);spBox()}}catch(_){}};
+try{setTimeout(spGuard,900);setTimeout(()=>spSnap(),15000);setInterval(()=>spSnap(),300000);
+  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")spSnap()});window.addEventListener("pagehide",()=>spSnap());
+  if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(_){}
 
 /* EA Part 1: balanced answer choices. Law as of December 31, 2025. */
 const BAL1={
@@ -19045,7 +19155,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 163 · Nov 21";
+const BUILD="Version 164 · Nov 22";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -19200,7 +19310,7 @@ function renderTabs(){
   if(X){if(h1)h1.textContent=X.title;if(cy)cy.textContent=X.sub;if(lg){lg.textContent=X.logo;lg.style.background=X.x==="s65"?"#5b3fb0":X.x==="caa"?"#0d5c63":X.x==="notary"?"#7a2e4a":"#a0521a"}}
   const st=view==="start";if(st){if(h1)h1.textContent="Solving Life LLC · Study";if(cy)cy.textContent="Pick a section to study";if(lg){lg.textContent="SL";lg.style.background=""}}
   $("#tabs").className="tabs bk";$("#tabs").hidden=st;
-  const lock=typeof CLOCK==="function"&&CLOCK(),main=view==="home"||view==="bkland"; // inside a lesson, quiz, lab or simulator the bar is: Back (this section's main page) + Sections; it stays on screen while scrolling
+  const lock=typeof CLOCK==="function"&&CLOCK(),main=view==="home"||(view==="bkland"&&lock); // inside a lesson, quiz, lab or simulator the bar is: Back (this section's main page) + Sections; it stays on screen while scrolling
   $("#tabs").classList.toggle("navin",!main&&!st);
   $("#tabs").innerHTML=st?"":!main?(lock?`<button class="bkback go" data-nav="back">‹ Back · Course home</button>`:`<button class="bkback go" data-nav="back">‹ Back · ${bk?"Course":X?esc(X.short):"Part "+part} main page</button><button class="bkback" data-sec="start">All sections</button>`)
     :`<button class="bkback" data-sec="start">‹ ${lock?"Course home":"Sections"}</button>`+(bk||X?"":`<span class="ptabs">`+[1,2,3].map(p=>`<button role="tab" aria-selected="${p===part}" data-part="${p}">Part ${p}<small>${PARTS[p].name}</small></button>`).join("")+`</span>`);
@@ -19259,7 +19369,7 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
     </div></section>`;
   const tnote=testNote?`<section class="section"><div class="ledger" style="border-left:4px solid ${/^Working/.test(testNote)?"var(--good)":/^Testing/.test(testNote)?"var(--line)":"var(--bad)"}"><div class="small"><b>Account saving test.</b> ${esc(testNote)}</div></div></section>`:"";
   const upd=updateReady?`<section class="section"><div class="ledger" style="border:2px solid var(--accent)"><div><b>A newer version is ready: ${esc(updateReady)}.</b></div><div class="small">You have ${esc(BUILD)}. Your progress stays as it is.</div><div class="row"><button class="btn pri" id="updnow" ${updating?"disabled":""}>${updating?"Updating…":"Update now"}</button></div></div></section>`:"";
-  const inst=/Install this app/.test(warn);$("#view").innerHTML=upd+tnote+(inst?"":warn)+(typeof doNextHtml==="function"?doNextHtml():"")+dash+quickHtml()+drillsHtml()+casesHtml()+introHtml(P.x||"ea")+(inst?warn:"")+`
+  const inst=/Install this app/.test(warn);$("#view").innerHTML=upd+tnote+(inst?"":warn)+(typeof doNextHtml==="function"?doNextHtml():"")+(typeof xpHtml==="function"?xpHtml():"")+dash+(typeof xpTools==="function"?xpTools(quickHtml()+drillsHtml()+casesHtml()):quickHtml()+drillsHtml()+casesHtml())+introHtml(P.x||"ea")+(inst?warn:"")+`
   <details class="more" id="moremodes" ${OPEN.moremodes?"open":""}><summary><b>All study modes</b><span>Slides, flashcards, audio, practice questions, mock exams, settings</span></summary>
   <section class="section">
     <div class="row" style="justify-content:space-between"><h3>Study now</h3><button class="btn ghost small" id="modedesc" style="min-height:34px;padding:5px 12px">${modeDesc?"Hide details":"What each one does"}</button></div>
@@ -20053,6 +20163,11 @@ function whyTag(it){const r=S.it[it.id],t=today(),weak=String(it.d)===String(wea
   return weak?["weak","Extra practice · your weakest area"]:["","Extra practice"]}
 function mkEntry(i,force){if(i.t==="g"&&typeof calcMC==="function"){const c=calcMC(i.make());return{id:i.id,calc:c,order:shuffle([...c.opts.keys()])}}return i.t==="g"?{id:i.id,calc:i.make()}:i.t==="f"?{id:i.id,fx:genFact(i,force)}:{id:i.id,order:i.fixed?[...i.opts.keys()]:shuffle([...i.opts.keys()])}}
 function numEq(a,k){const n=x=>x.replace(/[^0-9.]/g,"").replace(/\.0+$/,"").replace(/^0+(?=\d)/,"");return n(a)!==""&&n(a)===n(k)}
+/* Review finding: across the bank the correct answer is the single longest option far more often than chance (always
+   picking the longest scored 44 to 70% depending on the section). Practice keeps every question, but a mock exam is a
+   measurement, so it thins those questions until their share is about one in four. */
+function lenCue(i){if(!i.opts||i.opts.length<3)return false;const l=i.opts.map(x=>String(x).length),m=Math.max(...l);return l[i.ans]===m&&l.filter(x=>x===m).length===1}
+function lenBal(pool,k){const c=pool.filter(lenCue),o=pool.filter(i=>!lenCue(i));if(!c.length||o.length<Math.max(4,k))return pool;const keep=Math.min(1,(0.22/0.78)*o.length/c.length);return o.concat(c.filter(()=>Math.random()<keep))}
 function startSession(mode,n){reviewAll=false;
   const sz=qdOver||S.set.size;let q=[];
   if(mode==="easy"){touchDay();const due=shuffle(dueList(part,filt).slice(0,sz));const newLeft=Math.max(0,newPerDay(part)-S.day.nw);
@@ -20132,7 +20247,7 @@ function startSession(mode,n){reviewAll=false;
   else if(mode==="unit"){const pool=BANK.filter(i=>i.p==part&&unitRe&&unitRe.test((i.f||i.s)+" "+(i.b||"")));q=weightPick(pool.filter(i=>i.t==="q"),Math.ceil(sz*.6));q=shuffle(q.concat(weightPick(pool.filter(i=>i.t==="f"),sz-q.length)));if(!q.length){doneNote="No questions are linked to this unit yet.";render();return}}
   else if(mode==="topic"){q=weightPick(BANK.filter(i=>i.p==part&&TOPIC_OF[i.id]===topicSel),sz)}
   else if(mode==="weakdom"){q=weightPick(BANK.filter(i=>i.p==part&&i.d==filt),sz)}
-  else if(mode==="mock"){const doms=PARTS[part].doms;for(const d in doms){const k=Math.max(1,Math.round(n*doms[d][1]/100));const pool=BANK.filter(i=>i.p==part&&i.d==d&&i.t==="q"),unseen=i=>S.it[i.id]?1:0,hardish=shuffle(pool.filter(i=>i.lv>=2)).sort((x,y)=>unseen(x)-unseen(y)),easy=shuffle(pool.filter(i=>i.lv<2)).sort((x,y)=>unseen(x)-unseen(y));const e=Math.min(easy.length,Math.floor(k*0.15));q=q.concat(hardish.slice(0,k-e),easy.slice(0,e+Math.max(0,k-e-hardish.length)))}q=shuffle(q).slice(0,n)}
+  else if(mode==="mock"){const doms=PARTS[part].doms;for(const d in doms){const k=Math.max(1,Math.round(n*doms[d][1]/100));const pool=lenBal(BANK.filter(i=>i.p==part&&i.d==d&&i.t==="q"),k),unseen=i=>S.it[i.id]?1:0,hardish=shuffle(pool.filter(i=>i.lv>=2)).sort((x,y)=>unseen(x)-unseen(y)),easy=shuffle(pool.filter(i=>i.lv<2)).sort((x,y)=>unseen(x)-unseen(y));const e=Math.min(easy.length,Math.floor(k*0.15));q=q.concat(hardish.slice(0,k-e),easy.slice(0,e+Math.max(0,k-e-hardish.length)))}q=shuffle(q).slice(0,n)}
   if(!q.length)return;
   newSess(mode,q,n);
 }
