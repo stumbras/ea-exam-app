@@ -275,7 +275,7 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 205 = the gap work: 847 new exam-style questions in twenty-two files (Part 1 438, Part 2 199, Part 3 210; `bank_p1_gap14.js` added in Version 205 with 30 stories on income, assets and advising; `bank_p3_gap5.js` added in Version 204 with 31 stories), with `bank_p2_gap4.js`, `bank_p3_gap4.js` (Version 201, 43 Part 3 stories), `bank_p1_gap13.js` (Version 202, 33 worked calculations on deductions and credits) and `bank_p2_gap5.js` (Version 203, 32 Part 2 stories on entities, payroll, fringe benefits, exempt organizations)
+Versions 184 to 206 = the gap work: 883 new exam-style questions in twenty-three files (Part 1 438, Part 2 235, Part 3 210; `bank_p2_gap6.js` added in Version 206 with 36 stories on partners, S and C corporations, business deductions, payroll, trusts, estates, exempt organizations, plans and farms; `bank_p1_gap14.js` added in Version 205 with 30 stories on income, assets and advising; `bank_p3_gap5.js` added in Version 204 with 31 stories), with `bank_p2_gap4.js`, `bank_p3_gap4.js` (Version 201, 43 Part 3 stories), `bank_p1_gap13.js` (Version 202, 33 worked calculations on deductions and credits) and `bank_p2_gap5.js` (Version 203, 32 Part 2 stories on entities, payroll, fringe benefits, exempt organizations)
 (`bank_p1_gap4.js` to `gap12`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. Second-reader review so far: `bank_p1_gap4.js` and `gap5.js` (Version 198, 119
 questions, no errors), `gap6.js` and `gap7.js` (Version 200, 90 questions, two fixes) and `gap8.js` and `gap9.js`
@@ -283,8 +283,8 @@ questions, no errors), `gap6.js` and `gap7.js` (Version 200, 90 questions, two f
 Saturday deposit is possible). `gap10.js` and `gap11.js` were reviewed in Version 202 (60 questions, no errors); `gap12.js` and `bank_p2_gap1.js`
 in Version 203 (95 questions, no errors; one question in the new `gap13.js` repeated the facts of a `gap12.js`
 question and was given different numbers the same hour). `bank_p2_gap2.js` and `gap3.js` were reviewed in Version 204 (71 questions, no errors; one explanation, the SIMPLE
-IRA limit, now also gives the higher limit for employers with 25 or fewer employees). `bank_p2_gap4.js` and `bank_p3_gap1.js` were reviewed in Version 205 (no errors in the sums or rules; one fix: the Forms W-2 and 1099-NEC answer said "January 31, 2026", a Saturday, so the answer now says January 31 and the explanation gives Monday, February 2, 2026; the stem is unchanged, so progress stays). Still to review the same
-way: `bank_p1_gap13`, `bank_p2_gap5` and `bank_p3_gap2` to `gap5`. Confirmed for Version 205 on irs.gov: forgiven main-home mortgage debt is excluded for discharges before January 1, 2026, up to $750,000 ($375,000 married filing separately), on Form 982; student loan discharges after 2020 and before 2026 are excluded; HSA limits for 2025 are $4,300 self-only and $8,550 family, with the last-month rule and its testing period; June 15, 2025 was a Sunday, so the second estimated payment was due June 16; 2021 returns were due April 18, 2022. Confirmed for Version 203: late Form 1065 and 1120-S penalty $255 per owner
+IRA limit, now also gives the higher limit for employers with 25 or fewer employees). `bank_p2_gap4.js` and `bank_p3_gap1.js` were reviewed in Version 205 (no errors in the sums or rules; one fix: the Forms W-2 and 1099-NEC answer said "January 31, 2026", a Saturday, so the answer now says January 31 and the explanation gives Monday, February 2, 2026; the stem is unchanged, so progress stays). `bank_p3_gap2.js` and `gap3.js` were reviewed in Version 206 (73 questions, no errors; one explanation, the offer in compromise and the collection period, now also gives the 30 days after a rejection and the appeal). Still to review the same
+way: `bank_p1_gap13`, `bank_p2_gap5`, `bank_p2_gap6`, `bank_p3_gap4` and `gap5`. Confirmed for Version 206 on irs.gov: Form 1099-K is required from a payment app only above $20,000 and 200 transactions (threshold restored retroactively by the 2025 law); a C corporation with a June 30 year end files by the 15th day of the third month and gets a 7-month extension for tax years beginning before 2026; the private foundation excise tax is 1.39% of net investment income; Form 5500-EZ is required once a one-participant plan's assets pass $250,000. Confirmed for Version 205 on irs.gov: forgiven main-home mortgage debt is excluded for discharges before January 1, 2026, up to $750,000 ($375,000 married filing separately), on Form 982; student loan discharges after 2020 and before 2026 are excluded; HSA limits for 2025 are $4,300 self-only and $8,550 family, with the last-month rule and its testing period; June 15, 2025 was a Sunday, so the second estimated payment was due June 16; 2021 returns were due April 18, 2022. Confirmed for Version 203: late Form 1065 and 1120-S penalty $255 per owner
 per month for returns due in 2026 ($245 for returns due in 2025); the 2025 Form 1065 was due March 16, 2026.
 Confirmed for Version 204: information return penalties for returns due in 2026 are $60, $130, $340 and $680;
 first B notice within 15 business days and backup withholding no later than 30 business days after the IRS
@@ -352,6 +352,13 @@ repository + one free Cloudflare project + one subdomain of solvinglifewith.com 
 Google Play $25 once, Cloudflare paid plan about $5 a month only when live game traffic needs it, Apple $99 a year. Offered: a free
 GitHub organization named for the business, to do after the first app is live on Cloudflare. At 06:00 Manila workers_list still
 showed no Worker, so he had not tapped Deploy yet.
+CLOUDFLARE LIVE 07:00 Manila Nov 23: the owner deployed the Worker. Build log: wrangler 4.166.0 read 3103 files, uploaded 2549, address
+ea-exam-app.<his-account>.workers.dev (full address is in the conversation, not here). Checked: the home page opens with Version 205,
+version.json answers, HISTORY.md is refused (the .assetsignore works). Wrangler warned that workers_dev and preview_urls default to on; left
+as they are for now. Next: custom domain study.solvinglifewith.com (Worker -> Settings -> Domains & Routes -> Add -> Custom domain), then the
+move-my-progress card, then a business landing page for solvinglifewith.com (needed for Apple and Google organization accounts; no EIN and no
+home address on it). The owner requested a D-U-N-S number for the LLC through Apple's page on Nov 23 (up to 5 business days, then up to 2 for
+Apple to see it); then Google Play organization account ($25) first, Apple ($99 a year) second.
 Test note: t700 has a timing check (first draw under 0.8 s at phone speed) that fails when two test batches overlap; never start a second batch while t700 from the first is still running, and run t700 alone if in doubt.
 Games apps: the owner confirmed on November 23, 2026: "no real money gambling in any just play for fun learning apps". Play chips and learning only; never add deposits, cash-out or prizes with money value. No written plan for
 the games apps was found in this project's chats; ask the owner to paste it if it exists elsewhere. Re-checked against irs.gov on
@@ -571,6 +578,7 @@ One line per shipped version, newest first. Written by `tmp/ship.sh` from the gi
 
 <!-- VERSION-LOG -->
 
+- 2026-11-22 Version 206: Review of Part 3 sets 2 and 3 (one explanation extended); 36 Part 2 stories on partners, corporations, payroll, trusts, exempt organizations, plans and farms
 - 2026-11-22 Version 205: Review of Part 2 set 4 and Part 3 set 1 (one due date fix); 30 Part 1 stories on income, assets and advising
 - 2026-11-22 Cloudflare Workers static site settings (wrangler.jsonc, .assetsignore)
 - 2026-11-22 Version 204: Version 204: review of Part 2 sets 2 and 3 (no errors), 31 Part 3 stories (bank_p3_gap5.js), app-only branch site for Cloudflare
