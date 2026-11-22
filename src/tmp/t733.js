@@ -5,9 +5,9 @@ await p.goto('http://localhost:8765/ea-exam-app/?study');await p.waitForTimeout(
 let r=await p.evaluate(()=>{const S1=BANK.filter(i=>i.story),ids=BANK.map(i=>i.id);const longest=S1.filter(i=>i.opts[0].length>=Math.max(...i.opts.map(o=>o.length))).length,byD={};S1.forEach(i=>{byD[i.d]=(byD[i.d]||0)+1});
   return{n:S1.length,ok:S1.every(i=>i.p===1&&i.opts.length===4&&new Set(i.opts).size===4&&i.ex&&i.ex.length>80&&xaExam(i)),dup:ids.length-new Set(ids).size,minStem:Math.min(...S1.map(i=>i.s.length)),avgStem:Math.round(S1.reduce((a,i)=>a+i.s.length,0)/S1.length),longest,byD,maxGap:Math.max(...S1.map(i=>i.opts[0].length-Math.max(...i.opts.slice(1).map(o=>o.length))))}});
 console.log(' ',JSON.stringify(r));
-ok(`${r.n} story questions: Part 1, four different choices, an explanation each, counted as exam-type, no id clashes`,r.n===49&&r.ok&&r.dup===0);
+ok(`${r.n} story questions: Part 1, four different choices, an explanation each, counted as exam-type, no id clashes`,r.n>=49&&r.ok&&r.dup===0);
 ok(`they are long stories (shortest ${r.minStem} characters, average ${r.avgStem}) spread over all six topics`,r.minStem>=100&&r.avgStem>=200&&Object.keys(r.byD).length===6);
-ok(`the right answer is the longest choice in ${r.longest} of ${r.n}, and never much longer than the others (largest gap ${r.maxGap})`,r.longest<=20&&r.maxGap<=14);
+ok(`the right answer is the longest choice in ${r.longest} of ${r.n}, and never much longer than the others (largest gap ${r.maxGap})`,r.longest<=0.4*r.n&&r.maxGap<=14);
 await p.evaluate(()=>{part=1;view="home";render()});await p.waitForTimeout(300);
 await (await p.$('[data-xa="quick"]')).tap();await p.waitForTimeout(600);
 r=await p.evaluate(()=>({view,mode:sess&&sess.mode,n:sess.queue.length,story:sess.queue.filter(e=>BYID[e.id].story).length,note:sess.note||"",uniq:new Set(sess.queue.map(e=>e.id)).size}));

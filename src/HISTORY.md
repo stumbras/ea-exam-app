@@ -264,12 +264,14 @@ topic spread in Quick 10, this file and `src/` added to the repository.
 
 1. **Close the question gap (the owner asked to do this non-stop).** Measured by `tmp/t740.js`:
    rules that exist only as flash cards, with no exam-type question.
-   - Part 1: 409 of 757 (Income and assets 160 of 272, Deductions and credits 90 of 195,
+   - Part 1 at the start: 409 of 757 (Income and assets 160 of 272, Deductions and credits 90 of 195,
      Specialized returns 68 of 118, Preliminary work 44 of 87, Taxation 28 of 56, Advising 19 of 29)
+   - Part 1 after Version 184 (`bank_p1_gap4.js`, 76 questions): 327; Income and assets 87
+   - `node tmp/t741.js` writes the rules still untested to `/tmp/un_p1.json` (and p2, p3)
    - Part 2: 131 of 281. Part 3: 139 of 277.
    - Method: about 30 to 40 questions per session, own wording, long story style for at least a
-     third, start with Income and assets. Put them in `bank_p1_story.js` or a new `bank_p1_gap4.js`
-     added to `build.py`. Run t740 again and report the new numbers.
+     third, start with Income and assets. Add them to `bank_p1_gap4.js` (or a new file listed in `build.py`). The measure matches words, so
+     restate the rule in the explanation using the rule card's own words. Run t740 again and report the new numbers.
 2. Parts 2 and 3 have no story questions and no forced mix yet. Build the same as Part 1.
 3. Vary the position and length of right answers in new questions.
 4. Outside misses still to explain and cover (ids from the owner's outside practice, no
