@@ -275,10 +275,11 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 198 = the gap work: 647 new exam-style questions in sixteen files (`bank_p1_gap4.js` to
-`gap12`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
-the cards while writing. Second-reader review so far (Version 198): `bank_p1_gap4.js` and `gap5.js`, 119
-questions, no errors found. Still to review the same way: `gap6` to `gap12`, the three Part 2 files and the
+Versions 184 to 200 = the gap work: 678 new exam-style questions in seventeen files, with `bank_p2_gap4.js`
+(`bank_p1_gap4.js` to `gap12`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
+the cards while writing. Second-reader review so far: `bank_p1_gap4.js` and `gap5.js` (Version 198, 119
+questions, no errors) and `gap6.js` and `gap7.js` (Version 200, 90 questions, two fixes). Still to review the
+same way: `gap8` to `gap12`, the three Part 2 files and the
 three Part 3 files. Re-checked against irs.gov on
 November 23, 2026, the items the 2025 law changed: adoption credit ($17,280, up to $5,000 refundable, rest carried
 5 years), clean vehicle credit (binding contract and a payment by September 30, 2025), residential clean energy
@@ -379,7 +380,27 @@ Recommended path, cheapest first. Nothing here is built yet unless marked done.
    README Credits. No real names, addresses or ID numbers anywhere. State clearly: study aid, not tax advice, not
    affiliated with the IRS, SSA, NASAA or FINRA. Before selling, every question set needs a second review, and
    ideally a check by a credentialed enrolled agent.
-4. **Hosting.** Today the app and, since Version 183, its full source sit in a PUBLIC GitHub repository served by
+4. **Hosting decision (owner, November 23, 2026: "want also same easy access for claude like it is on github, do
+   paid github instead").** Stay on GitHub so the working method does not change. Steps, in this order:
+   (a) the owner upgrades the account to GitHub Pro (checked on docs.github.com: the free plan allows GitHub Pages
+   only in public repositories, GitHub Pro allows it in private ones; the published site itself stays public);
+   (b) only after that, make the repository private (Settings, General, Danger Zone, Change visibility), and
+   check the app still opens; (c) later, the app's own address: a CNAME record `study` pointing to
+   `stumbras.github.io` in the Wix domain settings, and the custom domain set in the repository's Pages settings.
+   Step (c) changes the app's address, and saved progress is stored per address: before it, every device must
+   export its progress (Settings and history) and import it at the new address, or a transfer step must be built
+   and shipped first. Step (c) also makes the Android wrapper possible (assetlinks.json at the domain root; the
+   repository already has `.nojekyll`, which lets a `.well-known` folder be served).
+   CORRECTION the same day, after the owner asked "so is github pro best for this?": checked
+   docs.github.com "GitHub Pages limits": Pages "is not intended for or allowed to be used as a free web-hosting
+   service to run your online business, e-commerce site, or any other website that is primarily directed at either
+   facilitating commercial transactions or providing commercial software as a service", with a soft limit of
+   100 GB a month and 1 GB per site. So GitHub Pro is fine for hiding the source while the app is the owner's own
+   study tool, but the SOLD product should not be served by GitHub Pages. Better plan, same working method: the
+   repository stays on GitHub (private repositories are free, no Pro needed) and Cloudflare Pages (free plan:
+   deploys from a private GitHub repository on every push, custom domains, 25 MiB per file, 20,000 files) serves
+   it at study.solvinglifellc.com. Claude keeps pushing to GitHub exactly as now. Waiting for the owner's choice.
+   Background: Today the app and, since Version 183, its full source sit in a PUBLIC GitHub repository served by
    GitHub Pages. That is fine for personal study and wrong for a product: anyone can copy it. Before launch: make
    the repository private and serve the site from a host that builds from a private repository (Cloudflare Pages
    has a free tier) on a subdomain of the business domain. Changing visibility takes the current GitHub Pages
@@ -403,7 +424,25 @@ Recommended path, cheapest first. Nothing here is built yet unless marked done.
    with the provider's license API. A free part (for example the diagnostic and one topic) sells the rest. A
    web app that holds all content in one file can be copied by a determined buyer; if that matters later, serve
    paid content from a small backend after sign-in (Cloudflare Workers has a free tier).
-6. **Stores, later.** Android: wrap the PWA as a Trusted Web Activity (PWABuilder or Bubblewrap); Google Play
+6. **Android app: the owner wants it (November 23, 2026: "why not do android app also based on this it is
+   easier to sell? not that hard to add"). Agreed; it is the easiest way to take money, because Google Play
+   collects payment and handles tax.** Checked the same day on Google's and Chrome's developer pages:
+   - The app is wrapped as a Trusted Web Activity with Bubblewrap or PWABuilder; no rewrite. The web app must be
+     installable and must pass Digital Asset Links, a file at `/.well-known/assetlinks.json` on the ROOT of the
+     app's own domain. The present address (stumbras.github.io/ea-exam-app/) cannot serve that file, so the app
+     needs its own address first (study.solvinglifellc.com or similar). Hosting inside Wix is not possible: Wix
+     does not host a standalone HTML app with its own service worker, only frames and code snippets.
+   - Google Play developer account: US$25 once. Open it as an ORGANIZATION account for Solving Life LLC (needs a
+     free D-U-N-S number); personal accounts opened after November 13, 2023 must first run a closed test with
+     12 testers for 14 days, organization accounts need not.
+   - Selling inside a Play app must use Google Play Billing. A Trusted Web Activity can do this from the web
+     code with the Digital Goods API and the Payment Request API (Bubblewrap `playBilling` feature). Two simple
+     models: a paid app (one price, no code needed), or a free app with a free part and one in-app purchase that
+     unlocks the rest (needs the edition flag and a small unlock check).
+   - To prepare on the app side (not done): edition build "EA" without personal sections; manifest with id,
+     description, screenshots, categories; make sure a cold start works offline and unknown addresses fall back
+     to the app; privacy policy page; store listing text and screenshots.
+   Other stores: Android alternatives aside, Google Play
    charges a one-time developer fee. Apple: a thin native wrapper (Capacitor) and a yearly developer fee; Apple
    and Google both have rules about selling digital content inside apps and take a commission, so read the
    current rules before choosing in-app purchase or a website-only sale. "Add to Home Screen" already gives an
