@@ -252,6 +252,8 @@ test to make a build pass.
 - One-tap answers must not be filed as "sure but wrong"; confidence is stored only when right.
 - Not yet checked on a real iPhone or in Safari; only Chromium at phone size.
 - The right answer is the longest choice more often than chance. New questions should vary this.
+- Dates in answers: check the weekday. A due date that falls on a weekend moves to the next business day
+  (March 15, 2025 was a Saturday; the 2022 return was due April 18, 2023). Ask for the rule or pick a clean year.
 
 ---
 
@@ -259,8 +261,8 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 191 = the gap work: 431 new exam-style questions in nine files (`bank_p1_gap4.js` to
-`gap8`, `bank_p2_gap1.js`, `gap2`, `bank_p3_gap1.js`), written from the rule cards, checked one by one against
+Versions 184 to 192 = the gap work: 462 new exam-style questions in ten files (`bank_p1_gap4.js` to
+`gap8`, `bank_p2_gap1.js`, `gap2`, `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. None has yet been reviewed by a second reader or against irs.gov line by line.
 
 ### Open work, in priority order
@@ -280,7 +282,8 @@ the cards while writing. None has yet been reviewed by a second reader or agains
    - `node tmp/t741.js` writes the rules still untested to `/tmp/un_p1.json` (and p2, p3)
    - Part 2: 131 of 281 at the start; 84 after Version 189 (`bank_p2_gap1.js`, 65 questions); 81 after
      Version 191 (`bank_p2_gap2.js`, 38 on forms and terms).
-   - Part 3: 139 of 277 at the start; 100 after Version 190 (`bank_p3_gap1.js`, 71 questions).
+   - Part 3: 139 of 277 at the start; 100 after Version 190 (`bank_p3_gap1.js`, 71 questions); 98 after Version 192
+     (`bank_p3_gap2.js`, 31 on terms and forms).
    - Gap questions in Parts 2 and 3 carry the flag `gp`; test `tmp/t734.js` checks them.
    - Method: about 30 to 40 questions per session, own wording, long story style for at least a
      third, start with Income and assets. Add them to `bank_p1_gap4.js` (or a new file listed in `build.py`). The measure matches words, so
