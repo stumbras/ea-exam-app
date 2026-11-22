@@ -263,7 +263,16 @@ Last shipped: see the version log below. Version 183 = honest readiness for unto
 topic spread in Quick 10, this file and `src/` added to the repository.
 Versions 184 to 193 = the gap work: 490 new exam-style questions in eleven files (`bank_p1_gap4.js` to
 `gap9`, `bank_p2_gap1.js`, `gap2`, `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
-the cards while writing. None has yet been reviewed by a second reader or against irs.gov line by line.
+the cards while writing. None has yet been reviewed by a second reader. Re-checked against irs.gov on
+November 23, 2026, the items the 2025 law changed: adoption credit ($17,280, up to $5,000 refundable, rest carried
+5 years), clean vehicle credit (binding contract and a payment by September 30, 2025), residential clean energy
+credit (must be installed by December 31, 2025, paying early is not enough), overtime deduction ($12,500 or $25,000
+joint, only the FLSA half-time premium, joint return if married), child tax credit SSN rule. All matched.
+
+Next sets, in order: Part 1 Preliminary work stories (dependents, filing status, residency: only 21 so far);
+Part 1 Deductions stories on the owner's missed topics; Part 2 and Part 3 second passes on the rules still
+listed by `node tmp/t741.js`; then calculation generators (`GEX`) for estimated tax, capital gain netting and
+the QBI limit.
 
 ### Open work, in priority order
 
@@ -332,6 +341,7 @@ One line per shipped version, newest first. Written by `tmp/ship.sh` from the gi
 
 <!-- VERSION-LOG -->
 
+- 2026-11-22 Version 193 notes: history: irs.gov re-check of the 2025 law items, next sets listed
 - 2026-11-22 Version 193: EA Part 1: 28 story questions on Taxation and Advising
 - 2026-11-22 Version 192: EA Part 3: 31 more exam-style questions on terms and forms; two date fixes
 - 2026-11-22 Version 191: EA Part 2: 38 more exam-style questions on forms and terms; Quick 10 in Parts 2 and 3 forces story questions, not AMT or EIC
