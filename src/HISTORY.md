@@ -269,6 +269,9 @@ topic spread in Quick 10, this file and `src/` added to the repository.
    - Part 1 after Version 184 (`bank_p1_gap4.js`, 76 questions): 327; Income and assets 87
    - Part 1 after Version 185 (`bank_p1_gap5.js`, 43 questions): 293; Deductions and credits 54
    - Part 1 after Version 186 (`bank_p1_gap6.js`, 45 questions on topics 1, 4 and 5): 266
+   - Part 1 after Version 188 (`bank_p1_gap8.js`, 48 questions on forms and terms): 234, with 824 exam-type
+     questions (643 before the gap work) and 254 story questions. The measure cannot go much lower: it needs two
+     matching words from the card's title, so one-word terms (QCD, Boot) and look-alike form names never count.
    - Part 1 after Version 187 (`bank_p1_gap7.js`, 45 questions on Specialized returns): 242. What is left in
      Part 1 is mostly form names and definitions. The measure credits at most two rules per question.
    - `node tmp/t741.js` writes the rules still untested to `/tmp/un_p1.json` (and p2, p3)
