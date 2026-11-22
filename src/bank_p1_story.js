@@ -81,7 +81,7 @@ const REQ=[["AMT",/alternative minimum tax|\bAMT\b|Form 6251/],["EIC",/earned in
    questions only (outside the biggest-gain topic first), so the pace promise (2, 5 or 8 new) holds and open misses, focus
    questions and the calculation are never displaced. */
 function storyMix(){if(!sess||!sess.queue||sess.queue.length<6)return;const inq=new Set(sess.queue.map(e=>e.id)),open=l=>shuffle(l.filter(i=>!S.it[i.id])).concat(shuffle(l.filter(i=>S.it[i.id]&&S.it[i.id][4]===0)));
-  const Q1=BANK.filter(i=>i.p==part&&xaExam(i)&&!inq.has(i.id)),K=REQ.map(r=>[r[0],open(Q1.filter(i=>r[1].test(i.s)))]).concat([["story-style",open(Q1.filter(i=>i.story&&!REQRE.test(i.s)))]]).filter(k=>k[1].length);if(!K.length)return;
+  const Q1=BANK.filter(i=>i.p==part&&xaExam(i)&&!inq.has(i.id)),/* AMT and EIC are forced only in Part 1 (Version 191); Parts 2 and 3 get story questions in every forced place */K=(part==1?REQ:[]).map(r=>[r[0],open(Q1.filter(i=>r[1].test(i.s)))]).concat([["story-style",open(Q1.filter(i=>i.story&&(part!=1||!REQRE.test(i.s))))]]).filter(k=>k[1].length);if(!K.length)return;
   const lim=typeof xaSpeed==="function"&&xaSpeed()==="max"?3:2;S.set.rqn=(S.set.rqn||0)+1;const pick=[];for(let n=0;n<lim*K.length&&pick.length<lim;n++){const k=K[(S.set.rqn+n)%K.length];if(k[1].length)pick.push([k[0],k[1].shift()])}
   let top=0;try{top=xaAll().top.d}catch(e){}const tg=(sess.quick&&sess.quick.tag)||{};
   const used=new Set(),slot=()=>{for(const wantTop of [false,true])for(let k=sess.queue.length-1;k>sess.pos;k--){const e=sess.queue[k],i=BYID[e.id];if(used.has(k)||!i||e.pre||i.t==="g"||tg[e.id]!=="new")continue;if((i.d==top)===wantTop)return k}return -1};

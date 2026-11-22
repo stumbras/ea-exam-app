@@ -153,7 +153,7 @@ then the red guided button. All must fit the first phone screen (tests t651, t65
 - After a right answer the app moves on by itself: 2 seconds (1 second on Max). A wrong answer
   stops until Next.
 - **Forced mix (`storyMix`)**: every Quick 10 gets two places (three on Max) taken in rotation by
-  AMT, EIC and story questions; unseen first, then last-missed. It only replaces places tagged
+  AMT, EIC and story questions in Part 1 (story questions only in Parts 2 and 3); unseen first, then last-missed. It only replaces places tagged
   `new`, never misses, focus or the calculation.
 - **Topic spread (Version 183)**: at most two new questions per topic in one drill. Extras are
   swapped for unseen questions from the topics the drill has least of, lowest cover first. Three
@@ -259,6 +259,9 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
+Versions 184 to 191 = the gap work: 431 new exam-style questions in nine files (`bank_p1_gap4.js` to
+`gap8`, `bank_p2_gap1.js`, `gap2`, `bank_p3_gap1.js`), written from the rule cards, checked one by one against
+the cards while writing. None has yet been reviewed by a second reader or against irs.gov line by line.
 
 ### Open work, in priority order
 
@@ -275,13 +278,14 @@ topic spread in Quick 10, this file and `src/` added to the repository.
    - Part 1 after Version 187 (`bank_p1_gap7.js`, 45 questions on Specialized returns): 242. What is left in
      Part 1 is mostly form names and definitions. The measure credits at most two rules per question.
    - `node tmp/t741.js` writes the rules still untested to `/tmp/un_p1.json` (and p2, p3)
-   - Part 2: 131 of 281 at the start; 84 after Version 189 (`bank_p2_gap1.js`, 65 questions).
+   - Part 2: 131 of 281 at the start; 84 after Version 189 (`bank_p2_gap1.js`, 65 questions); 81 after
+     Version 191 (`bank_p2_gap2.js`, 38 on forms and terms).
    - Part 3: 139 of 277 at the start; 100 after Version 190 (`bank_p3_gap1.js`, 71 questions).
    - Gap questions in Parts 2 and 3 carry the flag `gp`; test `tmp/t734.js` checks them.
    - Method: about 30 to 40 questions per session, own wording, long story style for at least a
      third, start with Income and assets. Add them to `bank_p1_gap4.js` (or a new file listed in `build.py`). The measure matches words, so
      restate the rule in the explanation using the rule card's own words. Run t740 again and report the new numbers.
-2. Part 2 has 43 story questions since Version 189, so its readiness and Quick 10 use them. Keep adding.
+2. Part 2 has 68 story questions (Versions 189 and 191), so its readiness and Quick 10 use them.
    Part 3 has 45 story questions since Version 190.
 3. Keep the right answer from being the longest choice: after drafting a set, list the questions where it is
    strictly longest and reword until under 30% (t733 and t734 fail above that).
@@ -325,6 +329,7 @@ One line per shipped version, newest first. Written by `tmp/ship.sh` from the gi
 
 <!-- VERSION-LOG -->
 
+- 2026-11-22 Version 191: EA Part 2: 38 more exam-style questions on forms and terms; Quick 10 in Parts 2 and 3 forces story questions, not AMT or EIC
 - 2026-11-22 Version 190: EA Part 3: 71 exam-style questions on rules that had none; Part 3 now has story questions
 - 2026-11-22 Version 189: EA Part 2: 65 exam-style questions on rules that had none; Part 2 now has story questions
 - 2026-11-22 Version 188: EA Part 1: 48 exam-style questions on the forms and terms of Income and Deductions (gap set 5)
