@@ -2,7 +2,7 @@ const {chromium}=require('playwright');
 (async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true});const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message.slice(0,200)));
 const ok=(n,c)=>console.log((c?'PASS ':'FAIL ')+n);
 await p.goto('http://localhost:8765/ea-exam-app/?study');await p.waitForTimeout(1500);await p.evaluate(()=>{localStorage.clear()});await p.reload();await p.waitForTimeout(1500);
-let r=await p.evaluate(()=>{const S1=BANK.filter(i=>i.story),ids=BANK.map(i=>i.id);const longest=S1.filter(i=>i.opts[0].length>Math.max(...i.opts.slice(1).map(o=>o.length))).length,byD={};S1.forEach(i=>{byD[i.d]=(byD[i.d]||0)+1});
+let r=await p.evaluate(()=>{const S1=BANK.filter(i=>i.story&&i.p===1),ids=BANK.map(i=>i.id);const longest=S1.filter(i=>i.opts[0].length>Math.max(...i.opts.slice(1).map(o=>o.length))).length,byD={};S1.forEach(i=>{byD[i.d]=(byD[i.d]||0)+1});
   return{n:S1.length,ok:S1.every(i=>i.p===1&&i.opts.length===4&&new Set(i.opts).size===4&&i.ex&&i.ex.length>80&&xaExam(i)),dup:ids.length-new Set(ids).size,minStem:Math.min(...S1.map(i=>i.s.length)),avgStem:Math.round(S1.reduce((a,i)=>a+i.s.length,0)/S1.length),longest,byD,maxGap:Math.max(...S1.map(i=>i.opts[0].length-Math.max(...i.opts.slice(1).map(o=>o.length))))}});
 console.log(' ',JSON.stringify(r));
 ok(`${r.n} story questions: Part 1, four different choices, an explanation each, counted as exam-type, no id clashes`,r.n>=49&&r.ok&&r.dup===0);

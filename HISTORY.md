@@ -275,11 +275,13 @@ topic spread in Quick 10, this file and `src/` added to the repository.
    - Part 1 after Version 187 (`bank_p1_gap7.js`, 45 questions on Specialized returns): 242. What is left in
      Part 1 is mostly form names and definitions. The measure credits at most two rules per question.
    - `node tmp/t741.js` writes the rules still untested to `/tmp/un_p1.json` (and p2, p3)
-   - Part 2: 131 of 281. Part 3: 139 of 277.
+   - Part 2: 131 of 281 at the start; 84 after Version 189 (`bank_p2_gap1.js`, 65 questions). Part 3: 139 of 277.
+   - Gap questions in Parts 2 and 3 carry the flag `gp`; test `tmp/t734.js` checks them.
    - Method: about 30 to 40 questions per session, own wording, long story style for at least a
      third, start with Income and assets. Add them to `bank_p1_gap4.js` (or a new file listed in `build.py`). The measure matches words, so
      restate the rule in the explanation using the rule card's own words. Run t740 again and report the new numbers.
-2. Parts 2 and 3 have no story questions and no forced mix yet. Build the same as Part 1.
+2. Part 2 has 43 story questions since Version 189, so its readiness and Quick 10 use them. Keep adding.
+   Part 3 story questions: see the version log.
 3. Vary the position and length of right answers in new questions.
 4. Outside misses still to explain and cover (ids from the owner's outside practice, no
    screenshot yet): #100709 Retirement Income, #100598 Gift Tax, #100172 Property.
@@ -321,6 +323,7 @@ One line per shipped version, newest first. Written by `tmp/ship.sh` from the gi
 
 <!-- VERSION-LOG -->
 
+- 2026-11-22 Version 189: EA Part 2: 65 exam-style questions on rules that had none; Part 2 now has story questions
 - 2026-11-22 Version 188: EA Part 1: 48 exam-style questions on the forms and terms of Income and Deductions (gap set 5)
 - 2026-11-22 Version 187: EA Part 1: 45 exam-style questions on Specialized returns rules that had none (gap set 4)
 - 2026-11-22 Version 186: EA Part 1: 45 exam-style questions on Preliminary work, Taxation and Advising rules that had none (gap set 3)
