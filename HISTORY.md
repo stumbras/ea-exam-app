@@ -261,8 +261,8 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 192 = the gap work: 462 new exam-style questions in ten files (`bank_p1_gap4.js` to
-`gap8`, `bank_p2_gap1.js`, `gap2`, `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
+Versions 184 to 193 = the gap work: 490 new exam-style questions in eleven files (`bank_p1_gap4.js` to
+`gap9`, `bank_p2_gap1.js`, `gap2`, `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. None has yet been reviewed by a second reader or against irs.gov line by line.
 
 ### Open work, in priority order
@@ -332,6 +332,7 @@ One line per shipped version, newest first. Written by `tmp/ship.sh` from the gi
 
 <!-- VERSION-LOG -->
 
+- 2026-11-22 Version 193: EA Part 1: 28 story questions on Taxation and Advising
 - 2026-11-22 Version 192: EA Part 3: 31 more exam-style questions on terms and forms; two date fixes
 - 2026-11-22 Version 191: EA Part 2: 38 more exam-style questions on forms and terms; Quick 10 in Parts 2 and 3 forces story questions, not AMT or EIC
 - 2026-11-22 Version 190: EA Part 3: 71 exam-style questions on rules that had none; Part 3 now has story questions
