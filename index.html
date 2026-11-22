@@ -749,6 +749,13 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 .donext.xpnx{margin:12px 0 4px}
 .xpdx{margin:8px 0 2px;align-items:center}.dxr{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin:12px 0 0;display:grid;gap:8px;background:var(--surface)}
 .dxrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;font-size:14.5px}.dxrow i{grid-column:1/-1;height:8px;border-radius:4px;background:var(--sunk);display:block;overflow:hidden}.dxrow em{display:block;height:100%;border-radius:4px}
+.xaready{display:grid;gap:6px;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;border:1.5px solid var(--line);border-radius:16px;background:var(--surface);padding:12px 14px;margin:10px 0 0}
+.xr1{display:flex;justify-content:space-between;font-size:11.5px;font-weight:800;letter-spacing:.8px;color:var(--muted)}.xr1 em{font-style:normal;color:var(--accent);letter-spacing:0}
+.xr2{display:flex;align-items:center;gap:12px}.xr2 b{font:800 40px/1 var(--mono,monospace);letter-spacing:-1px}.xr2 b.ok{color:var(--good)}.xr2 b.mid{color:var(--warn)}.xr2 b.bad{color:var(--bad)}.xr2 span{font-size:13px;color:var(--muted);line-height:1.35}
+.xrbar{position:relative;height:10px;border-radius:5px;background:var(--sunk);display:block}.xrbar i{display:block;height:100%;border-radius:5px;background:var(--muted)}.xrbar i.ok{background:var(--good)}.xrbar i.mid{background:var(--warn)}.xrbar i.bad{background:var(--bad)}.xrbar u{position:absolute;left:75%;top:-3px;bottom:-3px;width:2px;background:var(--fg);border-radius:1px}
+.xaquick{display:flex;flex-direction:column;gap:2px;align-items:flex-start;width:100%;text-align:left;font:inherit;cursor:pointer;border:0;border-radius:14px;padding:11px 14px;margin:8px 0 0;background:#0f172a;color:#fff}.xaquick b{font-size:16px}.xaquick span{font-size:12.5px;opacity:.82}
+.xr3{font-size:14px}.xasg{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 0}.xasg .btn{text-align:left}
+.xad{display:grid;gap:8px;margin-top:10px}.xabig{font:800 44px/1 var(--mono,monospace);letter-spacing:-1px}.xabig small{font-size:16px;font-weight:600;color:var(--muted)}.xabig.ok{color:var(--good)}.xabig.mid{color:var(--warn)}.xabig.bad{color:var(--bad)}
 .dxrow .ok{color:var(--good)}.dxrow .mid{color:var(--warn)}.dxrow .bad{color:var(--bad)}.dxrow em.ok{background:var(--good)}.dxrow em.mid{background:var(--warn)}.dxrow em.bad{background:var(--bad)}
 .npath{display:flex;flex-direction:column;gap:8px}.nstep{border:1px solid var(--line,rgba(148,163,184,.35));border-radius:14px;padding:10px 12px}.nstep.done{opacity:.65}.nstep.now{border:2px solid #ef4444}.nsh{display:flex;gap:10px;align-items:flex-start}.nsh input{width:24px;height:24px;flex:none;margin-top:2px}.nsh b{display:block}.nlinks{display:flex;flex-direction:column;gap:6px;margin-top:8px}.nlink{display:flex;gap:6px;align-items:center}.nlink a{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}.nlink button{flex:none}
 /* ---- trip computer ---- */
@@ -17625,7 +17632,7 @@ function xpHtml(){try{if(PARTS[part].bk)return"";const st=xpState(),cur=st.steps
   const row=x=>{const now=cs&&cs.x&&cs.x.d===x.d,op=OPEN["xp"+x.d]!==undefined?OPEN["xp"+x.d]:false;return `<details class="xprow${x.strong?" ok":""}${now?" now":""}" id="xp${x.d}" ${op?"open":""}><summary><b>${e(x.name)}</b><span class="xpw">${PARTS[part].x==="caa"?x.q+" questions":x.w+"% of the exam"+(x.dx!=null?" · diagnostic "+Math.round(x.dx*100)+"%":"")}</span><span class="xpcs">${x.les?chip(x.lesDone,now&&cs.k==="les","Lessons"):""}${chip(x.learned,now&&cs.k==="learn","Learn")}${chip(x.practiced,now&&cs.k==="prac",x.parked?"Practice · later":"Practice")}${chip(x.strong,now&&cs.k==="strong","Strong")}</span></summary>
     <div class="xpb"><div class="small muted">${x.fs} of ${x.f} facts met · ${x.qs} of ${x.q} questions tried${x.acc!=null?" · "+Math.round(x.acc*100)+"% right"+(x.qacc!=null?" on questions":""):""}</div><div class="row">${x.les?`<button class="btn small" data-xp="les" data-d="${x.d}">Lessons · ${x.lesRead} of ${x.les} read</button>`:""}<button class="btn small" data-xp="learn" data-d="${x.d}">Learn facts</button><button class="btn small" data-xp="prac" data-d="${x.d}">Practice questions</button><button class="btn small" data-xp="hard" data-d="${x.d}">Hard questions</button></div></div></details>`};
   const ex=st.steps.find(s=>s.k==="exam"),mk=st.steps.find(s=>s.k==="mock");
-  return `<section class="section xp"><h3 style="margin:0">${PARTS[part].x==="caa"?"Refresher by topic":"Your study path · "+e(PARTS[part].name||pl(part))}</h3><div class="small muted">${PARTS[part].x==="caa"?"The question bank, topic by topic, for when you want to brush up on one area.":`${st.done} of ${st.steps.length} steps done. ${xpDx()?"The red button follows your diagnostic: biggest gains first.":"Topics are in the exam's own order."} Tap a topic to study it out of turn.`}</div>${xpDxLine()}<div class="cbar"><i style="width:${Math.round(st.done/st.steps.length*100)}%"></i></div>
+  return `<section class="section xp"><h3 style="margin:0">${PARTS[part].x==="caa"?"Refresher by topic":"Your study path · "+e(PARTS[part].name||pl(part))}</h3><div class="small muted">${PARTS[part].x==="caa"?"The question bank, topic by topic, for when you want to brush up on one area.":`${st.done} of ${st.steps.length} steps done. ${st.byGain?"The red button goes where you gain most right now.":"Topics are in the exam's own order."} Tap a topic to study it out of turn.`}</div>${xpDxLine()}<div class="cbar"><i style="width:${Math.round(st.done/st.steps.length*100)}%"></i></div>
    ${st.D.map(row).join("")}
    ${ex?`<button class="xprow xpx${ex.done?" ok":""}${cs===ex?" now":""}" data-xp="exam"><b>${ex.done?"✓ ":""}Exam-style pack</b><span class="xpw">${ex.xs-ex.xsNew} of ${ex.xs} done</span></button>`:""}
    <button class="xprow xpx${mk.done?" ok":""}${cs===mk?" now":""}" data-xp="mock"><b>${mk.done?"✓ ":""}Mock exam</b><span class="xpw">${mk.last?`last: ${mk.last.c} of ${mk.last.n} right`:"not taken yet"}</span></button></section>`}catch(_){return""}}
@@ -17785,6 +17792,184 @@ const xpResults1=renderResults;renderResults=function(){xpResults1.apply(this,ar
     html=`<div class="dxr"><b>Your diagnostic · ${Math.round(r.s*100)}% overall</b><div class="small muted">Weighted by the exam's topic sizes. Harder questions count more. About 70% is the passing range.</div>${st.D.map(x=>{const v=x.dx==null?0:x.dx,cls=v>=0.75?"ok":v>=0.5?"mid":"bad";return `<div class="dxrow"><span>${esc(x.name)}</span><b class="${cls}">${Math.round(v*100)}% · ${v>=0.75?"strong":v>=0.5?"building":"weak"}</b><i><em class="${cls}" style="width:${Math.max(4,Math.round(v*100))}%"></em></i></div>`}).join("")}<div class="small">The red button now starts with <b>${esc(order[0].name)}</b>, then ${esc(order.slice(1,3).map(x=>x.name).join(", then "))}. Before each lesson a 5-question check lets you skip it. Questions you missed here are not counted as misses.</div></div>`}
   if(s.pcDone){const u=UNITS[part][s.pcDone.u];html=`<div class="dxr"><b>${s.pcDone.pass?"Lesson skipped: "+esc(u.t):"Not yet: "+esc(u.t)}</b><div class="small">${s.pcDone.pass?`You were sure and right on at least ${s.pcDone.need} of ${s.pcDone.n}. ${s.pcDone.facts} facts from this lesson are placed on your review schedule over the next 9 days, so each is still confirmed once.`:`${s.pcDone.sure} of ${s.pcDone.n} right and sure (${s.pcDone.need} skips the lesson). Reading the lesson is the next step.`}</div></div>`}
   if(html)h.insertAdjacentHTML("beforebegin",html)}catch(_){}};
+
+/* ================= Adaptive study for EA Parts 1 to 3 (Version 167) =================
+   Aim: the fewest study hours to a passing score. Everything here uses only the learner's own answers.
+   1. Predicted score. Per topic: every exam question seen counts once, as the average of "share of times right" and
+      "right the last time", harder questions weighing more; mock answers count twice; diagnostic and lesson-check misses
+      that were not kept as misses are still counted here. Topics are combined by their exam weights, with a range.
+      It is an estimate, and repeated questions flatter it a little: the page says so.
+   2. The red button follows the live estimate: exam weight x what is missing, re-ranked as answers come in. A topic that
+      has been started is finished (lessons, facts, practice) before the button moves to another, so it does not jump about.
+   3. Ask first. In a lesson where the check showed some knowledge (half or more right), new facts are asked before they
+      are taught. Right and sure: done in one answer. Wrong: it costs nothing (no miss is recorded), the fact is shown and
+      asked again a few questions later and once more at the end. Four wrong in a row switches to teach-first; a 75% hit
+      rate brings up to 12 more facts in the same sitting.
+   4. High-yield first. Inside a lesson, facts that many bank questions lean on are taught before the rest.
+   5. Diagnosis page: predicted score, topics by gain, weakest lessons, and why answers are missed (EXCEPT/NOT questions,
+      numbers and limits, deadlines, forms, long scenarios, hard questions, calculations, sure-but-wrong), each with a drill.
+   6. Fixing misses ends with look-alike questions from the same lessons, to test the idea and not the memory of an answer.
+   Nothing here changes saved answers, boxes or review dates of existing items. */
+const XAW={1:1,2:2,3:3};
+/* ---------- 1. estimate ---------- */
+function xaTopic(d){let w=0,g=0,n=0;for(const i of BANK){if(i.p!=part||i.t!=="q"||i.d!=d)continue;const r=S.it[i.id];if(!r||!r[2])continue;const k=XAW[i.lv||2];w+=k;g+=k*(r[3]/r[2]+(r[4]?1:0))/2;n++}
+  try{const mp=typeof mockPool==="function"?mockPool(part):null;if(mp&&mp.d&&mp.d[d]){const c=mp.d[d][0],m=mp.d[d][1];w+=4*m;g+=4*c;n+=m}}catch(_){}
+  const m=xpPeek(d);if(m.fn){w+=m.fw||0;n+=m.fn}
+  if(n>=5){const p=g/w;return{p,n,se:Math.sqrt(Math.max(.02,p*(1-p))/n)}}
+  const dx=xpDx();if(dx&&dx.d[d])return{p:dx.d[d][0],n:dx.d[d][1],se:Math.sqrt(.25/Math.max(1,dx.d[d][1]))};
+  return{p:null,n,se:null}}
+function xaAll(){const D=Object.keys(PARTS[part].doms).map(d=>Object.assign({d,name:PARTS[part].doms[d][0],w:PARTS[part].doms[d][1]},xaTopic(d)));let W=0,G=0,V=0,T=0,n=0;
+  D.forEach(x=>{T+=x.w;n+=x.n;if(x.p!=null){W+=x.w;G+=x.w*x.p;V+=x.w*x.w*x.se*x.se}x.gain=x.p==null?null:x.w*(1-x.p)});
+  const p=W?G/W:null,se=W?Math.sqrt(V)/W:null,cover=T?W/T:0,full=cover>0.99&&n>=120;
+  const verdict=p==null?"none":!full?"early":p>=0.78&&p-se>=0.72?"ready":p>=0.70?"close":"notyet";
+  return{D,p,se,cover,n,verdict,top:D.filter(x=>x.gain!=null).sort((a,b)=>b.gain-a.gain)[0]||null}}
+const XAV={none:"No estimate yet. Take the 24-question diagnostic.",early:"Early estimate: it firms up after about 120 questions across all topics.",ready:"You look ready to sit this part. Keep warm: one drill a day and a weekly mock.",close:"Close. Work the top topic below and take a mock.",notyet:"Not yet. The gap is in the topics at the top of the list."};
+/* diagnostic and check misses that are not kept as misses still count in the estimate */
+const xaForget0=xpForgetNewMisses;xpForgetNewMisses=function(s){try{Object.keys((s.xp||{}).isNew||{}).forEach(id=>{const r=S.it[id],it=BYID[id];if(it&&r&&r[4]===0&&r[2]<=1){const m=xpMem(it.d);m.fw=(m.fw||0)+XAW[it.lv||2];m.fn=(m.fn||0)+1}})}catch(_){}return xaForget0(s)};
+/* ---------- 2. order: live gain, but finish what was started ---------- */
+const xaDom0=xpDom;xpDom=function(d){const x=xaDom0(d),e=xaTopic(d);x.est=e;if(e.p!=null)x.gain=x.w*(1-e.p);return x};
+const xaState0=xpState;xpState=function(){const st=xaState0();try{if(!XPU[part]||!st.D.every(x=>x.gain!=null))return st;
+    const open=x=>!((x.lesDone||!x.les)&&x.learned&&(x.practiced||x.parked));S.set.xp=S.set.xp||{};let cur=S.set.xp["cur"+part];const cx=st.D.find(x=>String(x.d)===String(cur));
+    if(!cx||!open(cx)){const nx=st.D.filter(open).sort((a,b)=>b.gain-a.gain)[0];cur=nx?nx.d:null;S.set.xp["cur"+part]=cur}
+    const rank={};st.D.slice().sort((a,b)=>(String(a.d)===String(cur)?-1:0)-(String(b.d)===String(cur)?-1:0)||b.gain-a.gain).forEach((x,k)=>rank[x.d]=k);
+    const ord={les:0,learn:1,prac:2,exam:3,mock:4,strong:5},grp=s=>s.k==="exam"?1:s.k==="mock"?2:s.k==="strong"?3:0;
+    st.steps=st.steps.map((s,k)=>({s,k})).sort((a,b)=>grp(a.s)-grp(b.s)||(a.s.x&&b.s.x?rank[a.s.x.d]-rank[b.s.x.d]:0)||ord[a.s.k]-ord[b.s.k]||a.k-b.k).map(o=>o.s);st.byGain=true}catch(_){}return st};
+/* ---------- 4. yield: how many bank questions lean on each fact ---------- */
+const XAY={};
+function xaYield(){if(XAY[part])return XAY[part];const y={};try{const qt=BANK.filter(i=>i.p==part&&i.t==="q").map(i=>new Set(((i.s+" "+i.opts[i.ans]).toLowerCase().match(/[a-z0-9§]{3,}/g)||[])));
+    BANK.forEach(i=>{if(i.p!=part||i.t!=="f")return;const w=[...fwords(i)];if(!w.length){y[i.id]=0;return}const need=Math.max(1,Math.ceil(w.length*0.6));let c=0;for(const s of qt){let h=0;for(const x of w){if(s.has(x)){h++;if(h>=need)break}}if(h>=need)c++}y[i.id]=c})}catch(_){}return XAY[part]=y}
+/* ---------- 3. ask first ---------- */
+function xaKnows(d,k){try{const m=xpPeek(d);if(k!=null&&m.pc&&m.pc[k]!==undefined)return m.pc[k]/xpCheckN(k)>=0.5;const e=xaTopic(d);return e.p!=null&&e.n>=5&&e.p>=0.55}catch(_){return false}}
+function xaLearn(d,pool,k){try{const t=today(),Y=xaYield(),yb=i=>{const v=Y[i.id]||0;return v>=3?2:v>=1?1:0},topic=BANK.filter(i=>i.p==part&&i.d==d&&i.t==="f"),due=shuffle(topic.filter(i=>{const r=S.it[i.id];return r&&r[1]<=t})).slice(0,8);
+    const all=pool.filter(i=>!S.it[i.id]).sort((a,b)=>(yb(b)-yb(a))||(ORDER[a.id]-ORDER[b.id]));if(!all.length)return false;touchDay();const nw=all.slice(0,12),entries=due.map(i=>mkEntry(i));
+    if(xaKnows(d,k)){nw.forEach(i=>entries.push(Object.assign(mkEntry(i),{pre:1})));newSess("easy",null,0,entries,nw.map(i=>i.id));
+      sess.pre={pool:all.slice(12).map(i=>i.id),added:0,hits:0,n:0};sess.throttled=true;sess.thrShown=1;sess.title="Learn · asked first";sess.note="New facts are asked before they are taught. A wrong answer here costs nothing.";render();return true}
+    for(let j=0;j<nw.length;j+=4){const ch=nw.slice(j,j+4);entries.push({learn:ch.map(i=>i.id),id:ch[0].id});shuffle(ch.slice()).forEach(i=>entries.push(mkEntry(i)))}
+    if(nw.length>=2)shuffle(nw.slice()).forEach(i=>entries.push({id:i.id,lazy:2,final:true}));
+    newSess("easy",null,0,entries,nw.map(i=>i.id));return true}catch(_){return false}}
+xpLearnUnit=function(d,k){return xaLearn(d,xpUnitFacts(k),k)};
+const xaLearnTopic0=xpLearn;xpLearn=function(d){if(!XPU[part])return xaLearnTopic0(d);return xaLearn(d,BANK.filter(i=>i.p==part&&i.d==d&&i.t==="f"),null)};
+const xaRecord0=record;record=function(ok,conf){const s=sess,cur=s&&s.queue[s.pos],P=s&&s.pre;if(!(P&&cur&&cur.pre))return xaRecord0.apply(this,arguments);
+  const it=BYID[cur.id],key=it.p+"-"+it.d,t=today();let snap=null;
+  try{if(!ok)snap={r:S.it[it.id]?S.it[it.id].slice():null,dd:JSON.stringify((S.dd&&S.dd[key])||null),dom:S.dom[key],days:S.days&&S.days[t]?S.days[t].slice():null,nw:S.day?S.day.nw:0}}catch(_){}
+  cur.pre=0;const r=xaRecord0.apply(this,arguments);
+  try{P.n++;if(ok&&conf)P.hits++;
+    if(snap){if(snap.r)S.it[it.id]=snap.r;else delete S.it[it.id];const dd=JSON.parse(snap.dd);S.dd=S.dd||{};if(dd)S.dd[key]=dd;else delete S.dd[key];if(snap.dom===undefined)delete S.dom[key];else S.dom[key]=snap.dom;
+      if(S.days){if(snap.days)S.days[t]=snap.days;else delete S.days[t]}if(S.day)S.day.nw=snap.nw;persist()}
+    if(!(ok&&conf)){s.queue.push({id:it.id,lazy:2,final:true});s.total++}
+    const idx=[];s.queue.forEach((e,k)=>{if(k>s.pos&&e.pre)idx.push(k)});
+    if(idx.length&&P.n>=4&&P.hits===0){const ids=idx.map(k=>s.queue[k].id);idx.forEach(k=>{s.queue[k].pre=0});
+      for(let g=Math.floor((idx.length-1)/4)*4;g>=0;g-=4){const grp=idx.slice(g,g+4);s.queue.splice(grp[0],0,{learn:grp.map(k=>s.queue[k].id),id:s.queue[grp[0]].id})}
+      ids.forEach(id=>{s.queue.push({id,lazy:2,final:true});s.total++});P.switched=1;s.note="These are new to you, so the rest are shown first, then asked."}
+    else if(!idx.length&&!P.switched&&P.pool.length&&P.added<12&&P.n>=6&&P.hits/P.n>=0.75){const add=P.pool.splice(0,6).map(id=>BYID[id]).filter(i=>i&&!S.it[i.id]);
+      add.forEach((i,j)=>{s.queue.splice(s.pos+1+j,0,Object.assign(mkEntry(i),{pre:1}));s.newIds.push(i.id)});s.total+=add.length;P.added+=add.length;if(add.length)s.note=`You know most of these, so ${add.length} more facts were added to this sitting.`}
+    render()}catch(_){}return r};
+/* a one-line note under the session title */
+const xaSession0=renderSession;renderSession=function(){xaSession0.apply(this,arguments);try{const s=sess;if(s&&s.note&&view==="session"){const h=document.querySelector("#view .sesshead h2");if(h&&!document.querySelector("#view .xanote"))h.insertAdjacentHTML("afterend",`<div class="small xanote" style="color:var(--accent)">${esc(s.note)}</div>`)}}catch(_){}};
+/* ---------- 6. look-alike questions after fixing misses ---------- */
+function xaUnitOf(it){const m=XPU[part];if(!m)return -1;for(let k=0;k<m.length;k++){if(m[k]==it.d&&xpUnitQs(k).some(q=>q.id===it.id))return k}for(let k=0;k<m.length;k++){if(xpUnitQs(k).some(q=>q.id===it.id))return k}return -1}
+const xaRun0=xpRun;xpRun=function(a){const r=xaRun0(a);try{if(XPU[part]&&a.mode==="missed"&&sess&&view==="session"&&sess.mode==="missed"){const have=new Set(sess.queue.map(e=>e.id)),add=[];
+    for(const e of sess.queue){if(add.length>=4)break;const it=BYID[e.id];if(!it||it.t!=="q")continue;const k=xaUnitOf(it);if(k<0)continue;const sib=shuffle(xpUnitQs(k).filter(q=>!have.has(q.id)&&!S.it[q.id]&&q.d==it.d&&Math.abs((q.lv||2)-(it.lv||2))<=1))[0];if(sib){have.add(sib.id);add.push(sib)}}
+    if(add.length){add.forEach(q=>sess.queue.push(mkEntry(q)));sess.total+=add.length;sess.note=`The last ${add.length} are new look-alike questions from the same lessons: they test the idea, not your memory of the answer.`;render()}}}catch(_){}return r};
+/* ---------- 5. diagnosis page ---------- */
+const XACAT=[["exc","EXCEPT and NOT questions",i=>/\bEXCEPT\b|\bNOT\b|not true|false statement|is incorrect/.test(i.s)],
+ ["num","Amounts, rates and limits",i=>/[$%]/.test(String(i.opts[i.ans]))],
+ ["time","Deadlines and time limits",i=>/deadline|due date|how long|by when|within \d|\bdays\b|\bmonths\b|statute/i.test(i.s+" "+i.opts[i.ans])],
+ ["form","Which form or schedule",i=>/\bForm\b|\bSchedule\b/.test(String(i.opts[i.ans]))],
+ ["long","Long scenarios",i=>i.s.length>=220],
+ ["hard","Hard questions",i=>i.lv===3]];
+function xaVal(i){const r=S.it[i.id];return r&&r[2]?(r[3]/r[2]+(r[4]?1:0))/2:null}
+function xaCats(){const Q=BANK.filter(i=>i.p==part&&i.t==="q"&&i.opts),seen=Q.filter(i=>xaVal(i)!=null),all=seen.length?seen.reduce((a,i)=>a+xaVal(i),0)/seen.length:null;
+  const rows=XACAT.map(([k,name,f])=>{const pool=Q.filter(f),s=pool.filter(i=>xaVal(i)!=null);return{k,name,total:pool.length,n:s.length,acc:s.length?s.reduce((a,i)=>a+xaVal(i),0)/s.length:null}});
+  const G=GENS.filter(g=>g.p==part),gs=G.filter(g=>S.it[g.id]&&S.it[g.id][2]);if(G.length)rows.push({k:"calc",name:"Calculations",total:G.length,n:gs.reduce((a,g)=>a+S.it[g.id][2],0),acc:gs.length?gs.reduce((a,g)=>a+S.it[g.id][3],0)/gs.reduce((a,g)=>a+S.it[g.id][2],0):null});
+  rows.forEach(r=>{r.weak=r.acc!=null&&all!=null&&r.n>=6&&r.acc<=all-0.08});return{all,seen:seen.length,rows}}
+function xaLessons(){const m=XPU[part]||[],out=[];m.forEach((d,k)=>{const qs=xpUnitQs(k),s=qs.filter(i=>xaVal(i)!=null);if(s.length<4)return;const acc=s.reduce((a,i)=>a+xaVal(i),0)/s.length,miss=s.filter(i=>S.it[i.id][4]===0).length;out.push({k,d,t:UNITS[part][k].t,acc,n:s.length,miss})});
+  return out.filter(x=>x.acc<0.72||x.miss>=3).sort((a,b)=>a.acc-b.acc).slice(0,3)}
+/* rough workload left on the path, in answers, against the learner's own daily average and the exam date */
+function xaPace(){try{const st=xpState(),t=today();let left=0;st.D.forEach(x=>{if(!x.learned)left+=Math.max(0,Math.ceil(x.f*0.8)-x.fs)*2;if(!x.practiced&&!x.parked)left+=Math.max(10,x.need-x.qs)});
+    st.steps.forEach(s=>{if(!s.done&&s.k==="exam")left+=30;if(!s.done&&s.k==="mock")left+=25;if(!s.done&&s.k==="strong")left+=30});
+    let sum=0,days=0;for(let k=1;k<=7;k++){const v=(S.days||{})[t-k];if(v&&v[0]){sum+=v[0];days++}}const tv=(S.days||{})[t];if(tv&&tv[0]){sum+=tv[0];days++}
+    if(!left)return"Every step of the path is done.";if(days<2)return`About ${left} answers are left on the path. A daily pace appears after two study days.`;
+    const per=Math.round(sum/days),need=Math.ceil(left/Math.max(1,per)),dl=daysTo(examDate(part));
+    return`About ${left} answers left on the path. At your pace (${per} a day on the days you studied) that is about ${need} study days.${dl!=null&&dl>=0?(need>dl?` Your exam is in ${dl} days: raise the pace to about ${Math.ceil(left/Math.max(1,dl))} a day, or move the date.`:` Your exam is in ${dl} days: you are on pace.`):""}`}catch(_){return""}}
+function xaLine(){try{if(!XPU[part])return"";const A=xaAll(),pending=!xpDx()&&xpAnswered()<40&&!(S.set.xp||{})["nodx"+part];
+  const txt=A.p==null?"No estimate yet. The diagnostic takes about 15 minutes.":`Predicted ${Math.round(A.p*100)}% · aim for 75%+${A.top?" · biggest gain: "+esc(A.top.name):""}`;
+  return txt}catch(_){return""}}
+xpDxLine=function(){return""};
+/* ---------- readiness on top, then the red button, then two more suggestions ---------- */
+function xaReadyHtml(){try{const A=xaAll(),e=esc,pending=!xpDx()&&xpAnswered()<40&&!(S.set.xp||{})["nodx"+part],c=A.p==null?"":A.p>=0.75?"ok":A.p>=0.6?"mid":"bad";
+  const short={none:"Take the 24-question diagnostic to get your number",early:"Early estimate",ready:"Ready to sit this part",close:"Close",notyet:"Not yet"}[A.verdict];
+  return `<button class="xaready" data-xa="open"><span class="xr1">READINESS · ${e(pl(part)).toUpperCase()}<em>Diagnosis ›</em></span>
+    <span class="xr2"><b class="${c}">${A.p==null?"–":Math.round(A.p*100)+"%"}</b><span>${A.p==null?"no estimate yet":`predicted score ± ${Math.max(2,Math.round(A.se*100))}<br>aim for 75% or more`}</span></span>
+    <span class="xrbar"><i class="${c}" style="width:${A.p==null?0:Math.round(A.p*100)}%"></i><u></u></span>
+    <span class="xr3"><b>${e(short)}</b>${A.top&&A.p!=null?` · biggest gain: ${e(A.top.name)}`:""}</span></button>${pending?`<div class="row" style="justify-content:flex-end"><button class="btn ghost small" data-xp="nodx">Skip the diagnostic</button></div>`:""}`}catch(_){return""}}
+function xaSuggest(){const out=[];try{const main=xpNext(),t=main.t||"",miss=missedPool(part,"all").length,due=dueList(part,"all").length,pc=v=>Math.round(v*100)+"%";
+    if(miss>=3&&!/misses/.test(t))out.push({t:`Fix ${miss} misses`,run:{mode:"missed",filt:"all"}});
+    const L=xaLessons()[0];if(L&&!t.includes(L.t))out.push({t:`Weak lesson (${pc(L.acc)}): ${L.t}`,run:{unit:L.k,dd:L.d}});
+    const C=xaCats().rows.filter(r=>r.weak&&r.k!=="calc").sort((a,b)=>a.acc-b.acc)[0];if(C)out.push({t:`Weak type (${pc(C.acc)}): ${C.name}`,cat:C.k});
+    const nc=BANK.filter(i=>{const r=S.it[i.id];return i.p==part&&r&&r[5]}).length;if(nc>=3)out.push({t:`${nc} sure-but-wrong answers`,conf:1});
+    if(due>=5&&!/Review/.test(t))out.push({t:`Review ${due} facts that are due`,run:{mode:"easy",filt:"all"}})}catch(_){}return out.slice(0,2)}
+function xaSuggestHtml(){try{const l=xaSuggest();if(!l.length)return"";return `<div class="xasg"><span class="small muted">Also worth doing</span>${l.map((x,i)=>`<button class="btn small" data-xa="sg" data-i="${i}">${esc(x.t)} ›</button>`).join("")}</div>`}catch(_){return""}}
+/* ---------- Quick 10: always on top, built by the same engine ----------
+   10 items chosen from everything the engine knows: up to 3 open misses, up to 2 reviews that are due, 3 questions from the
+   topic with the biggest gain (from its weakest lesson when there is one) and 1 of the weakest question type, 1 calculation, and
+   1 from the next topic when there is room. Level follows the topic's estimate (under 55%: basic and medium; 55 to 75%: medium and hard; above:
+   hard). Questions answered right and not yet due are left out. It also adapts while you answer: a miss swaps a later,
+   less important item for an easier look-alike from the same lesson (twice at most), and a sure right answer on the focus topic raises
+   the next one from that topic a level. Every answer feeds the readiness figure, the path and the review dates. */
+function xaLevelOK(p,lv){return p==null?lv>=2:p<0.55?lv<=2:p<0.75?lv>=2:lv===3}
+function xaQuick(N){N=N||10;const t=today(),A=xaAll(),q=[],has=new Set(),tag={},add=(l,k,why)=>{let c=0;for(const i of l){if(q.length>=N||c>=k)break;if(i&&!has.has(i.id)){has.add(i.id);q.push(i);tag[i.id]=why;c++}}return c};
+  const fresh=i=>{const r=S.it[i.id];return !(r&&r[4]!==0&&r[1]>t)},Q=BANK.filter(i=>i.p==part&&i.t==="q"&&fresh(i)),facts=easyPool(part,"all");
+  const order=A.D.filter(x=>x.gain!=null).sort((a,b)=>b.gain-a.gain),g1=order[0],g2=order[1];
+  add(missedPool(part,"all"),3,"miss");add(shuffle(facts.filter(i=>{const r=S.it[i.id];return r&&r[4]!==0&&r[1]<=t})),2,"due");
+  if(g1){const L=xaLessons().filter(x=>x.d==g1.d)[0],inL=L?new Set(xpUnitQs(L.k).map(i=>i.id)):null,pool=Q.filter(i=>i.d==g1.d&&xaLevelOK(g1.p,i.lv||2));
+    if(inL)add(weightPick(pool.filter(i=>inL.has(i.id)),6),2,"focus");add(weightPick(pool,8),3-q.filter(i=>tag[i.id]==="focus").length,"focus");add(weightPick(Q.filter(i=>i.d==g1.d),6),3-q.filter(i=>tag[i.id]==="focus").length,"focus")}
+  const C=xaCats().rows.filter(r=>r.weak&&r.k!=="calc").sort((a,b)=>a.acc-b.acc)[0];if(C){const f=(XACAT.find(c=>c[0]===C.k)||[])[2];if(f)add(weightPick(Q.filter(i=>i.opts&&f(i)),6),1,"type")}
+  add(weightPick(GENS.filter(g=>g.p==part),2),1,"calc");
+  if(g2)add(weightPick(Q.filter(i=>i.d==g2.d&&xaLevelOK(g2.p,i.lv||2)),6),1,"next");
+  add(weightPick(Q.filter(i=>(i.lv||2)>=2),N),N,"fill");add(weightPick(Q,N),N,"fill");add(facts.filter(i=>!S.it[i.id]).sort((a,b)=>ORDER[a.id]-ORDER[b.id]),N,"fill");add(shuffle(facts.slice()),N,"fill");
+  if(!q.length)return false;const mix=shuffle(q);newSess("qd",mix);sess.quick={tag,swaps:0,focus:g1?String(g1.d):null,fp:g1?g1.p:null};sess.title="Quick 10 · adaptive";
+  const n=k=>q.filter(i=>tag[i.id]===k).length;sess.note=`Built for you now: ${[n("miss")?n("miss")+" misses":"",n("due")?n("due")+" due":"",g1?n("focus")+" on "+g1.name:"",n("type")?"1 weak type":"",n("calc")?"1 calculation":""].filter(Boolean).join(" · ")}`;render();return true}
+const xaStart0=startSession;startSession=function(mode,n){try{if(mode==="qd"&&XPU[part]&&(n||10)<=10&&xaQuick(n||10))return}catch(_){}return xaStart0.apply(this,arguments)};
+const xaRecord1=record;record=function(ok,conf){const s=sess,K=s&&s.quick,cur=s&&s.queue[s.pos],it=cur&&BYID[cur.id];const r=xaRecord1.apply(this,arguments);
+  try{if(K&&it&&it.t==="q"){const ahead=k=>k>s.pos,used=new Set(s.queue.map(e=>e.id));
+    if(!ok&&K.swaps<2){let j=-1;for(const w of ["fill","next","due","type"]){j=s.queue.findIndex((e,k)=>ahead(k)&&K.tag[e.id]===w);if(j>0)break}const u=xaUnitOf(it);
+      if(j>0&&u>=0){const sib=shuffle(xpUnitQs(u).filter(x=>!used.has(x.id)&&!S.it[x.id]&&(x.lv||2)<=(it.lv||2)))[0];if(sib){s.queue[j]=mkEntry(sib);K.tag[sib.id]="sib";K.swaps++;s.note="A miss: an easier look-alike from the same lesson was added further on."}}}
+    else if(ok&&conf&&String(it.d)===K.focus&&(it.lv||2)<3){const j=s.queue.findIndex((e,k)=>ahead(k)&&K.tag[e.id]==="focus"&&(BYID[e.id].lv||2)<=(it.lv||2));
+      if(j>0){const up=shuffle(BANK.filter(x=>x.p==part&&x.t==="q"&&String(x.d)===K.focus&&(x.lv||2)===(it.lv||2)+1&&!used.has(x.id)&&!(S.it[x.id]&&S.it[x.id][4]!==0&&S.it[x.id][1]>today())))[0];if(up){s.queue[j]=mkEntry(up);K.tag[up.id]="focus";s.note="Sure and right: the next one on this topic is a level harder."}}}}}catch(_){}return r};
+function xaQuickHtml(){return `<button class="xaquick" data-xa="quick"><b>⚡ Quick 10 · adaptive drill</b><span>Your misses, what is due and your weakest spots, about 8 min</span></button>`}
+const xaDoNext0=doNextHtml;doNextHtml=function(){const h=xaDoNext0();try{if(!XPU[part]||PARTS[part].bk||!h)return h;return xaReadyHtml()+xaQuickHtml()+h+xaSuggestHtml()}catch(_){return h}};
+function renderXaDiag(){const e=esc,A=xaAll(),C=xaCats(),L=xaLessons(),pc=v=>Math.round(v*100)+"%",cal=S.cal||[0,0,0,0],tm=(S.tm||{})[part+"-hard"]||[0,0],lm=typeof lastMock==="function"?lastMock(part):null,nconf=BANK.filter(i=>{const r=S.it[i.id];return i.p==part&&r&&r[5]}).length;
+  const cls=v=>v>=0.75?"ok":v>=0.6?"mid":"bad",bar=(v,c)=>`<i><em class="${c||cls(v)}" style="width:${Math.max(4,Math.round(v*100))}%"></em></i>`;
+  const top=A.p==null?`<div class="xabig">–</div>`:`<div class="xabig ${cls(A.p)}">${pc(A.p)}<small> ± ${Math.max(2,Math.round(A.se*100))}</small></div>`;
+  const order=A.D.slice().sort((a,b)=>(b.gain==null?-1:b.gain)-(a.gain==null?-1:a.gain));
+  $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Diagnosis · ${e(pl(part))}</h2><div class="small muted">Worked out from your own answers. It updates after every session.</div></div></div>
+   <div class="card xad"><div class="small muted">Predicted score on exam questions</div>${top}<div><b>${XAV[A.verdict]}</b></div><div class="small muted">${A.n} questions counted. Aim for 75% or more; the real exam is scaled and about 70% is the passing range. Questions you have repeated flatter this figure a little, so trust mock exams most.</div>
+     <div class="row"><button class="btn pri small" data-xa="dx">${xpDx()?"Run the 24-question diagnostic again":"Take the 24-question diagnostic"}</button></div></div>
+   <div class="card xad"><b>Topics, biggest gain first</b><div class="small muted">Gain = share of the exam x what you still miss. The red button works in this order.</div>
+     ${order.map((x,k)=>`<div class="dxrow"><span>${k===0&&x.gain!=null?"▶ ":""}${e(x.name)} <span class="muted">· ${x.w}% of exam</span></span><b class="${x.p==null?"":cls(x.p)}">${x.p==null?"no data":pc(x.p)}</b>${x.p==null?"":bar(x.p)}</div>`).join("")}</div>
+   ${L.length?`<div class="card xad"><b>Lessons that cost you most</b>${L.map(x=>`<div class="dxrow"><span>${e(x.t)}</span><b class="${cls(x.acc)}">${pc(x.acc)}${x.miss?" · "+x.miss+" open":""}</b>${bar(x.acc)}<div class="row" style="grid-column:1/-1"><button class="btn small" data-xa="les" data-k="${x.k}">Read the lesson</button><button class="btn small" data-xa="quiz" data-k="${x.k}" data-d="${x.d}">Quiz on it</button></div></div>`).join("")}</div>`:""}
+   <div class="card xad"><b>Why you miss</b><div class="small muted">${C.all==null?"Answer some questions first.":`All questions: ${pc(C.all)} over ${C.seen} seen. A type marked ⚠ runs 8 points or more below that.`}</div>
+     ${C.rows.filter(r=>r.total>=8).map(r=>`<div class="dxrow"><span>${r.weak?"⚠ ":""}${e(r.name)}</span><b class="${r.acc==null?"":cls(r.acc)}">${r.acc==null||r.n<3?"not enough yet":pc(r.acc)+" · "+r.n+" seen"}</b>${r.acc==null||r.n<3?"":bar(r.acc)}${r.weak||r.k==="calc"&&r.acc!=null&&r.acc<0.7?`<div class="row" style="grid-column:1/-1"><button class="btn small" data-xa="cat" data-c="${r.k}">Drill 10 of these</button></div>`:""}</div>`).join("")}
+     ${nconf?`<div class="dxrow"><span>⚠ Sure but wrong</span><b class="bad">${nconf} items</b><div class="small muted" style="grid-column:1/-1">The costliest kind: you would not have checked these on exam day.</div><div class="row" style="grid-column:1/-1"><button class="btn small" data-xa="conf">Drill them</button></div></div>`:""}</div>
+   <div class="card xad"><b>Confidence and pace</b>
+     <div class="small">${cal[0]>=10?`When you say Sure you are right ${pc(cal[1]/cal[0])} of the time${cal[2]>=10?`; when Guessing, ${pc(cal[3]/cal[2])}`:""}.${cal[1]/cal[0]<0.8?" Slow down on the ones you feel sure of.":""}`:"Confidence figures appear after 10 answers marked Sure."}</div>
+     <div class="small">${xaPace()}</div>
+     <div class="small">${tm[0]>=5?`Hard questions take you about ${Math.round(tm[1]/tm[0])} seconds each. The exam allows about ${Math.round(mpq(part)*60)}.`:"Pace appears after 5 hard questions."}${lm&&lm.sec?` Last mocks: ${Math.round(lm.sec/lm.n)} seconds a question.`:""}</div></div></section>`}
+const xaExtraView0=extraView;extraView=function(){if(view==="xadiag"){renderXaDiag();return true}return xaExtraView0()};
+const xaExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.xa===undefined)return xaExtraClick0(b);const a=d.xa;
+  if(a==="open"){view="xadiag";render();window.scrollTo(0,0);return true}
+  if(a==="dx"){xpDxStart();return true}
+  if(a==="quick"){startSession("qd",10);return true}
+  if(a==="sg"){const x=xaSuggest()[+d.i];if(!x)return true;if(x.run){xpRun(x.run);return true}if(x.conf){startSession("common",10);return true}if(x.cat){d.c=x.cat}else return true}
+  if(a==="les"){xpOpenLesson(+d.k);xpFromPath=false;window.scrollTo(0,0);return true}
+  if(a==="quiz"){xpRun({unit:+d.k,dd:isNaN(+d.d)?d.d:+d.d});return true}
+  if(a==="conf"){startSession("common",10);return true}
+  if(a==="cat"||a==="sg"){let pool;if(d.c==="calc"){pool=GENS.filter(g=>g.p==part)}else{const f=(XACAT.find(c=>c[0]===d.c)||[])[2];pool=f?BANK.filter(i=>i.p==part&&i.t==="q"&&i.opts&&f(i)):[]}
+    const rk=i=>{const r=S.it[i.id];return !r?1:r[4]===0?0:2};const q=shuffle(pool.slice()).sort((x,y)=>rk(x)-rk(y)).slice(0,10);if(q.length){newSess("quiz",shuffle(q));sess.title="Drill: "+(d.c==="calc"?"Calculations":(XACAT.find(c=>c[0]===d.c)||[])[1]);render()}return true}
+  return true};
+/* when the path is finished and the estimate says ready, the button says so */
+const xaNext0=xpNext;xpNext=function(){const a=xaNext0();try{if(XPU[part]&&a.qd==="smart"){const A=xaAll();if(A.verdict==="ready")a.d=`Predicted ${Math.round(A.p*100)}%: you look ready to sit this part. One drill a day keeps it warm.`}}catch(_){}return a};
 
 /* ================= CAA on the job =================
    The owner has passed the CAA training, so this section is no longer exam preparation. It is now:
@@ -19644,7 +19829,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 166 · Nov 22";
+const BUILD="Version 167 · Nov 22";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -19852,7 +20037,7 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
   const dash=`<section class="section" style="margin-top:12px"><div class="ledger dash">
       <div class="row" style="justify-content:space-between"><h2>${pl(part)}: ${P.name}</h2>${S.streak.n?`<span class="chip">${S.streak.n}-day streak</span>`:""}</div>
       ${examRowHtml()}
-      <div class="gauge"><div class="gnum"><b>${pc(ps.readyX)}</b><span>ready · goal 90%</span></div><div class="gbar" title="Overall readiness"><i style="width:${Math.min(100,ps.readyX).toFixed(1)}%"></i><span class="tick"></span></div></div>
+      <div class="gauge"><div class="gnum"><b>${pc(ps.readyX)}</b><span>${typeof XPU!=="undefined"&&XPU[part]?"path covered · goal 90%":"ready · goal 90%"}</span></div><div class="gbar" title="Overall readiness"><i style="width:${Math.min(100,ps.readyX).toFixed(1)}%"></i><span class="tick"></span></div></div>
       <div class="stats3"><div class="stat"><b>${pc(ps.strength)}</b><span>Memory</span></div><div class="stat"><b>${ps.examAcc===null?"–":ps.examAcc+"%"}</b><span>Exam-style</span></div><div class="stat"><b>${due}</b><span>Due today</span></div></div>
       ${bw}
       ${bkNote?`<div class="small" style="color:var(--accent)"><b>${esc(bkNote)}</b></div>`:""}
