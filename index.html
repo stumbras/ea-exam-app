@@ -756,6 +756,7 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 .xaquick{display:flex;flex-direction:column;gap:2px;align-items:flex-start;width:100%;text-align:left;font:inherit;cursor:pointer;border:0;border-radius:14px;padding:11px 14px;margin:8px 0 0;background:#0f172a;color:#fff}.xaquick b{font-size:16px}.xaquick span{font-size:12.5px;opacity:.82}
 .xaqrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.xaquick.alt{background:var(--accent);color:#fff}
 .xapace{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 0}.xaseg{display:inline-flex;border:1.5px solid var(--line);border-radius:99px;overflow:hidden}.xaseg button{font:inherit;font-size:12.5px;font-weight:700;border:0;background:var(--surface);color:var(--muted);padding:5px 11px;cursor:pointer}.xaseg button.on{background:#0f172a;color:#fff}
+.xahow{display:grid;gap:6px;margin:10px 0 0;padding:12px 14px;border:1.5px solid var(--accent);border-radius:14px;background:var(--accent-soft,var(--surface))}.xahow>b{font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-top:4px}.xafact{font-size:14px;border-left:3px solid var(--accent);padding:2px 0 2px 9px}.xafact span{display:block;font-weight:700}
 .xr3{font-size:14px}.xasg{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 0}.xasg .btn{text-align:left}
 .xad{display:grid;gap:8px;margin-top:10px}.xabig{font:800 44px/1 var(--mono,monospace);letter-spacing:-1px}.xabig small{font-size:16px;font-weight:600;color:var(--muted)}.xabig.ok{color:var(--good)}.xabig.mid{color:var(--warn)}.xabig.bad{color:var(--bad)}
 .dxrow .ok{color:var(--good)}.dxrow .mid{color:var(--warn)}.dxrow .bad{color:var(--bad)}.dxrow em.ok{background:var(--good)}.dxrow em.mid{background:var(--warn)}.dxrow em.bad{background:var(--bad)}
@@ -17816,25 +17817,35 @@ const xpResults1=renderResults;renderResults=function(){xpResults1.apply(this,ar
    Nothing here changes saved answers, boxes or review dates of existing items. */
 const XAW={1:1,2:2,3:3};
 /* ---------- 1. estimate ---------- */
-function xaTopic(d){let w=0,g=0,n=0;for(const i of BANK){if(i.p!=part||i.t!=="q"||i.d!=d)continue;const r=S.it[i.id];if(!r||!r[2])continue;const k=XAW[i.lv||2];w+=k;g+=k*(r[3]/r[2]+(r[4]?1:0))/2;n++}
-  try{const mp=typeof mockPool==="function"?mockPool(part):null;if(mp&&mp.d&&mp.d[d]){const c=mp.d[d][0],m=mp.d[d][1];w+=4*m;g+=4*c;n+=m}}catch(_){}
-  const m=xpPeek(d);if(m.fn){w+=m.fw||0;n+=m.fn}
-  if(n>=5){const p=g/w;return{p,n,se:Math.sqrt(Math.max(.02,p*(1-p))/n)}}
-  const dx=xpDx();if(dx&&dx.d[d])return{p:dx.d[d][0],n:dx.d[d][1],se:Math.sqrt(.25/Math.max(1,dx.d[d][1]))};
-  return{p:null,n,se:null}}
-function xaAll(){const D=Object.keys(PARTS[part].doms).map(d=>Object.assign({d,name:PARTS[part].doms[d][0],w:PARTS[part].doms[d][1]},xaTopic(d)));let W=0,G=0,V=0,T=0,n=0;
-  D.forEach(x=>{T+=x.w;n+=x.n;if(x.p!=null){W+=x.w;G+=x.w*x.p;V+=x.w*x.w*x.se*x.se}x.gain=x.p==null?null:x.w*(1-x.p)});
-  const p=W?G/W:null,se=W?Math.sqrt(V)/W:null,cover=T?W/T:0,full=cover>0.99&&n>=120;
+/* Readiness, rebuilt in Version 169 after it rose on a session with mistakes. The old figure gave a missed question
+   three-quarters credit the moment it was answered right once, so re-drilling misses pushed it up, and a topic with no
+   answers yet was simply left out. Now:
+   - Each exam question counts by your FIRST try. Right every time so far: full credit. Ever missed: no credit, until it
+     has been answered right on later review days (box 3 or higher), then 30%. Harder questions weigh more.
+   - A topic with few answers is pulled toward the average of your topics (worth about 4 medium questions), and a topic
+     with none sits at that average, so starting a topic cannot move the figure by itself.
+   A wrong answer can only lower the figure or leave it where it is. tmp/t654.js checks that on 6,000 random answers. */
+function xaCredit(r){return r[3]===r[2]?1:(r[4]&&r[0]>=3?0.3:0)}
+function xaRaw(d){let w=0,g=0,n=0;for(const i of BANK){if(i.p!=part||i.t!=="q"||i.d!=d)continue;const r=S.it[i.id];if(!r||!r[2])continue;const k=XAW[i.lv||2];w+=k;g+=k*xaCredit(r);n++}
+  const m=xpPeek(d);if(m.fn){w+=m.fw||0;n+=m.fn}return{g,wt:w,n,raw:w?g/w:null}}
+const XAC={k:null,v:null};
+const xaPersist0=persist;persist=function(){XAC.k=null;return xaPersist0.apply(this,arguments)};
+function xaAll(){if(XAC.k===part&&XAC.v)return XAC.v;const v=xaAll1();XAC.k=part;XAC.v=v;return v}
+function xaAll1(){const D=Object.keys(PARTS[part].doms).map(d=>Object.assign({d,name:PARTS[part].doms[d][0],w:PARTS[part].doms[d][1]},xaRaw(d)));let W=0,G=0,n=0,T=0;
+  D.forEach(x=>{T+=x.w;n+=x.n;if(x.n){W+=x.w;G+=x.w*x.raw}});const prior=W?G/W:null;let P=0,V=0;
+  D.forEach(x=>{if(prior==null){x.p=null;x.se=null;x.gain=null;return}x.p=(x.g+8*prior)/(x.wt+8);x.se=Math.sqrt(Math.max(.02,x.p*(1-x.p))/(x.n+4));x.gain=x.w*(1-x.p);x.nodata=!x.n;P+=x.w*x.p;V+=x.w*x.w*x.se*x.se});
+  const p=prior==null||n<10?null:P/T,se=p==null?null:Math.sqrt(V)/T,cover=T?W/T:0,full=cover>0.99&&n>=120;
   const verdict=p==null?"none":!full?"early":p>=0.78&&p-se>=0.72?"ready":p>=0.70?"close":"notyet";
   return{D,p,se,cover,n,verdict,top:D.filter(x=>x.gain!=null).sort((a,b)=>b.gain-a.gain)[0]||null}}
-const XAV={none:"No estimate yet. Take the 24-question diagnostic.",early:"Early estimate: it firms up after about 120 questions across all topics.",ready:"You look ready to sit this part. Keep warm: one drill a day and a weekly mock.",close:"Close. Work the top topic below and take a mock.",notyet:"Not yet. The gap is in the topics at the top of the list."};
+function xaTopic(d){const x=xaAll().D.find(x=>String(x.d)===String(d));return x?{p:x.p,n:x.n,se:x.se}:{p:null,n:0,se:null}}
+const XAV={none:"No estimate yet. It appears after 10 exam questions; the 24-question diagnostic is the quickest way.",early:"Early estimate: it firms up after about 120 questions across all topics.",ready:"You look ready to sit this part. Keep warm: one drill a day and a weekly mock.",close:"Close. Work the top topic below and take a mock.",notyet:"Not yet. The gap is in the topics at the top of the list."};
 /* diagnostic and check misses that are not kept as misses still count in the estimate */
 const xaForget0=xpForgetNewMisses;xpForgetNewMisses=function(s){try{Object.keys((s.xp||{}).isNew||{}).forEach(id=>{const r=S.it[id],it=BYID[id];if(it&&r&&r[4]===0&&r[2]<=1){const m=xpMem(it.d);m.fw=(m.fw||0)+XAW[it.lv||2];m.fn=(m.fn||0)+1}})}catch(_){}return xaForget0(s)};
 /* ---------- 2. order: live gain, but finish what was started ---------- */
 const xaDom0=xpDom;xpDom=function(d){const x=xaDom0(d),e=xaTopic(d);x.est=e;if(e.p!=null)x.gain=x.w*(1-e.p);return x};
 const xaState0=xpState;xpState=function(){const st=xaState0();try{if(!XPU[part]||!st.D.every(x=>x.gain!=null))return st;
     const open=x=>!((x.lesDone||!x.les)&&x.learned&&(x.practiced||x.parked));S.set.xp=S.set.xp||{};let cur=S.set.xp["cur"+part];const cx=st.D.find(x=>String(x.d)===String(cur));
-    if(!cx||!open(cx)){const nx=st.D.filter(open).sort((a,b)=>b.gain-a.gain)[0];cur=nx?nx.d:null;S.set.xp["cur"+part]=cur}
+    if(!cx||!open(cx)){const started=x=>{const m=xpPeek(x.d);return x.lesRead>0||x.fs>0||!!(m.pc||m.ul||m.uq||m.pr)},op=st.D.filter(open),nx=op.filter(started)[0]||op.slice().sort((a,b)=>b.gain-a.gain)[0];cur=nx?nx.d:null;S.set.xp["cur"+part]=cur} /* a topic already begun is finished first; otherwise the biggest gain */
     const rank={};st.D.slice().sort((a,b)=>(String(a.d)===String(cur)?-1:0)-(String(b.d)===String(cur)?-1:0)||b.gain-a.gain).forEach((x,k)=>rank[x.d]=k);
     const ord={les:0,learn:1,prac:2,exam:3,mock:4,strong:5},grp=s=>s.k==="exam"?1:s.k==="mock"?2:s.k==="strong"?3:0;
     st.steps=st.steps.map((s,k)=>({s,k})).sort((a,b)=>grp(a.s)-grp(b.s)||(a.s.x&&b.s.x?rank[a.s.x.d]-rank[b.s.x.d]:0)||ord[a.s.k]-ord[b.s.k]||a.k-b.k).map(o=>o.s);st.byGain=true}catch(_){}return st};
@@ -17949,7 +17960,8 @@ function xaNewToday(){const r=(S.set.xp||{})["nq"+part];return r&&r.day===today(
 const XATARGET={steady:20,fast:40,max:80};
 const xaStart0=startSession;startSession=function(mode,n){try{if(mode==="qd"&&XPU[part]&&(n||10)<=10&&xaQuick(n||10))return}catch(_){}return xaStart0.apply(this,arguments)};
 const xaRecord1=record;record=function(ok,conf){const s=sess,K=s&&s.quick,cur=s&&s.queue[s.pos],it=cur&&BYID[cur.id],firstSight=!!(it&&it.t==="q"&&XPU[part]&&!S.it[it.id]);const r=xaRecord1.apply(this,arguments);
-  try{if(firstSight){S.set.xp=S.set.xp||{};const k="nq"+part,t=today(),c=S.set.xp[k];S.set.xp[k]=c&&c.day===t?{day:t,n:c.n+1}:{day:t,n:1}}}catch(_){}
+  try{if(firstSight){S.set.xp=S.set.xp||{};const k="nq"+part,t=today(),c=S.set.xp[k];S.set.xp[k]=c&&c.day===t?{day:t,n:c.n+1}:{day:t,n:1};
+    const m=xpMem(it.d),l=it.lv||2;m.fl=((m.fl||"")+(ok?"ABC":"abc")[l-1]).slice(-30)}}catch(_){}
   try{if(K&&it&&it.t==="q"){const ahead=k=>k>s.pos,used=new Set(s.queue.map(e=>e.id));
     if(!ok&&K.swaps<2){let j=-1;for(const w of ["fill","next","focus","type"]){j=s.queue.findIndex((e,k)=>ahead(k)&&K.tag[e.id]===w);if(j>0)break}const u=xaUnitOf(it);
       if(j>0&&u>=0){const sib=shuffle(xpUnitQs(u).filter(x=>xaExam(x)&&!used.has(x.id)&&!S.it[x.id]&&(x.lv||2)<=(it.lv||2)))[0];if(sib){s.queue[j]=mkEntry(sib);K.tag[sib.id]="sib";K.swaps++;s.note="A miss: a look-alike question from the same lesson was added further on."}}}
@@ -17967,7 +17979,7 @@ function renderXaDiag(){const e=esc,A=xaAll(),C=xaCats(),L=xaLessons(),pc=v=>Mat
   const top=A.p==null?`<div class="xabig">–</div>`:`<div class="xabig ${cls(A.p)}">${pc(A.p)}<small> ± ${Math.max(2,Math.round(A.se*100))}</small></div>`;
   const order=A.D.slice().sort((a,b)=>(b.gain==null?-1:b.gain)-(a.gain==null?-1:a.gain));
   $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Diagnosis · ${e(pl(part))}</h2><div class="small muted">Worked out from your own answers. It updates after every session.</div></div></div>
-   <div class="card xad"><div class="small muted">Predicted score on exam questions</div>${top}<div><b>${XAV[A.verdict]}</b></div><div class="small muted">${A.n} questions counted. Aim for 75% or more; the real exam is scaled and about 70% is the passing range. Questions you have repeated flatter this figure a little, so trust mock exams most.</div>
+   <div class="card xad"><div class="small muted">Predicted score on exam questions</div>${top}<div><b>${XAV[A.verdict]}</b></div><div class="small muted">${A.n} questions counted. It counts your first try at each question, because exam questions are new to you: a question you ever missed stays missed until you have answered it right on later review days. A wrong answer can never raise it. Aim for 75% or more; the real exam is scaled (500 on a 200 to 800 scale passes).</div>
      <div class="row"><button class="btn pri small" data-xa="dx">${xpDx()?"Run the 24-question diagnostic again":"Take the 24-question diagnostic"}</button></div></div>
    <div class="card xad"><b>Topics, biggest gain first</b><div class="small muted">Gain = share of the exam x what you still miss. The red button works in this order.</div>
      ${order.map((x,k)=>`<div class="dxrow"><span>${k===0&&x.gain!=null?"▶ ":""}${e(x.name)} <span class="muted">· ${x.w}% of exam</span></span><b class="${x.p==null?"":cls(x.p)}">${x.p==null?"no data":pc(x.p)}</b>${x.p==null?"":bar(x.p)}</div>`).join("")}</div>
@@ -17995,6 +18007,49 @@ const xaExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.xa=
   return true};
 /* when the path is finished and the estimate says ready, the button says so */
 const xaNext0=xpNext;xpNext=function(){const a=xaNext0();try{if(XPU[part]&&a.qd==="smart"){const A=xaAll();if(A.verdict==="ready")a.d=`Predicted ${Math.round(A.p*100)}%: you look ready to sit this part. One drill a day keeps it warm.`}}catch(_){}return a};
+
+/* exam-style calculations are shown plainly, as on the exam: no worked example or step buttons above the choices.
+   After the answer: the working, and the reason behind the choice that was picked. The retired set stays resolvable. */
+setTimeout(()=>{try{GENS_OLD.forEach(g=>{if(!BYID[g.id])BYID[g.id]=g})}catch(_){}},0); /* this file runs before the item index is built */
+const xaCalcHook0=calcTeachHook;calcTeachHook=function(){try{const s=sess,cur=s&&s.queue[s.pos],it=cur&&BYID[cur.id];if(it&&it.exam){if(s.phase==="ask")return;cur.likeQueued=1}}catch(_){}return xaCalcHook0.apply(this,arguments)};
+
+/* ---------- after a miss: "Explain it · how to" ----------
+   One button under a missed exam question. It opens, in place: the explanation, the rule behind it (the one or two fact
+   cards the question leans on), how to attack this kind of question, and the lesson it belongs to with a
+   "read it after this session" switch that puts the lesson among the suggestions on the main page. */
+const XAHOW={exc:"EXCEPT and NOT questions: treat the four choices as four true-or-false statements. Mark each one, and the odd one out is the answer. Do not hunt for the 'right-sounding' choice.",
+ num:"Amounts and limits: the wrong choices are usually the right figure for another year, filing status or rule. Say the figure to yourself before you look at the choices.",
+ time:"Deadlines: name the starting event first (due date, filing date, date of the notice), then count from it. Most wrong choices count from the wrong event.",
+ form:"Which form: tie each form to its one job and to who files it. If two choices look close, ask who signs it and what it asks the IRS to do.",
+ long:"Long scenarios: read the last sentence first, because it says what is being asked. Then go back and pick out only the facts that bear on that.",
+ hard:"Hard questions: cover the choices, answer in your own words, then find the choice that matches. Cross out the two that cannot be right before choosing.",
+ calc:"Calculations: underline what is asked, list only the items that count, then do one step at a time. The wrong choices are what you get by counting an item that does not belong or skipping a limit.",
+ base:"Cover the choices, answer in your own words, then find the choice that matches. If none does, reread the last sentence of the question."};
+const XAFQ={},XAIDF={};
+/* fact cards a question leans on: words of the card's title found in the question, rare words counting more than common ones */
+const xaStem=w=>w.length>6?w.slice(0,6):w;
+function xaIdf(p){if(XAIDF[p])return XAIDF[p];const df={},F=BANK.filter(f=>f.p==p&&f.t==="f");F.forEach(f=>new Set([...fwords(f)].map(xaStem)).forEach(w=>df[w]=(df[w]||0)+1));const o={n:F.length,df};return XAIDF[p]=o}
+function xaFactsFor(it){if(XAFQ[it.id])return XAFQ[it.id];let out=[];try{const I=xaIdf(it.p),idf=w=>Math.log((I.n+1)/((I.df[w]||0)+1)),toks=t=>new Set((t.toLowerCase().match(/[a-z0-9§]{3,}/g)||[]).map(xaStem)),key=toks(String(it.opts[it.ans])+" "+(it.ex||"")),txt=toks(it.s);
+    out=BANK.filter(f=>f.p==it.p&&f.t==="f").map(f=>{const w=[...new Set([...fwords(f)].map(xaStem))];if(w.length<2)return null;let all=0,hit=0,n=0,inKey=0;for(const x of w){const v=idf(x);all+=v;if(key.has(x)){hit+=v;n++;inKey+=v}else if(txt.has(x)){hit+=v;n++}}
+      return all>0&&n>=2&&hit/all>=0.6&&inKey>0?{f,sc:hit+inKey+(f.d==it.d?0.5:0)}:null}).filter(Boolean).sort((a,b)=>b.sc-a.sc).slice(0,2).map(x=>x.f)}catch(_){}return XAFQ[it.id]=out}
+function xaHowHtml(cur,it){const e=esc,calc=it.t==="g",k=calc?"calc":((XACAT.find(c=>c[2](it))||[])[0]||"base"),facts=calc?[]:xaFactsFor(it),u=calc?-1:xaUnitOf(it),later=(S.set.xp||{})["rl"+part];
+  return `<div class="xahow"><b>Explain it</b>
+    ${calc?`<div class="small">The working is shown above, one step per line. Follow it with the numbers from the question, then try one like it.</div>`:`<div>${it.ex&&it.ex.length>=25?stepsHtml(it.ex):`The right answer is <b>${e(String(it.opts[it.ans]))}</b>.${it.ex?" "+e(it.ex):""}`}</div>`}
+    ${facts.length?`<b>The rule behind it</b>${facts.map(f=>`<div class="xafact"><span>${e(f.f)}</span>${e(f.b)}</div>`).join("")}`:""}
+    <b>How to attack this kind of question</b><div class="small">${e(XAHOW[k]||XAHOW.base)}</div>
+    ${u>=0?`<b>Where it is taught</b><div class="small">Lesson: ${e(UNITS[part][u].t)}</div><div class="row"><button class="btn small" data-xa="rl" data-k="${u}">${later===u?"✓ On your list for after this session":"Read this lesson after the session"}</button></div>`:""}</div>`}
+const xaSession1=renderSession;renderSession=function(){xaSession1.apply(this,arguments);try{const s=sess;if(!s||view!=="session"||!XPU[part]||s.mode==="mock"||s.phase!=="shown"||s.lastOk)return;const cur=s.queue[s.pos],it=cur&&BYID[cur.id];if(!it||it.t==="f")return;
+    const nx=document.querySelector("#view #next"),ex=document.querySelector("#view .explain");if(!nx||!ex||document.querySelector("#view [data-xa='how']"))return;
+    nx.insertAdjacentHTML("afterend",`<button class="btn small" data-xa="how">${cur.howOpen?"Hide the explanation":"📖 Explain it · how to"}</button>`);if(cur.howOpen)ex.insertAdjacentHTML("afterend",xaHowHtml(cur,it))}catch(_){}};
+const xaExtraClick1=extraClick;extraClick=function(b){const d=b.dataset;
+  if(d.xa==="how"){const cur=sess&&sess.queue[sess.pos];if(cur){cur.howOpen=!cur.howOpen;render()}return true}
+  if(d.xa==="rl"){S.set.xp=S.set.xp||{};S.set.xp["rl"+part]=S.set.xp["rl"+part]===+d.k?null:+d.k;persist();render();return true}
+  if(d.xa==="rlgo"){const k=(S.set.xp||{})["rl"+part];if(k!=null){S.set.xp["rl"+part]=null;persist();xpOpenLesson(k);xpFromPath=false;window.scrollTo(0,0)}return true}
+  return xaExtraClick1(b)};
+const xaSuggestHtml0=xaSuggestHtml;xaSuggestHtml=function(){let h=xaSuggestHtml0();try{const k=(S.set.xp||{})["rl"+part];if(k!=null&&UNITS[part]&&UNITS[part][k]){const b=`<button class="btn small" data-xa="rlgo">📖 Lesson you marked: ${esc(UNITS[part][k].t)} ›</button>`;h=h?h.replace('</span>','</span>'+b):`<div class="xasg"><span class="small muted">Also worth doing</span>${b}</div>`}}catch(_){}return h};
+
+/* the line under the session title: one readiness figure, the same one as the top card */
+const xaLive0=liveLine;liveLine=function(){try{if(!XPU[part])return xaLive0();const A=xaAll();touchDay();return `Readiness ${A.p==null?"–":Math.round(A.p*100)+"%"} · first tries only · ${S.day.n} answers today · ${xaNewToday()} new questions`}catch(_){return xaLive0()}};
 
 /* ================= CAA on the job =================
    The owner has passed the CAA training, so this section is no longer exam preparation. It is now:
@@ -19382,9 +19437,144 @@ p6q197kq30:{c:"refer the representative for discipline",w:["fine the claimant fo
 p6q16smt5n:{c:"respond and cooperate with the investigation",w:["ignore it unless a court subpoena follows","forward it to the claimant to answer instead","answer only through an attorney, after 90 days"]}
 };
 
+/* Version 169: the 55 EA questions where the right answer was 1.5 times or more the length of every wrong one.
+   Right answers are unchanged. Wrong choices are rewritten to the same length and level of detail, each still clearly wrong. */
+const BAL7={
+p3qdxovut:["CP14 (the first notice of a balance due)","CP2000 (proposed changes from income matching)","Letter 525 (the 30-day letter after an examination)"],
+p3q1tnzk9e:["90 days after the CDP notice","3 years after the CDP notice","Never: the right is lost for good"],
+p3q18pgpgn:["Form 2848 to appoint a representative","Form 9465 to request a payment plan","Form 656 to make an offer in compromise"],
+p3q136qz7o:["12 months after the representation ends","6 years after the consent is signed","Indefinitely, together with the client file"],
+p3qf671lb:["She charges both clients the same fee and tells each of them about the other","The IRS approves the arrangement in writing before the first meeting takes place","Never: a conflict of interest always bars representing both clients in any matter"],
+p3qvyuwr0:["Only returns that are filed electronically through her own software","Only matters that the IRS has already selected for examination","Only returns that claim a refund of more than $5,000"],
+p3q1uxueq6:["One who has never filed a return before and owes tax for several years","One who was assessed a civil fraud penalty for the prior tax year","One who forgot the due date and still has unfiled returns for other years"],
+p3q1tfd9fc:["Form 656-L alone, with no fee or payment","Form 9465 with Form 433-F attached","Form 843 with a statement of hardship"],
+p3q1mun2n9:["Refuse to hand anything over until the IRS serves a summons on her","Wait until the client has paid her fee, then send whatever she has","Destroy her duplicate copies first, then send the originals to the IRS"],
+p3qzrzwve:["20% of the underpayment due to fraud","100% of all the tax for the year","A flat $5,000 for each false return"],
+p3q6uabt5:["A Collection Due Process hearing, Form 12153","A petition to the Tax Court within 90 days","A claim for refund and abatement, Form 843"],
+p3q1l0wiks:["Any shareholder who owns stock on that date","The outside bookkeeper who keeps the records","The enrolled agent who is being appointed"],
+p3qctvycz:["The client insists and signs a statement","It saves the client less than $1,000 of tax","The IRS rarely examines that kind of item"],
+p3qr259rk:["When the IRS finishes processing the return","Three years from the date the return is filed","Only when the taxpayer dies or revokes it"],
+p3q15n9ef3:["12 months after the representation ends","7 years after the consent was signed","Until the client's next examination closes"],
+p3qbcqmya:["50% of all the payroll taxes that were not paid","100% of both the employer and employee FICA","25% of the income tax withheld from employees"],
+p3qpsz4oz:["Initials only, next to the firm's name and address","No signature at all when the return is e-filed","Having the client sign on the preparer's behalf"],
+p3q1225sbk:["Is always waived when the taxpayer shows reasonable cause","Stops running one year after the due date of the return","Is a penalty that can be contested in Appeals like any other"],
+p3q1mjjubj:["A second home that is rented out part of the year","A bank account held jointly with a spouse","Wages above the exempt amount on Form 668-W"],
+p3q9qcsuf:["A contingent fee for preparing an original return that claims a large refund","An unconscionable fee, provided the client agrees to it in a signed engagement letter","A fee shared with the IRS employee who is handling the client's examination"],
+p3q12t462i:["Certified by the Internal Revenue Service as a tax expert","An IRS-approved specialist in individual and business tax","Licensed by the IRS to guarantee the largest legal refund"],
+p3q12e4tgl:["60 hours, with at least 20 each year including 2 of ethics","72 hours, with at least 24 each year including 4 of ethics","45 hours, with at least 15 each year including 1 of ethics"],
+p3q1jnjoo2:["Do it if the client insists and signs a waiver","Do it, but note the real date in her own file","Ask the IRS for permission before changing it"],
+p3q1t5ag1v:["5 calendar days after the IRS gives notification of the rejection","30 calendar days after the IRS gives notification of the rejection","The extended due date of October 15, whatever the rejection date"],
+p3q1vxlzlg:["The liability has been paid in full by the taxpayer","The period for collection has expired","The levy is creating an economic hardship"],
+p3qo41mna:["Form 2848 or Form 8822","Form 56 or Form 8857","Form 911 or Form 12153"],
+p2q1t08m5m:["Vehicles used in a trade or business","Equipment used in a trade or business","Stocks and bonds held for investment"],
+p2qto900d:["1 year (without IRS consent)","10 years (without IRS consent)","Ever: it cannot be made again"],
+p2q1a12q1s:["When accrued, like any other year-end bonus","Never: a bonus to an owner is a dividend","Half when accrued and half when paid"],
+p2q1o5inj9:["$5,000 a year, whatever the business earns, for any month of the year","Premiums for the owner only, never for a spouse or for dependents","Nothing above the line: it is always an itemized medical expense"],
+p2q11jbpke:["All of the realized gain, whatever the boot","The boot received plus the realized gain","Nothing until the new property is later sold"],
+p2q1x68l4b:["A flat 35%, the old top corporate rate","Graduated rates from 15% up to 35%","The owner's individual rate, as a pass-through"],
+p2qa46veq:["No effect: the method chosen in year 1 stays","All depreciation taken so far must be repaid","Switch to 100% bonus on the remaining basis"],
+p2qhxlei5:["The year paid, because it was paid late","Never, because it was not paid in the year","Half in each of the two tax years"],
+p2q11nv13e:["Form 990-PF (private foundations)","Form 990-T (unrelated business)","Form 1023 (exemption application)"],
+p2q17ldjxz:["No: Section 179 needs 100% business use","No: a vehicle never qualifies for it","Only if business use is above 90%"],
+p2q17rbwmp:["Form 1099-NEC, by January 31","Schedule C (Form 1040)","Form W-2, by January 31"],
+p2q1t8kv1j:["50% or more of the interests in capital and profits are sold within 12 months","A general partner dies, retires or withdraws from the partnership during the year","A new partner is admitted and contributes cash or property to the partnership"],
+p2q1sbby8m:["The corporation hires a 101st employee","The corporation pays a salary to an owner","The corporation makes a cash distribution"],
+p2q7idqv9:["Repainting the walls of the existing office","Fixing a window that was broken in a storm","Routine yearly servicing of a machine"],
+p2q1kyrpe7:["On Form 1065, with a K-1","On Form 1120, at 21%","On Form 8832, each year"],
+p2qnydomr:["A cash distribution from the partnership","The partner's share of partnership losses","Guaranteed payments the partner received"],
+p2q1gweg1:["At least 2 shareholders and a board of directors","Shareholders who may be nonresident aliens","A foreign corporation with a U.S. office"],
+p1q1fo2nq1:["It is more than $500 after insurance","It was caused by a theft, not a storm","It was covered by an insurance policy"],
+p1qk78g6l:["Schedule D only, with no other form","Form 4797, then carried to Schedule 1","Schedule B, with interest and dividends"],
+p1qbbd3wg:["2 years from filing or 1 year from payment, whichever is later","3 years from the end of the tax year, with no exceptions at all","6 years from filing, the same as the long assessment period"],
+p1q697a99:["Withdraw the earnings first and move only the original contribution by December 31 of that year","Get written approval from the IRS before the return due date, including any extensions","Pay the 6% excise tax on Form 5329 and then move the contribution at any later time"],
+p1q1bftt54:["Form 8938 only, attached to the tax return and filed with the IRS, not with FinCEN","FinCEN Form 114 (FBAR), attached to Form 1040 and filed with the IRS","Nothing: no report is due until the accounts total $100,000 at year end"],
+p1q191z4m9:["As an itemized charitable deduction on Schedule A, with Form 8283 attached","As an adjustment to income on Schedule 1, with the charity's name noted","It is not reported on the return at all, because it is not income"],
+p1qfhgqp9:["Gambling winnings from a weekend trip to a casino","Pay received for serving on a jury for two weeks","A cash prize won in a raffle held by a charity"],
+p1q5yf7ta:["Any property used in a trade or business","Vehicles and equipment used in business","Stocks and bonds held for investment"],
+p1q3y501w:["Only a receipt from the charity for the items","Form 8283, Section A, with no appraisal","Form 8282, filed by the charity later"],
+p1qk7rfvf:["Medical expenses over 7.5% of AGI","Gifts of appreciated stock to charity","Gambling losses up to winnings"],
+p1q1vc8852:["A graduate student in her sixth year of higher education, enrolled full time all year","A student taking one evening course, enrolled less than half time for the whole year","A second-year student who has a felony drug conviction at the end of the tax year"],
+p1qcu1ywb:["Schedule 2 as an additional tax","Schedule 3 as a nonrefundable credit","Nowhere: alimony is never income"],
+p1qe1p8nl:["A 401(k) plan of a private employer","A traditional IRA held at a bank","A 403(b) plan of a public school"],
+p1qp33u0g:["Within 30 days after the sale only","Within 60 days after the sale only","At any time in the same calendar year"],
+p1q8o43mg:["15% (the usual long-term gain rate)","20% (the top long-term gain rate)","37% (ordinary income, like wages)"]};
+
+/* ================= Fuller explanations for 67 EA questions (Version 169) =================
+   The review found 67 explanations in Parts 1 to 3 under 25 characters ("IRC 213: 7.5% floor."). Each now says the rule
+   in a sentence or two and, where there is one, names the look-alike that the wrong choices play on. */
+const EXFIX={
+p1q3p3d3t:"Medical and dental expenses are deductible only above 7.5% of AGI, and only if you itemize. The 10% floor was an older rule that no longer applies.",
+p1qweq6kz:"A dependent who does not qualify for the child tax credit, such as a child who is 17 or older or a dependent parent, can bring the $500 credit for other dependents. It is nonrefundable.",
+p1q98336g:"Form 8857 asks for innocent spouse relief from tax owed on a joint return. Form 8379 is for an injured spouse, who wants back their share of a refund taken for the other spouse's debt.",
+p1qnw7ygo:"For 2025 a person can give $19,000 to each recipient with no gift tax return. A couple who split gifts can give $38,000 to each recipient.",
+p1q13e36y1:"Almost everything owned for investment or personal use is a capital asset. The exceptions are business items: inventory, receivables, depreciable business property and business real estate.",
+p1q1q58f1i:"Adjustments come off on Schedule 1 before AGI, whether or not you itemize. Half of self-employment tax is one of them. Mortgage interest and charitable gifts are itemized deductions, not adjustments.",
+p1q79xp9u:"State and local income taxes are an itemized deduction, inside the state and local tax cap. Federal income tax and Social Security tax are never deductible.",
+p1qbg59xg:"For 2025 a dependent care FSA can exclude up to $5,000 ($2,500 if married filing separately). The increase to $7,500 starts in 2026, a common trap.",
+p1q1y43lp6:"FBAR records (account name, number, bank, type and highest value) must be kept for 5 years from the FBAR due date, longer than the usual 3 years for return records.",
+p1q12h6047:"An unused foreign tax credit goes back 1 year and then forward 10. An individual's capital loss, excess charitable gifts and net operating loss only go forward.",
+p1qftq347:"E-file matches the name and Social Security number against Social Security Administration records, so a mismatch can reject the return. She should report the name change to SSA first, or file under the name SSA has.",
+p1q1frlg46:"For divorces finalized after 2018, alimony is not deductible by the payer and not income to the recipient. The old rule (deductible and taxable) still applies to earlier agreements that have not been changed.",
+p1q18e6ty6:"A nonresident alien generally cannot file a joint return. The couple can elect to treat her as a U.S. resident for the whole year, and then both report their worldwide income.",
+p1qgt0f4a:"Reinvested dividends were already taxed, so they add to basis: $10,000 + $1,500 = $11,500. A return of capital is a tax-free recovery of basis, so it takes $500 off: $11,000.",
+p1q89y2hs:"A single owner who owned and lived in the home 2 of the last 5 years excludes up to $250,000. $300,000 − $250,000 = $50,000, long-term because she held it more than a year.",
+p1q6cbghj:"Long-term gain on collectibles such as coins, art and stamps is taxed at a maximum of 28%, not at the 0%, 15% or 20% rates that apply to other long-term gains.",
+p2q1wdstcv:"C corporations pay a flat 21% of taxable income: 21% × $100,000 = $21,000. There are no graduated brackets.",
+p2qh2770u:"An S corporation may have no more than 100 shareholders. Members of one family can elect to count as a single shareholder.",
+p2ql33ocv:"Since 2018 every C corporation, including a personal service corporation, pays a flat 21%.",
+p2q1h3n3oi:"For 2025 the QBI limits begin above taxable income of $197,300 for a single filer and $394,600 on a joint return. At or below the threshold the deduction is simply 20% of qualified business income.",
+p2q1ih8ou0:"On a below-market loan to a shareholder, the forgone interest is treated as paid by the corporation to the shareholder as a dividend, and then paid back to the corporation as interest.",
+p2q5g03fj:"Wages earned before death and paid after it are income in respect of a decedent. Whoever receives them reports them, with the character they would have had for the decedent: ordinary income.",
+p2q18qbzh:"Income in respect of a decedent is taxed to the estate or beneficiary that actually receives it, with the same character. The recipient may deduct any estate tax the item caused.",
+p2q1mvfd3b:"Once $100,000 or more of employment tax builds up on any day, it must be deposited by the next business day, whatever the employer's normal schedule. Tuesday's liability is due Wednesday.",
+p2q18tqapm:"Form 940 is filed once a year and is due January 31 after the year ends. In 2026 that date is a Saturday, so the actual deadline moves to Monday, February 2. The exam tests the January 31 rule.",
+p3qty9oub:"Circular 230 allows four sanctions: censure (a public reprimand), suspension, disbarment and a monetary penalty. Prison comes only from a criminal court, not from the Office of Professional Responsibility.",
+p3q15b8p54:"The trust fund recovery penalty covers only money held in trust for the government: income tax withheld from employees and their share of Social Security and Medicare. The employer's own share is not included.",
+p3q6f6e10:"An enrolled agent may say 'enrolled to practice before the Internal Revenue Service'. The word 'certified' and anything that suggests employment by the IRS are not allowed.",
+p3ql20dio:"A consent to use or disclose return information lasts for the period it states. If it states none, it is valid for 1 year from the date it was signed.",
+p3q5g409u:"An enrolled agent has unlimited practice rights before every IRS office: examination, collection and Appeals. Tax Court needs separate admission, and other federal courts need an attorney.",
+p3q8ngrg2:"The Tax Court's small case procedure is for disputes of $50,000 or less per year, counting penalties. It is informal, and the decision cannot be appealed.",
+p3qfncm1i:"A penalty can be contested at three points: before assessment (answer the notice or go to Appeals), after assessment (ask for abatement), or after payment (pay it, then file a refund claim).",
+p3q1csan4t:"A representative may sign a client's return only in limited cases: disease or injury, continuous absence from the United States for at least 60 days before the due date, or other good cause with IRS permission. The Form 2848 is attached.",
+p3q19w40x:"The IRS may accept an offer for doubt as to liability (the tax may not be owed), doubt as to collectibility (it cannot be paid in full) or effective tax administration (hardship or fairness).",
+p3qlb7y3f:"Form 8857 asks for innocent spouse relief from tax owed on a joint return. Form 8379 is for an injured spouse, who wants back their share of a refund taken for the other spouse's debt.",
+p3qmjjm25:"The Collection Appeals Program is fast, but its decision is final, with no Tax Court review. A Collection Due Process hearing is the one whose result can go to Tax Court.",
+p3q49ikof:"Form 8879 is the taxpayer's signature authorization for an e-filed return. The ERO keeps it for 3 years and does not send it to the IRS unless asked.",
+p3q1434r8:"Anyone paid to prepare, or to help prepare, all or most of a federal tax return needs a PTIN. It is renewed every year.",
+p3q1vmf0j:"After a rejection the ERO has 5 calendar days to resend the return and still be treated as filing on time. If it cannot be fixed, a paper return is due by the later of the due date or 10 calendar days after the rejection notice.",
+p3q1sewyyv:"After passing all three parts a candidate has 1 year to apply for enrollment on Form 23, with the $140 fee. The three parts themselves must be passed within 3 years.",
+p3q2ugd4c:"A practitioner may not knowingly accept help from, or give help to, a person who is disbarred or suspended from practice before the IRS (section 10.24).",
+p3qq5l14l:"Copies of advertising, and the record of who received direct mail, are kept for 36 months from the date of last use.",
+p3q1d3yzrf:"Each affected client must give informed consent, confirmed in writing within 30 days. The practitioner keeps those consents for 36 months after the representation ends.",
+p3q1gqeu39:"The practitioner must tell the client about penalties reasonably likely to apply to a position, and about how adequate disclosure can avoid them.",
+p3q11m3qmc:"Whoever has principal authority over a firm's tax practice must take reasonable steps to have procedures that keep everyone in compliance. Having none can be sanctioned when staff then break the rules.",
+p3q1cwquer:"A disbarred practitioner may petition the Office of Professional Responsibility for reinstatement after 5 years.",
+p3q1b9fiyq:"The civil fraud penalty is 75% of the part of the underpayment due to fraud. The accuracy-related penalty is 20% (40% for gross valuation misstatements), and the two are not stacked on the same amount.",
+p3q1f2vxfs:"In a fraud case the burden is on the IRS, and the standard is clear and convincing evidence, which is higher than the usual preponderance of the evidence.",
+p3q83ar6u:"Willful failure to file is a misdemeanor: up to 1 year in prison and a fine of up to $25,000. Tax evasion and signing a false return are felonies.",
+p3q3x0h21:"The IRS normally must deal with the representative. It may go around one who unreasonably delays or hinders the examination, with a supervisor's approval.",
+p3q1yy4qwh:"Only a U.S. District Court offers a jury. The Tax Court and the Court of Federal Claims decide cases without one, and District Court requires paying the tax first.",
+p3q12teyua:"A small tax case decision is final: neither side can appeal it, and it cannot be cited as precedent.",
+p3q1m53ikb:"Before contacting third parties such as customers or banks about a taxpayer's liability, the IRS must give the taxpayer at least 45 days' advance notice.",
+p3qlvkpt3:"The burden of proof on a factual issue moves to the IRS when the taxpayer brings credible evidence, has kept the required records, substantiated the items and cooperated with reasonable requests.",
+p3q1svjf11:"The Taxpayer Bill of Rights has 10 rights, among them the right to be informed, to pay no more than the correct tax, to appeal in an independent forum, to privacy and to retain representation.",
+p3qr2dcmw:"After filing a Notice of Federal Tax Lien the IRS must notify the taxpayer within 5 business days. The taxpayer then has 30 days to ask for a Collection Due Process hearing.",
+p3qh2m4hf:"Subordination (Form 14134) lets another creditor move ahead of the IRS lien, which is what a refinancing lender needs. A discharge frees one property from the lien; a withdrawal removes the public notice.",
+p3qa7bl1:"The IRS must release a lien within 30 days after the debt is fully paid, becomes legally unenforceable, or a bond is accepted.",
+p3qsqgiue:"Seizing a main home needs written approval from a U.S. District Court judge or magistrate, and it is not allowed at all to collect a debt of $5,000 or less.",
+p3q14ybjzv:"In a Collection Due Process hearing the liability itself can be challenged only if the taxpayer did not receive a notice of deficiency and had no other chance to dispute it.",
+p3qlkq9ks:"The failure-to-pay penalty is normally 0.5% a month. It drops to 0.25% a month while an installment agreement is in effect, if the return was filed on time.",
+p3qedo9m:"The Electronic Return Originator (ERO) is the authorized e-file provider that originates the electronic submission of the return.",
+p3q18xsidm:"The ERO keeps each signed Form 8879 for 3 years from the return's due date or the date the IRS received the return, whichever is later.",
+p3q1asljlh:"When a return is rejected the ERO must tell the taxpayer within 24 hours and explain the reason.",
+p3q1xzkas4:"The preparer must give the taxpayer a complete copy of the return no later than the time it is presented for signature.",
+p3qyndde8:"The return period is the 12 months beginning July 1. Preparers keep a copy or a list of returns for 3 years after the close of the return period.",
+p3q1ql70l6:"Forms W-2 go to employees and to the Social Security Administration by the same date, January 31. For 2025 forms that date is a Saturday, so the actual deadline is Monday, February 2, 2026. The exam tests the January 31 rule."};
+(function(){let n=0;BANK.forEach(i=>{if(EXFIX[i.id]){i.ex=EXFIX[i.id];n++}});try{window.EXFIXN=n}catch(_){}})();
+
 /* Apply the balanced answer choices to the bank: right answer kept (or trimmed to its core), wrong options rewritten.
    Entry forms: id:[w1,w2,w3]  or  id:{c:"core right answer",w:[...],x:"detail moved to the explanation"} */
-(function(){const parts=["BAL1","BAL1b","BAL2","BAL2b","BAL3","BAL3b","BAL4","BAL4b","BAL5","BAL5b","BAL6","BAL6b"],B={};
+(function(){const parts=["BAL1","BAL1b","BAL2","BAL2b","BAL3","BAL3b","BAL4","BAL4b","BAL5","BAL5b","BAL6","BAL6b","BAL7"],B={};
   parts.forEach(n=>{try{const o=eval("typeof "+n+"!=='undefined'?"+n+":null");if(o)Object.assign(B,o)}catch(e){}});
   BANK.forEach(i=>{const w=B[i.id];if(!w||i.t!=="q")return;const v=Array.isArray(w)?{w}:w;const c=v.c||i.opts[i.ans];
     i.opts=[c,...v.w];i.ans=0;if(v.x)i.ex=v.x+" "+(i.ex||"");i.bal=1})})();
@@ -19720,6 +19910,221 @@ G("n1099",4,5,"How many 1099-NEC forms? (2026 payments)",()=>{const ppl=[["Leo, 
   return{q:`In 2026 a client paid these contractors for services: ${ppl.map(p=>`${p[0]} ${$$(p[1])}`).join("; ")}. How many need a Form 1099-NEC?`,a,u:"",
   w:[`2026 threshold: $2,000 or more to one payee`,`Corporations generally don't get one: Quick Print Inc. is out`,`Sole proprietors at $2,000 or more: ${need.map(p=>p[0].split(",")[0]).join(", ")||"none"}`,`Count: ${a}`],n:"The old $600 rule applies only to payments made in 2025 and earlier."}});
 
+/* ================= Calculations as the exam asks them (Version 169) =================
+   Checked against the IRS's own sample questions for the 2026-27 window (law through Dec. 31, 2025), Nov 22, 2026:
+   of 60 samples, 3 need arithmetic (2 of 20 in Part 1, 1 of 20 in Part 2, none in Part 3 beyond counting a period).
+   Each is one or two steps on round numbers: pick the items that count, then add or subtract. Stems are full sentences.
+   The wrong choices are what you get from a specific slip (counting an item that does not count, skipping a limit).
+   The older calculation set drilled long phase-out arithmetic with odd numbers and near-miss choices (for example
+   $467 against $584). The exam does not ask that, so for EA Parts 1 to 3 it is retired from every session.
+   Every question below: full sentences, round numbers, at most two steps, and three wrong choices that each name
+   the slip behind them. Figures are the 2025 amounts already used in this app's fact cards. */
+const GXN=["Maria","Elena","Priya","Grace","Nina","Rosa","Lena","Ivy","Anna","Dana","Julia","Carmen","Helen","Sofia","Mei","Laura"]; /* the stems say she and her */
+function GEX(id,p,d,name,make){GENS.push({id:"ge"+p+"-"+id,p,d,t:"g",lv:3,s:name,name,exam:1,make(){for(let k=0;k<12;k++){const o=make(),f=v=>typeof v==="string"?v:(o.u===""?String(v):$$(v));
+      const key=f(o.a),opts=[key],why=[""];o.x.forEach(e=>{const s=f(e[0]);if(!opts.includes(s)&&opts.length<4){opts.push(s);why.push(e[1])}});
+      if(opts.length===4)return{stem:o.q,ans:typeof o.a==="number"?o.a:0,key,steps:o.w.join("\n")+(o.n?"\nWatch out: "+o.n:""),tol:1,opts,why,exam:1}}
+    const o=make(),key=typeof o.a==="string"?o.a:$$(o.a);return{stem:o.q,ans:typeof o.a==="number"?o.a:0,key,steps:o.w.join("\n"),tol:1,exam:1}}})}
+/* ---------------- Part 1: Individuals ---------------- */
+GEX("gain",1,2,"Gain on a sale of stock",()=>{const n=PK(GXN),cost=R(8,20)*1000,gain=R(2,9)*1000,fee=PK([100,200,300,500]),price=cost+gain+fee;
+  return{q:`${n} bought stock for ${$$(cost)}. This year she sold all of it for ${$$(price)} and paid a ${$$(fee)} commission on the sale. What is her gain?`,a:gain,
+    w:[`Amount realized: ${$$(price)} − ${$$(fee)} commission = ${$$(price-fee)}`,`Gain: ${$$(price-fee)} − ${$$(cost)} basis = ${$$(gain)}`],
+    x:[[gain+fee,"That ignores the commission. Selling costs reduce the amount realized."],[gain+2*fee,"The commission was added instead of subtracted."],[price,"That is the sale price, not the gain. Subtract the basis."]]}});
+GEX("gift",1,2,"Sale of property received as a gift",()=>{const n=PK(GXN),gap=R(3,5)*1000,basis=R(12,20)*1000,fmv=basis-gap,c=PK([0,1,2]),sale=c===0?fmv-R(1,4)*1000:c===1?fmv+1000:basis+R(2,6)*1000;
+  const a=c===0?fmv-sale:c===1?0:sale-basis;
+  const x=c===0?[[basis-sale,"The donor's basis is used only to measure a gain. For a loss, use the value on the date of the gift."],[gap,"That is the drop in value before the gift, which nobody deducts."],[0,"It sold for less than its value at the gift, so there is a loss."]]
+    :c===1?[[basis-sale,"No loss: it sold for more than its value at the gift, which is the basis for a loss."],[sale-fmv,"No gain: it sold for less than the donor's basis, which is the basis for a gain."],[gap,"That is the drop in value before the gift, which nobody deducts."]]
+    :[[sale-fmv,"The value at the gift is the basis only for measuring a loss. For a gain, use the donor's basis."],[gap,"That is the drop in value before the gift, not the gain."],[0,"It sold for more than the donor's basis, so there is a gain."]];
+  return{q:`${n} received stock as a gift. The donor's basis was ${$$(basis)} and the stock was worth ${$$(fmv)} on the date of the gift. ${n} later sold it for ${$$(sale)}. What ${c===0?"loss":c===2?"gain":"gain or loss"} does ${n} recognize?`,a,
+    w:[`Value at the gift (${$$(fmv)}) was below the donor's basis (${$$(basis)}), so there are two bases: ${$$(basis)} for a gain, ${$$(fmv)} for a loss`,c===0?`Sold below the loss basis: ${$$(fmv)} − ${$$(sale)} = ${$$(a)} loss`:c===1?`${$$(sale)} is between the two bases: no gain and no loss`:`Sold above the gain basis: ${$$(sale)} − ${$$(basis)} = ${$$(a)} gain`],x}});
+GEX("inherit",1,2,"Sale of inherited property",()=>{const n=PK(GXN),cost=R(2,6)*10000,fmv=cost+R(3,8)*10000,sale=fmv+R(1,4)*5000;
+  return{q:`${n} inherited land from her father. He had paid ${$$(cost)} for it, and it was worth ${$$(fmv)} on the date of his death. ${n} sold it for ${$$(sale)}. What is her gain?`,a:sale-fmv,
+    w:[`Basis of inherited property is its value at the date of death: ${$$(fmv)}`,`Gain: ${$$(sale)} − ${$$(fmv)} = ${$$(sale-fmv)}, treated as long-term`],
+    x:[[sale-cost,"That uses the father's cost. Inherited property takes its value at death as basis."],[sale,"That is the sale price. Subtract the basis."],[fmv-cost,"That is the growth before death, which is never taxed to the heir."]]}});
+GEX("home",1,2,"Gain on the sale of a main home",()=>{const mfj=PK([0,1]),lim=mfj?500000:250000,gain=lim+R(2,12)*10000,who=mfj?"A married couple filing jointly":"A single taxpayer";
+  return{q:`${who} sold a main home they had owned and lived in for 8 years. The gain on the sale was ${$$(gain)}. How much of the gain is taxable?`,a:gain-lim,
+    w:[`Exclusion for ${mfj?"a joint return":"a single taxpayer"}: ${$$(lim)} (owned and used 2 of the last 5 years)`,`Taxable gain: ${$$(gain)} − ${$$(lim)} = ${$$(gain-lim)}`],
+    x:[[gain,"The exclusion was not applied."],[0,"The gain is larger than the exclusion, so part of it is taxed."],[mfj?gain-250000:250000,mfj?"$250,000 is the single amount. A joint return excludes $500,000.":"That is the exclusion, the part that is NOT taxed."]]}});
+GEX("caploss",1,2,"Capital loss limit and carryover",()=>{const n=PK(GXN),loss=R(9,15)*1000,gain=R(1,4)*1000,net=loss-gain;
+  return{q:`In 2025 ${n} had a ${$$(loss)} capital loss and a ${$$(gain)} capital gain, and no other capital transactions. How much capital loss carries over to 2026?`,a:net-3000,
+    w:[`Net capital loss: ${$$(loss)} − ${$$(gain)} = ${$$(net)}`,`Deduct $3,000 against other income this year; carry over ${$$(net)} − $3,000 = ${$$(net-3000)}`],
+    x:[[net,"That is the whole net loss. $3,000 of it is used this year."],[loss-3000,"Net the gain against the loss first."],[3000,"$3,000 is the amount deducted this year, not the carryover."]]}});
+GEX("wash",1,2,"Basis after a wash sale",()=>{const n=PK(GXN),loss=R(1,4)*500,cost=R(4,9)*1000;
+  return{q:`${n} sold 100 shares of stock at a ${$$(loss)} loss. Ten days later she bought 100 shares of the same stock for ${$$(cost)}. What is her basis in the new shares?`,a:cost+loss,
+    w:["Buying the same stock within 30 days makes it a wash sale: the loss is not deductible now",`The disallowed loss is added to the new shares: ${$$(cost)} + ${$$(loss)} = ${$$(cost+loss)}`],
+    x:[[cost,"That ignores the wash sale. The disallowed loss is added to the basis of the new shares."],[cost-loss,"The disallowed loss is added to basis, not subtracted."],[loss,"That is the loss, not the basis."]]}});
+GEX("rental",1,2,"Rental loss allowance",()=>{const n=PK(GXN),magi=100000+R(1,4)*10000,allow=25000-(magi-100000)/2,loss=allow+R(1,4)*1000;
+  return{q:`${n} actively participates in a rental house that lost ${$$(loss)} this year. Her modified AGI is ${$$(magi)} and she has no passive income. How much of the loss can she deduct this year?`,a:allow,
+    w:[`The $25,000 allowance shrinks by 50% of modified AGI over $100,000: 50% × ${$$(magi-100000)} = ${$$((magi-100000)/2)}`,`Allowance: $25,000 − ${$$((magi-100000)/2)} = ${$$(allow)}; the rest of the loss is suspended`],
+    x:[[loss,"The loss is larger than the allowance left at this income."],[25000,"The $25,000 allowance is reduced once modified AGI passes $100,000."],[(magi-100000)/2,"That is the reduction, not the allowance that remains."]]}});
+GEX("roth",1,2,"Roth IRA withdrawal before age 59½",()=>{const n=PK(GXN),contrib=R(10,25)*1000,take=contrib+R(2,8)*1000;
+  return{q:`${n}, age 40, withdraws ${$$(take)} from a Roth IRA she opened 8 years ago. Her total contributions were ${$$(contrib)} and she has made no conversions. How much of the withdrawal is taxable?`,a:take-contrib,
+    w:[`Contributions come out first, tax-free: ${$$(contrib)}`,`The rest is earnings, taxable because she is under 59½: ${$$(take)} − ${$$(contrib)} = ${$$(take-contrib)}`],
+    x:[[take,"Contributions to a Roth IRA always come out tax-free first."],[0,"The account is over 5 years old, but she is under 59½, so the earnings are taxable."],[contrib,"That is the tax-free part."]]}});
+GEX("early",1,2,"Additional 10% tax on an early IRA withdrawal",()=>{const n=PK(GXN),take=R(10,30)*1000,ex=R(3,8)*1000;
+  return{q:`${n}, age 35, withdrew ${$$(take)} from a traditional IRA and used ${$$(ex)} of it for her own college tuition. What is the additional 10% tax?`,a:(take-ex)/10,
+    w:[`Higher education expenses are an exception for IRAs: ${$$(ex)} escapes the 10%`,`10% × (${$$(take)} − ${$$(ex)}) = ${$$((take-ex)/10)}. The whole ${$$(take)} is still taxable income`],
+    x:[[take/10,"The part used for higher education is not subject to the 10%."],[ex/10,"That applies the 10% to the part that is excepted."],[0,"Only the tuition part is excepted."]]}});
+GEX("rmd",1,5,"Required minimum distribution",()=>{const n=PK(GXN),t=PK([[73,26.5],[74,25.5],[75,24.6],[80,20.2]]),a=R(6,14)*1000,prior=Math.round(a*t[1]),cur=Math.round((a+2000)*t[1]);
+  return{q:`${n} turned ${t[0]} in 2025. Her traditional IRA held ${$$(prior)} on December 31, 2024 and ${$$(cur)} on December 31, 2025. The factor for age ${t[0]} is ${t[1]}. What is her required minimum distribution for 2025?`,a,
+    w:[`Use the balance at the end of the PRIOR year: ${$$(prior)}`,`${$$(prior)} ÷ ${t[1]} = ${$$(a)}`],
+    x:[[a+2000,"That uses the balance at the end of 2025. The rule uses the prior December 31."],[Math.round(prior*0.04/100)*100,"There is no flat 4% rule. Divide the prior year-end balance by the factor."],[a/2,"Do not halve it. The whole amount must come out."]]}});
+GEX("ira",1,5,"IRA contribution limit",()=>{const n=PK(GXN),old=PK([0,1]),lim=old?8000:7000,comp=R(3,6)*1000;
+  return{q:`${n}, age ${old?55:30}, is single. Her only income in 2025 is ${$$(comp)} of wages and $20,000 of interest. What is the most she can contribute to a traditional IRA for 2025?`,a:comp,
+    w:[`2025 limit: $7,000${old?" + $1,000 catch-up at 50 or older = $8,000":""}`,`But never more than compensation: wages are ${$$(comp)}; interest is not compensation`],
+    x:[[lim,"The limit is the smaller of the dollar limit or compensation."],[old?7000:8000,old?"She is over 50, but compensation is the cap here.":"The catch-up is only at 50 or older, and compensation is the cap here."],[comp+20000,"Interest does not count as compensation, and the dollar limit would cap it anyway."]]}});
+GEX("depsd",1,1,"Standard deduction of a dependent",()=>{const n=PK(GXN),hi=PK([0,1,1]),w=hi?R(4,18)*500:R(2,8)*100;const a=hi?w+450:1350;
+  return{q:`${n}, age 17, is claimed as a dependent by her parents. In 2025 she earned ${$$(w)} in wages and had $300 of interest. What is her standard deduction?`,a,
+    w:[`Earned income + $450: ${$$(w)} + $450 = ${$$(w+450)}`,`Take the larger of that or $1,350: ${$$(a)} (never more than $15,750)`],
+    x:[[hi?1350:w+450,hi?"$1,350 is only the minimum. Earned income plus $450 is larger here.":"Earned income plus $450 is below the $1,350 minimum."],[15750,"A dependent does not get the full standard deduction unless earned income is that high."],[w+300,"Use earned income plus $450, not total income."]]}});
+GEX("kiddie",1,4,"Kiddie tax",()=>{const n=PK(GXN),u=R(40,90)*100;
+  return{q:`${n}, age 12, has ${$$(u)} of dividend income in 2025 and no earned income. How much of it is taxed at her parents' rate?`,a:u-2700,
+    w:["First $1,350: covered by her standard deduction. Next $1,350: taxed at her own rate",`Over $2,700 is taxed at the parents' rate: ${$$(u)} − $2,700 = ${$$(u-2700)}`],
+    x:[[u-1350,"Two $1,350 layers come off first, $2,700 in all."],[u,"The first $2,700 is not taxed at the parents' rate."],[2700,"That is the amount NOT taxed at the parents' rate."]]}});
+GEX("medical",1,3,"Medical expense deduction",()=>{const n=PK(GXN),agi=R(4,10)*10000,floor=agi*0.075,over=R(1,6)*1000,exp=floor+over;
+  return{q:`${n} itemizes deductions. Her AGI is ${$$(agi)} and she paid ${$$(exp)} of unreimbursed medical expenses. How much can she deduct?`,a:over,
+    w:[`Floor: 7.5% × ${$$(agi)} = ${$$(floor)}`,`Deductible: ${$$(exp)} − ${$$(floor)} = ${$$(over)}`],
+    x:[[exp,"Only the part above 7.5% of AGI is deductible."],[floor,"That is the floor, the part that is NOT deductible."],[Math.max(500,exp-agi/10),"The floor is 7.5% of AGI, not 10%."]]}});
+GEX("aotc",1,3,"American Opportunity Credit",()=>{const n=PK(GXN),x=PK([2400,2800,3200,3600]),a=2000+(x-2000)/4;
+  return{q:`${n} paid ${$$(x)} of tuition and required books for her son's first year of college. Her income is below the phase-out. What is her American Opportunity Credit?`,a,
+    w:["100% of the first $2,000 = $2,000",`25% of the next ${$$(x-2000)} = ${$$((x-2000)/4)}; total ${$$(a)} (the most is $2,500)`],
+    x:[[x,"The credit is not the full expense: 100% of the first $2,000, then 25% of the next $2,000."],[2000,"Add 25% of the expenses between $2,000 and $4,000."],[2500,"$2,500 is the maximum, reached at $4,000 of expenses."]]}});
+GEX("ctc",1,3,"Child tax credit and credit for other dependents",()=>{const k=PK([1,2,3]),o=PK([1,2]),a=k*2200+o*500;
+  return{q:`A couple filing jointly, with income below the phase-out, has ${k} qualifying ${k>1?"children":"child"} under age 17 and ${o} dependent ${o>1?"children":"child"} age 17 or older. What is the total of their child tax credit and credit for other dependents for 2025?`,a,
+    w:[`Child tax credit: ${k} × $2,200 = ${$$(k*2200)}`,`Credit for other dependents: ${o} × $500 = ${$$(o*500)}; total ${$$(a)}`],
+    x:[[(k+o)*2200,"A child who is 17 or older gets the $500 credit, not $2,200."],[k*2200,"Add $500 for each other dependent."],[k*2000+o*500,"The child tax credit is $2,200 per child for 2025."]]}});
+GEX("charity",1,3,"Cash gifts to charity",()=>{const n=PK(GXN),agi=R(5,12)*10000,lim=agi*0.6,gift=lim+R(1,5)*5000;
+  return{q:`${n} itemizes. Her AGI is ${$$(agi)} and in 2025 she gave ${$$(gift)} in cash to her church. How much can she deduct this year?`,a:lim,
+    w:[`Cash to a public charity is limited to 60% of AGI: 60% × ${$$(agi)} = ${$$(lim)}`,`The other ${$$(gift-lim)} carries forward for up to 5 years`],
+    x:[[gift,"Cash gifts are limited to 60% of AGI. The excess carries forward."],[agi/2,"The limit for cash to a public charity is 60% of AGI."],[agi*0.3,"30% is the limit for gifts of appreciated property, not cash."]]}});
+GEX("gross",1,2,"What counts as gross income",()=>{const n=PK(GXN),w=R(30,60)*1000,i=R(2,9)*100,u=R(2,6)*1000,cs=R(3,8)*1000,gf=R(5,15)*1000;
+  return{q:`In 2025 ${n} received ${$$(w)} of wages, ${$$(i)} of bank interest, ${$$(u)} of unemployment compensation, ${$$(cs)} of child support and a ${$$(gf)} cash gift from her aunt. What is her gross income?`,a:w+i+u,
+    w:[`Count wages, interest and unemployment: ${$$(w)} + ${$$(i)} + ${$$(u)} = ${$$(w+i+u)}`,"Child support and gifts received are not income"],
+    x:[[w+i+u+cs,"Child support received is not income."],[w+i,"Unemployment compensation is taxable."],[w+i+u+cs+gf,"Child support and gifts received are not income."]]}});
+GEX("safe",1,4,"Estimated tax safe harbor",()=>{const n=PK(GXN),cur=R(2,6)*10000,hiPrior=PK([0,1]),prior=hiPrior?cur*1.2:cur*0.8,a=Math.min(cur*0.9,prior);
+  return{q:`${n}'s 2024 tax was ${$$(prior)} and her 2024 AGI was $90,000. She expects her 2025 tax to be ${$$(cur)}. What is the smallest total of 2025 payments that avoids the underpayment penalty?`,a,
+    w:[`90% of this year's tax: ${$$(cur*0.9)}. 100% of last year's tax: ${$$(prior)} (100% because last year's AGI was $150,000 or less)`,`Pay the smaller: ${$$(a)}`],
+    x:[[hiPrior?prior:cur*0.9,"She needs only the smaller of the two tests."],[cur,"She does not have to pay 100% of this year's tax."],[prior*1.1,"110% of last year's tax applies only when last year's AGI was over $150,000."]]}});
+GEX("ftf",1,4,"Late filing penalty",()=>{const n=PK(GXN),tax=R(2,10)*1000,m=PK([2,3,4]);
+  return{q:`${n} filed her return ${m} months late with no extension. It showed ${$$(tax)} of unpaid tax, which she paid with the return. Ignoring the minimum penalty, what is the combined failure-to-file and failure-to-pay penalty?`,a:tax*m*0.05,
+    w:["Late filing is 5% a month and late payment 0.5% a month, but when both apply the filing penalty drops by the payment penalty: 5% a month combined",`5% × ${m} months × ${$$(tax)} = ${$$(tax*m*0.05)}`],
+    x:[[tax*m*0.055,"The two are not stacked. Together they are 5% a month."],[tax*m*0.005,"That is the late payment penalty alone."],[tax*0.25,"25% is the maximum, reached after 5 months."]]}});
+GEX("addmed",1,4,"Additional Medicare Tax",()=>{const n=PK(GXN),w=200000+R(2,10)*10000;
+  return{q:`${n} is single and her only income in 2025 is ${$$(w)} of wages. What is her Additional Medicare Tax?`,a:(w-200000)*0.009,
+    w:[`Wages over the $200,000 threshold for a single taxpayer: ${$$(w-200000)}`,`0.9% × ${$$(w-200000)} = ${$$((w-200000)*0.009)}`],
+    x:[[w*0.009,"The 0.9% applies only to wages above $200,000."],[(w-200000)*0.038,"3.8% is the net investment income tax, a different tax."],[(w-200000)*0.0145,"1.45% is the regular Medicare rate. The additional tax is 0.9%."]]}});
+GEX("niit",1,4,"Net investment income tax",()=>{const n=PK(GXN),ex=R(2,6)*10000,nii=ex+R(1,4)*10000,wages=200000+ex-nii;
+  return{q:`${n} is single. In 2025 she has ${$$(wages)} of wages and ${$$(nii)} of net investment income, so her modified AGI is ${$$(wages+nii)}. What is her net investment income tax?`,a:ex*0.038,
+    w:[`Modified AGI over the $200,000 threshold: ${$$(ex)}`,`3.8% × the smaller of net investment income (${$$(nii)}) or that excess (${$$(ex)}) = ${$$(ex*0.038)}`],
+    x:[[nii*0.038,"The tax is on the smaller of net investment income or the excess over the threshold."],[(wages+nii)*0.038,"The 3.8% is not applied to all of modified AGI."],[ex*0.009,"0.9% is the Additional Medicare Tax. This tax is 3.8%."]]}});
+GEX("gifttax",1,6,"Taxable gift",()=>{const n=PK(GXN),g=R(3,9)*10000,t=R(2,5)*10000;
+  return{q:`In 2025 ${n}, who is single, gave her nephew ${$$(g)} in cash and paid ${$$(t)} of his tuition directly to his university. What is the amount of her taxable gifts?`,a:g-19000,
+    w:[`Tuition paid directly to the school is not a gift: ignore the ${$$(t)}`,`Cash gift less the annual exclusion: ${$$(g)} − $19,000 = ${$$(g-19000)}`],
+    x:[[g,"Subtract the $19,000 annual exclusion."],[g+t-19000,"Tuition paid directly to the school is not a gift at all."],[g+t,"Tuition paid directly is not a gift, and the annual exclusion applies to the cash."]]}});
+GEX("split",1,6,"Gift splitting",()=>{const g=R(5,12)*10000;
+  return{q:`In 2025 a wife gave her son ${$$(g)} from her own account. She and her husband elect to split gifts. What is each spouse's taxable gift?`,a:g/2-19000,
+    w:[`Each spouse is treated as giving half: ${$$(g/2)}`,`Each uses a $19,000 annual exclusion: ${$$(g/2)} − $19,000 = ${$$(g/2-19000)}`],
+    x:[[g-19000,"With gift splitting each spouse is treated as giving half."],[g/2,"Each spouse still subtracts the $19,000 annual exclusion."],[g-38000,"That is the total for both spouses together, not each."]]}});
+GEX("spt",1,6,"Substantial presence test",()=>{const c=R(8,15)*10,p1=R(2,10)*15,p2=R(2,10)*30,a=c+p1/3+p2/6;
+  return{u:"",q:`A foreign citizen was present in the United States for ${c} days in 2025, ${p1} days in 2024 and ${p2} days in 2023. How many days count toward the substantial presence test for 2025?`,a,
+    w:[`2025 counts in full: ${c}. 2024 counts one-third: ${p1/3}. 2023 counts one-sixth: ${p2/6}`,`Total ${a} days. The test is met at 183 (with at least 31 days in the current year)`],
+    x:[[c+p1+p2,"Prior years do not count in full: one-third of last year, one-sixth of the year before."],[c,"Add one-third of last year's days and one-sixth of the year before."],[c+p1/3,"Add one-sixth of the days from two years back."]]}});
+GEX("install",1,2,"Installment sale",()=>{const n=PK(GXN),basis=PK([40,50,60,75])*1000,rec=PK([20,40])*1000,gp=(100000-basis)/100000;
+  return{q:`${n} sold land with a basis of ${$$(basis)} for $100,000. She received ${$$(rec)} this year and will receive the rest in later years. How much gain does she report this year under the installment method?`,a:rec*gp,
+    w:[`Gross profit: $100,000 − ${$$(basis)} = ${$$(100000-basis)}, which is ${Math.round(gp*100)}% of the price`,`${Math.round(gp*100)}% × ${$$(rec)} received = ${$$(rec*gp)}`],
+    x:[[100000-basis,"That is the whole gain. Only the share received this year is reported."],[rec,"Part of each payment is a return of basis."],[rec*(1-gp),"That is the basis part of the payment, not the gain part."]]}});
+GEX("boot",1,2,"Like-kind exchange with cash received",()=>{const n=PK(GXN),basis=R(10,20)*10000,gain=R(4,9)*10000,boot=R(1,3)*10000,fmvNew=basis+gain-boot;
+  return{q:`${n} exchanged rental land with a basis of ${$$(basis)} for other rental land worth ${$$(fmvNew)} plus ${$$(boot)} in cash. How much gain does she recognize?`,a:boot,
+    w:[`Gain realized: ${$$(fmvNew)} + ${$$(boot)} − ${$$(basis)} = ${$$(gain)}`,`Gain is recognized only up to the cash received: ${$$(boot)}`],
+    x:[[gain,"In a like-kind exchange the gain is taxed only up to the cash or other property received."],[0,"Cash received is taxed, up to the gain."],[gain-boot,"That is the gain that is postponed, not the gain recognized."]]}});
+/* ---------------- Part 2: Businesses ---------------- */
+GEX("pbasis",2,1,"Partner's basis at year end",()=>{const n=PK(GXN),b=R(2,6)*10000,inc=R(1,4)*10000,dist=R(1,3)*5000;
+  return{q:`${n}'s basis in her partnership interest was ${$$(b)} at the start of the year. Her share of partnership income was ${$$(inc)} and she received a ${$$(dist)} cash distribution. What is her basis at year end?`,a:b+inc-dist,
+    w:[`Add her share of income: ${$$(b)} + ${$$(inc)} = ${$$(b+inc)}`,`Subtract the distribution: ${$$(b+inc)} − ${$$(dist)} = ${$$(b+inc-dist)}`],
+    x:[[b+inc,"Distributions reduce basis."],[b-dist,"Her share of income increases basis, whether or not it is distributed."],[b+inc+dist,"A distribution is subtracted, not added."]]}});
+GEX("sloss",2,1,"S corporation loss limited by basis",()=>{const n=PK(GXN),sb=R(1,4)*10000,loan=PK([0,5000,10000]),loss=sb+loan+R(1,4)*5000;
+  return{q:`${n} has a stock basis of ${$$(sb)} in her S corporation${loan?` and has lent it ${$$(loan)} directly`:""}. She also guaranteed a $50,000 bank loan to the corporation. Her share of this year's loss is ${$$(loss)}. How much of the loss can she deduct?`,a:sb+loan,
+    w:[`Losses are limited to stock basis${loan?" plus debt basis":""}: ${$$(sb)}${loan?" + "+$$(loan)+" = "+$$(sb+loan):""}`,`The other ${$$(loss-sb-loan)} is suspended. A guarantee creates no basis`],
+    x:[[loss,"The loss is limited to her basis. Guaranteeing a bank loan does not create basis."],[loss-sb-loan,"That is the suspended part, not the part she can deduct."],[loan?sb:0,loan?"Her direct loan to the corporation counts as debt basis.":"She has stock basis, so part of the loss is allowed."]]}});
+GEX("ctax",2,1,"C corporation income tax",()=>{const ti=R(10,90)*10000;
+  return{q:`A C corporation has taxable income of ${$$(ti)} for 2025. What is its federal income tax?`,a:ti*0.21,
+    w:["C corporations pay a flat 21%",`21% × ${$$(ti)} = ${$$(ti*0.21)}`],
+    x:[[ti*0.35,"35% was the top rate before 2018. The rate is a flat 21%."],[ti*0.15,"There are no graduated corporate rates now. The rate is a flat 21%."],[ti*0.2,"20% is the accumulated earnings tax rate. The income tax rate is 21%."]]}});
+GEX("drd",2,1,"Dividends-received deduction",()=>{const own=PK([10,30]),pct=own<20?0.5:0.65,d=R(2,10)*10000;
+  return{q:`A C corporation owns ${own}% of another domestic corporation and received ${$$(d)} of dividends from it. Its taxable income is far above that amount. What is the dividends-received deduction?`,a:d*pct,
+    w:[`Ownership of ${own<20?"less than 20%":"20% or more but less than 80%"}: the deduction is ${pct*100}%`,`${pct*100}% × ${$$(d)} = ${$$(d*pct)}`],
+    x:[[d*(pct===0.5?0.65:0.5),`${pct===0.5?"65% needs ownership of at least 20%.":"50% is for ownership under 20%."}`],[d,"100% needs ownership of 80% or more."],[d*0.8,"80% is an old rate. The rates are 50%, 65% and 100%."]]}});
+GEX("ccharity",2,1,"Corporate charitable deduction",()=>{const ti=R(2,9)*100000,gift=ti*0.1+R(1,5)*10000;
+  return{q:`A C corporation has taxable income of ${$$(ti)} before its charitable deduction and gave ${$$(gift)} to qualified charities in 2025. How much can it deduct this year?`,a:ti*0.1,
+    w:[`Limit: 10% × ${$$(ti)} = ${$$(ti*0.1)}`,`The other ${$$(gift-ti*0.1)} carries forward for 5 years`],
+    x:[[gift,"A corporation's charitable deduction is limited to 10% of taxable income."],[ti*0.6,"60% is the limit for an individual's cash gifts."],[ti*0.25,"25% was a temporary limit. For 2025 it is 10%."]]}});
+GEX("gp",2,1,"Guaranteed payment and distributive share",()=>{const n=PK(GXN),gp=R(2,5)*10000,after=R(4,12)*10000,sh=PK([25,50]);
+  return{q:`A partnership has ordinary income of ${$$(after+gp)} before deducting a ${$$(gp)} guaranteed payment to ${n} for services. ${n} has a ${sh}% share of profits. How much ordinary income does ${n} report from the partnership?`,a:gp+after*sh/100,
+    w:[`Partnership income after the guaranteed payment: ${$$(after+gp)} − ${$$(gp)} = ${$$(after)}`,`${n}: ${$$(gp)} guaranteed payment + ${sh}% × ${$$(after)} = ${$$(gp+after*sh/100)}`],
+    x:[[after*sh/100,"Add the guaranteed payment, which is ordinary income to the partner."],[(after+gp)*sh/100,"The guaranteed payment goes to her in full, then she shares what is left."],[gp+(after+gp)*sh/100,"Deduct the guaranteed payment before splitting the remaining income."]]}});
+GEX("s179",2,2,"Section 179 and the business income limit",()=>{const cost=R(6,12)*10000,inc=cost-R(1,4)*10000;
+  return{q:`A sole proprietor bought ${$$(cost)} of equipment in 2025 and elects Section 179 for all of it. Her taxable income from the business before the deduction is ${$$(inc)}, and she has no other business income. How much Section 179 expense can she deduct this year?`,a:inc,
+    w:[`The cost is well under the $2,500,000 limit, but the deduction cannot exceed business taxable income: ${$$(inc)}`,`The other ${$$(cost-inc)} carries forward`],
+    x:[[cost,"Section 179 is limited to taxable income from the business. The excess carries forward."],[cost-inc,"That is the carryforward, not this year's deduction."],[0,"She can deduct up to her business taxable income."]]}});
+GEX("mileage",2,2,"Standard mileage rate",()=>{const n=PK(GXN),mi=R(5,20)*1000,pk=R(2,9)*100;
+  return{q:`${n}, a self-employed consultant, drove ${mi.toLocaleString("en-US")} business miles in 2025 and paid ${$$(pk)} for business parking and tolls. Using the standard mileage rate, what is her vehicle deduction?`,a:mi*0.7+pk,
+    w:[`${mi.toLocaleString("en-US")} miles × 70 cents = ${$$(mi*0.7)}`,`Parking and tolls are added: ${$$(mi*0.7)} + ${$$(pk)} = ${$$(mi*0.7+pk)}`],
+    x:[[mi*0.7,"Business parking and tolls are deductible on top of the mileage rate."],[mi*0.67+pk,"67 cents was the 2024 rate. For 2025 it is 70 cents."],[mi*0.7-pk,"Parking and tolls are added, not subtracted."]]}});
+GEX("meals",2,2,"Business meals and entertainment",()=>{const m=R(2,9)*1000,e=R(1,5)*1000;
+  return{q:`A business paid ${$$(m)} for meals with clients, where business was discussed, and ${$$(e)} for tickets to take clients to ball games. How much can it deduct?`,a:m/2,
+    w:[`Business meals: 50% × ${$$(m)} = ${$$(m/2)}`,"Entertainment is not deductible at all"],
+    x:[[m,"Business meals are only 50% deductible."],[(m+e)/2,"Entertainment is not deductible, not even at 50%."],[m+e,"Meals are 50% deductible and entertainment is not deductible."]]}});
+GEX("startup",2,2,"Startup costs in the first year",()=>{const s=PK([51000,52000,53000,54000]),a=5000-(s-50000);
+  return{q:`A new business paid ${$$(s)} of startup costs before it opened in 2025. Not counting amortization of the remainder, how much can it deduct immediately in its first year?`,a,
+    w:[`The $5,000 first-year amount shrinks dollar for dollar once costs pass $50,000: ${$$(s)} − $50,000 = ${$$(s-50000)}`,`$5,000 − ${$$(s-50000)} = ${$$(a)}; the rest is amortized over 180 months`],
+    x:[[5000,"The $5,000 is reduced when startup costs exceed $50,000."],[s,"Startup costs are not all deductible at once."],[s-50000,"That is the reduction, not what is left of the $5,000."]]}});
+GEX("cogs",2,2,"Cost of goods sold",()=>{const b=R(2,6)*10000,p=R(10,30)*10000,e=R(2,6)*10000;
+  return{q:`A retailer began the year with ${$$(b)} of inventory, purchased ${$$(p)} of merchandise, and ended the year with ${$$(e)} of inventory. What is its cost of goods sold?`,a:b+p-e,
+    w:[`Goods available: ${$$(b)} + ${$$(p)} = ${$$(b+p)}`,`Less ending inventory: ${$$(b+p)} − ${$$(e)} = ${$$(b+p-e)}`],
+    x:[[p,"Adjust purchases for the change in inventory."],[b+p,"Subtract the ending inventory."],[p+e-b===b+p-e?p+e:p+e-b,"Beginning inventory is added and ending inventory subtracted."]]}});
+GEX("recap",2,2,"Depreciation recapture on equipment",()=>{const cost=R(4,9)*10000,dep=R(1,3)*10000,over=PK([0,1]),sale=over?cost+R(1,3)*5000:cost-dep+R(1,2)*5000,gain=sale-(cost-dep),a=Math.min(gain,dep);
+  return{q:`A business sold equipment for ${$$(sale)}. It had cost ${$$(cost)} and ${$$(dep)} of depreciation had been taken. How much of the gain is ordinary income?`,a,
+    w:[`Adjusted basis: ${$$(cost)} − ${$$(dep)} = ${$$(cost-dep)}; gain: ${$$(sale)} − ${$$(cost-dep)} = ${$$(gain)}`,`Gain is ordinary up to the depreciation taken (${$$(dep)}): ${$$(a)}${gain>dep?`; the other ${$$(gain-dep)} is Section 1231 gain`:""}`],
+    x:[[over?gain:dep,over?"Only the gain up to the depreciation taken is ordinary. The rest is Section 1231 gain.":"Recapture cannot be more than the gain itself."],[0,"Gain on depreciable equipment is ordinary up to the depreciation taken."],[over?gain-dep:sale,over?"That is the Section 1231 part, not the ordinary part.":"That is the sale price, not the gain."]]}});
+GEX("homeoff",2,2,"Home office, simplified method",()=>{const big=PK([0,1]),sq=big?R(35,50)*10:R(10,28)*10,a=Math.min(sq,300)*5;
+  return{q:`A self-employed designer uses ${sq} square feet of her home regularly and exclusively as her principal place of business. Using the simplified method, what is her home office deduction?`,a,
+    w:[`$5 a square foot, up to 300 square feet`,`${Math.min(sq,300)} × $5 = ${$$(a)}`],
+    x:[[big?sq*5:1500,big?"The simplified method stops at 300 square feet.":"$1,500 is the maximum, at 300 square feet."],[sq*10===a?sq*4:sq*10,"The rate is $5 a square foot."],[Math.min(sq,300)*5+500,"There is no extra amount on top of $5 a square foot."]]}});
+GEX("futa",2,2,"Federal unemployment tax",()=>{const n=R(3,12);
+  return{q:`An employer has ${n} employees who each earned $40,000 in 2025. It paid its state unemployment tax in full and on time and gets the full credit. What is its federal unemployment (FUTA) tax for the year?`,a:n*42,
+    w:["FUTA applies to the first $7,000 of each employee's wages. With the full state credit the rate is 0.6%: $42 per employee",`${n} × $42 = ${$$(n*42)}`],
+    x:[[n*420,"That is 6.0% of $7,000. The state credit brings the rate down to 0.6%."],[n*240,"FUTA applies only to the first $7,000 of each employee's wages."],[n*2400,"Only the first $7,000 of wages is taxed, and the rate after the credit is 0.6%."]]}});
+/* ---------------- Part 3: Representation ---------------- */
+GEX("p3ftf",3,2,"Late filing penalty",()=>{const tax=R(2,10)*1000,m=PK([2,3,4]);
+  return{q:`A taxpayer filed ${m} months late with no extension. The return showed ${$$(tax)} of unpaid tax, paid with the return. Ignoring the minimum penalty, what is the combined failure-to-file and failure-to-pay penalty?`,a:tax*m*0.05,
+    w:["When both penalties apply in a month the filing penalty drops by the payment penalty: 5% a month combined",`5% × ${m} months × ${$$(tax)} = ${$$(tax*m*0.05)}`],
+    x:[[tax*m*0.055,"The two are not stacked. Together they are 5% a month."],[tax*m*0.005,"That is the late payment penalty alone."],[tax*0.25,"25% is the maximum, reached after 5 months."]]}});
+GEX("p3acc",3,1,"Accuracy-related penalty",()=>{const u=R(3,12)*1000;
+  return{q:`An examination finds a ${$$(u)} underpayment of tax caused by negligence. No fraud is involved. What is the accuracy-related penalty?`,a:u*0.2,
+    w:["Negligence: 20% of the underpayment",`20% × ${$$(u)} = ${$$(u*0.2)}`],
+    x:[[u*0.75,"75% is the civil fraud penalty."],[u*0.4,"40% applies to gross valuation misstatements."],[u*0.05,"5% a month is the late filing penalty."]]}});
+GEX("p3prep",3,1,"Preparer penalty for an unreasonable position",()=>{const hi=PK([0,1]),fee=hi?R(3,8)*1000:R(4,16)*100,a=Math.max(1000,fee/2);
+  return{q:`A preparer charged ${$$(fee)} for a return that understated tax because of an unreasonable position. What is the Section 6694(a) penalty?`,a,
+    w:[`The greater of $1,000 or 50% of the fee: 50% × ${$$(fee)} = ${$$(fee/2)}`,`Penalty: ${$$(a)}`],
+    x:[[hi?1000:fee/2,hi?"$1,000 is only the minimum. 50% of the fee is larger here.":"The penalty is never less than $1,000."],[Math.max(5000,fee*0.75),"The greater of $5,000 or 75% of the fee is for willful or reckless conduct."],[fee,"The penalty is 50% of the fee, not all of it."]]}});
+GEX("p3sub",3,1,"Substantial understatement threshold",()=>{const hi=PK([0,1]),tax=hi?R(6,20)*10000:R(1,4)*10000,a=Math.max(5000,tax/10);
+  return{q:`An individual's correct tax for the year is ${$$(tax)}. Above what amount is an understatement "substantial" for the accuracy-related penalty?`,a,
+    w:[`The greater of 10% of the correct tax or $5,000: 10% × ${$$(tax)} = ${$$(tax/10)}`,`Threshold: ${$$(a)}`],
+    x:[[hi?5000:tax/10,hi?"$5,000 is only the floor. 10% of the correct tax is larger here.":"The threshold is never less than $5,000."],[tax/4,"25% is the omission of gross income that opens the 6-year assessment period."],[10000,"$10,000 belongs to the corporate test."]]}});
+GEX("p3oic",3,3,"Payment with a lump sum offer",()=>{const o=R(2,10)*5000;
+  return{q:`A taxpayer who is not low-income submits a lump sum offer in compromise of ${$$(o)} based on doubt as to collectibility. Besides the application fee, how much must be paid with the offer?`,a:o*0.2,
+    w:["A lump sum offer needs 20% with the application, and it is not refundable",`20% × ${$$(o)} = ${$$(o*0.2)}`],
+    x:[[o,"Only 20% is paid with a lump sum offer."],[o*0.1,"The payment with a lump sum offer is 20%."],[205,"$205 is the application fee, which is paid in addition."]]}});
+GEX("p3tfrp",3,3,"Trust fund recovery penalty",()=>{const w=R(10,30)*1000,e=R(4,9)*1000;
+  return{q:`A company failed to pay over one quarter's payroll taxes: ${$$(w)} of income tax withheld from employees, ${$$(e)} of the employees' share of Social Security and Medicare, and ${$$(e)} of the employer's share. What amount can be assessed against a responsible officer as the trust fund recovery penalty?`,a:w+e,
+    w:[`Trust fund taxes are the withheld income tax and the employees' share: ${$$(w)} + ${$$(e)} = ${$$(w+e)}`,"The employer's own share is not a trust fund tax"],
+    x:[[w+2*e,"The employer's share is not a trust fund tax."],[w,"The employees' share of Social Security and Medicare is also a trust fund tax."],[2*e,"The withheld income tax is the largest trust fund tax."]]}});
+GEX("p3info",3,2,"Late information returns",()=>{const n=R(2,9)*10;
+  return{q:`A business filed ${n} Forms 1099 late for returns due in 2026, but corrected the failure within 30 days of the due date. There was no intentional disregard. What is the penalty?`,a:n*60,
+    w:["Corrected within 30 days: $60 per return",`${n} × $60 = ${$$(n*60)}`],
+    x:[[n*130,"$130 applies when the failure is corrected after 30 days but by August 1."],[n*340,"$340 applies after August 1 or when never filed."],[n*680,"$680 is the minimum for intentional disregard."]]}});
+/* the older calculation set is retired from EA Parts 1 to 3 (its saved history is left alone) */
+const GENS_OLD=[];for(let k=GENS.length-1;k>=0;k--){const g=GENS[k];if(g.p<=3&&!g.exam){GENS_OLD.unshift(g);GENS.splice(k,1)}}
+
 /* ================= Calculations the way the exam asks them: pick 1 of 4, with teaching =================
    The SEE has no typed answers: every question, calculations too, is multiple choice with 4 options.
    Wrong choices are built from the usual mistakes: an in-between number from the working (stopping a step
@@ -19854,7 +20259,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 168 · Nov 22";
+const BUILD="Version 169 · Nov 22";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -20110,7 +20515,7 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
         <div class="stat"><b>${due}</b><span>Reviews due today</span></div>
       </div>
       <div class="bar" style="height:10px" title="Memory strength"><i style="width:${(ps.fm/ps.ft*100).toFixed(1)}%;background:var(--good)"></i><i style="width:${Math.max(0,ps.strength-ps.fm/ps.ft*100).toFixed(1)}%;background:var(--accent)"></i></div>
-      <div class="small muted">Memory strength rises with every correct answer and every review you pass (green = mastered). Overall readiness ${pc(ps.readyX)} · ${ps.fm} facts mastered · ${ps.missed} to redrill.</div>
+      <div class="small muted">Memory strength rises with every correct answer and every review you pass (green = mastered). ${rdLabel()} ${pc(ps.readyX)} · ${ps.fm} facts mastered · ${ps.missed} to redrill.</div>
       <div class="verdict">${esc(verdict)}</div>${doneNote?`<div class="small" style="color:var(--good)">${esc(doneNote)}</div>`:""}
       ${planHtml(daysLeft)}
       <div class="row"><button class="btn pri" data-mode="audio">🎧 Audio review · ${pl(part)}</button><span class="small muted">Hands-free, 5, 10 or 15 minutes. ${(()=>{const n=BANK.filter(i=>i.t==="f"&&i.p==part&&S.au&&S.au[i.id]).length;return n?`Heard so far: ${n} of ${ps.ft} facts.`:"For driving or the gym."})()}</span></div>
@@ -21068,6 +21473,8 @@ function submitTyped(val){const s=sess,cur=s.queue[s.pos],it=BYID[cur.id],V=view
 function advance(){const s=sess;s.pos++;s.phase="ask";s.sel=null;s.typed="";s.qstart=Date.now();if(s.pos>=s.queue.length)return finish();
   if(s.mode!=="mock"&&s.done>0&&s.done%10===0&&s.cpAt!==s.done){s.cpAt=s.done;s.cp=true} // recalculate everything every 10 answers
   render();window.scrollTo(0,0)}
+/* in EA Parts 1 to 3 "readiness" means the predicted score on the top card; this older blend of coverage and memory is called "Path covered" there */
+function rdLabel(){try{return typeof XPU!=="undefined"&&XPU[part]?"Path covered":"Overall readiness"}catch(_){return"Overall readiness"}}
 function liveLine(){const b=partStats(part);touchDay();return `Learned ${b.fl}/${b.ft} · strength ${pc(b.strength)} · readiness ${pc(b.readyX)} · ${S.day.n} answers today`}
 function renderCheckpoint(){const s=sess,a=s.p0,b=partStats(part),last=(s.log||[]).slice(-10),ok=last.filter(x=>x[0]).length,P=PARTS[part];
   const doms=[...new Set(last.map(x=>x[1]))];let next=recList(part)[0];try{if(typeof xpNext==="function"&&!PARTS[part].bk&&PARTS[part].x!=="caa")next=xpNext()}catch(_){}
@@ -21075,7 +21482,7 @@ function renderCheckpoint(){const s=sess,a=s.p0,b=partStats(part),last=(s.log||[
   const row=(l,x,y)=>`<div class="row small" style="justify-content:space-between"><span>${l}</span><span class="mono">${x} → <b>${y}</b></span></div>`;
   $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Checkpoint: ${s.done} answers</h2><div class="small muted mono">Recalculated from everything you've done</div></div><button class="btn ghost small" id="quit">End session</button></div>
   <div class="card"><div class="row"><span class="big">${ok}/${last.length}</span><span class="muted">right in the last ${last.length}</span></div><div>${msg}</div>
-  <div class="list">${row("Facts learned",a.fl,b.fl+" of "+b.ft)}${row("Memory strength",pc(a.strength),pc(b.strength))}${row("Overall readiness",pc(a.readyX),pc(b.readyX))}${row("Missed, still to redrill",a.missed,b.missed)}</div>
+  <div class="list">${row("Facts learned",a.fl,b.fl+" of "+b.ft)}${row("Memory strength",pc(a.strength),pc(b.strength))}${row(rdLabel(),pc(a.readyX),pc(b.readyX))}${row("Missed, still to redrill",a.missed,b.missed)}</div>
   <div class="domains">${doms.map(d=>{const st=domStats(part,d);const [cls,lab]=level(st);return `<div class="dom"><div class="name">${d}. ${esc(P.doms[d][0])}</div><span class="pill ${cls}">${lab}${st.n>=8?" · "+Math.round(st.acc*100)+"%":""}</span><div class="bar"><i style="width:${(st.fpct*100).toFixed(1)}%;background:var(--good)"></i><i class="m" style="width:${Math.max(0,st.spct*100-st.fpct*100).toFixed(1)}%"></i></div><div class="small muted" style="grid-column:1/-1">Learned ${st.fl}/${st.ft} · strength ${pc(st.spct*100)}</div></div>`}).join("")}</div>
   <div class="small muted">Suggested after this session: ${esc(next.t)}.</div>
   <button class="btn pri" id="cpgo">Keep going <span class="mono small">(enter)</span></button></div></section>`}
