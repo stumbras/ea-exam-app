@@ -261,8 +261,8 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 196 = the gap work: 583 new exam-style questions in fourteen files (`bank_p1_gap4.js` to
-`gap11`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
+Versions 184 to 197 = the gap work: 617 new exam-style questions in fifteen files (`bank_p1_gap4.js` to
+`gap11`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. None has yet been reviewed by a second reader. Re-checked against irs.gov on
 November 23, 2026, the items the 2025 law changed: adoption credit ($17,280, up to $5,000 refundable, rest carried
 5 years), clean vehicle credit (binding contract and a payment by September 30, 2025), residential clean energy
