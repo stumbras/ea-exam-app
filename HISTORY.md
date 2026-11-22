@@ -261,9 +261,11 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 197 = the gap work: 617 new exam-style questions in fifteen files (`bank_p1_gap4.js` to
-`gap11`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
-the cards while writing. None has yet been reviewed by a second reader. Re-checked against irs.gov on
+Versions 184 to 198 = the gap work: 647 new exam-style questions in sixteen files (`bank_p1_gap4.js` to
+`gap12`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
+the cards while writing. Second-reader review so far (Version 198): `bank_p1_gap4.js` and `gap5.js`, 119
+questions, no errors found. Still to review the same way: `gap6` to `gap12`, the three Part 2 files and the
+three Part 3 files. Re-checked against irs.gov on
 November 23, 2026, the items the 2025 law changed: adoption credit ($17,280, up to $5,000 refundable, rest carried
 5 years), clean vehicle credit (binding contract and a payment by September 30, 2025), residential clean energy
 credit (must be installed by December 31, 2025, paying early is not enough), overtime deduction ($12,500 or $25,000
@@ -341,6 +343,7 @@ One line per shipped version, newest first. Written by `tmp/ship.sh` from the gi
 
 <!-- VERSION-LOG -->
 
+- 2026-11-22 Version 198: EA: second-reader review of sets 4 and 5 (no errors); 30 retirement income story questions
 - 2026-11-22 Version 197: EA Part 3: 34 story questions on penalties, Circular 230 duties, interviews, courts, collection and e-file rules
 - 2026-11-22 Version 196: EA Part 2: 33 worked story questions on the core calculations (basis, distributions, recapture, exchanges, deposits, plans)
 - 2026-11-22 Version 195: EA Part 1: 30 story questions on the topics missed in outside practice (EIC, AMT, gifts, stock dividends, disaster losses, basis)
