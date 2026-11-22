@@ -275,16 +275,22 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 203 = the gap work: 786 new exam-style questions in twenty files (Part 1 408, Part 2 199, Part 3 179), with `bank_p2_gap4.js`, `bank_p3_gap4.js` (Version 201, 43 Part 3 stories), `bank_p1_gap13.js` (Version 202, 33 worked calculations on deductions and credits) and `bank_p2_gap5.js` (Version 203, 32 Part 2 stories on entities, payroll, fringe benefits, exempt organizations)
+Versions 184 to 204 = the gap work: 817 new exam-style questions in twenty-one files (Part 1 408, Part 2 199, Part 3 210; `bank_p3_gap5.js` added in Version 204 with 31 stories), with `bank_p2_gap4.js`, `bank_p3_gap4.js` (Version 201, 43 Part 3 stories), `bank_p1_gap13.js` (Version 202, 33 worked calculations on deductions and credits) and `bank_p2_gap5.js` (Version 203, 32 Part 2 stories on entities, payroll, fringe benefits, exempt organizations)
 (`bank_p1_gap4.js` to `gap12`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. Second-reader review so far: `bank_p1_gap4.js` and `gap5.js` (Version 198, 119
 questions, no errors), `gap6.js` and `gap7.js` (Version 200, 90 questions, two fixes) and `gap8.js` and `gap9.js`
 (Version 201, 76 questions, no errors; one stem has a deposit on Saturday January 3, 2026, left as it is because a
 Saturday deposit is possible). `gap10.js` and `gap11.js` were reviewed in Version 202 (60 questions, no errors); `gap12.js` and `bank_p2_gap1.js`
 in Version 203 (95 questions, no errors; one question in the new `gap13.js` repeated the facts of a `gap12.js`
-question and was given different numbers the same hour). Still to review the same way: `gap13`, `bank_p2_gap2`
-to `gap5` and the four Part 3 files. Confirmed for Version 203: late Form 1065 and 1120-S penalty $255 per owner
-per month for returns due in 2026 ($245 for returns due in 2025); the 2025 Form 1065 was due March 16, 2026. Confirmed on irs.gov on November 23, 2026 (Version 201 round): 0% capital gain bracket $48,350
+question and was given different numbers the same hour). `bank_p2_gap2.js` and `gap3.js` were reviewed in Version 204 (71 questions, no errors; one explanation, the SIMPLE
+IRA limit, now also gives the higher limit for employers with 25 or fewer employees). Still to review the same
+way: `gap13`, `bank_p2_gap4`, `gap5` and the five Part 3 files. Confirmed for Version 203: late Form 1065 and 1120-S penalty $255 per owner
+per month for returns due in 2026 ($245 for returns due in 2025); the 2025 Form 1065 was due March 16, 2026.
+Confirmed for Version 204: information return penalties for returns due in 2026 are $60, $130, $340 and $680;
+first B notice within 15 business days and backup withholding no later than 30 business days after the IRS
+notice; installment agreement fees $22, $69, $107, $178, low-income waived with direct debit or $43 reimbursed;
+offer in compromise fee $205; minimum late-filing penalty $525 for returns due in 2026; SIMPLE $16,500 and
+$3,500 catch-up ($17,600 and $3,850 for employers with 25 or fewer employees; $5,250 at ages 60 to 63). Confirmed on irs.gov on November 23, 2026 (Version 201 round): 0% capital gain bracket $48,350
 single / $96,700 joint / $64,750 head of household, ABLE limit $19,000, 24% gambling withholding on winnings over
 $5,000 less the wager, Form 8938 thresholds abroad ($200,000 last day or $300,000 any time; $400,000 or $600,000
 joint); from secondary sources citing Rev. Proc. 2024-40: AMT exemption $88,100 and $137,000, QCD $108,000.
@@ -305,6 +311,32 @@ is registered there). WHEN HE SAYS "Pro is on": (1) stop publishing `src/` and `
 folder, because a private repository does not hide files that the site itself serves; keep them in the
 repository outside the published branch or folder and update tmp/sync_src.py, tmp/ship.sh and tmp/restore.sh;
 (2) make the repository private; (3) confirm the app still opens at the same address; if not, switch back at once.
+Owner asked (November 23): "anything better than github for all my current and future needs all in one integrated
+and claude connected too". Answer given: no single service does it all; keep three pieces he already has.
+GitHub = the code (the only code host this Claude workspace pushes to directly). Cloudflare = hosting now and the
+game server later (Workers free plan 100,000 requests a day; Durable Objects with WebSockets are on the free plan
+since April 2025, which suits play-for-fun multiplayer poker, mahjong, tongits, pusoy); a "Cloudflare Developer
+Platform" connector exists in the Claude directory (not connected yet; he connects it in claude.ai). Wix = sales,
+accounts, login. If the Cloudflare connector is connected, check whether it can deploy the static app (about
+3,000 files, 100 MB); if yes, GitHub Pro is no longer needed and can be cancelled.
+CLOUDFLARE (November 23, 2026, owner: "Use Cloudflare Developer Platform for this" and "i also own 10 years
+prepaid on cloudflare solvinglifewith.com"). The Cloudflare Developer Platform connector is connected in Claude
+(tools `mcp__Cloudflare_Developer_Platform__*`: D1, KV, R2, Hyperdrive, list/read Workers, docs search). It cannot
+create or deploy a Pages project or a Worker, and it says it is deprecated in favour of the Cloudflare API MCP
+server. The account had 0 Workers and R2 not enabled. Done on our side: tmp/push_site.sh (called by tmp/ship.sh)
+publishes the app-only tree (no src/, HISTORY.md, README.md; 2,551 files) to a new branch `site` with an ordinary
+push; `main` and `gh-pages` are unchanged (a forced push to gh-pages was refused by the session's safety check,
+so do not try that again). Owner's one-time setup, given to him: Cloudflare dashboard, Workers & Pages, Create
+application, Pages, Import an existing Git repository, GitHub, ea-exam-app, production branch `site`, no preset,
+no build command, no output directory, Save and Deploy. Limits checked in Cloudflare docs: free plan 20,000
+files per site, 25 MiB per file, 500 builds a month, private repositories supported, 100 custom domains per
+project. NEXT when he sends the pages.dev address: open it, check the app loads from the root path (it lives
+under /ea-exam-app/ on GitHub), check sw.js and manifests, then add study.solvinglifewith.com as a custom domain
+(his DNS is at Cloudflare) and later study.solvinglifellc.com (one CNAME in Wix). Build the "move my progress"
+step before telling anyone to switch address (the app already has a backup file export and import in Settings;
+make it one tap from the old address). With Cloudflare serving the private repository, GitHub Pro is not needed;
+after the Cloudflare copy works and progress is moved, the repository can be made private on the free plan
+(GitHub Pages then stops, so do it only when the owner says so).
 Test note: t700 has a timing check (first draw under 0.8 s at phone speed) that fails when two test batches overlap; never start a second batch while t700 from the first is still running, and run t700 alone if in doubt.
 Games apps: the owner confirmed on November 23, 2026: "no real money gambling in any just play for fun learning apps". Play chips and learning only; never add deposits, cash-out or prizes with money value. No written plan for
 the games apps was found in this project's chats; ask the owner to paste it if it exists elsewhere. Re-checked against irs.gov on

@@ -15,4 +15,6 @@ git -c user.name="Linas Kerbelis" -c user.email="stumbras@users.noreply.github.c
 Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_017Y7zWT8MhmMBQSpWCTPuco"
 git -c push.negotiate=true push -q origin main && git -c push.negotiate=true push -q origin main:gh-pages
+# branch "site" = the app only (no src/, HISTORY.md, README.md), for web hosts such as Cloudflare Pages
+sh /home/claude/ea-app/tmp/push_site.sh "$1"
 git ls-remote origin | head -3
