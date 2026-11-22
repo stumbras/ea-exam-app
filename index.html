@@ -757,6 +757,7 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 .xaqrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.xaquick.alt{background:var(--accent);color:#fff}
 .xapace{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 0}.xaseg{display:inline-flex;border:1.5px solid var(--line);border-radius:99px;overflow:hidden}.xaseg button{font:inherit;font-size:12.5px;font-weight:700;border:0;background:var(--surface);color:var(--muted);padding:5px 11px;cursor:pointer}.xaseg button.on{background:#0f172a;color:#fff}
 .xahow{display:grid;gap:6px;margin:10px 0 0;padding:12px 14px;border:1.5px solid var(--accent);border-radius:14px;background:var(--accent-soft,var(--surface))}.xahow>b{font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-top:4px}.xafact{font-size:14px;border-left:3px solid var(--accent);padding:2px 0 2px 9px}.xafact span{display:block;font-weight:700}
+.xachk{display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px;font-size:14px;align-items:start}.xachk i{font-style:normal;font-weight:800}.xachk.y i{color:var(--good)}.xachk.n i{color:var(--bad)}
 .xr3{font-size:14px}.xasg{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 0}.xasg .btn{text-align:left}
 .xad{display:grid;gap:8px;margin-top:10px}.xabig{font:800 44px/1 var(--mono,monospace);letter-spacing:-1px}.xabig small{font-size:16px;font-weight:600;color:var(--muted)}.xabig.ok{color:var(--good)}.xabig.mid{color:var(--warn)}.xabig.bad{color:var(--bad)}
 .dxrow .ok{color:var(--good)}.dxrow .mid{color:var(--warn)}.dxrow .bad{color:var(--bad)}.dxrow em.ok{background:var(--good)}.dxrow em.mid{background:var(--warn)}.dxrow em.bad{background:var(--bad)}
@@ -17825,15 +17826,21 @@ const XAW={1:1,2:2,3:3};
    - A topic with few answers is pulled toward the average of your topics (worth about 4 medium questions), and a topic
      with none sits at that average, so starting a topic cannot move the figure by itself.
    A wrong answer can only lower the figure or leave it where it is. tmp/t654.js checks that on 6,000 random answers. */
-function xaCredit(r){return r[3]===r[2]?1:(r[4]&&r[0]>=3?0.3:0)}
-function xaRaw(d){let w=0,g=0,n=0;for(const i of BANK){if(i.p!=part||i.t!=="q"||i.d!=d)continue;const r=S.it[i.id];if(!r||!r[2])continue;const k=XAW[i.lv||2];w+=k;g+=k*xaCredit(r);n++}
+/* Version 170, "count all, but think": every question still counts. Three cautions were added, each of which can only
+   take credit away, so the rule that a wrong answer never raises the figure still holds (tmp/t654.js):
+   - a right answer on a question whose right choice is the longest of the four earns 85%, because length alone helps there;
+   - a topic is pulled toward 85% of your average, not the full average, so thin or missing data counts a little against you;
+   - the card and the Diagnosis page say what the figure rests on, and compare it with your mocks. */
+const XACUE=0.85,XATHIN=0.85;
+function xaCredit(r,i){const c=r[3]===r[2]?1:(r[4]&&r[0]>=3?0.3:0);return c&&i&&typeof lenCue==="function"&&lenCue(i)?c*XACUE:c}
+function xaRaw(d){let w=0,g=0,n=0;for(const i of BANK){if(i.p!=part||i.t!=="q"||i.d!=d)continue;const r=S.it[i.id];if(!r||!r[2])continue;const k=XAW[i.lv||2];w+=k;g+=k*xaCredit(r,i);n++}
   const m=xpPeek(d);if(m.fn){w+=m.fw||0;n+=m.fn}return{g,wt:w,n,raw:w?g/w:null}}
 const XAC={k:null,v:null};
 const xaPersist0=persist;persist=function(){XAC.k=null;return xaPersist0.apply(this,arguments)};
 function xaAll(){if(XAC.k===part&&XAC.v)return XAC.v;const v=xaAll1();XAC.k=part;XAC.v=v;return v}
 function xaAll1(){const D=Object.keys(PARTS[part].doms).map(d=>Object.assign({d,name:PARTS[part].doms[d][0],w:PARTS[part].doms[d][1]},xaRaw(d)));let W=0,G=0,n=0,T=0;
   D.forEach(x=>{T+=x.w;n+=x.n;if(x.n){W+=x.w;G+=x.w*x.raw}});const prior=W?G/W:null;let P=0,V=0;
-  D.forEach(x=>{if(prior==null){x.p=null;x.se=null;x.gain=null;return}x.p=(x.g+8*prior)/(x.wt+8);x.se=Math.sqrt(Math.max(.02,x.p*(1-x.p))/(x.n+4));x.gain=x.w*(1-x.p);x.nodata=!x.n;P+=x.w*x.p;V+=x.w*x.w*x.se*x.se});
+  D.forEach(x=>{if(prior==null){x.p=null;x.se=null;x.gain=null;return}x.p=(x.g+8*XATHIN*prior)/(x.wt+8);x.se=Math.sqrt(Math.max(.02,x.p*(1-x.p))/(x.n+4));x.gain=x.w*(1-x.p);x.nodata=!x.n;P+=x.w*x.p;V+=x.w*x.w*x.se*x.se});
   const p=prior==null||n<10?null:P/T,se=p==null?null:Math.sqrt(V)/T,cover=T?W/T:0,full=cover>0.99&&n>=120;
   const verdict=p==null?"none":!full?"early":p>=0.78&&p-se>=0.72?"ready":p>=0.70?"close":"notyet";
   return{D,p,se,cover,n,verdict,top:D.filter(x=>x.gain!=null).sort((a,b)=>b.gain-a.gain)[0]||null}}
@@ -17899,6 +17906,18 @@ function xaCats(){const Q=BANK.filter(i=>i.p==part&&i.t==="q"&&i.opts),seen=Q.fi
   const rows=XACAT.map(([k,name,f])=>{const pool=Q.filter(f),s=pool.filter(i=>xaVal(i)!=null);return{k,name,total:pool.length,n:s.length,acc:s.length?s.reduce((a,i)=>a+xaVal(i),0)/s.length:null}});
   const G=GENS.filter(g=>g.p==part),gs=G.filter(g=>S.it[g.id]&&S.it[g.id][2]);if(G.length)rows.push({k:"calc",name:"Calculations",total:G.length,n:gs.reduce((a,g)=>a+S.it[g.id][2],0),acc:gs.length?gs.reduce((a,g)=>a+S.it[g.id][3],0)/gs.reduce((a,g)=>a+S.it[g.id][2],0):null});
   rows.forEach(r=>{r.weak=r.acc!=null&&all!=null&&r.n>=6&&r.acc<=all-0.08});return{all,seen:seen.length,rows}}
+function xaBasis(){const A=xaAll(),Q=BANK.filter(i=>i.p==part&&i.t==="q"),seen=Q.filter(i=>S.it[i.id]&&S.it[i.id][2]),first=l=>{const s=seen.filter(l);return{n:s.length,ok:s.length?s.filter(i=>S.it[i.id][3]===S.it[i.id][2]).length/s.length:null}};
+  const lm=typeof lastMock==="function"?lastMock(part):null,mock=lm&&lm.n>=20?{p:lm.c/lm.n,n:lm.n,days:Math.floor((Date.now()-lm.t)/864e5)}:null,un=A.D.filter(x=>!x.n);
+  return{A,total:Q.length,seen:seen.length,basic:first(i=>(i.lv||2)===1),med:first(i=>(i.lv||2)===2),hard:first(i=>i.lv===3),cued:first(i=>lenCue(i)),plain:first(i=>!lenCue(i)),mock,un}}
+function xaSolidHtml(){try{const B=xaBasis(),A=B.A,pc=v=>v==null?"–":Math.round(v*100)+"%",row=(ok,t)=>`<div class="xachk ${ok?"y":"n"}"><i>${ok?"✓":"✗"}</i><span>${t}</span></div>`;
+  const gap=B.mock&&A.p!=null?A.p-B.mock.p:null;
+  return `<div class="card xad"><b>How solid is this number?</b><div class="small muted">Every question you have answered counts. These are the checks to read it by.</div>
+    ${row(B.seen>=120,`${B.seen} of ${B.total} exam questions answered (120 or more makes it firm)`)}
+    ${row(!B.un.length,B.un.length?`Not started: ${B.un.map(x=>esc(x.name)).join(", ")}. They are counted at 85% of your average until you start them`:"Every topic has answers")}
+    ${row(B.hard.n>=20&&B.hard.ok>=0.65,`Hard questions, first try: ${pc(B.hard.ok)} of ${B.hard.n}. Medium: ${pc(B.med.ok)} of ${B.med.n}. Basic: ${pc(B.basic.ok)} of ${B.basic.n}`)}
+    ${row(B.cued.n<10||B.plain.n<10||B.cued.ok-B.plain.ok<0.08,B.cued.n>=10&&B.plain.n>=10?`Where the right choice is the longest you score ${pc(B.cued.ok)}; elsewhere ${pc(B.plain.ok)}. Those right answers are counted at 85%`:"Right answers where the right choice is the longest are counted at 85%")}
+    ${row(!!B.mock&&B.mock.n>=50&&B.mock.days<=14&&B.mock.p>=0.75,B.mock?`Recent mocks: ${pc(B.mock.p)} over ${B.mock.n} questions, ${B.mock.days===0?"today":B.mock.days+" days ago"}${gap!=null&&Math.abs(gap)>=0.08?`. That is ${Math.round(Math.abs(gap)*100)} points ${gap>0?"below":"above"} this figure: trust the mock`:""}`:"No mock exam of 20 or more questions yet. A 50-question mock is the best check")}
+    <div class="small">${[B.seen>=120,!B.un.length,B.hard.n>=20&&B.hard.ok>=0.65,!!B.mock&&B.mock.n>=50&&B.mock.days<=14&&B.mock.p>=0.75].filter(Boolean).length===4?"All four main checks pass: the figure can be trusted.":"Until the crosses are gone, read the figure as a rough guide."}</div></div>`}catch(_){return""}}
 function xaLessons(){const m=XPU[part]||[],out=[];m.forEach((d,k)=>{const qs=xpUnitQs(k),s=qs.filter(i=>xaVal(i)!=null);if(s.length<4)return;const acc=s.reduce((a,i)=>a+xaVal(i),0)/s.length,miss=s.filter(i=>S.it[i.id][4]===0).length;out.push({k,d,t:UNITS[part][k].t,acc,n:s.length,miss})});
   return out.filter(x=>x.acc<0.72||x.miss>=3).sort((a,b)=>a.acc-b.acc).slice(0,3)}
 /* rough workload left on the path, in answers, against the learner's own daily average and the exam date */
@@ -17913,12 +17932,13 @@ function xaLine(){try{if(!XPU[part])return"";const A=xaAll(),pending=!xpDx()&&xp
   return txt}catch(_){return""}}
 xpDxLine=function(){return""};
 /* ---------- readiness on top, then the red button, then two more suggestions ---------- */
+function xaMockNote(A){try{const lm=lastMock(part);if(!lm||lm.n<20||A.p==null)return"";const m=lm.c/lm.n;return Math.abs(A.p-m)>=0.08?` · mocks say ${Math.round(m*100)}%: trust the mock`:""}catch(_){return""}}
 function xaReadyHtml(){try{const A=xaAll(),e=esc,pending=!xpDx()&&xpAnswered()<40&&!(S.set.xp||{})["nodx"+part],c=A.p==null?"":A.p>=0.75?"ok":A.p>=0.6?"mid":"bad";
   const short={none:"Take the 24-question diagnostic to get your number",early:"Early estimate",ready:"Ready to sit this part",close:"Close",notyet:"Not yet"}[A.verdict];
   return `<button class="xaready" data-xa="open"><span class="xr1">READINESS · ${e(pl(part)).toUpperCase()}<em>Diagnosis ›</em></span>
     <span class="xr2"><b class="${c}">${A.p==null?"–":Math.round(A.p*100)+"%"}</b><span>${A.p==null?"no estimate yet":`predicted score ± ${Math.max(2,Math.round(A.se*100))}<br>aim for 75% or more`}</span></span>
     <span class="xrbar"><i class="${c}" style="width:${A.p==null?0:Math.round(A.p*100)}%"></i><u></u></span>
-    <span class="xr3"><b>${e(short)}</b>${A.top&&A.p!=null?` · biggest gain: ${e(A.top.name)}`:""}</span></button>${pending?`<div class="row" style="justify-content:flex-end"><button class="btn ghost small" data-xp="nodx">Skip the diagnostic</button></div>`:""}`}catch(_){return""}}
+    <span class="xr3"><b>${e(short)}</b>${A.p!=null?` · from ${A.n} question${A.n===1?"":"s"}${A.D.some(x=>!x.n)?`, ${A.D.filter(x=>!x.n).length} topic${A.D.filter(x=>!x.n).length>1?"s":""} not started`:""}`:""}${A.top&&A.p!=null?` · biggest gain: ${e(A.top.name)}`:""}${xaMockNote(A)}</span></button>${pending?`<div class="row" style="justify-content:flex-end"><button class="btn ghost small" data-xp="nodx">Skip the diagnostic</button></div>`:""}`}catch(_){return""}}
 function xaSuggest(){const out=[];try{const main=xpNext(),t=main.t||"",miss=missedPool(part,"all").length,due=dueList(part,"all").length,pc=v=>Math.round(v*100)+"%";
     if(miss>=3&&!/misses/.test(t))out.push({t:`Fix ${miss} misses`,run:{mode:"missed",filt:"all"}});
     const L=xaLessons()[0];if(L&&!t.includes(L.t))out.push({t:`Weak lesson (${pc(L.acc)}): ${L.t}`,run:{unit:L.k,dd:L.d}});
@@ -17979,8 +17999,9 @@ function renderXaDiag(){const e=esc,A=xaAll(),C=xaCats(),L=xaLessons(),pc=v=>Mat
   const top=A.p==null?`<div class="xabig">–</div>`:`<div class="xabig ${cls(A.p)}">${pc(A.p)}<small> ± ${Math.max(2,Math.round(A.se*100))}</small></div>`;
   const order=A.D.slice().sort((a,b)=>(b.gain==null?-1:b.gain)-(a.gain==null?-1:a.gain));
   $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Diagnosis · ${e(pl(part))}</h2><div class="small muted">Worked out from your own answers. It updates after every session.</div></div></div>
-   <div class="card xad"><div class="small muted">Predicted score on exam questions</div>${top}<div><b>${XAV[A.verdict]}</b></div><div class="small muted">${A.n} questions counted. It counts your first try at each question, because exam questions are new to you: a question you ever missed stays missed until you have answered it right on later review days. A wrong answer can never raise it. Aim for 75% or more; the real exam is scaled (500 on a 200 to 800 scale passes).</div>
+   <div class="card xad"><div class="small muted">Predicted score on exam questions</div>${top}<div><b>${XAV[A.verdict]}</b></div><div class="small muted">${A.n} questions counted. It counts your first try at every question, because exam questions are new to you: a question you ever missed stays missed until you have answered it right on later review days. A wrong answer can never raise it. Aim for 75% or more; the real exam is scaled (500 on a 200 to 800 scale passes).</div>
      <div class="row"><button class="btn pri small" data-xa="dx">${xpDx()?"Run the 24-question diagnostic again":"Take the 24-question diagnostic"}</button></div></div>
+   ${xaSolidHtml()}
    <div class="card xad"><b>Topics, biggest gain first</b><div class="small muted">Gain = share of the exam x what you still miss. The red button works in this order.</div>
      ${order.map((x,k)=>`<div class="dxrow"><span>${k===0&&x.gain!=null?"▶ ":""}${e(x.name)} <span class="muted">· ${x.w}% of exam</span></span><b class="${x.p==null?"":cls(x.p)}">${x.p==null?"no data":pc(x.p)}</b>${x.p==null?"":bar(x.p)}</div>`).join("")}</div>
    ${L.length?`<div class="card xad"><b>Lessons that cost you most</b>${L.map(x=>`<div class="dxrow"><span>${e(x.t)}</span><b class="${cls(x.acc)}">${pc(x.acc)}${x.miss?" · "+x.miss+" open":""}</b>${bar(x.acc)}<div class="row" style="grid-column:1/-1"><button class="btn small" data-xa="les" data-k="${x.k}">Read the lesson</button><button class="btn small" data-xa="quiz" data-k="${x.k}" data-d="${x.d}">Quiz on it</button></div></div>`).join("")}</div>`:""}
@@ -20259,7 +20280,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 169 · Nov 22";
+const BUILD="Version 170 · Nov 22";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
