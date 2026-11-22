@@ -1,0 +1,10 @@
+# not part of the app: keep these out of the published site
+.git
+.github
+.wrangler
+node_modules
+src
+HISTORY.md
+README.md
+wrangler.jsonc
+.assetsignore
