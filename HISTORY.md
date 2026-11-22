@@ -261,16 +261,16 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 194 = the gap work: 520 new exam-style questions in twelve files (`bank_p1_gap4.js` to
-`gap10`, `bank_p2_gap1.js`, `gap2`, `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
+Versions 184 to 195 = the gap work: 550 new exam-style questions in thirteen files (`bank_p1_gap4.js` to
+`gap11`, `bank_p2_gap1.js`, `gap2`, `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. None has yet been reviewed by a second reader. Re-checked against irs.gov on
 November 23, 2026, the items the 2025 law changed: adoption credit ($17,280, up to $5,000 refundable, rest carried
 5 years), clean vehicle credit (binding contract and a payment by September 30, 2025), residential clean energy
 credit (must be installed by December 31, 2025, paying early is not enough), overtime deduction ($12,500 or $25,000
 joint, only the FLSA half-time premium, joint return if married), child tax credit SSN rule. All matched.
 
-Next sets, in order (Preliminary work stories were done in Version 194):
-Part 1 Deductions stories on the owner's missed topics; Part 2 and Part 3 second passes on the rules still
+Next sets, in order (Preliminary work stories were done in Version 194, the owner's missed topics in
+Version 195): Part 2 and Part 3 second passes on the rules still
 listed by `node tmp/t741.js`; then calculation generators (`GEX`) for estimated tax, capital gain netting and
 the QBI limit.
 
@@ -341,6 +341,7 @@ One line per shipped version, newest first. Written by `tmp/ship.sh` from the gi
 
 <!-- VERSION-LOG -->
 
+- 2026-11-22 Version 195: EA Part 1: 30 story questions on the topics missed in outside practice (EIC, AMT, gifts, stock dividends, disaster losses, basis)
 - 2026-11-22 Version 194: EA Part 1: 30 story questions on Preliminary work (dependents, filing status, residency, who must file)
 - 2026-11-22 Version 193 notes: history: irs.gov re-check of the 2025 law items, next sets listed
 - 2026-11-22 Version 193: EA Part 1: 28 story questions on Taxation and Advising
