@@ -754,10 +754,15 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 .xr2{display:flex;align-items:center;gap:12px}.xr2 b{font:800 40px/1 var(--mono,monospace);letter-spacing:-1px}.xr2 b.ok{color:var(--good)}.xr2 b.mid{color:var(--warn)}.xr2 b.bad{color:var(--bad)}.xr2 span{font-size:13px;color:var(--muted);line-height:1.35}
 .xrbar{position:relative;height:10px;border-radius:5px;background:var(--sunk);display:block}.xrbar i{display:block;height:100%;border-radius:5px;background:var(--muted)}.xrbar i.ok{background:var(--good)}.xrbar i.mid{background:var(--warn)}.xrbar i.bad{background:var(--bad)}.xrbar u{position:absolute;left:75%;top:-3px;bottom:-3px;width:2px;background:var(--fg);border-radius:1px}
 .xaquick{display:flex;flex-direction:column;gap:2px;align-items:flex-start;width:100%;text-align:left;font:inherit;cursor:pointer;border:0;border-radius:14px;padding:11px 14px;margin:8px 0 0;background:#0f172a;color:#fff}.xaquick b{font-size:16px}.xaquick span{font-size:12.5px;opacity:.82}
-.xaqrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.xaquick.alt{background:var(--accent);color:#fff}
+.xaqrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.xaaud{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.xaquick.aud{background:#115e59}.xaqrow.three{grid-template-columns:1fr 1fr 1fr;gap:6px}.xaqrow.three .xaquick{padding:11px 9px;min-width:0}.xaqrow.three .xaquick b{font-size:14.5px;white-space:nowrap}.xaqrow.three .xaquick span{font-size:11.5px}.xaaudset{margin:8px 0 0;border:1.5px solid var(--line);border-radius:14px;background:var(--surface);color:var(--fg);font:inherit;font-size:13px;font-weight:700;padding:0 14px;cursor:pointer}.xaquick.alt{background:var(--accent);color:#fff}
 .xapace{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 0}.xaseg{display:inline-flex;border:1.5px solid var(--line);border-radius:99px;overflow:hidden}.xaseg button{font:inherit;font-size:12.5px;font-weight:700;border:0;background:var(--surface);color:var(--muted);padding:5px 11px;cursor:pointer}.xaseg button.on{background:#0f172a;color:#fff}
 .xahow{display:grid;gap:6px;margin:10px 0 0;padding:12px 14px;border:1.5px solid var(--accent);border-radius:14px;background:var(--accent-soft,var(--surface))}.xahow>b{font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-top:4px}.xafact{font-size:14px;border-left:3px solid var(--accent);padding:2px 0 2px 9px}.xafact span{display:block;font-weight:700}
 .xachk{display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px;font-size:14px;align-items:start}.xachk i{font-style:normal;font-weight:800}.xachk.y i{color:var(--good)}.xachk.n i{color:var(--bad)}
+body.xafocus header.top{display:none}
+body.xafocus .sesshead{flex-wrap:nowrap;align-items:flex-start;gap:8px}body.xafocus .sesshead h2{font-size:17px;line-height:1.2;margin:0}body.xafocus .sesshead .xanote{font-size:12px;line-height:1.3}body.xafocus .sesshead .row{flex-wrap:nowrap;margin:0}body.xafocus .sesshead #quit{white-space:nowrap;padding:6px 10px}
+body.xafocus #view>.section{padding-top:8px}body.xafocus #view .progress{margin:6px 0 4px}body.xafocus #view>.section>.small.muted.mono{font-size:11.5px;margin:2px 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.xafocus #view>.section>.card{margin-top:6px;padding-top:12px}body.xafocus #view .card .meta{font-size:10.5px;gap:2px 10px;margin-bottom:4px}body.xafocus #view .card .stem{margin-top:6px}
+body.xafast .opts+.small.muted{display:none}
 .xr3{font-size:14px}.xasg{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 0}.xasg .btn{text-align:left}
 .xad{display:grid;gap:8px;margin-top:10px}.xabig{font:800 44px/1 var(--mono,monospace);letter-spacing:-1px}.xabig small{font-size:16px;font-weight:600;color:var(--muted)}.xabig.ok{color:var(--good)}.xabig.mid{color:var(--warn)}.xabig.bad{color:var(--bad)}
 .dxrow .ok{color:var(--good)}.dxrow .mid{color:var(--warn)}.dxrow .bad{color:var(--bad)}.dxrow em.ok{background:var(--good)}.dxrow em.mid{background:var(--warn)}.dxrow em.bad{background:var(--bad)}
@@ -17695,7 +17700,7 @@ function xpUnitQs(k){return xpUnitPool(k).q}
 function xpUnitStep(x){const m=xpPeek(x.d),uq=m.uq||{},ua=m.ua||{},rr=m.rr||{},ul=m.ul||{};
   for(const u of x.L){const pos=`Lesson ${x.L.indexOf(u)+1} of ${x.les} · ${x.name}`;
     if(u.out)continue;
-    if(!u.read&&(m.pc||{})[u.k]===undefined&&xpUnitQs(u.k).length>=8){const N=xpCheckN(u.k);return{t:`Check: ${u.t}`,d:`${N} questions before the lesson. Get ${N-1} right, sure of each, and you skip this lesson and its fact sessions. ${pos}`,pre:u.k,dd:x.d}}
+    if(!u.read&&(m.pc||{})[u.k]===undefined&&xpUnitQs(u.k).length>=8){const N=xpCheckN(u.k);return{t:`Check: ${u.t}`,d:`${N} questions before the lesson. Get ${N-1} right${xpGate("ul")===2?", sure of each,":""} and you skip this lesson and its fact sessions. ${pos}`,pre:u.k,dd:x.d}}
     if(!u.read)return{t:`Read: ${u.t}`,d:`${pos} · ${u.n} slides with diagrams, about ${Math.max(2,Math.round(u.n*1.2))} min`,les:u.k};
     const nf=xpUnitFacts(u.k).filter(i=>!S.it[i.id]).length;
     const hasQ=xpUnitQs(u.k).length>=5;
@@ -17796,7 +17801,7 @@ const xpRun2=xpRun;xpRun=function(a){if(a.dxgo){xpDxStart();return}if(a.pre!==un
 const xpResults1=renderResults;renderResults=function(){xpResults1.apply(this,arguments);try{const s=sess,h=document.querySelector("#view .xpnx")||document.querySelector("#view #home");if(!s||!h)return;let html="";
   if(s.dxDone){const r=xpDx(),st=xpState(),order=st.D.slice().sort((a,b)=>(b.gain||0)-(a.gain||0));
     html=`<div class="dxr"><b>Your diagnostic · ${Math.round(r.s*100)}% overall</b><div class="small muted">Weighted by the exam's topic sizes. Harder questions count more. About 70% is the passing range.</div>${st.D.map(x=>{const v=x.dx==null?0:x.dx,cls=v>=0.75?"ok":v>=0.5?"mid":"bad";return `<div class="dxrow"><span>${esc(x.name)}</span><b class="${cls}">${Math.round(v*100)}% · ${v>=0.75?"strong":v>=0.5?"building":"weak"}</b><i><em class="${cls}" style="width:${Math.max(4,Math.round(v*100))}%"></em></i></div>`}).join("")}<div class="small">The red button now starts with <b>${esc(order[0].name)}</b>, then ${esc(order.slice(1,3).map(x=>x.name).join(", then "))}. Before each lesson a 5-question check lets you skip it. Questions you missed here are not counted as misses.</div></div>`}
-  if(s.pcDone){const u=UNITS[part][s.pcDone.u];html=`<div class="dxr"><b>${s.pcDone.pass?"Lesson skipped: "+esc(u.t):"Not yet: "+esc(u.t)}</b><div class="small">${s.pcDone.pass?`You were sure and right on at least ${s.pcDone.need} of ${s.pcDone.n}. ${s.pcDone.facts} facts from this lesson are placed on your review schedule over the next 9 days, so each is still confirmed once.`:`${s.pcDone.sure} of ${s.pcDone.n} right and sure (${s.pcDone.need} skips the lesson). Reading the lesson is the next step.`}</div></div>`}
+  if(s.pcDone){const u=UNITS[part][s.pcDone.u];html=`<div class="dxr"><b>${s.pcDone.pass?"Lesson skipped: "+esc(u.t):"Not yet: "+esc(u.t)}</b><div class="small">${s.pcDone.pass?`You got at least ${s.pcDone.need} of ${s.pcDone.n} right. ${s.pcDone.facts} facts from this lesson are placed on your review schedule over the next 9 days, so each is still confirmed once.`:`${s.pcDone.sure} of ${s.pcDone.n} right (${s.pcDone.need} skips the lesson). Reading the lesson is the next step.`}</div></div>`}
   if(html)h.insertAdjacentHTML("beforebegin",html)}catch(_){}};
 
 /* ================= Adaptive study for EA Parts 1 to 3 (Version 167) =================
@@ -17828,12 +17833,13 @@ const XAW={1:1,2:2,3:3};
    A wrong answer can only lower the figure or leave it where it is. tmp/t654.js checks that on 6,000 random answers. */
 /* Version 170, "count all, but think": every question still counts. Three cautions were added, each of which can only
    take credit away, so the rule that a wrong answer never raises the figure still holds (tmp/t654.js):
-   - a right answer on a question whose right choice is the longest of the four earns 85%, because length alone helps there;
+   - a right answer on a question whose right choice is the longest of the four carries 85% of the usual weight, because
+     length alone helps there (Version 171: as weight, not as a lower mark, so a right answer can never pull a topic down);
    - a topic is pulled toward 85% of your average, not the full average, so thin or missing data counts a little against you;
    - the card and the Diagnosis page say what the figure rests on, and compare it with your mocks. */
 const XACUE=0.85,XATHIN=0.85;
-function xaCredit(r,i){const c=r[3]===r[2]?1:(r[4]&&r[0]>=3?0.3:0);return c&&i&&typeof lenCue==="function"&&lenCue(i)?c*XACUE:c}
-function xaRaw(d){let w=0,g=0,n=0;for(const i of BANK){if(i.p!=part||i.t!=="q"||i.d!=d)continue;const r=S.it[i.id];if(!r||!r[2])continue;const k=XAW[i.lv||2];w+=k;g+=k*xaCredit(r,i);n++}
+function xaCredit(r){return r[3]===r[2]?1:(r[4]&&r[0]>=3?0.3:0)}
+function xaRaw(d){let w=0,g=0,n=0;for(const i of BANK){if(i.p!=part||i.t!=="q"||i.d!=d)continue;const r=S.it[i.id];if(!r||!r[2])continue;const k=XAW[i.lv||2],c=xaCredit(r),cue=c>0&&lenCue(i)?XACUE:1;g+=k*c*cue;w+=k*c*cue+k*(1-c);n++} /* the right part of a length-cued question carries 85% of the weight, so it still can only pull the figure up */
   const m=xpPeek(d);if(m.fn){w+=m.fw||0;n+=m.fn}return{g,wt:w,n,raw:w?g/w:null}}
 const XAC={k:null,v:null};
 const xaPersist0=persist;persist=function(){XAC.k=null;return xaPersist0.apply(this,arguments)};
@@ -17988,11 +17994,17 @@ const xaRecord1=record;record=function(ok,conf){const s=sess,K=s&&s.quick,cur=s&
     else if(ok&&conf&&String(it.d)===K.focus&&(it.lv||2)<3){const j=s.queue.findIndex((e,k)=>ahead(k)&&K.tag[e.id]==="focus"&&(BYID[e.id].lv||2)<=(it.lv||2));
       if(j>0){const up=shuffle(BANK.filter(x=>x.p==part&&x.t==="q"&&String(x.d)===K.focus&&(x.lv||2)===(it.lv||2)+1&&!used.has(x.id)&&!(S.it[x.id]&&S.it[x.id][4]!==0&&S.it[x.id][1]>today())))[0];if(up){s.queue[j]=mkEntry(up);K.tag[up.id]="focus";s.note="Sure and right: the next one on this topic is a level harder."}}}}}catch(_){}return r};
 function xaQuickHtml(){try{const sp=xaSpeed(),un=xaUnseen().length,all=BANK.filter(xaExam).length,nt=xaNewToday(),tg=XATARGET[sp];
-  return `<div class="xaqrow"><button class="xaquick" data-xa="quick"><b>⚡ Quick 10</b><span>exam questions, adaptive</span></button><button class="xaquick alt" data-xa="new10"><b>🆕 New 10</b><span>${un?un+" not seen yet":"all seen: runs Quick 10"}</span></button></div>
+  return `<div class="xaqrow three"><button class="xaquick" data-xa="quick"><b>⚡ Quick 10</b><span>exam, adaptive</span></button><button class="xaquick alt" data-xa="new10"><b>🆕 New 10</b><span>${un?un+" not seen":"all seen"}</span></button><button class="xaquick aud" data-xa="aud10"><b>🎧 Audio 10</b><span>${xaAudSub()}</span></button></div>
    <div class="xapace"><span class="small muted">New today <b>${nt}</b> of ${tg} · seen ${all-un} of ${all}</span><span class="xaseg">${[["steady","Steady"],["fast","Fast"],["max","Max"]].map(([v,l])=>`<button data-xa="pace" data-v="${v}" class="${sp===v?"on":""}">${l}</button>`).join("")}</span></div>`}catch(_){return""}}
 /* Fast and Max: one tap answers (counted as sure) and a right answer moves on by itself; a wrong one stops to show why */
-function xaFastTap(b){try{const s=sess;if(!s||view!=="session"||!XPU[part]||xaSpeed()==="steady"||s.mode==="mock"||s.phase!=="ask"||b.dataset.opt===undefined)return false;if(s.xp&&(s.xp.k==="dx"||s.xp.k==="pc"))return false;
-  const pos=s.pos;s.sel=+b.dataset.opt;submitAnswer(true);if(s.lastOk)setTimeout(()=>{try{if(sess===s&&s.pos===pos&&s.phase==="shown"&&view==="session"){const n=document.querySelector("#view #next");if(n)n.click()}}catch(_){}},xaSpeed()==="max"?450:800);return true}catch(_){return false}}
+function xaFastTap(b){try{const s=sess;if(!s||view!=="session"||!XPU[part]||xaSpeed()==="steady"||s.mode==="mock"||s.phase!=="ask"||b.dataset.opt===undefined)return false;/* Version 171: the diagnostic and lesson checks answer with one tap too on Fast and Max. Before, they alone still waited for a
+     Sure/Guessing tap that could sit below the screen, which looked like a frozen question. */
+  if(Date.now()<xaGuard)return true; /* a stray tap just after the screen changed is ignored, so it cannot answer the new question */
+  const pos=s.pos,cur=s.queue[pos],V=view4(cur,BYID[cur.id]),right=+b.dataset.opt===V.ans;s.sel=+b.dataset.opt;
+  if(!right)s.eb={pos,id:cur.id,o:[],pick:-1}; /* Fast and Max: a miss shows its explanation at once, without the "which reason fits" step */
+  submitAnswer(right); /* Version 171: a one-tap answer counts as "sure" only when it is right. Before, every miss on Fast or Max was filed as a confident mistake. */
+  if(s.lastOk)setTimeout(()=>{try{if(sess===s&&s.pos===pos&&s.phase==="shown"&&view==="session"){const n=document.querySelector("#view #next");if(n){xaGuard=Date.now()+450;n.click()}}}catch(_){}},xaSpeed()==="max"?1000:2000 /* Version 171: was 450/800 ms, reported as "pushes to next too quickly"; long enough now to read the right answer. Next still moves on at once. */);return true}catch(_){return false}}
+let xaGuard=0;
 const xaDoNext0=doNextHtml;doNextHtml=function(){const h=xaDoNext0();try{if(!XPU[part]||PARTS[part].bk||!h)return h;return xaReadyHtml()+xaQuickHtml()+h+xaSuggestHtml()}catch(_){return h}};
 function renderXaDiag(){const e=esc,A=xaAll(),C=xaCats(),L=xaLessons(),pc=v=>Math.round(v*100)+"%",cal=S.cal||[0,0,0,0],tm=(S.tm||{})[part+"-hard"]||[0,0],lm=typeof lastMock==="function"?lastMock(part):null,nconf=BANK.filter(i=>{const r=S.it[i.id];return i.p==part&&r&&r[5]}).length;
   const cls=v=>v>=0.75?"ok":v>=0.6?"mid":"bad",bar=(v,c)=>`<i><em class="${c||cls(v)}" style="width:${Math.max(4,Math.round(v*100))}%"></em></i>`;
@@ -18013,8 +18025,10 @@ function renderXaDiag(){const e=esc,A=xaAll(),C=xaCats(),L=xaLessons(),pc=v=>Mat
      <div class="small">${xaPace()}</div>
      <div class="small">${tm[0]>=5?`Hard questions take you about ${Math.round(tm[1]/tm[0])} seconds each. The exam allows about ${Math.round(mpq(part)*60)}.`:"Pace appears after 5 hard questions."}${lm&&lm.sec?` Last mocks: ${Math.round(lm.sec/lm.n)} seconds a question.`:""}</div></div></section>`}
 const xaExtraView0=extraView;extraView=function(){if(view==="xadiag"){renderXaDiag();return true}return xaExtraView0()};
-const xaExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.xa===undefined){if(d.opt!==undefined&&xaFastTap(b))return true;return xaExtraClick0(b)}const a=d.xa;
+const xaExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.xa===undefined){if(b.id==="next"&&XPU[part]&&xaSpeed()!=="steady")xaGuard=Math.max(xaGuard,Date.now()+300);if(d.opt!==undefined&&xaFastTap(b))return true;return xaExtraClick0(b)}const a=d.xa;
   if(a==="new10"){xaNew10();return true}
+  if(a==="aud10"){xaAudio10();return true}
+  if(a==="audset"){openAudio();aud.src="adapt";aud.cont=true;render();return true}
   if(a==="pace"){S.set.pace=d.v;persist();render();return true}
   if(a==="open"){view="xadiag";render();window.scrollTo(0,0);return true}
   if(a==="dx"){xpDxStart();return true}
@@ -18070,7 +18084,57 @@ const xaExtraClick1=extraClick;extraClick=function(b){const d=b.dataset;
 const xaSuggestHtml0=xaSuggestHtml;xaSuggestHtml=function(){let h=xaSuggestHtml0();try{const k=(S.set.xp||{})["rl"+part];if(k!=null&&UNITS[part]&&UNITS[part][k]){const b=`<button class="btn small" data-xa="rlgo">📖 Lesson you marked: ${esc(UNITS[part][k].t)} ›</button>`;h=h?h.replace('</span>','</span>'+b):`<div class="xasg"><span class="small muted">Also worth doing</span>${b}</div>`}}catch(_){}return h};
 
 /* the line under the session title: one readiness figure, the same one as the top card */
-const xaLive0=liveLine;liveLine=function(){try{if(!XPU[part])return xaLive0();const A=xaAll();touchDay();return `Readiness ${A.p==null?"–":Math.round(A.p*100)+"%"} · first tries only · ${S.day.n} answers today · ${xaNewToday()} new questions`}catch(_){return xaLive0()}};
+const xaLive0=liveLine;liveLine=function(){try{if(!XPU[part])return xaLive0();const A=xaAll();touchDay();return `Readiness ${A.p==null?"–":Math.round(A.p*100)+"%"} · ${S.day.n} answers today · ${xaNewToday()} new`}catch(_){return xaLive0()}};
+
+/* ---------- Version 171: one calculation of the path per redraw ----------
+   The main page asked for the path state and the next step several times while drawing, and each one walked the whole
+   question bank. On a phone that made the page slow to appear after every session. Now each redraw works them out once.
+   The saved copy is dropped at the start of every redraw and whenever progress is saved, so it can never be stale. */
+const XSC={st:null,nx:null,k:null};
+function xaDrop(){XSC.st=null;XSC.nx=null;XAC.k=null}
+const xaStateTop=xpState;xpState=function(){if(XSC.st&&XSC.k===part)return XSC.st;const st=xaStateTop();XSC.st=st;XSC.k=part;return st};
+const xaNextTop=xpNext;xpNext=function(){if(XSC.nx&&XSC.k===part)return XSC.nx;const a=xaNextTop();if(XSC.k===part)XSC.nx=a;return a};
+const xaPersist1=persist;persist=function(){xaDrop();return xaPersist1.apply(this,arguments)};
+/* During a session in EA Parts 1 to 3 the big app header is hidden and the session header is one compact block, so the
+   question and its four choices fit on a phone screen without scrolling. Before, the question began two-thirds of the way down. */
+const xaRender0=render;render=function(){xaDrop();const r=xaRender0.apply(this,arguments);try{const on=view==="session"&&!!sess&&!!XPU[part];document.body.classList.toggle("xafocus",on);document.body.classList.toggle("xafast",on&&xaSpeed()!=="steady"&&sess.mode!=="mock")}catch(_){}return r};
+
+/* Version 171: on Fast and Max, and in every diagnostic or lesson check, the 10-answer checkpoint screen is skipped.
+   It stopped a 24-question diagnostic twice and worked against "push me faster". Steady keeps it. */
+const xaAdvance0=advance;advance=function(){try{const s=sess;if(s&&XPU[part]&&(xaSpeed()!=="steady"||(s.xp&&(s.xp.k==="dx"||s.xp.k==="pc"))||s.dxRun))s.cpAt=s.done}catch(_){}return xaAdvance0.apply(this,arguments)};
+
+/* ===== Audio 10 on top (Version 171) =====
+   One tap starts hands-free listening. It works in 10-minute blocks: at each mark it offers "Stop here" (and plays a chime, or
+   says one line with the phone voice) and carries on by itself if nothing is tapped, so it suits driving. "Change" opens the
+   options (block length, what to hear, voice, speed, stop instead of keep going).
+   Built so that listening through to the end covers every fact of the part once:
+   (1) the facts behind the exam questions missed last (the matching "Explain it" uses), at most 8;
+   (2) facts marked missed or hard, at most 8;
+   (3) every fact never heard, highest-gain topic first, in teaching order inside a topic;
+   (4) then the facts already heard, least-heard first.
+   What was heard is saved per fact, so the next listen starts with what has not been heard yet. Concentrated: question, a short
+   pause, answer; the phone voice no longer says each answer a second time in this mode. */
+function xaAudOrder(scope){const rec=!!(aud&&aud.rec),ok=f=>!rec||REC[f.id]!==undefined,t=today();S.au=S.au||{};
+  const pool=BANK.filter(i=>i.t==="f"&&(scope==="all"||i.p==part)&&ok(i)),hc=f=>(S.au[f.id]||[0,0])[0],ht=f=>(S.au[f.id]||[0,0])[1]===t?1:0;let link=[];
+  try{const miss=BANK.filter(i=>i.p==part&&i.t!=="f"&&i.opts&&S.it[i.id]&&S.it[i.id][4]===0).sort((a,b)=>(S.it[b.id][7]||0)-(S.it[a.id][7]||0)).slice(0,12);
+    for(const m of miss)for(const f of xaFactsFor(m))if(ok(f)&&!link.includes(f))link.push(f)}catch(_){}
+  link=link.slice(0,8);const gain={};try{xaAll().D.forEach(x=>{gain[x.d]=x.gain==null?x.w/100:x.gain})}catch(_){}
+  const g=f=>f.p==part?(gain[f.d]||0):-1,used=new Set(link);
+  const hard=pool.filter(f=>{const r=S.it[f.id];return !used.has(f)&&r&&(r[4]===0||((r[6]||0)>=2&&r[0]<MASTER_BOX))}).sort((a,b)=>ht(a)-ht(b)||hc(a)-hc(b)).slice(0,8);hard.forEach(f=>used.add(f));
+  const rest=pool.filter(f=>!used.has(f)),ord=(a,b)=>g(b)-g(a)||a.p-b.p||a.d-b.d||ORDER[a.id]-ORDER[b.id];
+  return link.concat(hard,rest.filter(f=>!hc(f)).sort(ord),rest.filter(f=>hc(f)).sort((a,b)=>ht(a)-ht(b)||hc(a)-hc(b)||ord(a,b)))}
+function xaAudQueue(scope,n){const rec=!!(aud&&aud.rec),ok=f=>!rec||REC[f.id]!==undefined;let link=[];
+  try{const miss=BANK.filter(i=>i.p==part&&i.t!=="f"&&i.opts&&S.it[i.id]&&S.it[i.id][4]===0).sort((a,b)=>(S.it[b.id][7]||0)-(S.it[a.id][7]||0)).slice(0,12);
+    for(const m of miss)for(const f of xaFactsFor(m))if(ok(f)&&!link.includes(f))link.push(f)}catch(_){}
+  link=link.slice(0,8);const weak={};try{xaAll().D.filter(x=>x.gain!=null).sort((a,b)=>b.gain-a.gain).slice(0,2).forEach(x=>{weak[x.d]=1})}catch(_){}
+  const rest=audQueue0(scope,"smart",n).filter(f=>!link.includes(f)),isW=f=>f.p==part&&weak[f.d],W=rest.filter(isW),R=rest.filter(f=>!isW(f)),out=link.slice();
+  while(W.length||R.length){if(W.length)out.push(W.shift());if(W.length)out.push(W.shift());if(R.length)out.push(R.shift())}
+  return out.slice(0,n)}
+const audQueue0=audQueue;audQueue=function(scope,src,n){const all=!!(aud&&aud.cont);if(all)n=99999;
+  if(src==="adapt")return XPU[part]?(all?xaAudOrder(scope):xaAudQueue(scope,n)):audQueue0(scope,"smart",n);return audQueue0(scope,src,n)};
+function xaAudio10(){aud={state:"setup",mins:10,src:"adapt",scope:"part",gap:1,rate:1,cont:true,rec:recOn()&&recHas(part)&&S.set.recv!==false};view="audio";window.scrollTo(0,0);
+  if(aud.rec){startRec();return}if(!canSpeak()){render();return}unlockSpeech();startAudio()}
+function xaAudSub(){try{const c=audCover(part);return c.h?`heard ${c.h} of ${c.n}`:`all ${c.n} facts`}catch(_){return"hands-free"}}
 
 /* ================= CAA on the job =================
    The owner has passed the CAA training, so this section is no longer exam preparation. It is now:
@@ -20280,7 +20344,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 170 · Nov 22";
+const BUILD="Version 171 · Nov 22";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -20299,8 +20363,11 @@ if(HOSTED&&"serviceWorker" in navigator&&document.querySelector('link[rel="manif
   checkUpdate();document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")checkUpdate()})}
 // The installed app checks for a newer version whenever it has a connection, and offers it with one tap.
 let updateReady="",updating=false;
-function checkUpdate(){if(!navigator.onLine)return;fetch("./version.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v!==BUILD&&j.v!==updateReady){updateReady=j.v;if(!sess&&(view==="home"||view==="kids"&&KV.scr==="home"))render()}}).catch(()=>{})}
-function applyUpdate(){updating=true;render();const c=navigator.serviceWorker.controller;if(c)c.postMessage("refresh");setTimeout(()=>location.reload(),6000)}
+/* After "Update now", the web host can go on serving the older file for a few minutes. Without this the banner came straight
+   back and looked like a loop. The version just tried is held back for 10 minutes and a plain note is shown instead. */
+let updHold="";try{const t=JSON.parse(sessionStorage.getItem("updTry")||"null");if(t&&t.v&&t.v!==BUILD&&Date.now()-t.t<6e5)updHold=t.v}catch(_){}
+function checkUpdate(){if(!navigator.onLine)return;fetch("./version.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v===updHold)return;if(j&&j.v&&j.v!==BUILD&&j.v!==updateReady){updateReady=j.v;if(!sess&&(view==="home"||view==="kids"&&KV.scr==="home"))render()}}).catch(()=>{})}
+function applyUpdate(){try{sessionStorage.setItem("updTry",JSON.stringify({v:updateReady,t:Date.now()}))}catch(_){}updating=true;render();const c=navigator.serviceWorker.controller;if(c)c.postMessage("refresh");setTimeout(()=>location.reload(),6000)}
 const WHY={nohost:"this page is not opened inside Claude",nodb:"account storage is not offered in this view",nouser:"your account could not be identified in this view",noid:"your account could not be identified in this view",timeout:"your account did not answer in time",not_confirmed:"a save could not be read back",quota_exceeded:"account storage is full",unavailable:"the account service is busy"};
 const whyText=()=>WHY[syncWhy]||(syncWhy?"error: "+syncWhy:"");
 const devName=()=>/iPhone/.test(navigator.userAgent)?"iPhone":/iPad/.test(navigator.userAgent)?"iPad":/Android/.test(navigator.userAgent)?"Android":"computer";
@@ -20495,7 +20562,7 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
       ${statusLine}
     </div></section>`;
   const tnote=testNote?`<section class="section"><div class="ledger" style="border-left:4px solid ${/^Working/.test(testNote)?"var(--good)":/^Testing/.test(testNote)?"var(--line)":"var(--bad)"}"><div class="small"><b>Account saving test.</b> ${esc(testNote)}</div></div></section>`:"";
-  const upd=updateReady?`<section class="section"><div class="ledger" style="border:2px solid var(--accent)"><div><b>A newer version is ready: ${esc(updateReady)}.</b></div><div class="small">You have ${esc(BUILD)}. Your progress stays as it is.</div><div class="row"><button class="btn pri" id="updnow" ${updating?"disabled":""}>${updating?"Updating…":"Update now"}</button></div></div></section>`:"";
+  const upd=updateReady?`<section class="section"><div class="ledger" style="border:2px solid var(--accent)"><div><b>A newer version is ready: ${esc(updateReady)}.</b></div><div class="small">You have ${esc(BUILD)}. Your progress stays as it is.</div><div class="row"><button class="btn pri" id="updnow" ${updating?"disabled":""}>${updating?"Updating…":"Update now"}</button></div></div></section>`:updHold?`<section class="section"><div class="small muted">${esc(updHold)} is published, but the server has not handed it to this phone yet. It will be offered again in a few minutes. You have ${esc(BUILD)}.</div></section>`:"";
   const inst=/Install this app/.test(warn);$("#view").innerHTML=upd+tnote+(inst?"":warn)+(typeof doNextHtml==="function"?doNextHtml():"")+(typeof xpHtml==="function"?xpHtml():"")+dash+(typeof xpTools==="function"?xpTools(quickHtml()+drillsHtml()+casesHtml()):quickHtml()+drillsHtml()+casesHtml())+introHtml(P.x||"ea")+(inst?warn:"")+`
   <details class="more" id="moremodes" ${OPEN.moremodes?"open":""}><summary><b>All study modes</b><span>Slides, flashcards, audio, practice questions, mock exams, settings</span></summary>
   <section class="section">
@@ -21047,6 +21114,17 @@ let recEl=null,recSaved=null,recDl=null,recSil=null;
 function recSilence(){if(recSil)return recSil;const n=1200,b=new Uint8Array(44+n),v=new DataView(b.buffer),w=(o,t)=>{for(let i=0;i<t.length;i++)b[o+i]=t.charCodeAt(i)};
   w(0,"RIFF");v.setUint32(4,36+n,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,8000,true);v.setUint32(28,8000,true);v.setUint16(32,1,true);v.setUint16(34,8,true);w(36,"data");v.setUint32(40,n,true);b.fill(128,44);
   return recSil=URL.createObjectURL(new Blob([b],{type:"audio/wav"}))}
+/* Keep-going audio (Version 171): when a time block ends the review does not stop. It marks the block, offers "Stop here" on the
+   screen, plays a short chime (recorded voice) or says one line (phone voice), and carries on until the listener stops it or every
+   fact has been heard. */
+let recChm=null;
+function recChime(){if(recChm)return recChm;const sr=8000,n=5600,b=new Uint8Array(44+n),v=new DataView(b.buffer),w=(o,t)=>{for(let i=0;i<t.length;i++)b[o+i]=t.charCodeAt(i)};
+  w(0,"RIFF");v.setUint32(4,36+n,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,sr,true);v.setUint32(28,sr,true);v.setUint16(32,1,true);v.setUint16(34,8,true);w(36,"data");v.setUint32(40,n,true);
+  for(let i=0;i<n;i++){const t=i/sr,f=t<0.3?660:880,k=t<0.3?t:t-0.3,env=Math.min(1,k*60)*Math.exp(-k*7);b[44+i]=128+Math.round(70*env*Math.sin(2*Math.PI*f*t))}
+  return recChm=URL.createObjectURL(new Blob([b],{type:"audio/wav"}))}
+function audMark(a){if(!a.cont)return false;const blk=a.block||10;a.end=Date.now()+blk*60000;a.mins+=blk;a.marks=(a.marks||0)+1;a.offer=Date.now();a.cue=true;return true}
+function audCover(p){S.au=S.au||{};const l=BANK.filter(i=>i.t==="f"&&i.p==p),h=l.filter(i=>(S.au[i.id]||[0])[0]>0).length;return{n:l.length,h,left:l.length-h}}
+function audLeftTxt(a){const c=audCover(part),sec=c.left*(a&&a.rec?13.3:15)/((a&&a.rate)||1),m=Math.round(sec/60);return c.left?`Heard ${c.h} of ${c.n} ${pl(part)} facts · about ${m>=60?Math.floor(m/60)+" h "+(m%60)+" min":m+" min"} of listening left to hear them all`:`You have heard all ${c.n} ${pl(part)} facts at least once`}
 async function recBlobUrl(id){try{const c=await caches.open(REC_CACHE);let r=await c.match(recUrl(id));   // the copy saved on this device first, then the network
     if(!r){r=await fetch(recUrl(id));if(!r.ok)return "";c.put(recUrl(id),r.clone()).catch(()=>{})}
     return URL.createObjectURL(new Blob([await r.arrayBuffer()],{type:"audio/mpeg"}))}catch(e){return ""}}
@@ -21054,7 +21132,7 @@ function recPrep(a,k){const it=a.queue[k];if(!it||a.urls[it.id]!==undefined)retu
 function startRec(){const a=aud;a.rec=true;a.queue=audQueue(a.scope,a.src,a.mins*6+20);
   if(!a.queue.length){a.msg="Nothing recorded for this choice yet. Pick Smart mix or Random.";render();return}
   const el=recEl||(recEl=new Audio());el.preload="auto";
-  Object.assign(a,{state:"play",pos:-1,cur:null,heard:0,marked:0,start:Date.now(),end:Date.now()+a.mins*60000,paused:false,stop:false,phase:"q",msg:"",urls:{},began:false,miss:0});
+  Object.assign(a,{state:"play",pos:-1,cur:null,heard:0,marked:0,start:Date.now(),end:Date.now()+a.mins*60000,paused:false,stop:false,phase:"q",msg:"",urls:{},began:false,miss:0,block:a.mins,marks:0,offer:0});
   el.onended=()=>{if(aud!==a||a.stop||a.state!=="play")return;if(!a.began)recBegin(a);else recNext(a,true)};
   el.onerror=()=>{if(aud!==a||a.stop||a.state!=="play"||!a.began)return;a.miss++;recNext(a,false)};
   el.ontimeupdate=()=>{if(aud!==a||!a.cur||a.phase!=="q")return;if(el.currentTime>=(REC[a.cur.id]?REC[a.cur.id][0]:0)){a.phase="a";renderAudio()}};
@@ -21074,7 +21152,10 @@ function recPlayAt(a,k){const el=recEl,it=a.queue[k];if(!it){recFinish(a);return
 function recNext(a,count){const it=a.cur;
   if(count&&it){a.miss=0;a.heard++;S.au=S.au||{};const u=S.au[it.id]||[0,0];S.au[it.id]=[u[0]+1,today(),(a.knew||a.didnt)?0:1];if(!(a.ids=a.ids||[]).includes(it.id))a.ids.push(it.id);persist()}
   if(a.paused){a.paused=false;a.needTap=false;a.end+=Date.now()-(a.pauseAt||Date.now())}
-  const k=a.pos+1;if(k>=a.queue.length||Date.now()>=a.end){recFinish(a);return}recPlayAt(a,k)}
+  const k=a.pos+1;if(k>=a.queue.length){recFinish(a);return}
+  if(Date.now()>=a.end){if(!audMark(a)){recFinish(a);return}
+    a.cue=false;a.cur=null;try{const el=recEl;el.src=recChime();el.playbackRate=1;const p=el.play();if(p&&p.catch)p.catch(()=>{if(aud===a&&!a.stop)recPlayAt(a,k)});renderAudio();return}catch(e){}}
+  recPlayAt(a,k)}
 function recPause(a,on){if(aud!==a||a.state!=="play")return;if(on===a.paused&&!a.needTap)return;
   if(on){a.paused=true;a.pauseAt=Date.now();try{recEl.pause()}catch(e){}}
   else{a.paused=false;a.needTap=false;a.end+=Date.now()-(a.pauseAt||Date.now());const p=recEl.play();if(p&&p.catch)p.catch(()=>{})}
@@ -21093,13 +21174,14 @@ async function recDownload(){if(recDl&&recDl.on)return;const ids=Object.keys(REC
   recDl.on=false;await recCount()}
 function openAudio(){aud={state:"setup",mins:10,src:"smart",scope:"part",gap:1,rate:1,rec:recOn()&&recHas(part)&&S.set.recv!==false};view="audio";render();window.scrollTo(0,0);if(recOn()&&recSaved===null)recCount()}
 async function startAudio(){const a=aud;a.queue=audQueue(a.scope,a.src,a.mins*8);if(!a.queue.length){a.msg="Nothing to review for this choice yet. Pick Smart mix or Random.";render();return}
-  Object.assign(a,{state:"play",pos:0,heard:0,marked:0,start:Date.now(),end:Date.now()+a.mins*60000,paused:false,stop:false,phase:"q",msg:""});
+  Object.assign(a,{state:"play",pos:0,heard:0,marked:0,start:Date.now(),end:Date.now()+a.mins*60000,paused:false,stop:false,phase:"q",msg:"",block:a.mins,marks:0,offer:0});
   try{navigator.wakeLock.request("screen").then(l=>{a.lock=l}).catch(()=>{})}catch(e){}
   render();
-  while(aud===a&&!a.stop&&a.pos<a.queue.length&&Date.now()<a.end){const it=a.queue[a.pos];a.skip=false;a.redo=false;a.cur=it;a.didnt=false;a.knew=false;
+  while(aud===a&&!a.stop&&a.pos<a.queue.length&&(Date.now()<a.end||audMark(a))){const it=a.queue[a.pos];a.skip=false;a.redo=false;a.cur=it;a.didnt=false;a.knew=false;
+    if(a.cue){a.cue=false;renderAudio();try{await say((a.block||10)+" minutes done. Still playing. Tap stop when you want to finish.")}catch(e){}if(aud!==a||a.stop)break;a.skip=false;a.redo=false}
     try{a.phase="q";renderAudio();await say(audQ(it));await gate(a,a.gap*1000,"think");
       a.phase="a";renderAudio();await say(audA(it));await gate(a,500,"a");
-      a.phase="r";renderAudio();await say(audR(it,a.pos));await gate(a,700,"r")}
+      if(!a.cont){a.phase="r";renderAudio();await say(audR(it,a.pos));await gate(a,700,"r")}}
     catch(e){if(aud!==a||a.stop)break;
       if(a.redo||(e&&e.redo)){while(aud===a&&!a.stop&&a.paused){await wait(150);a.end+=150}a.redo=false;continue}       // paused or interrupted: say this fact again
       if(!a.skip&&e&&e.nostart){a.fails=(a.fails||0)+1;if(a.fails>3){a.state="fail";render();return}
@@ -21119,29 +21201,37 @@ function renderAudio(){if(view!=="audio"||!aud)return;const a=aud,chip=(k,v,cur,
         <div style="margin-top:6px">${recDl&&recDl.on?`<b id="recdl">Saving audio… ${recDl.done} of ${recDl.total}</b>`:recSaved!==null&&recSaved>=Object.keys(REC).length?`<b style="color:var(--good)">All audio is saved on this device. It works offline.</b>`:`<span id="recdl">${recSaved===null?"":recSaved+" of "+Object.keys(REC).length+" audio files are saved on this device. "}</span><button class="btn small" id="recget">Save all audio for offline use (${REC_MB} MB)</button>${recDl&&recDl.fail?`<div class="small" style="color:var(--warn)">${recDl.fail} files could not be saved. Check the internet and tap again.</div>`:""}`}</div></div>`:""}`:""}
     ${a.rec||canSpeak()?"":`<div class="small" style="color:var(--bad)">This browser has no speech voice. Try Chrome, Edge or Safari.</div>`}
     <div><div class="small muted">Length</div><div class="seg">${(a.rec?[10,20,30,60]:[5,10,15]).map(m=>chip(m,m+" min",a.mins,"data-amins")).join("")}</div></div>
-    <div><div class="small muted">What to review</div><div class="seg">${chip("smart","Smart mix (misses, hardest, due, then the rest)",a.src,"data-asrc")}${chip("missed","Only missed and hardest",a.src,"data-asrc")}${chip("random","Random",a.src,"data-asrc")}</div></div>
+    <div><div class="small muted">What to review</div><div class="seg">${typeof XPU!=="undefined"&&XPU[part]?chip("adapt","Adaptive (facts behind your misses first, weak topics next)",a.src,"data-asrc"):""}${chip("smart","Smart mix (misses, hardest, due, then the rest)",a.src,"data-asrc")}${chip("missed","Only missed and hardest",a.src,"data-asrc")}${chip("random","Random",a.src,"data-asrc")}</div></div>
     <div><div class="small muted">Scope</div><div class="seg">${chip("part",pl(part)+" only",a.scope,"data-ascope")}${chip("all","All three parts",a.scope,"data-ascope")}</div></div>
     ${a.rec?"":`<div><div class="small muted">Pause before the answer</div><div class="seg">${[1,3,5].map(g=>chip(g,g+" sec",a.gap,"data-agap")).join("")}</div></div>
     ${voiceHtml()}`}
     <div><div class="small muted">Voice speed</div><div class="seg">${[[0.85,"Slower"],[1,"Normal"],[1.2,"Faster"]].map(([r,l])=>chip(r,l,a.rate,"data-arate")).join("")}</div></div>
     ${a.msg?`<div class="small" style="color:var(--warn)">${esc(a.msg)}</div>`:""}
+    <div><div class="small muted">When the ${a.mins} minutes are up</div><div class="seg">${chip("1","Keep going (offers Stop, carries on if you don't tap)",a.cont?"1":"0","data-acont")}${chip("0","Stop",a.cont?"1":"0","data-acont")}</div></div>
+    ${a.cont?`<div class="small muted">${audLeftTxt(a)}.</div>`:""}
     <button class="btn pri" id="audstart" ${a.rec||canSpeak()?"":"disabled"}>Start ${a.mins}-minute review</button>
     <div class="small muted">${a.rec?"Start it, then lock the phone or open another app. Turn your volume up and silent mode off.":"Start it before you drive and don't touch the screen while moving. Turn your volume up; the screen stays on where the browser allows."}</div></div></section>`;return}
   if(a.state==="recfail"){$("#view").innerHTML=`<section class="section"><div class="card"><h2>The audio files could not be loaded</h2><div>There is no internet, and these facts are not saved on this device yet. When you are online, open Audio review and tap "Save all audio for offline use".</div><button class="btn pri" id="audback">Back</button></div></section>`;return}
   if(a.state==="fail"){$("#view").innerHTML=`<section class="section"><div class="card"><h2>Audio couldn't start here</h2><div>This device did not speak after several tries. Check the volume and silent switch, close other apps that are playing sound, then try again. On iPhone, open the app from its home screen icon or in Safari.</div><button class="btn pri" id="audback">Back</button></div></section>`;return}
   if(a.state==="done"){const m=Math.max(1,Math.round((Date.now()-a.start)/60000));$("#view").innerHTML=`<section class="section"><div class="ledger"><h2>Audio review complete</h2><div class="row"><span class="big">${a.heard}</span><span class="muted">facts reviewed in about ${m} min</span></div>
+    ${a.cont?`<div class="small"><b>${audLeftTxt(a)}.</b> The next listen starts with the ones you have not heard.</div>`:""}
     <div class="small">${a.known||0} marked "knew it" · ${a.marked} marked "didn't know" (added to your missed items) · ${(a.ids||[]).filter(id=>S.au[id]&&S.au[id][2]).length} not rated.</div>
     ${(a.ids||[]).some(id=>S.au[id]&&S.au[id][2])?`<button class="btn pri" id="audquiz">Quiz me on what I just heard</button><div class="small muted">A quick quiz on the facts you didn't rate. Your answers update mastery, weak spots and recommendations.</div>`:""}
     <div class="row"><button class="btn pri" id="audagain">Another session</button><button class="btn" id="audback">Back to ${pl(part)}</button></div></div></section>`;return}
   const it=a.cur||a.queue[Math.max(0,a.pos)],left=Math.max(0,Math.round((a.end-Date.now())/1000)),ph={q:"Question",think:"Think of the answer…",a:"Answer",r:"Once more"}[a.phase];
-  $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Audio review</h2><div class="small muted mono">${a.heard} reviewed · ${fmt(left)} left${a.paused?" · paused":""}</div></div><button class="btn ghost small" id="audend">End</button></div>
-   <div class="progress"><i style="width:${Math.min(100,Math.round((1-left/(a.mins*60))*100))}%"></i></div>
+  $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Audio review</h2><div class="small muted mono">${a.heard} ${a.cont?"heard":"reviewed"} · ${fmt(left)} ${a.cont?"to the next "+(a.block||10)+"-min mark":"left"}${a.paused?" · paused":""}</div></div><button class="btn ghost small" id="audend">${a.cont?"Stop":"End"}</button></div>
+   <div class="progress"><i style="width:${Math.min(100,Math.round((1-left/((a.cont?(a.block||10):a.mins)*60))*100))}%"></i></div>
+   ${a.cont&&a.offer&&Date.now()-a.offer<60000?`<div class="card" style="border:2px solid var(--good)"><b>✓ ${a.marks*(a.block||10)} minutes done</b><div class="small">Still playing. It carries on by itself.</div><button class="btn pri" id="audend">Stop here</button></div>`:""}
    ${a.rec&&a.pos<0?`<div class="notice">Loading the audio…</div>`:""}${a.needTap?`<div class="card" style="border:2px solid var(--warn)"><b>The voice did not start.</b><div class="small">Phones only allow speech after a tap. Check that the volume is up and silent mode is off, then tap the button.</div><button class="btn pri" id="audtap">Turn the voice on</button></div>`:""}
    <div class="card"><div class="meta"><span>${pl(it.p)} · ${esc(PARTS[it.p].doms[it.d][0])}</span><span>${ph}</span></div>
    <div class="front">${esc(it.f)}</div>${a.phase==="a"||a.phase==="r"?`<div class="back">${esc(it.b)}</div>`:""}
    <div class="rate" style="grid-template-columns:repeat(2,1fr)"><button id="audmiss" class="r0" ${a.didnt||a.knew?"disabled":""}>${a.didnt?"Added to redrill":"Didn't know it"}</button><button id="audknew" class="r3" ${a.didnt||a.knew?"disabled":""}>${a.knew?"Counted":"Knew it"}</button><button id="audpause">${a.paused?"Resume":"Pause"}</button><button id="audskip">Skip</button></div>
+   ${a.cont?`<div class="small muted">${audLeftTxt(a)}. Keeps going after each ${a.block||10} minutes until you tap Stop.</div><div class="row"><button class="btn ghost small" id="audopts">Change length, speed or voice</button></div>`:`<div class="row"><button class="btn ghost small" id="audmore">+5 min</button><span class="small muted">${a.mins} minutes in all</span></div>`}
    <div class="small muted">Tap Knew it or Didn't know it when you can. Untapped facts are saved for a short follow-up quiz.${a.rec?" You can lock the phone or switch apps; the review keeps playing.":""}</div></div></section>`}
 function audioClick(b){const a=aud;if(!a)return false;
+  if(b.id==="audmore"){if(a.state==="play"){a.end+=300000;a.mins+=5;try{audQueue(a.scope,a.src,a.queue.length+40).forEach(f=>{if(!a.queue.includes(f))a.queue.push(f)})}catch(e){}renderAudio()}return true}
+  if(b.id==="audopts"){a.stop=true;if(a.rec)recFinish(a);else hush();if(a.heard&&!a.rec){S.hist.push({t:Date.now(),p:part,m:"audio",n:a.heard,c:a.heard-a.marked});persist()}openAudio();aud.src="adapt";aud.cont=true;render();return true}
+  if(b.dataset.acont){a.cont=b.dataset.acont==="1";render();return true}
   if(b.dataset.amins){a.mins=+b.dataset.amins;render();return true}if(b.dataset.asrc){a.src=b.dataset.asrc;render();return true}if(b.dataset.ascope){a.scope=b.dataset.ascope;render();return true}
   if(b.dataset.agap){a.gap=+b.dataset.agap;render();return true}if(b.dataset.arate){a.rate=+b.dataset.arate;render();return true}
   if(b.dataset.acv){S.set.cvoice=b.dataset.acv;persist();render();return true}
