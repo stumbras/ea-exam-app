@@ -275,7 +275,7 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 204 = the gap work: 817 new exam-style questions in twenty-one files (Part 1 408, Part 2 199, Part 3 210; `bank_p3_gap5.js` added in Version 204 with 31 stories), with `bank_p2_gap4.js`, `bank_p3_gap4.js` (Version 201, 43 Part 3 stories), `bank_p1_gap13.js` (Version 202, 33 worked calculations on deductions and credits) and `bank_p2_gap5.js` (Version 203, 32 Part 2 stories on entities, payroll, fringe benefits, exempt organizations)
+Versions 184 to 205 = the gap work: 847 new exam-style questions in twenty-two files (Part 1 438, Part 2 199, Part 3 210; `bank_p1_gap14.js` added in Version 205 with 30 stories on income, assets and advising; `bank_p3_gap5.js` added in Version 204 with 31 stories), with `bank_p2_gap4.js`, `bank_p3_gap4.js` (Version 201, 43 Part 3 stories), `bank_p1_gap13.js` (Version 202, 33 worked calculations on deductions and credits) and `bank_p2_gap5.js` (Version 203, 32 Part 2 stories on entities, payroll, fringe benefits, exempt organizations)
 (`bank_p1_gap4.js` to `gap12`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. Second-reader review so far: `bank_p1_gap4.js` and `gap5.js` (Version 198, 119
 questions, no errors), `gap6.js` and `gap7.js` (Version 200, 90 questions, two fixes) and `gap8.js` and `gap9.js`
@@ -283,8 +283,8 @@ questions, no errors), `gap6.js` and `gap7.js` (Version 200, 90 questions, two f
 Saturday deposit is possible). `gap10.js` and `gap11.js` were reviewed in Version 202 (60 questions, no errors); `gap12.js` and `bank_p2_gap1.js`
 in Version 203 (95 questions, no errors; one question in the new `gap13.js` repeated the facts of a `gap12.js`
 question and was given different numbers the same hour). `bank_p2_gap2.js` and `gap3.js` were reviewed in Version 204 (71 questions, no errors; one explanation, the SIMPLE
-IRA limit, now also gives the higher limit for employers with 25 or fewer employees). Still to review the same
-way: `gap13`, `bank_p2_gap4`, `gap5` and the five Part 3 files. Confirmed for Version 203: late Form 1065 and 1120-S penalty $255 per owner
+IRA limit, now also gives the higher limit for employers with 25 or fewer employees). `bank_p2_gap4.js` and `bank_p3_gap1.js` were reviewed in Version 205 (no errors in the sums or rules; one fix: the Forms W-2 and 1099-NEC answer said "January 31, 2026", a Saturday, so the answer now says January 31 and the explanation gives Monday, February 2, 2026; the stem is unchanged, so progress stays). Still to review the same
+way: `bank_p1_gap13`, `bank_p2_gap5` and `bank_p3_gap2` to `gap5`. Confirmed for Version 205 on irs.gov: forgiven main-home mortgage debt is excluded for discharges before January 1, 2026, up to $750,000 ($375,000 married filing separately), on Form 982; student loan discharges after 2020 and before 2026 are excluded; HSA limits for 2025 are $4,300 self-only and $8,550 family, with the last-month rule and its testing period; June 15, 2025 was a Sunday, so the second estimated payment was due June 16; 2021 returns were due April 18, 2022. Confirmed for Version 203: late Form 1065 and 1120-S penalty $255 per owner
 per month for returns due in 2026 ($245 for returns due in 2025); the 2025 Form 1065 was due March 16, 2026.
 Confirmed for Version 204: information return penalties for returns due in 2026 are $60, $130, $340 and $680;
 first B notice within 15 business days and backup withholding no later than 30 business days after the IRS
@@ -337,6 +337,21 @@ step before telling anyone to switch address (the app already has a backup file 
 make it one tap from the old address). With Cloudflare serving the private repository, GitHub Pro is not needed;
 after the Cloudflare copy works and progress is moved, the repository can be made private on the free plan
 (GitHub Pages then stops, so do it only when the owner says so).
+t700 has about 81 checks when complete and needs about 100 s; a count of 30 or 56 is a partial read.
+CLOUDFLARE UPDATE 05:45 Manila: the owner's dashboard opened the newer WORKERS flow (project name ea-exam-app,
+deploy command `npx wrangler deploy`), not Pages. Made it work instead of sending him back: `pwa/wrangler.jsonc`
+(name ea-exam-app, assets directory "./", no server code) and `pwa/.assetsignore` (keeps src, HISTORY.md,
+README.md, .git and the config out of the site) are now in the repository (commit 0f2b39f on main). The Workers
+build deploys from the default branch `main`; the `site` branch is then not needed by Cloudflare but is kept.
+The Worker name in wrangler.jsonc must stay equal to the project name. He was told to switch OFF "Enable Preview
+builds" (each ship pushes three branches). Address will be ea-exam-app.<his-subdomain>.workers.dev. A Workers
+custom domain needs the domain's DNS on Cloudflare: study.solvinglifewith.com works; study.solvinglifellc.com
+would need that domain's DNS moved from Wix, so use solvinglifewith.com for the app and link to it from Wix.
+OWNER QUESTION 05:45 (why not GitHub Pro for 3 or 4 apps): answered that Pro adds nothing per app. Each app = one free private
+repository + one free Cloudflare project + one subdomain of solvinglifewith.com (kids., poker., study.). Money later, in order:
+Google Play $25 once, Cloudflare paid plan about $5 a month only when live game traffic needs it, Apple $99 a year. Offered: a free
+GitHub organization named for the business, to do after the first app is live on Cloudflare. At 06:00 Manila workers_list still
+showed no Worker, so he had not tapped Deploy yet.
 Test note: t700 has a timing check (first draw under 0.8 s at phone speed) that fails when two test batches overlap; never start a second batch while t700 from the first is still running, and run t700 alone if in doubt.
 Games apps: the owner confirmed on November 23, 2026: "no real money gambling in any just play for fun learning apps". Play chips and learning only; never add deposits, cash-out or prizes with money value. No written plan for
 the games apps was found in this project's chats; ask the owner to paste it if it exists elsewhere. Re-checked against irs.gov on
