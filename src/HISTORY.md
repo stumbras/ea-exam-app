@@ -275,12 +275,16 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 200 = the gap work: 678 new exam-style questions in seventeen files, with `bank_p2_gap4.js`
+Versions 184 to 201 = the gap work: 721 new exam-style questions in eighteen files (Part 1 375, Part 2 167, Part 3 179), with `bank_p2_gap4.js` and `bank_p3_gap4.js` (Version 201, 43 Part 3 stories)
 (`bank_p1_gap4.js` to `gap12`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. Second-reader review so far: `bank_p1_gap4.js` and `gap5.js` (Version 198, 119
-questions, no errors) and `gap6.js` and `gap7.js` (Version 200, 90 questions, two fixes). Still to review the
-same way: `gap8` to `gap12`, the three Part 2 files and the
-three Part 3 files. Re-checked against irs.gov on
+questions, no errors), `gap6.js` and `gap7.js` (Version 200, 90 questions, two fixes) and `gap8.js` and `gap9.js`
+(Version 201, 76 questions, no errors; one stem has a deposit on Saturday January 3, 2026, left as it is because a
+Saturday deposit is possible). Still to review the same way: `gap10` to `gap12`, the four Part 2 files and the
+four Part 3 files. Confirmed on irs.gov on November 23, 2026 (Version 201 round): 0% capital gain bracket $48,350
+single / $96,700 joint / $64,750 head of household, ABLE limit $19,000, 24% gambling withholding on winnings over
+$5,000 less the wager, Form 8938 thresholds abroad ($200,000 last day or $300,000 any time; $400,000 or $600,000
+joint); from secondary sources citing Rev. Proc. 2024-40: AMT exemption $88,100 and $137,000, QCD $108,000. Re-checked against irs.gov on
 November 23, 2026, the items the 2025 law changed: adoption credit ($17,280, up to $5,000 refundable, rest carried
 5 years), clean vehicle credit (binding contract and a payment by September 30, 2025), residential clean energy
 credit (must be installed by December 31, 2025, paying early is not enough), overtime deduction ($12,500 or $25,000
@@ -367,6 +371,11 @@ Check against irs.gov before changing or adding; the exam window sets which year
 
 ## 12. Product plan (from the super rule)
 
+Owner's own view of the market (November 23, 2026): "be realistic such app will not be superseller but of
+course we can add more exams to make sales bigger". So: keep fixed costs at or near zero, build nothing that
+needs upkeep or a monthly bill until sales justify it, and treat each added exam (Series 65, EDPNA, later
+others) as a new edition from the same code. Prefer the simplest way to take money over the most complete one.
+
 The owner means to sell this as an exam-prep product: a website with paid access, perhaps Android and Apple apps.
 Recommended path, cheapest first. Nothing here is built yet unless marked done.
 
@@ -418,12 +427,46 @@ Recommended path, cheapest first. Nothing here is built yet unless marked done.
    - The link between them, version 1: the members-only Wix page shows the app link and the member's access key;
      the app asks for the key once. Version 2: a small Wix backend function (Velo `wix-http-functions`) answers
      "does this member hold a paid plan" so the app can check and turn access off when a plan ends. Not built.
+   - **Owner's rule (November 23, 2026): "i already have prepaid that wix plan so use it as much as posible
+     too".** So Wix carries everything except the app's own files: sales page, checkout (Pricing Plans),
+     member accounts and login, emails to buyers, blog/search pages for each exam. No second paid service.
+   - CORRECTION, checked on dev.wix.com the same day (pages updated October–November 2026). Wix now has "Wix
+     Headless" with two paths:
+     (a) Self-managed, "add a frontend to an existing Wix site": the editor-built site stays the public website
+     and another frontend, hosted elsewhere, connects through the Wix JavaScript SDK (`@wix/sdk` with
+     `OAuthStrategy`, `@wix/pricing-plans`, `@wix/members`, `@wix/redirects`). Member login uses the Wix login
+     page (redirect and token exchange; the Wix site must be published). This is the path that uses the
+     prepaid plan: the app sends the buyer to the Wix login, then asks Wix for that member's plan orders and
+     unlocks when one is active. It replaces "version 1 access key" and "version 2 Velo function" above.
+     To confirm when building: the exact call for a member's own orders, and that the result is cached so the
+     app still opens offline (re-check when online, for example every 7 days).
+     (b) Wix-managed headless: Wix itself hosts a static build ("vanilla HTML and JavaScript"), by upload or by
+     the Wix CLI (`preview` and `release`), with CDN and SSL. So the older line "Wix cannot host a standalone
+     HTML app" is no longer true. BUT it is created as a NEW project in the Wix dashboard, separate from the
+     existing site; the docs say a premium plan unlocks custom domains and payments, so it would most likely
+     need a second plan, and the other Wix-hosted choice REPLACES the editor-built site. Not confirmed: file
+     count/size limits for about 3,000 files and 100 MB, and service worker behaviour. Use (b) only if the owner
+     wants one bill and accepts a second plan; otherwise (a) with free hosting.
    If Wix payments or plans turn out too limited, the fallback is a merchant of record:
    Use a merchant of record (for example Lemon Squeezy or Paddle) so sales
    tax and VAT are handled for the business; it issues a license key, the app asks for the key once and checks it
    with the provider's license API. A free part (for example the diagnostic and one topic) sells the rest. A
    web app that holds all content in one file can be copied by a determined buyer; if that matters later, serve
    paid content from a small backend after sign-in (Cloudflare Workers has a free tier).
+   - **The owner's Wix plan (checked November 23, 2026):** Wix Core, prepaid 3 years, bought about November 11,
+     2026, in the Wix account under the business mailbox (site shown as "my-site-3" in Wix emails). Core is the
+     lowest plan that accepts online payments, so Pricing Plans (one-time or recurring) and members-only pages
+     work without an upgrade. A session has no Wix login: the `wix:*` skills need a Wix API key or OAuth, and
+     billing receipts go to the business mailbox. The free business apps that came with the plan must be claimed
+     within 60 days of purchase (about January 10, 2027) and are free for one year only.
+   - **Wix mobile apps (owner sent a screenshot of the Wix Owner app, November 23, 2026).** "Spaces by Wix" is
+     Wix's free members app; the business appears inside it; members can buy and manage plans, get push
+     notifications and chat; tabs can be limited to holders of a pricing plan. Use it as the free buyers' side:
+     a plan-locked tab with the button that opens the study app. NOT confirmed: whether a Spaces tab can open
+     an outside web address directly (check when building). "Get your own mobile app" (Branded App) is a
+     separate paid plan from about $99 a month plus the Apple and Google fees, is removed from the stores when
+     cancelled, and is built from Wix blocks, so it would not contain the study app. Do not buy; the Android
+     route in item 6 costs $25 once.
 6. **Android app: the owner wants it (November 23, 2026: "why not do android app also based on this it is
    easier to sell? not that hard to add"). Agreed; it is the easiest way to take money, because Google Play
    collects payment and handles tax.** Checked the same day on Google's and Chrome's developer pages:
