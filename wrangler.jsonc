@@ -1,0 +1,8 @@
+{
+  // Cloudflare Workers static site: serves the app's files as they are. No server code.
+  "name": "ea-exam-app",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./"
+  }
+}
