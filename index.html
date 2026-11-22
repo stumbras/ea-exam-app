@@ -20543,6 +20543,11 @@ GEX("ctc",1,3,"Child tax credit and credit for other dependents",()=>{const k=PK
   return{q:`A couple filing jointly, with income below the phase-out, has ${k} qualifying ${k>1?"children":"child"} under age 17 and ${o} dependent ${o>1?"children":"child"} age 17 or older. What is the total of their child tax credit and credit for other dependents for 2025?`,a,
     w:[`Child tax credit: ${k} × $2,200 = ${$$(k*2200)}`,`Credit for other dependents: ${o} × $500 = ${$$(o*500)}; total ${$$(a)}`],
     x:[[(k+o)*2200,"A child who is 17 or older gets the $500 credit, not $2,200."],[k*2200,"Add $500 for each other dependent."],[k*2000+o*500,"The child tax credit is $2,200 per child for 2025."]]}});
+GEX("schaint",1,3,"Interest deductible on Schedule A",()=>{const n=PK(GXN),inv=R(4,9)*1000,mg=inv+R(1,4)*1000,mort=R(5,12)*1000,sec=R(2,5)*1000,cc=R(1,3)*1000,home=PK(["houseboat","mobile home","cabin"]),ok=Math.min(mg,inv),ans=ok+mort+sec;
+  return{q:`${n} itemizes for 2025. Her only investment income is ${$$(inv)} of interest and ordinary dividends. She paid ${$$(mg)} of margin interest on a loan used to buy stock, ${$$(mort)} of mortgage interest on her main home, ${$$(sec)} of interest on the loan for a ${home} she uses as a second home, and ${$$(cc)} of credit card interest on personal purchases. How much interest can she deduct on Schedule A?`,a:ans,
+    w:[`Investment interest: ${$$(mg)} of margin interest, limited to net investment income of ${$$(inv)} = ${$$(ok)} (Form 4952). The other ${$$(mg-inv)} carries forward to next year.`,`Add the mortgage interest on both homes (${$$(mort)} + ${$$(sec)}); credit card interest is personal and adds nothing: ${$$(ok)} + ${$$(mort+sec)} = ${$$(ans)}`],
+    n:`a ${home} counts as a second home when it has sleeping, cooking and toilet facilities.`,
+    x:[[mg+mort+sec,"That deducts all of the margin interest. Investment interest is limited to net investment income; the excess carries forward."],[ok+mort,"That leaves out the second home. Mortgage interest on one second home is deductible too."],[ans+cc,"That includes the credit card interest. Personal interest is never deductible."]]}});
 GEX("charity",1,3,"Cash gifts to charity",()=>{const n=PK(GXN),agi=R(5,12)*10000,lim=agi*0.6,gift=lim+R(1,5)*5000;
   return{q:`${n} itemizes. Her AGI is ${$$(agi)} and in 2025 she gave ${$$(gift)} in cash to her church. How much can she deduct this year?`,a:lim,
     w:[`Cash to a public charity is limited to 60% of AGI: 60% × ${$$(agi)} = ${$$(lim)}`,`The other ${$$(gift-lim)} carries forward for up to 5 years`],
@@ -20810,7 +20815,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 177 · Nov 22";
+const BUILD="Version 178 · Nov 23";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
