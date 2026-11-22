@@ -275,13 +275,16 @@ test to make a build pass.
 
 Last shipped: see the version log below. Version 183 = honest readiness for untouched material,
 topic spread in Quick 10, this file and `src/` added to the repository.
-Versions 184 to 202 = the gap work: 754 new exam-style questions in nineteen files (Part 1 408, Part 2 167, Part 3 179), with `bank_p2_gap4.js`, `bank_p3_gap4.js` (Version 201, 43 Part 3 stories) and `bank_p1_gap13.js` (Version 202, 33 worked calculations on deductions and credits)
+Versions 184 to 203 = the gap work: 786 new exam-style questions in twenty files (Part 1 408, Part 2 199, Part 3 179), with `bank_p2_gap4.js`, `bank_p3_gap4.js` (Version 201, 43 Part 3 stories), `bank_p1_gap13.js` (Version 202, 33 worked calculations on deductions and credits) and `bank_p2_gap5.js` (Version 203, 32 Part 2 stories on entities, payroll, fringe benefits, exempt organizations)
 (`bank_p1_gap4.js` to `gap12`, `bank_p2_gap1.js`, `gap2`, `gap3` (worked calculations), `bank_p3_gap3.js` (worked stories), `bank_p3_gap1.js`, `gap2`), written from the rule cards, checked one by one against
 the cards while writing. Second-reader review so far: `bank_p1_gap4.js` and `gap5.js` (Version 198, 119
 questions, no errors), `gap6.js` and `gap7.js` (Version 200, 90 questions, two fixes) and `gap8.js` and `gap9.js`
 (Version 201, 76 questions, no errors; one stem has a deposit on Saturday January 3, 2026, left as it is because a
-Saturday deposit is possible). `gap10.js` and `gap11.js` were reviewed in Version 202 (60 questions, no errors). Still to review the same way:
-`gap12`, `gap13`, the four Part 2 files and the four Part 3 files. Confirmed on irs.gov on November 23, 2026 (Version 201 round): 0% capital gain bracket $48,350
+Saturday deposit is possible). `gap10.js` and `gap11.js` were reviewed in Version 202 (60 questions, no errors); `gap12.js` and `bank_p2_gap1.js`
+in Version 203 (95 questions, no errors; one question in the new `gap13.js` repeated the facts of a `gap12.js`
+question and was given different numbers the same hour). Still to review the same way: `gap13`, `bank_p2_gap2`
+to `gap5` and the four Part 3 files. Confirmed for Version 203: late Form 1065 and 1120-S penalty $255 per owner
+per month for returns due in 2026 ($245 for returns due in 2025); the 2025 Form 1065 was due March 16, 2026. Confirmed on irs.gov on November 23, 2026 (Version 201 round): 0% capital gain bracket $48,350
 single / $96,700 joint / $64,750 head of household, ABLE limit $19,000, 24% gambling withholding on winnings over
 $5,000 less the wager, Form 8938 thresholds abroad ($200,000 last day or $300,000 any time; $400,000 or $600,000
 joint); from secondary sources citing Rev. Proc. 2024-40: AMT exemption $88,100 and $137,000, QCD $108,000.
@@ -292,7 +295,19 @@ $1,700, $50 per $1,000 over $200,000 / $400,000; QBI thresholds $197,300 to $247
 excess business loss $313,000 / $626,000; foreign earned income exclusion $130,000; IRA phase-out $79,000 to
 $89,000 single and $126,000 to $146,000 joint; lifetime learning phase-out from $80,000 / $160,000; home
 improvement credit 30% with $1,200, $600 windows and $2,000 heat pump limits, ending after 2025.
-Owner asked on November 23 "ok so leave it on github?": answered yes, unchanged until shortly before selling. Re-checked against irs.gov on
+Owner asked on November 23 "ok so leave it on github?": answered yes, unchanged until shortly before selling.
+GitHub Pro (owner, November 23: "should buy it 48 is nothing for me if it is real benefits", and he plans more
+apps: mixed poker learning and play, mahjong, tongits, pusoy). Answer given: yes, monthly ($4), for ONE benefit:
+Pages from a private repository, so this repository and the future game repositories can be private with a live
+test address and no per-app setup by the owner. It does not lift the GitHub Pages rule against running a business,
+so serving still moves to Cloudflare before selling (the owner already has a Cloudflare account; his other domain
+is registered there). WHEN HE SAYS "Pro is on": (1) stop publishing `src/` and `HISTORY.md` inside the Pages
+folder, because a private repository does not hide files that the site itself serves; keep them in the
+repository outside the published branch or folder and update tmp/sync_src.py, tmp/ship.sh and tmp/restore.sh;
+(2) make the repository private; (3) confirm the app still opens at the same address; if not, switch back at once.
+Test note: t700 has a timing check (first draw under 0.8 s at phone speed) that fails when two test batches overlap; never start a second batch while t700 from the first is still running, and run t700 alone if in doubt.
+Games apps: the owner confirmed on November 23, 2026: "no real money gambling in any just play for fun learning apps". Play chips and learning only; never add deposits, cash-out or prizes with money value. No written plan for
+the games apps was found in this project's chats; ask the owner to paste it if it exists elsewhere. Re-checked against irs.gov on
 November 23, 2026, the items the 2025 law changed: adoption credit ($17,280, up to $5,000 refundable, rest carried
 5 years), clean vehicle credit (binding contract and a payment by September 30, 2025), residential clean energy
 credit (must be installed by December 31, 2025, paying early is not enough), overtime deduction ($12,500 or $25,000
