@@ -29,7 +29,7 @@ const _persist=window.persist;if(typeof _persist==="function")window.persist=fun
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"&&cs){clearTimeout(csT);csPush()}});
 async function csOnCred(resp){csMsg="Checking your Google account…";csModal();
   try{const{st,j}=await csReq("/login",{id_token:resp.credential});if(st!==200||!j.token){csMsg=j.error||"Sign-in did not work. Please try again.";return csModal()}
-    cs={token:j.token,email:j.email,name:j.name,last:0};csSave();csChip();
+    cs={token:j.token,email:j.email,name:j.name,last:0,acc:j.access?{access:j.access,usedMs:j.usedMs,limitMs:j.limitMs,at:Date.now()}:null};csSave();csChip();setTimeout(acDraw,50);
     if(csDecide(j.saved)==="pull"){csMsg="Found your saved progress. Loading it…";csModal();return setTimeout(()=>csApply(j.saved.data),600)}
     await csPush();csMsg="Done! Your progress is now saved to "+j.email+". Sign in with the same Google account on any phone or computer to continue.";csModal()}
   catch(_){csMsg="No connection. Please try again when you're online.";csModal()}}
@@ -43,18 +43,63 @@ function csModal(){let m=document.getElementById("csmodal");if(!m){m=document.cr
      <div style="display:flex;gap:10px;flex-wrap:wrap"><button id="csnow" class="btn">Save now</button><button id="csout" class="btn ghost">Sign out</button><button id="csx" class="btn ghost">Close</button></div>`
    :`<p style="margin:0 0 12px">Sign in with Google to save your progress and continue on any phone or computer. We only use your name and email to find your saved progress.</p>
      <div id="csbtn" style="min-height:44px;display:flex;justify-content:center"></div>
-     <p style="font-size:13px;opacity:.75;margin:12px 0 0">Not signed in, your progress still stays on this device. <a href="https://solvinglifewith.com/privacy.html" target="_blank" rel="noopener">Privacy</a></p>
+     <p style="font-size:13px;opacity:.75;margin:12px 0 0">Signing in starts your free hour and saves your progress. <a href="https://solvinglifewith.com/privacy.html" target="_blank" rel="noopener">Privacy</a></p>
      <div style="margin-top:12px;text-align:right"><button id="csx" class="btn ghost">Not now</button></div>`}
    ${csMsg?`<p style="margin:12px 0 0;font-weight:600">${esc(csMsg)}</p>`:""}</div>`;
-  const close=()=>{m.remove();csMsg=""};m.onclick=e=>{if(e.target===m)close()};
+  const close=()=>{m.remove();csMsg="";setTimeout(()=>{try{acDraw()}catch(_){}},30)};m.onclick=e=>{if(e.target===m)close()};
   const x=document.getElementById("csx");if(x)x.onclick=close;
   const o=document.getElementById("csout");if(o)o.onclick=()=>{cs=null;csSave();csChip();try{google.accounts.id.disableAutoSelect()}catch(_){}close()};
   const n=document.getElementById("csnow");if(n)n.onclick=async()=>{csMsg="Saving…";csModal();await csPush();csMsg="Saved.";csModal()};
   if(!cs)csGis(()=>{try{google.accounts.id.initialize({client_id:CS_CID,callback:csOnCred,auto_select:false,ux_mode:"popup"});
     const b=document.getElementById("csbtn");if(b)google.accounts.id.renderButton(b,{theme:"filled_blue",size:"large",shape:"pill",text:"signin_with",width:280})}catch(_){}})}
+
+/* ---------- ACCESS: free 60-minute preview per Google account, then full access for people the owner adds in his hub.
+   Kids (Becoming Genius) is always free. Not signed in = a sign-in screen on the exam apps. ---------- */
+const AC_BUY="https://solvinglifewith.com/apps.html";
+let acLast=Date.now(),acPend=0,acBusy=false;
+["pointerdown","keydown","touchstart","scroll"].forEach(ev=>document.addEventListener(ev,()=>{acLast=Date.now()},{passive:true,capture:true}));
+function acKids(){try{return (typeof view!=="undefined"&&view==="kids")||(typeof SLAPP==="function"&&SLAPP()==="kids")||document.body.classList.contains("kidsmode")}catch(_){return false}}
+function acState(){if(!cs)return"out";const a=cs.acc;if(!a)return"unknown";return a.access}
+function acLeft(){const a=cs&&cs.acc,m=a?Math.max(0,Math.ceil(((a.limitMs||3600000)-(a.usedMs||0))/60000)):60;return m>=2880?Math.floor(m/1440)+" days":m>=120?Math.floor(m/60)+" h":m+" min"}
+async function acCheck(){if(!cs||acBusy)return;acBusy=true;try{const{st,j}=await csReq("/status");if(st===200&&j.access){if(!j.email){cs=null;csSave();csChip()}else{cs.acc=Object.assign(j,{at:Date.now()});csSave()}}}catch(_){}finally{acBusy=false;acDraw()}}
+async function acTick(){if(!cs||!cs.acc||cs.acc.access!=="trial"||acPend<5000)return;const ms=acPend;acPend=0;
+  try{const{st,j}=await csReq("/tick",{ms});if(st===200&&j.access){cs.acc=Object.assign(j,{at:Date.now()});csSave()}else acPend+=ms}catch(_){acPend+=ms}acDraw()}
+function acBadge(show){let b=document.getElementById("acbadge");if(!show){if(b)b.remove();return}
+  if(!b){b=document.createElement("button");b.id="acbadge";b.style.cssText="position:fixed;right:10px;bottom:10px;z-index:60;border:0;border-radius:999px;padding:8px 13px;font:700 13px system-ui;background:#ffd666;color:#3a2a00;box-shadow:0 4px 14px rgba(0,0,0,.25)";b.onclick=()=>window.open(AC_BUY,"_blank");document.body.appendChild(b)}
+  b.textContent="Free preview · "+acLeft()+" left · Get full access"}
+function acWall(kind){let w=document.getElementById("acwall");if(!kind){if(w)w.remove();return}
+  if(w&&w.dataset.k===kind)return;if(!w){w=document.createElement("div");w.id="acwall";document.body.appendChild(w)}w.dataset.k=kind;
+  w.style.cssText="position:fixed;inset:0;z-index:9000;background:linear-gradient(160deg,#0f2e47,#1a6b55);color:#fff;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto";
+  const kidsLink=`<p style="margin:16px 0 0;font-size:14px;opacity:.85">The kids app is always free: <a style="color:#ffd666" href="./?kids">Becoming Genius</a></p>`;
+  w.innerHTML=kind==="out"?`<div style="max-width:440px;text-align:center;font:16px/1.5 system-ui,sans-serif">
+    <div style="font-size:44px">🎓</div><h2 style="font-size:26px;margin:6px 0">Start your free hour</h2>
+    <p>Sign in with Google to study free for 60 minutes. Your progress is saved to your account and follows you to every phone and computer.</p>
+    <button id="acin" style="border:0;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;margin-top:8px">Sign in with Google</button>
+    <p style="margin:14px 0 0"><a style="color:#ffd666" href="${AC_BUY}" target="_blank" rel="noopener">See full access options</a></p>${kidsLink}</div>`
+  :`<div style="max-width:440px;text-align:center;font:16px/1.5 system-ui,sans-serif">
+    <div style="font-size:44px">⏰</div><h2 style="font-size:26px;margin:6px 0">Your free hour is done</h2>
+    <p>Hope it helped! Get full access to every Solving Life exam app (EA, Series 65, EDPNA and Customs Broker), always updated, with your progress kept.</p>
+    <a href="${AC_BUY}" target="_blank" rel="noopener" style="display:inline-block;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;text-decoration:none;margin-top:8px">Get full access</a>
+    <p style="margin:14px 0 0;display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><input id="accode" placeholder="Have a code?" style="border:0;border-radius:999px;padding:10px 14px;font:600 15px system-ui;width:150px;text-transform:uppercase"><button id="acapply" style="border:0;border-radius:999px;padding:10px 14px;font:700 15px system-ui;background:#fff;color:#0f2e47">Apply</button></p>
+    <p style="margin:10px 0 0"><button id="acre" style="background:none;border:1px solid #fff8;color:#fff;border-radius:999px;padding:9px 14px;font:600 14px system-ui">I already paid: check again</button></p>
+    <p style="font-size:14px;opacity:.85">Signed in as ${esc(cs&&cs.email||"")} · <a style="color:#ffd666" href="#" id="acsw">use another account</a></p>${kidsLink}</div>`;
+  const i=document.getElementById("acin");if(i)i.onclick=()=>csModal();
+  const r=document.getElementById("acre");if(r)r.onclick=async()=>{r.textContent="Checking…";await acCheck();if(acState()!=="full")r.textContent="Not yet. Message us at info@solvinglifellc.com with this email."};
+  const ap=document.getElementById("acapply");if(ap)ap.onclick=async()=>{const c=(document.getElementById("accode").value||"").trim();if(!c)return;ap.textContent="…";
+    try{const{st,j}=await csReq("/redeem",{code:c});if(st===200&&j.access){cs.acc=Object.assign(j,{at:Date.now()});csSave();acDraw()}else{ap.textContent=j.error||"Not valid";return}}catch(_){ap.textContent="Offline"}};
+  const sw=document.getElementById("acsw");if(sw)sw.onclick=e=>{e.preventDefault();cs=null;csSave();csChip();acDraw();csModal()}}
+const AC_ON=/(^|\.)solvinglifewith\.com$|\.workers\.dev$|\.github\.io$/.test(location.hostname);
+function acDraw(){if(!AC_ON||acKids()){acWall(null);acBadge(false);return}const st=acState();
+  if(st==="out"){acBadge(false);if(!document.getElementById("csmodal"))acWall("out");else acWall(null);return}
+  if(st==="expired"){acBadge(false);acWall("expired");return}
+  acWall(null);acBadge(st==="trial")}
+setInterval(()=>{if(cs&&cs.acc&&cs.acc.access==="trial"&&!acKids()&&document.visibilityState==="visible"&&Date.now()-acLast<120000)acPend+=15000},15000);
+setInterval(acTick,60000);setInterval(acDraw,4000);setInterval(acCheck,10*60000);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")acTick();else acCheck()});
+window.slAccess={check:acCheck,draw:acDraw};
 window.slCloudOpen=csModal;
 document.addEventListener("click",e=>{const c=e.target.closest&&e.target.closest("#sync");if(c){e.stopImmediatePropagation();csModal()}},true);
-async function csStart(){csChip();if(!cs)return;try{if(sessionStorage.getItem("slCloudPulled")){sessionStorage.removeItem("slCloudPulled");return csLater(2000)}}catch(_){}
+async function csStart(){csChip();try{acDraw()}catch(_){}if(!cs)return;acCheck();try{if(sessionStorage.getItem("slCloudPulled")){sessionStorage.removeItem("slCloudPulled");return csLater(2000)}}catch(_){}
   try{const{st,j}=await csReq("/load");if(st!==200)return;if(csDecide(j.saved)==="pull")return csApply(j.saved.data);csLater(3000)}catch(_){}}
 function csKid(){const k=document.body.classList.contains("kidsmode");let b=document.getElementById("cskid");
   if(!k){if(b)b.remove();return}if(!b){b=document.createElement("button");b.id="cskid";b.style.cssText="position:fixed;left:10px;bottom:10px;z-index:50;border:0;border-radius:999px;padding:8px 12px;font:600 13px system-ui;background:rgba(255,255,255,.92);color:#123;box-shadow:0 4px 14px rgba(0,0,0,.25)";b.onclick=e=>{e.stopPropagation();csModal()};document.body.appendChild(b)}

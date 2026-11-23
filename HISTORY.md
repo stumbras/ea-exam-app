@@ -1575,7 +1575,11 @@ More exams: CBP's page "Past Customs Broker License Examinations & Answer Keys" 
 so the owner must attach more PDFs (or the allowlist must reach this workspace). NEXT for CBLE: worked lessons per 19 CFR part,
 HTSUS GRI drills, valuation calculations, and the practical exercise with drawn 7501 forms.
 
-- 2026-11-24 Version 231: Business payment plan fix, Forms 656 and 433-F, 28 Part 1 questions
+- 2026-11-23 Version 232: Free preview with Google sign-in, full access for paying users, promo codes, owner access hub
+- 2026-11-23 Sync server: adjustable preview length, extra minutes, promo codes
+- 2026-11-23 Sync server: app access (grants by email, 60-minute preview per Google account) and owner hub
+- 2026-11-23 Fun app ads (EA, Series 65, Customs Broker, kids)
+- 2026-11-24 Version 231: business payment plan fix, Form 3520 card, Forms 656 and 433-F explained, 28 Part 1 questions
 - 2026-11-23 Version 230: simple payment plan fix, Forms 9465 and 12153 explained, 56 questions for untested cards
 - 2026-11-23 Version 229: Forms 2553 and 8832 explained, 28 Part 3 representation questions, stale-fact audit
 - 2026-11-23 Version 228: 24 Part 3 questions on the filing process, reviewed before release; two cards re-recorded
