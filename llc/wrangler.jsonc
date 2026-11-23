@@ -1,0 +1,8 @@
+{
+  // Cloudflare Workers static site: the new solvinglifellc.com (preview until the owner says switch). Root directory "llc".
+  "name": "solvinglifellc-site",
+  "compatibility_date": "2026-11-01",
+  "assets": { "directory": "./" },
+  "workers_dev": true,
+  "preview_urls": false
+}

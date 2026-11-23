@@ -1,0 +1,69 @@
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#0F1B2D;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+a{color:#0B6B58}a:hover{color:#08493C}
+h1,h2,h3,.brand{font-family:"Space Grotesk",Inter,system-ui,sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+header.top{border-bottom:1px solid #E4E8EE}
+header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:18px;padding-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#0F1B2D;font-weight:700;font-size:20px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 22px;font-weight:500;font-size:15px}
+nav.main a{color:#0F1B2D;text-decoration:none;padding:10px 0}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:12px 22px;border-radius:10px;font-weight:600;font-size:16px;text-decoration:none}
+.btn-main{background:#0E7C66;color:#fff}.btn-main:hover{background:#0B6B58;color:#fff}
+.btn-line{border:1px solid #5B6B82;color:#fff}.btn-line:hover{color:#fff;border-color:#fff}
+.hero{background:#0F1B2D;color:#fff}
+.hero .wrap{padding-top:96px;padding-bottom:88px;display:flex;flex-direction:column;gap:28px}
+.kicker{margin:0;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#8FD9C4}
+.hero h1{margin:0;max-width:860px;font-size:clamp(38px,6vw,64px);line-height:1.05;letter-spacing:-.02em}
+.hero p.lead{margin:0;max-width:680px;font-size:20px;line-height:1.55;color:#C9D2DE}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+section.block{padding:88px 0}
+section.alt{background:#F5F7FA}
+.head{display:flex;flex-direction:column;gap:12px;max-width:720px;margin-bottom:32px}
+.head h2,.about h2,.contact h2{margin:0;font-size:clamp(30px,4vw,40px);line-height:1.15;letter-spacing:-.01em}
+.head p{margin:0;font-size:18px;color:#46536A}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{background:#fff;border:1px solid #E4E8EE;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:#0F1B2D}
+a.card:hover{border-color:#0E7C66;color:#0F1B2D}
+.card .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.card h3{margin:0;font-size:20px;line-height:1.25}
+.card p{margin:0;font-size:15px;color:#46536A}
+.venture-name{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:22px}
+.label{font-size:13px;font-weight:600;color:#5A6780;text-transform:uppercase;letter-spacing:.06em}
+.more{margin-top:auto;font-weight:600;font-size:15px;color:#0B6B58}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.st-open{background:#E3F4EE;color:#08493C}.st-dev{background:#FDF0E1;color:#8A4106}.st-plan{background:#EEF0F4;color:#3A4558}
+.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.tab{font:600 15px Inter,system-ui,sans-serif;padding:10px 18px;min-height:44px;border-radius:999px;border:1px solid #CBD2DC;background:#fff;color:#0F1B2D;cursor:pointer}
+.tab[aria-selected="true"]{background:#0F1B2D;color:#fff;border-color:#0F1B2D}
+.note{margin:24px 0 0;font-size:14px;color:#5A6780}
+.about{display:flex;flex-wrap:wrap;gap:48px}
+.about .text{flex:1 1 420px;display:flex;flex-direction:column;gap:16px}
+.about .text p{margin:0;font-size:18px;line-height:1.65;color:#2E3A4F}
+.about .box{flex:1 1 320px;border:1px solid #E4E8EE;border-radius:16px;padding:28px}
+.about .box h3{margin:0 0 10px;font-size:20px}.about .box p{margin:0;color:#46536A}
+.contact{background:#0F1B2D;color:#fff;padding:80px 0}
+.contact .wrap{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between}
+.contact .col{flex:1 1 360px;display:flex;flex-direction:column;gap:14px}
+.contact p{margin:0;font-size:18px;color:#C9D2DE}
+.contact a.big{color:#fff;font-size:20px;font-weight:600}
+.contact h3{margin:0;font-size:20px}
+footer.bottom{border-top:1px solid #E4E8EE;padding:28px 0;font-size:14px;color:#46536A}
+footer.bottom .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer.bottom nav{display:flex;flex-wrap:wrap;gap:20px}
+.page{max-width:760px;margin:0 auto;padding:64px 24px 88px}
+.page h1{font-size:40px;margin:0 0 8px}.page h2{font-size:22px;margin:36px 0 8px}
+.page p,.page li{font-size:17px;line-height:1.65;color:#2E3A4F}
+.muted{color:#5A6780;font-size:15px}
+.bar{background:#0E7C66;color:#fff;text-align:center;font-size:14px;font-weight:600;padding:8px 16px}
+.price{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:20px;color:#0F1B2D}
+.list{margin:0;padding-left:20px;color:#2E3A4F}.list li{margin:6px 0}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.step{counter-increment:s;background:#fff;border:1px solid #E4E8EE;border-radius:14px;padding:22px}
+.step:before{content:counter(s);display:inline-flex;width:32px;height:32px;border-radius:50%;background:#0E7C66;color:#fff;align-items:center;justify-content:center;font-weight:700;margin-bottom:10px}
+.step h3{margin:0 0 6px;font-size:18px}.step p{margin:0;color:#46536A;font-size:15px}
+details{background:#fff;border:1px solid #E4E8EE;border-radius:12px;padding:16px 18px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;font-size:17px}details p{margin:10px 0 0;color:#2E3A4F}
+table.prices{width:100%;border-collapse:collapse;font-size:16px}table.prices td,table.prices th{text-align:left;padding:12px 10px;border-bottom:1px solid #E4E8EE;vertical-align:top}
+table.prices th{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#5A6780}
+.tw{overflow-x:auto}
