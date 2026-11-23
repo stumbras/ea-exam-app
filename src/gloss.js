@@ -339,9 +339,9 @@ const GLP={
 const GLOFF={7:{"K-1":1}}; // in the ITIN section "K-1" can be a visa class, so it is not explained there
 let glRe=null,glOn=true,glQuiet=false;const glSeen=new WeakSet();
 function glBuild(){try{const keys=new Set(Object.keys(GL));Object.values(GLP).forEach(o=>Object.keys(o).forEach(k=>keys.add(k)));const alt=[];
-  keys.forEach(k=>{alt.push(k);if(/^Section /.test(k)){alt.push(k.replace(/^Section /,"§"));alt.push(k.replace(/^Section /,"§ "))}if(/^[a-z]/.test(k))alt.push(k[0].toUpperCase()+k.slice(1))});
+  keys.forEach(k=>{alt.push(k);if(/^[A-Z]{2,6}$/.test(k))alt.push(k+"s");if(/^Section /.test(k)){alt.push(k.replace(/^Section /,"§"));alt.push(k.replace(/^Section /,"§ "))}if(/^[a-z]/.test(k))alt.push(k[0].toUpperCase()+k.slice(1))});
   alt.sort((a,b)=>b.length-a.length);glRe=new RegExp("(?<![A-Za-z0-9§])(?:"+alt.map(k=>k.replace(/[.*+?^${}()|[\]\\\/]/g,"\\$&")).join("|")+")(?![A-Za-z0-9])","g")}catch(_){glRe=null}}
-function glKey(t){let k=t.replace(/^§ ?/,"Section ");if(glGet(k))return k;k=k[0].toLowerCase()+k.slice(1);return glGet(k)?k:null}
+function glKey(t){let k=t.replace(/^§ ?/,"Section ");if(glGet(k))return k;if(/^[A-Z]{2,6}s$/.test(k)&&glGet(k.slice(0,-1)))return k.slice(0,-1);k=k[0].toLowerCase()+k.slice(1);return glGet(k)?k:null}
 function glPart(k){try{const o=GLP[part];return o&&o[k]?o[k]:null}catch(_){return null}}
 function glGet(k){try{if(GLOFF[part]&&GLOFF[part][k])return null}catch(_){}return glPart(k)||GL[k]||null}
 function glSkip(n){for(let p=n.parentNode;p&&p.nodeType===1;p=p.parentNode){if(p.id==="view")return false;const t=p.tagName;if(t==="BUTTON"||t==="A"||t==="INPUT"||t==="TEXTAREA"||t==="SELECT"||t==="OPTION"||t==="LABEL"||t==="SUMMARY"||t==="SCRIPT"||t==="STYLE"||t==="svg"||t==="CANVAS"||t==="H1"||p.classList.contains("gl")||p.isContentEditable)return true}return false}

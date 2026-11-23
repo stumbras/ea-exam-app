@@ -346,3 +346,6 @@ This repository holds the built app that GitHub Pages serves, the source it is b
 - `version.json`: the current version, used by the update button
 
 © Solving Life LLC
+- Version 210 (Nov 23): Series 65 and EDPNA get the forms and acronyms drill button; 59 new glossary terms for the two
+  sections (gloss_more.js) and plural forms ("ADRs", "VEs") are now explained; form cards and exam-type questions for 15
+  SEC/FINRA/NASAA forms (s65_forms.js) and 15 SSA forms (edpna_forms.js), with the 2024 SSA-1699 registration rule.

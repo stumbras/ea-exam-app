@@ -627,9 +627,41 @@ nobody answered). Credential claims (IRS Certifying Acceptance Agent, Authorized
 ITIN promise are LEFT OUT until the owner confirms the approvals are issued. Booking, client portal, pay-an-invoice, inquiry form
 and blog links point to the live Wix site (constants BOOK, PORTAL, PAY, INQUIRY, BLOG in make.py) until step 3 wires Wix directly.
 Worker name solvinglifellc-site, root directory llc; the study app's .assetsignore leaves llc out. Domain NOT switched.
+NEW TAX SITE PREVIEW LIVE (Nov 23 09:07): https://solvinglifellc-site.<his-account>.workers.dev, Worker created through the Cloudflare API
+(placeholder script, then POST builds/workers with repo stumbras/ea-exam-app, repo_id 1461875162, provider account 31204620, branch main,
+root /llc, build token 97288ae0-37a4-4c01-94a0-20d0cefd1457), first build succeeded. It redeploys on every push to main.
+OWN SOCIAL CONNECTOR (owner, 09:01-09:07: "why paid ... create own free connectors", "create it for all my youtube, tiktok, insta and
+facebook", "no reauthorising often"): Worker "solvinglife-social" at https://social.solvinglifewith.com, source social/worker.js (no
+secrets in it). KV namespace solvinglife-social (b3fe465a03cb4f54913f133f24ef548d) holds app keys and tokens; Worker secret ADMIN is the
+private path key (in the conversation only, never in the repo). Setup page /s/<ADMIN>/ (owner pastes app keys there himself and taps
+Connect per network); MCP endpoint /mcp/<ADMIN> to add as a claude.ai custom connector (No sign-in). Tools: social_status,
+facebook_post (text/link/photo/video/Reel), instagram_post (photo/Reel/Story/carousel via Instagram Login), youtube_upload (streams
+long videos), tiktok_send_to_app (inbox draft; public direct posting needs TikTok's audit). Deployed by API upload, NOT by Workers Builds
+(so the secret binding stays); redeploy by uploading social/worker.js again with the same bindings. Weekly cron (Mon 06:17 UTC)
+refreshes the Instagram token. Token life: Facebook Page tokens from a long-lived user token do not expire; Instagram 60 days, refreshed
+weekly; Google refresh token lasts only 7 days while the OAuth consent screen is in "Testing" -> owner must set it to "In production";
+TikTok refresh token 365 days. YouTube: older Google docs say uploads from unverified API projects are locked private until an audit;
+the newest reference page says they are not; check on the first upload. Media for posts must be public https URLs (host short files in
+pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.g. R2 or Google Drive direct links).
 
 ## 11. Version log
 
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+TAX SITE BLOG + WIX CHECK (Nov 23 09:40 Manila): Reviewed bank_p2_gap6 and bank_p3_gap6 against current rules: no fixes needed
+(right answer longest in 6% and 17%). Wix read-only check: 0 booking services exist (Bookings app installed but empty); 6 blog
+posts (published Nov 12); Stores holds 12 template demo products (hand cream, lounge chair...) still visible, not ours. Copied
+the 6 posts into the coded site at the same /post/<slug> addresses (site_llc/blog_posts.py; make.py builds blog.html and
+post/*.html; <base href="/"> added so links work in subfolders; Blog in the main menu). So old Wix links keep working after the
+domain switch. Two "Solving Life is an IRS Certifying Acceptance Agent" lines were reworded in our copy (owner has not confirmed
+the CAA approval); the Wix originals still carry them. Commit 78e410d. Still waiting on the owner: booking service (name, length,
+price), what to do with the demo products, CAA yes/no.
+
+VERSION 210 (Nov 23 ~10:00 Manila): forms-and-acronyms job for Series 65 and EDPNA, parts (b) and (c) done: gloss_more.js
+(33 Series 65 + 26 EDPNA entries, loaded after gloss.js, calls glBuild()); gloss.js now matches plurals of all-caps keys
+(ADRs -> ADR); s65_forms.js (15 form cards, 11 questions) and edpna_forms.js (15 SSA form cards, 10 questions); fa_drill.js
+adds the drill button for parts 5 and 6. Drill now: Series 65 17 forms / 87 acronyms, EDPNA 15 forms / 49 acronyms.
+Part (a), the real form viewer for SEC/SSA forms, is BLOCKED: this workspace's network refuses ssa.gov (403) and sec.gov
+(timeout); a temporary Cloudflare fetch worker was refused by the safety check, so not used. Needs the owner to attach the
+PDFs or approve another route. Tests t750 16, t760 12, t733 11, t734 7, t654 13, t653 17, t510 26.

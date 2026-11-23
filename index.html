@@ -14887,9 +14887,9 @@ const GLP={
 const GLOFF={7:{"K-1":1}}; // in the ITIN section "K-1" can be a visa class, so it is not explained there
 let glRe=null,glOn=true,glQuiet=false;const glSeen=new WeakSet();
 function glBuild(){try{const keys=new Set(Object.keys(GL));Object.values(GLP).forEach(o=>Object.keys(o).forEach(k=>keys.add(k)));const alt=[];
-  keys.forEach(k=>{alt.push(k);if(/^Section /.test(k)){alt.push(k.replace(/^Section /,"§"));alt.push(k.replace(/^Section /,"§ "))}if(/^[a-z]/.test(k))alt.push(k[0].toUpperCase()+k.slice(1))});
+  keys.forEach(k=>{alt.push(k);if(/^[A-Z]{2,6}$/.test(k))alt.push(k+"s");if(/^Section /.test(k)){alt.push(k.replace(/^Section /,"§"));alt.push(k.replace(/^Section /,"§ "))}if(/^[a-z]/.test(k))alt.push(k[0].toUpperCase()+k.slice(1))});
   alt.sort((a,b)=>b.length-a.length);glRe=new RegExp("(?<![A-Za-z0-9§])(?:"+alt.map(k=>k.replace(/[.*+?^${}()|[\]\\\/]/g,"\\$&")).join("|")+")(?![A-Za-z0-9])","g")}catch(_){glRe=null}}
-function glKey(t){let k=t.replace(/^§ ?/,"Section ");if(glGet(k))return k;k=k[0].toLowerCase()+k.slice(1);return glGet(k)?k:null}
+function glKey(t){let k=t.replace(/^§ ?/,"Section ");if(glGet(k))return k;if(/^[A-Z]{2,6}s$/.test(k)&&glGet(k.slice(0,-1)))return k.slice(0,-1);k=k[0].toLowerCase()+k.slice(1);return glGet(k)?k:null}
 function glPart(k){try{const o=GLP[part];return o&&o[k]?o[k]:null}catch(_){return null}}
 function glGet(k){try{if(GLOFF[part]&&GLOFF[part][k])return null}catch(_){}return glPart(k)||GL[k]||null}
 function glSkip(n){for(let p=n.parentNode;p&&p.nodeType===1;p=p.parentNode){if(p.id==="view")return false;const t=p.tagName;if(t==="BUTTON"||t==="A"||t==="INPUT"||t==="TEXTAREA"||t==="SELECT"||t==="OPTION"||t==="LABEL"||t==="SUMMARY"||t==="SCRIPT"||t==="STYLE"||t==="svg"||t==="CANVAS"||t==="H1"||p.classList.contains("gl")||p.isContentEditable)return true}return false}
@@ -14918,6 +14918,77 @@ function glOpen(key,shown){const g=glGet(key);if(!g)return;glClose();const o=doc
   const mo=new MutationObserver(()=>{if(!tm)tm=setTimeout(run,40)});
   const start=()=>{const v=document.getElementById("view");if(!v){setTimeout(start,200);return}run()};
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start()})();
+
+/* ---- Glossary additions for Series 65 (part 5) and EDPNA (part 6), Version 210 ----
+   Every abbreviation the two sections used without an entry, found by a scan of s65_*.js and edpna_*.js on November 23, 2026.
+   Meanings only, no yearly amounts, as in gloss.js. Loaded right after gloss.js; rebuilds the matcher at the end. */
+Object.assign(GLP[5],{
+"CE":["Continuing education","Yearly training an investment adviser representative must complete in states that adopted the NASAA rule: a products-and-practice part and an ethics part. Missing it blocks renewal."],
+"S&P":["Standard & Poor's","A credit rating agency. Its S&P 500 index tracks 500 large U.S. companies and is the usual benchmark for U.S. stocks."],
+"AIR":["Assumed interest rate","The rate a variable annuity uses to set the first payout. If the separate account earns more than the AIR, the next payment rises; less, it falls."],
+"CD":["Certificate of deposit","A bank deposit for a fixed term at a stated rate, FDIC-insured up to the limit. Early withdrawal usually costs a penalty."],
+"IRS":["Internal Revenue Service","The bureau of the Treasury Department that collects federal taxes and enforces the tax law."],
+"CRS":["Form CRS (client relationship summary)","A short plain-language disclosure that SEC-registered advisers and broker-dealers give retail investors: services, fees, conflicts and disciplinary history. It is Part 3 of Form ADV for advisers."],
+"Form CRS":["Client relationship summary","A short plain-language disclosure that SEC-registered advisers and broker-dealers give retail investors: services, fees, conflicts and disciplinary history. It is Part 3 of Form ADV for advisers."],
+"SECURE":["SECURE Act","Setting Every Community Up for Retirement Enhancement Act (2019), followed by SECURE 2.0 (2022). They changed required minimum distribution ages, inherited IRA rules and many plan rules."],
+"BBB":["BBB rating","The lowest investment-grade rating on the S&P and Fitch scales (Baa on Moody's). Anything below it is high yield."],
+"BB":["BB rating","The highest below-investment-grade rating on the S&P and Fitch scales (Ba on Moody's): a high-yield, or junk, bond."],
+"ADR":["American depositary receipt","A certificate traded in U.S. dollars on a U.S. market that stands for shares of a foreign company held by a U.S. bank. The holder still carries currency risk."],
+"CMO":["Collateralized mortgage obligation","A mortgage-backed security split into tranches that receive principal in a set order, to spread prepayment and extension risk unevenly."],
+"PAC":["Planned amortization class","The CMO tranche with the most predictable payments; companion (support) tranches absorb the prepayment changes."],
+"ESG":["Environmental, social and governance","Factors some investors weigh along with financial ones. A fund's ESG label must match how it actually invests."],
+"UPIA":["Uniform Prudent Investor Act","State law for trustees: judge each investment as part of the whole portfolio, diversify, and weigh risk and return for the beneficiaries."],
+"AML":["Anti-money laundering","Programs firms must keep to detect and report money laundering: customer identification, monitoring, and suspicious activity reports."],
+"OFAC":["Office of Foreign Assets Control","The Treasury office that keeps the sanctions lists. Firms must block accounts and transactions of anyone on its SDN list."],
+"SDN":["Specially Designated Nationals","OFAC's list of persons and entities whose assets must be blocked and with whom U.S. persons may not deal."],
+"CIP":["Customer identification program","The USA PATRIOT Act rule that firms verify a new customer's name, date of birth, address and ID number when an account is opened."],
+"PATRIOT":["USA PATRIOT Act","The 2001 law that added the customer identification program and other anti-money laundering duties for financial firms."],
+"U4":["Form U4","The Uniform Application for Securities Industry Registration or Transfer, filed through the CRD system to register an agent or investment adviser representative. It must be kept current, including disciplinary events."],
+"U5":["Form U5","The Uniform Termination Notice, filed by the firm through the CRD system when an agent or adviser representative leaves; the firm must file it within 30 days."],
+"EPS":["Earnings per share","Net income available to common stockholders divided by the shares outstanding. The 'E' in the price-to-earnings ratio."],
+"FNMA":["Federal National Mortgage Association (Fannie Mae)","A publicly traded government-sponsored enterprise that buys mortgages and issues mortgage-backed securities. Its securities are not backed by the full faith and credit of the U.S."],
+"FHLMC":["Federal Home Loan Mortgage Corporation (Freddie Mac)","A publicly traded government-sponsored enterprise like Fannie Mae. Its securities are not backed by the full faith and credit of the U.S."],
+"HFT":["High-frequency trading","Computer-driven trading that holds positions for fractions of a second to profit from tiny price differences."],
+"AUM":["Assets under management","The value of the client accounts an adviser manages. It decides SEC or state registration and is the base for percentage fees."],
+"PV":["Present value","What a future amount is worth today, found by discounting it at a chosen rate."],
+"DPP":["Direct participation program","An investment, usually a limited partnership, that passes income, gains, losses and deductions straight to the investors. Illiquid."],
+"IRMAA":["Income-related monthly adjustment amount","The Medicare Part B and Part D surcharge paid by people whose income from two years earlier is above a threshold."],
+"POD":["Payable on death","A bank account registration that passes the money directly to a named beneficiary at death, outside probate."],
+"MSCI EAFE":["MSCI Europe, Australasia and Far East index","The usual benchmark for stocks of developed markets outside the U.S. and Canada."],
+"ITSFEA":["Insider Trading and Securities Fraud Enforcement Act of 1988","Raised insider-trading penalties (up to three times the profit gained or loss avoided) and requires firms to keep written policies to prevent insider trading."],
+"TBE":["Tenancy by the entirety","Joint ownership only for married couples, with right of survivorship; neither spouse can sell their share alone."],
+"ERA":["Exempt reporting adviser","An adviser exempt from SEC registration (for example, one advising only private funds under a size limit or only venture capital funds) that still files parts of Form ADV."],
+"GO":["General obligation bond","A municipal bond backed by the issuer's full faith, credit and taxing power. Often needs voter approval."],
+"IPS":["Investment policy statement","A written statement of a client's goals, risk tolerance, constraints and the rules for managing the portfolio."]
+});
+Object.assign(GLP[6],{
+"Title II":["Title II of the Social Security Act","The insured program: retirement, survivors and disability insurance (SSDI), paid for by FICA taxes. Eligibility depends on work credits."],
+"Title XVI":["Title XVI of the Social Security Act","Supplemental Security Income (SSI): a needs-based program for aged, blind and disabled people with limited income and resources. No work credits needed."],
+"ALS":["Amyotrophic lateral sclerosis","A progressive nerve disease. It is on the Compassionate Allowances list, and SSDI for ALS has no 5-month waiting period."],
+"VE":["Vocational expert","A witness at the hearing who testifies about the claimant's past work and whether jobs exist for someone with the claimant's limits."],
+"ME":["Medical expert","An impartial doctor or psychologist who gives an opinion at a hearing on the medical evidence. The ME does not decide whether the claimant is disabled."],
+"CE":["Consultative examination","An exam or test that SSA buys from an outside source when the claimant's own records are not enough to decide the claim."],
+"CDR":["Continuing disability review","SSA's periodic check of whether a beneficiary is still disabled, using the medical improvement review standard."],
+"CPD":["Comparison point decision","The most recent favorable medical decision. A continuing disability review compares the current condition with it."],
+"MRI":["Magnetic resonance imaging","A medical imaging test. In a disability claim it is objective medical evidence."],
+"ISM":["In-kind support and maintenance","Shelter given to an SSI recipient free or below cost. It can reduce the SSI payment; food no longer counts since September 30, 2024."],
+"VTR":["Value of the one-third reduction","The SSI rule that cuts the payment by one-third when the person lives in another's household all month and receives shelter from them."],
+"PMV":["Presumed maximum value","The cap on how much in-kind support and maintenance can reduce an SSI payment when the one-third rule does not apply: one-third of the federal benefit rate plus $20."],
+"PRW":["Past relevant work","Work done in the relevant period before the claim, long enough to learn and at the level of substantial gainful activity. Step 4 asks whether the claimant can still do it."],
+"DOT":["Dictionary of Occupational Titles","The Labor Department job reference that SSA and vocational experts use to describe jobs' exertion and skill levels."],
+"DSM":["Diagnostic and Statistical Manual of Mental Disorders","The American Psychiatric Association's reference for diagnosing mental disorders, on which SSA's mental listings are based."],
+"IQ":["Intelligence quotient","A standardized test score used in the intellectual disorder listing."],
+"VA":["Department of Veterans Affairs","Its disability rating does not bind SSA, but SSA must consider the evidence behind it."],
+"APRN":["Advanced practice registered nurse","An acceptable medical source for claims filed on or after March 27, 2017, within the licensed scope of practice."],
+"PA":["Physician assistant","An acceptable medical source for claims filed on or after March 27, 2017, within the licensed scope of practice."],
+"EXR":["Expedited reinstatement","Lets a person whose benefits ended because of work ask to restart them within 5 years, without a new application, if the same impairment stops them working again."],
+"PIE":["Payroll Information Exchange","With the beneficiary's permission, SSA receives wage data directly from participating payroll providers, which cuts reporting errors and overpayments."],
+"BWE":["Blind work expenses","An SSI rule for blind people: expenses needed to earn income, such as taxes and transportation, are not counted as income."],
+"HA":["Hearings and Appeals","Prefix of SSA forms used at the hearing level, such as HA-501 (request for hearing), and of the new HALLEX section numbers."],
+"HS":["High school","Education level used in the medical-vocational (grid) rules."],
+"FR":["Federal Register","The daily U.S. government publication where final rules, such as changes to SSA's representative rules, are printed."]
+});
+glBuild();
 
 /* ================= CAA · ITIN · Certifying Acceptance Agent and Form W-7 work =================
    Built from the official IRS sources, downloaded Nov 18, 2026: Publication 4520 (Acceptance Agents' Guide),
@@ -17588,6 +17659,65 @@ Q(6,1,3,"A blind SSI recipient pays federal income tax and buys lunches at work.
 Q(6,1,2,"What is the maximum monthly Social Security benefit for a worker retiring at full retirement age in 2026?","$4,152",["$3,822","$5,108","$2,830"],"For SSI the 2026 maximum federal payment is $994 (individual) or $1,491 (couple). $2,830 is the 2026 blind SGA amount.");
 Q(6,4,1,"A brief cites HALLEX I-2-5-60, but SSA now uses a new HALLEX numbering format. Is the old citation accepted?","Yes: during the transition either format is accepted",["No: only the new HA numbers are accepted now","No: HALLEX can never be cited in a brief","Yes: but only before an ALJ, not the Council"],"Old links redirect to the renumbered sections.");
 
+/* ---- Series 65 forms: one card and exam-type questions for each SEC, NASAA and FINRA form the section names (Version 210).
+   Asked for: "make sure same thing is done for series 65" as the EA forms work. Cards are titled with the form name so the
+   forms and acronyms drill picks them up. Own wording, made-up names. Checked November 23, 2026. ---- */
+F(5,4,"Form ADV","The investment adviser registration and disclosure form, filed electronically through IARD. Part 1A: firm information for regulators; Part 1B: state-only items; Part 2A: the firm brochure; Part 2B: the brochure supplement on each supervised person; Part 3: Form CRS for retail investors.");
+F(5,4,"Form ADV-W","Withdrawal from investment adviser registration with the SEC or a state, filed through IARD when the adviser stops doing business or moves to the other regulator.");
+F(5,4,"Form ADV-E","Certificate filed by the independent public accountant after the surprise examination of an adviser that has custody of client funds or securities. Due within 120 days of the examination date.");
+F(5,4,"Form ADV-H","Request for a temporary or continuing hardship exemption when an adviser cannot file on IARD electronically.");
+F(5,4,"Form ADV-NR","Appointment of an agent for service of process by a non-resident general partner or managing agent of an SEC-registered adviser.");
+F(5,4,"Form U4","Uniform Application for Securities Industry Registration or Transfer, filed through CRD to register an agent or investment adviser representative. Must be kept current, including new disciplinary events and criminal charges.");
+F(5,4,"Form BD","Uniform application for broker-dealer registration with the SEC, FINRA and the states, filed through CRD.");
+F(5,4,"Form BR","Uniform branch office registration form, filed through CRD for each branch of a broker-dealer.");
+F(5,4,"Form D","Notice of an exempt offering under Regulation D, filed with the SEC within 15 days after the first sale. States may require a notice filing and fee.");
+F(5,4,"Form 13F","Quarterly holdings report of an institutional investment manager with investment discretion over $100 million or more in section 13(f) securities. Due within 45 days after each calendar quarter.");
+F(5,4,"Schedule 13D","Filed by anyone who acquires beneficial ownership of more than 5% of a public company's voting equity with a purpose of influencing control. Due within 5 business days. Passive holders may use the shorter Schedule 13G.");
+F(5,4,"Form 144","Notice of a proposed sale of restricted or control securities under Rule 144, required when the amount sold in any 3 months is more than 5,000 shares or more than $50,000.");
+F(5,1,"Form 8-K","Current report a public company files within 4 business days of a material event, such as a merger, bankruptcy, a change of auditors, or a director or officer leaving.");
+F(5,1,"Form 10-K","A public company's annual report, with financial statements audited by an independent accountant.");
+F(5,1,"Form 10-Q","A public company's quarterly report for each of the first three fiscal quarters. Its financial statements are reviewed, not audited. The fourth quarter is covered by the 10-K.");
+Q(5,4,2,"Before a new client signs, an adviser hands her a document that describes the representative who will run her account: education, business background and any disciplinary history. Which part of Form ADV is that?","Part 2B",["Part 1A","Part 2A","Part 3"],"Part 2B is the brochure supplement about the supervised persons who advise the client. Part 2A describes the firm, Part 1A is filed for regulators, and Part 3 is Form CRS.");
+Q(5,4,2,"Lantern Advisers, a state-registered firm, decides to close and stop advising clients. Which form does it file to end its registration?","Form ADV-W",["Form U5","Form ADV-E","Form BD"],"Form ADV-W withdraws an adviser's registration. Form U5 ends an individual's registration with a firm; Form ADV-E is the accountant's custody certificate; Form BD registers a broker-dealer.");
+Q(5,4,2,"An adviser has custody of client funds, so an independent accountant performs a surprise examination. What does the accountant file afterward, and by when?","Form ADV-E, within 120 days of the exam",["Form ADV-W, within 30 days of the exam","Form 13F, within 45 days of the exam date","Form ADV-H, within 90 days of the exam"],"Form ADV-E is the accountant's certificate of the surprise examination of client funds and securities, filed within 120 days of the examination date.");
+Q(5,4,2,"Ridgeback Capital manages $250 million of exchange-listed stocks with full investment discretion. Which report must it file every quarter because of those holdings?","Form 13F",["Form 10-Q","Form D","Schedule 13G"],"An institutional investment manager with discretion over $100 million or more in section 13(f) securities files Form 13F within 45 days after each quarter. Form 10-Q is filed by public companies about themselves.");
+Q(5,4,2,"Odin buys 6% of a public company's voting stock and plans to push for seats on its board. Which filing is due, and how fast?","Schedule 13D, within 5 business days",["Schedule 13G, within 45 days of year end","Form 144, within 4 business days","Form 13F, within 45 days of quarter end"],"More than 5% with an intent to influence control requires Schedule 13D within 5 business days. Schedule 13G is for passive holders.");
+Q(5,1,2,"A listed company's chief financial officer resigns without warning. Within how many business days must the company report it on Form 8-K?","4",["2","10","15"],"Form 8-K reports material events within 4 business days, including the departure of a principal officer.");
+Q(5,4,2,"A startup raises money from accredited investors under Rule 506(b) of Regulation D. What must it file with the SEC, and when?","Form D, within 15 days after the first sale",["Form S-1, before the first sale","Form 8-K, within 4 business days","Form D, within 30 days after the offering ends"],"A Regulation D offering is exempt from registration, but the issuer files a Form D notice within 15 days after the first sale. Form S-1 is a registration statement.");
+Q(5,4,2,"Bertram, an officer of a listed company, plans to sell 20,000 shares of his control stock under Rule 144 over the next month. Which form must he file?","Form 144",["Form 13F","Schedule 13D","Form D"],"Form 144 gives notice of a proposed sale of restricted or control stock when more than 5,000 shares or more than $50,000 will be sold in 3 months.");
+Q(5,4,2,"Ines, an investment adviser representative, is charged with a felony. She has not been convicted. What must happen to her Form U4?","It must be updated to report the charge.",["Nothing until she is convicted of it.","It is withdrawn and filed again next year.","Only her clients are told, by letter."],"Form U4 must be kept current. Felony charges, not only convictions, are reportable, and the amendment must be filed promptly.");
+Q(5,4,2,"Which form registers a new broker-dealer firm with the SEC, FINRA and the states through CRD?","Form BD",["Form BR","Form ADV","Form U4"],"Form BD registers the broker-dealer. Form BR registers its branch offices, Form ADV is for investment advisers, and Form U4 registers individuals.");
+Q(5,1,2,"Which filing reports a public company's results for its fourth fiscal quarter?","The annual Form 10-K",["A fourth Form 10-Q filing","Form 8-K within 4 days","Schedule 13G each year"],"Form 10-Q is filed only for the first three quarters. The fourth quarter is covered by the annual report on Form 10-K, whose statements are audited.");
+
+/* ---- EDPNA forms: one card and exam-type questions for each SSA form the section names (Version 210).
+   Asked for: "make sure same thing is done for ... that edna or what is called soc sec exam". Titles and the 2024 registration
+   rule checked against ssa.gov (Form SSA-1699, 09-2024 edition) on November 23, 2026. Own wording, made-up names. ---- */
+F(6,5,"Form SSA-1696","Claimant's Appointment of a Representative. The claimant appoints the representative and both sign. It also records whether the representative wants direct payment of the fee or assigns it to an affiliated entity.");
+F(6,5,"Form SSA-1699","Representative Registration (09-2024 edition). Since September 30, 2024 anyone not already registered must register on it before SSA will accept a new appointment, even without direct payment. Also used to update registration and add affiliations.");
+F(6,5,"Form SSA-1694","Entity Registration and Taxpayer Information. A firm registers on it, and names a point of contact, before a representative can assign direct payment of fees to the firm.");
+F(6,5,"Form SSA-1560","The fee petition: asks SSA to authorize a fee for the services provided, used when no fee agreement applies or a higher fee is sought. Filed after the work is finished.");
+F(6,4,"Form SSA-561","Request for Reconsideration: the first appeal of an initial determination. Due within 60 days after the notice is received; receipt is presumed 5 days after the date on the notice.");
+F(6,4,"Form HA-501","Request for Hearing by an Administrative Law Judge, after reconsideration. Due within 60 days after the reconsideration notice is received.");
+F(6,4,"Form HA-520","Request for Review of an administrative law judge's decision or dismissal by the Appeals Council. Due within 60 days after the notice is received.");
+F(6,4,"Form SSA-3441","Disability Report – Appeal: updates SSA on new treatment, medications, changes in condition and daily activities when the claimant appeals.");
+F(6,3,"Form SSA-3368","Disability Report – Adult: the conditions, treating sources, medications, tests, work and education, filed with an adult disability claim.");
+F(6,3,"Form SSA-3369","Work History Report: the details of past jobs, such as duties, lifting, tools and hours, used at steps 4 and 5.");
+F(6,3,"Form SSA-3373","Function Report – Adult: the claimant's own account of daily activities and how the impairments limit them.");
+F(6,3,"Form SSA-827","Authorization to Disclose Information to the Social Security Administration: lets doctors, hospitals and other sources release records to SSA.");
+F(6,1,"Form SSA-8240","The beneficiary's authorization for SSA to get wage and employment information directly from payroll data providers (the Payroll Information Exchange).");
+F(6,1,"Form SSA-632","Request for Waiver of Overpayment Recovery: asks SSA not to collect an overpayment because the person was not at fault and repayment would defeat the purpose of the program or be against equity and good conscience.");
+F(6,1,"Form SSA-634","Request for Change in Overpayment Recovery Rate: asks SSA to withhold a smaller amount each month to repay an overpayment.");
+Q(6,5,2,"Kim has helped claimants informally for years but has never registered with SSA. In 2026 a new claimant wants to appoint her, and she will not ask for direct payment. What must she do before SSA will accept the appointment?","Register on Form SSA-1699.",["Nothing; registration is only for direct pay.","File Form SSA-1694 for herself.","File Form SSA-1560 before the claim starts."],"Since September 30, 2024 anyone who has not registered must register on Form SSA-1699 before SSA recognizes a new appointment, whether or not they want direct payment.");
+Q(6,5,2,"Harbor Advocates LLC wants the fees its representatives earn paid directly to the firm. Which form registers the firm for that?","Form SSA-1694",["Form SSA-1699","Form SSA-1696","Form SSA-8240"],"An entity registers on Form SSA-1694 and names a point of contact. Each representative registers on Form SSA-1699 and assigns direct payment to the firm on Form SSA-1696.");
+Q(6,4,2,"Lowell's claim was denied at reconsideration. Which form asks for the next level of appeal?","Form HA-501",["Form SSA-561","Form HA-520","Form SSA-3441"],"After reconsideration the next step is a hearing before an administrative law judge, requested on Form HA-501 within 60 days of receiving the notice. Form SSA-3441 is usually filed with it.");
+Q(6,4,2,"An administrative law judge has issued an unfavorable decision. Which form asks the Appeals Council to review it?","Form HA-520",["Form HA-501","Form SSA-561","Form SSA-1560"],"Form HA-520 requests Appeals Council review, due within 60 days after the decision is received.");
+Q(6,4,2,"A reconsideration denial notice is dated Monday, June 1, 2026. Nothing shows it arrived late. What is the last day to request a hearing?","August 5, 2026",["July 31, 2026","August 1, 2026","July 1, 2026"],"The notice is presumed received 5 days after its date, June 6. The appeal is due 60 days after receipt: August 5, 2026, a Wednesday.");
+Q(6,4,2,"Along with an appeal, which form tells SSA about new treatment, new medications and changes in the claimant's condition since the last report?","Form SSA-3441",["Form SSA-3368","Form SSA-3373","Form SSA-827"],"Form SSA-3441 is the disability report for appeals. Form SSA-3368 is filed with the initial adult claim.");
+Q(6,3,2,"Which form gives the claimant's own account of daily activities, such as cooking, shopping and sleep, and how the impairments limit them?","Form SSA-3373",["Form SSA-3369","Form SSA-3368","Form SSA-8240"],"Form SSA-3373 is the adult function report. Form SSA-3369 covers past jobs.");
+Q(6,3,2,"Which form lists the details of the claimant's past jobs, such as duties, how much was lifted, tools used and hours worked?","Form SSA-3369",["Form SSA-3373","Form SSA-3441","Form SSA-1696"],"The Work History Report, Form SSA-3369, supports the findings on past relevant work at step 4 and transferable skills at step 5.");
+Q(6,1,2,"Nadia was overpaid $4,000 through no fault of her own, and repaying it would leave her unable to meet basic living costs. She does not dispute the amount. Which form asks SSA not to collect it?","Form SSA-632",["Form SSA-634","Form SSA-561","Form SSA-795"],"Form SSA-632 requests a waiver of overpayment recovery. If she disputed the fact or amount of the overpayment, she would appeal with Form SSA-561.");
+Q(6,1,2,"Teodor agrees he owes an overpayment, but the full monthly withholding leaves him short each month. Which form asks for a smaller monthly amount?","Form SSA-634",["Form SSA-632","Form SSA-561","Form SSA-3368"],"Form SSA-634 requests a change in the overpayment recovery rate. A waiver on Form SSA-632 would ask SSA not to collect at all.");
+
 /* ================= Bookkeeping · office security and client privacy (WISP, Section 7216) ================= */
 Q(4,5,2,"Federal law requires a paid tax preparer's office to have","a written information security plan (WISP) under the FTC Safeguards Rule",["a locked filing cabinet only","nothing, if the office is a single-member LLC","a plan only after a data breach"],"Tax preparers are financial institutions under the Gramm-Leach-Bliley Act; IRS Publications 4557 and 5708 explain the plan.");
 Q(4,5,3,"Before tax return information is shared with a preparer working outside the United States, the office needs","the client's signed Section 7216 consent, as a separate document",["a line in the engagement letter","the client's verbal OK on a call","nothing, if the preparer is family"],"Revenue Procedure 2013-14 sets the wording; the consent cannot be merged into other documents.");
@@ -19925,6 +20055,8 @@ const faExtraClick0=extraClick;extraClick=function(b){if(b.dataset.fa!==undefine
 /* entry: a third button in the forms row under the main button (EA parts and the bookkeeping course); it shows the gauge.
    It shares the row instead of adding one, because tmp/t510.js keeps the page short and the path near the top. */
 const faEntry0=fvEntryHtml;fvEntryHtml=function(){let h=faEntry0();try{const st=faStat(part);if(st.all.n>=8)h=h.replace('class="fventry"','class="fventry fa3"').replace(/<\/div>\s*$/,`<button class="btn fabtn" data-fa="open">🎯 Forms & acronyms drill ${faPct(st.all)}%</button></div>`)}catch(e){}return h};
+/* Version 210: Series 65 (5) and EDPNA (6) have no IRS forms row, so they get a row with just the drill button under the main button. */
+const faDoNext5=doNextHtml;doNextHtml=function(){const h=faDoNext5();try{if(h&&(part==5||part==6)){const st=faStat(part);if(st.all.n>=8)return h+`<div class="fventry"><button class="btn fabtn" data-fa="open">🎯 Forms & acronyms drill ${faPct(st.all)}%</button></div>`}}catch(e){}return h};
 
 /* ================= CAA on the job =================
    The owner has passed the CAA training, so this section is no longer exam preparation. It is now:
@@ -22166,7 +22298,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 209 · Nov 23";
+const BUILD="Version 210 · Nov 23";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");

@@ -87,3 +87,5 @@ const faExtraClick0=extraClick;extraClick=function(b){if(b.dataset.fa!==undefine
 /* entry: a third button in the forms row under the main button (EA parts and the bookkeeping course); it shows the gauge.
    It shares the row instead of adding one, because tmp/t510.js keeps the page short and the path near the top. */
 const faEntry0=fvEntryHtml;fvEntryHtml=function(){let h=faEntry0();try{const st=faStat(part);if(st.all.n>=8)h=h.replace('class="fventry"','class="fventry fa3"').replace(/<\/div>\s*$/,`<button class="btn fabtn" data-fa="open">🎯 Forms & acronyms drill ${faPct(st.all)}%</button></div>`)}catch(e){}return h};
+/* Version 210: Series 65 (5) and EDPNA (6) have no IRS forms row, so they get a row with just the drill button under the main button. */
+const faDoNext5=doNextHtml;doNextHtml=function(){const h=faDoNext5();try{if(h&&(part==5||part==6)){const st=faStat(part);if(st.all.n>=8)return h+`<div class="fventry"><button class="btn fabtn" data-fa="open">🎯 Forms & acronyms drill ${faPct(st.all)}%</button></div>`}}catch(e){}return h};
