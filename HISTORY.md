@@ -689,3 +689,14 @@ SOCIAL CONNECTED (Nov 23 16:08 Manila), done in the owner's Chrome via the Claud
   Login Kit + Content Posting API (inbox upload), target user @solvinglifellc. Connected. Production needs TikTok review + demo video.
 - Connector now deploys by Workers Builds (trigger on social/*, root /social, social/wrangler.jsonc keeps KV + cron; ADMIN secret kept).
   Setup page has a "Choose Google file" shortcut.
+
+YOUTUBE AUTOPILOT (Nov 23 ~17:00 Manila): connector got youtube_api (full youtube scope), drive_id uploads (drive.readonly scope,
+Drive API enabled in project solving-life-posting), drive_video_link (signed /m/<id>/<sig>.mp4 stream for Facebook/TikTok),
+publish_at scheduling + playlist_id, and youtube_queue (KV ytq, log ytlog). Cron "21 9 * * *" uploads 5 queued videos/day
+(API quota ~6 uploads/day). 7 playlists created (Tax Season Anime PLKyRqPY09WLE, True or False PLTrpGybG33Ak, Tax Rules in 30
+Seconds PLY66Ha2PcQ_Y, Tax Guides PLf9cLxV7vuKU, ITIN/Immigrants PLYT1LZtFHGLE, Side Hustle/Gig/Small Business PLDnbt0A4ju6Q,
+Become a Tax Pro PLUB9yEAoaek8). 58 Drive videos scheduled one a day at 6 PM Denver (01:00 UTC) Nov 24 -> Jan 20; first 5 uploaded,
+53 in the queue. Titles/descriptions fact-checked (overtime deduction is $12,500/$25,000, not the video's spoken figure).
+Plan doc: project "YouTube Plan - Solving Life LLC". App ads (EA, Series 65, EDPNA, kids) rendered from real screenshots in
+/home/claude/ads (render.py + ad_*.json, original generated music) — waiting for owner review, then Jan 21 -> Apr 15 slots.
+TikTok token bug fixed (token may be nested under data); TikTok needs one reconnect click by the owner. Instagram link retry Thu Nov 26.
