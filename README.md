@@ -349,3 +349,5 @@ This repository holds the built app that GitHub Pages serves, the source it is b
 - Version 210 (Nov 23): Series 65 and EDPNA get the forms and acronyms drill button; 59 new glossary terms for the two
   sections (gloss_more.js) and plural forms ("ADRs", "VEs") are now explained; form cards and exam-type questions for 15
   SEC/FINRA/NASAA forms (s65_forms.js) and 15 SSA forms (edpna_forms.js), with the 2024 SSA-1699 registration rule.
+- Version 211 (Nov 23): 12 real Social Security forms in the form viewer (SSA-1696, 1699, 827, 561, 16, 454, SS-5, HA-4631 and
+  more, plus IRS W-4V), each box with SSA's wording and an exam note; EDPNA hub opens Form SSA-1696 directly.

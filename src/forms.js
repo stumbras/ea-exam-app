@@ -344,7 +344,7 @@ function fxRule(k,label){const R=FXR[k];if(!R)return"";const t=fvClean(label).re
 /* ---------- the viewer ---------- */
 function fvFieldHtml(d,i){const f=d.f[i],k=fv.k,lab=fvClean(f[6]),own=k==="f1040"?F40X[i]:fxRule(k,f[6]),rel=own?[]:fvRelated(f[6],k),ln=k==="f1040"&&F40REV[i]?"Line "+F40REV[i]:(k==="f1040"&&F40BOX[i]?F40BOX[i]:"");
   return `<div class="fvsh"><div class="fvshh"><b>${ln?esc(ln):(f[5]?"Checkbox":"Box")}</b><span><button class="btn ghost small" data-fv="prev" aria-label="Previous box">‹</button><button class="btn ghost small" data-fv="next" aria-label="Next box">›</button><button class="btn ghost small" data-fv="close">Close</button></span></div>
-   <div class="fvirs"><i class="fvh">On the form</i>${lab?esc(lab):"The IRS file has no description for this box."}</div>
+   <div class="fvirs"><i class="fvh">On the form</i>${lab?esc(lab):(/^(?:ssa|ss5|ha)/.test(k)?"The SSA file":"The IRS file")+" has no description for this box."}</div>
    ${own?`<div class="fvown"><i class="fvh">What it means</i>${esc(own)}</div>`:""}
    ${rel.length?`<div class="fvrel"><i class="fvh">Related in the course</i>${rel.map(r=>`<div><b>${esc(r.f)}</b> ${esc(r.b)}</div>`).join("")}</div>`:""}
    ${fv.tab==="fill"&&k==="f1040"?fvFillInput(d,i):""}</div>`}
@@ -354,7 +354,7 @@ function fvPageHtml(d){const k=fv.k,pg=fv.pg,P=d.p[pg],fl=fv.tab==="fill"?(fv.fi
 function renderForm(){const V=document.getElementById("view");if(!fv){view="home";return render()}
   if(fv.lib)return renderFormLib(V);
   const k=fv.k,ix=FORMIDX[k],d=FCACHE[k],is40=k==="f1040";
-  let h=`<section class="section fvw"><div class="fvtop nolink"><button class="btn ghost small" data-fv="back">← Back</button><div class="fvt"><b>${esc(fvName(k))}</b><span>${esc(ix[0]||"")} · the real IRS form</span></div></div>`;
+  let h=`<section class="section fvw"><div class="fvtop nolink"><button class="btn ghost small" data-fv="back">← Back</button><div class="fvt"><b>${esc(fvName(k))}</b><span>${esc(ix[0]||"")} · the real ${/^(?:ssa|ss5|ha)/.test(k)?"SSA":"IRS"} form</span></div></div>`;
   if(!d)h+=`<div class="card">Loading the form…</div>`;
   else if(d.err)h+=`<div class="card"><b>The form could not be loaded.</b><div class="small muted">Forms are downloaded the first time they are opened. Check the internet and try again.</div><button class="btn" data-fv="retry">Try again</button></div>`;
   else{const ab=fvAbout(k);

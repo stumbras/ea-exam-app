@@ -6,7 +6,7 @@ const dn=()=>p.evaluate(()=>{const d=document.querySelector('.donext');return d?
 for(const pt of [1,2,3,5,6,7,8]){await p.evaluate(pt=>{part=pt;sess=null;view="home";render();scrollTo(0,0)},pt);await p.waitForTimeout(200);
  const r=await p.evaluate(()=>({h:document.documentElement.scrollHeight,rows:document.querySelectorAll('.xp details.xprow').length,steps:xpState().steps.length,doms:Object.keys(PARTS[part].doms).length,tools:!!document.querySelector('#xptools'),y:Math.round(document.querySelector('.xp').getBoundingClientRect().top),sw:document.documentElement.scrollWidth}));
  console.log(` part ${pt}: height ${r.h}, ${r.rows} topics, ${r.steps} steps, path at y=${r.y} | ${(await dn()).slice(0,110)}`);
- ok(`part ${pt} shows the path with one row per topic, tools folded, no sideways scroll`,r.rows===r.doms&&r.tools&&r.sw<=392&&(pt===8||pt===7||(r.h<2800&&r.y<(pt<=3?960:570))))}
+ ok(`part ${pt} shows the path with one row per topic, tools folded, no sideways scroll`,r.rows===r.doms&&r.tools&&r.sw<=392&&(pt===8||pt===7||(r.h<2800&&r.y<(pt<=3?960:600))))}
 await p.evaluate(()=>{part=4;view="home";render()});await p.waitForTimeout(200);ok('course section is unchanged (no exam path)',await p.evaluate(()=>!document.querySelector('.xp')));
 // ---- walk the path in Part 1 ----
 await p.evaluate(()=>{part=1;Object.keys(PARTS[1].doms).forEach(d=>{xpMem(d,1).ld=1});S.set.xp.nodx1=1;S.set.xpv=2;/* a learner from before lessons joined the path: t641 covers the lesson steps */view="home";render()});await p.waitForTimeout(200);await p.screenshot({path:'tmp/x_home0.png',fullPage:true});

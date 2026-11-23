@@ -665,3 +665,11 @@ adds the drill button for parts 5 and 6. Drill now: Series 65 17 forms / 87 acro
 Part (a), the real form viewer for SEC/SSA forms, is BLOCKED: this workspace's network refuses ssa.gov (403) and sec.gov
 (timeout); a temporary Cloudflare fetch worker was refused by the safety check, so not used. Needs the owner to attach the
 PDFs or approve another route. Tests t750 16, t760 12, t733 11, t734 7, t654 13, t653 17, t510 26.
+
+VERSION 211 (Nov 23 ~12:00 Manila): owner attached SSA PDFs from ssa.gov (SSA blocks this workspace; owner's setting now
+allows sec.gov and finra.org). Real-form viewer gained 12 forms: SSA-1696 (12-2024), SSA-1699 (09-2024), SSA-827 (06-2024),
+SSA-1696-SUP1, SSA-1696-SUP2, SS-5 (12-2024), SSA-454-BK (09-2026), SSA-199 (08-2026, Vocational Rehabilitation Provider
+Claim), HA-4631 (09-2026), SSA-561 (08-2025), SSA-16 (09-2025), and IRS W-4V (Rev. January 2026). Keys ssa*/ss5/ha4631/fw4v
+in mk_forms.py (titles in TT). forms_ssa.js: exam notes per box (FXR) + "Form SSA-1696, every box" button on the EDPNA hub.
+Viewer says "the real SSA form" for SSA keys. SEC forms (ADV, ADV-W, BD...) downloaded to /tmp/secdl but are not fillable
+(filed online), so not added yet. t510 limit for parts 5/6 path raised 570 -> 600 px (drill row). All tests pass.
