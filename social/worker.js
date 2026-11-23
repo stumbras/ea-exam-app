@@ -46,7 +46,7 @@ export default {
 
 /* ---------------- setup page ---------------- */
 const FIELDS = [
-  ["meta_app_id", "Meta app ID (for Facebook)"], ["meta_app_secret", "Meta app secret", 1],
+  ["meta_app_id", "Meta app ID (for Facebook and Instagram)"], ["meta_app_secret", "Meta app secret", 1], ["meta_config_id", "Meta login configuration ID (optional; from Facebook Login for Business, Configurations)"],
   ["ig_app_id", "Instagram app ID (from the Instagram use case)"], ["ig_app_secret", "Instagram app secret", 1],
   ["google_client_id", "Google OAuth client ID (for YouTube)"], ["google_client_secret", "Google OAuth client secret", 1],
   ["tiktok_client_key", "TikTok client key"], ["tiktok_client_secret", "TikTok client secret", 1]
@@ -85,7 +85,7 @@ async function startAuth(n, env) {
   await env.SL.put("state:" + state, n, { expirationTtl: 900 });
   let url;
   if (n === "facebook") { if (!cfg.meta_app_id) throw new Error("Save the Meta app ID first.");
-    url = `https://www.facebook.com/${GV}/dialog/oauth?` + form({ client_id: cfg.meta_app_id, redirect_uri: cb, state, scope: "pages_show_list,pages_read_engagement,pages_manage_posts,business_management" }); }
+    url = `https://www.facebook.com/${GV}/dialog/oauth?` + form({ client_id: cfg.meta_app_id, redirect_uri: cb, state, ...(cfg.meta_config_id ? { config_id: cfg.meta_config_id } : { scope: "pages_show_list,pages_read_engagement,pages_manage_posts,business_management,instagram_basic,instagram_content_publish" }) }); }
   else if (n === "instagram") { if (!cfg.ig_app_id) throw new Error("Save the Instagram app ID first.");
     url = "https://www.instagram.com/oauth/authorize?" + form({ client_id: cfg.ig_app_id, redirect_uri: cb, response_type: "code", state, scope: "instagram_business_basic,instagram_business_content_publish" }); }
   else if (n === "google") { if (!cfg.google_client_id) throw new Error("Save the Google client ID first.");
@@ -143,10 +143,14 @@ async function fbPost(env, a) {
   return { network: "facebook", type: "post", page: pg.name, ...(await jfetch(`${base}/feed`, { method: "POST", body: form({ message: a.text, link: a.link, published: a.draft ? "false" : "true", access_token: pg.access_token }) })) };
 }
 async function igPost(env, a) {
-  const ig = await kget(env, "tok:instagram"); if (!ig) throw new Error("Instagram is not connected.");
-  const base = `https://graph.instagram.com/${GV}/${ig.user_id}`, T = ig.access_token;
+  let ig = await kget(env, "tok:instagram"), G = "https://graph.instagram.com";
+  if (!ig) { /* Instagram linked to the Facebook Page: posts through the Page's sign-in (no separate Instagram app needed) */
+    const fb = await kget(env, "tok:facebook"), p = fb && fb.pages && fb.pages.find(x => x.ig);
+    if (!p) throw new Error("Instagram is not connected. Link the Instagram account to the Facebook Page, then tap Connect Facebook again.");
+    ig = { user_id: p.ig, access_token: p.access_token, username: p.name + " (Instagram)" }; G = "https://graph.facebook.com"; }
+  const base = `${G}/${GV}/${ig.user_id}`, T = ig.access_token;
   const container = async o => (await jfetch(`${base}/media`, { method: "POST", body: form({ ...o, access_token: T }) })).id;
-  const ready = async id => { for (let i = 0; i < 40; i++) { const s = await jfetch(`https://graph.instagram.com/${GV}/${id}?fields=status_code,status&access_token=${T}`); if (s.status_code === "FINISHED") return; if (s.status_code === "ERROR") throw new Error("Instagram could not process the media: " + (s.status || "")); await sleep(3000); } throw new Error("Instagram is still processing; try publishing again in a minute."); };
+  const ready = async id => { for (let i = 0; i < 40; i++) { const s = await jfetch(`${G}/${GV}/${id}?fields=status_code,status&access_token=${T}`); if (s.status_code === "FINISHED") return; if (s.status_code === "ERROR") throw new Error("Instagram could not process the media: " + (s.status || "")); await sleep(3000); } throw new Error("Instagram is still processing; try publishing again in a minute."); };
   let id;
   if (a.carousel && a.carousel.length) {
     const kids = []; for (const m of a.carousel.slice(0, 10)) { const k = await container(/\.(mp4|mov)(\?|$)/i.test(m) ? { video_url: m, media_type: "VIDEO", is_carousel_item: "true" } : { image_url: m, is_carousel_item: "true" }); await ready(k); kids.push(k); }
@@ -188,7 +192,7 @@ async function ttDraft(env, a) { // sends the video to the TikTok app's inbox; t
   return { network: "tiktok", publish_id: init.data.publish_id, note: "Sent to the TikTok app inbox. Open TikTok, tap the notification, add a sound if you like, and post." };
 }
 async function status(env) {
-  const o = {}; for (const n of ["facebook", "instagram", "google", "tiktok"]) { const t = await kget(env, "tok:" + n); o[n === "google" ? "youtube" : n] = t ? (n === "facebook" ? { pages: t.pages.map(x => x.name) } : n === "instagram" ? { username: t.username } : n === "google" ? { channel: t.channel } : { name: t.name }) : "not connected"; }
+  const o = {}; for (const n of ["facebook", "instagram", "google", "tiktok"]) { let t = await kget(env, "tok:" + n); if (!t && n === "instagram") { const fb = await kget(env, "tok:facebook"), p = fb && fb.pages && fb.pages.find(x => x.ig); if (p) t = { username: "linked to the " + p.name + " Page" }; } o[n === "google" ? "youtube" : n] = t ? (n === "facebook" ? { pages: t.pages.map(x => x.name) } : n === "instagram" ? { username: t.username } : n === "google" ? { channel: t.channel } : { name: t.name }) : "not connected"; }
   return o;
 }
 
