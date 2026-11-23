@@ -31,7 +31,7 @@ def page(fn, title, desc, body):
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="bar">Now booking for the 2027 tax season · <a href="tel:{TEL}" style="color:#fff">{PHONE}</a></div>
+<div class="bar">Grand opening: ready to help now, ahead of the 2027 tax season · 🎉 <a href="https://solvinglifewith.com/giveaway" style="color:#fff">Free tax prep giveaway</a> · <a href="tel:{TEL}" style="color:#fff">{PHONE}</a></div>
 <header class="top"><div class="wrap">
 <a class="brand" href="index.html"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect x="1" y="1" width="34" height="34" rx="9" stroke="#0F1B2D" stroke-width="2"/><path d="M11 23c2 2 4 3 7 3 4 0 7-2 7-5 0-6-13-3-13-9 0-3 3-5 6-5 3 0 5 1 6 3" stroke="#0E7C66" stroke-width="2.4" stroke-linecap="round"/></svg>Solving Life LLC</a>
 <nav class="main" aria-label="Main">{nav}</nav>
@@ -48,7 +48,7 @@ def page(fn, title, desc, body):
 <footer class="bottom"><div class="wrap" style="flex-direction:column;gap:18px">
 <div style="display:flex;flex-wrap:wrap;gap:36px">
 <nav aria-label="Services" style="display:flex;flex-direction:column;gap:8px"><b>Services</b>
-<a href="services.html#individual">Individual &amp; family taxes</a><a href="services.html#business">Self-employed &amp; business</a><a href="services.html#itin">ITIN services</a><a href="services.html#international">International taxes</a><a href="services.html#gambling">Casino &amp; gambling taxes</a><a href="services.html#investments">Investments &amp; crypto</a><a href="services.html#irs">IRS help</a><a href="services.html#bookkeeping">Bookkeeping</a><a href="services.html#representation">IRS representation (March 2027)</a></nav>
+<a href="services.html#individual">Individual &amp; family taxes</a><a href="services.html#business">Self-employed &amp; business</a><a href="services.html#itin">ITIN services</a><a href="services.html#international">International taxes</a><a href="services.html#gambling">Casino &amp; gambling taxes</a><a href="services.html#investments">Investments &amp; crypto</a><a href="services.html#irs">IRS help</a><a href="services.html#bookkeeping">Bookkeeping &amp; payroll</a><a href="services.html#apostille">Apostilles</a><a href="services.html#representation">IRS representation (March 2027)</a></nav>
 <nav aria-label="Clients" style="display:flex;flex-direction:column;gap:8px"><b>Clients</b>
 <a href="index.html#how">How it works</a><a href="pricing.html">Pricing</a><a href="faq.html#bring">What to bring</a><a href="faq.html">FAQ</a><a href="{PORTAL}">Client portal</a><a href="{PAY}">Pay an invoice</a><a href="{BLOG}">Blog</a></nav>
 <nav aria-label="More" style="display:flex;flex-direction:column;gap:8px"><b>Solving Life</b>
@@ -70,7 +70,8 @@ SERVICES = [
  ("gambling", "Casino & gambling taxes", "quote on request", "Big wins, professional players and foreign visitors with U.S. winnings. We report wins and losses correctly under the newest rules.", ["Forms W-2G and 1042-S", "Records of losses and sessions", "Refunds of withholding for eligible visitors"]),
  ("investments", "Investments, day trading & crypto", "from $50 plus add-ons", "Stocks, funds, options and crypto, from a few trades to active trading.", ["Stocks, ETFs and funds +$50; crypto +$50", "Day traders from $250", "Trader tax status review $150"]),
  ("irs", "IRS help", "from $75", "Letters, notices and fixes for returns already filed.", ["Letter or CP2000 review $75", "Payment plan set-up $75", "Amended return $75"]),
- ("bookkeeping", "Bookkeeping", "from $150 a month", "Monthly books in QuickBooks Online, payroll, and catch-up work so your records are ready at tax time.", ["Monthly bookkeeping from $150/month; with payroll from $250/month", "Catch-up and clean-up $40/hour; QuickBooks set-up $150", "Form 1099-NEC filing $15 per contractor"]),
+ ("bookkeeping", "Bookkeeping & payroll", "from $150 a month", "Monthly books in QuickBooks Online, payroll, and catch-up work so your records are ready at tax time.", ["Monthly bookkeeping from $150/month; with payroll from $250/month", "Catch-up and clean-up $40/hour; QuickBooks set-up $150", "Form 1099-NEC filing $15 per contractor"]),
+ ("apostille", "Apostilles & document help", "quote on request", "Need a U.S. document accepted abroad? We help you get apostilles for birth and marriage certificates, diplomas, powers of attorney and business papers, and track them until they are done.", ["Colorado and other state documents", "Federal (U.S. Department of State) documents", "Help for families, students and businesses abroad"]),
  ("representation", "IRS representation & audit protection", "coming March 2027", "Audit support and representation before the IRS will open in March 2027. Join the waitlist and we will contact you first.", ["Audit and exam support", "Collection and payment cases", "Audit protection plans"]),
 ]
 
@@ -83,9 +84,9 @@ def svc_cards(limit=None):
 page("index.html", "Solving Life LLC — taxes, ITINs and bookkeeping, done right",
  "Online tax preparation, ITIN applications and bookkeeping for families, the self-employed, investors, immigrants, expats and nonresidents in all 50 states.",
  f"""<section class="hero"><div class="wrap">
-<p class="kicker">Online · all 50 states · federal and state e-file</p>
-<h1>Taxes, ITINs and bookkeeping, done right.</h1>
-<p class="lead">Personal, online tax help for families, the self-employed, investors, immigrants, expats and nonresidents. Upload securely, meet by video, sign electronically.</p>
+<p class="kicker">Now open · online · all 50 states and abroad</p>
+<h1>Taxes, ITINs, bookkeeping and apostilles, done right.</h1>
+<p class="lead">Personal, online help for families, the self-employed, small businesses, investors, immigrants, expats and nonresidents. Upload securely, meet by video, sign electronically.</p>
 <div class="row"><a class="btn btn-main" href="pricing.html">See services &amp; prices</a><a class="btn btn-line" href="{INQUIRY}">Send an inquiry</a></div>
 </div></section>
 <section class="block"><div class="wrap">
@@ -106,6 +107,20 @@ page("index.html", "Solving Life LLC — taxes, ITINs and bookkeeping, done righ
 <div class="card"><h3>ITINs with the tax return</h3><p>We prepare your Form W-7 together with the return and review your documents with you by secure video.</p></div>
 <div class="card"><h3>Casino and gambling know-how</h3><p>Wins, losses and withholding refunds on Forms W-2G and 1042-S, reported under the newest rules.</p></div>
 <div class="card"><h3>Visitors and nonresidents</h3><p>A free online treaty check for foreign visitors whose U.S. winnings or income were withheld at 30%.</p></div>
+</div></div></section><section class="block alt"><div class="wrap">
+<div class="head"><h2>Tax tips that are actually fun</h2><p>A new 30-second video every day: tax myths, quizzes, an anime series and infomercial parodies that teach real rules.</p></div>
+<div class="grid">
+<a class="card" href="https://www.youtube.com/@solvinglifellc"><h3>YouTube</h3><p>Shorts every day at 6 PM Mountain, plus step-by-step guides.</p><span class="price">Subscribe</span></a>
+<a class="card" href="https://www.tiktok.com/@solvinglifellc"><h3>TikTok</h3><p>Quick tax rules, quizzes and the Tax Season anime.</p><span class="price">Follow</span></a>
+<a class="card" href="https://www.instagram.com/solvinglifellc/"><h3>Instagram</h3><p>Reels, giveaways and reminders before every deadline.</p><span class="price">Follow</span></a>
+<a class="card" href="https://www.facebook.com/1389976747538284"><h3>Facebook</h3><p>Reels and news for families and small businesses.</p><span class="price">Follow</span></a>
+</div></div></section>
+<section class="block"><div class="wrap">
+<div class="head"><h2>Become a tax pro with our study apps</h2><p>The same team that does the work built the apps. Study on your phone, free to start.</p></div>
+<div class="grid">
+<a class="card" href="https://study.solvinglifewith.com/ea/"><h3>Enrolled Agent Prep</h3><p>All 3 EA exam parts with adaptive drills, mock exams, audio and a full bookkeeping &amp; QuickBooks course.</p><span class="price">Try it free</span></a>
+<a class="card" href="https://study.solvinglifewith.com/65/"><h3>Series 65 Prep</h3><p>A guided path in the exam's own order, a forms &amp; acronyms drill and quick quizzes.</p><span class="price">Try it free</span></a>
+<a class="card" href="https://study.solvinglifewith.com/kids/"><h3>Becoming Genius (kids)</h3><p>Quiz shows, coding missions and lessons with levels and rewards. No ads.</p><span class="price">Free</span></a>
 </div></div></section>""")
 
 page("services.html", "Services — Solving Life LLC", "Tax returns, ITINs, international and gambling taxes, investments and crypto, IRS help and bookkeeping.",
@@ -113,7 +128,7 @@ page("services.html", "Services — Solving Life LLC", "Tax returns, ITINs, inte
  "".join(f'<article class="card" id="{k}" style="margin-bottom:18px"><div class="top"><h2 style="margin:0;font-size:24px">{html.escape(t)}</h2><span class="price">{html.escape(p)}</span></div><p>{html.escape(d)}</p><ul class="list">' + "".join(f"<li>{html.escape(x)}</li>" for x in L) + f'</ul><div class="row" style="margin-top:8px"><a class="btn btn-main" href="{INQUIRY}">{"Join the waitlist" if k=="representation" else "Ask about this"}</a></div></article>' for k, t, p, d, L in SERVICES) +
  "</div></section>")
 
-rows = [("Individual & family taxes", "from $100"), ("Self-employed & business", "from $150"), ("ITIN services", "from $100"), ("Expat taxes (FBAR included)", "$200"), ("Nonresident returns (1040-NR)", "from $150"), ("Casino & gambling", "quote on request"), ("Stocks, ETFs and funds", "+$50"), ("Crypto", "+$50"), ("Day trader", "from $250"), ("Trader tax status review", "$150"), ("Letter or CP2000 review", "$75"), ("Payment plan", "$75"), ("Amended return", "$75"), ("Monthly bookkeeping", "from $150/month"), ("Bookkeeping + payroll", "from $250/month"), ("Catch-up and clean-up", "$40/hour"), ("QuickBooks set-up", "$150"), ("Form 1099-NEC filing", "$15 per contractor")]
+rows = [("Individual & family taxes", "from $100"), ("Self-employed & business", "from $150"), ("ITIN services", "from $100"), ("Expat taxes (FBAR included)", "$200"), ("Nonresident returns (1040-NR)", "from $150"), ("Casino & gambling", "quote on request"), ("Stocks, ETFs and funds", "+$50"), ("Crypto", "+$50"), ("Day trader", "from $250"), ("Trader tax status review", "$150"), ("Letter or CP2000 review", "$75"), ("Payment plan", "$75"), ("Amended return", "$75"), ("Monthly bookkeeping", "from $150/month"), ("Bookkeeping + payroll", "from $250/month"), ("Catch-up and clean-up", "$40/hour"), ("QuickBooks set-up", "$150"), ("Form 1099-NEC filing", "$15 per contractor"), ("Apostille help", "quote on request")]
 page("pricing.html", "Pricing — Solving Life LLC", "Starting prices for tax returns, ITINs, investments, IRS help and bookkeeping.",
  '<section class="block"><div class="wrap"><div class="head"><h1 style="margin:0;font-size:clamp(32px,5vw,48px)">Pricing</h1><p>Starting points. Your final quote is confirmed before any work begins.</p></div><div class="tw"><table class="prices"><thead><tr><th>Service</th><th>Price</th></tr></thead><tbody>' +
  "".join(f"<tr><td>{html.escape(a)}</td><td><b>{html.escape(b)}</b></td></tr>" for a, b in rows) + "</tbody></table></div></div></section>")
