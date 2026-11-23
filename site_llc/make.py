@@ -9,12 +9,12 @@ BOOK = WIX            # TODO step 3: direct Wix Bookings link for the video meet
 PORTAL = WIX          # TODO step 3: client portal link
 PAY = WIX             # TODO step 3: pay-an-invoice link
 INQUIRY = WIX         # TODO step 3: inquiry form (Wix Forms) or own form posting to Wix
-BLOG = WIX            # TODO step 3: blog feed from the Wix Blog API
+BLOG = "blog.html"    # posts copied from the Wix blog into post/<slug>.html (same addresses as on Wix)
 PHONE = "(720) 432-0981"; TEL = "+17204320981"; EMAIL = "info@solvinglifellc.com"
 HOURS = "Every day, 5:00 AM to 11:00 PM Mountain Time"
 
 NAV = [("index.html", "Home"), ("services.html", "Services"), ("pricing.html", "Pricing"),
-       ("about.html", "About"), ("faq.html", "FAQ"), ("contact.html", "Contact")]
+       ("about.html", "About"), ("faq.html", "FAQ"), ("blog.html", "Blog"), ("contact.html", "Contact")]
 
 def page(fn, title, desc, body):
     nav = "".join(f'<a href="{h}"{" aria-current=\"page\"" if h == fn else ""}>{t}</a>' for h, t in NAV)
@@ -22,6 +22,7 @@ def page(fn, title, desc, body):
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<base href="/">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(desc)}">
@@ -58,6 +59,7 @@ def page(fn, title, desc, body):
 </body>
 </html>
 """
+    os.makedirs(os.path.dirname(os.path.join(OUT, fn)), exist_ok=True)
     open(os.path.join(OUT, fn), "w").write(doc)
 
 SERVICES = [
@@ -162,3 +164,31 @@ legal("accessibility.html", "Accessibility", [
  ("Our aim", "We want everyone to be able to use this site. Pages use readable type, strong contrast, real buttons and links, and work on phones and with screen readers."),
  ("Need help?", f"If anything on the site is hard to use, call or text {PHONE} or write to {EMAIL} and we will help you directly.")])
 print("pages:", sorted(os.listdir(OUT)))
+
+# ---- Blog: the posts from the Wix blog, at the same /post/<slug> addresses ----
+from blog_posts import POSTS, SOURCES_NOTE
+from datetime import date
+E = html.escape
+def nice(d): return date.fromisoformat(d).strftime("%B %-d, %Y")
+def block(b):
+    k, v = b
+    if k == "p": return f"<p>{E(v)}</p>"
+    if k == "h2": return f"<h2>{E(v)}</h2>"
+    if k in ("ul", "ol"): return f"<{k}>" + "".join(f"<li>{E(i)}</li>" for i in v) + f"</{k}>"
+    if k == "table":
+        head = "".join(f"<th>{E(c)}</th>" for c in v[0])
+        rows = "".join("<tr>" + "".join(f"<td>{E(c)}</td>" for c in r) + "</tr>" for r in v[1:])
+        return f'<div class="tbl"><table><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table></div>'
+    if k == "sources": return "<h2>Sources</h2><ul class=\"src\">" + "".join(f"<li>{E(i)}</li>" for i in v) + f"</ul><p class=\"note\">{E(SOURCES_NOTE)}</p>"
+    raise ValueError(k)
+for i, po in enumerate(POSTS):
+    body = "".join(block(b) for b in po["blocks"]).replace("send an inquiry.", f'<a href="{INQUIRY}">send an inquiry</a>.')
+    more = "".join(f'<li><a href="post/{q["slug"]}">{E(q["title"])}</a></li>' for q in POSTS if q is not po)[:]
+    page(f"post/{po['slug']}.html", po["title"] + " — Solving Life LLC", po["excerpt"],
+f"""<article class="post wrap"><p class="meta"><a href="blog.html">Blog</a> · {nice(po["date"])} · {po["minutes"]} min read</p>
+<h1>{E(po["title"])}</h1>{body}
+<aside class="more"><h2>More from the blog</h2><ul>{more}</ul></aside></article>""")
+cards = "".join(f'<a class="card post-card" href="post/{q["slug"]}"><span class="meta">{nice(q["date"])} · {q["minutes"]} min</span><h3>{E(q["title"])}</h3><p>{E(q["excerpt"])}</p></a>' for q in POSTS)
+page("blog.html", "Blog — Solving Life LLC", "Plain-English tax guides: ITINs, expats and the FBAR, students, nonresident casino winnings and missed refunds.",
+f"""<section class="hero"><div class="wrap"><h1>Blog</h1><p class="lead">Short, plain-English guides to the tax questions our clients ask most.</p></div></section>
+<section><div class="wrap"><div class="grid">{cards}</div></div></section>""")
