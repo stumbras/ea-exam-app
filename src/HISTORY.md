@@ -221,7 +221,7 @@ the app had only as flash cards.
 - Every form named in a lesson or explanation becomes a link (`fvLinkify`); not in mock exams or kids.
 - Interactive Form 1040 with three worked cases (`F40CASES`) and box-by-box plain explanations.
 - Plain explanations per box (`FXR`) exist for 15 forms: 1040, W-2, 1099-NEC, 1099-INT,
-  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821. The other 212 show the IRS field text only.
+  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867. The other 211 show the IRS field text only.
 - Rules for `FXR` patterns: anchor on the line number (`(?:^|[.:] )N\. `), because labels often
   mention other lines. Check with tests t721, t722, t723.
 
@@ -423,7 +423,7 @@ the QBI limit.
    strictly longest and reword until under 30% (t733 and t734 fail above that).
 4. Outside misses still to explain and cover (ids from the owner's outside practice, no
    screenshot yet): #100709 Retirement Income, #100598 Gift Tax, #100172 Property.
-5. Plain box-by-box explanations for more forms: 1041, 1065, 1120-S, 706, 709, 8867 first.
+5. Plain box-by-box explanations for more forms: 1041, 1065, 1120-S, 706, 709 (8867 done in Version 218).
 6. Test on a real iPhone (Safari): audio chime, keep-going audio, form viewer.
 7. Check whether the military state-residence rule is on the current IRS exam outline.
 
@@ -651,6 +651,18 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 218 (Nov 23 ~21:45 Manila, side-panel session). (1) Open-work item 5 started: Form 8867 explained box by box
+(FXR.f8867 at the end of forms.js, 31 rules anchored on line numbers; every one of the 57 fields gets a plain explanation,
+checked with `node tmp/t722.js f8867`). Facts used: $650 per failure for returns filed in 2026 (irs.gov, section 6695(g)), four
+benefits (EIC, CTC/ACTC/ODC, AOTC, HOH), records kept 3 years, Form 8862 not needed after a math or clerical error. STILL TO DO
+for item 5: Forms 1041, 1065, 1120-S, 706, 709 (their field lists are in pwa/forms/<key>.json). (2) SECOND-READER REVIEW of
+bank_p1_gap16.js done by an independent reader: all 35 keyed answers and sums correct; one wrong choice narrowed ("Home mortgage
+interest" -> "Interest on their main home loan", because Form 6251 line 3 can add back interest on a home that is not a qualified
+dwelling) and two explanations tightened (what a nonresident alien may itemize; the $500 rule for qualified disasters). No stems
+changed. The review queue is now empty. (3) FBAR penalty cards and the gap7 explanation now give the inflation-adjusted amounts
+for penalties assessed from January 17, 2025: $16,536 non-willful per report, $165,353 or 50% willful (31 CFR 1010.821).
+Owner's instruction (Nov 23, 20:55 Manila): keep working without stopping for the next 8 hours (until about 04:55 Nov 24).
+
 VERSION 217 (Nov 23 ~21:20 Manila, side-panel session): SECOND-READER REVIEW of bank_p1_gap15.js and bank_p2_gap7.js done by an
 independent reader (all 52 re-read, every sum re-worked, figure-sensitive items checked on irs.gov): 49 correct as written, 3 fixed.
 (1) "Greta" stem said "did not pay enough estimated tax ... interest": that is the section 6654 penalty, which is NOT compounded

@@ -447,3 +447,37 @@ function fvEntryHtml(){return `<div class="fventry"><button class="btn" data-fv=
 const fvDoNext0=doNextHtml;doNextHtml=function(){const h=fvDoNext0();try{if(typeof XPU!=="undefined"&&XPU[part]&&h)return h+fvEntryHtml()}catch(e){}return h};
 const fvRenderCamp0=renderCamp;renderCamp=function(){fvRenderCamp0();try{if(cv&&cv.scr==="hub"){const s=document.querySelector("#view .section");if(s&&!s.querySelector(".fventry")){const d=document.querySelector("#view .donext")||s.firstElementChild;d.insertAdjacentHTML("afterend",fvEntryHtml())}}}catch(e){}};
 const fvRenderBk0=typeof renderBk==="function"?renderBk:null;if(fvRenderBk0)renderBk=function(){fvRenderBk0();try{const V=document.getElementById("view"),d=V.querySelector(".donext");if(d&&!V.querySelector(".fventry"))d.insertAdjacentHTML("afterend",fvEntryHtml())}catch(e){}};
+
+/* Form 8867, Paid Preparer's Due Diligence Checklist, explained box by box (Version 218). Penalty figure: $650 per failure for
+   returns filed in 2026 (irs.gov, section 6695(g)); records kept 3 years (Reg. 1.6695-2(b)(4)). Anchored on the line numbers. */
+FXR.f8867=[[/^For tax year/,"The tax year of the return this checklist goes with. A new Form 8867 is completed for every return or refund claim that claims one of the four benefits."],
+ [/^Taxpayer name/,"The name of the client, exactly as on the return."],
+ [/^Taxpayer identification number/,"The client's SSN or ITIN, so the checklist stays matched to the return."],
+ [/^Preparer's name/,"The paid preparer who did the due diligence. A nonsigning preparer completes the form and gives it to the signing preparer."],
+ [/^Preparer tax identification/,"The preparer's PTIN. The penalty for a due diligence failure falls on the preparer, and the firm can also be penalized."],
+ [/^Part I\b/,"Part I is answered for every return. First tick each benefit claimed: the earned income credit, the child credits (CTC, ACTC, ODC), the American opportunity credit, and head of household status. Each one is a separate due diligence duty, and a separate $650 penalty (returns filed in 2026) if it is not met."],
+ [/^E ?I ?C\.?$/,"Tick this when the return claims the earned income credit. Then Part II must be answered."],
+ [/^C ?T ?C/,"Tick this when the return claims the child tax credit, the additional child tax credit or the credit for other dependents. Then Part III must be answered."],
+ [/^A ?O ?T ?C\.?$/,"Tick this when the return claims the American opportunity tax credit. Then Part IV must be answered."],
+ [/^H ?O ?H\.?$/,"Tick this when the return uses head of household filing status. Then Part V must be answered."],
+ [/(?:^|[.:] )1\. Did you complete/,"Requirement 1: the return is based on what the client told you, or what you reasonably found out, for THIS tax year. Last year's answers cannot simply be copied."],
+ [/(?:^|[.:] )2\. If credits/,"Requirement 2, compute the credits: complete the worksheets for each credit (or your own with the same information) and keep them. This is how the amount claimed is shown to be figured correctly."],
+ [/(?:^|[.:] )3\. Did you satisfy the knowledge/,"Requirement 3, knowledge: interview the client, ask enough questions, and write down the answers at the time. You must not know, or have reason to know, that any information used is wrong. The test is what a reasonable, well-informed preparer would conclude."],
+ [/(?:^|[.:] )4\. Did any information/,"Did anything the client said look incorrect, incomplete or inconsistent? If yes, you must ask more questions (4a) and record them (4b) before you can prepare the return."],
+ [/(?:^|[.:] )4a\. /,"When something does not add up, ask reasonable follow-up questions until the facts are correct, complete and consistent. If the client will not answer, the credit cannot be claimed by you."],
+ [/(?:^|[.:] )4b\. /,"Write the follow-up questions and answers down at the time you ask them (contemporaneously): what you asked, whom, when, what they said, and how it changed the return."],
+ [/(?:^|[.:] )5\. Did you satisfy the record retention/,"Requirement 4, keep records for 3 years: this Form 8867, the worksheets, the documents the client gave you that you relied on, and your notes of how, when and from whom you got the information. Paper or electronic."],
+ [/(?:^|[.:] )5\. List those documents/,"Name the client's documents you relied on, if any, for example school or medical records showing where a child lived, or Form 1098-T."],
+ [/(?:^|[.:] )6\. Did you ask the taxpayer whether/,"Tell the client that the IRS may ask for proof, and ask whether they could show documents that support the credit or the filing status. You do not have to collect the documents; you have to ask."],
+ [/(?:^|[.:] )7\. Did you ask the taxpayer if any of these credits/,"Ask whether the IRS denied or reduced one of these credits in an earlier year. If so, the client may need Form 8862 to claim it again, and a ban of 2 years (reckless disregard) or 10 years (fraud) may apply."],
+ [/(?:^|[.:] )7a\. /,"Form 8862 is attached when a credit was denied or reduced for a reason other than a math or clerical error. Tick N/A when it is not required."],
+ [/(?:^|[.:] )8\. If the taxpayer is reporting self-employment/,"With self-employment income, ask about the business, its records, all income and all expenses, so that Schedule C is complete and correct. Income that looks made up to reach the largest earned income credit is a warning sign."],
+ [/(?:^|[.:] )9a\. /,"Part II, earned income credit. 9a: the client is eligible, and each child claimed meets the relationship, age, residency and joint return tests of a qualifying child. With no child, the client meets the rules for the credit without one."],
+ [/(?:^|[.:] )9b\. /,"The child must have lived with the client in the United States for more than half the year. Paying the child's support is not enough for the earned income credit; ask where the child actually lived."],
+ [/(?:^|[.:] )9c\. /,"When a child could be the qualifying child of more than one person, explain the tiebreaker rules: a parent comes first; between parents, the one the child lived with longer, then the higher AGI; otherwise the person with the highest AGI."],
+ [/(?:^|[.:] )10\. /,"Part III, child credits. Each person claimed must be the client's dependent and a U.S. citizen, national or resident. For the child tax credit the child must also be under 17 and have an SSN valid for work."],
+ [/(?:^|[.:] )11\. /,"Explain that the child tax credit needs the child to have lived with the client for more than half the year, unless the custodial parent released the claim to the child."],
+ [/(?:^|[.:] )12\. /,"For divorced or separated parents: the noncustodial parent can claim the child tax credit only with Form 8332 (or a similar statement) from the custodial parent attached to the return."],
+ [/(?:^|[.:] )13\. /,"Part IV, American opportunity credit. The client should show Form 1098-T and receipts for the tuition and related costs. Check that the student and the costs qualify and that the credit has not been claimed for 4 years already."],
+ [/(?:^|[.:] )14\. /,"Part V, head of household. The client must be unmarried or considered unmarried on the last day of the year AND have paid more than half the cost of keeping up a home for a qualifying person. Ask who lived in the home and who paid for it."],
+ [/(?:^|[.:] )15\. /,"Part VI: the preparer certifies that every answer is true, correct and complete. The finished form is sent with an e-filed return, or given to the client to attach to a paper return."]];

@@ -57,7 +57,7 @@ Q(1,6,3,"In 2025 a widower gives his son $50,000 cash and pays $20,000 tuition d
 Q(1,6,3,"A married couple elects gift splitting. The husband alone gave $60,000 to their daughter in 2025. Total taxable gifts for the couple:","$22,000",["$41,000","$60,000","$0"],"Each is treated as giving $30,000 − $19,000 = $11,000. Total $22,000.");
 
 // ----- 6C International information reporting -----
-F(1,6,"FBAR penalties","Non-willful: up to about $10,000 (inflation-adjusted) per report (Bittner v. U.S., 2023: per report, not per account). Willful: greater of about $100,000 (adjusted) or 50% of the account balance; criminal penalties possible");
+F(1,6,"FBAR penalties","Non-willful: up to $16,536 per report ($10,000 in the statute, inflation-adjusted for penalties assessed from January 17, 2025; Bittner v. U.S., 2023: per report, not per account). Willful: greater of $165,353 ($100,000 adjusted) or 50% of the account balance; criminal penalties possible");
 F(1,6,"FBAR: signature authority without ownership","Must file (e.g., an employee who can sign on the employer's foreign account), unless an exception applies");
 F(1,6,"FBAR recordkeeping","Keep account records (name, number, bank, type, maximum value) for 5 years from the FBAR due date");
 F(1,6,"FBAR: maximum account value conversion","Use the Treasury Reporting Rates of Exchange for the last day of the calendar year");
