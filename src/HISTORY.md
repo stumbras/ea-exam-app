@@ -651,6 +651,20 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 225 (Nov 23 ~23:00 Manila, side-panel session): bank_p1_gap17.js, 27 Part 1 story questions, second round on the owner's
+"keep covering" topics from new angles: AMT exemption phase-out, minimum tax credit only for timing items, standard deduction and
+AMT, EIC tiebreaker, child with an ITIN, age 25 rule, Form 4952 capital gain election, interest to carry tax-exempt bonds, Form
+2439, gift tax paid and basis, excess Roth contribution and recharacterization, earnings on a corrected excess, business bad debt
+in part, guarantee as a favor, switching from actual costs to the mileage rate, commuting, Form 8332 revocation, future interest
+gifts, 529 five-year election, gift loans, stock split with cash for a half share, holding period after a split, dual-status
+year, flat 30% on a nonresident's dividends, qualified disaster loss, personal theft loss, Form 709 with no tax due. SECOND-READER
+REVIEW done BEFORE shipping (independent reader, figures checked on irs.gov): all 27 keyed answers and sums correct; fixed one
+explanation (gifts after 1976 have no fair-market-value cap on the gift tax basis increase; now shows the fraction), one stem (the
+excess IRA contribution now has its date, because earnings are taxed in the year the contribution was MADE), one explanation
+(a qualified disaster is narrower than a federally declared one: declared January 1, 2020 to September 2, 2025, incident period
+begun by July 4, 2025), and three small tightenings. Right answer strictly longest in 3 of 27. Tests passed: t651 t652 t653
+t654 t658 t701 t733 t734, bias guard. The review queue is empty.
+
 VERSION 224 (Nov 23 ~22:45 Manila, side-panel session): INDEPENDENT SECOND READ of the six form explanation blocks (FXR.f8867,
 f709, f1041, f706, f1065, f1120s; 619 explanations) against the 2025 IRS instructions and Rev. Proc. 2024-40. 6 texts fixed:
 (1) Form 709 line 6: when the consenting spouse must also file (both exceptions, present-interest condition). (2) Form 1041 line
