@@ -221,7 +221,7 @@ the app had only as flash cards.
 - Every form named in a lesson or explanation becomes a link (`fvLinkify`); not in mock exams or kids.
 - Interactive Form 1040 with three worked cases (`F40CASES`) and box-by-box plain explanations.
 - Plain explanations per box (`FXR`) exist for 15 forms: 1040, W-2, 1099-NEC, 1099-INT,
-  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867, 709, 1041, 706, 1065. The other 207 show the IRS field text only.
+  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867, 709, 1041, 706, 1065, 1120-S. The other 206 show the IRS field text only.
 - Rules for `FXR` patterns: anchor on the line number (`(?:^|[.:] )N\. `), because labels often
   mention other lines. Check with tests t721, t722, t723.
 
@@ -423,7 +423,7 @@ the QBI limit.
    strictly longest and reword until under 30% (t733 and t734 fail above that).
 4. Outside misses still to explain and cover (ids from the owner's outside practice, no
    screenshot yet): #100709 Retirement Income, #100598 Gift Tax, #100172 Property.
-5. Plain box-by-box explanations for more forms: 1120-S (8867 done in Version 218, 709 in 219, 1041 in 220, 706 in 221, 1065 in 222).
+5. Plain box-by-box explanations: DONE for 8867 (Version 218), 709 (219), 1041 (220), 706 (221), 1065 (222), 1120-S (223). More forms can follow the same method (candidates: 1120, 941, 8949, Schedule D, Schedule E, 2553, 8832, 433-A, 656, 9465).
 6. Test on a real iPhone (Safari): audio chime, keep-going audio, form viewer.
 7. Check whether the military state-residence rule is on the current IRS exam outline.
 
@@ -651,6 +651,16 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 223 (Nov 23 ~22:30 Manila, side-panel session): Form 1120-S explained box by box (FXR.f1120s at the end of forms.js,
+about 110 rules; all 390 fields get a plain explanation, none empty in `node tmp/t722.js f1120s`, each distinct label read
+against its rule). Points taught: the S election (Form 2553, 2 months and 15 days), eligibility (100 shareholders, one class of
+stock, eligible shareholders), reasonable compensation and health insurance of a more-than-2% shareholder, the corporate-level
+taxes of a former C corporation (built-in gains within 5 years, excess net passive income, LIFO recapture), pro rata per-share
+per-day allocation, no self-employment tax on the pass-through income, stock basis and debt basis (direct loans only; outside
+debt gives no basis), cancelled debt excluded at the corporate level, the small corporation test (receipts and assets under
+$250,000), and the accumulated adjustments account with the order of distributions. OPEN-WORK ITEM 5 IS NOW DONE for the six
+forms named (8867, 709, 1041, 706, 1065, 1120-S). NEXT: independent second read of the six FXR blocks, then fixes.
+
 VERSION 222 (Nov 23 ~22:15 Manila, side-panel session): Form 1065 explained box by box (FXR.f1065 at the end of forms.js, about
 130 rules; all 440 fields get a plain explanation, none empty in `node tmp/t722.js f1065`, each distinct label read against its
 rule). Points taught: page 1 holds only trade or business items and everything else passes through Schedule K with its character;
@@ -1463,6 +1473,7 @@ More exams: CBP's page "Past Customs Broker License Examinations & Answer Keys" 
 so the owner must attach more PDFs (or the allowlist must reach this workspace). NEXT for CBLE: worked lessons per 19 CFR part,
 HTSUS GRI drills, valuation calculations, and the practical exercise with drawn 7501 forms.
 
+- 2026-11-23 Version 223: Form 1120-S explained box by box
 - 2026-11-23 Version 222: Form 1065 explained box by box
 - 2026-11-23 Version 221: Form 706 explained box by box
 - 2026-11-23 Version 220: Form 1041 explained box by box
