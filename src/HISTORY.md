@@ -651,6 +651,18 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 224 (Nov 23 ~22:45 Manila, side-panel session): INDEPENDENT SECOND READ of the six form explanation blocks (FXR.f8867,
+f709, f1041, f706, f1065, f1120s; 619 explanations) against the 2025 IRS instructions and Rev. Proc. 2024-40. 6 texts fixed:
+(1) Form 709 line 6: when the consenting spouse must also file (both exceptions, present-interest condition). (2) Form 1041 line
+21: removed "no exemption on a final return" (no such rule was found in the instructions; an unused exemption is simply lost and
+is not part of excess deductions), added the $5,100 qualified disability trust exemption. (3) Form 1041 complex trust: $300 when
+all income must be distributed. (4) Form 706 Schedule F against Schedule I: IRAs and retirement accounts belong on Schedule I.
+(5) Form 706 Part V: the meaning of the two value columns moved into the first row text (the column rules never displayed).
+(6) Form 1120-S item G: yes on the first S return, attach Form 2553 only if not filed earlier. Fit: Form 1065 questions 18, 19 and
+26 got their own texts. Not source-fetched by the reader (re-reasoned only): section 6166 wording, built-in gains 5 years,
+re-election wait 5 years, family-as-one-shareholder, section 108(d)(7), section 6163, joint property and life insurance inclusion.
+The irs.gov Form 706 instructions page is now the July 2026 revision ($15,000,000; special-use cap $1,460,000 for 2026 deaths).
+
 VERSION 223 (Nov 23 ~22:30 Manila, side-panel session): Form 1120-S explained box by box (FXR.f1120s at the end of forms.js,
 about 110 rules; all 390 fields get a plain explanation, none empty in `node tmp/t722.js f1120s`, each distinct label read
 against its rule). Points taught: the S election (Form 2553, 2 months and 15 days), eligibility (100 shareholders, one class of
