@@ -651,6 +651,33 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 228 (Nov 24 ~00:10 Manila, side-panel session): bank_p3_gap7.js, 24 Part 3 questions on the filing process (topic 4, the
+thinnest Part 3 topic: 101 questions before, against 157 to 195 in the others; flag gp): stockpiling, rejected returns and the
+perfection period, duplicate dependent SSN, IP PIN, Practitioner and Self-Select PIN, Form 8879 retention, Form 8453, Form 9325,
+Form 8888 and the limit of 3 deposits to one account, no refunds to a preparer's account, Form 4852, e-filed Form 1040-X, EFIN
+misuse, copy to the client and the 3-year records rule (section 6107), signing and PTIN, the e-file mandate and Form 8948,
+sections 7216 and 6713, sections 7206 and 7207, timely mailing (section 7502), data theft and the Stakeholder Liaison, name and
+SSN mismatch. SECOND-READER REVIEW done BEFORE shipping (Pub 1345 and irs.gov pages): no keyed answer wrong; 3 fixes.
+(1) PERFECTION PERIOD: for individual returns it ends on the 5th calendar day AFTER THE DUE DATE (April 20 for April 15; IRS
+MeF due dates page for processing year 2026), not 5 days from the rejection. The new question, and the OLD card and question in
+bank_p3.js ("Rejected e-filed return"), now say so (card text and explanation only; no stem changed). (2) DUPLICATE DEPENDENT:
+since the 2025 filing season the IRS accepts the second e-filed return when the taxpayer listed first enters a valid IP PIN;
+paper is the fallback without one. (3) Refund into a preparer's account violates Circular 230 section 10.31 (not 10.51).
+No inflation-adjusted section 6695 amounts are used in this set: the figures for returns filed in 2026 could not be confirmed
+from an IRS page by search (Rev. Proc. 2024-40 section .54/.55 is the source to read). TO RE-CHECK when the bank moves to tax
+year 2026: paper refund checks are being phased out (Executive Order 14247), so the "fourth deposit becomes a paper check" rule
+and Form 8888 wording may change. Not source-fetched by the reader: the statute sections, Pub 3112 (EFIN), Forms 8948, 4852,
+1040-X e-file years. Review queue empty.
+AUDIO: recordings are keyed by fact id, so a card whose text changes keeps playing the OLD words, and a card without a recording
+is left out of "hear every fact" for a recorded part (t710 fails with "756 of 757"). The two cards reworded tonight were
+RE-RECORDED in this session with the same pipeline (p1f11k4w1x "FBAR penalties", p3fggodup "Rejected e-filed return"): pip
+install kokoro-onnx onnxruntime; model files kokoro-v1.0.int8.onnx and voices-v1.0.bin from the GitHub release
+thewh1teagle/kokoro-onnx model-files-v1.0 into /home/claude/tts; copy tools/tts_*.py to /home/claude; write
+/home/claude/tts/facts_raw.json with ONLY the changed facts ({id,p,f,b} read from BYID in the built app); run
+`python3 -I /home/claude/tts_gen.py <part> 0 1`; then copy each mp3 into pwa/audio and set meta.json[id] = [the "a" value from
+out/<id>.json, the mp3 size]. Do NOT run pack_audio.py with a partial facts_raw.json: it rewrites meta.json from scratch.
+RULE: whenever a fact card's text is changed, re-record that card in the same version.
+
 VERSION 227 (Nov 23 ~23:45 Manila, side-panel session): Form 1120 explained box by box (FXR.f1120 at the end of forms.js, 153
 rules; all 481 fields get a plain explanation; `node tmp/t722.js f1120` shows none empty). SECOND-READER REVIEW done BEFORE
 shipping against the 2025 Instructions for Form 1120 and Pub 542: no wrong figure, rate, date or form number; 4 texts improved:
@@ -1525,6 +1552,7 @@ More exams: CBP's page "Past Customs Broker License Examinations & Answer Keys" 
 so the owner must attach more PDFs (or the allowlist must reach this workspace). NEXT for CBLE: worked lessons per 19 CFR part,
 HTSUS GRI drills, valuation calculations, and the practical exercise with drawn 7501 forms.
 
+- 2026-11-23 Version 228: 24 Part 3 questions on the filing process, reviewed before release; two cards re-recorded
 - 2026-11-23 Version 227: Form 1120 explained box by box, reviewed before release
 - 2026-11-23 Version 226: 26 worked Part 2 questions, reviewed before release
 - 2026-11-23 Version 225: 27 more story questions on the owner's weak topics, reviewed before release
