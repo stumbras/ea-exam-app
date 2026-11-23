@@ -92,7 +92,7 @@ async function startAuth(n, env) {
   else if (n === "instagram") { if (!cfg.ig_app_id) throw new Error("Save the Instagram app ID first.");
     url = "https://www.instagram.com/oauth/authorize?" + form({ client_id: cfg.ig_app_id, redirect_uri: cb, response_type: "code", state, scope: "instagram_business_basic,instagram_business_content_publish" }); }
   else if (n === "google") { if (!cfg.google_client_id) throw new Error("Save the Google client ID first.");
-    url = "https://accounts.google.com/o/oauth2/v2/auth?" + form({ client_id: cfg.google_client_id, redirect_uri: cb, response_type: "code", access_type: "offline", prompt: "consent", state, scope: "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly" }); }
+    url = "https://accounts.google.com/o/oauth2/v2/auth?" + form({ client_id: cfg.google_client_id, redirect_uri: cb, response_type: "code", access_type: "offline", prompt: "consent", state, scope: "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube" }); }
   else if (n === "tiktok") { if (!cfg.tiktok_client_key) throw new Error("Save the TikTok client key first.");
     url = "https://www.tiktok.com/v2/auth/authorize/?" + form({ client_key: cfg.tiktok_client_key, redirect_uri: cb, response_type: "code", state, scope: "user.info.basic,video.upload" }); }
   else throw new Error("Unknown network");
@@ -171,6 +171,12 @@ async function googleToken(env) {
   const g = await kget(env, "tok:google"), cfg = (await kget(env, "cfg")) || {}; if (!g || !g.refresh_token) throw new Error("YouTube is not connected.");
   return (await jfetch("https://oauth2.googleapis.com/token", { method: "POST", body: form({ client_id: cfg.google_client_id, client_secret: cfg.google_client_secret, refresh_token: g.refresh_token, grant_type: "refresh_token" }) })).access_token;
 }
+async function ytApi(env, a) { // YouTube Data API v3 for the channel: playlists, playlistItems, videos (titles/descriptions), channels (branding)
+  const m = (a.method || "GET").toUpperCase(); if (!/^[a-zA-Z]+$/.test(a.resource || "")) throw new Error("resource must be like playlists, playlistItems, videos, channels, search");
+  const at = await googleToken(env), q = new URLSearchParams(a.query || {});
+  const r = await fetch(`https://www.googleapis.com/youtube/v3/${a.resource}?${q}`, { method: m, headers: { authorization: "Bearer " + at, "content-type": "application/json" }, body: m === "GET" || m === "DELETE" ? undefined : JSON.stringify(a.body || {}) });
+  const t = await r.text(); if (!r.ok) throw new Error("YouTube " + r.status + ": " + t.slice(0, 600)); return t ? JSON.parse(t) : { ok: true };
+}
 async function ytUpload(env, a) {
   const at = await googleToken(env), v = await fetch(a.video_url); if (!v.ok) throw new Error("Could not download the video from " + a.video_url);
   const len = Number(v.headers.get("content-length") || 0), type = (v.headers.get("content-type") || "video/mp4").split(";")[0];
@@ -212,6 +218,7 @@ const TOOLS = [
   { name: "facebook_post", description: "Post to the Solving Life Facebook Page: text, a link, a photo (image_url), a video (video_url) or a Reel (video_url with reel=true). Media must be a public https URL. Posts publicly unless draft=true.", inputSchema: { type: "object", properties: { text: { type: "string" }, link: { type: "string" }, image_url: { type: "string" }, video_url: { type: "string" }, reel: { type: "boolean" }, draft: { type: "boolean" }, page: { type: "string", description: "Page name or id if more than one" } }, required: ["text"] } },
   { name: "instagram_post", description: "Publish to the Solving Life Instagram: a photo (image_url), a Reel (video_url), a Story (story=true) or a carousel (carousel = list of up to 10 image/video URLs). Media must be a public https URL (JPEG images; MP4 videos).", inputSchema: { type: "object", properties: { caption: { type: "string" }, image_url: { type: "string" }, video_url: { type: "string" }, story: { type: "boolean" }, carousel: { type: "array", items: { type: "string" } } } } },
   { name: "youtube_upload", description: "Upload a video (public https MP4 URL) to the Solving Life YouTube channel. Vertical videos under 3 minutes become Shorts. privacy: public, unlisted or private.", inputSchema: { type: "object", properties: { video_url: { type: "string" }, title: { type: "string" }, description: { type: "string" }, tags: { type: "array", items: { type: "string" } }, privacy: { type: "string", enum: ["public", "unlisted", "private"] } }, required: ["video_url", "title"] } },
+  { name: "youtube_api", description: "Manage the Solving Life YouTube channel through YouTube Data API v3: list/create/update playlists, add videos to playlists (playlistItems), update video titles/descriptions/tags (videos, part=snippet), update channel branding (channels, part=brandingSettings), list uploads (search with forMine=true). Give resource, method, query (e.g. part, mine, id) and body.", inputSchema: { type: "object", properties: { resource: { type: "string" }, method: { type: "string", enum: ["GET", "POST", "PUT", "DELETE"] }, query: { type: "object" }, body: { type: "object" } }, required: ["resource"] } },
   { name: "tiktok_send_to_app", description: "Send a video (public https MP4 URL) to the Solving Life TikTok app's inbox as a draft; the owner finishes and posts it in the TikTok app.", inputSchema: { type: "object", properties: { video_url: { type: "string" } }, required: ["video_url"] } }
 ];
 async function mcp(req, env) {
@@ -226,7 +233,7 @@ async function mcp(req, env) {
     if (m.method === "tools/call") {
       const a = (m.params && m.params.arguments) || {}, n = m.params && m.params.name;
       try {
-        const out = n === "social_status" ? await status(env) : n === "facebook_post" ? await fbPost(env, a) : n === "instagram_post" ? await igPost(env, a) : n === "youtube_upload" ? await ytUpload(env, a) : n === "tiktok_send_to_app" ? await ttDraft(env, a) : null;
+        const out = n === "social_status" ? await status(env) : n === "facebook_post" ? await fbPost(env, a) : n === "instagram_post" ? await igPost(env, a) : n === "youtube_upload" ? await ytUpload(env, a) : n === "youtube_api" ? await ytApi(env, a) : n === "tiktok_send_to_app" ? await ttDraft(env, a) : null;
         if (out === null) return bad(-32602, "Unknown tool " + n);
         return ok({ content: [{ type: "text", text: JSON.stringify(out, null, 1) }] });
       } catch (e) { return ok({ content: [{ type: "text", text: "Error: " + e.message }], isError: true }); }
