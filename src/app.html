@@ -855,12 +855,12 @@ body.course .tabs.bk{display:flex}
 <div class="wrap" id="app">
   <header class="top">
     <div class="brand"><span class="logo" aria-hidden="true">EA</span><div>
-      <h1>EA Exam APP</h1>
+      <h1>Enrolled Agent Prep</h1>
       <div class="cycle">2025 tax law · exam window to Feb 28, 2027</div>
     </div></div>
     <div class="topact"><span class="chip" id="sync" role="button" tabindex="0" title="Tap to test account saving" style="cursor:pointer"><span class="dot"></span><span id="synctext">Saved on this device</span></span>
     <button class="chip" id="themebtn" type="button" aria-label="Switch between light and dark">Dark</button></div>
-    <button class="kidsbtn" id="kidsbtn" type="button" aria-label="Open the kids Rocket Genius">🚀<span>KIDS</span></button>
+    <button class="kidsbtn" id="kidsbtn" type="button" aria-label="Open the kids Becoming Genius">🚀<span>KIDS</span></button>
   </header>
   <nav class="tabs" role="tablist" id="tabs"></nav>
   <main id="view"></main>
@@ -1127,7 +1127,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;","
 
 function renderTabs(){
   const bk=!!PARTS[part].bk,X=PARTS[part].x?PARTS[part]:null,cy=document.querySelector(".top .cycle"),h1=document.querySelector(".top h1"),lg=document.querySelector(".top .logo");
-  if(h1)h1.textContent=bk?"Bookkeeping · QuickBooks · Taxes":"EA Exam APP";if(cy)cy.textContent=bk?"Foundation course · 2025 and 2026 amounts":"2025 tax law · exam window to Feb 28, 2027";if(lg){lg.textContent=bk?"BK":"EA";lg.style.background=bk?"#0f7a3d":""}
+  if(h1)h1.textContent=bk?"Bookkeeping · QuickBooks · Taxes":"Enrolled Agent Prep";if(cy)cy.textContent=bk?"Foundation course · 2025 and 2026 amounts":"2025 tax law · exam window to Feb 28, 2027";if(lg){lg.textContent=bk?"BK":"EA";lg.style.background=bk?"#0f7a3d":""}
   if(X){if(h1)h1.textContent=X.title;if(cy)cy.textContent=X.sub;if(lg){lg.textContent=X.logo;lg.style.background=X.x==="s65"?"#5b3fb0":X.x==="caa"?"#0d5c63":X.x==="notary"?"#7a2e4a":"#a0521a"}}
   const st=view==="start";if(st){if(h1)h1.textContent="Solving Life LLC · Study";if(cy)cy.textContent="Pick a section to study";if(lg){lg.textContent="SL";lg.style.background=""}}
   $("#tabs").className="tabs bk";$("#tabs").hidden=st;

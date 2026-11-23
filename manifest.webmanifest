@@ -1,8 +1,9 @@
 {
- "name": "EA Exam APP",
- "short_name": "EA Exam",
- "description": "Enrolled Agent exam study app. Works offline.",
- "start_url": "./",
+ "name": "Solving Life Enrolled Agent Prep",
+ "short_name": "SL EA Prep",
+ "description": "Enrolled Agent exam study app by Solving Life LLC, with a bookkeeping course. Works offline.",
+ "start_url": "./?study",
+ "id": "./",
  "scope": "./",
  "display": "standalone",
  "orientation": "portrait",

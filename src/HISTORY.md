@@ -579,6 +579,48 @@ Recommended path, cheapest first. Nothing here is built yet unless marked done.
    iPhone and Android testing; analytics that respect privacy; a way to push corrections fast (the update button
    exists).
 
+
+APP NAMES (owner, 07:53-07:55 Nov 23): Solving Life Enrolled Agent Prep (EA with the bookkeeping course inside), Solving Life
+Series 65 Prep, Solving Life EDPNA Prep, Solving Life Becoming Genius (kids; free, Pro version later). Bundle: Solving Life All
+Access (buy any one app and all unlock). Planned links on one origin so progress is shared: study.solvinglifewith.com/ea, /65,
+/edpna, /kids. Company site solvinglifewith.com; tax practice stays on Wix at solvinglifellc.com. Company page already uses
+these names. NEXT JOB: split into the four named apps (own name, icon, manifest and start page each, one shared engine), then
+the Series 65 / EDPNA forms-and-acronyms job.
+COMPANY SITE LIVE 08:04 Nov 23: second Worker solvinglife-site (root path /company) deployed by the owner; address
+solvinglife-site.<his-account>.workers.dev; checked, the page shows. Still to do: custom domains solvinglifewith.com (company)
+and study.solvinglifewith.com (app). The current Cloudflare connector cannot deploy or add domains; the owner was asked to add
+Cloudflare's full connector (custom connector URL https://mcp.cloudflare.com/mcp) so Claude can do such steps. The owner is
+frustrated by multi-step dashboard instructions: give one step at a time, with direct links, and do the work whenever a tool
+allows it. Reviews left: bank_p2_gap6, bank_p3_gap6. Version 208 is the last shipped version of the night.
+DOMAINS DONE 08:32 Nov 23 by Claude through the Cloudflare API connector (custom connector mcp.cloudflare.com, reconnected with
+Workers, Zone and DNS rights): solvinglifewith.com -> Worker solvinglife-site, study.solvinglifewith.com -> Worker ea-exam-app. Both
+checked live (study answers Version 208). Existing records left alone: Google mail MX/SPF/DKIM/verification and the owner's home
+server tunnel names (ai, amp, api, audiobookshelf, nextcloud, plex, proxmox). Claude can now manage Workers and DNS directly.
+WIX CONNECTED 08:34 Nov 23 (official Wix connector). Site "Solving Life LLC", id 8124ca47-5a9e-4015-ad89-7bb92faaf4bf, solvinglifellc.com,
+premium plan, editor-built (page text and layout cannot be edited through the API). Apps: Promote SEO, Blog, Bookings, Forms, Invoices
+V2, Members Area, Payments, Stores (catalog V3). Two other sites in the account: "My Site 1", "My Site 2" (unused; leave alone).
+OWNER DECISION 08:38 Nov 23 ("ok do all spend as much as needed time ... dont loose anything make all super easy"): ONE CODED SITE.
+Plan, in order: (1) split the study app into the four named apps; (2) build the new solvinglifellc.com as code in GitHub, served by
+Cloudflare, on a preview address first; (3) connect it to Wix as the engine (bookings, payments/checkout on Wix-hosted pages, invoices,
+members, blog, app sales) through the Wix SDK/REST; test a booking and a purchase; (4) only when the owner says "switch", point
+solvinglifellc.com at the new site (domain is registered at Wix; DNS move or CNAME needed; keep Google mail records intact). The old
+Wix editor site stays live and untouched until then. Social media: owner wants to create and push content from Claude; suggested the
+Windsor.ai for Social Media connector (Instagram, Facebook, TikTok, YouTube posting); the owner does not want his personal name on
+business profiles; Cristy runs the accounts; English only for anything on her accounts.
+APP SPLIT METHOD (found in code): the app already has separate installable entries by query string with their own manifests:
+?kids (kids.js KLOCK/kLockUI swaps the manifest link to manifest-kids.webmanifest) and ?course (manifest-course.webmanifest), all
+built in build.py lines 24-30. Do the same for Series 65 (?s65) and EDPNA (?edpna), rename the EA manifest to "Solving Life Enrolled
+Agent Prep" (the course stays inside it), kids to "Solving Life Becoming Genius". Clean links /ea /65 /edpna /kids = tiny folders with an
+index.html that sends to ../?param (or Cloudflare redirects). All stay on one origin, so localStorage progress is shared.
+APP SPLIT DONE in Version 209: sl_apps.js (last in build.py) with SLAPPS for s65 (part 5) and edpna (part 6), localStorage "slApp";
+manifests manifest-65 / manifest-edpna built in build.py; main manifest renamed "Solving Life Enrolled Agent Prep", start_url
+./?study (id kept ./ so existing installs stay the same app); kids manifest "Solving Life Becoming Genius" and every visible
+"Rocket Genius" text renamed (no keys changed); header h1 "Enrolled Agent Prep" (document <title> stays "EA Exam APP" because
+isWebCopy depends on it). Short-link folders pwa/ea, pwa/65, pwa/edpna, pwa/kids; sw.js lets those navigations through, and
+sl_apps.js also redirects if an old service worker serves the app at such a path. Test tmp/t760.js (12 checks). NOTE: on iPhone each
+home-screen app has its own storage, so progress is per installed app there (EA progress lives in the EA app); move old progress
+with Settings > Copy progress code / Paste progress code.
+
 ## 11. Version log
 
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.

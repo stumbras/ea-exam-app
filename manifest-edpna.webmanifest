@@ -1,0 +1,30 @@
+{
+ "name": "Solving Life EDPNA Prep",
+ "short_name": "EDPNA Prep",
+ "description": "EDPNA exam study app by Solving Life LLC. Works offline.",
+ "start_url": "./?edpna",
+ "id": "./?edpna",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#5a2c0c",
+ "theme_color": "#a0521a",
+ "icons": [
+  {
+   "src": "icon-edpna-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-edpna-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-edpna-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}

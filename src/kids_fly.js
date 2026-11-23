@@ -21,7 +21,7 @@ const KFLYQ=[["What force holds a plane up in the air?",["Lift","Weight","Drag",
  ["Do rockets need wings to go up?",["No: their thrust is bigger than their weight","Yes, big wings","Only on Tuesdays","Only at night"],"Rockets push straight up. Wings need air, and there's no air in space!"],
  ["Heading 90° means flying…",["East","North","South","West"],"0° is North, 90° East, 180° South, 270° West."],
  ["Why does air get 'thinner' high up?",["There is less air pressing down from above","Clouds eat it","Planes use it up","It's colder so it disappears"],"About 5.5 km up, air is only half as thick as at the ground."]];
-const KFLYRW=[{cx:0,cz:600,hd:0,len:1200,w:30,nm:"Rocket Genius Airport",num:["36","18"]},{cx:4550,cz:2550,hd:Math.PI/2,len:900,w:28,nm:"Island Airstrip",num:["09","27"]}];
+const KFLYRW=[{cx:0,cz:600,hd:0,len:1200,w:30,nm:"Becoming Genius Airport",num:["36","18"]},{cx:4550,cz:2550,hd:Math.PI/2,len:900,w:28,nm:"Island Airstrip",num:["09","27"]}];
 const KFLYPAD={x:-2600,z:3800},KFLYISL={x:4550,z:2550,r:760},KFLYMT=[[-2600,7000,950,760],[-900,8300,1250,980],[1800,7600,1000,820],[-5200,2600,900,640],[5200,7600,1100,880],[-4300,-2200,800,560]];
 let kFly=null,kFlyRAF=0;
 function kFlyWater(x,z){return x>3300&&Math.hypot(x-KFLYISL.x,z-KFLYISL.z)>KFLYISL.r}
@@ -77,7 +77,7 @@ function kFlyGoal(F){const P=F.P,lv=F.lv;if(F.won||F.crashT>0)return;
     if(rw||!F.touched)return;F.touched=0;kFlySay("That's not the right runway. Take off again and find it! 🧭",3)}
   if(lv===3){const d=Math.hypot(P.x-KFLYPAD.x,P.z-KFLYPAD.z);if(F.rocket.t<0&&d<850){F.rocket.t=0;kBeep("launch");kFlySay("🚀 3… 2… 1… LIFTOFF! Thrust is bigger than weight, so the rocket goes UP!",5);kLine("Three, two, one, liftoff!",3)}if(F.rocket.t>15)return kFlyWin(F,3,"🚀 You watched the launch AND the booster landing! Reusable rockets make space cheaper.")}}
 function kFlyWin(F,stars,msg){F.won=1;F.pts+=50*stars;const k=KS(),f=k.fly,first=!f.done[F.lv];f.done[F.lv]=1;f.stars[F.lv]=Math.max(f.stars[F.lv]||0,stars);if(F.lv+1>f.lv&&F.lv<5)f.lv=F.lv+1;f.pts=(f.pts||0)+50*stars;F.done.push(F.lv);
-  if(first){k.coins+=20;kTix(1,"first time finishing this mission");kTrophy("fly"+F.lv,KFLYM[F.lv].ic,"Sky Pilot: "+KFLYM[F.lv].n,KFLYM[F.lv].goal+" in Sky Pilot.")}if([0,1,2,3,4].every(i=>f.done[i]))kTrophy("flyall","👨‍✈️","Captain Rocket Genius!","Finished every Sky Pilot mission.");
+  if(first){k.coins+=20;kTix(1,"first time finishing this mission");kTrophy("fly"+F.lv,KFLYM[F.lv].ic,"Sky Pilot: "+KFLYM[F.lv].n,KFLYM[F.lv].goal+" in Sky Pilot.")}if([0,1,2,3,4].every(i=>f.done[i]))kTrophy("flyall","👨‍✈️","Captain Becoming Genius!","Finished every Sky Pilot mission.");
   persist();kBeep("chest");kHorn&&kHorn("clap");kLine(msg.replace(/[^\w\s!.,']/g,""),3);
   const pool=KFLYQ.map((q,i)=>i).filter(i=>!F.asked.includes(i)),qi=pool.length?kPick(pool):kR(0,KFLYQ.length-1);F.asked.push(qi);if(F.asked.length>=KFLYQ.length)F.asked=[];k.fly.asked=F.asked;
   const Q=F.lv>=6?(Math.random()<.5?kPick(KFLYQ2):(()=>{const h=kHeroQ(kPick(["af","sf"]));return[h.q,[h.o[h.a],...h.o.filter((x,i)=>i!==h.a)].slice(0,4),h.f]})()):KFLYQ[qi],ord=kShuf(Q[1].map((x,i)=>i));F.q={msg,stars,first,qi,q:Q[0],o:ord.map(i=>Q[1][i]),a:ord.indexOf(0),ex:Q[2],ans:null};kDriveHum(0);render()}
