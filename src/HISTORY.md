@@ -651,6 +651,18 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 217 (Nov 23 ~21:20 Manila, side-panel session): SECOND-READER REVIEW of bank_p1_gap15.js and bank_p2_gap7.js done by an
+independent reader (all 52 re-read, every sum re-worked, figure-sensitive items checked on irs.gov): 49 correct as written, 3 fixed.
+(1) "Greta" stem said "did not pay enough estimated tax ... interest": that is the section 6654 penalty, which is NOT compounded
+(section 6622(b)); stem now is a late-paid balance due, explanation says the estimated tax penalty uses the same rate without
+compounding. (2) "Eve" FBAR explanation: the non-willful penalty is $10,000 in the statute, $16,536 after inflation for penalties
+assessed from January 17, 2025 (Federal Register 2025-01374), per report. (3) "Yara" hobby stem: costs changed from clay and
+glazes (cost of goods sold, which Reg. 1.183-1(e) lets a hobby subtract from receipts) to booth fees, travel and advertising, so
+only one answer can be defended. The two reworded stems get new ids (shipped under an hour earlier, so little progress is lost).
+Not source-fetched by the reader, only re-reasoned: the nine Part 2 items and the stable Part 1 rules (list in the session report).
+STILL TO REVIEW: bank_p1_gap16.js (35 questions, Version 216). The FBAR card "FBAR penalties" also says "about $10,000
+(inflation-adjusted)": update the card to the $16,536 figure when the cards are next edited.
+
 VERSION 216 (Nov 23 ~21:00 Manila, side-panel session): bank_p1_gap16.js, 35 Part 1 story questions on the topics the owner has
 missed on outside practice (the "keep covering" list in section 9): AMT (ISO adjustment, add-backs, a worked AMT, Form 8801),
 EIC ban periods, Form 8862 and investment income with tax-exempt interest, investment interest (limit, carryforward, the
