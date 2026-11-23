@@ -651,6 +651,22 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 216 (Nov 23 ~21:00 Manila, side-panel session): bank_p1_gap16.js, 35 Part 1 story questions on the topics the owner has
+missed on outside practice (the "keep covering" list in section 9): AMT (ISO adjustment, add-backs, a worked AMT, Form 8801),
+EIC ban periods, Form 8862 and investment income with tax-exempt interest, investment interest (limit, carryforward, the
+election), capital gain distributions without Schedule D, gifted property basis (loss basis, the no-gain-no-loss zone, tacked
+holding period), excess IRA contributions (6%, the cure, the compensation limit), nonbusiness bad debt, mileage (70 / 21 / 14
+cents), Form 8332 (what moves and what stays), gift tax returns (splitting, tuition, noncitizen spouse $190,000), stock
+dividends, nonresident aliens (no standard deduction, substantial presence sum, the joint-return election) and disaster losses
+(prior-year election, federally declared only, the $100 and 10% sum). Right answer strictly longest in 4 of 35. Tests passed:
+t651 t652 t653 t654 t658 t701 t730 t731 t733 t734, bias guard. NOT YET second-reader reviewed (queue: bank_p1_gap15.js,
+bank_p2_gap7.js, bank_p1_gap16.js). The gap measure (t740) does not move much for this set and is at its floor: after Version 215
+the 212 Part 1 rules it still lists are almost all form numbers, schedules and acronyms that already have several questions
+each (the measure cannot match one-word titles), so new sets should follow the owner's missed topics, not the measure.
+Open-work item 7 (military state-residence rule on the exam outline): not settled; the exam moved from Prometric to PSI on
+March 1, 2026 (fee $317 a part, 2026-27 window July 1, 2026 to February 28, 2027 per irs.gov) and the PSI content outline was
+not found by search; check the PSI candidate bulletin.
+
 VERSION 215 (Nov 23 ~20:30 Manila, side-panel session): 52 new exam-type questions on rules that had a card but no question.
 bank_p1_gap15.js (43, Part 1: filing thresholds HOH and QSS, age 65 rule, nonresident alien, inheritance, home sale for a couple,
 Roth ordering, NIIT exclusions, hobby income, Alaska dividend, RMD sum, amount realized, renting to a relative, Coverdell ages,
@@ -1377,6 +1393,7 @@ More exams: CBP's page "Past Customs Broker License Examinations & Answer Keys" 
 so the owner must attach more PDFs (or the allowlist must reach this workspace). NEXT for CBLE: worked lessons per 19 CFR part,
 HTSUS GRI drills, valuation calculations, and the practical exercise with drawn 7501 forms.
 
+- 2026-11-23 Version 216: 35 story questions on the owner's weak topics
 - 2026-11-23 Version 215: 52 new exam questions for untested rules; study site and TikTok send fixes kept in source
 - 2026-11-23 Fix: study site opens again on Cloudflare (offline cache), TikTok send reads Drive directly; history notes
 - 2026-11-23 Version 214: Customs Broker Prep: 141 real CBP exam questions with official answers
