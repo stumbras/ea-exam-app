@@ -7,6 +7,6 @@
   "workers_dev": false,
   "preview_urls": false,
   "kv_namespaces": [{ "binding": "SL", "id": "b3fe465a03cb4f54913f133f24ef548d" }],
-  "triggers": { "crons": ["17 6 * * 1"] },
+  "triggers": { "crons": ["17 6 * * 1", "21 9 * * *"] },
   "routes": [{ "pattern": "social.solvinglifewith.com", "custom_domain": true }]
 }

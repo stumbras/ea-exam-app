@@ -40,7 +40,9 @@ export default {
       return new Response(`<p>Something went wrong: ${esc(e.message)}</p><p><a href="/s/${esc(env.ADMIN)}/">Back to setup</a></p>`, { status: 500, headers: H });
     }
   },
-  async scheduled(_e, env) { // keep the Instagram token fresh (it lasts 60 days; refresh weekly)
+  async scheduled(e, env) {
+    if (e && e.cron === "21 9 * * *") return ytQueue(env, 5); // daily: upload the next scheduled YouTube videos (API quota ~6 uploads/day)
+    // weekly: keep the Instagram token fresh (it lasts 60 days)
     const ig = await kget(env, "tok:instagram"); if (!ig || !ig.access_token) return;
     try { const d = await jfetch(`https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${ig.access_token}`); ig.access_token = d.access_token; ig.refreshed = Date.now(); await kput(env, "tok:instagram", ig); } catch (_) {}
   }
@@ -172,6 +174,11 @@ async function igPost(env, a) {
 async function googleToken(env) {
   const g = await kget(env, "tok:google"), cfg = (await kget(env, "cfg")) || {}; if (!g || !g.refresh_token) throw new Error("YouTube is not connected.");
   return (await jfetch("https://oauth2.googleapis.com/token", { method: "POST", body: form({ client_id: cfg.google_client_id, client_secret: cfg.google_client_secret, refresh_token: g.refresh_token, grant_type: "refresh_token" }) })).access_token;
+}
+async function ytQueue(env, n) { // KV "ytq": list of youtube_upload argument objects (with drive_id, publish_at, playlist_id); results go to "ytlog"
+  const q = (await kget(env, "ytq")) || [], log = (await kget(env, "ytlog")) || [];
+  while (n-- > 0 && q.length) { const a = q[0]; try { const r = await ytUpload(env, a); log.push({ at: new Date().toISOString(), title: a.title, id: r.id, publish_at: r.publish_at, playlist: r.playlist }); q.shift(); } catch (err) { log.push({ at: new Date().toISOString(), title: a.title, error: String(err.message).slice(0, 300) }); break; } }
+  await kput(env, "ytq", q); await kput(env, "ytlog", log.slice(-200)); return { left: q.length };
 }
 async function sig(env, id) { const k = await crypto.subtle.importKey("raw", new TextEncoder().encode(env.ADMIN), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]); return [...new Uint8Array(await crypto.subtle.sign("HMAC", k, new TextEncoder().encode("drive:" + id)))].slice(0, 12).map(b => b.toString(16).padStart(2, "0")).join(""); }
 async function driveStream(env, id, req) {
