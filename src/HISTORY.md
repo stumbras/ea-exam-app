@@ -651,6 +651,19 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 226 (Nov 23 ~23:15 Manila, side-panel session): bank_p2_gap8.js, 26 Part 2 worked story questions (flag gp) in the
+areas the exam asks most: partner's basis with an assumed mortgage, cash and property distributions, loss limit, guaranteed
+payment sum, liquidating loss; S corporation loss limit (stock plus direct loans; a guarantee gives no basis), the order of basis
+adjustments, health insurance of a more-than-2% shareholder; section 351 with boot, a distribution beyond earnings and profits,
+the dividends-received deduction with its taxable income limit, the accumulated earnings credit; section 179 income limit,
+mid-quarter convention, sections 1245, 1250 and 1231 with the look-back, like-kind exchange with boot and of equipment,
+installment sale percentage and recapture in the year of sale, simplified home office; simple trust distribution deduction;
+income in respect of a decedent. SECOND-READER REVIEW done BEFORE shipping: every sum re-worked, no keyed answer wrong; two stems
+tightened (S corporation basis order now says no ordering election was made, Reg. 1.1367-1(g) / Form 7203; the section 1231
+look-back now says the 2022 loss was the only one in the 5 years). The reader confirmed only section 179 and the S corporation
+basis rules on irs.gov; the rest was re-reasoned from the Code. Right answer strictly longest in 6 of 26, largest gap 10. Tests
+passed: t651 t652 t653 t654 t658 t701 t733 t734. Gap measure Part 2 stays 73 (form names and acronyms). Review queue empty.
+
 VERSION 225 (Nov 23 ~23:00 Manila, side-panel session): bank_p1_gap17.js, 27 Part 1 story questions, second round on the owner's
 "keep covering" topics from new angles: AMT exemption phase-out, minimum tax credit only for timing items, standard deduction and
 AMT, EIC tiebreaker, child with an ITIN, age 25 rule, Form 4952 capital gain election, interest to carry tax-exempt bonds, Form
