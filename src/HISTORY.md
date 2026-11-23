@@ -407,6 +407,8 @@ the QBI limit.
    - Part 1 after Version 187 (`bank_p1_gap7.js`, 45 questions on Specialized returns): 242. What is left in
      Part 1 is mostly form names and definitions. The measure credits at most two rules per question.
    - `node tmp/t741.js` writes the rules still untested to `/tmp/un_p1.json` (and p2, p3)
+   - Part 1 after Version 215 (`bank_p1_gap15.js`, 43 questions across all six topics): 212. Part 2 after Version 215
+     (`bank_p2_gap7.js`, 9 questions): 73.
    - Part 2: 131 of 281 at the start; 84 after Version 189 (`bank_p2_gap1.js`, 65 questions); 81 after
      Version 191 (`bank_p2_gap2.js`, 38 on forms and terms).
    - Part 3: 139 of 277 at the start; 100 after Version 190 (`bank_p3_gap1.js`, 71 questions); 98 after Version 192
@@ -649,9 +651,29 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 215 (Nov 23 ~20:30 Manila, side-panel session): 52 new exam-type questions on rules that had a card but no question.
+bank_p1_gap15.js (43, Part 1: filing thresholds HOH and QSS, age 65 rule, nonresident alien, inheritance, home sale for a couple,
+Roth ordering, NIIT exclusions, hobby income, Alaska dividend, RMD sum, amount realized, renting to a relative, Coverdell ages,
+combat pay, W-2 code DD, nonrecourse foreclosure, early-withdrawal exceptions, spousal IRA, 2025 CTC SSN rule, AOTC years, EIC on a
+separate return, clean vehicle credit end date, saver's and adoption credits, whose student loan, medical costs, carryovers,
+credit vs deduction, HSA, underpayment interest, options dealers, marginal rate, W-4P, marriage penalty, double education
+benefits, FBAR due date/records/spouses/Bittner, section 2036) and bank_p2_gap7.js (9, Part 2, flag gp: C corporation carryovers,
+S distributions, BIG tax, 15-year property, ADS, section 45S, 65-day rule, section 645, IRA prohibited transaction). Written from
+the rule cards; adoption credit ($17,280, $5,000 refundable) and the EIC separated-spouse rule re-checked on irs.gov the same
+hour. Gap measure (t740): Part 1 233 -> 212, Part 2 78 -> 73, Part 3 97 (what is left in Part 3 is form numbers and acronyms
+that already have questions; the measure cannot match one-word titles). Right answer strictly longest in 4 of 52. Tests passed:
+t651 t652 t653 t654 t658 t701 t730 t731 t733 t734, bias guard. t700 (upgrade from Version 164): all progress checks pass; its
+speed check ("everything after the first draw under a quarter of a second") passed in 1 of 3 runs here (home redraw 258 to 333 ms
+against the 250 ms limit) - check on the next version whether that is this sandbox or the growing bank. t700 needs
+tmp/old164.html served at http://localhost:8765/old164.html (ln -s it into /tmp/srv) and a clone deep enough to hold Version 164
+(git fetch --depth=2000 origin main; a depth-50 clone also cuts the version log that sync_src.py writes). NOT YET second-reader reviewed: bank_p1_gap15.js and bank_p2_gap7.js are next in the review queue.
+Also in this version: sw.src.js now carries the Cloudflare fix (see the note below), so builds keep it.
+
 SIDE-PANEL SESSION FIXES (Nov 23 ~19:55 Manila, a second Claude session working in the owner's Chrome; pushed straight to main,
-NOT through tmp/ship.sh). ANY OTHER SESSION: `git pull` and copy sw.js, social/worker.js and this file into your working folders
-(/home/claude/ea-app/pwa/sw.js, pwa/social/worker.js, ea-app/HISTORY.md) BEFORE the next ship, or ship.sh will undo these fixes.
+NOT through tmp/ship.sh; Version 215 right after it was shipped from the same session with the normal steps). ANY OTHER SESSION:
+`git pull`, then run `sh src/tmp/restore.sh` again (or copy sw.src.js, pwa/sw.js, pwa/social/worker.js, build.py, the two new bank
+files and this HISTORY.md into /home/claude/ea-app) BEFORE the next build or ship, or the build will undo these fixes.
+NOTE: pwa/sw.js is BUILD OUTPUT. build.py writes it from sw.src.js, so the service worker must be edited in sw.src.js.
 1. sw.js, "This site can't be reached" (ERR_FAILED) on study.solvinglifewith.com from the second visit on, for every visitor:
    Cloudflare static assets answer /index.html with a 307 to /, the service worker saved that redirected copy under INDEX, and
    Chrome refuses a redirected response for a page navigation. GitHub Pages does not redirect, so it only broke on Cloudflare.
