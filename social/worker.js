@@ -121,6 +121,7 @@ async function callback(n, u, env) {
     tok = { refresh_token: t.refresh_token, channel };
   } else if (n === "tiktok") {
     const t = await jfetch("https://open.tiktokapis.com/v2/oauth/token/", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" }, body: form({ client_key: cfg.tiktok_client_key, client_secret: cfg.tiktok_client_secret, code, grant_type: "authorization_code", redirect_uri: cb }) });
+    if (!t.access_token) throw new Error("TikTok sign-in failed: " + JSON.stringify(t).slice(0, 300));
     let name = ""; try { const i = await jfetch("https://open.tiktokapis.com/v2/user/info/?fields=display_name", { headers: { authorization: "Bearer " + t.access_token } }); name = i.data && i.data.user && i.data.user.display_name; } catch (_) {}
     tok = { refresh_token: t.refresh_token, access_token: t.access_token, expires: Date.now() + (t.expires_in || 0) * 1000, name };
   }
@@ -184,6 +185,7 @@ async function tiktokToken(env, force) {
   const t = await kget(env, "tok:tiktok"), cfg = (await kget(env, "cfg")) || {}; if (!t) throw new Error("TikTok is not connected.");
   if (!force && t.access_token && t.expires > Date.now() + 60000) return t.access_token;
   const n = await jfetch("https://open.tiktokapis.com/v2/oauth/token/", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" }, body: form({ client_key: cfg.tiktok_client_key, client_secret: cfg.tiktok_client_secret, grant_type: "refresh_token", refresh_token: t.refresh_token }) });
+  if (!n.access_token) throw new Error("TikTok refresh failed, reconnect TikTok: " + JSON.stringify(n).slice(0, 300));
   Object.assign(t, { access_token: n.access_token, refresh_token: n.refresh_token || t.refresh_token, expires: Date.now() + n.expires_in * 1000 }); await kput(env, "tok:tiktok", t); return t.access_token;
 }
 async function ttDraft(env, a, retried) { // sends the video to the TikTok app's inbox; the owner adds sounds and posts from the app
