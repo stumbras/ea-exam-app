@@ -187,7 +187,7 @@ async function crossPost(env) { // KV "xq": same items as the YouTube schedule; 
     if (Date.parse(a.publish_at) > now + 300000) { keep.push(a); continue; }
     const url = a.drive_id ? (await driveLink(env, a)).url : a.video_url, text = a.title + "\n\n" + (a.description || "").replace(/#shorts\s?/g, "");
     const r = { at: new Date().toISOString(), title: a.title };
-    try { r.facebook = (await fbPost(env, { text, video_url: url, reel: true })).id; } catch (err) { r.facebook = "error: " + String(err.message).slice(0, 200); }
+    if (a.no_facebook) r.facebook = "skipped"; else try { r.facebook = (await fbPost(env, { text, video_url: url, reel: true })).id; } catch (err) { r.facebook = "error: " + String(err.message).slice(0, 200); }
     try { r.tiktok = (await ttDraft(env, { video_url: url })).publish_id; } catch (err) { r.tiktok = "error: " + String(err.message).slice(0, 200); }
     log.push(r);
   }
