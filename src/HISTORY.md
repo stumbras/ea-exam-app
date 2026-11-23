@@ -221,7 +221,7 @@ the app had only as flash cards.
 - Every form named in a lesson or explanation becomes a link (`fvLinkify`); not in mock exams or kids.
 - Interactive Form 1040 with three worked cases (`F40CASES`) and box-by-box plain explanations.
 - Plain explanations per box (`FXR`) exist for 15 forms: 1040, W-2, 1099-NEC, 1099-INT,
-  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867. The other 211 show the IRS field text only.
+  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867, 709. The other 210 show the IRS field text only.
 - Rules for `FXR` patterns: anchor on the line number (`(?:^|[.:] )N\. `), because labels often
   mention other lines. Check with tests t721, t722, t723.
 
@@ -423,7 +423,7 @@ the QBI limit.
    strictly longest and reword until under 30% (t733 and t734 fail above that).
 4. Outside misses still to explain and cover (ids from the owner's outside practice, no
    screenshot yet): #100709 Retirement Income, #100598 Gift Tax, #100172 Property.
-5. Plain box-by-box explanations for more forms: 1041, 1065, 1120-S, 706, 709 (8867 done in Version 218).
+5. Plain box-by-box explanations for more forms: 1041, 706, 1065, 1120-S (8867 done in Version 218, 709 in Version 219).
 6. Test on a real iPhone (Safari): audio chime, keep-going audio, form viewer.
 7. Check whether the military state-residence rule is on the current IRS exam outline.
 
@@ -651,6 +651,25 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 219 (Nov 23 ~22:10 Manila, side-panel session): Form 709 explained box by box (FXR.f709 at the end of forms.js, about
+110 rules; all 1,851 fields get a plain explanation, checked with `node tmp/t722.js f709`). Line numbers repeat in every part of
+Form 709, so each rule is anchored on the line's own words and the general rules (item number) come last. 2025 figures used:
+annual exclusion $19,000, noncitizen spouse $190,000, basic exclusion and GST exemption $13,990,000 (credit $5,541,800), top rate
+40%, 529 five-year election $95,000. A helper to review a long form: print each distinct label with the rule it receives
+(the /tmp/fx.js pattern: dedupe on the label with "Row N." normalised). STILL TO DO for open-work item 5: Forms 1041, 706, 1065,
+1120-S.
+PLAN RECHECK (Nov 23 21:10 Manila, the owner asked "what about all apps transfer, website on wix redone by claude? rethink,
+recheck all we planned"). State found: (a) apps moved: five apps live at study.solvinglifewith.com, each with its own name, icon
+and manifest, Google sign-in sync; the repository is STILL PUBLIC with all source and question banks. (b) Stores: nothing started;
+waiting for the D-U-N-S number requested Nov 23; no /.well-known/assetlinks.json yet. (c) Selling: no checkout, no paywall, no
+sold-edition build. (d) New tax site: preview only at solvinglifellc-site.<account>.workers.dev (11 pages + 6 blog posts); BOOK,
+PORTAL, PAY, INQUIRY in site_llc/make.py still point to the old Wix site; step 3 (Wix wiring) not started. (e) solvinglifellc.com is
+still the Wix editor site; domain not switched. (f) Company site live at solvinglifewith.com. Advice given to the owner: fix the
+live Wix site first (CAA claim if the approval is not issued; 12 demo store products; no booking service), do not switch the domain
+before tax season unless a real booking and payment were tested (or switch after April 15), make the repository private before
+promoting the apps, and keep the apps free on the web until the tax site earns (Play store when D-U-N-S arrives). WAITING ON THE
+OWNER: CAA approved yes/no; booking service name, length, price; switch timing.
+
 VERSION 218 (Nov 23 ~21:45 Manila, side-panel session). (1) Open-work item 5 started: Form 8867 explained box by box
 (FXR.f8867 at the end of forms.js, 31 rules anchored on line numbers; every one of the 57 fields gets a plain explanation,
 checked with `node tmp/t722.js f8867`). Facts used: $650 per failure for returns filed in 2026 (irs.gov, section 6695(g)), four
