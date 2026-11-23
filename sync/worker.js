@@ -7,25 +7,34 @@
 const ORIGINS = ["https://study.solvinglifewith.com", "https://ea-exam-app.linaskerbelis.workers.dev", "http://localhost:8080"];
 const CLIENT_IDS = ["184315933690-kq6qmc1qjsi177ht716s3ignsn0osd4u.apps.googleusercontent.com"];
 const MAX = 20 * 1024 * 1024;
-const PREVIEW_MS = 60 * 60 * 1000;
 const ALWAYS = ["linaskerbelis@gmail.com", "info@solvinglifewith.com", "info@solvinglifellc.com", "cristyesplanada@gmail.com"];
+async function cfg(env) { return (await env.P.get("cfg", "json")) || { previewMin: 60 }; }
 async function access(env, sub) {
   const who = await env.P.get("s:" + sub, "json"), email = (who && who.email || "").toLowerCase();
   if (email && (ALWAYS.includes(email) || await env.P.get("g:" + email))) return { access: "full", email };
-  const used = +(await env.P.get("t:" + sub)) || 0;
-  return { access: used >= PREVIEW_MS ? "expired" : "trial", usedMs: used, limitMs: PREVIEW_MS, email };
+  const used = +(await env.P.get("t:" + sub)) || 0, bonus = +(await env.P.get("b:" + sub)) || 0, limit = (await cfg(env)).previewMin * 60000 + bonus;
+  return { access: used >= limit ? "expired" : "trial", usedMs: used, limitMs: limit, email };
 }
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 async function hub(req, env, u) {
   let msg = "";
   if (req.method === "POST") {
-    const f = await req.formData(), email = String(f.get("email") || "").trim().toLowerCase(), act = f.get("act");
-    if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      if (act === "add") { await env.P.put("g:" + email, JSON.stringify({ at: Date.now(), note: String(f.get("note") || "").slice(0, 200) })); msg = "Full access given to " + email; }
-      else if (act === "remove") { await env.P.delete("g:" + email); msg = "Access removed for " + email; }
-      else if (act === "reset") { const l = await env.P.list({ prefix: "s:" }); for (const k of l.keys) { const v = await env.P.get(k.name, "json"); if (v && (v.email || "").toLowerCase() === email) await env.P.delete("t:" + k.name.slice(2)); } msg = "Free hour reset for " + email; }
-    } else msg = "Please type a full email address.";
+    const f = await req.formData(), act = f.get("act"), email = String(f.get("email") || "").trim().toLowerCase();
+    const okEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    const subsOf = async e => { const out = [], l = await env.P.list({ prefix: "s:" }); for (const k of l.keys) { const v = await env.P.get(k.name, "json"); if (v && (v.email || "").toLowerCase() === e) out.push(k.name.slice(2)); } return out; };
+    if (act === "preview") { const m = Math.max(0, Math.min(10080, Math.round(+f.get("minutes") || 0))); await env.P.put("cfg", JSON.stringify({ ...(await cfg(env)), previewMin: m })); msg = "Free preview is now " + m + " minutes for everyone."; }
+    else if (act === "code") { const code = String(f.get("code") || "").trim().toUpperCase().replace(/[^A-Z0-9-]/g, ""), m = Math.max(0, Math.min(43200, Math.round(+f.get("minutes") || 0)));
+      if (code && m) { await env.P.put("c:" + code, JSON.stringify({ minutes: m, note: String(f.get("note") || "").slice(0, 120), at: Date.now(), used: 0 })); msg = "Code " + code + " gives " + m + " extra free minutes."; }
+      else if (code) { await env.P.delete("c:" + code); msg = "Code " + code + " removed."; } }
+    else if (!okEmail) msg = "Please type a full email address.";
+    else if (act === "add") { await env.P.put("g:" + email, JSON.stringify({ at: Date.now(), note: String(f.get("note") || "").slice(0, 200) })); msg = "Full access given to " + email; }
+    else if (act === "remove") { await env.P.delete("g:" + email); msg = "Access removed for " + email; }
+    else if (act === "reset") { for (const sub of await subsOf(email)) await env.P.delete("t:" + sub); msg = "Free preview reset for " + email; }
+    else if (act === "extra") { const add = Math.max(0, Math.min(43200, Math.round(+f.get("minutes") || 60))) * 60000, subs = await subsOf(email);
+      for (const sub of subs) await env.P.put("b:" + sub, String((+(await env.P.get("b:" + sub)) || 0) + add)); msg = subs.length ? "Gave " + add / 60000 + " extra free minutes to " + email : email + " has not signed in yet."; }
   }
+  const C = await cfg(env), cl = await env.P.list({ prefix: "c:" }), codes = [];
+  for (const k of cl.keys) { const v = await env.P.get(k.name, "json"); if (v) codes.push({ code: k.name.slice(2), ...v }); }
   const g = await env.P.list({ prefix: "g:" }), s = await env.P.list({ prefix: "s:", limit: 1000 });
   const grants = g.keys.map(k => k.name.slice(2)), users = [];
   for (const k of s.keys) { const v = await env.P.get(k.name, "json"); if (v) users.push({ ...v, used: +(await env.P.get("t:" + k.name.slice(2))) || 0 }); }
@@ -34,12 +43,17 @@ async function hub(req, env, u) {
   const d = t => t ? new Date(t).toLocaleString("en-US", { timeZone: "America/Denver", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "";
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Solving Life app access</title>
 <style>body{font:16px/1.45 system-ui,sans-serif;max-width:760px;margin:0 auto;padding:18px;color:#122}h1{font-size:24px}form{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}input{font:inherit;padding:10px;border:1px solid #bbb;border-radius:10px;flex:1;min-width:200px}button{font:inherit;padding:10px 14px;border:0;border-radius:10px;background:#1a6b55;color:#fff;font-weight:700}button.r{background:#a33}button.g{background:#556}table{width:100%;border-collapse:collapse;font-size:14px}td,th{border-bottom:1px solid #ddd;padding:7px 4px;text-align:left}.ok{color:#1a6b55;font-weight:700}.msg{background:#e4f5ec;padding:10px;border-radius:10px}</style></head><body>
-<h1>Solving Life app access</h1><p>People who paid get full access to every exam app (EA, Series 65, EDPNA, Customs Broker). Everyone else gets a free 60-minute preview after signing in with Google. The kids app is always free.</p>
+<h1>Solving Life app access</h1><p>People who paid get full access to every exam app (EA, Series 65, EDPNA, Customs Broker). Everyone else gets a free preview after signing in with Google. The kids app is always free.</p>
 ${msg ? `<p class="msg">${esc(msg)}</p>` : ""}
 <form method="post"><input name="email" type="email" placeholder="customer@gmail.com" required><input name="note" placeholder="note (optional, e.g. paid $49 Nov 24)"><button name="act" value="add">Give full access</button><button class="r" name="act" value="remove">Remove</button><button class="g" name="act" value="reset">Reset free hour</button></form>
+<form method="post"><input name="minutes" type="number" min="0" max="10080" value="${C.previewMin}" style="max-width:120px"><button name="act" value="preview">Set free preview minutes (everyone)</button></form>
+<form method="post"><input name="email" type="email" placeholder="person@gmail.com" required><input name="minutes" type="number" value="60" style="max-width:110px"><button name="act" value="extra">Give extra free minutes</button></form>
+<h2>Promo codes</h2><p>Share a code in a group or forum; each person can use one code once to get extra free minutes.</p>
+<form method="post"><input name="code" placeholder="CODE e.g. REDDIT7" required style="max-width:200px"><input name="minutes" type="number" placeholder="minutes (blank = delete)" style="max-width:190px"><input name="note" placeholder="where it was shared"><button name="act" value="code">Save code</button></form>
+<table><tr><th>Code</th><th>Extra minutes</th><th>Used</th><th>Note</th></tr>${codes.map(c => `<tr><td><b>${esc(c.code)}</b></td><td>${c.minutes}</td><td>${c.used || 0}</td><td>${esc(c.note || "")}</td></tr>`).join("")}</table>
 <h2>Full access (${grants.length + ALWAYS.length})</h2><p>${ALWAYS.map(esc).join(", ")} (always)${grants.length ? ", " + grants.map(esc).join(", ") : ""}</p>
 <h2>People who signed in (${users.length})</h2><table><tr><th>Email</th><th>Access</th><th>Preview used</th><th>Last seen (Denver)</th></tr>
-${users.map(x => `<tr><td>${esc(x.email || "")}</td><td>${full(x.email) ? '<span class="ok">Full</span>' : x.used >= PREVIEW_MS ? "Preview used up" : "Preview"}</td><td>${Math.round(x.used / 60000)} min</td><td>${d(x.last)}</td></tr>`).join("")}</table></body></html>`;
+${users.map(x => `<tr><td>${esc(x.email || "")}</td><td>${full(x.email) ? '<span class="ok">Full</span>' : x.used >= C.previewMin * 60000 ? "Preview used up" : "Preview"}</td><td>${Math.round(x.used / 60000)} min</td><td>${d(x.last)}</td></tr>`).join("")}</table></body></html>`;
   return new Response(html, { headers: { "content-type": "text/html;charset=utf-8", "cache-control": "no-store" } });
 }
 const enc = new TextEncoder();
@@ -73,6 +87,13 @@ export default {
         const a = await access(env, sub); if (a.access === "full") return J(req, a);
         const { ms } = await req.json().catch(() => ({})); const add = Math.max(0, Math.min(+ms || 0, 3 * 60 * 1000));
         await env.P.put("t:" + sub, String(a.usedMs + add)); return J(req, await access(env, sub));
+      }
+      if (u.pathname === "/redeem" && req.method === "POST") {
+        const { code } = await req.json().catch(() => ({})); const k = "c:" + String(code || "").trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
+        const c = await env.P.get(k, "json"); if (!c) return J(req, { error: "That code is not valid." }, 404);
+        if (await env.P.get("r:" + sub)) return J(req, { error: "You have already used a code." }, 409);
+        await env.P.put("r:" + sub, k); await env.P.put("b:" + sub, String((+(await env.P.get("b:" + sub)) || 0) + c.minutes * 60000));
+        c.used = (c.used || 0) + 1; await env.P.put(k, JSON.stringify(c)); return J(req, { ok: true, added: c.minutes, ...(await access(env, sub)) });
       }
       if (u.pathname === "/load") { const s = await env.P.get("u:" + sub, "json"); return J(req, { saved: s ? { upd: s.upd, data: s.data } : null }); }
       if (u.pathname === "/save" && req.method === "POST") {
