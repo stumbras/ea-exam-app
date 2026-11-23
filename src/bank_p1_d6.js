@@ -65,7 +65,7 @@ F(1,6,"FBAR: not foreign accounts","Accounts at U.S. branches of foreign banks; 
 F(1,6,"FBAR: which 'U.S. persons' file","Citizens, resident aliens, and entities (corporations, partnerships, LLCs, trusts, estates) created under U.S. law");
 F(1,6,"Specified foreign financial assets (Form 8938)","Foreign financial accounts, foreign stock or securities not in a financial account, interests in foreign entities, foreign-issued life insurance with cash value. NOT foreign real estate held directly");
 F(1,6,"Form 8938 penalty","$10,000 for failure to file, plus up to $50,000 more for continued failure after IRS notice; 40% penalty on understatements from undisclosed assets");
-F(1,6,"Form 3520","Annual return of transactions with foreign trusts and receipt of large foreign gifts: from a nonresident alien individual or foreign estate over $100,000; from foreign corporations or partnerships over $20,116 (2025). Due with the income tax return. Penalty for gifts: 5% per month up to 25%");
+F(1,6,"Form 3520","Annual return of transactions with foreign trusts and receipt of large foreign gifts: from a nonresident alien individual or foreign estate over $100,000; from foreign corporations or partnerships over $20,116 (2025). Due April 15 (October 15 if the income tax return is extended), filed separately, not attached to Form 1040. Penalty for gifts: 5% per month up to 25%");
 F(1,6,"Form 3520-A","Annual information return of a foreign trust with a U.S. owner; due March 15");
 F(1,6,"Form 5471","U.S. persons who are officers, directors or shareholders (generally 10%+) of certain foreign corporations; penalty $10,000 per form");
 F(1,6,"Form 8865","U.S. persons with interests in foreign partnerships");

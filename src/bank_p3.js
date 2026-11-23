@@ -161,7 +161,7 @@ F(3,3,"Federal Payment Levy Program","Continuous levy of up to 15% of Social Sec
 F(3,3,"Seizure of a principal residence","Requires approval of a U.S. District Court judge or magistrate; not allowed to collect $5,000 or less");
 F(3,3,"Guaranteed installment agreement","Must be granted if tax owed (not counting interest/penalties) is $10,000 or less, paid within 3 years, and no failure to file or pay or prior IA in the preceding 5 years");
 F(3,3,"Streamlined / simple payment plan (individuals)","Assessed balance up to $50,000, paid in full by the CSED (the end of the collection period); no financial statement required. Called streamlined before March 2025, when the 72-month limit was dropped. Can apply online");
-F(3,3,"In-business trust fund express IA","Businesses owing $25,000 or less of payroll taxes, paid within 24 months");
+F(3,3,"In-business trust fund express IA","Now called the simple payment plan (business trust fund): a business still operating that owes $25,000 or less of payroll taxes pays in full by the CSED, with no financial statement. Until December 2025 it had to be paid within 24 months");
 F(3,3,"Installment agreement conditions","Must be in filing compliance; file and pay future taxes on time. Interest and penalties continue to accrue (FTP drops to 0.25%/month if the return was timely). User fees apply, reduced or waived for low-income taxpayers and online direct debit");
 F(3,3,"Installment agreement forms","Form 9465 (request); Form 433-F, 433-A, 433-B (collection information statements)");
 F(3,3,"Partial payment installment agreement","Pays less than the full balance before the CSED; requires full financial disclosure; reviewed every 2 years");
