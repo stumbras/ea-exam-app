@@ -68,6 +68,9 @@ ${row("tiktok", "TikTok", t => t.name || "")}
 <h2>2. App keys</h2><p>Paste each key from the developer pages. Saved keys show as ●●●●; leave a box empty to keep what is saved.</p>
 <form method="post" action="/s/${A}/save">${FIELDS.map(([k, l, sec]) => `<label for="${k}">${l}</label><input id="${k}" name="${k}" autocomplete="off" ${sec ? 'type="password"' : ""} placeholder="${cfg[k] ? (sec ? "●●●● saved" : esc(cfg[k])) : ""}">`).join("")}
 <p><button type="submit">Save keys</button></p></form>
+<h3>Google (YouTube) shortcut</h3><p>Pick the client_secret_….json file you downloaded from Google Cloud. It fills in both Google boxes and saves.</p>
+<p><label class="b" style="display:inline-block;cursor:pointer">Choose Google file<input id="gfile" type="file" accept=".json,application/json" style="display:none"></label></p>
+<script>document.getElementById("gfile").onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text()),w=j.web||j.installed;document.getElementById("google_client_id").value=w.client_id;document.getElementById("google_client_secret").value=w.client_secret;document.querySelector("form").submit()}catch(x){alert("That is not the Google client file.")}};</script>
 <h2>3. Addresses the developer pages ask for</h2><p>Redirect / callback addresses:<br>${["facebook", "instagram", "google", "tiktok"].map(n => `<code>${HOST}/cb/${n}</code>`).join("<br>")}</p>
 <p>Privacy policy: <code>https://solvinglifewith.com/privacy.html</code><br>Terms: <code>https://solvinglifewith.com/terms.html</code><br>Website: <code>https://solvinglifewith.com</code></p>
 </main></body></html>`;
