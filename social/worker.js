@@ -7,6 +7,7 @@
 //   GET  /s/<ADMIN>/go/<net>    start sign-in with facebook | instagram | google | tiktok
 //   GET  /cb/<net>              sign-in callback (state must match)
 //   POST /mcp/<ADMIN>           MCP endpoint (JSON-RPC over HTTP) used by Claude
+//   GET  /m/<driveId>/<sig>.mp4 public read-only stream of one Google Drive video (sig = HMAC of the id with ADMIN), for Facebook/TikTok to fetch
 const GV = "v23.0"; // Meta Graph API version
 const HOST = "https://social.solvinglifewith.com";
 const H = { "content-type": "text/html; charset=utf-8", "x-robots-tag": "noindex", "cache-control": "no-store" };
@@ -28,6 +29,7 @@ export default {
     const u = new URL(req.url), p = u.pathname.split("/").filter(Boolean);
     try {
       if (p[0] === "cb" && p[1]) return await callback(p[1], u, env);
+      if (p[0] === "m" && p[1] && p[2]) { const id = p[1]; if (p[2].replace(/\.mp4$/, "") !== await sig(env, id)) return new Response("Not found", { status: 404 }); return await driveStream(env, id, req); }
       if (!env.ADMIN || p[1] !== env.ADMIN) return new Response("Not found", { status: 404 });
       if (p[0] === "s" && req.method === "GET" && !p[2]) return new Response(await setupPage(env, u.searchParams.get("msg")), { headers: H });
       if (p[0] === "s" && p[2] === "save" && req.method === "POST") return await save(req, env);
@@ -92,7 +94,7 @@ async function startAuth(n, env) {
   else if (n === "instagram") { if (!cfg.ig_app_id) throw new Error("Save the Instagram app ID first.");
     url = "https://www.instagram.com/oauth/authorize?" + form({ client_id: cfg.ig_app_id, redirect_uri: cb, response_type: "code", state, scope: "instagram_business_basic,instagram_business_content_publish" }); }
   else if (n === "google") { if (!cfg.google_client_id) throw new Error("Save the Google client ID first.");
-    url = "https://accounts.google.com/o/oauth2/v2/auth?" + form({ client_id: cfg.google_client_id, redirect_uri: cb, response_type: "code", access_type: "offline", prompt: "consent", state, scope: "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube" }); }
+    url = "https://accounts.google.com/o/oauth2/v2/auth?" + form({ client_id: cfg.google_client_id, redirect_uri: cb, response_type: "code", access_type: "offline", prompt: "consent", state, scope: "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/drive.readonly" }); }
   else if (n === "tiktok") { if (!cfg.tiktok_client_key) throw new Error("Save the TikTok client key first.");
     url = "https://www.tiktok.com/v2/auth/authorize/?" + form({ client_key: cfg.tiktok_client_key, redirect_uri: cb, response_type: "code", state, scope: "user.info.basic,video.upload" }); }
   else throw new Error("Unknown network");
@@ -171,6 +173,15 @@ async function googleToken(env) {
   const g = await kget(env, "tok:google"), cfg = (await kget(env, "cfg")) || {}; if (!g || !g.refresh_token) throw new Error("YouTube is not connected.");
   return (await jfetch("https://oauth2.googleapis.com/token", { method: "POST", body: form({ client_id: cfg.google_client_id, client_secret: cfg.google_client_secret, refresh_token: g.refresh_token, grant_type: "refresh_token" }) })).access_token;
 }
+async function sig(env, id) { const k = await crypto.subtle.importKey("raw", new TextEncoder().encode(env.ADMIN), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]); return [...new Uint8Array(await crypto.subtle.sign("HMAC", k, new TextEncoder().encode("drive:" + id)))].slice(0, 12).map(b => b.toString(16).padStart(2, "0")).join(""); }
+async function driveStream(env, id, req) {
+  const at = await googleToken(env), h = { authorization: "Bearer " + at }; const rg = req && req.headers.get("range"); if (rg) h.range = rg;
+  const r = await fetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(id)}?alt=media&supportsAllDrives=true`, { headers: h });
+  if (!r.ok && r.status !== 206) return new Response("Drive error " + r.status, { status: 502 });
+  const o = new Headers(); for (const k of ["content-length", "content-range", "accept-ranges"]) { const v = r.headers.get(k); if (v) o.set(k, v); } o.set("content-type", "video/mp4"); o.set("cache-control", "public, max-age=3600");
+  return new Response(r.body, { status: r.status, headers: o });
+}
+async function driveLink(env, a) { if (!/^[\w-]{10,}$/.test(a.drive_id || "")) throw new Error("drive_id looks wrong"); return { url: `${HOST}/m/${a.drive_id}/${await sig(env, a.drive_id)}.mp4` }; }
 async function ytApi(env, a) { // YouTube Data API v3 for the channel: playlists, playlistItems, videos (titles/descriptions), channels (branding)
   const m = (a.method || "GET").toUpperCase(); if (!/^[a-zA-Z]+$/.test(a.resource || "")) throw new Error("resource must be like playlists, playlistItems, videos, channels, search");
   const at = await googleToken(env), q = new URLSearchParams(a.query || {});
@@ -178,7 +189,7 @@ async function ytApi(env, a) { // YouTube Data API v3 for the channel: playlists
   const t = await r.text(); if (!r.ok) throw new Error("YouTube " + r.status + ": " + t.slice(0, 600)); return t ? JSON.parse(t) : { ok: true };
 }
 async function ytUpload(env, a) {
-  const at = await googleToken(env), v = await fetch(a.video_url); if (!v.ok) throw new Error("Could not download the video from " + a.video_url);
+  const at = await googleToken(env), v = a.drive_id ? await fetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(a.drive_id)}?alt=media&supportsAllDrives=true`, { headers: { authorization: "Bearer " + at } }) : await fetch(a.video_url); if (!v.ok) throw new Error("Could not download the video: " + v.status);
   const len = Number(v.headers.get("content-length") || 0), type = (v.headers.get("content-type") || "video/mp4").split(";")[0];
   const bytes = len ? null : await v.arrayBuffer(), size = len || bytes.byteLength; // long videos stream straight through without being held in memory
   const meta = { snippet: { title: (a.title || "").slice(0, 100), description: a.description || "", tags: a.tags || [], categoryId: "27" }, status: a.publish_at ? { privacyStatus: "private", publishAt: a.publish_at, selfDeclaredMadeForKids: false } : { privacyStatus: a.privacy || "public", selfDeclaredMadeForKids: false } };
@@ -218,7 +229,8 @@ const TOOLS = [
   { name: "social_status", description: "Show which Solving Life accounts (Facebook Page, Instagram, YouTube, TikTok) are connected.", inputSchema: { type: "object", properties: {} } },
   { name: "facebook_post", description: "Post to the Solving Life Facebook Page: text, a link, a photo (image_url), a video (video_url) or a Reel (video_url with reel=true). Media must be a public https URL. Posts publicly unless draft=true.", inputSchema: { type: "object", properties: { text: { type: "string" }, link: { type: "string" }, image_url: { type: "string" }, video_url: { type: "string" }, reel: { type: "boolean" }, draft: { type: "boolean" }, page: { type: "string", description: "Page name or id if more than one" } }, required: ["text"] } },
   { name: "instagram_post", description: "Publish to the Solving Life Instagram: a photo (image_url), a Reel (video_url), a Story (story=true) or a carousel (carousel = list of up to 10 image/video URLs). Media must be a public https URL (JPEG images; MP4 videos).", inputSchema: { type: "object", properties: { caption: { type: "string" }, image_url: { type: "string" }, video_url: { type: "string" }, story: { type: "boolean" }, carousel: { type: "array", items: { type: "string" } } } } },
-  { name: "youtube_upload", description: "Upload a video (public https MP4 URL) to the Solving Life YouTube channel. Vertical videos under 3 minutes become Shorts. privacy: public, unlisted or private.", inputSchema: { type: "object", properties: { video_url: { type: "string" }, title: { type: "string" }, description: { type: "string" }, tags: { type: "array", items: { type: "string" } }, privacy: { type: "string", enum: ["public", "unlisted", "private"] }, publish_at: { type: "string", description: "Schedule: ISO time when the video goes public (it stays private until then)" }, playlist_id: { type: "string", description: "Add the video to this playlist" } }, required: ["video_url", "title"] } },
+  { name: "youtube_upload", description: "Upload a video (public https MP4 URL) to the Solving Life YouTube channel. Vertical videos under 3 minutes become Shorts. privacy: public, unlisted or private.", inputSchema: { type: "object", properties: { video_url: { type: "string" }, title: { type: "string" }, description: { type: "string" }, tags: { type: "array", items: { type: "string" } }, privacy: { type: "string", enum: ["public", "unlisted", "private"] }, publish_at: { type: "string", description: "Schedule: ISO time when the video goes public (it stays private until then)" }, playlist_id: { type: "string", description: "Add the video to this playlist" }, drive_id: { type: "string", description: "Google Drive file id of the video (instead of video_url)" } }, required: ["title"] } },
+  { name: "drive_video_link", description: "Make a public read-only link (for facebook_post / tiktok_send_to_app video_url) to one video in the Solving Life Google Drive.", inputSchema: { type: "object", properties: { drive_id: { type: "string" } }, required: ["drive_id"] } },
   { name: "youtube_api", description: "Manage the Solving Life YouTube channel through YouTube Data API v3: list/create/update playlists, add videos to playlists (playlistItems), update video titles/descriptions/tags (videos, part=snippet), update channel branding (channels, part=brandingSettings), list uploads (search with forMine=true). Give resource, method, query (e.g. part, mine, id) and body.", inputSchema: { type: "object", properties: { resource: { type: "string" }, method: { type: "string", enum: ["GET", "POST", "PUT", "DELETE"] }, query: { type: "object" }, body: { type: "object" } }, required: ["resource"] } },
   { name: "tiktok_send_to_app", description: "Send a video (public https MP4 URL) to the Solving Life TikTok app's inbox as a draft; the owner finishes and posts it in the TikTok app.", inputSchema: { type: "object", properties: { video_url: { type: "string" } }, required: ["video_url"] } }
 ];
@@ -234,7 +246,7 @@ async function mcp(req, env) {
     if (m.method === "tools/call") {
       const a = (m.params && m.params.arguments) || {}, n = m.params && m.params.name;
       try {
-        const out = n === "social_status" ? await status(env) : n === "facebook_post" ? await fbPost(env, a) : n === "instagram_post" ? await igPost(env, a) : n === "youtube_upload" ? await ytUpload(env, a) : n === "youtube_api" ? await ytApi(env, a) : n === "tiktok_send_to_app" ? await ttDraft(env, a) : null;
+        const out = n === "social_status" ? await status(env) : n === "facebook_post" ? await fbPost(env, a) : n === "instagram_post" ? await igPost(env, a) : n === "youtube_upload" ? await ytUpload(env, a) : n === "youtube_api" ? await ytApi(env, a) : n === "drive_video_link" ? await driveLink(env, a) : n === "tiktok_send_to_app" ? await ttDraft(env, a) : null;
         if (out === null) return bad(-32602, "Unknown tool " + n);
         return ok({ content: [{ type: "text", text: JSON.stringify(out, null, 1) }] });
       } catch (e) { return ok({ content: [{ type: "text", text: "Error: " + e.message }], isError: true }); }
