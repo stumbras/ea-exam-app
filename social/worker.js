@@ -180,14 +180,17 @@ async function ytUpload(env, a) {
   if (!r.ok) throw new Error("YouTube upload failed: " + JSON.stringify(d).slice(0, 500));
   return { network: "youtube", id: d.id, url: "https://youtu.be/" + d.id, privacy: d.status && d.status.privacyStatus };
 }
-async function tiktokToken(env) {
+async function tiktokToken(env, force) {
   const t = await kget(env, "tok:tiktok"), cfg = (await kget(env, "cfg")) || {}; if (!t) throw new Error("TikTok is not connected.");
-  if (t.access_token && t.expires > Date.now() + 60000) return t.access_token;
+  if (!force && t.access_token && t.expires > Date.now() + 60000) return t.access_token;
   const n = await jfetch("https://open.tiktokapis.com/v2/oauth/token/", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" }, body: form({ client_key: cfg.tiktok_client_key, client_secret: cfg.tiktok_client_secret, grant_type: "refresh_token", refresh_token: t.refresh_token }) });
   Object.assign(t, { access_token: n.access_token, refresh_token: n.refresh_token || t.refresh_token, expires: Date.now() + n.expires_in * 1000 }); await kput(env, "tok:tiktok", t); return t.access_token;
 }
-async function ttDraft(env, a) { // sends the video to the TikTok app's inbox; the owner adds sounds and posts from the app
-  const at = await tiktokToken(env), v = await fetch(a.video_url); if (!v.ok) throw new Error("Could not download the video.");
+async function ttDraft(env, a, retried) { // sends the video to the TikTok app's inbox; the owner adds sounds and posts from the app
+  try { return await ttDraft1(env, a, await tiktokToken(env, retried)); } catch (e) { if (!retried && /access_token_invalid|401/.test(String(e.message))) return ttDraft(env, a, true); throw e; }
+}
+async function ttDraft1(env, a, at) {
+  const v = await fetch(a.video_url); if (!v.ok) throw new Error("Could not download the video.");
   const bytes = new Uint8Array(await v.arrayBuffer()), size = bytes.byteLength, chunk = size <= 64e6 ? size : 10e6, count = Math.floor(size / chunk) || 1;
   const init = await jfetch("https://open.tiktokapis.com/v2/post/publish/inbox/video/init/", { method: "POST", headers: { authorization: "Bearer " + at, "content-type": "application/json; charset=UTF-8" }, body: JSON.stringify({ source_info: { source: "FILE_UPLOAD", video_size: size, chunk_size: chunk, total_chunk_count: count } }) });
   const url = init.data.upload_url;
