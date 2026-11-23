@@ -652,6 +652,15 @@ One line per shipped version, newest first. Written by `tmp/ship.sh` from the gi
 
 <!-- VERSION-LOG -->
 
+**Version 230 (Nov 24, night run, continued).** Four pieces, each read by an independent second reader before release.
+1. *STALE RULE FOUND AND FIXED: streamlined installment agreements are now SIMPLE PAYMENT PLANS.* For individuals since March 3, 2025 (interim guidance SBSE-05-0325-0008; IRM 5.14.5 rewritten July 21, 2026; Instructions for Form 9465 Rev. 12/2026): assessed balance of $50,000 or less, no financial statement, paid in full by the collection expiration date. The 72-month limit and the direct debit requirement above $25,000 are gone. Fixed without touching any stem: right answers and explanations of three Part 3 questions (p3q1da976u, p3q9zjskl with its worked steps in `bank_calc_ex.js`, p3q1918wt5), the fact card p3fttjcng (audio RE-RECORDED, meta [4.8, 68277]), its long explanation in `bank_explain3.js` and the lesson table in `units_p2_p3_more.js`. Left alone: the lien withdrawal explanation in `bank_p3_gap2.js` that mentions a direct debit agreement of $25,000 or less (a lien rule, not checked tonight; CHECK NEXT).
+2. *Forms 9465 and 12153 explained box by box* (`FXR.f9465`, `FXR.f12153`). User fee amounts are left out on purpose. Reviewer fixes: simple payment plan wording on Form 9465; the guaranteed agreement conditions completed (income tax, no agreement in the past 5 years); on Form 12153 two rules needed `^` so they stop catching table rows 3 and 4, and the prior-opportunity rule was moved to the "I am not liable" box.
+3. *28 Part 3 questions for fact cards no exam-type question tested* (`bank_p3_gap9.js`, const J90). Reviewer fix: section 10.52 wording (willful violation of any rule except 10.33; reckless or grossly incompetent violation of 10.34 to 10.37). This reviewer could fetch only two IRS pages (web permission prompts went unanswered), so most of it was checked from knowledge only.
+4. *28 Part 2 questions on the same basis* (`bank_p2_gap9.js`, const H90). Reviewer fixes: the Form 990 due date question now uses a year where November 15 is a weekday; percentage depletion limit 50% (100% oil and gas); the $150,000 accumulated earnings credit is for listed service fields; the museum garage and personal holding company stems tightened. Also checked from knowledge for most items.
+Measure: the app's count of untested cards moved only from 97 to 94 (Part 3) and 73 to 71 (Part 2), because the matcher needs close word overlap; do not use that count as the goal.
+Method note: when a background reviewer stalls on a web permission prompt, message it to finish from its own knowledge and say so in the report.
+
+
 **Version 229 (Nov 24, night run, continued).** Three pieces, each read by an independent second reader before release.
 1. *Audit of older cards for the stale facts found tonight* (5 days "of the rejection", FBAR $10,000, no exemption on a final Form 1041, IRAs on Schedule F of Form 706, Prometric and the old exam fees, the clean vehicle credit end date, section 1062, duplicate dependent on paper): nothing left to fix. The only hits were wrong answer choices (kept on purpose) and cards already corrected in Versions 225 to 228. The Part 3 explanation about a taxpayer's OWN number already used (paper return with Form 14039) is still right and was left alone.
 2. *Forms 2553 and 8832 explained box by box* (`FXR.f2553`, `FXR.f8832` at the end of `forms.js`); plain explanations now exist for 24 forms. Reviewer found no wrong law, but three places where one label is shared by different boxes (the trust's EIN in Part III of Form 2553; all four Item F tick boxes carry the "(1) Calendar year" label; the Form 8832 Part II signature block shares the consent block's label). Fixed by wording each explanation to cover both boxes, without touching the field files.
@@ -1559,6 +1568,7 @@ More exams: CBP's page "Past Customs Broker License Examinations & Answer Keys" 
 so the owner must attach more PDFs (or the allowlist must reach this workspace). NEXT for CBLE: worked lessons per 19 CFR part,
 HTSUS GRI drills, valuation calculations, and the practical exercise with drawn 7501 forms.
 
+- 2026-11-23 Version 230: Simple payment plan fix, Forms 9465 and 12153, 56 questions for untested cards
 - 2026-11-23 Version 229: Forms 2553 and 8832 explained, 28 Part 3 representation questions, stale-fact audit
 - 2026-11-23 Version 228: 24 Part 3 questions on the filing process, reviewed before release; two cards re-recorded
 - 2026-11-23 Version 227: Form 1120 explained box by box, reviewed before release
