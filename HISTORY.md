@@ -221,7 +221,7 @@ the app had only as flash cards.
 - Every form named in a lesson or explanation becomes a link (`fvLinkify`); not in mock exams or kids.
 - Interactive Form 1040 with three worked cases (`F40CASES`) and box-by-box plain explanations.
 - Plain explanations per box (`FXR`) exist for 15 forms: 1040, W-2, 1099-NEC, 1099-INT,
-  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867, 709, 1041. The other 209 show the IRS field text only.
+  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867, 709, 1041, 706. The other 208 show the IRS field text only.
 - Rules for `FXR` patterns: anchor on the line number (`(?:^|[.:] )N\. `), because labels often
   mention other lines. Check with tests t721, t722, t723.
 
@@ -423,7 +423,7 @@ the QBI limit.
    strictly longest and reword until under 30% (t733 and t734 fail above that).
 4. Outside misses still to explain and cover (ids from the owner's outside practice, no
    screenshot yet): #100709 Retirement Income, #100598 Gift Tax, #100172 Property.
-5. Plain box-by-box explanations for more forms: 706, 1065, 1120-S (8867 done in Version 218, 709 in 219, 1041 in 220).
+5. Plain box-by-box explanations for more forms: 1065, 1120-S (8867 done in Version 218, 709 in 219, 1041 in 220, 706 in 221).
 6. Test on a real iPhone (Safari): audio chime, keep-going audio, form viewer.
 7. Check whether the military state-residence rule is on the current IRS exam outline.
 
@@ -651,6 +651,14 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 221 (Nov 23 ~22:00 Manila, side-panel session): Form 706 (Rev. August 2025) explained box by box (FXR.f706 at the end
+of forms.js, about 115 rules; all 316 fields get a plain explanation, none empty in `node tmp/t722.js f706`, each distinct label
+read against its rule). Facts used: due 9 months after death, Form 4768 gives 6 months to file (not to pay); basic exclusion
+$13,990,000 for deaths in 2025 ($15,000,000 in 2026); top rate 40%; alternate valuation must lower both the gross estate and the
+tax; special-use valuation cap $1,420,000 for 2025; section 6166 (more than 35% of the adjusted gross estate); portability only
+by filing Form 706; DSUE not indexed and lost under the last-deceased-spouse rule. STILL TO DO for open-work item 5: Forms 1065
+and 1120-S; then an independent second read of all six form explanations (8867, 709, 1041, 706, 1065, 1120-S).
+
 VERSION 220 (Nov 23 ~21:40 Manila, side-panel session): Form 1041 explained box by box (FXR.f1041 at the end of forms.js, about
 120 rules; all 173 fields get a plain explanation; `node tmp/t722.js f1041` shows none empty and each distinct label was read
 against the rule it receives). Facts used: file at $600 gross income; exemption $600 / $300 / $100, none on a final return; top
@@ -1444,6 +1452,7 @@ More exams: CBP's page "Past Customs Broker License Examinations & Answer Keys" 
 so the owner must attach more PDFs (or the allowlist must reach this workspace). NEXT for CBLE: worked lessons per 19 CFR part,
 HTSUS GRI drills, valuation calculations, and the practical exercise with drawn 7501 forms.
 
+- 2026-11-23 Version 221: Form 706 explained box by box
 - 2026-11-23 Version 220: Form 1041 explained box by box
 - 2026-11-23 Version 219: Form 709 explained box by box
 - 2026-11-23 Version 218: Form 8867 explained box by box; review of Part 1 set 16; FBAR penalty amounts
