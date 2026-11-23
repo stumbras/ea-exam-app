@@ -1,8 +1,9 @@
 {
- "name": "Rocket Genius",
- "short_name": "Rocket Genius",
+ "name": "Solving Life Becoming Genius",
+ "short_name": "Becoming Genius",
  "description": "Learning games for kids: math, English, science, code, geography and chess.",
  "start_url": "./?kids",
+ "id": "./?kids",
  "scope": "./",
  "display": "standalone",
  "orientation": "portrait",
@@ -25,6 +26,5 @@
    "type": "image/png",
    "purpose": "maskable"
   }
- ],
- "id": "./?kids"
+ ]
 }
