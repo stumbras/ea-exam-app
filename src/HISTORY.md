@@ -221,7 +221,7 @@ the app had only as flash cards.
 - Every form named in a lesson or explanation becomes a link (`fvLinkify`); not in mock exams or kids.
 - Interactive Form 1040 with three worked cases (`F40CASES`) and box-by-box plain explanations.
 - Plain explanations per box (`FXR`) exist for 15 forms: 1040, W-2, 1099-NEC, 1099-INT,
-  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867, 709, 1041, 706, 1065, 1120-S. The other 206 show the IRS field text only.
+  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867, 709, 1041, 706, 1065, 1120-S, 1120. The other 205 show the IRS field text only.
 - Rules for `FXR` patterns: anchor on the line number (`(?:^|[.:] )N\. `), because labels often
   mention other lines. Check with tests t721, t722, t723.
 
@@ -651,6 +651,19 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 227 (Nov 23 ~23:45 Manila, side-panel session): Form 1120 explained box by box (FXR.f1120 at the end of forms.js, 153
+rules; all 481 fields get a plain explanation; `node tmp/t722.js f1120` shows none empty). SECOND-READER REVIEW done BEFORE
+shipping against the 2025 Instructions for Form 1120 and Pub 542: no wrong figure, rate, date or form number; 4 texts improved:
+(1) Schedule K question 16 now explains its own 80% ownership change and separates it from section 382; (2) the due date text
+gives the June 30 year-end exception (15th day of the 3rd month); (3) the section 1062 farmland installment text now carries its
+effective date, sales in tax years beginning after July 4, 2025, so NOT a calendar-year 2025 return (the same sentence was
+corrected in the Form 1041 block, which had the same text); (4) the international rows text now fits IC-DISC and section 250.
+Not source-fetched by the reader: Form 966 30 days, Form 5472 $25,000, personal holding company tests and 20%, accumulated
+earnings tax 20% and $150,000, section 382, general business credit back 1 forward 20, $5,000 start-up, corporate alternative
+minimum tax 15% and $1 billion, 1% buyback tax, Form 7004 length (so the text no longer states a number of months for Form 1120).
+Plain explanations now exist for 22 forms. Drafted and waiting for its own review: bank_p3_gap7.js (24 Part 3 filing-process
+questions, NOT in build.py yet).
+
 VERSION 226 (Nov 23 ~23:15 Manila, side-panel session): bank_p2_gap8.js, 26 Part 2 worked story questions (flag gp) in the
 areas the exam asks most: partner's basis with an assumed mortgage, cash and property distributions, loss limit, guaranteed
 payment sum, liquidating loss; S corporation loss limit (stock plus direct loans; a guarantee gives no basis), the order of basis
