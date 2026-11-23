@@ -221,7 +221,7 @@ the app had only as flash cards.
 - Every form named in a lesson or explanation becomes a link (`fvLinkify`); not in mock exams or kids.
 - Interactive Form 1040 with three worked cases (`F40CASES`) and box-by-box plain explanations.
 - Plain explanations per box (`FXR`) exist for 15 forms: 1040, W-2, 1099-NEC, 1099-INT,
-  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867, 709. The other 210 show the IRS field text only.
+  Schedules 1, 2, 3, A, B, C, SE, W-7, 4868, 2848, 8821, 8867, 709, 1041. The other 209 show the IRS field text only.
 - Rules for `FXR` patterns: anchor on the line number (`(?:^|[.:] )N\. `), because labels often
   mention other lines. Check with tests t721, t722, t723.
 
@@ -423,7 +423,7 @@ the QBI limit.
    strictly longest and reword until under 30% (t733 and t734 fail above that).
 4. Outside misses still to explain and cover (ids from the owner's outside practice, no
    screenshot yet): #100709 Retirement Income, #100598 Gift Tax, #100172 Property.
-5. Plain box-by-box explanations for more forms: 1041, 706, 1065, 1120-S (8867 done in Version 218, 709 in Version 219).
+5. Plain box-by-box explanations for more forms: 706, 1065, 1120-S (8867 done in Version 218, 709 in 219, 1041 in 220).
 6. Test on a real iPhone (Safari): audio chime, keep-going audio, form viewer.
 7. Check whether the military state-residence rule is on the current IRS exam outline.
 
@@ -651,6 +651,14 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+VERSION 220 (Nov 23 ~21:40 Manila, side-panel session): Form 1041 explained box by box (FXR.f1041 at the end of forms.js, about
+120 rules; all 173 fields get a plain explanation; `node tmp/t722.js f1041` shows none empty and each distinct label was read
+against the rule it receives). Facts used: file at $600 gross income; exemption $600 / $300 / $100, none on a final return; top
+rate 37% above $15,650 for 2025; due the 15th day of the 4th month, Form 7004 gives 5 1/2 months; no estimated tax for an
+estate's first 2 years; Form 1041-T within 65 days; sections 645, 663(b) (65-day rule) and 643(e)(3); new section 1062 lines
+(farmland sale tax in four installments). STILL TO DO for open-work item 5: Forms 706, 1065, 1120-S. The form explanations
+(8867, 709, 1041) have not had an independent second read yet.
+
 VERSION 219 (Nov 23 ~22:10 Manila, side-panel session): Form 709 explained box by box (FXR.f709 at the end of forms.js, about
 110 rules; all 1,851 fields get a plain explanation, checked with `node tmp/t722.js f709`). Line numbers repeat in every part of
 Form 709, so each rule is anchored on the line's own words and the general rules (item number) come last. 2025 figures used:
