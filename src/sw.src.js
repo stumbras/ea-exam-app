@@ -8,7 +8,7 @@ self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.
 self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET")return;const u=new URL(r.url);
   if(u.origin===self.location.origin&&(u.pathname.indexOf("/audio/")>=0||u.pathname.indexOf("/video/")>=0))return; // recorded audio: the app keeps its own saved copies
   if(u.origin===self.location.origin&&/\/version\.json$/.test(u.pathname)){e.respondWith(fetch(r).catch(()=>new Response("{}",{headers:{"Content-Type":"application/json"}})));return}
-  if(u.origin===self.location.origin&&r.mode==="navigate"&&/^(ea|65|edpna|kids)\/(index\.html)?$/.test(u.href.slice(BASE.length).split(/[?#]/)[0]))return; // short links /ea/ /65/ /edpna/ /kids/: tiny pages that open the right app
+  if(u.origin===self.location.origin&&r.mode==="navigate"&&/^(ea|65|edpna|kids|cble)\/(index\.html)?$/.test(u.href.slice(BASE.length).split(/[?#]/)[0]))return; // short links /ea/ /65/ /edpna/ /kids/: tiny pages that open the right app
   if(u.origin===self.location.origin&&u.href.startsWith(BASE)){
     const key=(r.mode==="navigate"||u.href===BASE)?INDEX:u.origin+u.pathname;
     e.respondWith((async()=>{const c=await caches.open(CACHE),hit=await c.match(key);

@@ -5,6 +5,7 @@
    opened later without its query string still opens in the right section. Saved progress keys are not touched. ---- */
 const SLAPPS={
   s65:{part:5,name:"Solving Life Series 65 Prep",short:"Series 65 Prep",man:"manifest-65.webmanifest",color:"#5b3fb0",icon:"apple-touch-icon-65.png"},
+  cble:{part:9,name:"Solving Life Customs Broker Prep",short:"Customs Broker Prep",man:"manifest-cble.webmanifest",color:"#1f5d8c",icon:"apple-touch-icon-cble.png"},
   edpna:{part:6,name:"Solving Life EDPNA Prep",short:"EDPNA Prep",man:"manifest-edpna.webmanifest",color:"#a0521a",icon:"apple-touch-icon-edpna.png"}
 };
 function SLAPP(){try{const k=localStorage.getItem("slApp")||"";return SLAPPS[k]?k:""}catch(_){return ""}}
@@ -13,7 +14,7 @@ function slAppUI(){try{const a=SLAPPS[SLAPP()];if(!a)return;document.title=a.nam
   const at=document.querySelector('meta[name="apple-mobile-web-app-title"]');if(at)at.setAttribute("content",a.short);
   const ic=document.querySelector('link[rel="apple-touch-icon"]');if(ic)ic.setAttribute("href",a.icon);
   const tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.setAttribute("content",a.color)}catch(_){}}
-(function(){try{const sm=location.pathname.match(/\/(ea|65|edpna|kids)\/(index\.html)?$/);if(sm){location.replace("../?"+({ea:"study","65":"s65",edpna:"edpna",kids:"kids"})[sm[1]]+location.hash);return}}catch(_){}})();
+(function(){try{const sm=location.pathname.match(/\/(ea|65|edpna|kids|cble)\/(index\.html)?$/);if(sm){location.replace("../?"+({ea:"study","65":"s65",edpna:"edpna",kids:"kids",cble:"cble"})[sm[1]]+location.hash);return}}catch(_){}})();
 (function(){try{const q=new URLSearchParams(location.search);
   if(q.has("study")||q.has("kids")||q.has("course"))localStorage.removeItem("slApp");
   if(q.has("study")){localStorage.removeItem("kidsLock");localStorage.removeItem("courseLock")}
