@@ -7,8 +7,8 @@ improving the app without the chat where it was built. It is shipped with every 
 Update it when a rule, a file, a formula or the open-work list changes. The version log at the
 bottom is written automatically by `tmp/ship.sh`.
 
-- Live app: https://stumbras.github.io/ea-exam-app/
-- Kids only: https://stumbras.github.io/ea-exam-app/?kids
+- Live app: https://study.solvinglifewith.com/ (Cloudflare; mirror https://stumbras.github.io/ea-exam-app/)
+- Kids only: https://study.solvinglifewith.com/kids/ (mirror https://stumbras.github.io/ea-exam-app/?kids)
 - Repository: https://github.com/stumbras/ea-exam-app (branches `main` and `gh-pages`, same content)
 - Owner: Solving Life LLC
 - Detailed changelog, one long bullet per version with the reason for each change: `README.md`
@@ -649,6 +649,25 @@ pwa/company/media/ via git, up to 25 MiB each; long videos need another host, e.
 One line per shipped version, newest first. Written by `tmp/ship.sh` from the git history.
 
 <!-- VERSION-LOG -->
+SIDE-PANEL SESSION FIXES (Nov 23 ~19:55 Manila, a second Claude session working in the owner's Chrome; pushed straight to main,
+NOT through tmp/ship.sh). ANY OTHER SESSION: `git pull` and copy sw.js, social/worker.js and this file into your working folders
+(/home/claude/ea-app/pwa/sw.js, pwa/social/worker.js, ea-app/HISTORY.md) BEFORE the next ship, or ship.sh will undo these fixes.
+1. sw.js, "This site can't be reached" (ERR_FAILED) on study.solvinglifewith.com from the second visit on, for every visitor:
+   Cloudflare static assets answer /index.html with a 307 to /, the service worker saved that redirected copy under INDEX, and
+   Chrome refuses a redirected response for a page navigation. GitHub Pages does not redirect, so it only broke on Cloudflare.
+   Fix: INDEX = BASE (the folder address), never save or serve a response with .redirected, and the short links also match
+   without the trailing slash (/kids as well as /kids/). Lesson: never cache a URL that the host redirects.
+2. social/worker.js, tiktok_send_to_app failed with "Could not download the video." for drive_video_link addresses: the Worker
+   was fetching its own address (social.solvinglifewith.com/m/...), which a Worker cannot do. Fix: ttDraft1 recognises its own
+   signed /m/<id>/<sig>.mp4 links, checks the signature and reads the file straight from Drive (driveStream). The daily
+   cross-post (crossPost -> ttDraft) had the same failure and is fixed by the same change.
+3. TikTok developer portal: domain solvinglifewith.com verified as a URL property for the sandbox (DNS TXT record
+   tiktok-developers-site-verification=... added in Cloudflare). Not needed for the present FILE_UPLOAD path; needed if the
+   connector ever switches to PULL_FROM_URL.
+4. Live addresses: the app is at https://study.solvinglifewith.com/ (kids: /kids/ or /?kids); the GitHub Pages address still works.
+Owner's standing instruction (Nov 23): keep this file updated constantly, and use every available tool (Chrome, connectors)
+automatically without being reminded.
+
 TAX SITE BLOG + WIX CHECK (Nov 23 09:40 Manila): Reviewed bank_p2_gap6 and bank_p3_gap6 against current rules: no fixes needed
 (right answer longest in 6% and 17%). Wix read-only check: 0 booking services exist (Bookings app installed but empty); 6 blog
 posts (published Nov 12); Stores holds 12 template demo products (hand cream, lounge chair...) still visible, not ours. Copied

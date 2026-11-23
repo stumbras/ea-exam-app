@@ -241,7 +241,10 @@ async function ttDraft(env, a, retried) { // sends the video to the TikTok app's
   try { return await ttDraft1(env, a, await tiktokToken(env, retried)); } catch (e) { if (!retried && /access_token_invalid|401/.test(String(e.message))) return ttDraft(env, a, true); throw e; }
 }
 async function ttDraft1(env, a, at) {
-  const v = await fetch(a.video_url); if (!v.ok) throw new Error("Could not download the video.");
+  // Our own signed Drive links (HOST/m/<id>/<sig>.mp4) are read straight from Drive: a Worker cannot fetch its own address.
+  const own = /^https:\/\/social\.solvinglifewith\.com\/m\/([\w-]{10,})\/([0-9a-f]{24})\.mp4$/.exec(a.video_url || "");
+  const v = own && own[2] === await sig(env, own[1]) ? await driveStream(env, own[1]) : await fetch(a.video_url);
+  if (!v.ok) throw new Error("Could not download the video (" + v.status + ").");
   const bytes = new Uint8Array(await v.arrayBuffer()), size = bytes.byteLength, chunk = size <= 64e6 ? size : 10e6, count = Math.floor(size / chunk) || 1;
   const init = await jfetch("https://open.tiktokapis.com/v2/post/publish/inbox/video/init/", { method: "POST", headers: { authorization: "Bearer " + at, "content-type": "application/json; charset=UTF-8" }, body: JSON.stringify({ source_info: { source: "FILE_UPLOAD", video_size: size, chunk_size: chunk, total_chunk_count: count } }) });
   const url = init.data.upload_url;
