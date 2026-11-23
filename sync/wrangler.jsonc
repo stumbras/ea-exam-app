@@ -1,0 +1,3 @@
+{"name":"solvinglife-sync","main":"worker.js","compatibility_date":"2026-11-01","workers_dev":true,"preview_urls":false,
+ "kv_namespaces":[{"binding":"P","id":"182703011174471dbee5c4eb43120d42"}],
+ "routes":[{"pattern":"sync.solvinglifewith.com","custom_domain":true}]}
