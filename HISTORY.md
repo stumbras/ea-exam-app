@@ -883,3 +883,223 @@ Become a Tax Pro PLUB9yEAoaek8). 58 Drive videos scheduled one a day at 6 PM Den
 Plan doc: project "YouTube Plan - Solving Life LLC". App ads (EA, Series 65, EDPNA, kids) rendered from real screenshots in
 /home/claude/ads (render.py + ad_*.json, original generated music) — waiting for owner review, then Jan 21 -> Apr 15 slots.
 TikTok token bug fixed (token may be nested under data); TikTok needs one reconnect click by the owner. Instagram link retry Thu Nov 26.
+
+VERSION 212 (Nov 23 ~19:20 Manila): GOOGLE SIGN-IN SYNC. cloud_sync.js (last in build.py, starts on DOMContentLoaded because bank
+files load before the main code): the header chip "☁️ Sign in to save progress" (kids mode: a floating "☁️ Parents: save progress"
+button) opens a sign-in sheet with the Google Identity Services button (client 184315933690-kq6q…, JS origins study.solvinglifewith.com
+and ea-exam-app.linaskerbelis.workers.dev; consent-screen app name changed to "Solving Life"). Backend: Worker solvinglife-sync at
+https://sync.solvinglifewith.com (code sync/worker.js, KV 182703011174471dbee5c4eb43120d42, secret SECRET set at upload):
+POST /login {id_token} -> verifies with Google tokeninfo, returns a 90-day HMAC session token + saved copy; GET /load; POST /save
+{upd,data} (409 if the cloud copy is newer); POST /delete. One key per Google account; the whole S object is stored, so EA, Series 65,
+EDPNA and kids all sync together. Rules: on sign-in/start, a newer cloud copy with at least 90% of the local progress score is loaded
+(local copy kept in localStorage "ea-drill-before-restore"); otherwise this device's copy is pushed. Pushes 8 s after persist() and
+when the app is hidden. Apple sign-in: later (needs Apple developer account). Privacy policy (company site) updated.
+NEXT: Customs Broker License Exam (CBLE) app — owner asked (research the current exam first).
+
+- 2026-11-23 Version 212: Google sign-in saves progress across devices for every Solving Life app
+- 2026-11-23 Site: grand opening bar, apostilles, payroll, social links, study apps, giveaway
+- 2026-11-23 History: restore the full notes (an earlier notes commit dropped older lines) and keep the new social sections
+- 2026-11-23 Grand opening v3: bookkeeping, payroll, small business, apostilles
+- 2026-11-23 Grand opening video v2: apps, all socials, website
+- 2026-11-23 Grand opening video
+- 2026-11-23 Giveaway rules: start when first posted on Instagram (Nov 23)
+- 2026-11-23 Giveaway video v2: animated, voiced, with a tax quiz
+- 2026-11-23 Giveaway rules: Instagram entries too
+- 2026-11-23 Giveaway video; cross-post can skip Facebook per item
+- 2026-11-23 Company site: official rules for the free tax prep giveaway (YouTube and TikTok)
+- 2026-11-23 Social: daily cross-post of each day's video to Facebook Reels and TikTok inbox when it goes public on YouTube
+- 2026-11-23 History: YouTube autopilot and app ads
+- 2026-11-23 Social: youtube_queue tool to view and fill the daily upload queue
+- 2026-11-23 Social: daily cron uploads the next 5 queued YouTube videos (KV ytq, log in ytlog)
+- 2026-11-23 Social: post Drive videos directly (drive_id on YouTube upload, signed public stream for Facebook/TikTok); Google sign-in asks Drive read access
+- 2026-11-23 Social: schedule YouTube uploads (publish_at) and add to a playlist
+- 2026-11-23 Social: youtube_api tool for playlists, titles and channel branding (needs full youtube scope)
+- 2026-11-23 Social: read TikTok tokens whether TikTok nests them under data
+- 2026-11-23 Social: show TikTok token errors instead of saving an empty token
+- 2026-11-23 Social: refresh TikTok token and retry once when TikTok says it is invalid
+- 2026-11-23 Social video EP1 for posting
+- 2026-11-23 Notes: social accounts connected
+- 2026-11-23 Social setup page: pick the Google client file to fill in YouTube keys
+- 2026-11-22 Social connector: Instagram posts through the Facebook Page sign-in; optional Meta login configuration; deploy by Workers Builds
+- 2026-11-22 Version 211 · Nov 23: Version 211: real SSA forms in the form viewer with exam notes
+- 2026-11-22 Version 210 · Nov 23: Version 210: Series 65 and EDPNA forms and acronyms drill, glossary, form cards and questions
+- 2026-11-22 Tax site: blog posts copied from Wix at the same /post/ addresses, Blog page and nav
+- 2026-11-22 Keep connector and generator sources out of the study site
+- 2026-11-22 Own social posting connector source (no secrets) and tax-site page generator
+- 2026-11-22 Site preview: New solvinglifellc.com as a coded site in llc/ (preview only; domain unchanged)
+- 2026-11-22 Version 209: Four Solving Life apps from one engine: Enrolled Agent Prep, Series 65 Prep, EDPNA Prep, Becoming Genius; short links /ea /65 /edpna /kids
+- 2026-11-22 Company site: keep wrangler temp files out of the upload
+- 2026-11-22 Version 208: Review of Part 2 set 5 and Part 3 set 5; one repeated question replaced; app names on the company site
+- 2026-11-22 Version 207: Review of Part 3 set 4 and Part 1 set 13; 30 Part 3 stories; company site in company/
+- 2026-11-22 Version 206: Review of Part 3 sets 2 and 3 (one explanation extended); 36 Part 2 stories on partners, corporations, payroll, trusts, exempt organizations, plans and farms
+- 2026-11-22 Version 205: Review of Part 2 set 4 and Part 3 set 1 (one due date fix); 30 Part 1 stories on income, assets and advising
+- 2026-11-22 Cloudflare Workers static site settings (wrangler.jsonc, .assetsignore)
+- 2026-11-22 Version 204: Version 204: review of Part 2 sets 2 and 3 (no errors), 31 Part 3 stories (bank_p3_gap5.js), app-only branch site for Cloudflare
+- 2026-11-22 Version 203: Version 203: review of Part 1 set 12 and Part 2 set 1 (no errors), 32 Part 2 stories (bank_p2_gap5.js), one repeated IRA question renumbered
+- 2026-11-22 Version 202: Version 202: review of Part 1 sets 10 and 11 (no errors), 33 Part 1 calculation stories (bank_p1_gap13.js)
+- 2026-11-22 Version 201: Version 201: review of Part 1 sets 8 and 9 (no errors), 43 Part 3 stories (bank_p3_gap4.js), Wix plan notes in HISTORY
+- 2026-11-22 Version 200: EA: second-reader review of sets 6 and 7 (two fixes); 31 Part 2 worked story questions
+- 2026-11-22 Version 199: Forms and acronyms drill with a gauge (all EA parts); product plan recorded in HISTORY.md
+- 2026-11-22 Version 198: EA: second-reader review of sets 4 and 5 (no errors); 30 retirement income story questions
+- 2026-11-22 Version 197: EA Part 3: 34 story questions on penalties, Circular 230 duties, interviews, courts, collection and e-file rules
+- 2026-11-22 Version 196: EA Part 2: 33 worked story questions on the core calculations (basis, distributions, recapture, exchanges, deposits, plans)
+- 2026-11-22 Version 195: EA Part 1: 30 story questions on the topics missed in outside practice (EIC, AMT, gifts, stock dividends, disaster losses, basis)
+- 2026-11-22 Version 194: EA Part 1: 30 story questions on Preliminary work (dependents, filing status, residency, who must file)
+- 2026-11-22 Version 193 notes: history: irs.gov re-check of the 2025 law items, next sets listed
+- 2026-11-22 Version 193: EA Part 1: 28 story questions on Taxation and Advising
+- 2026-11-22 Version 192: EA Part 3: 31 more exam-style questions on terms and forms; two date fixes
+- 2026-11-22 Version 191: EA Part 2: 38 more exam-style questions on forms and terms; Quick 10 in Parts 2 and 3 forces story questions, not AMT or EIC
+- 2026-11-22 Version 190: EA Part 3: 71 exam-style questions on rules that had none; Part 3 now has story questions
+- 2026-11-22 Version 189: EA Part 2: 65 exam-style questions on rules that had none; Part 2 now has story questions
+- 2026-11-22 Version 188: EA Part 1: 48 exam-style questions on the forms and terms of Income and Deductions (gap set 5)
+- 2026-11-22 Version 187: EA Part 1: 45 exam-style questions on Specialized returns rules that had none (gap set 4)
+- 2026-11-22 Version 186: EA Part 1: 45 exam-style questions on Preliminary work, Taxation and Advising rules that had none (gap set 3)
+- 2026-11-22 Version 185: EA Part 1: 43 exam-style questions on Deductions and credits rules that had none (gap set 2)
+- 2026-11-22 Version 184: EA Part 1: 76 exam-style questions on Income and assets rules that had none (gap set 1)
+- 2026-11-22 Version 183: EA: readiness counts untouched material; Quick 10 spreads over topics; HISTORY.md and src/ ship with the app
+- 2026-11-22 Version 182: EA: outside practice calibrates readiness; 12 more story questions on rules that had no exam question; coverage gap measured
+- 2026-11-22 Version 181: EA Part 1: readiness leans on long story questions; EIC set; 37 story questions; AMT, EIC and stories rotate into Quick 10
+- 2026-11-22 Version 180: EA Part 1: 23 story-style questions, AMT set, both pushed into Quick 10; excess IRA, bad debt, gift return and stock dividend questions
+- 2026-11-22 Version 179: EA Part 1: four questions added (AMT add-backs, capital gain distributions without Schedule D, military state residence)
+- 2026-11-22 Version 178: EA Part 1: new exam calculation, interest deductible on Schedule A (investment interest limit, second home, personal interest)
+- 2026-11-22 Version 177: Audio: Part 3 recorded voice (all EA parts recorded); Forms 2848 and 8821 explained box by box
+- 2026-11-22 Version 176: Forms: every box explained on Form W-7 and Form 4868
+- 2026-11-22 Version 175: Audio: Part 2 recorded voice (281 facts), plays with the phone locked
+- 2026-11-22 Version 174: Forms: every box explained on Schedules 2, 3, A, B and SE
+- 2026-11-22 Version 173: Forms: written box-by-box explanations for W-2, Schedule 1, Schedule C, 1099-NEC and 1099-INT
+- 2026-11-22 Version 172: Real IRS forms: 227 forms with every box tappable, form names are links, Form 1040 explained box by box with fill-in practice
+- 2026-11-22 Version 171: EA: Audio 10 on top (keep-going, covers every fact), 2 s before auto-advance, glitch fixes after the fast-pace updates
+- 2026-11-21 Version 170: EA readiness: count every question, with cautions for length-cued answers and thin data; shows what the figure rests on and compares with mocks
+- 2026-11-21 Version 169: EA: readiness by first tries (never rises on a miss), 48 exam-style calculations, Explain it how-to, 67 fuller explanations, 58 length giveaways removed
+- 2026-11-21 Version 168: EA Parts 1-3: pace control, one-tap answers, New 10, Quick 10 exam questions only
+- 2026-11-21 Version 167: EA Parts 1-3: readiness on top, Quick 10 adaptive drill, predicted score, ask-first learning, Diagnosis page, look-alike questions
+- 2026-11-21 Version 166: EA Parts 1-3: adaptive diagnostic, lesson checks, lesson-by-lesson path, question-only accuracy, smart drill fix
+- 2026-11-21 Version 165: CAA refresher and client checklist; lessons for EA Parts 2 and 3
+- 2026-11-21 Version 164: review release - study path for every exam section, automatic safety copies of progress, balanced mock exams, section terms, fixes
+- 2026-11-20 Version 163: QuickBooks, Tax Return and Business Tax Bootcamps; simpler step lists; one-tap reason check after a wrong answer
+- 2026-11-20 Version 162: mistake notebook, terms page with my looked-up list, Bootcamp certificate
+- 2026-11-20 Version 161: kids: fix warm-up / Mission Path deadlock, fix Lv undefined in warm-up header
+- 2026-11-20 Version 160: Bookkeeping Bootcamp - module 2 rebuilt as 13 learn-then-do steps with a month-end close capstone
+- 2026-11-20 Version 159: tap-to-explain glossary in every study section, pinned Back button on inner screens
+- 2026-11-20 Version 158: Smart review fix - missed-then-right questions no longer due forever, 10-minute rest before a repeat
+- 2026-11-20 Version 157: tidy pass - shorter start pages, Go button first, folded reference sections, notary path one step at a time, clipped badge and sideways scroll fixes
+- 2026-11-20 Version 156: Chess coach, hoverslam landing computer, Brick Bay traffic lights, EA Part 2 and 3 exam-style packs
+- 2026-11-20 Version 155: Sky Pilot 3 (real climb and turn physics, airport, town, PAPI, sunset), Tesla Drive 3 (grip, traffic signals, trip computer), retina-sharp game canvases
+- 2026-11-20 Version 154: Guided next-step button, EA exam-style pack, notary path with links, Kids Career Labs, Genius Hospital, Desktop Lab, progress safety
+- 2026-11-19 Version 153: Kids: realistic Sky Pilot with honest landings, weather, emergencies, ATC radio, crash physics
+- 2026-11-19 Version 152: Kids: Brick Bay buildings for every game, vault and city hacking, police escape by plane, quick decision stats
+- 2026-11-19 Version 151: Kids: hubs home, Daily Genius one button with performance, Robot Chess 12 levels, game time limits
+- 2026-11-19 Version 150: Kids: Tesla World banner near the top, all Tesla games inside the hub
+- 2026-11-19 Version 149: Kids: one Genius Quiz with achievement badges instead of 13 topic tiles
+- 2026-11-19 Version 148: Kids: Tesla World hub, Vegas Loop map, Mechazilla Catch game, 21 quiz questions
+- 2026-11-19 Version 147: Kids: Free Pass and grown-up 30-minute unlock, guided mode stays strict
+- 2026-11-19 Version 146: Foundation Course app: welcome screen, skills map, Journal Entry Lab, Run Solving Life LLC, daily workout
+- 2026-11-19 Version 145: Calculations as 4-choice questions with worked examples, step hints and teach-me retries
+- 2026-11-19 Version 144: Smart drill v2: no repeats, harder faster, more calculations, 53 hard P2/P3 questions
+- 2026-11-19 Version 143: EA: smart spaced-repetition drills + 20 drill sets from the 2026 course slides
+- 2026-11-19 Version 142: Rocket Genius: Manila mahjong, guided must-do chain, all activities connected
+- 2026-11-19 Version 141: Rocket Genius: Poker Academy (No-Limit Hold'em from zero), Today's Mission Path
+- 2026-11-19 Version 140: Rocket Genius: real aircraft per mission, cockpit six-pack, checklists, Pilot School hub; fix quiz generator name clash
+- 2026-11-19 Version 139: Rocket Genius: GPS grid, map, Navigator mission, pilot instruments
+- 2026-11-19 Version 138: Rocket Genius: skipped activities flash red with bonus tickets, faster chess difficulty
+- 2026-11-19 Version 137: Rocket Genius: helicopter, drone, missiles, history, stricter rotation
+- 2026-11-19 Version 136: Rocket Genius: Air Force/Space Force/Cyber skills, formation, sound barrier, search & rescue, booster return
+- 2026-11-19 Version 135: Rocket Genius: Genius Path (6 hero skills, daily curiosity/creativity/teaser, new lessons, Invention Workshop)
+- 2026-11-19 Version 134: Rocket Genius: fix sound/update buttons covering the back button
+- 2026-11-19 README: tidy rotation and lessons entries
+- 2026-11-19 Version 133: Rocket Genius: Brick Bay jets, Sky Pilot fighter jet, Law track, rotation tied to every game
+- 2026-11-19 Version 132: Rocket Genius: Sky Pilot flight simulator
+- 2026-11-19 Version 131: Rocket Genius: Termux missions, Brick Bay on-foot/buildings/combos
+- 2026-11-19 Version 129: EA: 9 new quick-decision drills; Kids renamed Rocket Genius: smart rotation, Genius Lessons, Music Lab with mic, Phone Powers, Spelling Bee on home, tilt fix
+- 2026-11-19 Version 128: Kids link suggests the name Space Academy when added to an iPhone home screen
+- 2026-11-19 Version 128: Cyber Tank: treads + turret in Road Trip (crush + fire), Derby (cannon), Brick Bay
+- 2026-11-18 Version 127: Space Mission: rocket builder (TWR, kN, tonnes) + launch, Mach 1, Max-Q, staging, Karman line, orbit, docking, re-entry, landing; multi-touch hold fix
+- 2026-11-18 Version 126: Booster Landing 2.0: 10 levels (night, Moon, Mars, flip, asteroids, Falcon Heavy), legs, stars, Mission Control fuel question
+- 2026-11-18 Version 125: README for Brick Bay and derby shooting
+- 2026-11-18 Version 125: Brick Bay toy-brick city game, derby shooting + fixed joystick, coach off by default
+- 2026-11-18 Version 124: Derby: tap-to-drive plus thumbstick, car keeps rolling, coach waits for first touch
+- 2026-11-18 Version 123: Faster adaptive climb: double level-ups on perfect streaks, chess to level 25 with expert first-try mode
+- 2026-11-18 Version 122: Derby rules screen, Rules button, step-by-step coach with on/off switch
+- 2026-11-18 Version 121: Derby rebuilt as Smash Arena: thumbstick, boost button, follow camera, mini-map, respawns, score goal, spins, flying parts, bombs
+- 2026-11-18 Version 120: Tesla Hacker pack (20 Linux missions + ELITE), Byte helper with map, typo fixes, auto-type, ACCESS GRANTED rewards for Tesla Drive, README
+- 2026-11-18 Version 119: Tesla Drive 2.5: real Tesla designs, Model X, Demolition Derby, hints, ramps, Boring tunnel, Easter eggs
+- 2026-11-18 Version 118: Kids: Tesla Drive Brain Gates, Autopilot view with detection boxes, turn-signal and chime sounds, bolt combos, sparks, smoke and rain; tycoon sounds (dice, cash register, building, asteroid booms, dome alarm, Mars wind)
+- 2026-11-18 Version 117: Kids: Mars Colony Tycoon (build, idle income, Mars science facts), Mission Control learning credits, Asteroid Defense math-facts arcade, Mars Empire board game; README updated
+- 2026-11-18 Version 116: Kids: natural voice for poker lessons and the new SpaceX and poker lines
+- 2026-11-18 Version 115: Kids: all natural-voice recordings (spelling bee words, letters, lessons)
+- 2026-11-18 Version 114: Kids: Poker School in a new Strategy Club, SpaceX quiz and Booster Landing game, natural recorded voices (Kokoro), answer by voice, themes, faster terminal with word chips and launch commands, real progress files in the terminal; README updated
+- 2026-11-18 Version 113: Kids: Computer Academy (Linux, Windows PowerShell and Mac terminals plus Windows, Mac and Linux Mint shortcut missions), Tesla Drive 2.0 (5 models, paint, Autopilot, Plaid, Superchargers, regen braking, day and night, landscapes, missions, tilt steering, vibration), top-bar update button, automatic progress backup
+- 2026-11-18 Version 112: Kids: Tesla Drive reward rides with tickets, flying Rocket Roadster with space phase, rocket launch cutscene, Rocket Roadster cartoon video, expert Tesla and EV questions
+- 2026-11-18 Version 111: Kids: guarantee 4 different answer choices on every picture question
+- 2026-11-18 Version 110: Kids: game-show Quiz Show with maps, flags, planets, Tesla and spelling bee, Hacker Terminal (Linux), Brain Scan gauge, power-up lessons, review of mistakes, no-points hints, trophies and certificates, voices, sounds, music, update button
+- 2026-11-18 Version 109: Kids: Block Miner and Chess Quest games, daily chest and quests, base building, prize goals, profile with birthday, kids-only link, grown-up progress corner
+- 2026-11-18 Version 108: Kids Space Academy: red Kids button on the start page, 3 games across math, English, science, code and geography with adaptive levels, ranks, badges and a grown-up corner
+- 2026-11-18 Version 107: Cleaner study page: progress card, Quick drill (5, 10 or 20, adaptive: smart, redo misses, common mistakes, weakest area, new material), Quick decisions with progress bars (new drills: basis, taxable or not, capital or ordinary, dependents, due dates, which IRS form), practice cases with progress; all other modes, progress details and settings folded
+- 2026-11-18 Version 106: Part 3: 2026 SEE user fee cut from $99 to $66 per part (T.D. 10045)
+- 2026-11-18 Version 105: EA Part 1: education credit case (AOTC expenses, amount and refundable part). CO Notary: commission problems case (stolen journal, name change, resignation, stamp and journal)
+- 2026-11-18 Version 104: EA Part 2: 3 more business cases (S corporation basis and excess distribution, partner K-1 with guaranteed payment and basis-limited loss, an estate's first Form 1041)
+- 2026-11-18 Version 103: EA Part 1: Prepare a return step by step, 4 practice cases for 2025 (head of household and child credits, tips and overtime on Schedule 1-A, senior deduction with the per-spouse phase-out, home sale exclusion)
+- 2026-11-18 Version 102: EA Part 3: Represent a client step by step (5 cases: audit and Forms 2848, 30-day letter, 90-day letter and Tax Court, CDP and payment plans, trust fund penalty). EA Part 2: Advise a business step by step (3 cases: entity and S election, 2025 bonus and §179, payroll setup)
+- 2026-11-18 Version 101: Series 65: Advise a client step by step, 5 practice cases (new client onboarding, custody exceptions, state or SEC registration, wash sale basis, agency cross, loans and testimonials)
+- 2026-11-18 Version 100: EDPNA: Work a claim step by step, 5 practice cases with 2026 amounts (appointment and appeal deadline, SGA with IRWE, hearing and Appeals Council, fee cap and direct-payment assessment, SSI payment and resources)
+- 2026-11-18 Version 99: CAA · ITIN: 3 more Fill a Form W-7 cases (Exception 3 mortgage, U.S. military dependent with notarized copies, Canadian retiree with Exception 1(d) treaty pension). FTA card notes the 2027 switch to automatic relief
+- 2026-11-18 Version 98: IRS paper refund check phase-out (Executive Order 14247, FS-2026-02): CP53E, online account, 6-week paper check fallback; Part 3 answer lengths rebalanced
+- 2026-11-18 Version 97: Calculation trainer: 8 new Part 2 problems (§1245 and unrecaptured §1250 gain, 40% bonus plus MACRS, employer FICA, excess business loss, DNI, built-in gains tax, partner SE income) and 4 new Part 3 problems (failure to file and pay, minimum late-filing penalty, trust fund recovery penalty, information return penalties)
+- 2026-11-18 Version 96: Slide lessons for EA Part 2 (7 units: entities, partnerships, S and C corporations, 2025 depreciation, payroll and information returns, trusts, exempt organizations and plans) and Part 3 (7 units: practice rights, Circular 230 duties, sanctions and penalties, Forms 2848 and 8821, exams and appeals, collection, e-file and refunds)
+- 2026-11-18 Version 95: Slide lessons for CAA · ITIN (5 units) and Colorado Notary (5 units) with form examples, document tables and flows
+- 2026-11-18 Version 94: Colorado Notary: Notarize step by step, 6 practice cases (deed acknowledgment, jurat with affirmation, representative capacity, copy certification, interpreter and signature by direction, remote notarization). Practice answers rebalanced so length gives nothing away
+- 2026-11-18 Version 93: CAA: Form W-7 line-by-line cards and 9 questions (lines 1a, 1b, 2, 6a, 6b, 6g, signing by mark, treaty country, office code). Notary: 10 identity, interpreter and refusal questions from C.R.S. 24-21-507 to 510
+- 2026-11-18 Version 92: Series 65: outline gaps (geopolitical risk, manager tenure and style drift, annualized and real returns, HFT, marking the close, sharing in accounts) and NASAA's May 4, 2026 recordkeeping amendments; IAR CE deficiency rule
+- 2026-11-18 Version 91: Bookkeeping: 35 medium and hard questions (payroll limits, safe harbor, adjusting entries, bank reconciliation, COGS, QuickBooks deposits, bills, closing date, 1099 card payments, 2025 OBBBA deductions and credits)
+- 2026-11-18 Version 90: EA Part 2 and Part 3 reach 400 questions for 4 full mocks: OPR proceedings, 2025 information return and late-filing penalties, ex parte, Form 8938 statute, IRA levy, §704(c), disguised sales, ESBT, farm FICA
+- 2026-11-18 Version 89: EA Part 2 (26 questions, 12 cards) and Part 3 (37 questions, 16 cards): OBBBA QSBS, BOI after March 2025, related parties, §1446, PTET, §45S, refund lookback, IDR, SFR, passports, collection standards, payment plan fees, PATH hold, AEP 2026 update
+- 2026-11-18 Version 88: CAA · ITIN: Fill a Form W-7 practice (8 cases), Form W-7-COA (Rev. 8-2025), Exception 1(a) partnership papers from June 1, 2026, Pub 1915 (Rev. 12-2025) records checklists
+- 2026-11-18 Version 87: Colorado Notary: official SOS rules (8 CCR 1505-11), petition circulator affidavits (C.R.S. 1-40-111) and real property acknowledgments (Title 38)
+- 2026-11-18 Version 86: new Colorado Notary course (C.R.S. 24-21-501, SOS handbook, Oct 2026 checklist, fee schedule): 54 flashcards, 65 questions, 40-question mocks; 18 new EA Part 2 questions
+- 2026-11-18 Version 85: EA Part 1: 31 new 2025-law questions (SSN rule for the child tax credit, senior/tips/car-loan phase-outs, SALT phase-down, credits that ended, Roth conversions, 529-to-Roth, QCD, HSA)
+- 2026-11-18 Version 84: EDPNA: medical expert handbook (June 2024), SSI vs SSDI work incentives 2026, CDR and age-18 rules, HALLEX renumbering
+- 2026-11-18 Version 83: OLT office practice follows the Nov 18 Remote Client Process: portal invite after Personal Info, 30-minute link, DM Docs, invoice rule, bank consents, four 8879 signing ways, quick fixes
+- 2026-11-18 Version 82: EDPNA 2026 updates from SSA Pub 17-008 (SSI 2026) and Pub 05-10029 (Disability Benefits, July 2026) and the 2024 conduct rules
+- 2026-11-18 Version 81: new CAA · ITIN section from IRS Pub 4520, Pub 5726 and Form W-7 instructions: 57 flashcards, 57 questions, mocks
+- 2026-11-18 Version 80: 73 new EA Part 2 and Part 3 questions; rewrote 68 thin imported Series 65 and EDPNA questions
+- 2026-11-18 Version 79: balanced Bookkeeping answer choices, bias guard, exam-accurate pace hint
+- 2026-11-18 Version 78: balanced answer choices in EA Part 1 and Part 2
+- 2026-11-18 Version 77: advice from people who passed, mocks draw unseen questions first
+- 2026-11-18 Version 76: EA Part 3 answer choices rebalanced
+- 2026-11-18 Version 75: Series 65 answer choices rebalanced
+- 2026-11-18 Version 74: EDPNA answer choices rebalanced (right answer no longer the longest give-away)
+- 2026-11-18 Version 73: practice tax software uses tax year 2026 amounts
+- 2026-11-18 Version 72: Certificate of Accuracy is Form W-7 (COA)
+- 2026-11-18 Version 71: retiree (Social Security, RMD, QCD, senior deduction) and amended return (1040-X) cases
+- 2026-11-18 Version 70: input-box look in field maps, drills linked from the EA home
+- 2026-11-18 Version 69: decision drills (filing status, above or below the line, standard or itemized, which return)
+- 2026-11-18 Version 68: practice returns show decisions, field-by-field maps, the finished return and a software check; 8 new returns
+- 2026-11-18 Version 67: office steps follow the Nov 17 process update, security and privacy questions
+- 2026-11-18 Version 66: EDPNA case bank and three lessons, two Series 65 lessons
+- 2026-11-18 Version 65: tax practice follows the OLT Pro Web workflow, with OLT videos
+- 2026-11-18 Version 64: QuickBooks client jobs with realistic screens, Intuit training links, more Series 65 questions
+- 2026-11-18 Version 63: section intros, harder Series 65 and EDPNA questions
+- 2026-11-18 Version 62: usable items from the PASS READY document, corrected and updated
+- 2026-11-18 Version 61: bigger Series 65 and EDPNA banks, calculation trainers, imported practice questions
+- 2026-11-18 Version 60: Series 65 and EDPNA exam sections
+- 2026-11-18 Version 59: interactive simulators - interview, tap-to-fill W-2, entry feedback, reviewer drill, try-it-yourself bookkeeping
+- 2026-11-18 Version 58: lesson and flashcards on the firm's five tools
+- 2026-11-18 Version 57: firm name shown as Solving Life LLC everywhere
+- 2026-11-18 Version 56: office workflow in the tax simulator, 10 office practice returns, month-end close
+- 2026-11-18 Version 55: practice tax software and practice QuickBooks company simulators
+- 2026-11-18 Version 54: course book PDF opens from inside the course
+- 2026-11-18 Version 53: Bookkeeping, QuickBooks, Taxes foundation course; section chooser at start
+- 2026-11-17 Version 52: all 757 Part 1 facts recorded for background audio
+- 2026-11-17 Version 51: form numbers read as 'ten forty'; more recorded facts
+- 2026-11-17 Version 50: more recorded facts for background audio
+- 2026-11-17 Version 49: recorded voice for audio review, plays in the background (first batch of recordings)
+- 2026-11-17 Version 48: Slides tile near the top, Check for update button
+- 2026-11-17 Version 47: 18 Part 1 unit lessons with form examples and diagrams
+- 2026-11-17 Version 46: one-tap Save progress and Load progress, 10 new Part 1 questions
+- 2026-11-17 Version 45: exam dates on the home screen, Random 10 mixed mode
+- 2026-11-17 Version 44: Lessons section (slide view of every fact by topic)
+- 2026-11-17 Version 43: 100 new Part 2 and 108 new Part 3 questions
+- 2026-11-17 Version 42: simple Easy style, 142 new Part 1 teaching questions
+- 2026-11-17 Version 41: one-tap audio, clearer look, dashboard on top, smart session, update notice
+- 2026-11-17 Add EA Exam APP: installable offline study app
+- 2026-11-17 Initial commit
