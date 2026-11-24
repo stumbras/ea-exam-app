@@ -1574,3 +1574,21 @@ exercise): broker compliance 24, entry/entry summary 35, classification 14, valu
 More exams: CBP's page "Past Customs Broker License Examinations & Answer Keys" lists 2018-2026; cbp.gov is blocked here (403),
 so the owner must attach more PDFs (or the allowlist must reach this workspace). NEXT for CBLE: worked lessons per 19 CFR part,
 HTSUS GRI drills, valuation calculations, and the practical exercise with drawn 7501 forms.
+
+## 15. Business listings, X and site data (Nov 24, 2026)
+
+Listings done: Google Business Profile (added categories Bookkeeping service, Payroll service, Tax consultant; new
+description with apostilles and the study apps; both pending Google review), Bing Places (owner), Yelp (Tax Services,
+Bookkeepers, Payroll Services; hours 5 AM-11 PM; no street address shown), Apple Business org (domain solvinglifellc.com
+verified by TXT record in the Wix DNS zone; EIN check failed "try later"; owner uploads Articles of Organization; review
+up to 5 business days; time zone America/Denver), Nextdoor business page (address hidden), Foursquare place
+(app.foursquare.com/v/solving-life-llc/6b04d16a4eafd3320296be57, no street address).
+Blocked: Manta (Cloudflare blocks the PH IP), LinkedIn company page (needs profile connections), BBB (search box broken),
+Hotfrog and Alignable (need owner password / reCAPTCHA), Reddit (blocked in the Chrome extension).
+X (Twitter) @solvinglifellc: business account, category Tax Preparation Service. Developer console account "Solving Life LLC",
+app 33671957, OAuth 2.0 confidential client, callback https://social.solvinglifewith.com/cb/x, pay-per-use credits ($25).
+Social worker: X sign-in (PKCE), tool x_post (text, links stripped, optional MP4 via /2/media/upload initialize/append/
+finalize), weekly cron "7 2 * * 3" posts the first item of KV "xw" (youtube_queue actions xw_get/xw_replace/xw_run).
+23 weekly tax-quiz posts queued (through about April 2027). X is NOT in the daily cross-post (cost).
+New site (site_llc/make.py): schema.org AccountingService JSON-LD on index.html (no street address; sameAs all socials) and
+an X card in the social section.
