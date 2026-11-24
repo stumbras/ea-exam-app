@@ -154,6 +154,12 @@ async function page(env, want) {
 }
 async function fbPost(env, a) {
   const pg = await page(env, a.page), base = `https://graph.facebook.com/${GV}/${pg.id}`;
+  if (a.video_url && a.story) { // Facebook Page video story (shows for 24 hours)
+    const st = await jfetch(`${base}/video_stories`, { method: "POST", body: form({ upload_phase: "start", access_token: pg.access_token }) });
+    await jfetch(`https://rupload.facebook.com/video-upload/${GV}/${st.video_id}`, { method: "POST", headers: { authorization: "OAuth " + pg.access_token, file_url: a.video_url } });
+    const fin = await jfetch(`${base}/video_stories`, { method: "POST", body: form({ upload_phase: "finish", video_id: st.video_id, access_token: pg.access_token }) });
+    return { network: "facebook", type: "story", page: pg.name, id: fin.post_id || st.video_id };
+  }
   if (a.video_url && a.reel) {
     const st = await jfetch(`${base}/video_reels`, { method: "POST", body: form({ upload_phase: "start", access_token: pg.access_token }) });
     await jfetch(`https://rupload.facebook.com/video-upload/${GV}/${st.video_id}`, { method: "POST", headers: { authorization: "OAuth " + pg.access_token, file_url: a.video_url } });
@@ -200,6 +206,7 @@ async function crossPost(env) { // KV "xq": same items as the YouTube schedule; 
     const url = a.drive_id ? (await driveLink(env, a)).url : a.video_url, text = a.title + "\n\n" + (a.description || "").replace(/#shorts\s?/g, "");
     const r = { at: new Date().toISOString(), title: a.title };
     if (a.no_facebook) r.facebook = "skipped"; else try { r.facebook = (await fbPost(env, { text, video_url: url, reel: true })).id; } catch (err) { r.facebook = "error: " + String(err.message).slice(0, 200); }
+    if (!a.no_facebook) try { r.fb_story = (await fbPost(env, { video_url: url, story: true })).id; } catch (err) { r.fb_story = "error: " + String(err.message).slice(0, 200); }
     try { r.tiktok = (await ttDraft(env, { video_url: url })).publish_id; } catch (err) { r.tiktok = "error: " + String(err.message).slice(0, 200); }
     log.push(r);
   }
@@ -309,7 +316,7 @@ async function status(env) {
 /* ---------------- MCP ---------------- */
 const TOOLS = [
   { name: "social_status", description: "Show which Solving Life accounts (Facebook Page, Instagram, YouTube, TikTok) are connected.", inputSchema: { type: "object", properties: {} } },
-  { name: "facebook_post", description: "Post to the Solving Life Facebook Page: text, a link, a photo (image_url), a video (video_url) or a Reel (video_url with reel=true). Media must be a public https URL. Posts publicly unless draft=true.", inputSchema: { type: "object", properties: { text: { type: "string" }, link: { type: "string" }, image_url: { type: "string" }, video_url: { type: "string" }, reel: { type: "boolean" }, draft: { type: "boolean" }, page: { type: "string", description: "Page name or id if more than one" } }, required: ["text"] } },
+  { name: "facebook_post", description: "(story: true with video_url posts a 24-hour Page story) Post to the Solving Life Facebook Page: text, a link, a photo (image_url), a video (video_url) or a Reel (video_url with reel=true). Media must be a public https URL. Posts publicly unless draft=true.", inputSchema: { type: "object", properties: { text: { type: "string" }, link: { type: "string" }, image_url: { type: "string" }, video_url: { type: "string" }, reel: { type: "boolean" }, story: { type: "boolean" }, draft: { type: "boolean" }, page: { type: "string", description: "Page name or id if more than one" } }, required: ["text"] } },
   { name: "instagram_post", description: "Publish to the Solving Life Instagram: a photo (image_url), a Reel (video_url), a Story (story=true) or a carousel (carousel = list of up to 10 image/video URLs). Media must be a public https URL (JPEG images; MP4 videos).", inputSchema: { type: "object", properties: { caption: { type: "string" }, image_url: { type: "string" }, video_url: { type: "string" }, story: { type: "boolean" }, carousel: { type: "array", items: { type: "string" } } } } },
   { name: "youtube_upload", description: "Upload a video (public https MP4 URL) to the Solving Life YouTube channel. Vertical videos under 3 minutes become Shorts. privacy: public, unlisted or private.", inputSchema: { type: "object", properties: { video_url: { type: "string" }, title: { type: "string" }, description: { type: "string" }, tags: { type: "array", items: { type: "string" } }, privacy: { type: "string", enum: ["public", "unlisted", "private"] }, publish_at: { type: "string", description: "Schedule: ISO time when the video goes public (it stays private until then)" }, playlist_id: { type: "string", description: "Add the video to this playlist" }, drive_id: { type: "string", description: "Google Drive file id of the video (instead of video_url)" } }, required: ["title"] } },
   { name: "drive_video_link", description: "Make a public read-only link (for facebook_post / tiktok_send_to_app video_url) to one video in the Solving Life Google Drive.", inputSchema: { type: "object", properties: { drive_id: { type: "string" } }, required: ["drive_id"] } },
