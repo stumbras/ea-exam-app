@@ -22,6 +22,14 @@ async function access(env, sub) {
   const used = +(await env.P.get("t:" + sub)) || 0, bonus = +(await env.P.get("b:" + sub)) || 0, limit = (await cfg(env)).previewMin * 60000 + bonus;
   return { access: used >= limit ? "expired" : "trial", usedMs: used, limitMs: limit, email };
 }
+// A buyer who just paid usually opens the app right away: when someone without full access checks in, look at Wix
+// orders again (at most once a minute) so the purchase unlocks in seconds instead of waiting for the 10-minute timer.
+async function accessNow(env, sub) {
+  let a = await access(env, sub); if (a.access === "full" || !(await env.P.get("wixkey"))) return a;
+  const last = +(await env.P.get("wixrun")) || 0; if (Date.now() - last < 60000) return a;
+  await env.P.put("wixrun", String(Date.now())); try { const r = await wixSync(env); if (r && r.granted) a = await access(env, sub); } catch (_) {}
+  return a;
+}
 async function wixSync(env) {
   const key = await env.P.get("wixkey"); if (!key) return { skipped: "no Wix key" };
   const since = await env.P.get("wixlast") || new Date(Date.now() - 30 * 864e5).toISOString();
@@ -114,7 +122,7 @@ async function subFor(env, email, fallback) { const m = await env.P.get("e:" + e
 async function signedIn(env, req, sub, email, name) {
   const saved = await env.P.get("u:" + sub, "json"), prev = await env.P.get("s:" + sub, "json");
   await env.P.put("s:" + sub, JSON.stringify({ email, name: name || prev && prev.name || "", first: prev && prev.first || Date.now(), last: Date.now() }));
-  return J(req, { token: await mkToken(env, sub), email, name: name || "", saved: saved ? { upd: saved.upd, data: saved.data } : null, ...(await access(env, sub)) });
+  return J(req, { token: await mkToken(env, sub), email, name: name || "", saved: saved ? { upd: saved.upd, data: saved.data } : null, ...(await accessNow(env, sub)) });
 }
 async function adminData(env) {
   const now = Date.now(), DAY = 864e5, C = await cfg(env);
@@ -168,7 +176,7 @@ export default {
       if (u.pathname === "/admin/me") { const who = await env.P.get("s:" + sub, "json"), em = (who && who.email || "").toLowerCase();
         if (!ADMINS.includes(em)) return J(req, { error: "This account is not an admin. Sign in with " + ADMINS[0] + "." }, 403);
         return J(req, { admin: true, email: em, ...(await adminData(env)) }); }
-      if (u.pathname === "/status") return J(req, await access(env, sub));
+      if (u.pathname === "/status") return J(req, await accessNow(env, sub));
       if (u.pathname === "/tick" && req.method === "POST") {
         const a = await access(env, sub); if (a.access === "full") return J(req, a);
         const { ms } = await req.json().catch(() => ({})); const add = Math.max(0, Math.min(+ms || 0, 3 * 60 * 1000));
