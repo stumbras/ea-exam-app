@@ -70,6 +70,7 @@ async function load(){if(!tok){$("#login").hidden=false;$("#app").hidden=true;re
   $("#hub").src=j.hub;
   $("#soc").innerHTML=(j.social?L(j.social,"Auto-posting control","Connect accounts, queues, posting status"):'<a href="#" onclick="document.querySelector(\'[data-t=access]\').click();return false">Auto-posting control<small>Paste your social setup link once in Access control → Social media control link</small></a>')
    +(j.social?L(j.social.replace(/\/?$/,"/")+"reddit","Reddit helper","Ready-to-post drafts"):"")
+   +(j.social?L(j.social.replace(/\/?$/,"/")+"tiktok","TikTok captions","Copy the caption for each daily TikTok draft"):"")
    +L("https://studio.youtube.com","YouTube Studio","Videos, Shorts, analytics")+L("https://business.facebook.com","Meta Business Suite","Facebook and Instagram posts, inbox")
    +L("https://www.tiktok.com/tiktokstudio","TikTok Studio","Drafts to post")+L("https://x.com/solvinglifellc","X @solvinglifellc","Weekly tax quiz posts")
    +L("https://www.reddit.com/user/SolvingLifeLLC","Reddit u/SolvingLifeLLC","Profile and Reddit Pro")+L("https://business.google.com","Google Business Profile","Reviews, posts, info");
