@@ -87,7 +87,7 @@ F(6,5,"Fee agreement: the limit","The lesser of 25% of past-due benefits or $9,2
 F(6,5,"Conditions for approving a fee agreement","Filed before the first favorable decision, signed by claimant and representative, fee within the limit, and the claim results in past-due benefits.");
 F(6,5,"Fee petition","Form SSA-1560, filed after the work ends, with an itemized list of services and time. SSA sets a reasonable fee.");
 F(6,5,"Who qualifies for direct payment of fees?","Attorneys and non-attorneys who meet the EDPNA requirements.");
-F(6,5,"The assessment (user fee) on direct payment","6.3% of the fee, capped at $123 (from December 2025). The representative may not pass it on to the claimant.");
+F(6,5,"The assessment (user fee) on direct payment","6.3% of the fee, capped at $128 (from December 1, 2026; it was $123 before). The representative may not pass it on to the claimant.");
 F(6,5,"Requesting review of a fee agreement amount","Within 15 days of the notice, by the claimant, the representative or the decision maker.");
 F(6,5,"Out-of-pocket expenses","Costs such as medical record charges may be billed to the claimant without SSA approval; they are not part of the fee.");
 F(6,5,"Fee held in trust","A representative may hold a deposit toward the fee only in a trust or escrow account until SSA authorizes the fee.");
@@ -134,7 +134,7 @@ Q(6,4,2,"A claimant misses the hearing with no explanation and does not answer t
 Q(6,5,1,"Under an approved fee agreement in 2026 the fee is the lesser of 25% of past-due benefits or","$9,200",["$7,200","$6,000","$10,000"],"The cap rose to $9,200 on November 30, 2024.");
 Q(6,5,3,"Past-due benefits are $30,000 under an approved fee agreement. The authorized fee is","$7,500",["$9,200","$30,000","$6,000"],"25% of $30,000 is $7,500, which is below the cap.");
 Q(6,5,3,"Past-due benefits are $52,000 under an approved fee agreement. The authorized fee is","$9,200",["$13,000","$12,877","$7,200"],"25% would be $13,000, so the cap applies.");
-Q(6,5,3,"SSA pays an EDPNA a $6,000 fee directly. The assessment withheld is","$123",["$378","$60","$0"],"6.3% would be $378, but the assessment is capped at $123.");
+Q(6,5,3,"SSA pays an EDPNA a $6,000 fee directly. The assessment withheld is","$128",["$378","$123","$0"],"6.3% would be $378, but the assessment is capped at $128 for payments from December 1, 2026 ($123 before).");
 Q(6,5,2,"A fee agreement must be filed","before the date of the first favorable decision",["within 60 days after the decision","with the fee petition","only if the claim is denied"],"Otherwise the fee petition process is used.");
 Q(6,5,2,"Who may ask for administrative review of the fee under a fee agreement, and when?","The claimant, the representative or the decision maker, within 15 days of the notice",["Only the claimant, within 60 days","Only the representative, at any time","Nobody; the amount is final"],"The 15-day review request.");
 Q(6,5,2,"A representative wants to bill the claimant $85 for copies of medical records. This","may be collected without SSA authorization as an expense",["needs a fee petition","is prohibited","must come out of past-due benefits"],"Expenses are not fees.");

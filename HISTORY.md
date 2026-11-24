@@ -1621,6 +1621,7 @@ EA card reads "EA · Enrolled Agent Exam (IRS SEE)" with "independent, not affil
 Deploying the sync worker: Workers Builds is not connected for it; patch the live script through the Cloudflare API
 (read /content/v2, apply text edits, check the SHA-256 against the repo file, PUT with keep_bindings, re-PUT schedules).
 
+- 2026-11-24 Version|Site update: EDPNA: 2027 COLA figures (SGA, TWP, SSI, QC, student exclusion) and the $128 user-fee cap from Dec 2026
 - 2026-11-24 Version|Site update: Series 65: Reg BI, dual registrants, accredited investor via license, exam basics and 2027 retest rules
 - 2026-11-24 Reddit helper: X/Facebook short version with filled-in X post link
 - 2026-11-24 Reddit helper: watch links for tax questions and ITIN
