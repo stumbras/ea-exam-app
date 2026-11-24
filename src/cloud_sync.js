@@ -29,10 +29,20 @@ const _persist=window.persist;if(typeof _persist==="function")window.persist=fun
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"&&cs){clearTimeout(csT);csPush()}});
 async function csOnCred(resp){csMsg="Checking your Google account…";csModal();
   try{const{st,j}=await csReq("/login",{id_token:resp.credential});if(st!==200||!j.token){csMsg=j.error||"Sign-in did not work. Please try again.";return csModal()}
+    await csDone(j)}
+  catch(_){csMsg="No connection. Please try again when you're online.";csModal()}}
+async function csDone(j){
     cs={token:j.token,email:j.email,name:j.name,last:0,acc:j.access?{access:j.access,usedMs:j.usedMs,limitMs:j.limitMs,at:Date.now()}:null};csSave();csChip();setTimeout(acDraw,50);
     if(csDecide(j.saved)==="pull"){csMsg="Found your saved progress. Loading it…";csModal();return setTimeout(()=>csApply(j.saved.data),600)}
-    await csPush();csMsg="Done! Your progress is now saved to "+j.email+". Sign in with the same Google account on any phone or computer to continue.";csModal()}
-  catch(_){csMsg="No connection. Please try again when you're online.";csModal()}}
+    await csPush();csMsg="Done! Your progress is now saved to "+j.email+". Sign in with the same email on any phone or computer to continue.";csModal()}
+let csMailTo="",csMailSent=false;
+function csMailHtml(){return csMailSent?`<div style="margin-top:12px"><p style="margin:0 0 6px">We emailed a 6-digit code to <b>${esc(csMailTo)}</b>. Check inbox and spam.</p><input id="cscode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456" style="width:100%;box-sizing:border-box;font-size:22px;letter-spacing:6px;text-align:center;padding:10px;border-radius:12px;border:1px solid #bbb"><div style="display:flex;gap:8px;margin-top:8px"><button id="csverify" class="btn" style="flex:1">Sign in</button><button id="csback" class="btn ghost">Change email</button></div></div>`
+  :`<div style="margin-top:12px"><p style="margin:0 0 6px;font-weight:700">Or sign in with an email code</p><input id="csmail" type="email" autocomplete="email" placeholder="you@example.com" value="${esc(csMailTo)}" style="width:100%;box-sizing:border-box;font-size:16px;padding:10px;border-radius:12px;border:1px solid #bbb"><button id="cssend" class="btn" style="width:100%;margin-top:8px">Email me a code</button></div>`}
+function csMailWire(){const sd=document.getElementById("cssend");if(sd)sd.onclick=async()=>{const e=(document.getElementById("csmail").value||"").trim();if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(e)){csMsg="Please type a valid email address.";return csModal()}
+    csMailTo=e;csMsg="Sending your code…";csModal();try{const{st,j}=await csReq("/mail/start",{email:e});if(st!==200){csMsg=j.error||"Could not send the code.";return csModal()}csMailSent=true;csMsg="";csModal()}catch(_){csMsg="No connection. Please try again.";csModal()}};
+  const v=document.getElementById("csverify");if(v)v.onclick=async()=>{const c=(document.getElementById("cscode").value||"").replace(/\D/g,"");if(c.length!==6){csMsg="Type the 6-digit code from the email.";return csModal()}
+    csMsg="Checking your code…";csModal();try{const{st,j}=await csReq("/mail/verify",{email:csMailTo,code:c});if(st!==200||!j.token){csMsg=j.error||"That code did not work.";return csModal()}csMailSent=false;await csDone(j)}catch(_){csMsg="No connection. Please try again.";csModal()}};
+  const bk=document.getElementById("csback");if(bk)bk.onclick=()=>{csMailSent=false;csMsg="";csModal()}}
 function csGis(cb){if(window.google&&google.accounts&&google.accounts.id)return cb();const s=document.createElement("script");s.src="https://accounts.google.com/gsi/client";s.async=true;s.onload=cb;s.onerror=()=>{csMsg="Google sign-in could not load. Check your connection.";csModal()};document.head.appendChild(s)}
 function csInApp(){return /FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram|Line\/|TikTok|musical_ly|Snapchat|Twitter|; wv\)/i.test(navigator.userAgent)}
 function csModal(){let m=document.getElementById("csmodal");if(!m){m=document.createElement("div");m.id="csmodal";document.body.appendChild(m)}
@@ -42,17 +52,18 @@ function csModal(){let m=document.getElementById("csmodal");if(!m){m=document.cr
    <div style="font-size:22px;font-weight:800;margin-bottom:6px">☁️ Keep your progress</div>
    ${cs?`<p style="margin:0 0 10px">Signed in as <b>${esc(cs.email||"")}</b>. Your progress in every Solving Life app saves to your Google account${when?` (last saved ${when})`:""}.</p>
      <div style="display:flex;gap:10px;flex-wrap:wrap"><button id="csnow" class="btn">Save now</button><button id="csout" class="btn ghost">Sign out</button><button id="csx" class="btn ghost">Close</button></div>`
-   :`<p style="margin:0 0 12px">Sign in with Google to save your progress and continue on any phone or computer. We only use your name and email to find your saved progress.</p>
+   :`<p style="margin:0 0 12px">Sign in with Google or an email code to save your progress and continue on any phone or computer. We only use your name and email to find your saved progress.</p>
      <div id="csbtn" style="min-height:44px;display:flex;justify-content:center"></div>
+     ${csMailHtml()}
      <p style="font-size:13px;opacity:.75;margin:12px 0 0">Signing in starts your free hour and saves your progress. <a href="https://solvinglifewith.com/privacy.html" target="_blank" rel="noopener">Privacy</a></p>
      <div style="margin-top:12px;text-align:right"><button id="csx" class="btn ghost">Not now</button></div>`}
    ${csMsg?`<p style="margin:12px 0 0;font-weight:600">${esc(csMsg)}</p>`:""}</div>`;
   const close=()=>{m.remove();csMsg="";setTimeout(()=>{try{acDraw()}catch(_){}},30)};m.onclick=e=>{if(e.target===m)close()};
-  const x=document.getElementById("csx");if(x)x.onclick=close;
+  const x=document.getElementById("csx");if(x)x.onclick=close;csMailWire();
   const o=document.getElementById("csout");if(o)o.onclick=()=>{cs=null;csSave();csChip();try{google.accounts.id.disableAutoSelect()}catch(_){}close()};
   const n=document.getElementById("csnow");if(n)n.onclick=async()=>{csMsg="Saving…";csModal();await csPush();csMsg="Saved.";csModal()};
   if(!cs&&csInApp()){const b=document.getElementById("csbtn");if(b){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),u=location.href.replace(/^http:/,"https:"),go=ios?"x-safari-"+u:"intent://"+u.replace(/^https:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url="+encodeURIComponent(u)+";end";
-    b.style.cssText="display:block";b.innerHTML=`<p style="margin:0 0 10px;font-weight:700">Google sign-in does not work inside Messenger, Facebook or Instagram. Open the app in ${ios?"Safari":"Chrome"} to sign in:</p><a href="${go}" style="display:block;text-align:center;background:#1a73e8;color:#fff;font-weight:800;padding:14px;border-radius:999px;text-decoration:none">Open in ${ios?"Safari":"Chrome"}</a><p style="font-size:13px;margin:10px 0 0;opacity:.8">If nothing happens: tap ••• at the top, then <b>Open in ${ios?"Safari":"browser"}</b>.</p><button id="cscopy" class="btn ghost" style="margin-top:8px">Copy link</button>`;
+    b.style.cssText="display:block";b.innerHTML=`<p style="margin:0 0 10px;font-weight:700">Google sign-in does not work inside Messenger, Facebook or Instagram. Use the email code below, or open the app in ${ios?"Safari":"Chrome"} for Google sign-in:</p><a href="${go}" style="display:block;text-align:center;background:#1a73e8;color:#fff;font-weight:800;padding:14px;border-radius:999px;text-decoration:none">Open in ${ios?"Safari":"Chrome"}</a><p style="font-size:13px;margin:10px 0 0;opacity:.8">If nothing happens: tap ••• at the top, then <b>Open in ${ios?"Safari":"browser"}</b>.</p><button id="cscopy" class="btn ghost" style="margin-top:8px">Copy link</button>`;
     const cp=document.getElementById("cscopy");if(cp)cp.onclick=()=>{try{navigator.clipboard.writeText(u);cp.textContent="Copied ✓"}catch(_){}}}return}
   if(!cs)csGis(()=>{try{google.accounts.id.initialize({client_id:CS_CID,callback:csOnCred,auto_select:false,ux_mode:"popup"});
     const b=document.getElementById("csbtn");if(b)google.accounts.id.renderButton(b,{theme:"filled_blue",size:"large",shape:"pill",text:"signin_with",width:280})}catch(_){}})}
