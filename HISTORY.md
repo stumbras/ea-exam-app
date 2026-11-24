@@ -1593,6 +1593,8 @@ finalize), weekly cron "7 2 * * 3" posts the first item of KV "xw" (youtube_queu
 New site (site_llc/make.py): schema.org AccountingService JSON-LD on index.html (no street address; sameAs all socials) and
 an X card in the social section.
 
+- 2026-11-23 Version: Customs Broker card: own color and description on the home screen
+- 2026-11-23 Social: Reddit helper page with prefilled post links and copy-ready replies (Reddit API needs manual approval)
 - 2026-11-23 Site update: Media: early-access story videos
 - 2026-11-23 Site update: Media: kids Becoming Genius ad
 - 2026-11-23 Restore sync worker with Wix order access (overwritten by a site ship)
