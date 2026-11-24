@@ -23318,7 +23318,7 @@ async function csStart(){csChip();try{acDraw()}catch(_){}if(!cs)return;acCheck()
   try{const{st,j}=await csReq("/load");if(st!==200)return;if(csDecide(j.saved)==="pull")return csApply(j.saved.data);csLater(3000)}catch(_){}}
 function csKid(){const k=document.body.classList.contains("kidsmode");let b=document.getElementById("cskid");
   if(!k){if(b)b.remove();return}if(!b){b=document.createElement("button");b.id="cskid";b.style.cssText="position:fixed;left:10px;bottom:10px;z-index:50;border:0;border-radius:999px;padding:8px 12px;font:600 13px system-ui;background:rgba(255,255,255,.92);color:#123;box-shadow:0 4px 14px rgba(0,0,0,.25)";b.onclick=e=>{e.stopPropagation();csModal()};document.body.appendChild(b)}
-  b.textContent=cs?"☁️ Saved":"☁️ Parents: save progress"}
+  b.textContent=cs?("☁️ Saved to "+(cs.email||"Google")):"🔐 Parents: sign in with Google";b.style.background=cs?"rgba(255,255,255,.92)":"#1a73e8";b.style.color=cs?"#123":"#fff";b.style.padding=cs?"8px 12px":"12px 16px";b.style.fontSize=cs?"13px":"15px"}
 setTimeout(csStart,1200);setInterval(()=>{csChip();csKid()},3000);
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",csInit);else setTimeout(csInit,0);
