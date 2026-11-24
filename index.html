@@ -23340,6 +23340,12 @@ function csInit(){
 if(typeof HOSTED==="undefined"||!HOSTED)return;
 const CS_URL="https://sync.solvinglifewith.com",CS_CID="184315933690-kq6qmc1qjsi177ht716s3ignsn0osd4u.apps.googleusercontent.com",CS_K="slCloud";
 let cs=null;try{cs=JSON.parse(localStorage.getItem(CS_K)||"null")}catch(_){}
+/* Installed iPhone/Android app: Google's pop-up can't report back to a home-screen app, so it uses Google's redirect sign-in.
+   The server sends the person back with #gsi=<one-time code>, which is swapped here for the normal sign-in result. */
+function csStandalone(){try{return matchMedia("(display-mode: standalone)").matches||navigator.standalone===true}catch(_){return false}}
+setTimeout(async()=>{const h=location.hash;if(!/[#&]gsi(err)?=/.test(h))return;const m=h.match(/gsi=([0-9a-f]+)/);history.replaceState(null,"",location.pathname+location.search);
+  if(!m){csMsg="Google sign-in did not work. Please try again, or use an email code.";return csModal()}
+  try{const{st,j}=await csReq("/gsi/claim",{code:m[1]});if(st!==200||!j.token){csMsg=j.error||"Sign-in did not work. Please try again.";return csModal()}await csDone(j)}catch(_){csMsg="No connection. Please try again.";csModal()}},0);
 let csT=0,csBusy=false,csMsg="";
 const csSave=()=>{try{cs?localStorage.setItem(CS_K,JSON.stringify(cs)):localStorage.removeItem(CS_K)}catch(_){}};
 const csScore=o=>{try{return typeof spScore==="function"?spScore(o):JSON.stringify(o).length/1000}catch(_){return 0}};
@@ -23399,7 +23405,7 @@ function csModal(){let m=document.getElementById("csmodal");if(!m){m=document.cr
   if(!cs&&csInApp()){const b=document.getElementById("csbtn");if(b){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),u=location.href.replace(/^http:/,"https:"),go=ios?"x-safari-"+u:"intent://"+u.replace(/^https:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url="+encodeURIComponent(u)+";end";
     b.style.cssText="display:block";b.innerHTML=`<p style="margin:0 0 10px;font-weight:700">Google sign-in does not work inside Messenger, Facebook or Instagram. Use the email code below, or open the app in ${ios?"Safari":"Chrome"} for Google sign-in:</p><a href="${go}" style="display:block;text-align:center;background:#1a73e8;color:#fff;font-weight:800;padding:14px;border-radius:999px;text-decoration:none">Open in ${ios?"Safari":"Chrome"}</a><p style="font-size:13px;margin:10px 0 0;opacity:.8">If nothing happens: tap ••• at the top, then <b>Open in ${ios?"Safari":"browser"}</b>.</p><button id="cscopy" style="background:#e3ebf0;color:#10202e;border:1px solid #c9d3db;border-radius:12px;padding:12px 14px;font:700 15px system-ui;margin-top:8px">Copy link</button>`;
     const cp=document.getElementById("cscopy");if(cp)cp.onclick=()=>{try{navigator.clipboard.writeText(u);cp.textContent="Copied ✓"}catch(_){}}}return}
-  if(!cs)csGis(()=>{try{google.accounts.id.initialize({client_id:CS_CID,callback:csOnCred,auto_select:false,ux_mode:"popup"});
+  if(!cs)csGis(()=>{try{google.accounts.id.initialize(Object.assign({client_id:CS_CID,callback:csOnCred,auto_select:false,ux_mode:"popup"},csStandalone()?{ux_mode:"redirect",login_uri:CS_URL+"/gsi"}:{}));
     const b=document.getElementById("csbtn");if(b)google.accounts.id.renderButton(b,{theme:"filled_blue",size:"large",shape:"pill",text:"signin_with",width:280,locale:"en"})}catch(_){}})}
 
 /* ---------- ACCESS: free 60-minute preview per Google account, then full access for people the owner adds in his hub.
