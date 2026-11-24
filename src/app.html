@@ -1692,11 +1692,22 @@ function sayNums(t){
   t=t.replace(/\$(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d{2}))?(?![\d.]*\d)/g,(m,d,c)=>{const v=+d.replace(/,/g,"");let w=numWords(v)+(v===1?" dollar":" dollars");if(c&&+c)w=(v?w+" and ":"")+numWords(+c)+(+c===1?" cent":" cents");return w});
   t=t.replace(/(dollars?|cents?|thousand|million|billion)\s*[–—]\s*/g,"$1 to ").replace(/\s[−]\s/g," minus ").replace(/\s=\s/g," equals ");
   t=t.replace(/(^|[^\d.])(\d{1,3}(?:,\d{3})+)(?![\d]|\.\d)/g,(m,pre,d)=>pre+numWords(+d.replace(/,/g,"")));
-  t=t.replace(/(\d)\.(\d)/g,"$1 point $2");
+  t=t.replace(/(^|[^\d.§])(\d{1,2})\.(\d{1,2})(?![\d.])/g,(m,pre,a,b,off,str)=>/(?:CFR|[Ss]ection|§|Rule|Reg\.?|Regulation|U\.S\.C\.?)\s*$/.test(str.slice(0,off+pre.length))?m:pre+a+" point "+b);
   return t}
-function sayable(t){t=sayForms(sayNums(String(t)));return t.replace(/\$(\d[\d,]*)–\$/g,"$$$1 to $").replace(/(\d)–(\d)/g,"$1 to $2").replace(/§\s*/g,"section ").replace(/≥/g," at least ").replace(/≤/g," at most ").replace(/→/g," then ").replace(/×/g," times ").replace(/÷/g," divided by ").replace(/\+/g," plus ").replace(/&/g," and ")
+function sayWords(t){
+  t=t.replace(/(\d)½/g,"$1 and a half").replace(/½/g,"one half").replace(/(\d)¼/g,"$1 and a quarter").replace(/(\d)¾/g,"$1 and three quarters").replace(/(\d+)¢/g,"$1 cents").replace(/…/g,", blank,");
+  t=t.replace(/\$(\d+\.\d+)(?=\s*(?:and|or|to|–|-)\s*\$?\d+(?:\.\d+)?\s*(?:million|billion|trillion)\b)/g,"$1").replace(/\$(\d+\.\d{1,2})\s*(million|billion|trillion)\b/g,"$1 $2 dollars");
+  t=t.replace(/\bU\.S\.(?=[\s,;:)]|$)/g,"U S").replace(/\bU\.S\./g,"U S ").replace(/\bRev\. Proc\./g,"Revenue Procedure").replace(/\bRev\. Rul\./g,"Revenue Ruling").replace(/\bTreas\. Reg\./g,"Treasury Regulation")
+     .replace(/\bReg\.(?=\s*§|\s+\d)/g,"Regulation").replace(/\bPub\.(?=\s*\d)/g,"Publication").replace(/\bNo\.(?=\s*\d)/g,"number").replace(/\bSec\.(?=\s*\d)/g,"Section").replace(/\bi\.e\.,?/g,"that is").replace(/\betc\./g,"et cetera").replace(/\bapprox\./g,"approximately")
+     .replace(/\b(Inc|Corp|Co|Ltd)\./g,"$1").replace(/\b(Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.(?=\s*\d)/g,"$1").replace(/\bMr\./g,"Mister").replace(/\bMs\./g,"Ms").replace(/\bDr\./g,"Doctor");
+  t=t.replace(/\(Rev\.\s*/g,"(revision ").replace(/\bRev\.\s*(?=\d)/g,"revision ").replace(/\bPub\. L\./g,"Public Law").replace(/ⁿ/g," to the n").replace(/≈/g," about ").replace(/−(?=\d)/g,"minus ").replace(/−/g," minus ");
+  t=t.replace(/⅔/g," and two thirds").replace(/⅓/g," and a third").replace(/\s*·\s*/g,", ").replace(/\s<=\s/g," at most ").replace(/\s>=\s/g," at least ").replace(/\s<\s/g," is less than ").replace(/\s>\s/g," is greater than ").replace(/\bC\.R\.S\./g,"C R S").replace(/\bU\.S\.C\./g,"U S C").replace(/\b(SSR|AR|POMS)\s+(\d+)-(\d+)(p?)\b/g,(m,a,x,y,z)=>a+" "+x+" dash "+y+(z?" p":""));
+  t=t.replace(/\b(Notice|Procedure|Ruling|Announcement|Decision|Bulletin)\s+(\d{4})-(\d{1,3})\b/g,"$1 $2 dash $3");
+  t=t.replace(/\b(NOT|OR|AND|ONLY|ALL|ANY|BOTH|NO|YES|NEVER|MUST|EACH|EITHER|AFTER|BEFORE|BUT|IS|ARE|NONE|SAME|MORE|LESS|OVER|UNDER|ALSO|EVEN|FIRST|LAST)\b/g,m=>m.toLowerCase());
+  return t}
+function sayable(t){t=sayForms(sayNums(sayWords(String(t))));return t.replace(/\$(\d[\d,]*)–\$/g,"$$$1 to $").replace(/(\d)–(\d)/g,"$1 to $2").replace(/§\s*/g,"section ").replace(/≥/g," at least ").replace(/≤/g," at most ").replace(/→/g," then ").replace(/×/g," times ").replace(/÷/g," divided by ").replace(/\+/g," plus ").replace(/&/g," and ")
   .replace(/\bMFJ\b/g,"married filing jointly").replace(/\bMFS\b/g,"married filing separately").replace(/\bHOH\b/g,"head of household").replace(/\bQSS\b/g,"qualifying surviving spouse").replace(/\bMAGI\b/g,"modified A G I").replace(/\bAGI\b/g,"A G I").replace(/\bFMV\b/g,"fair market value").replace(/\bSE tax\b/g,"self-employment tax")
-  .replace(/e\.g\.,?/g,"for example").replace(/\bvs\.?\b/g,"versus").replace(/\//g," or ").replace(/[()“”"]/g,", ").replace(/\s+/g," ").replace(/ ,/g,",").trim()}
+  .replace(/e\.g\.,?/g,"for example").replace(/\bvs\.?\b/g,"versus").replace(/\//g," or ").replace(/[()“”"]/g,", ").replace(/\s+/g," ").replace(/ ,/g,",").replace(/,(?:\s*,)+/g,",").replace(/,\s*([.;:?!])/g,"$1").replace(/^[,\s]+|[,\s]+$/g,"").trim()}
 function audQ(it){const f=it.f;if(/\?$/.test(f))return sayable(f);
   if(/^(?:FinCEN )?(Form|Schedule) [A-Za-z0-9-]+$/.test(f))return "What is "+sayable(f)+" used for?";
   if(/^[A-Z][A-Z0-9&\/ -]{1,7}$/.test(f))return "What does "+f.replace(/[^A-Z0-9]/g,"").split("").join(" ")+" mean?";
@@ -1750,7 +1761,7 @@ function sayOne(text,rate){return new Promise((res,rej)=>{let done=false,started
     if(spent>=2500&&tries===0){tries=1;spent=0;if(U){U.onend=U.onerror=U.onstart=null}try{ss.cancel();ss.resume()}catch(e){}setTimeout(()=>{if(!done)go()},180);return}  // one more try
     if(spent>=3000&&tries===1)fin(false,{nostart:true})},250);
   go()})}
-function chunks(text){const parts=text.match(/[^.!?;:]+[.!?;:]*\s*/g)||[text];const out=[];let cur="";for(const p of parts){if((cur+p).length>200&&cur){out.push(cur.trim());cur=p}else cur+=p}if(cur.trim())out.push(cur.trim());return out}
+function chunks(text){const parts=text.match(/(?:[^.!?;:]|[.!?;:](?=\S))+[.!?;:]*\s*/g)||[text];const out=[];let cur="";for(const p of parts){if((cur+p).length>200&&cur){out.push(cur.trim());cur=p}else cur+=p}if(cur.trim())out.push(cur.trim());return out}
 async function say(text){const rate=aud?aud.rate:1;text=sayNums(String(text));if(TTS)return TTS.speak(text.slice(0,1900),{rate,voice:S.set.cvoice||"buttery",language:"en"});
   const a=aud;for(const c of chunks(text)){if(a&&(aud!==a||a.stop))return;if(a&&a.skip)throw{skip:true};if(a&&a.redo)throw{redo:true};await sayOne(c,rate)}
   if(a&&a.redo)throw{redo:true}}
