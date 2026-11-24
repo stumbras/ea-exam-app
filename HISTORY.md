@@ -1636,7 +1636,9 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Part 10 `{x:"sie"}`: FINRA Securities Industry Essentials. `sie_bank.js`: 35 cards and 44 questions in the 4 FINRA sections (16/44/31/9). Exam facts from FINRA's SIE page: 75 questions, 1 h 45 min, passing score 70, $100, valid 4 years, 18+, Prometric or online; retest waits 15/15/60 days from Jan 19, 2027.
 - Wiring: PARTS[10], ea-lastsec map, section switch, start tile (with 5, 6, 9), `.startcard.x10` green #2a7d4f, SLAPPS.sie (manifest-sie, icons icon-sie-192/512, apple-touch-icon-sie), short link /sie/, service-worker bypass, INTRO.sie, company apps page. TOPICS for x-parts now built from every PARTS entry with `x` (was a hard-coded [5..9]).
 - Tested: all 14 study modes open on an iPhone-size screen with no errors or sideways scrolling; full suite passes.
+- Round 2 (`sie_more.js`): +26 cards, +46 questions (market participants, bid/ask, rights/warrants, ADRs, bond types and ratings, money market, GNMA/MBS, NAV math, REITs, options intrinsic/time value, short sales, discretion, statements, ACATS, free-riding, gifts $300 under Rule 3220 from Mar 30, 2026, Reg S-P, 15c3-3, laws and arbitration). Totals: 61 cards, 90 questions.
 
+- 2026-11-24 Version|Site update: SIE: 26 more cards and 46 more questions
 - 2026-11-24 Version|Site update: New SIE Prep course (FINRA Securities Industry Essentials) at /sie/
 - 2026-11-24 Version|Site update: Customs and bookkeeping 2027 dates and fees, paywall shows app name, HISTORY section 17
 - 2026-11-24 Version|Site update: Kids: Brick Bay drifting (skid marks, drift cash, Drift King trophies); cleaner session chips and a smaller parents button on phones
