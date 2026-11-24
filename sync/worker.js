@@ -1,5 +1,5 @@
 // Solving Life progress sync: Google sign-in (ID token) -> one saved copy of the study app progress per Google account.
-// Routes: POST /mail/start {email}, POST /mail/verify {email, code} (6-digit email code via Resend, KV mailkey/mailfrom; e:<email> maps an email to one account so Google and email sign-in share progress); POST /login {id_token} -> {token, email, saved:{upd, data}|null}; GET /load (Bearer token); POST /save (Bearer token) {upd, data}
+// Routes: GET /admin/me (Bearer token of an ADMINS account) -> dashboard data and the private hub link; POST /mail/start {email}, POST /mail/verify {email, code} (6-digit email code via Resend, KV mailkey/mailfrom; e:<email> maps an email to one account so Google and email sign-in share progress); POST /login {id_token} -> {token, email, saved:{upd, data}|null}; GET /load (Bearer token); POST /save (Bearer token) {upd, data}
 // Storage: KV binding P, key "u:<google sub>" = {upd, data, email, at}. Session token = HMAC(SECRET) signed "sub.exp".
 // ACCESS: "g:<email>" = grant {at, note, until?} (full access to every exam app); "t:<sub>" = free-preview minutes used (ms);
 // "s:<sub>" = {email, name, first, last} sign-in index for the owner's hub. Kids app is always free (not checked here).
@@ -10,6 +10,7 @@ const ORIGINS = ["https://study.solvinglifewith.com", "https://ea-exam-app.linas
 const CLIENT_IDS = ["184315933690-kq6qmc1qjsi177ht716s3ignsn0osd4u.apps.googleusercontent.com"];
 const MAX = 20 * 1024 * 1024;
 const ALWAYS = ["linaskerbelis@gmail.com", "info@solvinglifewith.com", "info@solvinglifellc.com", "cristyesplanada@gmail.com"];
+const ADMINS = ["info@solvinglifewith.com"]; // Google accounts that can open the admin dashboard (study.solvinglifewith.com/admin/)
 const WIX_SITE = "8124ca47-5a9e-4015-ad89-7bb92faaf4bf";
 const WIX_PRODUCTS = ["3dcbe428-b0f3-4b32-ae59-70a38b0f2279"]; // "All 4 Exam Study Apps – 12 Months (Buy One, Get All)"
 const YEAR = 365 * 864e5;
@@ -45,6 +46,7 @@ async function hub(req, env, u) {
     const subsOf = async e => { const out = [], l = await env.P.list({ prefix: "s:" }); for (const k of l.keys) { const v = await env.P.get(k.name, "json"); if (v && (v.email || "").toLowerCase() === e) out.push(k.name.slice(2)); } return out; };
     if (act === "preview") { const m = Math.max(0, Math.min(10080, Math.round(+f.get("minutes") || 0))); await env.P.put("cfg", JSON.stringify({ ...(await cfg(env)), previewMin: m })); msg = "Free preview is now " + m + " minutes for everyone."; }
     else if (act === "mailkey") { const k = String(f.get("key") || "").trim(), fr = String(f.get("from") || "").trim(); if (k) await env.P.put("mailkey", k); if (fr) await env.P.put("mailfrom", fr); msg = "Email sign-in settings saved."; }
+    else if (act === "sociallink") { const l = String(f.get("link") || "").trim(); if (/^https:\/\/social\.solvinglifewith\.com\//.test(l)) { await env.P.put("sociallink", l); msg = "Social media control link saved."; } else msg = "Paste the full social.solvinglifewith.com setup link."; }
     else if (act === "mailtest") { const to = String(f.get("to") || "").trim().toLowerCase(); const r = await sendMail(env, to, "Solving Life test email", "This is a test from your Solving Life apps. Email sign-in codes will look like this: 123456"); msg = r.ok ? "Test email sent to " + to : "Email failed: " + r.error; }
     else if (act === "wixkey") { const k = String(f.get("key") || "").trim(); if (k) { await env.P.put("wixkey", k); const s = await wixSync(env); msg = s.error ? "Key saved, but Wix answered with error " + s.error + ". Check the key's permissions (Wix Stores / eCommerce orders: read)." : "Wix key saved. Paid orders are checked every 10 minutes (" + (s.granted || 0) + " granted now)."; } }
     else if (act === "wixnow") { const s = await wixSync(env); msg = s.skipped ? "Paste the Wix API key first." : s.error ? "Wix error " + s.error : "Checked Wix orders: " + s.granted + " access grant(s)."; }
@@ -81,6 +83,8 @@ ${msg ? `<p class="msg">${esc(msg)}</p>` : ""}
 <h2>Email sign-in codes</h2><p>For people who open the app inside Messenger, Facebook or Instagram (Google sign-in is blocked there). Uses Resend (free tier). Status: ${mk ? '<span class="ok">key saved</span>' : "no Resend key yet"} · sender: ${esc(mf || "onboarding@resend.dev (test mode)")}</p>
 <form method="post"><input name="key" type="password" autocomplete="off" placeholder="${mk ? "●●●● saved (paste a new key to replace)" : "paste the Resend API key"}"><input name="from" placeholder="Solving Life LLC &lt;login@solvinglifewith.com&gt;" value="${esc(mf || "")}"><button name="act" value="mailkey">Save</button></form>
 <form method="post"><input name="to" type="email" placeholder="send a test to…" required><button class="g" name="act" value="mailtest">Send test email</button></form>
+<h2>Social media control link</h2><p>Paste your private social.solvinglifewith.com setup link once; the admin dashboard then opens it with one tap. Status: ${await env.P.get("sociallink") ? '<span class="ok">saved</span>' : "not saved yet"}</p>
+<form method="post"><input name="link" type="password" autocomplete="off" placeholder="https://social.solvinglifewith.com/s/…"><button name="act" value="sociallink">Save link</button></form>
 <h2>Promo codes</h2><p>Share a code in a group or forum; each person can use one code once to get extra free minutes.</p>
 <form method="post"><input name="code" placeholder="CODE e.g. REDDIT7" required style="max-width:200px"><input name="minutes" type="number" placeholder="minutes (blank = delete)" style="max-width:190px"><input name="note" placeholder="where it was shared"><button name="act" value="code">Save code</button></form>
 <table><tr><th>Code</th><th>Extra minutes</th><th>Used</th><th>Note</th></tr>${codes.map(c => `<tr><td><b>${esc(c.code)}</b></td><td>${c.minutes}</td><td>${c.used || 0}</td><td>${esc(c.note || "")}</td></tr>`).join("")}</table>
@@ -111,6 +115,20 @@ async function signedIn(env, req, sub, email, name) {
   const saved = await env.P.get("u:" + sub, "json"), prev = await env.P.get("s:" + sub, "json");
   await env.P.put("s:" + sub, JSON.stringify({ email, name: name || prev && prev.name || "", first: prev && prev.first || Date.now(), last: Date.now() }));
   return J(req, { token: await mkToken(env, sub), email, name: name || "", saved: saved ? { upd: saved.upd, data: saved.data } : null, ...(await access(env, sub)) });
+}
+async function adminData(env) {
+  const now = Date.now(), DAY = 864e5, C = await cfg(env);
+  const s = await env.P.list({ prefix: "s:", limit: 1000 }), g = await env.P.list({ prefix: "g:" }), cl = await env.P.list({ prefix: "c:" });
+  let users = 0, a1 = 0, a7 = 0, new7 = 0, trialDone = 0; const recent = [];
+  for (const k of s.keys) { const v = await env.P.get(k.name, "json"); if (!v) continue; users++; if (now - (v.last || 0) < DAY) a1++; if (now - (v.last || 0) < 7 * DAY) a7++; if (now - (v.first || 0) < 7 * DAY) new7++;
+    const used = +(await env.P.get("t:" + k.name.slice(2))) || 0; if (used >= C.previewMin * 60000) trialDone++; recent.push({ email: v.email || "", last: v.last || 0, first: v.first || 0, usedMin: Math.round(used / 60000) }); }
+  recent.sort((x, y) => y.last - x.last);
+  let paid = 0, wixPaid = 0; for (const k of g.keys) { const v = await env.P.get(k.name, "json") || {}; if (!v.until || v.until > now) { paid++; if (/Wix order/.test(v.note || "")) wixPaid++; } }
+  const codes = []; for (const k of cl.keys) { const v = await env.P.get(k.name, "json"); if (v) codes.push({ code: k.name.slice(2), minutes: v.minutes, used: v.used || 0, note: v.note || "" }); }
+  return { users, active24h: a1, active7d: a7, new7d: new7, trialUsedUp: trialDone, fullAccess: paid + ALWAYS.length, wixBuyers: wixPaid, previewMin: C.previewMin, codes,
+    wix: { key: !!(await env.P.get("wixkey")), lastChecked: await env.P.get("wixlast"), error: await env.P.get("wixerr", "json") },
+    mail: { key: !!(await env.P.get("mailkey")), from: await env.P.get("mailfrom") || "" }, recent: recent.slice(0, 40),
+    hub: "https://sync.solvinglifewith.com/hub/" + env.ADMIN, social: await env.P.get("sociallink") || "" };
 }
 function cors(req) { const o = req.headers.get("origin"); return { "access-control-allow-origin": ORIGINS.includes(o) ? o : ORIGINS[0], "access-control-allow-headers": "authorization,content-type", "access-control-allow-methods": "GET,POST,OPTIONS", "vary": "origin", "cache-control": "no-store" }; }
 const J = (req, o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { ...cors(req), "content-type": "application/json" } });
@@ -147,6 +165,9 @@ export default {
         return signedIn(env, req, sub, em, "");
       }
       const sub = await readToken(env, req); if (!sub) return J(req, { error: "Please sign in again." }, 401);
+      if (u.pathname === "/admin/me") { const who = await env.P.get("s:" + sub, "json"), em = (who && who.email || "").toLowerCase();
+        if (!ADMINS.includes(em)) return J(req, { error: "This account is not an admin. Sign in with " + ADMINS[0] + "." }, 403);
+        return J(req, { admin: true, email: em, ...(await adminData(env)) }); }
       if (u.pathname === "/status") return J(req, await access(env, sub));
       if (u.pathname === "/tick" && req.method === "POST") {
         const a = await access(env, sub); if (a.access === "full") return J(req, a);
