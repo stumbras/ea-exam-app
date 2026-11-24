@@ -70,7 +70,7 @@ function csModal(){let m=document.getElementById("csmodal");if(!m){m=document.cr
 
 /* ---------- ACCESS: free 60-minute preview per Google account, then full access for people the owner adds in his hub.
    Kids (Becoming Genius) is always free. Not signed in = a sign-in screen on the exam apps. ---------- */
-const AC_BUY="https://solvinglifewith.com/apps.html";
+const AC_BUY="https://www.solvinglifellc.com/product-page/all-4-exam-study-apps-12-months-buy-one-get-all";
 let acLast=Date.now(),acPend=0,acBusy=false;
 ["pointerdown","keydown","touchstart","scroll"].forEach(ev=>document.addEventListener(ev,()=>{acLast=Date.now()},{passive:true,capture:true}));
 function acKids(){try{return (typeof view!=="undefined"&&view==="kids")||(typeof SLAPP==="function"&&SLAPP()==="kids")||document.body.classList.contains("kidsmode")}catch(_){return false}}
@@ -88,13 +88,14 @@ function acWall(kind){let w=document.getElementById("acwall");if(!kind){if(w)w.r
   const kidsLink=`<p style="margin:16px 0 0;font-size:14px;opacity:.85">The kids app is always free: <a style="color:#ffd666" href="./?kids">Becoming Genius</a></p>`;
   w.innerHTML=kind==="out"?`<div style="max-width:440px;text-align:center;font:16px/1.5 system-ui,sans-serif">
     <div style="font-size:44px">🎓</div><h2 style="font-size:26px;margin:6px 0">Start your free hour</h2>
-    <p>Sign in with Google to study free for 60 minutes. Your progress is saved to your account and follows you to every phone and computer.</p>
-    <button id="acin" style="border:0;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;margin-top:8px">Sign in with Google</button>
+    <p>Sign in with Google or an email code to study free for 60 minutes. Your progress is saved to your account and follows you to every phone and computer.</p>
+    <button id="acin" style="border:0;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;margin-top:8px">Sign in (Google or email)</button>
     <p style="margin:14px 0 0"><a style="color:#ffd666" href="${AC_BUY}" target="_blank" rel="noopener">See full access options</a></p>${kidsLink}</div>`
   :`<div style="max-width:440px;text-align:center;font:16px/1.5 system-ui,sans-serif">
     <div style="font-size:44px">⏰</div><h2 style="font-size:26px;margin:6px 0">Your free hour is done</h2>
     <p>Hope it helped! Get full access to every Solving Life exam app (EA, Series 65, EDPNA and Customs Broker), always updated, with your progress kept.</p>
-    <a href="${AC_BUY}" target="_blank" rel="noopener" style="display:inline-block;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;text-decoration:none;margin-top:8px">Get full access</a>
+    <a href="${AC_BUY}" target="_blank" rel="noopener" style="display:inline-block;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;text-decoration:none;margin-top:8px">Get full access: $49 for all 4 apps</a>
+    <p style="font-size:14px;margin:8px 0 0;opacity:.9">Pay with the same email you signed in with (<b>${esc(cs&&cs.email||"")}</b>). Access opens in about a minute: come back and tap "I already paid".</p>
     <p style="margin:14px 0 0;display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><input id="accode" placeholder="Have a code?" style="border:0;border-radius:999px;padding:10px 14px;font:600 15px system-ui;width:150px;text-transform:uppercase"><button id="acapply" style="border:0;border-radius:999px;padding:10px 14px;font:700 15px system-ui;background:#fff;color:#0f2e47">Apply</button></p>
     <p style="margin:10px 0 0"><button id="acre" style="background:none;border:1px solid #fff8;color:#fff;border-radius:999px;padding:9px 14px;font:600 14px system-ui">I already paid: check again</button></p>
     <p style="font-size:14px;opacity:.85">Signed in as ${esc(cs&&cs.email||"")} · <a style="color:#ffd666" href="#" id="acsw">use another account</a></p>${kidsLink}</div>`;
