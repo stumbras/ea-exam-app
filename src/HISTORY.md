@@ -1592,3 +1592,31 @@ finalize), weekly cron "7 2 * * 3" posts the first item of KV "xw" (youtube_queu
 23 weekly tax-quiz posts queued (through about April 2027). X is NOT in the daily cross-post (cost).
 New site (site_llc/make.py): schema.org AccountingService JSON-LD on index.html (no street address; sameAs all socials) and
 an X card in the social section.
+
+## 16. Launch day: sign-in, payments, admin, brand (Nov 24, 2026)
+Brand: the study app is "Solving Life Academy" (shield logo with SL, cap and check; icons in pwa/icon-*.png and
+apple-touch-icon.png; SL_LOGO svg in app.html; build.py sets title, manifest name "Solving Life Academy" / "SL Academy").
+Kids keeps "Becoming Genius"; the adult KIDS button now opens a "give it to your kids" panel (kidsGive in kids.js) with the
+separate link study.solvinglifewith.com/kids/ and install steps.
+Sign-in: Google (GIS popup) works only in real browsers; Messenger/Facebook/Instagram/TikTok in-app browsers block it
+(origin_mismatch / disallowed_useragent). csInApp() in cloud_sync.js shows "Open in Safari/Chrome" (x-safari-https:// and
+Android intent://) plus an email-code option. Email codes: sync /mail/start and /mail/verify, sent by Resend (account
+info@solvinglifewith.com, domain solvinglifewith.com verified, DNS: resend._domainkey TXT, send/rsend CNAMEs, _dmarc TXT,
+sender "Solving Life LLC <login@solvinglifewith.com>", key in KV mailkey). KV e:<email> maps one email to one account, so
+Google and email sign-in share progress. Cloudflare "Always Use HTTPS" is on for solvinglifewith.com; sl_apps.js also sends
+http and github.io/pages.dev/workers.dev copies to https://study.solvinglifewith.com.
+App: reopens the last section used (localStorage ea-lastsec); installs a new version automatically when no quiz is running
+(checkUpdate -> applyUpdate); the service worker never hands a failed or redirected page to the browser; home screen has an
+"Install the app" card with an Install now button on Android Chrome (beforeinstallprompt).
+Payments: Wix Payments connected through the API (US, owner Linas Kerbelis, ToS accepted by the owner). Site plan: Core
+(paid to Nov 2029). Owner still adds the Relay bank and ID in Wix (within 30 days of the first sale) and the Wix API key in
+the hub. When a signed-in person without full access checks in, the sync server re-reads Wix orders (at most once a minute),
+so a purchase unlocks in seconds; the 10-minute cron still runs.
+Admin: study.solvinglifewith.com/admin/ (pwa/admin/index.html), sign-in with info@solvinglifewith.com (ADMINS in sync
+worker) by Google or email code; GET /admin/me returns stats, the hub link and the saved social link (KV sociallink). Tabs:
+Overview, Access control (hub in an iframe), Social media, Products & sales, All tools. Links: Admin in solvinglifewith.com
+menus; Wix redirect solvinglifellc.com/admin -> the dashboard.
+Content: cble_more.js (41 flashcards, 26 questions; CBLE now 65 cards / 167 questions); Customs card color and text fixed;
+EA card reads "EA · Enrolled Agent Exam (IRS SEE)" with "independent, not affiliated with the IRS".
+Deploying the sync worker: Workers Builds is not connected for it; patch the live script through the Cloudflare API
+(read /content/v2, apply text edits, check the SHA-256 against the repo file, PUT with keep_bindings, re-PUT schedules).
