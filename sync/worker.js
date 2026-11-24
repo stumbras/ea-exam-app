@@ -148,7 +148,7 @@ export default {
     if (u.pathname.startsWith("/hub/")) { if (!env.ADMIN || u.pathname.split("/")[2] !== env.ADMIN) return new Response("Not found", { status: 404 }); return hub(req, env, u); }
     try {
       if (u.pathname === "/gsi" && req.method === "POST") { // Google redirect sign-in (installed iPhone app, where pop-ups can't report back)
-        const f = await req.formData().catch(() => null), id_token = f && f.get("credential");
+        const f = await req.formData().catch(() => null), id_token = f && (f.get("credential") || f.get("id_token"));
         const r = await fetch("https://oauth2.googleapis.com/tokeninfo?id_token=" + encodeURIComponent(id_token || "")); const g = await r.json();
         const back = "https://study.solvinglifewith.com/";
         if (!r.ok || !CLIENT_IDS.includes(g.aud) || !["accounts.google.com", "https://accounts.google.com"].includes(g.iss) || +g.exp * 1000 < Date.now()) return Response.redirect(back + "#gsierr=1", 303);
