@@ -998,7 +998,7 @@ let updateReady="",updating=false;
 /* After "Update now", the web host can go on serving the older file for a few minutes. Without this the banner came straight
    back and looked like a loop. The version just tried is held back for 10 minutes and a plain note is shown instead. */
 let updHold="";try{const t=JSON.parse(sessionStorage.getItem("updTry")||"null");if(t&&t.v&&t.v!==BUILD&&Date.now()-t.t<6e5)updHold=t.v}catch(_){}
-function checkUpdate(){if(!navigator.onLine)return;fetch("./version.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v===updHold)return;if(j&&j.v&&j.v!==BUILD&&j.v!==updateReady){updateReady=j.v;if(!sess&&navigator.serviceWorker&&navigator.serviceWorker.controller){applyUpdate();return}if(!sess&&(view==="home"||view==="kids"&&KV.scr==="home"))render()}}).catch(()=>{})}
+function checkUpdate(){if(!navigator.onLine)return;fetch("./version.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v===updHold)return;if(j&&j.v&&j.v!==BUILD&&j.v!==updateReady){const busy=sess||view==="audio"||view==="lessons";if(busy){clearTimeout(window._updT);window._updT=setTimeout(checkUpdate,120000);return}updateReady=j.v;if(navigator.serviceWorker&&navigator.serviceWorker.controller){applyUpdate();return}if(!sess&&(view==="home"||view==="kids"&&KV.scr==="home"))render()}}).catch(()=>{})}
 function applyUpdate(){try{sessionStorage.setItem("updTry",JSON.stringify({v:updateReady,t:Date.now()}))}catch(_){}updating=true;render();const c=navigator.serviceWorker.controller;if(c)c.postMessage("refresh");setTimeout(()=>location.reload(),6000)}
 const WHY={nohost:"this page is not opened inside Claude",nodb:"account storage is not offered in this view",nouser:"your account could not be identified in this view",noid:"your account could not be identified in this view",timeout:"your account did not answer in time",not_confirmed:"a save could not be read back",quota_exceeded:"account storage is full",unavailable:"the account service is busy"};
 const whyText=()=>WHY[syncWhy]||(syncWhy?"error: "+syncWhy:"");
@@ -1039,7 +1039,7 @@ document.addEventListener("visibilitychange",()=>{if(document.visibilityState!==
 document.addEventListener("visibilitychange",async()=>{
   if(document.hidden){if(saveTimer){clearTimeout(saveTimer);pushRemote()}}
   else if(mainRef&&!loaded){retryN=0;retryLater()}
-  else if(mainRef&&loaded&&!sess){try{const before=S.upd;if(await pull()&&S.upd!==before)render()}catch(e){}}});
+  else if(mainRef&&loaded&&!sess&&!(aud&&aud.state==="play")&&view!=="audio"){try{const before=S.upd;if(await pull()&&S.upd!==before)render()}catch(e){}}});
 window.addEventListener("pagehide",()=>{if(saveTimer){clearTimeout(saveTimer);pushRemote()}});
 
 /* ================= LEARNING MODEL ================= */
