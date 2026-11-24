@@ -14,7 +14,7 @@ self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET")return;c
     e.respondWith((async()=>{const c=await caches.open(CACHE),hit=await c.match(key);
       const net=fetch(key,{cache:"no-cache"}).then(res=>{if(res&&res.ok&&!res.redirected)return c.put(key,res.clone()).then(()=>res);return res}).catch(()=>null);
       if(hit&&!hit.redirected){e.waitUntil(net);return hit}
-      return (await net)||new Response("Offline and not saved yet. Open this app once with internet.",{status:503,headers:{"Content-Type":"text/plain"}})})());
+      const got=await net;if(got&&got.ok&&!got.redirected)return got;try{return await fetch(r)}catch(_){}return hit||new Response("Offline and not saved yet. Open this app once with internet.",{status:503,headers:{"Content-Type":"text/plain"}})})().catch(()=>fetch(r)));
     return}
   if(/(^|\.)fonts\.(googleapis|gstatic)\.com$/.test(u.hostname)){
     e.respondWith((async()=>{const c=await caches.open(FONTS),hit=await c.match(r);if(hit)return hit;
