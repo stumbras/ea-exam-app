@@ -4,7 +4,7 @@
 // Routes (all private ones carry the ADMIN key in the path):
 //   GET  /s/<ADMIN>/            setup page: save app keys, connect each network, see status
 //   POST /s/<ADMIN>/save        save app keys from the setup page form
-//   GET  /s/<ADMIN>/go/<net>    start sign-in with facebook | instagram | google | tiktok
+//   GET  /s/<ADMIN>/go/<net>    start sign-in with facebook | instagram | google | tiktok | x
 //   GET  /cb/<net>              sign-in callback (state must match)
 //   POST /mcp/<ADMIN>           MCP endpoint (JSON-RPC over HTTP) used by Claude
 //   GET  /m/<driveId>/<sig>.mp4 public read-only stream of one Google Drive video (sig = HMAC of the id with ADMIN), for Facebook/TikTok to fetch
@@ -54,11 +54,12 @@ const FIELDS = [
   ["meta_app_id", "Meta app ID (for Facebook and Instagram)"], ["meta_app_secret", "Meta app secret", 1], ["meta_config_id", "Meta login configuration ID (optional; from Facebook Login for Business, Configurations)"],
   ["ig_app_id", "Instagram app ID (from the Instagram use case)"], ["ig_app_secret", "Instagram app secret", 1],
   ["google_client_id", "Google OAuth client ID (for YouTube)"], ["google_client_secret", "Google OAuth client secret", 1],
-  ["tiktok_client_key", "TikTok client key"], ["tiktok_client_secret", "TikTok client secret", 1]
+  ["tiktok_client_key", "TikTok client key"], ["tiktok_client_secret", "TikTok client secret", 1],
+  ["x_client_id", "X OAuth 2.0 client ID"], ["x_client_secret", "X OAuth 2.0 client secret", 1]
 ];
 async function setupPage(env, msg) {
   const cfg = (await kget(env, "cfg")) || {}, A = env.ADMIN;
-  const st = {}; for (const n of ["facebook", "instagram", "google", "tiktok"]) st[n] = await kget(env, "tok:" + n);
+  const st = {}; for (const n of ["facebook", "instagram", "google", "tiktok", "x"]) st[n] = await kget(env, "tok:" + n);
   const row = (n, label, who) => `<tr><td>${label}</td><td>${st[n] ? `<b style="color:#0B6B58">Connected</b> ${esc(who(st[n]) || "")}` : "Not connected"}</td><td><a class="b" href="/s/${A}/go/${n}">${st[n] ? "Reconnect" : "Connect"}</a></td></tr>`;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Solving Life posting setup</title>
 <style>body{font:16px/1.5 system-ui,sans-serif;margin:0;color:#0F1B2D}main{max-width:720px;margin:0 auto;padding:24px}h1{font-size:26px}table{width:100%;border-collapse:collapse}td{padding:12px 6px;border-bottom:1px solid #E4E8EE;vertical-align:top}
@@ -69,6 +70,7 @@ ${row("facebook", "Facebook Page", t => (t.pages || []).map(x => x.name).join(",
 ${row("instagram", "Instagram", t => t.username ? "@" + t.username : "")}
 ${row("google", "YouTube", t => t.channel || "")}
 ${row("tiktok", "TikTok", t => t.name || "")}
+${row("x", "X (Twitter)", t => t.username ? "@" + t.username : "")}
 </table>
 <h2>2. App keys</h2><p>Paste each key from the developer pages. Saved keys show as ●●●●; leave a box empty to keep what is saved.</p>
 <form method="post" action="/s/${A}/save">${FIELDS.map(([k, l, sec]) => `<label for="${k}">${l}</label><input id="${k}" name="${k}" autocomplete="off" ${sec ? 'type="password"' : ""} placeholder="${cfg[k] ? (sec ? "●●●● saved" : esc(cfg[k])) : ""}">`).join("")}
@@ -76,7 +78,7 @@ ${row("tiktok", "TikTok", t => t.name || "")}
 <h3>Google (YouTube) shortcut</h3><p>Pick the client_secret_….json file you downloaded from Google Cloud. It fills in both Google boxes and saves.</p>
 <p><label class="b" style="display:inline-block;cursor:pointer">Choose Google file<input id="gfile" type="file" accept=".json,application/json" style="display:none"></label></p>
 <script>document.getElementById("gfile").onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text()),w=j.web||j.installed;document.getElementById("google_client_id").value=w.client_id;document.getElementById("google_client_secret").value=w.client_secret;document.querySelector("form").submit()}catch(x){alert("That is not the Google client file.")}};</script>
-<h2>3. Addresses the developer pages ask for</h2><p>Redirect / callback addresses:<br>${["facebook", "instagram", "google", "tiktok"].map(n => `<code>${HOST}/cb/${n}</code>`).join("<br>")}</p>
+<h2>3. Addresses the developer pages ask for</h2><p>Redirect / callback addresses:<br>${["facebook", "instagram", "google", "tiktok", "x"].map(n => `<code>${HOST}/cb/${n}</code>`).join("<br>")}</p>
 <p>Privacy policy: <code>https://solvinglifewith.com/privacy.html</code><br>Terms: <code>https://solvinglifewith.com/terms.html</code><br>Website: <code>https://solvinglifewith.com</code></p>
 </main></body></html>`;
 }
@@ -100,12 +102,16 @@ async function startAuth(n, env) {
     url = "https://accounts.google.com/o/oauth2/v2/auth?" + form({ client_id: cfg.google_client_id, redirect_uri: cb, response_type: "code", access_type: "offline", prompt: "consent", state, scope: "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/drive.readonly" }); }
   else if (n === "tiktok") { if (!cfg.tiktok_client_key) throw new Error("Save the TikTok client key first.");
     url = "https://www.tiktok.com/v2/auth/authorize/?" + form({ client_key: cfg.tiktok_client_key, redirect_uri: cb, response_type: "code", state, scope: "user.info.basic,video.upload" }); }
+  else if (n === "x") { if (!cfg.x_client_id) throw new Error("Save the X client ID first.");
+    const ver = b64u(crypto.getRandomValues(new Uint8Array(48))), ch = b64u(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(ver))));
+    await env.SL.put("pkce:" + state, ver, { expirationTtl: 900 });
+    url = "https://x.com/i/oauth2/authorize?" + form({ response_type: "code", client_id: cfg.x_client_id, redirect_uri: cb, scope: "tweet.read tweet.write users.read media.write offline.access", state, code_challenge: ch, code_challenge_method: "S256" }); }
   else throw new Error("Unknown network");
   return Response.redirect(url, 302);
 }
 async function callback(n, u, env) {
   const state = u.searchParams.get("state"), code = u.searchParams.get("code");
-  const want = state && await env.SL.get("state:" + state);
+  const want = state && await env.SL.get("state:" + state), ver = n === "x" && state ? await env.SL.get("pkce:" + state) : null;
   if (!want || want !== n) return new Response("This sign-in link has expired. Start again from the setup page.", { status: 400 });
   await env.SL.delete("state:" + state);
   if (!code) return new Response("Sign-in was cancelled: " + esc(u.searchParams.get("error_description") || u.searchParams.get("error") || ""), { status: 400, headers: H });
@@ -130,6 +136,11 @@ async function callback(n, u, env) {
     if (!t.access_token) throw new Error("TikTok sign-in failed: " + JSON.stringify(t).slice(0, 300));
     let name = ""; try { const i = await jfetch("https://open.tiktokapis.com/v2/user/info/?fields=display_name", { headers: { authorization: "Bearer " + t.access_token } }); name = i.data && i.data.user && i.data.user.display_name; } catch (_) {}
     tok = { refresh_token: t.refresh_token, access_token: t.access_token, expires: Date.now() + (t.expires_in || 0) * 1000, name };
+  } else if (n === "x") {
+    const t = await jfetch("https://api.x.com/2/oauth2/token", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded", authorization: "Basic " + btoa(cfg.x_client_id + ":" + cfg.x_client_secret) }, body: form({ grant_type: "authorization_code", code, redirect_uri: cb, code_verifier: ver || "", client_id: cfg.x_client_id }) });
+    if (!t.access_token) throw new Error("X sign-in failed: " + JSON.stringify(t).slice(0, 300));
+    let username = ""; try { const me = await jfetch("https://api.x.com/2/users/me", { headers: { authorization: "Bearer " + t.access_token } }); username = me.data && me.data.username; } catch (_) {}
+    tok = { access_token: t.access_token, refresh_token: t.refresh_token, expires: Date.now() + (t.expires_in || 0) * 1000, username };
   }
   await kput(env, "tok:" + n, tok);
   return Response.redirect(`${HOST}/s/${env.ADMIN}/?msg=${encodeURIComponent(n + " connected.")}`, 303);
@@ -189,6 +200,7 @@ async function crossPost(env) { // KV "xq": same items as the YouTube schedule; 
     const r = { at: new Date().toISOString(), title: a.title };
     if (a.no_facebook) r.facebook = "skipped"; else try { r.facebook = (await fbPost(env, { text, video_url: url, reel: true })).id; } catch (err) { r.facebook = "error: " + String(err.message).slice(0, 200); }
     try { r.tiktok = (await ttDraft(env, { video_url: url })).publish_id; } catch (err) { r.tiktok = "error: " + String(err.message).slice(0, 200); }
+    if (await kget(env, "tok:x")) try { r.x = (await xPost(env, { text, video_url: url })).id; } catch (err) { r.x = "error: " + String(err.message).slice(0, 200); }
     log.push(r);
   }
   await kput(env, "xq", keep); await kput(env, "xlog", log.slice(-200)); return { left: keep.length };
@@ -251,8 +263,36 @@ async function ttDraft1(env, a, at) {
   for (let i = 0; i < count; i++) { const s = i * chunk, e = i === count - 1 ? size : s + chunk; const r = await fetch(url, { method: "PUT", headers: { "content-type": "video/mp4", "content-range": `bytes ${s}-${e - 1}/${size}` }, body: bytes.slice(s, e) }); if (!r.ok && r.status !== 206 && r.status !== 201) throw new Error("TikTok upload failed: " + r.status); }
   return { network: "tiktok", publish_id: init.data.publish_id, note: "Sent to the TikTok app inbox. Open TikTok, tap the notification, add a sound if you like, and post." };
 }
+function b64u(b) { return btoa(String.fromCharCode(...b)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
+async function xToken(env, force) {
+  const t = await kget(env, "tok:x"), cfg = (await kget(env, "cfg")) || {}; if (!t) throw new Error("X is not connected.");
+  if (!force && t.expires > Date.now() + 120000) return t.access_token;
+  const n = await jfetch("https://api.x.com/2/oauth2/token", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded", authorization: "Basic " + btoa(cfg.x_client_id + ":" + cfg.x_client_secret) }, body: form({ grant_type: "refresh_token", refresh_token: t.refresh_token, client_id: cfg.x_client_id }) });
+  if (!n.access_token) throw new Error("X token refresh failed: " + JSON.stringify(n).slice(0, 200));
+  Object.assign(t, { access_token: n.access_token, refresh_token: n.refresh_token || t.refresh_token, expires: Date.now() + n.expires_in * 1000 }); await kput(env, "tok:x", t); return t.access_token;
+}
+async function xPost(env, a) { // posts text (links removed: X charges more for links) with an optional MP4 video
+  const at = await xToken(env), H2 = { authorization: "Bearer " + at };
+  let text = String(a.text || "").replace(/https?:\/\/\S+/g, "").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+  if ([...text].length > 280) text = [...text].slice(0, 277).join("").replace(/\s+\S*$/, "") + "…";
+  const body = { text };
+  if (a.video_url) {
+    const own = /^https:\/\/social\.solvinglifewith\.com\/m\/([\w-]{10,})\/([0-9a-f]{24})\.mp4$/.exec(a.video_url);
+    const v = own && own[2] === await sig(env, own[1]) ? await driveStream(env, own[1]) : await fetch(a.video_url);
+    if (!v.ok) throw new Error("Could not download the video (" + v.status + ").");
+    const bytes = new Uint8Array(await v.arrayBuffer());
+    const init = await jfetch("https://api.x.com/2/media/upload/initialize", { method: "POST", headers: { ...H2, "content-type": "application/json" }, body: JSON.stringify({ media_type: "video/mp4", total_bytes: bytes.byteLength, media_category: "tweet_video" }) });
+    const id = init.data.id, seg = 4e6;
+    for (let i = 0, k = 0; i < bytes.byteLength; i += seg, k++) { const fd = new FormData(); fd.append("segment_index", String(k)); fd.append("media", new Blob([bytes.slice(i, i + seg)], { type: "video/mp4" }), "v.mp4"); const r = await fetch(`https://api.x.com/2/media/upload/${id}/append`, { method: "POST", headers: H2, body: fd }); if (!r.ok) throw new Error("X upload failed: " + r.status + " " + (await r.text()).slice(0, 200)); }
+    let fin = await jfetch(`https://api.x.com/2/media/upload/${id}/finalize`, { method: "POST", headers: H2 }), pi = fin.data && fin.data.processing_info;
+    for (let n = 0; pi && pi.state !== "succeeded" && n < 30; n++) { if (pi.state === "failed") throw new Error("X video processing failed."); await new Promise(r => setTimeout(r, Math.min(10, pi.check_after_secs || 3) * 1000)); const st = await jfetch(`https://api.x.com/2/media/upload?command=STATUS&media_id=${id}`, { headers: H2 }); pi = st.data && st.data.processing_info; }
+    body.media = { media_ids: [id] };
+  }
+  const p = await jfetch("https://api.x.com/2/tweets", { method: "POST", headers: { ...H2, "content-type": "application/json" }, body: JSON.stringify(body) });
+  return { network: "x", id: p.data && p.data.id };
+}
 async function status(env) {
-  const o = {}; for (const n of ["facebook", "instagram", "google", "tiktok"]) { let t = await kget(env, "tok:" + n); if (!t && n === "instagram") { const fb = await kget(env, "tok:facebook"), p = fb && fb.pages && fb.pages.find(x => x.ig); if (p) t = { username: "linked to the " + p.name + " Page" }; } o[n === "google" ? "youtube" : n] = t ? (n === "facebook" ? { pages: t.pages.map(x => x.name) } : n === "instagram" ? { username: t.username } : n === "google" ? { channel: t.channel } : { name: t.name }) : "not connected"; }
+  const o = {}; for (const n of ["facebook", "instagram", "google", "tiktok", "x"]) { let t = await kget(env, "tok:" + n); if (!t && n === "instagram") { const fb = await kget(env, "tok:facebook"), p = fb && fb.pages && fb.pages.find(x => x.ig); if (p) t = { username: "linked to the " + p.name + " Page" }; } o[n === "google" ? "youtube" : n] = t ? (n === "facebook" ? { pages: t.pages.map(x => x.name) } : n === "instagram" ? { username: t.username } : n === "google" ? { channel: t.channel } : n === "x" ? { username: t.username } : { name: t.name }) : "not connected"; }
   return o;
 }
 
@@ -265,6 +305,7 @@ const TOOLS = [
   { name: "drive_video_link", description: "Make a public read-only link (for facebook_post / tiktok_send_to_app video_url) to one video in the Solving Life Google Drive.", inputSchema: { type: "object", properties: { drive_id: { type: "string" } }, required: ["drive_id"] } },
   { name: "youtube_api", description: "Manage the Solving Life YouTube channel through YouTube Data API v3: list/create/update playlists, add videos to playlists (playlistItems), update video titles/descriptions/tags (videos, part=snippet), update channel branding (channels, part=brandingSettings), list uploads (search with forMine=true). Give resource, method, query (e.g. part, mine, id) and body.", inputSchema: { type: "object", properties: { resource: { type: "string" }, method: { type: "string", enum: ["GET", "POST", "PUT", "DELETE"] }, query: { type: "object" }, body: { type: "object" } }, required: ["resource"] } },
   { name: "youtube_queue", description: "Daily auto-upload queue for YouTube (5 a day). action: get (queue + recent log), append (items: youtube_upload argument objects with drive_id or video_url, title, description, tags, playlist_id, publish_at), replace (items), run (upload n now).", inputSchema: { type: "object", properties: { action: { type: "string", enum: ["get", "append", "replace", "run", "xq_get", "xq_replace"] }, items: { type: "array", items: { type: "object" } }, n: { type: "number" } }, required: ["action"] } },
+  { name: "x_post", description: "Post to the Solving Life X (Twitter) account: text up to 280 characters (links are removed to keep cost low) and an optional public https MP4 video_url.", inputSchema: { type: "object", properties: { text: { type: "string" }, video_url: { type: "string" } }, required: ["text"] } },
   { name: "tiktok_send_to_app", description: "Send a video (public https MP4 URL) to the Solving Life TikTok app's inbox as a draft; the owner finishes and posts it in the TikTok app.", inputSchema: { type: "object", properties: { video_url: { type: "string" } }, required: ["video_url"] } }
 ];
 async function mcp(req, env) {
@@ -279,7 +320,7 @@ async function mcp(req, env) {
     if (m.method === "tools/call") {
       const a = (m.params && m.params.arguments) || {}, n = m.params && m.params.name;
       try {
-        const out = n === "social_status" ? await status(env) : n === "facebook_post" ? await fbPost(env, a) : n === "instagram_post" ? await igPost(env, a) : n === "youtube_upload" ? await ytUpload(env, a) : n === "youtube_api" ? await ytApi(env, a) : n === "youtube_queue" ? await ytQ(env, a) : n === "drive_video_link" ? await driveLink(env, a) : n === "tiktok_send_to_app" ? await ttDraft(env, a) : null;
+        const out = n === "social_status" ? await status(env) : n === "facebook_post" ? await fbPost(env, a) : n === "instagram_post" ? await igPost(env, a) : n === "youtube_upload" ? await ytUpload(env, a) : n === "youtube_api" ? await ytApi(env, a) : n === "youtube_queue" ? await ytQ(env, a) : n === "drive_video_link" ? await driveLink(env, a) : n === "tiktok_send_to_app" ? await ttDraft(env, a) : n === "x_post" ? await xPost(env, a) : null;
         if (out === null) return bad(-32602, "Unknown tool " + n);
         return ok({ content: [{ type: "text", text: JSON.stringify(out, null, 1) }] });
       } catch (e) { return ok({ content: [{ type: "text", text: "Error: " + e.message }], isError: true }); }
