@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><title>Admin · Solving Life Academy</title>
+<link rel="icon" href="../icon-192.png"><meta name="theme-color" content="#0b2a4a">
+<style>
+:root{--ink:#10202e;--mut:#5b6b78;--bg:#eef3f6;--card:#fff;--line:#dbe3ea;--brand:#0f766e;--navy:#0b2a4a;--gold:#e9a72b}
+*{box-sizing:border-box}body{margin:0;font:16px/1.45 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,var(--navy),var(--brand));color:#fff;padding:18px 16px;display:flex;gap:12px;align-items:center}
+header img{width:48px;height:48px;border-radius:12px}header h1{font-size:20px;margin:0}header p{margin:0;opacity:.8;font-size:13px}
+main{max-width:980px;margin:0 auto;padding:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+h2{font-size:17px;margin:0 0 10px}.mut{color:var(--mut);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.stat{background:#f6fafb;border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:26px}.stat span{font-size:13px;color:var(--mut)}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.links a{display:block;padding:12px;border-radius:12px;background:#f6fafb;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:600}
+.links a small{display:block;font-weight:400;color:var(--mut)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:12px 16px;background:var(--brand);color:#fff;cursor:pointer}.ghost{background:#e3ebf0;color:var(--ink)}
+input{font:inherit;padding:11px;border:1px solid #bbb;border-radius:12px;width:100%}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:7px 4px;border-bottom:1px solid var(--line)}
+.ok{color:#0f766e;font-weight:700}.bad{color:#a33;font-weight:700}
+iframe{width:100%;height:80vh;border:1px solid var(--line);border-radius:14px;background:#fff}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}.tabs button{font:inherit;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer}.tabs button.on{background:var(--navy);color:#fff}
+#msg{font-weight:600}
+</style></head><body>
+<header><img src="../icon-192.png" alt=""><div><h1>Admin · Solving Life Academy</h1><p>Access, sales, sign-ins, social media and products in one place</p></div></header>
+<main>
+<div id="login" class="card">
+ <h2>Sign in</h2><p class="mut">Only the business Google account (info@solvinglifewith.com) can open this dashboard.</p>
+ <div id="gbtn" style="min-height:44px"></div>
+ <p class="mut" style="margin:14px 0 6px">Or get a sign-in code by email</p>
+ <div id="mailbox"><input id="em" type="email" placeholder="info@solvinglifewith.com" autocomplete="email"><button class="btn" id="send" style="margin-top:8px;width:100%">Email me a code</button></div>
+ <p id="msg"></p>
+</div>
+<div id="app" hidden>
+ <div class="tabs"><button data-t="over" class="on">Overview</button><button data-t="access">Access control</button><button data-t="social">Social media</button><button data-t="sales">Products &amp; sales</button><button data-t="tools">All tools</button><button id="out" style="margin-left:auto">Sign out</button></div>
+ <section data-p="over">
+  <div class="card"><h2>Today at a glance</h2><div class="grid" id="stats"></div><p class="mut" id="who"></p></div>
+  <div class="card"><h2>Systems</h2><div id="sys"></div></div>
+  <div class="card"><h2>Latest sign-ins</h2><table id="recent"></table></div>
+ </section>
+ <section data-p="access" hidden><div class="card"><h2>Access control</h2><p class="mut">Give or remove full access, set the free preview, extra minutes, promo codes, Wix and email settings.</p><iframe id="hub" title="Access control"></iframe></div></section>
+ <section data-p="social" hidden><div class="card"><h2>Social media</h2><div class="links" id="soc"></div></div></section>
+ <section data-p="sales" hidden><div class="card"><h2>Products &amp; sales</h2><div class="links" id="sal"></div></div></section>
+ <section data-p="tools" hidden><div class="card"><h2>All tools</h2><div class="links" id="tl"></div></div></section>
+</div>
+</main>
+<script>
+const API="https://sync.solvinglifewith.com",CID="184315933690-kq6qmc1qjsi177ht716s3ignsn0osd4u.apps.googleusercontent.com",K="slAdmin",WIX="8124ca47-5a9e-4015-ad89-7bb92faaf4bf";
+const $=s=>document.querySelector(s),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+let tok=null;try{tok=localStorage.getItem(K)}catch(_){}
+const msg=t=>{$("#msg").textContent=t||""};
+async function req(p,b){const r=await fetch(API+p,{method:b?"POST":"GET",headers:Object.assign({"content-type":"application/json"},tok?{authorization:"Bearer "+tok}:{}),body:b?JSON.stringify(b):undefined});return{st:r.status,j:await r.json().catch(()=>({}))}}
+async function signed(j){tok=j.token;try{localStorage.setItem(K,tok)}catch(_){}load()}
+function gis(){const s=document.createElement("script");s.src="https://accounts.google.com/gsi/client";s.async=true;s.onload=()=>{google.accounts.id.initialize({client_id:CID,ux_mode:"popup",callback:async r=>{msg("Checking…");const{st,j}=await req("/login",{id_token:r.credential});if(st!==200)return msg(j.error||"Sign-in failed");signed(j)}});google.accounts.id.renderButton($("#gbtn"),{theme:"filled_blue",size:"large",shape:"pill",text:"signin_with",width:280})};document.head.appendChild(s)}
+let mailTo="";function wireMail(){const b=$("#mailbox");$("#send").onclick=async()=>{mailTo=$("#em").value.trim();msg("Sending…");const{st,j}=await req("/mail/start",{email:mailTo});if(st!==200)return msg(j.error||"Could not send");msg("");
+  b.innerHTML='<input id="code" inputmode="numeric" maxlength="6" placeholder="6-digit code" autocomplete="one-time-code"><button class="btn" id="ver" style="margin-top:8px;width:100%">Sign in</button>';
+  $("#ver").onclick=async()=>{msg("Checking…");const{st,j}=await req("/mail/verify",{email:mailTo,code:$("#code").value});if(st!==200)return msg(j.error||"Wrong code");signed(j)}}}
+const L=(h,t,s)=>`<a href="${h}" target="_blank" rel="noopener">${esc(t)}<small>${esc(s||"")}</small></a>`;
+const d=t=>t?new Date(t).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}):"";
+async function load(){if(!tok){$("#login").hidden=false;$("#app").hidden=true;return}
+  const{st,j}=await req("/admin/me");if(st!==200){if(st===401){tok=null;try{localStorage.removeItem(K)}catch(_){}}$("#login").hidden=false;$("#app").hidden=true;return msg(j.error||"Please sign in again.")}
+  $("#login").hidden=true;$("#app").hidden=false;$("#who").textContent="Signed in as "+j.email;
+  const S=[["People signed in",j.users],["Active today",j.active24h],["Active 7 days",j.active7d],["New 7 days",j.new7d],["Full access",j.fullAccess],["Wix buyers",j.wixBuyers],["Free hour used up",j.trialUsedUp],["Free preview (min)",j.previewMin]];
+  $("#stats").innerHTML=S.map(([a,b])=>`<div class="stat"><b>${b}</b><span>${a}</span></div>`).join("");
+  $("#sys").innerHTML=`<p>Wix sales sync: ${j.wix.key?'<span class="ok">on</span>':'<span class="bad">no Wix key yet</span>'}${j.wix.lastChecked?" · checked through "+esc(d(Date.parse(j.wix.lastChecked))):""}${j.wix.error?' · <span class="bad">last error '+esc(j.wix.error.status)+'</span>':""}</p>
+   <p>Email sign-in codes: ${j.mail.key?'<span class="ok">on</span> · '+esc(j.mail.from):'<span class="bad">no email key</span>'}</p>
+   <p>Promo codes: ${j.codes.map(c=>esc(c.code)+" ("+c.used+" used)").join(", ")||"none"}</p>`;
+  $("#recent").innerHTML="<tr><th>Email</th><th>Last seen</th><th>Joined</th><th>Preview used</th></tr>"+j.recent.map(r=>`<tr><td>${esc(r.email)}</td><td>${d(r.last)}</td><td>${d(r.first)}</td><td>${r.usedMin} min</td></tr>`).join("");
+  $("#hub").src=j.hub;
+  $("#soc").innerHTML=(j.social?L(j.social,"Auto-posting control","Connect accounts, queues, posting status"):'<a href="#" onclick="document.querySelector(\'[data-t=access]\').click();return false">Auto-posting control<small>Paste your social setup link once in Access control → Social media control link</small></a>')
+   +(j.social?L(j.social.replace(/\/?$/,"/")+"reddit","Reddit helper","Ready-to-post drafts"):"")
+   +L("https://studio.youtube.com","YouTube Studio","Videos, Shorts, analytics")+L("https://business.facebook.com","Meta Business Suite","Facebook and Instagram posts, inbox")
+   +L("https://www.tiktok.com/tiktokstudio","TikTok Studio","Drafts to post")+L("https://x.com/solvinglifellc","X @solvinglifellc","Weekly tax quiz posts")
+   +L("https://www.reddit.com/user/SolvingLifeLLC","Reddit u/SolvingLifeLLC","Profile and Reddit Pro")+L("https://business.google.com","Google Business Profile","Reviews, posts, info");
+  const W="https://manage.wix.com/dashboard/"+WIX+"/";
+  $("#sal").innerHTML=L(W+"ecom-platform/orders-list","Wix orders","Every sale")+L(W+"wix-stores/products/product/3dcbe428-b0f3-4b32-ae59-70a38b0f2279","$49 bundle product","Price, description, photos")
+   +L(W+"wix-stores/products","All Wix products","Catalog")+L(W+"wix-cashier/payments","Payments and payouts","Wix Payments, bank, PayPal")
+   +L("https://www.solvinglifellc.com/product-page/all-4-exam-study-apps-12-months-buy-one-get-all","Buy page (what buyers see)","Check the checkout")
+   +L("https://solvinglifewith.com/apps","Apps page","solvinglifewith.com/apps")+L("https://study.solvinglifewith.com/","Open the study app","Solving Life Academy")+L("https://study.solvinglifewith.com/kids/","Open the Kids app","Becoming Genius");
+  $("#tl").innerHTML=L(W+"home","Wix dashboard","solvinglifellc.com")+L("https://dash.cloudflare.com","Cloudflare","Hosting, DNS, servers")+L("https://resend.com/emails","Resend","Sign-in code emails")
+   +L("https://github.com/stumbras/ea-exam-app","GitHub","App code")+L("https://console.x.com","X developer console","API credits")+L("https://console.cloud.google.com/apis/credentials","Google Cloud","Google sign-in setup")
+   +L("https://mail.google.com","Gmail","info@ mailbox")+L("https://business.apple.com","Apple Business Connect","Maps listing")}
+document.querySelectorAll(".tabs [data-t]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs [data-t]").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll("[data-p]").forEach(p=>p.hidden=p.dataset.p!==b.dataset.t)});
+$("#out").onclick=()=>{tok=null;try{localStorage.removeItem(K)}catch(_){}$("#hub").src="about:blank";load()};
+gis();wireMail();load();
+</script></body></html>
