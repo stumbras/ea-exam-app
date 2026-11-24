@@ -1593,6 +1593,7 @@ finalize), weekly cron "7 2 * * 3" posts the first item of KV "xw" (youtube_queu
 New site (site_llc/make.py): schema.org AccountingService JSON-LD on index.html (no street address; sameAs all socials) and
 an X card in the social section.
 
+- 2026-11-24 Version: Reopen the last section used; updates install automatically when no quiz is running
 - 2026-11-24 Version: Brand: Solving Life Academy name, shield logo and new install icons
 - 2026-11-24 Version: Sign-in box: email code option next to Google (works inside Messenger and Facebook)
 - 2026-11-24 Sync server: email-code sign-in (Resend), one account per email shared with Google sign-in

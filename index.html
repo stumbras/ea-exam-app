@@ -24049,7 +24049,7 @@ let updateReady="",updating=false;
 /* After "Update now", the web host can go on serving the older file for a few minutes. Without this the banner came straight
    back and looked like a loop. The version just tried is held back for 10 minutes and a plain note is shown instead. */
 let updHold="";try{const t=JSON.parse(sessionStorage.getItem("updTry")||"null");if(t&&t.v&&t.v!==BUILD&&Date.now()-t.t<6e5)updHold=t.v}catch(_){}
-function checkUpdate(){if(!navigator.onLine)return;fetch("./version.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v===updHold)return;if(j&&j.v&&j.v!==BUILD&&j.v!==updateReady){updateReady=j.v;if(!sess&&(view==="home"||view==="kids"&&KV.scr==="home"))render()}}).catch(()=>{})}
+function checkUpdate(){if(!navigator.onLine)return;fetch("./version.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v===updHold)return;if(j&&j.v&&j.v!==BUILD&&j.v!==updateReady){updateReady=j.v;if(!sess&&navigator.serviceWorker&&navigator.serviceWorker.controller){applyUpdate();return}if(!sess&&(view==="home"||view==="kids"&&KV.scr==="home"))render()}}).catch(()=>{})}
 function applyUpdate(){try{sessionStorage.setItem("updTry",JSON.stringify({v:updateReady,t:Date.now()}))}catch(_){}updating=true;render();const c=navigator.serviceWorker.controller;if(c)c.postMessage("refresh");setTimeout(()=>location.reload(),6000)}
 const WHY={nohost:"this page is not opened inside Claude",nodb:"account storage is not offered in this view",nouser:"your account could not be identified in this view",noid:"your account could not be identified in this view",timeout:"your account did not answer in time",not_confirmed:"a save could not be read back",quota_exceeded:"account storage is full",unavailable:"the account service is busy"};
 const whyText=()=>WHY[syncWhy]||(syncWhy?"error: "+syncWhy:"");
@@ -24178,6 +24178,9 @@ function weakestDomain(p){let best=null;for(const d in PARTS[p].doms){const st=d
 /* ================= UI STATE ================= */
 let part=1;try{part=+(sessionStorage.getItem("ea-part")||1)||1}catch(e){}
 let bkNote="",topicSel=0,aheadNote=false,doneNote=false,filt="all",view="start",sess=null,showFacts=false,factQ="",confirmReset=false,kStat="all",kCat="all";
+/* Open where the person left off last time (the section they used last), unless they chose "All sections" last. */
+try{const ls=localStorage.getItem("ea-lastsec");if(ls&&ls!=="start"&&!sessionStorage.getItem("ea-part")){const M={bk:BK,s65:5,edpna:6,caa:7,notary:8,cble:9};if(M[ls]){part=M[ls];view="home"}else if(ls==="ea"){part=+(localStorage.getItem("ea-lastpart")||1)||1;if(PARTS[part].bk||PARTS[part].x)part=1;view="home"}}}catch(_){}
+
 const $=s=>document.querySelector(s);
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 
@@ -25340,7 +25343,7 @@ document.addEventListener("click",e=>{
   if(view==="lessons"&&lessonClick(b))return;
   if(b.dataset.mode==="audio"){openAudio();return}
   if(b.dataset.nav==="back"){hush();try{if(typeof tv!=="undefined"&&tv){tv.dr=null;tv.dord=null}}catch(_){}if(sess&&sess.mode!=="mock"){try{clearInterval(timerId)}catch(_){}sess=null}view=(typeof CLOCK==="function"&&CLOCK())?"bkland":"home";render();window.scrollTo(0,0);return}
-  if(b.dataset.sec){hush();const sc=b.dataset.sec;if(sc==="start"){view="start"}else{if(sc==="bk")part=BK;else if(sc==="s65")part=5;else if(sc==="edpna")part=6;else if(sc==="caa")part=7;else if(sc==="notary")part=8;else if(sc==="cble")part=9;else if(PARTS[part].bk||PARTS[part].x){let lp=1;try{lp=+(localStorage.getItem("ea-lastpart")||1)||1}catch(_){}part=lp}view="home"}
+  if(b.dataset.sec){hush();const sc=b.dataset.sec;try{localStorage.setItem("ea-lastsec",sc)}catch(_){}if(sc==="start"){view="start"}else{if(sc==="bk")part=BK;else if(sc==="s65")part=5;else if(sc==="edpna")part=6;else if(sc==="caa")part=7;else if(sc==="notary")part=8;else if(sc==="cble")part=9;else if(PARTS[part].bk||PARTS[part].x){let lp=1;try{lp=+(localStorage.getItem("ea-lastpart")||1)||1}catch(_){}part=lp}view="home"}
     try{sessionStorage.setItem("ea-part",part)}catch(_){}filt="all";confirmReset=false;aud=null;les=null;render();window.scrollTo(0,0);return}
   if(b.dataset.part){part=+b.dataset.part;if(!PARTS[part].bk&&!PARTS[part].x)try{localStorage.setItem("ea-lastpart",part)}catch(_){}try{sessionStorage.setItem("ea-part",part)}catch(_){}filt="all";confirmReset=false;if(view!=="session"){view="home"}render();return}
   if(b.dataset.f){filt=b.dataset.f;render();return}
