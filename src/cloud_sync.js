@@ -95,7 +95,7 @@ function acWall(kind){let w=document.getElementById("acwall");if(!kind){if(w)w.r
   w.style.cssText="position:fixed;inset:0;z-index:9000;background:linear-gradient(160deg,#0f2e47,#1a6b55);color:#fff;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto";
   const kidsLink=`<p style="margin:16px 0 0;font-size:14px;opacity:.85">The kids app is always free: <a style="color:#ffd666" href="./?kids">Becoming Genius</a></p>`;
   w.innerHTML=kind==="out"?`<div style="max-width:440px;text-align:center;font:16px/1.5 system-ui,sans-serif">
-    <div style="font-size:44px">🎓</div><h2 style="font-size:26px;margin:6px 0">Start your free hour</h2>
+    <div style="font-size:44px">🎓</div><div style="font:700 13px system-ui;letter-spacing:.08em;text-transform:uppercase;opacity:.8">${(document.title||"Solving Life Academy").replace(/[<>&"]/g,"")}</div><h2 style="font-size:26px;margin:6px 0">Start your free hour</h2>
     <p>Sign in with Google or an email code to study free for 60 minutes. Your progress is saved to your account and follows you to every phone and computer.</p>
     <button id="acin" style="border:0;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;margin-top:8px">Sign in (Google or email)</button>
     <p style="margin:14px 0 0"><a style="color:#ffd666" href="${AC_BUY}" target="_blank" rel="noopener">See full access options</a></p>${kidsLink}</div>`

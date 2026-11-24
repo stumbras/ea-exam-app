@@ -1621,6 +1621,18 @@ EA card reads "EA · Enrolled Agent Exam (IRS SEE)" with "independent, not affil
 Deploying the sync worker: Workers Builds is not connected for it; patch the live script through the Cloudflare API
 (read /content/v2, apply text edits, check the SHA-256 against the repo file, PUT with keep_bindings, re-PUT schedules).
 
+## 17. Improvement rounds 2–5 and social helpers (Nov 24, 2026)
+- **Reddit helper:** all 35 drafts rewritten in a casual first-person voice; each has an "X / Facebook short version" (≤280 chars) with a "Post on X (filled in)" intent link. Watch links added for r/tax, r/personalfinance and ITIN/nonresident questions. Drafts p19 (EA window July 2026–Feb 2027), p21 (Series 65 pass = 92 of 130) and p27 (2027 SGA) were corrected.
+- **Series 65** (`s65_regbi.js`): Reg BI, dual registrants, accredited investor through a Series 7/65/82 license, exam basics ($187, 140 questions, 180 minutes, 92 of 130) and NASAA retest waits (60 days after a third failure for windows opened from Jan 4, 2027). Intro notes remote testing ends Jan 4, 2027.
+- **EDPNA** (`edpna_2027.js`): 2027 COLA 3.6%; SGA $1,770 / $2,950 blind; TWP $1,270; SSI $1,029 / $1,544; QC $1,970; student exclusion $2,500 / $10,080. Direct-payment user fee cap $128 from Dec 1, 2026 (was $123): 8 questions updated. Fee agreement cap still $9,200.
+- **Kids** (`kids_drift.js`): Brick Bay drifting (skid marks, tire smoke, drift cash, trophies "Drift King" and "Tire Smoke Legend"); wraps kCtCrashStep/kCtCrashDraw. Phone fixes: session-plan chips stack icon over text under 430px; the parents sign-in pill is smaller ("🔐 Parents: save progress") and the body gets 56px bottom padding.
+- **Customs** (`cble_2027.js`): spring 2027 exam Apr 28, 2027 (4th Wednesday), 2027 permit user fee $190.88 due Jan 29, 2027, triennial report window mid-Dec 2026 to Feb 28, 2027.
+- **Bookkeeping** (`bk_2027.js`): W-2/1099-NEC due Feb 1, 2027 (Jan 31 is a Sunday), $2,000 1099-NEC line for 2026 payments, year-end close order.
+- **Paywall** shows the app's name above "Start your free hour".
+- **Phone test** (`tmp/phone_all.js`, 360px): start, EA, 65, EDPNA, CBLE and admin pages have no sideways overflow or page errors; the sign-in box buttons are readable; the install card shows iPhone/Android steps by device; the live site shows the paywall when signed out and the kids app stays free.
+- **Reminders:** phone reminder to open Chrome at 7:00 AM Manila on Nov 25 (repeats through 6 PM), plus a 7:05 AM check that fills in the Reddit/X/Facebook profiles once Chrome is connected.
+
+- 2026-11-24 Version|Site update: Customs and bookkeeping 2027 dates and fees, paywall shows app name, HISTORY section 17
 - 2026-11-24 Version|Site update: Kids: Brick Bay drifting (skid marks, drift cash, Drift King trophies); cleaner session chips and a smaller parents button on phones
 - 2026-11-24 Version|Site update: EDPNA: 2027 COLA figures (SGA, TWP, SSI, QC, student exclusion) and the $128 user-fee cap from Dec 2026
 - 2026-11-24 Version|Site update: Series 65: Reg BI, dual registrants, accredited investor via license, exam basics and 2027 retest rules

@@ -1,0 +1,10 @@
+/* ================= CBLE · 2027 dates and fees (Solving Life LLC, original wording) =================
+   Sources: CBP notice "Customs Broker Permit User Fee Payment for 2027" (FR 2026-21853, CBP Decision 26-14);
+   CBP CSMS on the 2027 triennial status report; 19 CFR 111.13 (exam on the 4th Wednesday of April and October);
+   CBP Publication 3433 (registration opens about 10 weeks before the exam, closes 6 weeks before, $390 fee). */
+F(9,1,"Next exam: spring 2027","The CBLE is given on the fourth Wednesday of April and October, so the spring 2027 exam is set for Wednesday, April 28, 2027 unless CBP moves it. Registration opens about 10 weeks before and closes about 6 weeks before. The exam fee is $390, paid through eCBP.");
+F(9,1,"Permit user fee for 2027","$190.88 per permit (up from $185.38 for 2026), due by January 29, 2027 (19 CFR 111.96(c), 19 CFR 24.22).");
+F(9,1,"2027 triennial status report","Every licensed broker files the status report and pays the $100 triennial fee. The 2027 filing window runs from mid-December 2026 to February 28, 2027.");
+Q(9,1,2,"A broker holds a national permit. What user fee is due for calendar year 2027, and by when?","$190.88, by January 29, 2027",["$185.38, by March 1, 2027","$100, by February 28, 2027","$300, by December 31, 2026"],"CBP set the 2027 permit user fee at $190.88, due January 29, 2027. $100 is the triennial fee; $300 is the individual license application fee.");
+Q(9,1,2,"When must the 2027 triennial status report be filed?","In the window from mid-December 2026 to February 28, 2027, with the $100 fee",["Any time in 2027","By January 29, 2027 with the permit fee","Only if CBP asks for it"],"Missing the triennial report and fee leads to suspension of the license by operation of law.");
+Q(9,1,1,"On which day is the CBLE normally given?","The fourth Wednesday in April and in October",["The first Monday in April and October","Any day at a testing center","The last Friday in March and September"],"19 CFR 111.13 sets the fourth Wednesday, unless it conflicts with a holiday or other event.");

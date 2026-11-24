@@ -1,0 +1,7 @@
+/* ================= Bookkeeping · year-end checklist for early 2027 (Solving Life LLC) =================
+   Weekend rule: a due date on a Saturday, Sunday or legal holiday moves to the next business day. */
+F(4,5,"W-2 and 1099-NEC deadline in 2027","January 31, 2027 is a Sunday, so W-2s (to workers and the SSA) and 1099-NECs (to contractors and the IRS) for 2026 are due Monday, February 1, 2027.");
+F(4,5,"Which 2026 contractors get a 1099-NEC","Those paid $2,000 or more for services in 2026 (the line was $600 for 2025 payments). Get a W-9 before the first payment so you have the name and TIN.");
+Q(4,5,2,"A client's January 31, 2027 deadline for sending 2026 Forms W-2 falls on a Sunday. When are they due?","Monday, February 1, 2027",["Friday, January 29, 2027","Sunday, January 31, 2027","February 15, 2027"],"When a deadline falls on a weekend or legal holiday, it moves to the next business day.");
+Q(4,5,2,"In 2026 a business paid one contractor $1,800 and another $2,400 for services. Which ones need a 1099-NEC?","Only the $2,400 contractor",["Both","Neither","Only the $1,800 contractor"],"For payments made in 2026 the threshold is $2,000.");
+Q(4,2,2,"Before closing the books for 2026, which step comes first?","Reconcile every bank and credit card account through December 31",["Send 1099s","Delete old transactions","Change the closing date to 2025"],"Reconciled accounts make the year-end numbers reliable; then set a closing date in QuickBooks so nobody changes the closed year by mistake.");

@@ -7958,6 +7958,14 @@ F(4,5,"Solving Life LLC: what is Verifyle for?","Kept for later: signing by a te
 F(4,5,"Solving Life LLC: what does the website do, and not do?","It explains the firm, shows how to contact us and carries the Privacy Notice. It does not collect tax documents.");
 F(4,5,"Solving Life LLC: where do client records live?","In the Google shared drive IMPORTANT DOCUMENTS STORAGE, never in a personal Drive or on a personal phone.");
 
+/* ================= Bookkeeping · year-end checklist for early 2027 (Solving Life LLC) =================
+   Weekend rule: a due date on a Saturday, Sunday or legal holiday moves to the next business day. */
+F(4,5,"W-2 and 1099-NEC deadline in 2027","January 31, 2027 is a Sunday, so W-2s (to workers and the SSA) and 1099-NECs (to contractors and the IRS) for 2026 are due Monday, February 1, 2027.");
+F(4,5,"Which 2026 contractors get a 1099-NEC","Those paid $2,000 or more for services in 2026 (the line was $600 for 2025 payments). Get a W-9 before the first payment so you have the name and TIN.");
+Q(4,5,2,"A client's January 31, 2027 deadline for sending 2026 Forms W-2 falls on a Sunday. When are they due?","Monday, February 1, 2027",["Friday, January 29, 2027","Sunday, January 31, 2027","February 15, 2027"],"When a deadline falls on a weekend or legal holiday, it moves to the next business day.");
+Q(4,5,2,"In 2026 a business paid one contractor $1,800 and another $2,400 for services. Which ones need a 1099-NEC?","Only the $2,400 contractor",["Both","Neither","Only the $1,800 contractor"],"For payments made in 2026 the threshold is $2,000.");
+Q(4,2,2,"Before closing the books for 2026, which step comes first?","Reconcile every bank and credit card account through December 31",["Send 1099s","Delete old transactions","Change the closing date to 2025"],"Reconciled accounts make the year-end numbers reliable; then set a closing date in QuickBooks so nobody changes the closed year by mistake.");
+
 // Bookkeeping · QuickBooks · Taxes: basic quiz, modules 1 to 3. Original questions. Q(part, module, level, stem, correct, [wrong x3], explanation)
 Q(4,1,1,"Which agency collects federal income tax?","The Internal Revenue Service (IRS)",["The Federal Reserve","The FDIC","The Securities and Exchange Commission"],"The IRS is part of the Treasury and administers the federal tax law.");
 Q(4,1,1,"A worker's gross pay is $1,600. Federal withholding is $150 and other deductions are $192. What is the net pay?","$1,258",["$1,450","$1,408","$1,600"],"$1,600 − $150 − $192 = $1,258.");
@@ -18489,6 +18497,17 @@ Q(9,4,2,"What exchange-rate date is used to convert a foreign currency price?","
 Q(9,4,3,"Transaction value cannot be used and there are no identical or similar goods. Which method comes next unless the importer asks otherwise?","Deductive value",["Computed value","The fallback method","Transaction value of related parties"],"The order is transaction, identical, similar, deductive, computed; the importer may ask to use computed before deductive (19 CFR 152.101).");
 Q(9,5,2,"An absolute quota fills on day 3 of the quota period. What happens to further imports?","They cannot be entered for consumption until the next period",["They enter at a higher duty rate","They enter duty-free","They are seized and forfeited"],"Absolute quotas cap the quantity; above the cap goods can be exported or held, e.g. in a bonded warehouse or FTZ, until the next period. A tariff-rate quota would charge a higher rate instead.");
 
+/* ================= CBLE · 2027 dates and fees (Solving Life LLC, original wording) =================
+   Sources: CBP notice "Customs Broker Permit User Fee Payment for 2027" (FR 2026-21853, CBP Decision 26-14);
+   CBP CSMS on the 2027 triennial status report; 19 CFR 111.13 (exam on the 4th Wednesday of April and October);
+   CBP Publication 3433 (registration opens about 10 weeks before the exam, closes 6 weeks before, $390 fee). */
+F(9,1,"Next exam: spring 2027","The CBLE is given on the fourth Wednesday of April and October, so the spring 2027 exam is set for Wednesday, April 28, 2027 unless CBP moves it. Registration opens about 10 weeks before and closes about 6 weeks before. The exam fee is $390, paid through eCBP.");
+F(9,1,"Permit user fee for 2027","$190.88 per permit (up from $185.38 for 2026), due by January 29, 2027 (19 CFR 111.96(c), 19 CFR 24.22).");
+F(9,1,"2027 triennial status report","Every licensed broker files the status report and pays the $100 triennial fee. The 2027 filing window runs from mid-December 2026 to February 28, 2027.");
+Q(9,1,2,"A broker holds a national permit. What user fee is due for calendar year 2027, and by when?","$190.88, by January 29, 2027",["$185.38, by March 1, 2027","$100, by February 28, 2027","$300, by December 31, 2026"],"CBP set the 2027 permit user fee at $190.88, due January 29, 2027. $100 is the triennial fee; $300 is the individual license application fee.");
+Q(9,1,2,"When must the 2027 triennial status report be filed?","In the window from mid-December 2026 to February 28, 2027, with the $100 fee",["Any time in 2027","By January 29, 2027 with the permit fee","Only if CBP asks for it"],"Missing the triennial report and fee leads to suspension of the license by operation of law.");
+Q(9,1,1,"On which day is the CBLE normally given?","The fourth Wednesday in April and in October",["The first Monday in April and October","Any day at a testing center","The last Friday in March and September"],"19 CFR 111.13 sets the fourth Wednesday, unless it conflicts with a holiday or other event.");
+
 /* ================= Bookkeeping · office security and client privacy (WISP, Section 7216) ================= */
 Q(4,5,2,"Federal law requires a paid tax preparer's office to have","a written information security plan (WISP) under the FTC Safeguards Rule",["a locked filing cabinet only","nothing, if the office is a single-member LLC","a plan only after a data breach"],"Tax preparers are financial institutions under the Gramm-Leach-Bliley Act; IRS Publications 4557 and 5708 explain the plan.");
 Q(4,5,3,"Before tax return information is shared with a preparer working outside the United States, the office needs","the client's signed Section 7216 consent, as a separate document",["a line in the engagement letter","the client's verbal OK on a call","nothing, if the preparer is family"],"Revenue Procedure 2013-14 sets the wording; the consent cannot be merged into other documents.");
@@ -23507,7 +23526,7 @@ function acWall(kind){let w=document.getElementById("acwall");if(!kind){if(w)w.r
   w.style.cssText="position:fixed;inset:0;z-index:9000;background:linear-gradient(160deg,#0f2e47,#1a6b55);color:#fff;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto";
   const kidsLink=`<p style="margin:16px 0 0;font-size:14px;opacity:.85">The kids app is always free: <a style="color:#ffd666" href="./?kids">Becoming Genius</a></p>`;
   w.innerHTML=kind==="out"?`<div style="max-width:440px;text-align:center;font:16px/1.5 system-ui,sans-serif">
-    <div style="font-size:44px">🎓</div><h2 style="font-size:26px;margin:6px 0">Start your free hour</h2>
+    <div style="font-size:44px">🎓</div><div style="font:700 13px system-ui;letter-spacing:.08em;text-transform:uppercase;opacity:.8">${(document.title||"Solving Life Academy").replace(/[<>&"]/g,"")}</div><h2 style="font-size:26px;margin:6px 0">Start your free hour</h2>
     <p>Sign in with Google or an email code to study free for 60 minutes. Your progress is saved to your account and follows you to every phone and computer.</p>
     <button id="acin" style="border:0;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;margin-top:8px">Sign in (Google or email)</button>
     <p style="margin:14px 0 0"><a style="color:#ffd666" href="${AC_BUY}" target="_blank" rel="noopener">See full access options</a></p>${kidsLink}</div>`
