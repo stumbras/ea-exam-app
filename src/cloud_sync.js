@@ -34,6 +34,7 @@ async function csOnCred(resp){csMsg="Checking your Google account…";csModal();
     await csPush();csMsg="Done! Your progress is now saved to "+j.email+". Sign in with the same Google account on any phone or computer to continue.";csModal()}
   catch(_){csMsg="No connection. Please try again when you're online.";csModal()}}
 function csGis(cb){if(window.google&&google.accounts&&google.accounts.id)return cb();const s=document.createElement("script");s.src="https://accounts.google.com/gsi/client";s.async=true;s.onload=cb;s.onerror=()=>{csMsg="Google sign-in could not load. Check your connection.";csModal()};document.head.appendChild(s)}
+function csInApp(){return /FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram|Line\/|TikTok|musical_ly|Snapchat|Twitter|; wv\)/i.test(navigator.userAgent)}
 function csModal(){let m=document.getElementById("csmodal");if(!m){m=document.createElement("div");m.id="csmodal";document.body.appendChild(m)}
   m.style.cssText="position:fixed;inset:0;z-index:9999;background:rgba(10,15,30,.6);display:flex;align-items:center;justify-content:center;padding:18px";
   const when=cs&&cs.last?new Date(cs.last).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}):"";
@@ -50,6 +51,9 @@ function csModal(){let m=document.getElementById("csmodal");if(!m){m=document.cr
   const x=document.getElementById("csx");if(x)x.onclick=close;
   const o=document.getElementById("csout");if(o)o.onclick=()=>{cs=null;csSave();csChip();try{google.accounts.id.disableAutoSelect()}catch(_){}close()};
   const n=document.getElementById("csnow");if(n)n.onclick=async()=>{csMsg="Saving…";csModal();await csPush();csMsg="Saved.";csModal()};
+  if(!cs&&csInApp()){const b=document.getElementById("csbtn");if(b){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),u=location.href.replace(/^http:/,"https:"),go=ios?"x-safari-"+u:"intent://"+u.replace(/^https:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url="+encodeURIComponent(u)+";end";
+    b.style.cssText="display:block";b.innerHTML=`<p style="margin:0 0 10px;font-weight:700">Google sign-in does not work inside Messenger, Facebook or Instagram. Open the app in ${ios?"Safari":"Chrome"} to sign in:</p><a href="${go}" style="display:block;text-align:center;background:#1a73e8;color:#fff;font-weight:800;padding:14px;border-radius:999px;text-decoration:none">Open in ${ios?"Safari":"Chrome"}</a><p style="font-size:13px;margin:10px 0 0;opacity:.8">If nothing happens: tap ••• at the top, then <b>Open in ${ios?"Safari":"browser"}</b>.</p><button id="cscopy" class="btn ghost" style="margin-top:8px">Copy link</button>`;
+    const cp=document.getElementById("cscopy");if(cp)cp.onclick=()=>{try{navigator.clipboard.writeText(u);cp.textContent="Copied ✓"}catch(_){}}}return}
   if(!cs)csGis(()=>{try{google.accounts.id.initialize({client_id:CS_CID,callback:csOnCred,auto_select:false,ux_mode:"popup"});
     const b=document.getElementById("csbtn");if(b)google.accounts.id.renderButton(b,{theme:"filled_blue",size:"large",shape:"pill",text:"signin_with",width:280})}catch(_){}})}
 

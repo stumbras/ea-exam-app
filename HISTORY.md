@@ -1593,6 +1593,7 @@ finalize), weekly cron "7 2 * * 3" posts the first item of KV "xw" (youtube_queu
 New site (site_llc/make.py): schema.org AccountingService JSON-LD on index.html (no street address; sameAs all socials) and
 an X card in the social section.
 
+- 2026-11-23 Version: In Messenger/Facebook/Instagram browsers the sign-in shows Open in Safari/Chrome instead of the Google button
 - 2026-11-23 Version: Service worker: never hand a failed or redirected page to the browser; fall back to the network
 - 2026-11-23 Version: Force https so Google sign-in origin always matches
 - 2026-11-23 Version: Copies on github.io and other preview hosts redirect to study.solvinglifewith.com so Google sign-in works
