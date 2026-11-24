@@ -1621,6 +1621,7 @@ EA card reads "EA · Enrolled Agent Exam (IRS SEE)" with "independent, not affil
 Deploying the sync worker: Workers Builds is not connected for it; patch the live script through the Cloudflare API
 (read /content/v2, apply text edits, check the SHA-256 against the repo file, PUT with keep_bindings, re-PUT schedules).
 
+- 2026-11-24 Version: Brick Bay: crashes trigger at normal driving speed; bumping cops and the bandit also sends bricks flying
 - 2026-11-24 Version: EA: 2026-27 exam window cards (PSI, $317 per part, tax year 2025 law, Form 23); 2025 OBBBA figures verified
 - 2026-11-24 Version: Installed app: full-width Sign in with Google button (Google redirect sign-in)
 - 2026-11-24 Sync /gsi: also accept id_token from the OAuth form post
