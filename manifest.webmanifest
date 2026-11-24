@@ -1,7 +1,7 @@
 {
  "name": "Solving Life Academy",
  "short_name": "SL Academy",
- "description": "License exam prep by Solving Life LLC: Enrolled Agent (IRS SEE), Series 65, EDPNA, Customs Broker and a bookkeeping course. Works offline.",
+ "description": "License exam prep by Solving Life LLC: Enrolled Agent (IRS SEE), Series 65, SIE, EDPNA, Customs Broker and a bookkeeping course. Works offline.",
  "start_url": "./?study",
  "id": "./",
  "scope": "./",

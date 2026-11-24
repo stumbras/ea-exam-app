@@ -1632,6 +1632,12 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - **Phone test** (`tmp/phone_all.js`, 360px): start, EA, 65, EDPNA, CBLE and admin pages have no sideways overflow or page errors; the sign-in box buttons are readable; the install card shows iPhone/Android steps by device; the live site shows the paywall when signed out and the kids app stays free.
 - **Reminders:** phone reminder to open Chrome at 7:00 AM Manila on Nov 25 (repeats through 6 PM), plus a 7:05 AM check that fills in the Reddit/X/Facebook profiles once Chrome is connected.
 
+## 18. New course: SIE Prep (Nov 25, 2026)
+- Part 10 `{x:"sie"}`: FINRA Securities Industry Essentials. `sie_bank.js`: 35 cards and 44 questions in the 4 FINRA sections (16/44/31/9). Exam facts from FINRA's SIE page: 75 questions, 1 h 45 min, passing score 70, $100, valid 4 years, 18+, Prometric or online; retest waits 15/15/60 days from Jan 19, 2027.
+- Wiring: PARTS[10], ea-lastsec map, section switch, start tile (with 5, 6, 9), `.startcard.x10` green #2a7d4f, SLAPPS.sie (manifest-sie, icons icon-sie-192/512, apple-touch-icon-sie), short link /sie/, service-worker bypass, INTRO.sie, company apps page. TOPICS for x-parts now built from every PARTS entry with `x` (was a hard-coded [5..9]).
+- Tested: all 14 study modes open on an iPhone-size screen with no errors or sideways scrolling; full suite passes.
+
+- 2026-11-24 Version|Site update: New SIE Prep course (FINRA Securities Industry Essentials) at /sie/
 - 2026-11-24 Version|Site update: Customs and bookkeeping 2027 dates and fees, paywall shows app name, HISTORY section 17
 - 2026-11-24 Version|Site update: Kids: Brick Bay drifting (skid marks, drift cash, Drift King trophies); cleaner session chips and a smaller parents button on phones
 - 2026-11-24 Version|Site update: EDPNA: 2027 COLA figures (SGA, TWP, SSI, QC, student exclusion) and the $128 user-fee cap from Dec 2026
