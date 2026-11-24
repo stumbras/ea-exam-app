@@ -386,7 +386,7 @@ details summary{cursor:pointer;font-weight:600}
 .startcard.bk{background:#0f7a3d}.startcard.ea{background:var(--accent);color:var(--accent-ink)}
 .startcard .lvl{font-size:13px;font-weight:700;opacity:.92;text-transform:uppercase;letter-spacing:.05em}.startcard b{font-size:22px;line-height:1.2}.startcard p{margin:0;font-size:15.5px;line-height:1.45;opacity:.96}
 .startcard .sbar{height:8px;border-radius:4px;background:rgba(255,255,255,.3);overflow:hidden;display:block}.startcard .sbar i{display:block;height:100%;background:#fff}.startcard em{font-style:normal;font-size:13.5px;opacity:.95}.tabs .bkback{font:inherit;font-weight:700;background:var(--surface);color:var(--fg);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
-.startcard.x5{background:#5b3fb0}.startcard.x6{background:#a0521a}.startcard.x7{background:#0d5c63}.startcard.x8{background:#7a2e4a}.mode.bkm{border-left:5px solid var(--good)}.mode.bkm.sim{grid-column:1/-1;background:var(--good-soft)}
+.startcard.x5{background:#5b3fb0}.startcard.x6{background:#a0521a}.startcard.x7{background:#0d5c63}.startcard.x8{background:#7a2e4a}.startcard.x9{background:#1f5d8c}.mode.bkm{border-left:5px solid var(--good)}.mode.bkm.sim{grid-column:1/-1;background:var(--good-soft)}
 .qin{font:inherit;font-size:16px;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);width:100%;min-width:0;box-sizing:border-box}
 .qrow{display:grid;gap:3px;font-size:13.5px;font-weight:600;color:var(--muted)}
 .qmenu{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.qmenu em{grid-column:1/-1;font-style:normal;font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:4px}
@@ -865,7 +865,7 @@ body.course .tabs.bk{display:flex}
     </div></div>
     <div class="topact"><span class="chip" id="sync" role="button" tabindex="0" title="Tap to test account saving" style="cursor:pointer"><span class="dot"></span><span id="synctext">Saved on this device</span></span>
     <button class="chip" id="themebtn" type="button" aria-label="Switch between light and dark">Dark</button></div>
-    <button class="kidsbtn" id="kidsbtn" type="button" aria-label="Open the kids Becoming Genius">🚀<span>KIDS</span></button>
+    <button class="kidsbtn" id="kidsbtn" type="button" aria-label="Give the kids app Becoming Genius to your kids">🚀<span>KIDS</span></button>
   </header>
   <nav class="tabs" role="tablist" id="tabs"></nav>
   <main id="view"></main>
@@ -10951,7 +10951,7 @@ function kBeeCheck(){const Q=kCurQ(),inp=$("#kbeein");if(!Q||Q.kind!=="bee"||!in
   const k=KS(),vv=kNatural(k)?k.voice:"max",ids=[ok?kRecId("Correct!",vv):null,kRecId(Q.word,vv),...[...Q.word].map(ch=>kRecId(ch.toUpperCase(),vv)),kRecId(Q.word,vv)];
   setTimeout(()=>{if(k.voice!=="off"&&ids.slice(1).every(Boolean))kPlayRec(ids.filter(Boolean),vv,()=>kSpeak(`${Q.word}. ${[...Q.word].join(", ")}. ${Q.word}.`,{read:true,force:true,rate:.85,seq:1}));else kSpeak(`${ok?"Correct! ":""}${Q.word}. ${[...Q.word].join(", ")}. ${Q.word}.`,{read:true,force:true,rate:.85,seq:1})},ok?700:200);return ok}
 function kidsClick(b){const d=b.dataset;try{if(kGate(d)){render();return true}kPlayMark(d);kPathNudge(d)}catch(_){}
-  if(b.id==="kidsbtn"){KV={scr:"home"};view="kids";render();window.scrollTo(0,0);return true}
+  if(b.id==="kidsbtn"){kidsGive();return true}
   if(view!=="kids")return false;kLastAct=Date.now();const k=KS(),g=KV,go=(o,top=true)=>{KV=o;render();if(top)window.scrollTo(0,0);return true},top=()=>{render();window.scrollTo(0,0);return true};
   if(k.music&&!kMus)kMusicStart();if(!kGreeted&&k.setup&&k.name){kGreeted=true;kLine(`Welcome back, ${k.name}!`,0)}
   if(d.kav!==undefined){KV.av=+d.kav;document.querySelectorAll(".kavb").forEach(x=>x.classList.toggle("on",x===b));const big=$("#kavbig");if(big)big.textContent=KAV[KV.av];kBeep("click");return true}
@@ -11535,6 +11535,29 @@ function kGateStep(D,dt,lx,carY,SP){if(SP||D.over)return;D.gT=(D.gT==null?12:D.g
   if(D.gate.y>carY+120)D.gate=null;D.gateMsgT=Math.max(0,(D.gateMsgT||0)-dt)}
 function kGateDraw(c,D,lx,LW,W){const G=D.gate;c.fillStyle="rgba(5,8,24,.85)";c.fillRect(0,G.y-64,W,26);c.fillStyle="#ffd23f";c.font="900 15px system-ui";c.textAlign="center";c.fillText(`🧠 ${G.q} = ?`,W/2,G.y-51);
   G.opts.forEach((v,i)=>{const x=lx(i);c.fillStyle=G.done?(v===G.a?"#2ec27e":"#6b7280"):G.hinted&&v===G.a?"#2ec27e":"#3fb6ff";c.beginPath();c.roundRect(x-LW/2+5,G.y-32,LW-10,34,8);c.fill();c.fillStyle="#fff";c.font="900 18px system-ui";c.fillText(v,x,G.y-14)})}
+
+/* Kids button on the adult home: hand the separate Kids app to a child instead of opening it inside the adult app */
+function kidsGive(){const U="https://study.solvinglifewith.com/kids/";let o=document.getElementById("kgive");if(o)o.remove();
+  o=document.createElement("div");o.id="kgive";o.style.cssText="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px";
+  o.innerHTML=`<div style="background:#fff;color:#111;border-radius:18px;max-width:420px;width:100%;padding:18px;font:15px/1.45 system-ui,sans-serif;max-height:90vh;overflow:auto">
+  <div style="font:900 20px system-ui">🚀 Becoming Genius · Kids app</div>
+  <p style="margin:8px 0"><b>Give this app to your kids and let them test it!</b> Free learning games: math, reading, space, flying, chess and more. It is its own separate app, so your exam progress stays yours.</p>
+  <p style="margin:8px 0;word-break:break-all"><b>Kids link:</b> <a href="${U}" target="_blank" rel="noopener">${U}</a></p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+   <button type="button" id="kgshare" style="flex:1;padding:12px;border:0;border-radius:12px;background:#d10000;color:#fff;font-weight:800">Send link</button>
+   <button type="button" id="kgcopy" style="flex:1;padding:12px;border:0;border-radius:12px;background:#1e3a8a;color:#fff;font-weight:800">Copy link</button></div>
+  <div style="font-weight:800;margin-top:6px">Install it on your kid's phone or tablet</div>
+  <ul style="margin:6px 0 10px 18px;padding:0">
+   <li><b>iPhone/iPad:</b> open the link in Safari → Share → Add to Home Screen → Add.</li>
+   <li><b>Android:</b> open it in Chrome → ⋮ → Install app (or Add to Home screen).</li>
+   <li>Opened inside Messenger or Facebook? Tap ••• → Open in Safari/Chrome first.</li></ul>
+  <div style="display:flex;gap:8px"><a href="${U}" target="_blank" rel="noopener" style="flex:1;text-align:center;padding:12px;border-radius:12px;background:#eef;color:#1e3a8a;font-weight:800;text-decoration:none">Try it here</a>
+   <button type="button" id="kgclose" style="flex:1;padding:12px;border:0;border-radius:12px;background:#ddd;font-weight:800">Close</button></div></div>`;
+  document.body.appendChild(o);
+  o.addEventListener("click",e=>{if(e.target===o||e.target.id==="kgclose")o.remove()});
+  const msg="Free learning games for kids from Solving Life LLC: "+U;
+  o.querySelector("#kgshare").onclick=()=>{if(navigator.share)navigator.share({title:"Becoming Genius",text:"Free learning games for kids",url:U}).catch(()=>{});else location.href="sms:?&body="+encodeURIComponent(msg)};
+  o.querySelector("#kgcopy").onclick=e=>{try{navigator.clipboard.writeText(U);e.target.textContent="Copied ✓"}catch(_){prompt("Copy this link:",U)}};}
 
 /* ---------- realistic Tesla top-down drawings (front faces up) ---------- */
 function kShade(h,p){const n=parseInt(String(h).slice(1),16);if(isNaN(n))return h;const f=v=>Math.round(Math.max(0,Math.min(255,p<0?v*(1+p):v+(255-v)*p)));return `rgb(${f(n>>16)},${f(n>>8&255)},${f(n&255)})`}
@@ -23987,7 +24010,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 232 · Nov 24";
+const BUILD="dev";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -24143,7 +24166,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;","
 
 function renderTabs(){
   const bk=!!PARTS[part].bk,X=PARTS[part].x?PARTS[part]:null,cy=document.querySelector(".top .cycle"),h1=document.querySelector(".top h1"),lg=document.querySelector(".top .logo");
-  if(h1)h1.textContent=bk?"Bookkeeping · QuickBooks · Taxes":"Enrolled Agent Prep";if(cy)cy.textContent=bk?"Foundation course · 2025 and 2026 amounts":"2025 tax law · exam window to Feb 28, 2027";if(lg){lg.textContent=bk?"BK":"EA";lg.style.background=bk?"#0f7a3d":""}
+  if(h1)h1.textContent=bk?"Bookkeeping · QuickBooks · Taxes":"Enrolled Agent (EA) Prep · IRS SEE";if(cy)cy.textContent=bk?"Foundation course · 2025 and 2026 amounts":"2025 tax law · exam window to Feb 28, 2027";if(lg){lg.textContent=bk?"BK":"EA";lg.style.background=bk?"#0f7a3d":""}
   if(X){if(h1)h1.textContent=X.title;if(cy)cy.textContent=X.sub;if(lg){lg.textContent=X.logo;lg.style.background=X.x==="s65"?"#5b3fb0":X.x==="caa"?"#0d5c63":X.x==="notary"?"#7a2e4a":X.x==="cble"?"#1f5d8c":"#a0521a"}}
   const st=view==="start";if(st){if(h1)h1.textContent="Solving Life LLC · Study";if(cy)cy.textContent="Pick a section to study";if(lg){lg.textContent="SL";lg.style.background=""}}
   $("#tabs").className="tabs bk";$("#tabs").hidden=st;
@@ -24152,11 +24175,20 @@ function renderTabs(){
   $("#tabs").innerHTML=st?"":!main?(lock?`<button class="bkback go" data-nav="back">‹ Back · Course home</button>`:`<button class="bkback go" data-nav="back">‹ Back · ${bk?"Course":X?esc(X.short):"Part "+part} main page</button><button class="bkback" data-sec="start">All sections</button>`)
     :`<button class="bkback" data-sec="start">‹ ${lock?"Course home":"Sections"}</button>`+(bk||X?"":`<span class="ptabs">`+[1,2,3].map(p=>`<button role="tab" aria-selected="${p===part}" data-part="${p}">Part ${p}<small>${PARTS[p].name}</small></button>`).join("")+`</span>`);
 }
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();window.__bip=e;const c=document.getElementById("instcard");if(c)c.outerHTML=instCard()});
+addEventListener("appinstalled",()=>{const c=document.getElementById("instcard");if(c)c.remove()});
+function instCard(){try{if(matchMedia("(display-mode: standalone)").matches||navigator.standalone)return""}catch(_){}
+  const ua=navigator.userAgent,inapp=/FBAN|FBAV|FB_IAB|Messenger|Instagram|Line\/|TikTok|musical_ly|Snapchat|Twitter/i.test(ua),and=/Android/i.test(ua);
+  const how=inapp?`You are inside another app's browser. First tap ••• (top right) and choose <b style="font-size:inherit;display:inline">Open in ${IOS?"Safari":"Chrome"}</b>, then install from there.`
+   :IOS?`On iPhone or iPad in Safari: tap <b style="font-size:inherit;display:inline">Share</b> (square with arrow) → <b style="font-size:inherit;display:inline">Add to Home Screen</b> → <b style="font-size:inherit;display:inline">Add</b>.`
+   :and?`On Android in Chrome: tap <b style="font-size:inherit;display:inline">⋮</b> → <b style="font-size:inherit;display:inline">Add to Home screen</b> or <b style="font-size:inherit;display:inline">Install app</b> → <b style="font-size:inherit;display:inline">Install</b>.`
+   :`On a computer in Chrome or Edge: click the install icon at the right end of the address bar, or menu → <b style="font-size:inherit;display:inline">Install</b>.`;
+  return `<div class="startcard" id="instcard" style="background:linear-gradient(135deg,#0b3b5c,#0f766e);cursor:default"><span class="lvl">Free · works offline</span><b>📲 Install the app on your phone</b><p>${how}</p>${window.__bip&&!inapp?`<button class="bkback" style="margin-top:8px;background:#fff;color:#0b3b5c;font-weight:800" onclick="window.__bip.prompt();window.__bip.userChoice.then(()=>{window.__bip=null;const c=document.getElementById('instcard');if(c)c.outerHTML=instCard()})">Install now</button>`:""}<em>One app opens all sections. Your progress syncs to your Google account.</em></div>`}
 function renderStart(){const b=bkStats("all"),e=[1,2,3].map(p=>Math.round(partStats(p).readyX));
-  $("#view").innerHTML=`<section class="section" style="margin-top:14px"><div class="startgrid">
+  $("#view").innerHTML=`<section class="section" style="margin-top:14px"><div class="startgrid">${instCard()}
     <button class="startcard bk" data-sec="bk"><span class="lvl">Foundation course · about 40 hours</span><b>Bookkeeping · QuickBooks · Taxes</b><p>How the U.S. money and tax system works, accounting and bookkeeping, QuickBooks Online, and preparing tax returns as a professional.</p><span class="sbar"><i style="width:${Math.min(100,b.pct).toFixed(0)}%"></i></span><em>${Math.round(b.pct)}% done · slides, flashcards, quiz, cases, audio</em></button>
-    <button class="startcard ea" data-sec="ea"><span class="lvl">Exam preparation</span><b>EA Exam · Parts 1, 2 and 3</b><p>Enrolled Agent exam drill: facts, exam-style questions, calculations, mock exams, slides and audio.</p><span class="sbar"><i style="width:${Math.round((e[0]+e[1]+e[2])/3)}%"></i></span><em>Part 1 ${e[0]}% · Part 2 ${e[1]}% · Part 3 ${e[2]}% ready</em></button>
-    ${[5,6,7,8,9].map(p=>{const X=PARTS[p],ps=partStats(p),n=BANK.filter(i=>i.p==p);return `<button class="startcard x${p}" data-sec="${X.x}"><span class="lvl">${p===7?"Certification training":p===8?"State commission course":"Exam preparation"}</span><b>${X.short} · ${esc(X.name)}</b><p>${p===8?"Become a Colorado notary: qualifications and the exam, acknowledgments, jurats, copy certifications, ID rules, the stamp and journal, fees, prohibited acts, and electronic and remote notarization.":p===7?"ITINs and Form W-7 for a Certifying Acceptance Agent: program rules, the 13 documents, the Certificate of Accuracy, exceptions, records and compliance.":p===5?"Investment adviser representative exam: economics, investment vehicles, client strategies, and securities law and ethics.":"Social Security disability representation: the programs, the five-step evaluation, evidence, appeals, fees and conduct."}</p><span class="sbar"><i style="width:${Math.round(ps.readyX)}%"></i></span><em>${Math.round(ps.readyX)}% ready · ${n.filter(i=>i.t==="f").length} flashcards · ${n.filter(i=>i.t==="q").length} questions</em></button>`}).join("")}
+    <button class="startcard ea" data-sec="ea"><span class="lvl">Exam preparation</span><b>EA · Enrolled Agent Exam (IRS SEE) · Parts 1, 2 and 3</b><p>Prep for the IRS Special Enrollment Examination (independent, not affiliated with the IRS): facts, exam-style questions, calculations, mock exams, slides and audio.</p><span class="sbar"><i style="width:${Math.round((e[0]+e[1]+e[2])/3)}%"></i></span><em>Part 1 ${e[0]}% · Part 2 ${e[1]}% · Part 3 ${e[2]}% ready</em></button>
+    ${[5,6,7,8,9].map(p=>{const X=PARTS[p],ps=partStats(p),n=BANK.filter(i=>i.p==p);return `<button class="startcard x${p}" data-sec="${X.x}"><span class="lvl">${p===7?"Certification training":p===8?"State commission course":"Exam preparation"}</span><b>${X.short} · ${esc(X.name)}</b><p>${p===8?"Become a Colorado notary: qualifications and the exam, acknowledgments, jurats, copy certifications, ID rules, the stamp and journal, fees, prohibited acts, and electronic and remote notarization.":p===7?"ITINs and Form W-7 for a Certifying Acceptance Agent: program rules, the 13 documents, the Certificate of Accuracy, exceptions, records and compliance.":p===5?"Investment adviser representative exam: economics, investment vehicles, client strategies, and securities law and ethics.":p===9?"U.S. Customs Broker license exam (CBLE): broker rules (19 CFR Part 111), entry and release, classification (HTSUS), valuation, duties, drawback, trade programs and penalties.":"Social Security disability representation: the programs, the five-step evaluation, evidence, appeals, fees and conduct."}</p><span class="sbar"><i style="width:${Math.round(ps.readyX)}%"></i></span><em>${Math.round(ps.readyX)}% ready · ${n.filter(i=>i.t==="f").length} flashcards · ${n.filter(i=>i.t==="q").length} questions</em></button>`}).join("")}
   </div><div class="statusline" style="margin-top:14px">${BUILD}${HOSTED?` · <button class="linkbtn" id="updcheck">Check for update</button>${updMsg?" · "+esc(updMsg):""}`:""}</div>
   ${updateReady?`<div class="ledger" style="border:2px solid var(--accent);margin-top:10px"><b>A newer version is ready: ${esc(updateReady)}.</b><div class="row"><button class="btn pri" id="updnow" ${updating?"disabled":""}>${updating?"Updating…":"Update now"}</button></div></div>`:""}</section>`}
 function render(){if(typeof KLOCK==="function"&&KLOCK())view="kids";document.body.classList.toggle("kidsmode",view==="kids");document.body.classList.toggle("onstart",view==="start");if(view==="kids")return renderKids();renderTabs();if(view==="start")return renderStart();if(typeof extraView==="function"&&extraView())return;if(view==="labs")return renderLabs();if(view==="qbo")return renderQbo();if(view==="taxsim")return renderTax();if(view==="w7")return renderW7();if(view==="lessons")return renderLessons();if(view==="audio")return renderAudio();if(view==="session")return renderSession();if(view==="results")return renderResults();renderHome()}

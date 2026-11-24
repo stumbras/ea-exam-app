@@ -870,7 +870,7 @@ function kBeeCheck(){const Q=kCurQ(),inp=$("#kbeein");if(!Q||Q.kind!=="bee"||!in
   const k=KS(),vv=kNatural(k)?k.voice:"max",ids=[ok?kRecId("Correct!",vv):null,kRecId(Q.word,vv),...[...Q.word].map(ch=>kRecId(ch.toUpperCase(),vv)),kRecId(Q.word,vv)];
   setTimeout(()=>{if(k.voice!=="off"&&ids.slice(1).every(Boolean))kPlayRec(ids.filter(Boolean),vv,()=>kSpeak(`${Q.word}. ${[...Q.word].join(", ")}. ${Q.word}.`,{read:true,force:true,rate:.85,seq:1}));else kSpeak(`${ok?"Correct! ":""}${Q.word}. ${[...Q.word].join(", ")}. ${Q.word}.`,{read:true,force:true,rate:.85,seq:1})},ok?700:200);return ok}
 function kidsClick(b){const d=b.dataset;try{if(kGate(d)){render();return true}kPlayMark(d);kPathNudge(d)}catch(_){}
-  if(b.id==="kidsbtn"){KV={scr:"home"};view="kids";render();window.scrollTo(0,0);return true}
+  if(b.id==="kidsbtn"){kidsGive();return true}
   if(view!=="kids")return false;kLastAct=Date.now();const k=KS(),g=KV,go=(o,top=true)=>{KV=o;render();if(top)window.scrollTo(0,0);return true},top=()=>{render();window.scrollTo(0,0);return true};
   if(k.music&&!kMus)kMusicStart();if(!kGreeted&&k.setup&&k.name){kGreeted=true;kLine(`Welcome back, ${k.name}!`,0)}
   if(d.kav!==undefined){KV.av=+d.kav;document.querySelectorAll(".kavb").forEach(x=>x.classList.toggle("on",x===b));const big=$("#kavbig");if(big)big.textContent=KAV[KV.av];kBeep("click");return true}
@@ -1454,3 +1454,26 @@ function kGateStep(D,dt,lx,carY,SP){if(SP||D.over)return;D.gT=(D.gT==null?12:D.g
   if(D.gate.y>carY+120)D.gate=null;D.gateMsgT=Math.max(0,(D.gateMsgT||0)-dt)}
 function kGateDraw(c,D,lx,LW,W){const G=D.gate;c.fillStyle="rgba(5,8,24,.85)";c.fillRect(0,G.y-64,W,26);c.fillStyle="#ffd23f";c.font="900 15px system-ui";c.textAlign="center";c.fillText(`🧠 ${G.q} = ?`,W/2,G.y-51);
   G.opts.forEach((v,i)=>{const x=lx(i);c.fillStyle=G.done?(v===G.a?"#2ec27e":"#6b7280"):G.hinted&&v===G.a?"#2ec27e":"#3fb6ff";c.beginPath();c.roundRect(x-LW/2+5,G.y-32,LW-10,34,8);c.fill();c.fillStyle="#fff";c.font="900 18px system-ui";c.fillText(v,x,G.y-14)})}
+
+/* Kids button on the adult home: hand the separate Kids app to a child instead of opening it inside the adult app */
+function kidsGive(){const U="https://study.solvinglifewith.com/kids/";let o=document.getElementById("kgive");if(o)o.remove();
+  o=document.createElement("div");o.id="kgive";o.style.cssText="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px";
+  o.innerHTML=`<div style="background:#fff;color:#111;border-radius:18px;max-width:420px;width:100%;padding:18px;font:15px/1.45 system-ui,sans-serif;max-height:90vh;overflow:auto">
+  <div style="font:900 20px system-ui">🚀 Becoming Genius · Kids app</div>
+  <p style="margin:8px 0"><b>Give this app to your kids and let them test it!</b> Free learning games: math, reading, space, flying, chess and more. It is its own separate app, so your exam progress stays yours.</p>
+  <p style="margin:8px 0;word-break:break-all"><b>Kids link:</b> <a href="${U}" target="_blank" rel="noopener">${U}</a></p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+   <button type="button" id="kgshare" style="flex:1;padding:12px;border:0;border-radius:12px;background:#d10000;color:#fff;font-weight:800">Send link</button>
+   <button type="button" id="kgcopy" style="flex:1;padding:12px;border:0;border-radius:12px;background:#1e3a8a;color:#fff;font-weight:800">Copy link</button></div>
+  <div style="font-weight:800;margin-top:6px">Install it on your kid's phone or tablet</div>
+  <ul style="margin:6px 0 10px 18px;padding:0">
+   <li><b>iPhone/iPad:</b> open the link in Safari → Share → Add to Home Screen → Add.</li>
+   <li><b>Android:</b> open it in Chrome → ⋮ → Install app (or Add to Home screen).</li>
+   <li>Opened inside Messenger or Facebook? Tap ••• → Open in Safari/Chrome first.</li></ul>
+  <div style="display:flex;gap:8px"><a href="${U}" target="_blank" rel="noopener" style="flex:1;text-align:center;padding:12px;border-radius:12px;background:#eef;color:#1e3a8a;font-weight:800;text-decoration:none">Try it here</a>
+   <button type="button" id="kgclose" style="flex:1;padding:12px;border:0;border-radius:12px;background:#ddd;font-weight:800">Close</button></div></div>`;
+  document.body.appendChild(o);
+  o.addEventListener("click",e=>{if(e.target===o||e.target.id==="kgclose")o.remove()});
+  const msg="Free learning games for kids from Solving Life LLC: "+U;
+  o.querySelector("#kgshare").onclick=()=>{if(navigator.share)navigator.share({title:"Becoming Genius",text:"Free learning games for kids",url:U}).catch(()=>{});else location.href="sms:?&body="+encodeURIComponent(msg)};
+  o.querySelector("#kgcopy").onclick=e=>{try{navigator.clipboard.writeText(U);e.target.textContent="Copied ✓"}catch(_){prompt("Copy this link:",U)}};}
