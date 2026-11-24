@@ -102,7 +102,7 @@ function acWall(kind){let w=document.getElementById("acwall");if(!kind){if(w)w.r
   :`<div style="max-width:440px;text-align:center;font:16px/1.5 system-ui,sans-serif">
     <div style="font-size:44px">⏰</div><h2 style="font-size:26px;margin:6px 0">Your free hour is done</h2>
     <p>Hope it helped! Get full access to every Solving Life exam app (EA, Series 65, EDPNA and Customs Broker), always updated, with your progress kept.</p>
-    <a href="${AC_BUY}" target="_blank" rel="noopener" style="display:inline-block;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;text-decoration:none;margin-top:8px">Get full access: $49 for all 4 apps</a>
+    <a href="${AC_BUY}" target="_blank" rel="noopener" style="display:inline-block;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;text-decoration:none;margin-top:8px">Get full access: $49 for all 5 apps</a>
     <p style="font-size:14px;margin:8px 0 0;opacity:.9">Pay with the same email you signed in with (<b>${esc(cs&&cs.email||"")}</b>). Access opens in about a minute: come back and tap "I already paid".</p>
     <p style="margin:14px 0 0;display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><input id="accode" placeholder="Have a code?" style="border:0;border-radius:999px;padding:10px 14px;font:600 15px system-ui;width:150px;text-transform:uppercase"><button id="acapply" style="border:0;border-radius:999px;padding:10px 14px;font:700 15px system-ui;background:#fff;color:#0f2e47">Apply</button></p>
     <p style="margin:10px 0 0"><button id="acre" style="background:none;border:1px solid #fff8;color:#fff;border-radius:999px;padding:9px 14px;font:600 14px system-ui">I already paid: check again</button></p>
