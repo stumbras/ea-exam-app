@@ -683,7 +683,7 @@ body.course .top .logo{background:#fff!important;color:#0f7a3d!important}
 .kcov.st0 b{filter:grayscale(1);opacity:.5}.kcov.st1{border:1px solid #eab308;background:rgba(234,179,8,.12)}.kcov.st2{border:1px solid #22c55e;background:rgba(34,197,94,.15)}
 .kplanrow{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0 0}.kplan{display:flex;align-items:center;gap:6px;padding:8px;border-radius:14px;background:rgba(255,255,255,.08);font-size:12px;font-weight:800;line-height:1.2}
 .kplan b{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.18);font-size:12px}
-.kplan.done{background:rgba(34,197,94,.22)}.kplan.done b{background:#22c55e}.kplan.now{background:linear-gradient(135deg,#f59e0b,#ef4444);box-shadow:0 0 0 2px #fde047}.kplan.now b{background:#fff;color:#be185d}.kplan.lock{opacity:.5}
+.kplan.done{background:rgba(34,197,94,.22)}.kplan.done b{background:#22c55e}.kplan.now{background:linear-gradient(135deg,#f59e0b,#ef4444);box-shadow:0 0 0 2px #fde047}.kplan.now b{background:#fff;color:#be185d}.kplan.lock{opacity:.5}.kplan span{hyphens:none;overflow-wrap:normal;min-width:0}.kplan span i{font-style:normal}@media(max-width:430px){.kplan{flex-direction:column;gap:3px;text-align:center;padding:7px 4px;font-size:11.5px}.kplan b{width:20px;height:20px;font-size:11px}.kplan span i{display:block;font-size:17px;margin-bottom:1px}}
 /* ---- Desktop Lab ---- */
 .kgui{position:relative;height:460px;border-radius:16px;overflow:hidden;margin:8px 0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#111;user-select:none}
 .kgui.os-win{background:radial-gradient(120% 80% at 30% 20%,#7cc4ff,#1e5fbf 60%,#0b2e6b)}.kgui.os-mac{background:linear-gradient(160deg,#f6a96b,#c36bd6 45%,#3a3f9e)}.kgui.os-mint{background:linear-gradient(160deg,#87c66b,#3f7d4a 60%,#1d3b2a)}
@@ -12280,6 +12280,27 @@ function kCtCrashTop(c,D,dt){const C=D.cr,me=D.me;if(!C||!C.me||D.foot||D.air)re
   c.restore();if(n>=5&&Math.random()<dt*20)C.p.push({k:"flame",x:me.x+Math.sin(me.a)*16,y:me.y-Math.cos(me.a)*16,vx:-me.vx*.2,vy:-me.vy*.2-20,life:.5,t:0,r:6});
   if(n>=4&&!C.warned){C.warned=1;kCtSay("🔥 Your car is smoking! Drive to the 🎨 Spray Shop to fix it.",3)}if(n<4)C.warned=0}
 
+/* ---------- 🏁 Brick Bay drifting: skid marks on sharp fast turns, tire smoke, drift combos pay city cash, "Drift King" trophy ---------- */
+function kDrInit(D){if(!D.dr)D.dr={m:[],cur:0,best:0,tot:0,last:null,cool:0}}
+function kDrStep(D,dt,sp){kDrInit(D);const R=D.dr,me=D.me;R.cool=Math.max(0,R.cool-dt);
+  for(const m of R.m)m.t+=dt;if(R.m.length&&R.m[0].t>9)R.m=R.m.filter(m=>m.t<9);
+  if(D.air||D.foot||(me.jump>0)){R.cur=0;R.last=null;return}
+  const lat=Math.abs(me.vx*Math.cos(me.a)+me.vy*Math.sin(me.a)),drifting=sp>110&&lat>70;
+  if(drifting){R.cur+=dt;const px=Math.cos(me.a)*9,py=Math.sin(me.a)*9,bx=me.x-Math.sin(me.a)*12,by=me.y+Math.cos(me.a)*12,pt=[bx-px,by-py,bx+px,by+py];
+    if(R.last)R.m.push({a:R.last,b:pt,t:0});R.last=pt;if(R.m.length>500)R.m.splice(0,R.m.length-500);
+    if(Math.random()<dt*18&&D.cr)D.cr.p.push({k:"smoke",x:bx,y:by,vx:(Math.random()-.5)*20,vy:(Math.random()-.5)*20,r:6+Math.random()*6,life:.9,t:0});
+    if(R.cur>.25&&Math.floor((R.cur-dt)*4)!==Math.floor(R.cur*4)&&Math.random()<.5)kBeep&&kBeep("tick")}
+  else{if(R.cur>.9&&!R.cool){const s=Math.round(R.cur*10)/10,pay=Math.min(60,Math.round(R.cur*8));D.money=(D.money||0)+pay;R.tot+=R.cur;R.best=Math.max(R.best,R.cur);R.cool=.6;
+      kCtFx({k:"txt",x:me.x,y:me.y-44,txt:`🏁 DRIFT ${s}s! +$${pay}${R.cur>=R.best&&R.cur>2?" · best!":""}`,big:R.cur>2?1:0,small:R.cur>2?0:1});
+      if(R.cur>2.5&&typeof kTrophy==="function")kTrophy("citydrift","🏁","Drift King!","Held a 2.5-second drift in Brick Bay City.");
+      if(R.tot>20&&typeof kTrophy==="function")kTrophy("citydrift20","🛞","Tire Smoke Legend","Drifted 20 seconds in total around Brick Bay.")}
+    R.cur=0;R.last=null}}
+function kDrDraw(c,D){const R=D.dr;if(!R||!R.m.length)return;c.save();c.lineCap="round";c.lineWidth=3.5;
+  for(const m of R.m){const al=Math.max(0,.55*(1-m.t/9));if(al<=0)continue;c.strokeStyle=`rgba(20,20,24,${al})`;c.beginPath();c.moveTo(m.a[0],m.a[1]);c.lineTo(m.b[0],m.b[1]);c.moveTo(m.a[2],m.a[3]);c.lineTo(m.b[2],m.b[3]);c.stroke()}
+  c.restore()}
+if(typeof kCtCrashStep==="function"){const _s=kCtCrashStep;kCtCrashStep=function(D,dt,sp){_s(D,dt,sp);try{kDrStep(D,dt,sp)}catch(_){}}}
+if(typeof kCtCrashDraw==="function"){const _d=kCtCrashDraw;kCtCrashDraw=function(c,D,dt){try{kDrDraw(c,D)}catch(_){}_d(c,D,dt)}}
+
 /* ---------- ✈️ Sky Pilot: kid-friendly 3D flight simulator (metric, four forces, takeoff, rings, landing, rocket watch, island hop) ---------- */
 const KFLYM=[
  {ic:"🛫",n:"First Takeoff",goal:"Climb to 100 m",lesson:"Wings make LIFT when air rushes over them. More speed = more lift. Push the THROTTLE to 100%, wait for 25 m/s (90 km/h), then pull UP gently.",start:"rw"},
@@ -14608,7 +14629,7 @@ function kWarmOpenLes(s){const [tr,i]=String(s).split(":"),ix=+i;if(!KLESS[tr]||
 function kPathDoneN(){try{const r=kRot(),P=kPath();return P.filter(id=>r.done[id]).length}catch(_){return 0}}
 function kMust(){const k=KS();if(k.guided===false)return null;const r=kRot(),P=kPath(),nx=P.find(id=>!r.done[id]);if(!nx)return null;const w=k.warm;if(w&&w.day===kToday()&&kPathDoneN()>(w.p0||0))return null;return nx}
 function kPlanStrip(){const k=KS();if(!k.setup)return "";const w=k.warm||{},wd=!kWarmNeeded(),m=kMust(),r=kRot(),P=kPath(),nx=P.find(id=>!r.done[id]),I=nx&&kPathInfo(nx),md=!m;
-  const step=(n,ic,t,st)=>`<div class="kplan ${st}"><b>${st==="done"?"✓":n}</b><span>${ic} ${t}</span></div>`;
+  const step=(n,ic,t,st)=>`<div class="kplan ${st}"><b>${st==="done"?"✓":n}</b><span><i>${ic}</i> ${t}</span></div>`;
   return `<div class="kplanrow">${step(1,"🌅","Warm-up",wd?"done":"now")}${step(2,"🧭",md?"Mission step":(I?esc(I.x[2]):"Mission step"),md?"done":wd?"now":"lock")}${step(3,"🎮","Your pick!",wd&&md?"now":"lock")}</div>`}
 
 /* ---------- computer login: the first time a game opens each session, answer one computer question ---------- */
@@ -23518,7 +23539,7 @@ async function csStart(){csChip();try{acDraw()}catch(_){}if(!cs)return;acCheck()
   try{const{st,j}=await csReq("/load");if(st!==200)return;if(csDecide(j.saved)==="pull")return csApply(j.saved.data);csLater(3000)}catch(_){}}
 function csKid(){const k=document.body.classList.contains("kidsmode");let b=document.getElementById("cskid");
   if(!k){if(b)b.remove();return}if(!b){b=document.createElement("button");b.id="cskid";b.style.cssText="position:fixed;left:10px;bottom:10px;z-index:50;border:0;border-radius:999px;padding:8px 12px;font:600 13px system-ui;background:rgba(255,255,255,.92);color:#123;box-shadow:0 4px 14px rgba(0,0,0,.25)";b.onclick=e=>{e.stopPropagation();csModal()};document.body.appendChild(b)}
-  b.textContent=cs?("☁️ Saved to "+(cs.email||"Google")):"🔐 Parents: sign in with Google";b.style.background=cs?"rgba(255,255,255,.92)":"#1a73e8";b.style.color=cs?"#123":"#fff";b.style.padding=cs?"8px 12px":"12px 16px";b.style.fontSize=cs?"13px":"15px"}
+  b.textContent=cs?("☁️ Saved"):"🔐 Parents: save progress";b.title=cs?("Saved to "+(cs.email||"Google")):"Sign in with Google to save progress";b.style.background=cs?"rgba(255,255,255,.85)":"#1a73e8";b.style.color=cs?"#123":"#fff";b.style.padding=cs?"6px 10px":"9px 13px";b.style.fontSize=cs?"12px":"13.5px";b.style.opacity=cs?".8":"1";document.body.style.paddingBottom="56px"}
 setTimeout(csStart,1200);setInterval(()=>{csChip();csKid()},3000);
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",csInit);else setTimeout(csInit,0);

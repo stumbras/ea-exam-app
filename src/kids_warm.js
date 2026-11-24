@@ -82,7 +82,7 @@ function kWarmOpenLes(s){const [tr,i]=String(s).split(":"),ix=+i;if(!KLESS[tr]||
 function kPathDoneN(){try{const r=kRot(),P=kPath();return P.filter(id=>r.done[id]).length}catch(_){return 0}}
 function kMust(){const k=KS();if(k.guided===false)return null;const r=kRot(),P=kPath(),nx=P.find(id=>!r.done[id]);if(!nx)return null;const w=k.warm;if(w&&w.day===kToday()&&kPathDoneN()>(w.p0||0))return null;return nx}
 function kPlanStrip(){const k=KS();if(!k.setup)return "";const w=k.warm||{},wd=!kWarmNeeded(),m=kMust(),r=kRot(),P=kPath(),nx=P.find(id=>!r.done[id]),I=nx&&kPathInfo(nx),md=!m;
-  const step=(n,ic,t,st)=>`<div class="kplan ${st}"><b>${st==="done"?"✓":n}</b><span>${ic} ${t}</span></div>`;
+  const step=(n,ic,t,st)=>`<div class="kplan ${st}"><b>${st==="done"?"✓":n}</b><span><i>${ic}</i> ${t}</span></div>`;
   return `<div class="kplanrow">${step(1,"🌅","Warm-up",wd?"done":"now")}${step(2,"🧭",md?"Mission step":(I?esc(I.x[2]):"Mission step"),md?"done":wd?"now":"lock")}${step(3,"🎮","Your pick!",wd&&md?"now":"lock")}</div>`}
 
 /* ---------- computer login: the first time a game opens each session, answer one computer question ---------- */
