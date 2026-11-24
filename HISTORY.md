@@ -1593,6 +1593,8 @@ finalize), weekly cron "7 2 * * 3" posts the first item of KV "xw" (youtube_queu
 New site (site_llc/make.py): schema.org AccountingService JSON-LD on index.html (no street address; sameAs all socials) and
 an X card in the social section.
 
+- 2026-11-23 Site update: Media: 4 amazing exams video
+- 2026-11-23 Social: daily Facebook Page video story with each day's Reel; facebook_post story option
 - 2026-11-23 Site update: Apps page: Buy one, get all four, Wix checkout button with automatic access
 - 2026-11-23 Sync server: automatic 12-month app access from paid Wix store orders (bundle product), hub field for the Wix API key, grants with end dates
 - 2026-11-23 Site update: New site: business structured data for Google and AI search, X link; history: listings and X setup
