@@ -1593,6 +1593,7 @@ finalize), weekly cron "7 2 * * 3" posts the first item of KV "xw" (youtube_queu
 New site (site_llc/make.py): schema.org AccountingService JSON-LD on index.html (no street address; sameAs all socials) and
 an X card in the social section.
 
+- 2026-11-23 Version: Force https so Google sign-in origin always matches
 - 2026-11-23 Version: Copies on github.io and other preview hosts redirect to study.solvinglifewith.com so Google sign-in works
 - 2026-11-23 Version: Kids app: clear Sign in with Google button for parents
 - 2026-11-23 Version: Install card with button, Kids button shares the separate Kids app, EA card names Enrolled Agent and IRS SEE, apps page explains buying and installing
