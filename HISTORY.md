@@ -1621,6 +1621,7 @@ EA card reads "EA · Enrolled Agent Exam (IRS SEE)" with "independent, not affil
 Deploying the sync worker: Workers Builds is not connected for it; patch the live script through the Cloudflare API
 (read /content/v2, apply text edits, check the SHA-256 against the repo file, PUT with keep_bindings, re-PUT schedules).
 
+- 2026-11-24 Site update: TikTok captions page for inbox drafts; admin Social tab links it
 - 2026-11-24 Site update: HISTORY: launch day notes (sign-in, payments, admin, brand)
 - 2026-11-24 Sync server: check Wix orders right away when a buyer without access opens the app
 - 2026-11-24 Version: Admin dashboard at /admin (Google or email-code sign-in for info@solvinglifewith.com), Admin links on solvinglifewith.com, 41 new Customs Broker cards and 26 practice questions

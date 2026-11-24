@@ -34,6 +34,7 @@ export default {
       if (p[0] === "s" && req.method === "GET" && !p[2]) return new Response(await setupPage(env, u.searchParams.get("msg")), { headers: H });
       if (p[0] === "s" && p[2] === "save" && req.method === "POST") return await save(req, env);
       if (p[0] === "s" && p[2] === "go" && p[3]) return await startAuth(p[3], env);
+      if (p[0] === "s" && p[2] === "tiktok") return new Response(await tiktokPage(env), { headers: H });
       if (p[0] === "s" && p[2] === "reddit") return new Response(await redditPage(env, req, p[3]), { headers: H });
       if (p[0] === "mcp") return await mcp(req, env);
       return new Response("Not found", { status: 404 });
@@ -208,6 +209,7 @@ async function crossPost(env) { // KV "xq": same items as the YouTube schedule; 
     const r = { at: new Date().toISOString(), title: a.title };
     if (a.no_facebook) r.facebook = "skipped"; else try { r.facebook = (await fbPost(env, { text, video_url: url, reel: true })).id; } catch (err) { r.facebook = "error: " + String(err.message).slice(0, 200); }
     if (!a.no_facebook) try { r.fb_story = (await fbPost(env, { video_url: url, story: true })).id; } catch (err) { r.fb_story = "error: " + String(err.message).slice(0, 200); }
+    r.caption = ttCaption(a); r.video_url = url;
     try { r.tiktok = (await ttDraft(env, { video_url: url })).publish_id; } catch (err) { r.tiktok = "error: " + String(err.message).slice(0, 200); }
     log.push(r);
   }
@@ -313,6 +315,20 @@ async function xPost(env, a) { // posts text (links removed: X charges more for 
 }
 // Reddit helper (Reddit's Data API needs manual approval): drafts in KV "rd" = [{id, sub, kind: "post"|"reply", title, text, thread, done}]
 // Page /s/<ADMIN>/reddit lists them; "Open in Reddit" opens the subreddit's submit form with title and text filled in.
+function ttCaption(a) { // TikTok inbox drafts carry no text, so each video gets a ready caption to paste (max 2200 characters)
+  const d = String(a.description || "").replace(/#\w+/g, "").split("\n").filter(l => l.trim() && !/^General info/.test(l)).join("\n").trim();
+  const tags = [...new Set((a.tags || []).map(t => "#" + String(t).replace(/[^A-Za-z0-9]/g, "")).filter(t => t.length > 2).concat(["#taxes", "#taxtips", "#moneytips", "#fyp"]))].slice(0, 8).join(" ");
+  return (a.title + "\n\n" + d + "\n\n" + tags).slice(0, 2200);
+}
+async function tiktokPage(env) {
+  const log = ((await kget(env, "xlog")) || []).filter(x => x.caption).slice(-7).reverse(), q = ((await kget(env, "xq")) || []).slice(0, 7);
+  const card = (h, cap, vid, i) => `<div class="c"><p class="h">${esc(h)}</p><textarea readonly id="c${i}">${esc(cap)}</textarea><p><button onclick="navigator.clipboard.writeText(document.getElementById('c${i}').value);this.textContent='Copied ✓'">Copy caption</button>${vid ? ` <a class="b" href="${esc(vid)}" target="_blank" rel="noopener">Download video</a>` : ""}</p></div>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>TikTok captions</title>
+<style>body{font:16px/1.45 system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;color:#0F1B2D}h1{font-size:24px}.c{border:1px solid #E4E8EE;border-radius:14px;padding:14px;margin:14px 0}.h{font-weight:700;color:#C2410C;margin:0 0 6px}textarea{width:100%;box-sizing:border-box;min-height:170px;font:15px/1.4 system-ui;border:1px solid #CBD2DC;border-radius:10px;padding:10px}button,.b{display:inline-block;font:700 15px system-ui;padding:10px 14px;border-radius:10px;border:0;background:#0F1B2D;color:#fff;text-decoration:none}.b{background:#0f766e}</style></head><body>
+<h1>TikTok captions</h1><p>TikTok inbox drafts arrive without text. Open the draft in TikTok, tap the caption box, paste the caption below, then Post. For a whole week at once: download the videos and schedule them in TikTok Studio on a computer.</p>
+<h2>Sent to your TikTok inbox</h2>${log.map((x, i) => card(x.at.slice(0, 10) + " · " + x.title, x.caption, x.video_url, "l" + i)).join("") || "<p>Nothing sent yet.</p>"}
+<h2>Coming next</h2>${q.map((a, i) => card(String(a.publish_at).slice(0, 10) + " · " + a.title, ttCaption(a), "", "q" + i)).join("")}</body></html>`;
+}
 async function redditPage(env, req, act) {
   let d = (await kget(env, "rd")) || [];
   if (act && act.startsWith("done-")) { const id = act.slice(5); d = d.map(x => x.id === id ? { ...x, done: Date.now() } : x); await kput(env, "rd", d); }
