@@ -1,5 +1,5 @@
 // Solving Life progress sync: Google sign-in (ID token) -> one saved copy of the study app progress per Google account.
-// Routes: GET /admin/me (Bearer token of an ADMINS account) -> dashboard data and the private hub link; POST /mail/start {email}, POST /mail/verify {email, code} (6-digit email code via Resend, KV mailkey/mailfrom; e:<email> maps an email to one account so Google and email sign-in share progress); POST /login {id_token} -> {token, email, saved:{upd, data}|null}; GET /load (Bearer token); POST /save (Bearer token) {upd, data}
+// Routes: POST /gsi (Google redirect sign-in form post; 303 to the app with #gsi=<one-time code>), POST /gsi/claim {code}; GET /admin/me (Bearer token of an ADMINS account) -> dashboard data and the private hub link; POST /mail/start {email}, POST /mail/verify {email, code} (6-digit email code via Resend, KV mailkey/mailfrom; e:<email> maps an email to one account so Google and email sign-in share progress); POST /login {id_token} -> {token, email, saved:{upd, data}|null}; GET /load (Bearer token); POST /save (Bearer token) {upd, data}
 // Storage: KV binding P, key "u:<google sub>" = {upd, data, email, at}. Session token = HMAC(SECRET) signed "sub.exp".
 // ACCESS: "g:<email>" = grant {at, note, until?} (full access to every exam app); "t:<sub>" = free-preview minutes used (ms);
 // "s:<sub>" = {email, name, first, last} sign-in index for the owner's hub. Kids app is always free (not checked here).
@@ -147,6 +147,22 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { headers: cors(req) });
     if (u.pathname.startsWith("/hub/")) { if (!env.ADMIN || u.pathname.split("/")[2] !== env.ADMIN) return new Response("Not found", { status: 404 }); return hub(req, env, u); }
     try {
+      if (u.pathname === "/gsi" && req.method === "POST") { // Google redirect sign-in (installed iPhone app, where pop-ups can't report back)
+        const f = await req.formData().catch(() => null), id_token = f && f.get("credential");
+        const r = await fetch("https://oauth2.googleapis.com/tokeninfo?id_token=" + encodeURIComponent(id_token || "")); const g = await r.json();
+        const back = "https://study.solvinglifewith.com/";
+        if (!r.ok || !CLIENT_IDS.includes(g.aud) || !["accounts.google.com", "https://accounts.google.com"].includes(g.iss) || +g.exp * 1000 < Date.now()) return Response.redirect(back + "#gsierr=1", 303);
+        const em = String(g.email || "").toLowerCase(), sub = em ? await subFor(env, em, g.sub) : g.sub;
+        const body = await (await signedIn(env, req, sub, em, g.given_name || g.name || "")).json();
+        const n = new Uint8Array(18); crypto.getRandomValues(n); const code = [...n].map(x => x.toString(16).padStart(2, "0")).join("");
+        await env.P.put("gsi:" + code, JSON.stringify(body), { expirationTtl: 300 });
+        return Response.redirect(back + "#gsi=" + code, 303);
+      }
+      if (u.pathname === "/gsi/claim" && req.method === "POST") {
+        const { code } = await req.json().catch(() => ({})); const k = "gsi:" + String(code || "").replace(/[^0-9a-f]/g, "");
+        const v = await env.P.get(k); if (!v) return J(req, { error: "That sign-in expired. Please try again." }, 401);
+        await env.P.delete(k); return J(req, JSON.parse(v));
+      }
       if (u.pathname === "/login" && req.method === "POST") {
         const { id_token } = await req.json();
         const r = await fetch("https://oauth2.googleapis.com/tokeninfo?id_token=" + encodeURIComponent(id_token || "")); const g = await r.json();
