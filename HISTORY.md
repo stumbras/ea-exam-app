@@ -1593,6 +1593,7 @@ finalize), weekly cron "7 2 * * 3" posts the first item of KV "xw" (youtube_queu
 New site (site_llc/make.py): schema.org AccountingService JSON-LD on index.html (no street address; sameAs all socials) and
 an X card in the social section.
 
+- 2026-11-23 Version: Kids app: clear Sign in with Google button for parents
 - 2026-11-23 Version: Install card with button, Kids button shares the separate Kids app, EA card names Enrolled Agent and IRS SEE, apps page explains buying and installing
 - 2026-11-23 Version: Customs Broker card: own color and description on the home screen
 - 2026-11-23 Social: Reddit helper page with prefilled post links and copy-ready replies (Reddit API needs manual approval)
