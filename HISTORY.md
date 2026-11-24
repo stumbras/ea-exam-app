@@ -1621,6 +1621,8 @@ EA card reads "EA · Enrolled Agent Exam (IRS SEE)" with "independent, not affil
 Deploying the sync worker: Workers Builds is not connected for it; patch the live script through the Cloudflare API
 (read /content/v2, apply text edits, check the SHA-256 against the repo file, PUT with keep_bindings, re-PUT schedules).
 
+- 2026-11-24 Version: Installed app: Google sign-in uses redirect mode (iPhone home-screen apps can't use the pop-up)
+- 2026-11-24 Sync server: Google redirect sign-in for installed iPhone apps (/gsi, /gsi/claim)
 - 2026-11-24 Version: Brick Bay: crash physics, cartoon explosions, toy-brick buildings crack and crumble (builders fix them), flying bricks, smoke, damaged cars fixed at the Spray Shop
 - 2026-11-24 Version: Home: CAA and Colorado Notary moved behind an EXTRA button
 - 2026-11-24 Version: Sign-in box: always light and readable in dark mode, Google button in English
