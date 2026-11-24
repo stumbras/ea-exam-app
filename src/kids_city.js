@@ -72,7 +72,7 @@ function kCtLoop(ts){const D=kCt,cv=$("#kcty");if(!D||KV.scr!=="city"||!cv){kDri
   if(!D.over&&!D.q&&!D.inside){D.t+=dt;D.tipT=Math.max(0,D.tipT-dt);D.boostCd=Math.max(0,D.boostCd-dt);D.hornCd=Math.max(0,D.hornCd-dt);D.arrowT=Math.max(0,D.arrowT-dt);if(me.boost>0)me.boost-=dt;
     let tx=null,ty=null,thr=0;if(D.foot){}else if(D.joy){const dx=D.joy.x-D.joy.ox,dy=D.joy.y-D.joy.oy,m=Math.hypot(dx,dy);if(D.joy.fixed||m>14||D.joy.drag){D.joy.drag=1;if(m>8){tx=me.x+dx*10;ty=me.y+dy*10;thr=Math.min(1,.35+m/60)}}else{tx=D.joy.ox+D.camX;ty=D.joy.oy+D.camY;thr=Math.hypot(tx-me.x,ty-me.y)>30?1:0}}
     else if(D.goT>0){D.goT-=dt;tx=D.gx;ty=D.gy;thr=Math.hypot(tx-me.x,ty-me.y)>30?1:(D.goT=0)}if(D.kL||D.kR){me.a+=(D.kR?1:-1)*3.4*dt;tx=null;thr=Math.max(thr,.5)}if(D.kU)thr=1;if(D.kD)thr=-.5;
-    if(me.jump>0){me.jump-=dt;thr=Math.max(thr,.8)}if(D.air)kCtJetStep(D,me,tx,ty,dt);else if(!D.foot)kDbDrive(me,tx,ty,thr,3.4,dt);else me.vx=me.vy=0;me.x+=me.vx*dt;me.y+=me.vy*dt;const sp=Math.hypot(me.vx,me.vy);if(typeof kCt4Step==="function")kCt4Step(D,dt);
+    if(me.jump>0){me.jump-=dt;thr=Math.max(thr,.8)}if(D.air)kCtJetStep(D,me,tx,ty,dt);else if(!D.foot)kDbDrive(me,tx,ty,thr,3.4,dt);else me.vx=me.vy=0;me.x+=me.vx*dt;me.y+=me.vy*dt;const sp=Math.hypot(me.vx,me.vy);if(typeof kCt4Step==="function")kCt4Step(D,dt);if(typeof kCtCrashStep==="function")kCtCrashStep(D,dt,sp);
     if(!(me.jump>0)&&!D.air){const hit=kCtSolid(me);if(hit>90){kBeep("crash");kVib(60);if(D.balloons){D.balloons--;kBeep("spark");kCtFx({k:"txt",x:me.x,y:me.y-30,txt:"💥🎈 POP!"})}}}
     if(me.x>30*T+12&&!(me.jump>0)&&!D.air){D.money=Math.max(0,D.money-10);kBeep("boom");kCtFx({k:"txt",x:me.x,y:me.y,txt:"💦 SPLASH! -$10"});kLine("Splash! Cars don't swim!",2);Object.assign(me,{x:kCtRc(3),y:me.y,vx:0,vy:0,a:0})}
     for(const o of D.tr){const v=[[0,-1],[1,0],[0,1],[-1,0]][o.d],near=Math.hypot(o.x-me.x,o.y-me.y)<70&&((me.x-o.x)*v[0]+(me.y-o.y)*v[1])>0,s=(typeof kCt4Stop==="function"&&kCt4Stop(D,o,v))?0:(near?20:o.sp),ox=o.x,oy=o.y;o.x+=v[0]*s*dt;o.y+=v[1]*s*dt;
@@ -107,7 +107,7 @@ function kCtDraw(cv,D,dt){const c=cv.getContext("2d"),W=cv.width,H=cv.height,T=K
   {const s=M.marks.spray;c.strokeStyle="rgba(255,105,180,.8)";c.lineWidth=3;c.beginPath();c.arc(s.x,s.y,26,0,7);c.stroke();c.font="18px serif";c.fillText("🎨",s.x,s.y)}
   c.font="22px serif";KCT.GEMS.forEach(([gx,gy],i)=>{if(!k.city.gems.includes(i))c.fillText("💎",gx*T+T/2,gy*T+T/2+Math.sin(D.t*4+i)*3)});
   for(const p of D.peds){const x=p.ax+(p.bx-p.ax)*p.u+(p.ox||0),y=p.ay+(p.by-p.ay)*p.u+(p.oy||0);kCtFig(c,x,y,p.col)}
-  if(typeof kCt4Draw==="function")kCt4Draw(c,D);for(const o of D.tr)kCtMini(c,o,26,46,o.col,o.sh);
+  if(typeof kCt4Draw==="function")kCt4Draw(c,D);if(typeof kCtCrashDraw==="function")kCtCrashDraw(c,D,dt);for(const o of D.tr)kCtMini(c,o,26,46,o.col,o.sh);
   for(const o of D.cops){kCtMini(c,o,28,48,"#f4f6ff","sedan");const fl=Math.floor(D.t*8)%2;c.fillStyle=fl?"#ff2a3a":"#2a6bff";c.fillRect(o.x-8,o.y-4,8,5);c.fillStyle=fl?"#2a6bff":"#ff2a3a";c.fillRect(o.x,o.y-4,8,5);c.font="14px serif";c.fillText(o.tag==="🍪"?"🍪👮":"👮",o.x,o.y-30)}
   if(D.bandit){const b=D.bandit;kCtMini(c,b,28,48,"#7a3fb5","suv");c.font="18px serif";c.fillText("🎂😈",b.x,b.y-32)}
   const js=me.jump>0?1+Math.sin(me.jump/1.1*Math.PI)*.45:1;if(me.jump>0){c.fillStyle="rgba(0,0,0,.3)";c.beginPath();c.ellipse(me.x+18*(js-1)*2,me.y+20*(js-1)*2,15,24,me.a,0,7);c.fill()}
