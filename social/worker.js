@@ -34,6 +34,7 @@ export default {
       if (p[0] === "s" && req.method === "GET" && !p[2]) return new Response(await setupPage(env, u.searchParams.get("msg")), { headers: H });
       if (p[0] === "s" && p[2] === "save" && req.method === "POST") return await save(req, env);
       if (p[0] === "s" && p[2] === "go" && p[3]) return await startAuth(p[3], env);
+      if (p[0] === "s" && p[2] === "reddit") return new Response(await redditPage(env, req, p[3]), { headers: H });
       if (p[0] === "mcp") return await mcp(req, env);
       return new Response("Not found", { status: 404 });
     } catch (e) {
@@ -225,6 +226,8 @@ async function ytQ(env, a) {
   if (a.action === "xw_replace") { await kput(env, "xw", a.items || []); return { xw: (a.items || []).length }; }
   if (a.action === "xw_get") return { xw: ((await kget(env, "xw")) || []).map(x => x.text.slice(0, 50)), log: ((await kget(env, "xwlog")) || []).slice(-10) };
   if (a.action === "xw_run") return xWeekly(env);
+  if (a.action === "rd_replace") { await kput(env, "rd", a.items || []); return { rd: (a.items || []).length, page: "/s/<ADMIN>/reddit" }; }
+  if (a.action === "rd_get") return { rd: (await kget(env, "rd")) || [] };
   if (a.action === "run") return ytQueue(env, Math.min(6, a.n || 1));
   let q = (await kget(env, "ytq")) || [];
   if (a.action === "append") q = q.concat(a.items || []); else if (a.action === "replace") q = a.items || [];
@@ -308,6 +311,24 @@ async function xPost(env, a) { // posts text (links removed: X charges more for 
   const p = await jfetch("https://api.x.com/2/tweets", { method: "POST", headers: { ...H2, "content-type": "application/json" }, body: JSON.stringify(body) });
   return { network: "x", id: p.data && p.data.id };
 }
+// Reddit helper (Reddit's Data API needs manual approval): drafts in KV "rd" = [{id, sub, kind: "post"|"reply", title, text, thread, done}]
+// Page /s/<ADMIN>/reddit lists them; "Open in Reddit" opens the subreddit's submit form with title and text filled in.
+async function redditPage(env, req, act) {
+  let d = (await kget(env, "rd")) || [];
+  if (act && act.startsWith("done-")) { const id = act.slice(5); d = d.map(x => x.id === id ? { ...x, done: Date.now() } : x); await kput(env, "rd", d); }
+  const card = x => {
+    const sub = String(x.sub || "").replace(/^r\//, ""), sub_u = encodeURIComponent(sub);
+    const open = x.kind === "post" ? `https://www.reddit.com/r/${sub_u}/submit?type=TEXT&title=${encodeURIComponent(x.title || "")}&text=${encodeURIComponent(x.text || "")}` : (x.thread || `https://www.reddit.com/r/${sub_u}/search/?q=${encodeURIComponent(x.search || "")}&sort=new`);
+    return `<div class="c${x.done ? " d" : ""}"><p class="h">${x.kind === "post" ? "POST" : "REPLY"} · r/${esc(sub)}${x.done ? " · done" : ""}</p>${x.title ? `<h3>${esc(x.title)}</h3>` : ""}${x.search ? `<p class="s">Find a thread: search “${esc(x.search)}”</p>` : ""}
+<textarea readonly id="t${esc(x.id)}">${esc(x.text || "")}</textarea>
+<p><button onclick="navigator.clipboard.writeText(document.getElementById('t${esc(x.id)}').value);this.textContent='Copied ✓'">Copy text</button> <a class="b" href="${esc(open)}" target="_blank" rel="noopener">${x.kind === "post" ? "Open in Reddit (filled in)" : "Open Reddit"}</a> ${x.done ? "" : `<a class="b g" href="/s/${env.ADMIN}/reddit/done-${esc(x.id)}">Mark done</a>`}</p></div>`;
+  };
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Reddit helper</title>
+<style>body{font:16px/1.45 system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;color:#0F1B2D}h1{font-size:24px}.c{border:1px solid #E4E8EE;border-radius:14px;padding:14px;margin:14px 0}.d{opacity:.5}.h{font-weight:700;color:#C2410C;margin:0}.s{color:#555}textarea{width:100%;box-sizing:border-box;min-height:150px;font:15px/1.4 system-ui;border:1px solid #CBD2DC;border-radius:10px;padding:10px}button,.b{display:inline-block;background:#FF4500;color:#fff;border:0;border-radius:10px;padding:10px 14px;font-weight:700;text-decoration:none;font-size:15px;margin:4px 4px 0 0}.g{background:#556}</style></head><body>
+<h1>Reddit helper · u/SolvingLifeLLC</h1><p>Claude writes these to follow each group's rules. Replies: open Reddit, find a matching recent question, paste. Posts: “Open in Reddit” fills in the title and text; check the group's rules, then tap Post.</p>
+${d.filter(x => !x.done).map(card).join("") || "<p>No drafts waiting. Ask Claude for this week's Reddit drafts.</p>"}
+${d.some(x => x.done) ? "<h2>Done</h2>" + d.filter(x => x.done).slice(-10).map(card).join("") : ""}</body></html>`;
+}
 async function status(env) {
   const o = {}; for (const n of ["facebook", "instagram", "google", "tiktok", "x"]) { let t = await kget(env, "tok:" + n); if (!t && n === "instagram") { const fb = await kget(env, "tok:facebook"), p = fb && fb.pages && fb.pages.find(x => x.ig); if (p) t = { username: "linked to the " + p.name + " Page" }; } o[n === "google" ? "youtube" : n] = t ? (n === "facebook" ? { pages: t.pages.map(x => x.name) } : n === "instagram" ? { username: t.username } : n === "google" ? { channel: t.channel } : n === "x" ? { username: t.username } : { name: t.name }) : "not connected"; }
   return o;
@@ -321,7 +342,7 @@ const TOOLS = [
   { name: "youtube_upload", description: "Upload a video (public https MP4 URL) to the Solving Life YouTube channel. Vertical videos under 3 minutes become Shorts. privacy: public, unlisted or private.", inputSchema: { type: "object", properties: { video_url: { type: "string" }, title: { type: "string" }, description: { type: "string" }, tags: { type: "array", items: { type: "string" } }, privacy: { type: "string", enum: ["public", "unlisted", "private"] }, publish_at: { type: "string", description: "Schedule: ISO time when the video goes public (it stays private until then)" }, playlist_id: { type: "string", description: "Add the video to this playlist" }, drive_id: { type: "string", description: "Google Drive file id of the video (instead of video_url)" } }, required: ["title"] } },
   { name: "drive_video_link", description: "Make a public read-only link (for facebook_post / tiktok_send_to_app video_url) to one video in the Solving Life Google Drive.", inputSchema: { type: "object", properties: { drive_id: { type: "string" } }, required: ["drive_id"] } },
   { name: "youtube_api", description: "Manage the Solving Life YouTube channel through YouTube Data API v3: list/create/update playlists, add videos to playlists (playlistItems), update video titles/descriptions/tags (videos, part=snippet), update channel branding (channels, part=brandingSettings), list uploads (search with forMine=true). Give resource, method, query (e.g. part, mine, id) and body.", inputSchema: { type: "object", properties: { resource: { type: "string" }, method: { type: "string", enum: ["GET", "POST", "PUT", "DELETE"] }, query: { type: "object" }, body: { type: "object" } }, required: ["resource"] } },
-  { name: "youtube_queue", description: "Daily auto-upload queue for YouTube (5 a day). action: get (queue + recent log), append (items: youtube_upload argument objects with drive_id or video_url, title, description, tags, playlist_id, publish_at), replace (items), run (upload n now).", inputSchema: { type: "object", properties: { action: { type: "string", enum: ["get", "append", "replace", "run", "xq_get", "xq_replace", "xw_get", "xw_replace", "xw_run"] }, items: { type: "array", items: { type: "object" } }, n: { type: "number" } }, required: ["action"] } },
+  { name: "youtube_queue", description: "Daily auto-upload queue for YouTube (5 a day). action: get (queue + recent log), append (items: youtube_upload argument objects with drive_id or video_url, title, description, tags, playlist_id, publish_at), replace (items), run (upload n now).", inputSchema: { type: "object", properties: { action: { type: "string", enum: ["get", "append", "replace", "run", "xq_get", "xq_replace", "xw_get", "xw_replace", "xw_run", "rd_get", "rd_replace"] }, items: { type: "array", items: { type: "object" } }, n: { type: "number" } }, required: ["action"] } },
   { name: "x_post", description: "Post to the Solving Life X (Twitter) account: text up to 280 characters (links are removed to keep cost low) and an optional public https MP4 video_url.", inputSchema: { type: "object", properties: { text: { type: "string" }, video_url: { type: "string" } }, required: ["text"] } },
   { name: "tiktok_send_to_app", description: "Send a video (public https MP4 URL) to the Solving Life TikTok app's inbox as a draft; the owner finishes and posts it in the TikTok app.", inputSchema: { type: "object", properties: { video_url: { type: "string" } }, required: ["video_url"] } }
 ];
