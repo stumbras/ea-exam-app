@@ -42,6 +42,7 @@ export default {
   },
   async scheduled(e, env) {
     if (e && e.cron === "21 9 * * *") return ytQueue(env, 5);
+    if (e && e.cron === "7 2 * * 3") return xWeekly(env); // weekly X post (paid per post, so once a week)
     if (e && e.cron === "3 1 * * *") return crossPost(env); // when each YouTube video goes public: Facebook Reel + TikTok draft // daily: upload the next scheduled YouTube videos (API quota ~6 uploads/day)
     // weekly: keep the Instagram token fresh (it lasts 60 days)
     const ig = await kget(env, "tok:instagram"); if (!ig || !ig.access_token) return;
@@ -200,14 +201,23 @@ async function crossPost(env) { // KV "xq": same items as the YouTube schedule; 
     const r = { at: new Date().toISOString(), title: a.title };
     if (a.no_facebook) r.facebook = "skipped"; else try { r.facebook = (await fbPost(env, { text, video_url: url, reel: true })).id; } catch (err) { r.facebook = "error: " + String(err.message).slice(0, 200); }
     try { r.tiktok = (await ttDraft(env, { video_url: url })).publish_id; } catch (err) { r.tiktok = "error: " + String(err.message).slice(0, 200); }
-    if (await kget(env, "tok:x")) try { r.x = (await xPost(env, { text, video_url: url })).id; } catch (err) { r.x = "error: " + String(err.message).slice(0, 200); }
     log.push(r);
   }
   await kput(env, "xq", keep); await kput(env, "xlog", log.slice(-200)); return { left: keep.length };
 }
+async function xWeekly(env) { // KV "xw": list of weekly X posts {text, video_url?}; posts the first one, logs to "xwlog"
+  if (!(await kget(env, "tok:x"))) return { skipped: "X not connected" };
+  const q = (await kget(env, "xw")) || [], log = (await kget(env, "xwlog")) || []; if (!q.length) return { left: 0 };
+  const a = q.shift(), r = { at: new Date().toISOString(), text: a.text.slice(0, 60) };
+  try { r.id = (await xPost(env, a)).id; } catch (err) { r.error = String(err.message).slice(0, 200); q.unshift(a); }
+  await kput(env, "xw", q); await kput(env, "xwlog", log.concat(r).slice(-100)); return r;
+}
 async function ytQ(env, a) {
   if (a.action === "xq_replace") { await kput(env, "xq", a.items || []); return { xq: (a.items || []).length }; }
   if (a.action === "xq_get") return { xq: ((await kget(env, "xq")) || []).length, log: ((await kget(env, "xlog")) || []).slice(-15) };
+  if (a.action === "xw_replace") { await kput(env, "xw", a.items || []); return { xw: (a.items || []).length }; }
+  if (a.action === "xw_get") return { xw: ((await kget(env, "xw")) || []).map(x => x.text.slice(0, 50)), log: ((await kget(env, "xwlog")) || []).slice(-10) };
+  if (a.action === "xw_run") return xWeekly(env);
   if (a.action === "run") return ytQueue(env, Math.min(6, a.n || 1));
   let q = (await kget(env, "ytq")) || [];
   if (a.action === "append") q = q.concat(a.items || []); else if (a.action === "replace") q = a.items || [];
@@ -304,7 +314,7 @@ const TOOLS = [
   { name: "youtube_upload", description: "Upload a video (public https MP4 URL) to the Solving Life YouTube channel. Vertical videos under 3 minutes become Shorts. privacy: public, unlisted or private.", inputSchema: { type: "object", properties: { video_url: { type: "string" }, title: { type: "string" }, description: { type: "string" }, tags: { type: "array", items: { type: "string" } }, privacy: { type: "string", enum: ["public", "unlisted", "private"] }, publish_at: { type: "string", description: "Schedule: ISO time when the video goes public (it stays private until then)" }, playlist_id: { type: "string", description: "Add the video to this playlist" }, drive_id: { type: "string", description: "Google Drive file id of the video (instead of video_url)" } }, required: ["title"] } },
   { name: "drive_video_link", description: "Make a public read-only link (for facebook_post / tiktok_send_to_app video_url) to one video in the Solving Life Google Drive.", inputSchema: { type: "object", properties: { drive_id: { type: "string" } }, required: ["drive_id"] } },
   { name: "youtube_api", description: "Manage the Solving Life YouTube channel through YouTube Data API v3: list/create/update playlists, add videos to playlists (playlistItems), update video titles/descriptions/tags (videos, part=snippet), update channel branding (channels, part=brandingSettings), list uploads (search with forMine=true). Give resource, method, query (e.g. part, mine, id) and body.", inputSchema: { type: "object", properties: { resource: { type: "string" }, method: { type: "string", enum: ["GET", "POST", "PUT", "DELETE"] }, query: { type: "object" }, body: { type: "object" } }, required: ["resource"] } },
-  { name: "youtube_queue", description: "Daily auto-upload queue for YouTube (5 a day). action: get (queue + recent log), append (items: youtube_upload argument objects with drive_id or video_url, title, description, tags, playlist_id, publish_at), replace (items), run (upload n now).", inputSchema: { type: "object", properties: { action: { type: "string", enum: ["get", "append", "replace", "run", "xq_get", "xq_replace"] }, items: { type: "array", items: { type: "object" } }, n: { type: "number" } }, required: ["action"] } },
+  { name: "youtube_queue", description: "Daily auto-upload queue for YouTube (5 a day). action: get (queue + recent log), append (items: youtube_upload argument objects with drive_id or video_url, title, description, tags, playlist_id, publish_at), replace (items), run (upload n now).", inputSchema: { type: "object", properties: { action: { type: "string", enum: ["get", "append", "replace", "run", "xq_get", "xq_replace", "xw_get", "xw_replace", "xw_run"] }, items: { type: "array", items: { type: "object" } }, n: { type: "number" } }, required: ["action"] } },
   { name: "x_post", description: "Post to the Solving Life X (Twitter) account: text up to 280 characters (links are removed to keep cost low) and an optional public https MP4 video_url.", inputSchema: { type: "object", properties: { text: { type: "string" }, video_url: { type: "string" } }, required: ["text"] } },
   { name: "tiktok_send_to_app", description: "Send a video (public https MP4 URL) to the Solving Life TikTok app's inbox as a draft; the owner finishes and posts it in the TikTok app.", inputSchema: { type: "object", properties: { video_url: { type: "string" } }, required: ["video_url"] } }
 ];
