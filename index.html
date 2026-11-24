@@ -25135,7 +25135,19 @@ function sayForms(t){
   const four=x=>x.replace(/(^|[^\d$,.])(\d{4})(?!\d|,\d|%|\.\d)/g,(m,pre,n,off,str)=>{const formy=/(?:Forms?|[Ss]ections?|§|Schedules?|Publications?|Pub\.?|Circular)\s*$/.test(str.slice(0,off+pre.length));return pre+((+n>=1950&&+n<=2060&&!formy)?n:formNum(n))});
   const three=x=>x.replace(/(^|[^\d$,.])(\d{3})(?!\d|,\d|%|\.\d)/g,(m,pre,n,off,str)=>{const formy=/(?:Forms?|[Ss]ections?|§|Publications?|Pub\.?|Circular|Letter)\s*$/.test(str.slice(0,off+pre.length)),unit=/^\s*(?:days?|hours?|miles?|months?|years?|payments?|weeks?|percent|full|or under|to \d)/.test(str.slice(off+m.length));return pre+((formy||(FORM3.test(n)&&!unit))?formNum(n):n)});
   return three(three(four(four(t))))}
-function sayable(t){t=sayForms(String(t));return t.replace(/\$(\d[\d,]*)–\$/g,"$$$1 to $").replace(/(\d)–(\d)/g,"$1 to $2").replace(/§\s*/g,"section ").replace(/≥/g," at least ").replace(/≤/g," at most ").replace(/→/g," then ").replace(/×/g," times ").replace(/÷/g," divided by ").replace(/\+/g," plus ").replace(/&/g," and ")
+/* numbers in words, so every voice reads "$100,000" as "one hundred thousand dollars", never "1 dollar…" */
+function numWords(n){n=Math.floor(n);if(n===0)return "zero";const O=["","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"],T=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+  const h=x=>{let r=[];if(x>=100){r.push(O[Math.floor(x/100)]+" hundred");x%=100}if(x>=20){r.push(T[Math.floor(x/10)]+(x%10?"-"+O[x%10]:""))}else if(x)r.push(O[x]);return r.join(" ")};
+  const S=[[1e12,"trillion"],[1e9,"billion"],[1e6,"million"],[1e3,"thousand"]];let out=[];for(const [v,w] of S){if(n>=v){out.push(h(Math.floor(n/v))+" "+w);n%=v}}if(n)out.push(h(n));return out.join(" ")}
+function sayNums(t){
+  const big={k:"thousand",K:"thousand",m:"million",M:"million",b:"billion",B:"billion",million:"million",billion:"billion",thousand:"thousand",trillion:"trillion"};
+  t=t.replace(/\$(\d+(?:\.\d+)?)\s?(trillion|billion|million|thousand|[KkMmBb])\b/g,(m,a,u)=>a+" "+big[u]+" dollars");
+  t=t.replace(/\$(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d{2}))?(?![\d.]*\d)/g,(m,d,c)=>{const v=+d.replace(/,/g,"");let w=numWords(v)+(v===1?" dollar":" dollars");if(c&&+c)w=(v?w+" and ":"")+numWords(+c)+(+c===1?" cent":" cents");return w});
+  t=t.replace(/(dollars?|cents?|thousand|million|billion)\s*[–—]\s*/g,"$1 to ").replace(/\s[−]\s/g," minus ").replace(/\s=\s/g," equals ");
+  t=t.replace(/(^|[^\d.])(\d{1,3}(?:,\d{3})+)(?![\d]|\.\d)/g,(m,pre,d)=>pre+numWords(+d.replace(/,/g,"")));
+  t=t.replace(/(\d)\.(\d)/g,"$1 point $2");
+  return t}
+function sayable(t){t=sayForms(sayNums(String(t)));return t.replace(/\$(\d[\d,]*)–\$/g,"$$$1 to $").replace(/(\d)–(\d)/g,"$1 to $2").replace(/§\s*/g,"section ").replace(/≥/g," at least ").replace(/≤/g," at most ").replace(/→/g," then ").replace(/×/g," times ").replace(/÷/g," divided by ").replace(/\+/g," plus ").replace(/&/g," and ")
   .replace(/\bMFJ\b/g,"married filing jointly").replace(/\bMFS\b/g,"married filing separately").replace(/\bHOH\b/g,"head of household").replace(/\bQSS\b/g,"qualifying surviving spouse").replace(/\bMAGI\b/g,"modified A G I").replace(/\bAGI\b/g,"A G I").replace(/\bFMV\b/g,"fair market value").replace(/\bSE tax\b/g,"self-employment tax")
   .replace(/e\.g\.,?/g,"for example").replace(/\bvs\.?\b/g,"versus").replace(/\//g," or ").replace(/[()“”"]/g,", ").replace(/\s+/g," ").replace(/ ,/g,",").trim()}
 function audQ(it){const f=it.f;if(/\?$/.test(f))return sayable(f);
@@ -25192,7 +25204,7 @@ function sayOne(text,rate){return new Promise((res,rej)=>{let done=false,started
     if(spent>=3000&&tries===1)fin(false,{nostart:true})},250);
   go()})}
 function chunks(text){const parts=text.match(/[^.!?;:]+[.!?;:]*\s*/g)||[text];const out=[];let cur="";for(const p of parts){if((cur+p).length>200&&cur){out.push(cur.trim());cur=p}else cur+=p}if(cur.trim())out.push(cur.trim());return out}
-async function say(text){const rate=aud?aud.rate:1;if(TTS)return TTS.speak(text.slice(0,1900),{rate,voice:S.set.cvoice||"buttery",language:"en"});
+async function say(text){const rate=aud?aud.rate:1;text=sayNums(String(text));if(TTS)return TTS.speak(text.slice(0,1900),{rate,voice:S.set.cvoice||"buttery",language:"en"});
   const a=aud;for(const c of chunks(text)){if(a&&(aud!==a||a.stop))return;if(a&&a.skip)throw{skip:true};if(a&&a.redo)throw{redo:true};await sayOne(c,rate)}
   if(a&&a.redo)throw{redo:true}}
 function voiceHtml(){const chip=(k,v,on,attr)=>`<button aria-pressed="${on}" ${attr}="${esc(k)}">${esc(v)}</button>`;
