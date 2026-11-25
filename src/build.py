@@ -1,5 +1,7 @@
-import sys
-s=open("app.html").read().replace("/*BUILD*/",sys.argv[1] if len(sys.argv)>1 else "dev")
+import sys, time
+# every build gets its own version id (never a fixed "dev"), or installed apps would never see that a new version exists
+VER=sys.argv[1] if len(sys.argv)>1 else time.strftime("Build %Y-%m-%d %H:%M:%S",time.gmtime())
+s=open("app.html").read().replace("/*BUILD*/",VER)
 # recorded audio: pwa/audio/meta.json maps fact id -> second where the answer starts (written by pack_audio.py)
 import os as _os,json as _json
 _am=_json.load(open("pwa/audio/meta.json")) if _os.path.exists("pwa/audio/meta.json") else {}
@@ -34,4 +36,4 @@ _e=json.load(open("pwa/manifest.webmanifest"));_e.update({"name":"Solving Life E
 _c=json.load(open("pwa/manifest.webmanifest"));_c.update({"name":"Foundation Course","short_name":"Foundation","description":"Bookkeeping, QuickBooks and taxes from zero to job-ready. Works offline.","start_url":"./?course","id":"./?course","background_color":"#0a5c33","theme_color":"#0f7a3d","icons":[{"src":"icon-course-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-course-512.png","sizes":"512x512","type":"image/png"},{"src":"icon-course-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]});open("pwa/manifest-course.webmanifest","w").write(json.dumps(_c,indent=1))
 open("pwa/sw.js","w").write(open("sw.src.js").read())
 open("pwa/.nojekyll","w").write("")
-open("pwa/version.json","w").write(json.dumps({"v":sys.argv[1] if len(sys.argv)>1 else "dev"}))
+open("pwa/version.json","w").write(json.dumps({"v":VER}))
