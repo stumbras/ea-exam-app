@@ -1644,6 +1644,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
 - Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
 
+- 2026-11-25 Version 2026-11-26m · Nov 26: Enrolled Agent story questions: wrong answers balanced
 - 2026-11-25 Version 2026-11-26l · Nov 26: Clearer explanations on 84 questions across the exam apps
 - 2026-11-25 Version 2026-11-26k · Nov 26: Enrolled Agent: about 460 questions fixed so the right answer no longer stands out by length
 - 2026-11-25 Version 2026-11-26j · Nov 26: Series 65: 220 questions fixed so the right answer no longer stands out by length
