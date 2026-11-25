@@ -1644,6 +1644,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
 - Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
 
+- 2026-11-25 Version 2026-11-26h · Nov 26: Notary and CAA: 38 questions get wrong answers as long as the right one
 - 2026-11-25 Version 2026-11-26g · Nov 26: Kids: learning questions before Orbit Lab and Roadster Thrusters launches (bonus fuel / air tank + extra life)
 - 2026-11-25 Version 2026-11-26f · Nov 26: Kids: Roadster Thrusters (flying Roadster, traffic hops, upside-down tunnels, tilt), Cybercab + Semi, Tesla traffic, Starman, rumble/flash effects
 - 2026-11-25 Version 2026-11-26e · Nov 26: Kids: new Orbit Lab — real orbital physics, Moon trip, encounter predictor, re-entry heat, parachute, time warp
