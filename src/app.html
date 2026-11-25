@@ -1707,7 +1707,7 @@ function sayWords(t){
   return t}
 function sayable(t){t=sayForms(sayNums(sayWords(String(t))));return t.replace(/\$(\d[\d,]*)–\$/g,"$$$1 to $").replace(/(\d)–(\d)/g,"$1 to $2").replace(/§\s*/g,"section ").replace(/≥/g," at least ").replace(/≤/g," at most ").replace(/→/g," then ").replace(/×/g," times ").replace(/÷/g," divided by ").replace(/\+/g," plus ").replace(/&/g," and ")
   .replace(/\bMFJ\b/g,"married filing jointly").replace(/\bMFS\b/g,"married filing separately").replace(/\bHOH\b/g,"head of household").replace(/\bQSS\b/g,"qualifying surviving spouse").replace(/\bMAGI\b/g,"modified A G I").replace(/\bAGI\b/g,"A G I").replace(/\bFMV\b/g,"fair market value").replace(/\bSE tax\b/g,"self-employment tax")
-  .replace(/e\.g\.,?/g,"for example").replace(/\bvs\.?\b/g,"versus").replace(/\//g," or ").replace(/[()“”"]/g,", ").replace(/\s+/g," ").replace(/ ,/g,",").replace(/,(?:\s*,)+/g,",").replace(/,\s*([.;:?!])/g,"$1").replace(/^[,\s]+|[,\s]+$/g,"").trim()}
+  .replace(/\b([A-Z]{2,6})(s?)\b/g,(m,w,pl)=>{const W={FICA:"fie-ka",FUTA:"few-ta",FATCA:"fat-ka",FBAR:"F bar",REIT:"reet",LIFO:"life-oh",FIFO:"fife-oh",MACRS:"makers",COGS:"cogs",UNICAP:"uni-cap",ITIN:"I-tin",PTIN:"P-tin",ATIN:"A-tin",EFIN:"E-fin",ETIN:"E-tin",SIMPLE:"simple",SEP:"sep",SALT:"salt",ABLE:"able",SHOP:"shop",PATH:"path",PIN:"pin",CAP:"cap",II:"two",III:"three",NOTE:"note",FINRA:"fin-ra",NASAA:"na-sa",ERISA:"eh-risa",EDGAR:"edgar",HIPAA:"hip-ah",COBRA:"cobra",TEFRA:"teff-ra",SECURE:"secure",CARES:"cares",OBBBA:"O B B B A"};return W[w]?W[w]+pl:w.split("").join(" ")+pl}).replace(/e\.g\.,?/g,"for example").replace(/\bvs\.?\b/g,"versus").replace(/\//g," or ").replace(/[()“”"]/g,", ").replace(/\s+/g," ").replace(/ ,/g,",").replace(/,(?:\s*,)+/g,",").replace(/,\s*([.;:?!])/g,"$1").replace(/^[,\s]+|[,\s]+$/g,"").trim()}
 function audQ(it){const f=it.f;if(/\?$/.test(f))return sayable(f);
   if(/^(?:FinCEN )?(Form|Schedule) [A-Za-z0-9-]+$/.test(f))return "What is "+sayable(f)+" used for?";
   if(/^[A-Z][A-Z0-9&\/ -]{1,7}$/.test(f))return "What does "+f.replace(/[^A-Z0-9]/g,"").split("").join(" ")+" mean?";
@@ -1840,7 +1840,7 @@ async function recDownload(){if(recDl&&recDl.on)return;const ids=Object.keys(REC
       recDl.done++;if(recDl.done%8===0){const el=document.getElementById("recdl");if(el)el.textContent="Saving audio… "+recDl.done+" of "+recDl.total}}};
     await Promise.all([one(),one(),one(),one()])}catch(e){recDl.fail=recDl.total}
   recDl.on=false;await recCount()}
-function openAudio(){aud={state:"setup",mins:10,src:"smart",scope:"part",gap:1,rate:1,rec:recOn()&&recHas(part)&&S.set.recv!==false};view="audio";render();window.scrollTo(0,0);if(recOn()&&recSaved===null)recCount()}
+function openAudio(){aud={state:"setup",mins:10,src:"smart",scope:"part",gap:1,rate:1,rec:recOn()&&recHas(part)&&S.set.recv2!==false};view="audio";render();window.scrollTo(0,0);if(recOn()&&recSaved===null)recCount()}
 async function startAudio(){const a=aud;a.queue=audQueue(a.scope,a.src,a.mins*8);if(!a.queue.length){a.msg="Nothing to review for this choice yet. Pick Smart mix or Random.";render();return}
   Object.assign(a,{state:"play",pos:0,heard:0,marked:0,start:Date.now(),end:Date.now()+a.mins*60000,paused:false,stop:false,phase:"q",msg:"",block:a.mins,marks:0,offer:0});
   try{navigator.wakeLock.request("screen").then(l=>{a.lock=l}).catch(()=>{})}catch(e){}
@@ -1864,7 +1864,7 @@ async function gate(a,ms,ph){a.phase=ph;renderAudio();const until=Date.now()+ms;
 function renderAudio(){if(view!=="audio"||!aud)return;const a=aud,chip=(k,v,cur,attr)=>`<button aria-pressed="${cur===k}" ${attr}="${k}">${v}</button>`;
   if(a.state==="setup"){$("#view").innerHTML=`<section class="section"><div class="sesshead"><h2>Audio review</h2><button class="btn ghost small" id="audback">Back</button></div>
     <div class="card"><div>${a.rec?"Hands-free review. For each fact you hear the question, 2 seconds to answer in your head, then the answer.":"Hands-free review for driving or the gym. For each fact you hear the question, a short pause to answer in your head, the answer, then the answer once more in short form."}</div>
-    ${recOn()&&recHas(part)?`<div><div class="small muted">Voice</div><div class="seg">${chip("1","Recorded voice · keeps playing in the background",a.rec?"1":"0","data-arec")}${chip("0","Phone voice",a.rec?"1":"0","data-arec")}</div></div>
+    ${recOn()&&recHas(part)?`<div><div class="small muted">Voice</div><div class="seg">${chip("1","Recorded voice · keeps playing in the background",a.rec?"1":"0","data-arec")}${chip("0","Phone voice · stops if you switch apps",a.rec?"1":"0","data-arec")}</div></div>
       ${a.rec?`<div class="notice"><b>Recorded voice.</b> Keeps playing when you switch apps or lock the phone, with play, pause and skip on the lock screen. Recorded so far: ${Object.keys(REC).filter(id=>BYID[id]&&BYID[id].p==part).length} of ${BANK.filter(i=>i.t==="f"&&i.p==part).length} ${pl(part)} facts.
         <div style="margin-top:6px">${recDl&&recDl.on?`<b id="recdl">Saving audio… ${recDl.done} of ${recDl.total}</b>`:recSaved!==null&&recSaved>=Object.keys(REC).length?`<b style="color:var(--good)">All audio is saved on this device. It works offline.</b>`:`<span id="recdl">${recSaved===null?"":recSaved+" of "+Object.keys(REC).length+" audio files are saved on this device. "}</span><button class="btn small" id="recget">Save all audio for offline use (${REC_MB} MB)</button>${recDl&&recDl.fail?`<div class="small" style="color:var(--warn)">${recDl.fail} files could not be saved. Check the internet and tap again.</div>`:""}`}</div></div>`:""}`:""}
     ${a.rec||canSpeak()?"":`<div class="small" style="color:var(--bad)">This browser has no speech voice. Try Chrome, Edge or Safari.</div>`}
@@ -1906,7 +1906,7 @@ function audioClick(b){const a=aud;if(!a)return false;
   if(b.dataset.adv){S.set.voice=b.dataset.adv;persist();render();return true}
   if(b.id==="audtest"){unlockSpeech();const line="Qualifying child age test. Under 19 at year end, or under 24 if a full-time student.";const ss=window.speechSynthesis;
     if(!TTS&&ss&&!ss.speaking&&!ss.pending){say(line).catch(()=>{})}else{hush();setTimeout(()=>say(line).catch(()=>{}),220)}return true}
-  if(b.dataset.arec){a.rec=b.dataset.arec==="1";S.set.recv=a.rec;persist();if(![10,20,30,60].includes(a.mins)||!a.rec)a.mins=10;render();return true}
+  if(b.dataset.arec){a.rec=b.dataset.arec==="1";S.set.recv2=a.rec;persist();if(![10,20,30,60].includes(a.mins)||!a.rec)a.mins=10;render();return true}
   if(b.id==="recget"){recDownload();return true}
   if(b.id==="audstart"){if(a.rec){startRec();return true}unlockSpeech();startAudio();return true}
   if(a.rec&&a.state==="play"){

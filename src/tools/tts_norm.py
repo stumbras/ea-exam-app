@@ -14,6 +14,49 @@ FORM3 = {"401", "403", "457", "529", "501", "230", "990", "941", "940", "944", "
 PREFIX = re.compile(r"(?:Forms?|[Ss]ections?|Schedules?|Publications?|Pub\.?|Circular|Notice|Letter|and|or|,)\s*$")
 
 
+O = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+     "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+T = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+
+def numwords(n):  # 126000 -> "one hundred twenty-six thousand" (same wording as the app's phone voice)
+    n = int(n)
+    if n == 0:
+        return "zero"
+    def h(x):
+        r = []
+        if x >= 100:
+            r.append(O[x // 100] + " hundred"); x %= 100
+        if x >= 20:
+            r.append(T[x // 10] + ("-" + O[x % 10] if x % 10 else ""))
+        elif x:
+            r.append(O[x])
+        return " ".join(r)
+    out = []
+    for v, w in ((10 ** 12, "trillion"), (10 ** 9, "billion"), (10 ** 6, "million"), (1000, "thousand")):
+        if n >= v:
+            out.append(h(n // v) + " " + w); n %= v
+    if n:
+        out.append(h(n))
+    return " ".join(out)
+
+
+BIG = {"k": "thousand", "K": "thousand", "m": "million", "M": "million", "b": "billion", "B": "billion"}
+
+
+def money(t):  # "$79,000" -> "seventy-nine thousand dollars", "$1.5 million" -> "1.5 million dollars", "$12.50" -> "twelve dollars and fifty cents"
+    t = re.sub(r"\$(\d+(?:\.\d+)?)\s?(trillion|billion|million|thousand|[KkMmBb])\b",
+               lambda m: m.group(1) + " " + BIG.get(m.group(2), m.group(2)) + " dollars", t)
+    def dol(m):
+        v = int(m.group(1).replace(",", ""))
+        w = numwords(v) + (" dollar" if v == 1 else " dollars")
+        c = m.group(2)
+        if c and int(c):
+            w = (w + " and " if v else "") + numwords(int(c)) + (" cent" if int(c) == 1 else " cents")
+        return w
+    return re.sub(r"\$(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d{2}))?(?![\d.]*\d)", dol, t)
+
+
 def pair(n):  # 1040 -> "10 40", 8606 -> "86 oh 6", 5500 -> "55 hundred", 709 -> "7 oh 9"
     a, b = n[:-2], n[-2:]
     if b == "00":
@@ -56,6 +99,8 @@ def spoken(t):
     t = re.sub(r"\bvs\.?(?=\s)", "versus", t)
     t = t.replace("§§", "sections ").replace("§", "section ")
     t = re.sub(r"\$(\d[\d,.]*)\s*[–-]\s*\$", r"$\1 to $", t)
+    t = money(t)
+    t = re.sub(r"(dollars?|cents?|thousand|million|billion)\s*[–—-]\s*", r"\1 to ", t)
     t = re.sub(r"(\d%?)\s*–\s*(\d)", r"\1 to \2", t)
     t = t.replace("–", ", ").replace("—", ", ").replace("…", ".")
     t = t.replace("≥", " at least ").replace("≤", " at most ").replace("→", " then ").replace("×", " times ")
