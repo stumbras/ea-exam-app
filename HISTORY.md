@@ -1644,6 +1644,10 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
 - Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
 
+- 2026-11-25 Version 2026-11-25i · Nov 25: SIE: 129 new questions and 17 study cards (pool doubled)
+- 2026-11-25 Allow cross-site reads of podcast media
+- 2026-11-25 Media: Free Series 65 Course episode 2
+- 2026-11-25 Media: Free EA Course episode 12
 - 2026-11-25 Version 2026-11-25h · Nov 25: Bonus podcast episode in app feeds
 - 2026-11-25 Bonus episode: why these exams are worth it
 - 2026-11-25 Version 2026-11-25g: In-app podcast: EA and Series 65 audio screens list the free course episodes with a player (feeds copied next to the app); links to YouTube and Spotify
