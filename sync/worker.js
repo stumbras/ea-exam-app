@@ -24,10 +24,11 @@ async function access(env, sub) {
 }
 // A buyer who just paid usually opens the app right away: when someone without full access checks in, look at Wix
 // orders again (at most once a minute) so the purchase unlocks in seconds instead of waiting for the 10-minute timer.
+let wixRunAt = 0;
 async function accessNow(env, sub) {
   let a = await access(env, sub); if (a.access === "full" || !(await env.P.get("wixkey"))) return a;
-  const last = +(await env.P.get("wixrun")) || 0; if (Date.now() - last < 60000) return a;
-  await env.P.put("wixrun", String(Date.now())); try { const r = await wixSync(env); if (r && r.granted) a = await access(env, sub); } catch (_) {}
+  if (Date.now() - wixRunAt < 60000) return a; // throttle kept in memory: a KV write per check-in used up the free daily write quota
+  wixRunAt = Date.now(); try { const r = await wixSync(env); if (r && r.granted) a = await access(env, sub); } catch (_) {}
   return a;
 }
 async function wixSync(env) {
@@ -35,7 +36,7 @@ async function wixSync(env) {
   const since = await env.P.get("wixlast") || new Date(Date.now() - 30 * 864e5).toISOString();
   const body = { search: { filter: { $and: [{ paymentStatus: { $eq: "PAID" } }, { updatedDate: { $gt: since } }, { "lineItems.catalogReference.catalogItemId": { $in: WIX_PRODUCTS } }] }, sort: [{ fieldName: "updatedDate", order: "ASC" }], cursorPaging: { limit: 100 } } };
   const r = await fetch("https://www.wixapis.com/ecom/v1/orders/search", { method: "POST", headers: { authorization: key, "wix-site-id": WIX_SITE, "content-type": "application/json" }, body: JSON.stringify(body) });
-  const j = await r.json().catch(() => ({})); if (!r.ok) { await env.P.put("wixerr", JSON.stringify({ at: Date.now(), status: r.status, msg: JSON.stringify(j).slice(0, 300) })); return { error: r.status }; }
+  const j = await r.json().catch(() => ({})); if (!r.ok) { const pe = await env.P.get("wixerr", "json"); if (!pe || pe.status !== r.status) await env.P.put("wixerr", JSON.stringify({ at: Date.now(), status: r.status, msg: JSON.stringify(j).slice(0, 300) })); return { error: r.status }; }
   let last = since, n = 0;
   for (const o of j.orders || []) {
     const email = String(o.buyerInfo && o.buyerInfo.email || "").trim().toLowerCase();
@@ -43,7 +44,7 @@ async function wixSync(env) {
       await env.P.put("g:" + email, JSON.stringify({ at: Date.now(), note: "Wix order #" + o.number, until: base + YEAR })); n++; }
     if (o.updatedDate > last) last = o.updatedDate;
   }
-  await env.P.put("wixlast", last); await env.P.delete("wixerr"); return { granted: n };
+  if (last !== since) await env.P.put("wixlast", last); if (await env.P.get("wixerr")) await env.P.delete("wixerr"); return { granted: n }; // write only on change: the 10-minute timer alone used ~290 of the 1,000 free daily writes
 }
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 async function hub(req, env, u) {

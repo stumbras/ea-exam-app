@@ -30,9 +30,9 @@ async function csPush(){if(!cs||csBusy)return;csBusy=true;try{S.upd=S.upd||Date.
   const{st,j}=await csReq("/save",{upd:S.upd,data:JSON.stringify(S)});
   if(st===409&&j.saved){if(csDecide(j.saved)==="pull")return csApply(j.saved.data);S.upd=Date.now();try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(_){}await csReq("/save",{upd:S.upd,data:JSON.stringify(S)})}
   if(st===200){cs.last=Date.now();csSave()}}catch(_){}finally{csBusy=false}}
-function csLater(ms){if(!cs)return;clearTimeout(csT);csT=setTimeout(csPush,ms||8000)}
+function csLater(ms){if(!cs)return;if(ms){clearTimeout(csT);csT=setTimeout(()=>{csT=0;csPush()},ms);return}if(csT)return;csT=setTimeout(()=>{csT=0;csPush()},60000)} // at most one cloud save a minute while studying (plus one when the app is closed or hidden)
 const _persist=window.persist;if(typeof _persist==="function")window.persist=function(){const r=_persist.apply(this,arguments);csLater();return r};
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"&&cs){clearTimeout(csT);csPush()}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"&&cs){clearTimeout(csT);csT=0;csPush()}});
 async function csOnCred(resp){csMsg="Checking your Google account…";csModal();
   try{const{st,j}=await csReq("/login",{id_token:resp.credential});if(st!==200||!j.token){csMsg=j.error||"Sign-in did not work. Please try again.";return csModal()}
     await csDone(j)}
@@ -118,7 +118,7 @@ function acDraw(){if(!AC_ON||acKids()){acWall(null);acBadge(false);return}const 
   if(st==="expired"){acBadge(false);acWall("expired");return}
   acWall(null);acBadge(st==="trial")}
 setInterval(()=>{if(cs&&cs.acc&&cs.acc.access==="trial"&&!acKids()&&document.visibilityState==="visible"&&Date.now()-acLast<120000)acPend+=15000},15000);
-setInterval(acTick,60000);setInterval(acDraw,4000);setInterval(acCheck,10*60000);
+setInterval(acTick,180000);setInterval(acDraw,4000);setInterval(acCheck,10*60000);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")acTick();else acCheck()});
 window.slAccess={check:acCheck,draw:acDraw};
 window.slCloudOpen=csModal;
