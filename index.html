@@ -24429,7 +24429,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 2026-11-25a · Nov 25";
+const BUILD="Version 2026-11-25b · Nov 25";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -25179,7 +25179,8 @@ function audQueue(scope,src,n){const t=today();S.au=S.au||{};const pool=BANK.fil
   const by=[[],[],[],[],[],[]];pool.forEach(i=>by[tier(i)].push(i));
   const dacc={};const da=i=>{const k=i.p+"-"+i.d;if(!(k in dacc)){const st=domStats(i.p,i.d),pr=prior(i.p,i.d);dacc[k]=st.n>=5?st.acc:(pr==null?0.5:pr)}return dacc[k]};
   const A=least(by[0].concat(by[1])),B=least(by[2].concat(by[3])),
-    C=shuffle(by[5]).sort((a,b)=>(fresh(b)-fresh(a))||heard(a)-heard(b)||da(a)-da(b)||ORDER[a.id]-ORDER[b.id]).concat(least(by[4])); // new facts: weakest domains first
+    rk=(()=>{const o={};by[5].forEach(i=>{o[i.id]=Math.pow(Math.random(),1/(1.6-da(i)))});return o})(), // random draw that favors weaker domains without always starting in the same one
+    C=by[5].slice().sort((a,b)=>(fresh(b)-fresh(a))||heard(a)-heard(b)||rk[b.id]-rk[a.id]).concat(least(by[4])); // new facts: mixed topics, weaker domains a bit more often
   // mix: about 40% misses and hardest, 30% due or still learning, 30% new or known; empty groups give their share to the others
   const q=[],take=(l,k)=>{while(k-->0&&l.length)q.push(l.shift())};take(A,Math.ceil(n*.4));take(B,Math.ceil(n*.3));take(C,n-q.length);
   for(const l of [A,B,C])take(l,n-q.length);

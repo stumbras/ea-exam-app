@@ -1638,6 +1638,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Tested: all 14 study modes open on an iPhone-size screen with no errors or sideways scrolling; full suite passes.
 - Round 2 (`sie_more.js`): +26 cards, +46 questions (market participants, bid/ask, rights/warrants, ADRs, bond types and ratings, money market, GNMA/MBS, NAV math, REITs, options intrinsic/time value, short sales, discretion, statements, ACATS, free-riding, gifts $300 under Rule 3220 from Mar 30, 2026, Reg S-P, 15c3-3, laws and arbitration). Totals: 61 cards, 90 questions.
 
+- 2026-11-24 Version 2026-11-25b: Audio smart mix: topics mixed randomly each time (weaker areas a bit more often) instead of always starting in the same section
 - 2026-11-24 Version 2026-11-25a: Fix: builds had a fixed version id, so installed apps never saw updates; every build now gets its own id
 - 2026-11-24 Version|App updates itself on the audio screen unless a review is playing: Allow updates on the audio setup screen; hold only while audio plays
 - 2026-11-24 Version|Audio: dollars and abbreviations read correctly; recorded voice (keeps playing in background) is now the default: Audio: speak dollar amounts as words, spell abbreviations letter by letter, default to background-capable recorded voice
