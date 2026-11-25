@@ -46,10 +46,10 @@ function kOrbPredict(D){const P=[],S={x:D.x,y:D.y,vx:D.vx,vy:D.vy,mAng:D.mAng};c
 function kOrbSim(D,dt){if(D.over)return;
   const el0=kOrbEl(D);if((D.thr&&D.fuel>0)||(el0.body==="earth"&&el0.alt<KORB.ATM)||(el0.body==="moon"&&el0.alt<30e3))D.warp=1;
   // steering: hold buttons, or SAS points the nose
-  if(D.l)D.ang-=KORB.ROT*dt;if(D.r)D.ang+=KORB.ROT*dt;
+  if(D.l)D.ang-=KORB.ROT*dt;if(D.r)D.ang+=KORB.ROT*dt;if(D.tilt&&Math.abs(D.tg||0)>.08){D.ang+=KORB.ROT*dt*Math.max(-1,Math.min(1,D.tg));D.sas=""}
   if(D.sas&&!D.l&&!D.r&&!D.landed){const el=el0;let tx,ty;if(D.sas==="pro"){tx=el.vx;ty=el.vy}else if(D.sas==="retro"){tx=-el.vx;ty=-el.vy}else{tx=el.rx;ty=el.ry}
     const want=Math.atan2(tx,ty);let d=want-D.ang;d=Math.atan2(Math.sin(d),Math.cos(d));D.ang+=Math.max(-KORB.ROT*dt,Math.min(KORB.ROT*dt,d))}
-  if(D.landed){const thrusting=D.thr&&D.fuel>0;if(!thrusting){if(D.landed==="moon"){const m=kOrbMoon(D);const mw=Math.sqrt(KORB.GM/KORB.MA**3);D.mAng+=mw*dt;const m2=kOrbMoon(D);D.x+=m2.x-m.x;D.y+=m2.y-m.y;D.vx=-Math.sin(D.mAng)*mw*KORB.MA;D.vy=Math.cos(D.mAng)*mw*KORB.MA}D.t+=dt;return}D.landed="";D.shake=1.2;kBeep("whoosh");kOrbSay(D,"lift","Liftoff! We have liftoff!")}
+  if(D.landed){const thrusting=D.thr&&D.fuel>0;if(!thrusting){if(D.landed==="moon"){const m=kOrbMoon(D);const mw=Math.sqrt(KORB.GM/KORB.MA**3);D.mAng+=mw*dt;const m2=kOrbMoon(D);D.x+=m2.x-m.x;D.y+=m2.y-m.y;D.vx=-Math.sin(D.mAng)*mw*KORB.MA;D.vy=Math.cos(D.mAng)*mw*KORB.MA}D.t+=dt;return}D.landed="";D.shake=1.2;kBeep("whoosh");kFxFlash(D,"255,237,213",.5);kFxBuzz([100,50,100,50,100]);kOrbSay(D,"lift","Liftoff! We have liftoff!")}
   let T=dt*D.warp;const maxH=(D.thr||el0.alt<200e3)?0.02:0.2,n=Math.min(600,Math.ceil(T/maxH)),h=T/n;
   for(let i=0;i<n;i++){kOrbStep(D,h);if(kOrbHit(D))return}
   if(D.trail.length===0||D.t-D.trail[D.trail.length-1][2]>Math.max(.5,D.warp*.4)){D.trail.push([D.x,D.y,D.t]);if(D.trail.length>500)D.trail.shift()}
@@ -58,8 +58,8 @@ function kOrbHit(D){const r=Math.hypot(D.x,D.y);if(r<KORB.R){const v=Math.hypot(
     if(v<15){D.x*=KORB.R/r;D.y*=KORB.R/r;D.vx=D.vy=0;D.landed="earth";if(D.visMoon){kOrbWin(D,6);D.over=true;D.res="home";kOrbSay(D,"home","Splashdown! Mission accomplished: Earth to the Moon and back!")}else{kOrbSay(D,"splash"+Math.round(D.t),"Splashdown! Welcome back to Earth.");D.over=true;D.res="home"}}else kOrbCrash(D,`Hit the ${D.chute?"water":"ground"} at ${Math.round(v)} m/s. Open the 🪂 parachute lower and slower!`);return true}
   const m=kOrbMoon(D),dx=D.x-m.x,dy=D.y-m.y,dm=Math.hypot(dx,dy);if(dm<KORB.MR){const mw=Math.sqrt(KORB.GM/KORB.MA**3),rvx=D.vx+Math.sin(D.mAng)*mw*KORB.MA,rvy=D.vy-Math.cos(D.mAng)*mw*KORB.MA,v=Math.hypot(rvx,rvy);
     if(v<10){D.x=m.x+dx*KORB.MR/dm;D.y=m.y+dy*KORB.MR/dm;D.landed="moon";D.visMoon=true;D.ang=Math.atan2(dx,dy);kOrbWin(D,5);kOrbSay(D,"moonland","The Eagle has landed! You're on the Moon!")}else kOrbCrash(D,`Hit the Moon at ${Math.round(v)} m/s. Slow down to under 10 m/s with short burns!`);return true}return false}
-function kOrbCrash(D,why){D.over=true;D.res="crash";D.why=why;kBeep("bad");try{if(navigator.vibrate)navigator.vibrate([80,40,120])}catch(_){}for(let i=0;i<60;i++)D.fx.push({x:0,y:0,vx:(Math.random()-.5)*260,vy:(Math.random()-.5)*260,l:1.2,c:i%3?"#f97316":"#fde047",s:3+Math.random()*4});setTimeout(()=>{if(kOrb===D&&KV.scr==="orbit"){KV.end=1;render()}},1400)}
-function kOrbWin(D,i){const o=kOrbState(),k=KS();if(!o.done[i]){o.done[i]=1;o.stars=Object.keys(o.done).length;k.fly=k.fly||{done:{},pts:0};k.fly.pts=(k.fly.pts||0)+100;kT(`${KORBM[i].ic} Mission complete: ${KORBM[i].n}! +100 pilot points`);kBeep("win");
+function kOrbCrash(D,why){D.over=true;D.res="crash";D.why=why;kBeep("bad");kFxFlash(D,"249,115,22",.9);D.shake=1.5;try{if(navigator.vibrate)navigator.vibrate([80,40,120])}catch(_){}for(let i=0;i<60;i++)D.fx.push({x:0,y:0,vx:(Math.random()-.5)*260,vy:(Math.random()-.5)*260,l:1.2,c:i%3?"#f97316":"#fde047",s:3+Math.random()*4});setTimeout(()=>{if(kOrb===D&&KV.scr==="orbit"){KV.end=1;render()}},1400)}
+function kOrbWin(D,i){const o=kOrbState(),k=KS();if(!o.done[i]){o.done[i]=1;o.stars=Object.keys(o.done).length;k.fly=k.fly||{done:{},pts:0};k.fly.pts=(k.fly.pts||0)+100;kFxFlash(D,"255,255,255",.6);kFxBuzz([40,40,40,40,120]);kT(`${KORBM[i].ic} Mission complete: ${KORBM[i].n}! +100 pilot points`);kBeep("win");
     for(let j=0;j<70;j++)D.fx.push({x:0,y:0,vx:(Math.random()-.5)*300,vy:-Math.random()*300,l:1.6,c:["#22d3ee","#a78bfa","#fde047","#34d399"][j%4],s:3+Math.random()*3});persist()}
   D.goal=Math.min(Object.keys(o.done).length,KORBM.length-1);while(o.done[D.goal]&&D.goal<KORBM.length-1)D.goal++}
 function kOrbGoals(D){const el=kOrbEl(D);D.maxAlt=Math.max(D.maxAlt,el.body==="earth"?el.alt:0);
@@ -124,7 +124,7 @@ function kOrbLoop(ts){const D=kOrb,cv=document.getElementById("korb");if(!D||KV.
   if(D.thr&&D.fuel>0&&!D.landed){const air=el.body==="earth"&&el.alt<KORB.ATM;for(let i=0;i<3;i++){const sp=60+Math.random()*80,a=D.ang+Math.PI+(Math.random()-.5)*.5;D.fx.push({x:0,y:0,vx:Math.sin(a)*sp,vy:-Math.cos(a)*sp,l:air?1:.5,c:air&&Math.random()<.5?"rgba(203,213,225,.7)":"#fb923c",s:air?3+Math.random()*4:2})}}
   for(const p of D.fx){p.x+=p.vx*dt;p.y+=p.vy*dt;p.l-=dt*1.4;p.s*=1+dt*.6}D.fx=D.fx.filter(p=>p.l>0).slice(-220);
   if(D.msgT>0)D.msgT-=dt;D.predT-=dt;if(D.predT<=0&&!D.landed){kOrbPredict(D);D.predT=.5}
-  kOrbDraw(c,D,W,H);kOrbHud(D);if(D.over&&D.res!=="crash"&&!D.shown){D.shown=1;setTimeout(()=>{if(kOrb===D&&KV.scr==="orbit"){KV.end=1;render()}},1600)}
+  kOrbDraw(c,D,W,H);kFxPaint(c,D,W,H,dt);if(D.thr&&D.fuel>0&&!D.landed&&Math.hypot(D.x,D.y)-KORB.R<20e3&&Math.random()<.25)kFxBuzz(18);kOrbHud(D);if(D.over&&D.res!=="crash"&&!D.shown){D.shown=1;setTimeout(()=>{if(kOrb===D&&KV.scr==="orbit"){KV.end=1;render()}},1600)}
   requestAnimationFrame(kOrbLoop)}
 function kOrbHud(D){const b=document.getElementById("korbwarp");if(b)b.textContent="⏩ "+D.warp+"×";const z=document.getElementById("korbzoom");if(z)z.textContent="🔍 "+(D.zoom<0?"Auto":D.zoom+1);
   ["pro","retro","up"].forEach(k=>{const e=document.getElementById("korb_"+k);if(e)e.classList.toggle("on",D.sas===k)});const ch=document.getElementById("korbchute");if(ch){const el=kOrbEl(D);ch.disabled=!(el.body==="earth"&&el.alt<6000&&el.v<250&&!D.landed)||D.chute;}}
@@ -139,7 +139,7 @@ function kOrbView(v){const o=kOrbState(),k=KS(),D=kOrb;
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("🪐 Orbit Lab","pschool")}<div class="kdrvbox"><canvas id="korb" width="${W}" height="${H}" style="border-radius:14px;display:block;margin:auto;touch-action:none"></canvas></div>
    <div class="kpad kdrvbtns"><button class="kbtn big ohold" id="korb_l">⟲</button><button class="kbtn big ohold lthr" id="korb_t">🔥 THRUST</button><button class="kbtn big ohold" id="korb_r">⟳</button></div>
    <div class="kpad kdrvbtns" style="gap:6px"><button class="kbtn small korbsas" id="korb_pro" data-korb="sas:pro">➡️ Prograde</button><button class="kbtn small korbsas" id="korb_retro" data-korb="sas:retro">⬅️ Retro</button><button class="kbtn small korbsas" id="korb_up" data-korb="sas:up">⬆️ Up</button></div>
-   <div class="kpad kdrvbtns" style="gap:6px"><button class="kbtn small ghost" data-korb="warp-">⏪</button><button class="kbtn small" id="korbwarp" data-korb="warp+">⏩ 1×</button><button class="kbtn small ghost" id="korbzoom" data-korb="zoom">🔍 Auto</button><button class="kbtn small ghost" id="korbchute" data-korb="chute" disabled>🪂</button><button class="kbtn small ghost" data-korb="quit">⏹</button></div>
+   <div class="kpad kdrvbtns" style="gap:6px"><button class="kbtn small ghost" data-korb="warp-">⏪</button><button class="kbtn small" id="korbwarp" data-korb="warp+">⏩ 1×</button><button class="kbtn small ghost" id="korbzoom" data-korb="zoom">🔍 Auto</button><button class="kbtn small ghost" id="korbchute" data-korb="chute" disabled>🪂</button><button class="kbtn small ghost" id="korbtilt" data-korb="tilt">📱</button><button class="kbtn small ghost" data-korb="quit">⏹</button></div>
    <div class="ksmall">Keys: ← → turn · Space/↑ thrust · , . warp · Z zoom · P prograde · R retro.</div></div>`;
   const cv=document.getElementById("korb");try{kHdSetup(cv)}catch(_){}D.last=0;requestAnimationFrame(kOrbLoop)}
 function kOrbClick(d){const D=kOrb,a=String(d.korb),k=KS();
@@ -149,9 +149,12 @@ function kOrbClick(d){const D=kOrb,a=String(d.korb),k=KS();
   if(a==="warp+"){const W=[1,5,25,100,500,2000];const el=kOrbEl(D);if((D.thr&&D.fuel>0)||(el.body==="earth"&&el.alt<KORB.ATM)){kOrbSay(D,"nowarp"+Math.round(D.t/30),"Time warp works above the air and with the engine off.");return}D.warp=W[Math.min(W.length-1,W.indexOf(D.warp)+1)];return}
   if(a==="warp-"){const W=[1,5,25,100,500,2000];D.warp=W[Math.max(0,W.indexOf(D.warp)-1)];return}
   if(a==="zoom"){D.zoom=D.zoom>=4?-1:D.zoom+1;return}
-  if(a==="chute"){D.chute=true;kBeep("click");kOrbSay(D,"chute","Parachute open!");return}}
+  if(a==="tilt"){if(D.tilt){D.tilt=false;D.tg=0;kT("📱 Tilt off");return}const on=()=>{D.tilt=true;D.g0=null;kT("📱 Tilt steering on: tip the phone left or right to turn the rocket")};try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==="function"){DeviceOrientationEvent.requestPermission().then(r=>{if(r==="granted")on()}).catch(()=>{})}else on()}catch(_){on()}return}
+  if(a==="chute"){D.chute=true;kBeep("click");kFxBuzz(80);kOrbSay(D,"chute","Parachute open!");return}}
 const kOHold={};document.addEventListener("pointerdown",e=>{try{if(view!=="kids"||KV.scr!=="orbit"||!kOrb)return;const b=e.target.closest&&e.target.closest(".ohold");if(!b)return;e.preventDefault();const m={korb_t:"thr",korb_l:"l",korb_r:"r"}[b.id];if(!m)return;kOrb[m]=true;kOHold[e.pointerId]=m;if(m!=="thr")kOrb.sas=""}catch(_){}});
 ["pointerup","pointercancel"].forEach(ev=>document.addEventListener(ev,e=>{if(!kOrb)return;const m=kOHold[e.pointerId];if(m){kOrb[m]=false;delete kOHold[e.pointerId]}},true));
 document.addEventListener("keydown",e=>{if(typeof view==="undefined"||view!=="kids"||KV.scr!=="orbit"||!kOrb)return;const D=kOrb;if(e.key===" "||e.key==="ArrowUp"){e.preventDefault();D.thr=true}if(e.key==="ArrowLeft"){D.l=true;D.sas=""}if(e.key==="ArrowRight"){D.r=true;D.sas=""}
   if(e.key===".")kOrbClick({korb:"warp+"});if(e.key===",")kOrbClick({korb:"warp-"});if(e.key==="z"||e.key==="Z")kOrbClick({korb:"zoom"});if(e.key==="p"||e.key==="P")kOrbClick({korb:"sas:pro"});if(e.key==="r"||e.key==="R")kOrbClick({korb:"sas:retro"})});
 document.addEventListener("keyup",e=>{if(!kOrb)return;if(e.key===" "||e.key==="ArrowUp")kOrb.thr=false;if(e.key==="ArrowLeft")kOrb.l=false;if(e.key==="ArrowRight")kOrb.r=false});
+
+window.addEventListener("deviceorientation",e=>{const D=kOrb;if(!D||!D.tilt||e.gamma==null)return;const ang=(screen.orientation&&screen.orientation.angle)||window.orientation||0;const g=ang===90?e.beta:(ang===-90||ang===270)?-e.beta:e.gamma;if(D.g0==null)D.g0=g;D.tg=(D.tg||0)*.7+((g-D.g0)/25)*.3});

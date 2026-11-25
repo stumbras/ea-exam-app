@@ -42,6 +42,7 @@ function kPilotView(v){const k=KS(),f=k.fly||{done:{},pts:0},sp=k.spx||{lv:0,lan
    ${card('data-k="land"',"🚀","Booster Landing",`${sp.land||0} landings · level ${(sp.lv||0)+1}/${KLAND.length}`,"Land Falcon 9 boosters, Starship, Moon and Mars · 🎟️ 1")}
    ${card('data-k="msnBuild"',"🌍","Space Mission","Build a rocket, reach orbit, come home","Mini space program with real metric physics · 🎟️ 1")}
    ${card('data-k="orbit"',"🪐","Orbit Lab <i class=\"knew\">NEW!</i>",`✅ ${Object.keys((k.orb||{}).done||{}).length}/7 missions`,"Real orbital physics: orbit, fly to the Moon, land, come home · 🎟️ 1")}
+   ${card('data-k="hover"',"🚀","Roadster Thrusters <i class=\"knew\">NEW!</i>",`🏆 best ${((k.hov||{}).best)||0}`,"Flying Tesla Roadster: cold-air thrusters, hop traffic, drive upside down in tunnels · 🎟️ 1")}
    <div class="kcard"><div class="kh">🎓 Ground school (free, earns tickets)</div><div class="krotrow">
     <button class="krotb" data-kltr="pilot"><span>✈️</span><b>Pilot Basics ${pl}/4</b></button><button class="krotb" data-kltr="mil"><span>🎖️</span><b>Air & Space Force ${ml}/4</b></button>
     <button class="krotb" data-kcat="af"><span>🎖️</span><b>Air Force quiz Lv ${Math.floor(((h.af||{}).c||0)/5)+1}</b></button><button class="krotb" data-kcat="sf"><span>🛰️</span><b>Space Force quiz Lv ${Math.floor(((h.sf||{}).c||0)/5)+1}</b></button><button class="krotb" data-kcat="spacex"><span>🚀</span><b>SpaceX quiz</b></button></div>
