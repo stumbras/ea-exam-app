@@ -1644,6 +1644,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
 - Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
 
+- 2026-11-25 Version 2026-11-26e · Nov 26: Kids: new Orbit Lab — real orbital physics, Moon trip, encounter predictor, re-entry heat, parachute, time warp
 - 2026-11-25 Version 2026-11-26d · Nov 26: Series 65: 12 economics questions; balanced answer lengths in new vehicle questions
 - 2026-11-25 Version 2026-11-26c · Nov 26: Series 65: 62 new questions (investment vehicles + ratios) to match NASAA weights
 - 2026-11-25 Version 2026-11-26b · Nov 26: Podcasts in every app: guest deep-dives in EDPNA, Customs Broker and SIE; Spotify links
