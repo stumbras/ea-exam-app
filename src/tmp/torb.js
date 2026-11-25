@@ -3,7 +3,7 @@ const {chromium,devices}=require('playwright');
 await p.goto('http://localhost:8765/ea-exam-app/?kids');await p.waitForTimeout(3000);
 await p.evaluate(()=>{const k=KS();k.tix=9;k.setup=1;k.name="Tomas";k.bday={m:5,d:5,y:2016};view="kids";KV={scr:"pschool"};render()});await p.waitForTimeout(500);await p.screenshot({path:'/tmp/orb0.png'});
 await p.evaluate(()=>{KV={scr:"orbit"};render()});await p.waitForTimeout(500);await p.screenshot({path:'/tmp/orb1.png'});
-await p.evaluate(()=>{kOrbClick({korb:"launch"})});await p.waitForTimeout(300);
+await p.evaluate(()=>{kOrbClick({korb:"launch"})});await p.waitForTimeout(300);await p.screenshot({path:"/tmp/orbq.png"});await p.evaluate(()=>{kOrbClick({korb:"q"+kOrb.Q.a})});await p.waitForTimeout(300);
 await p.evaluate(()=>{kOrb.thr=true});await p.waitForTimeout(2500);await p.screenshot({path:'/tmp/orb2.png'});
 // autopilot: simulate quickly in JS (not real time) to check orbit is reachable
 const r=await p.evaluate(()=>{const D=kOrb;let log=[];for(let i=0;i<20000;i++){const el=kOrbEl(D);

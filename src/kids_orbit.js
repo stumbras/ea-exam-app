@@ -17,7 +17,7 @@ let kOrb=null;
 function kOrbState(){const k=KS();k.orb=k.orb||{done:{},stars:0,best:0,launches:0};return k.orb}
 function kOrbNew(){const o=kOrbState();
   kOrb={x:0,y:KORB.R+4,vx:0,vy:0,ang:0,thr:false,l:false,r:false,fuel:KORB.FUEL,t:0,warp:1,landed:"earth",sas:"",zoom:-1,mAng:2.4,trail:[],fx:[],stars:[],last:0,
-    shake:0,chute:false,heat:0,maxAlt:0,visMoon:false,said:{},over:false,res:"",goal:Math.min(Object.keys(o.done).length,KORBM.length-1),pred:null,predT:0,msg:"",msgT:0};
+    pre:1,Q:(typeof kLandQ==="function"?kLandQ():null),shake:0,chute:false,heat:0,maxAlt:0,visMoon:false,said:{},over:false,res:"",goal:Math.min(Object.keys(o.done).length,KORBM.length-1),pred:null,predT:0,msg:"",msgT:0};
   for(let i=0;i<140;i++)kOrb.stars.push([Math.random(),Math.random(),Math.random()*1.4+.3,Math.random()*6.3]);
   o.launches++;persist()}
 function kOrbMoon(D){const a=D.mAng;return{x:KORB.MA*Math.cos(a),y:KORB.MA*Math.sin(a)}}
@@ -114,7 +114,7 @@ function kOrbDraw(c,D,W,H){const zi=D.zoom<0?kOrbAutoZ(D):D.zoom,half=KORBZ[zi],
   const enc=D.pred&&el.body==="earth"&&D.pred.minD<6e6?D.pred.minD:null;c.fillStyle="rgba(2,6,23,.62)";c.fillRect(6,6,150,enc!=null?108:92);c.fillStyle="#e2e8f0";c.font="bold 11px system-ui";c.textAlign="left";
   const lines=[["ALT",kOrbFmt(el.alt)+(el.body==="moon"?" 🌙":"")],["SPEED",Math.round(el.v).toLocaleString()+" m/s"],["AP",kOrbFmt(el.ap)],["PE",kOrbFmt(el.pe)],["⏩",D.warp+"×  ·  🔍"+(zi+1)+(D.zoom<0?" auto":"")]];
   if(enc!=null)lines.push(["🌙",enc<KORB.MSOI?"Moon encounter! ✅":"Moon miss: "+kOrbFmt(enc-KORB.MSOI)]);lines.forEach((l,i)=>{c.fillStyle="#94a3b8";c.fillText(l[0],12,22+i*16);c.fillStyle=l[0]==="PE"&&el.pe>KORB.ATM&&el.body==="earth"?"#4ade80":"#f8fafc";c.fillText(l[1],52,22+i*16)});
-  const fp=D.fuel/KORB.FUEL;c.fillStyle="rgba(2,6,23,.62)";c.fillRect(W-30,6,24,110);c.fillStyle=fp>.25?"#22c55e":"#ef4444";c.fillRect(W-25,11+100*(1-fp),14,100*fp);c.fillStyle="#e2e8f0";c.font="bold 9px system-ui";c.textAlign="center";c.fillText("⛽",W-18,128);c.fillText(Math.round(D.fuel)+"",W-18,140);
+  const fp=Math.min(1,D.fuel/KORB.FUEL);c.fillStyle="rgba(2,6,23,.62)";c.fillRect(W-30,6,24,110);c.fillStyle=fp>.25?"#22c55e":"#ef4444";c.fillRect(W-25,11+100*(1-fp),14,100*fp);c.fillStyle="#e2e8f0";c.font="bold 9px system-ui";c.textAlign="center";c.fillText("⛽",W-18,128);c.fillText(Math.round(D.fuel)+"",W-18,140);
   const G=KORBM[D.goal];c.fillStyle="rgba(2,6,23,.62)";c.fillRect(6,H-44,W-12,38);c.fillStyle="#fde047";c.font="bold 11px system-ui";c.textAlign="left";c.fillText(`${G.ic} Goal ${D.goal+1}: ${G.n}`,12,H-28);c.fillStyle="#e2e8f0";c.font="10px system-ui";kOrbWrap(c,D.msgT>0?D.msg:G.tip,12,H-15,W-24)}
 function kOrbWrap(c,t,x,y,w){const words=String(t).split(" ");let line="",yy=y;for(const wd of words){const tst=line?line+" "+wd:wd;if(c.measureText(tst).width>w&&line){c.fillText(line,x,yy);line=wd;yy+=12;if(yy>y+12)break}else line=tst}if(yy<=y+12)c.fillText(line,x,yy)}
 function kOrbEvec(D){const el=kOrbEl(D),mu=KORB.GM,rx=D.x,ry=D.y,vx=D.vx,vy=D.vy,r=Math.hypot(rx,ry),rv=rx*vx+ry*vy,v2=vx*vx+vy*vy;const ex=((v2-mu/r)*rx-rv*vx)/mu,ey=((v2-mu/r)*ry-rv*vy)/mu;if(Math.hypot(ex,ey)<1e-4)return null;return{ang:Math.atan2(ey,ex)}}
@@ -135,6 +135,7 @@ function kOrbView(v){const o=kOrbState(),k=KS(),D=kOrb;
     <div class="kcard"><div class="kh">🏆 Missions ${Object.keys(o.done).length}/${KORBM.length}</div>${KORBM.map((M,i)=>`<div class="ksmall" style="margin:6px 0">${o.done[i]?"✅":"⬜"} <b>${M.ic} ${i+1}. ${esc(M.n)}</b> — ${esc(M.g)}</div>`).join("")}</div>
     <div class="kpad">${(k.tix||0)>0?`<button class="kbtn big green" data-korb="launch">🚀 Launch (1 🎟️ · you have ${k.tix||0})</button>`:`<div class="ksmall">Out of tickets: earn more by learning (Quiz Show, chess, daily chest).</div>`}</div>
     <div class="kcard"><div class="ksmall">🧪 <b>How orbits work:</b> going up is the easy part. To stay in space you must go sideways about 2,300 m/s here (7,800 m/s on the real Earth!) so you keep falling around the planet instead of into it. Burn forward (prograde) to raise the far side of your orbit, backward (retrograde) to lower it.</div></div></div>`;KV.end=0;return}
+  if(D.pre&&D.Q){const Q=D.Q;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("🪐 Orbit Lab","pschool")}<div class="kcard"><div class="kh">📡 Mission Control check</div><div class="kdbqt" style="font-size:17px;margin:8px 0">${esc(Q.q)}</div><div class="kdbqo">${Q.o.map((x,i)=>`<button class="kbtn" data-korb="q${i}">${esc(x)}</button>`).join("")}</div><div class="kpad"><button class="kbtn ghost small" data-korb="qskip">Skip ▶</button></div><div class="ksmall">Right answer = +15% fuel for the whole flight!</div></div></div>`;return}
   const W=Math.min(400,v.clientWidth||360)-4,H=Math.round(W*1.35);
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("🪐 Orbit Lab","pschool")}<div class="kdrvbox"><canvas id="korb" width="${W}" height="${H}" style="border-radius:14px;display:block;margin:auto;touch-action:none"></canvas></div>
    <div class="kpad kdrvbtns"><button class="kbtn big ohold" id="korb_l">⟲</button><button class="kbtn big ohold lthr" id="korb_t">🔥 THRUST</button><button class="kbtn big ohold" id="korb_r">⟳</button></div>
@@ -144,6 +145,8 @@ function kOrbView(v){const o=kOrbState(),k=KS(),D=kOrb;
   const cv=document.getElementById("korb");try{kHdSetup(cv)}catch(_){}D.last=0;requestAnimationFrame(kOrbLoop)}
 function kOrbClick(d){const D=kOrb,a=String(d.korb),k=KS();
   if(a==="launch"){if((k.tix||0)<1){kT("You need a 🎟️ ticket. Learn to earn one!");render();return}k.tix--;kOrbNew();kBeep("click");kLine("Orbit Lab. Hold thrust to launch. Ten, nine, eight... just kidding. Go!",2);render();return}
+  if(D&&D.pre&&/^q\d$/.test(a)){const i=+a.slice(1),Q=D.Q,ok=i===Q.a;try{kAnswer(Q.s||"sci",ok,Q)}catch(_){}if(ok){D.fuel=Math.round(KORB.FUEL*1.15);kT("📡 Mission Control approved +15% fuel!")}else kT(`Answer: ${Q.o[Q.a]}. No bonus fuel this time.`);D.pre=0;render();return}
+  if(D&&D.pre&&a==="qskip"){D.pre=0;render();return}
   if(!D)return;if(a==="quit"){D.over=true;D.res=D.res||"quit";KV.end=1;render();return}
   if(a.startsWith("sas:")){const s=a.slice(4);D.sas=D.sas===s?"":s;kBeep("click");return}
   if(a==="warp+"){const W=[1,5,25,100,500,2000];const el=kOrbEl(D);if((D.thr&&D.fuel>0)||(el.body==="earth"&&el.alt<KORB.ATM)){kOrbSay(D,"nowarp"+Math.round(D.t/30),"Time warp works above the air and with the engine off.");return}D.warp=W[Math.min(W.length-1,W.indexOf(D.warp)+1)];return}

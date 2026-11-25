@@ -12,7 +12,7 @@ const KHVCOL=["#e31937","#f8fafc","#111827","#1d4ed8","#9ca3af","#b8bcc6"];
 let kHv=null;
 function kHvState(){const k=KS();k.hov=k.hov||{best:0,runs:0};return k.hov}
 function kHvNew(){const s=kHvState();s.runs++;persist();
-  kHv={x:0,y:0,vx:KHV.road,vy:0,air:100,lift:false,boost:false,t:0,last:0,dist:0,rings:0,lives:3,inv:0,over:false,shake:0,fx:[],segs:[],obs:[],ringsL:[],gen:0,wheel:0,ang:0,said:{},msg:"Hold ⬆️ LIFT to fly! Tap 🚀 BOOST for speed.",msgT:4,landed:true,traffic:[],tun:[],hops:0,upd:0,flip:false};
+  kHv={x:0,y:0,vx:KHV.road,vy:0,air:100,lift:false,boost:false,t:0,last:0,dist:0,rings:0,lives:3,inv:0,over:false,shake:0,fx:[],segs:[],obs:[],ringsL:[],gen:0,wheel:0,ang:0,said:{},msg:"Hold ⬆️ LIFT to fly! Tap 🚀 BOOST for speed.",msgT:4,landed:true,pre:1,Q:(typeof kLandQ==="function"?kLandQ():null),airMax:100,traffic:[],tun:[],hops:0,upd:0,flip:false};
   kHvGen(kHv,2600)}
 function kHvGen(D,upTo){while(D.gen<upTo){const x=D.gen;if(x<900){D.segs.push([x,x+900]);D.gen=x+900;continue}
     const gap=220+Math.random()*Math.min(480,160+x/18),len=380+Math.random()*700;D.segs.push([x+gap,x+gap+len]);
@@ -31,7 +31,7 @@ function kHvStep(D,dt){if(D.over)return;D.t+=dt;if(D.inv>0)D.inv-=dt;if(D.msgT>0
     kHvTraffic(D,dt);kHvObjects(D);return}
   let ay=-KHV.g;const la=Math.max(D.lift?1:0,D.tilt?(D.tLift||0):0);if(la>0&&D.air>0){ay+=KHV.lift*la;D.air=Math.max(0,D.air-28*dt);kHvPuff(D,"down")}
   let ax=0;if((D.boost||(D.tilt&&D.tBoost))&&D.air>0){ax+=KHV.boost;D.air=Math.max(0,D.air-22*dt);kHvPuff(D,"back")}
-  if(D.landed){ax+=(KHV.road-D.vx)*1.2;D.air=Math.min(100,D.air+16*dt)}else ax-=D.vx*KHV.drag*.3;
+  if(D.landed){ax+=(KHV.road-D.vx)*1.2;D.air=Math.min(D.airMax,D.air+16*dt)}else ax-=D.vx*KHV.drag*.3;
   D.vx=Math.max(160,Math.min(820,D.vx+ax*dt));D.vy+=ay*dt;D.vy*=1-.15*dt;D.x+=D.vx*dt;D.y+=D.vy*dt;D.dist=Math.max(D.dist,D.x);D.wheel+=D.vx*dt/14;
   if(D.y<=0){if(ground){if(!D.landed&&D.vy<-650){D.shake=.6;kBeep("thud");kFxBuzz(70);kHvSay(D,"hard","Hard landing! Use a little LIFT just before you touch down.")}
       if(!D.landed&&D.vy<-200)for(let i=0;i<10;i++)D.fx.push({x:0,y:0,vx:(Math.random()-.5)*160,vy:-Math.random()*60,l:.6,s:3,c:"rgba(214,200,170,.8)"});
@@ -46,7 +46,7 @@ function kHvStep(D,dt){if(D.over)return;D.t+=dt;if(D.inv>0)D.inv-=dt;if(D.msgT>0
   if(D.x>D.gen-1600)kHvGen(D,D.gen+2400);
   D.segs=D.segs.filter(s=>s[1]>D.x-800);D.ringsL=D.ringsL.filter(r=>r.x>D.x-800);D.obs=D.obs.filter(o=>o.x>D.x-800);D.traffic=D.traffic.filter(t=>t.x>D.x-900);D.tun=D.tun.filter(t=>t[1]>D.x-900)}
 function kHvObjects(D){
-  for(const r of D.ringsL)if(!r.got&&Math.abs(r.x-D.x)<34&&Math.abs(r.y-(D.y+14))<44){r.got=1;D.rings++;D.air=Math.min(100,D.air+25);kBeep("coin");kFxFlash(D,"253,224,71",.35);kFxBuzz(20);for(let i=0;i<16;i++)D.fx.push({x:0,y:-10,vx:Math.cos(i)*140,vy:Math.sin(i)*140,l:.7,s:3,c:"#fde047"})}
+  for(const r of D.ringsL)if(!r.got&&Math.abs(r.x-D.x)<34&&Math.abs(r.y-(D.y+14))<44){r.got=1;D.rings++;D.air=Math.min(D.airMax,D.air+25);kBeep("coin");kFxFlash(D,"253,224,71",.35);kFxBuzz(20);for(let i=0;i<16;i++)D.fx.push({x:0,y:-10,vx:Math.cos(i)*140,vy:Math.sin(i)*140,l:.7,s:3,c:"#fde047"})}
   for(const o of D.obs){const oy=o.y+Math.sin(D.t*2+o.ph)*30;if(!o.hit&&D.inv<=0&&Math.abs(o.x-D.x)<40&&Math.abs(oy-(D.y+12))<30){o.hit=1;D.inv=1.5;D.lives--;D.shake=.8;kBeep("bad");kFxFlash(D,"239,68,68",.5);kFxBuzz([60,40,60]);kHvSay(D,"drone"+D.lives,D.lives>0?`Bonk! Drone hit. ${D.lives} ❤️ left.`:"");if(D.lives<=0)kHvCrash(D,"Too many drone hits!")}}
 }
 function kHvTraffic(D,dt){for(const t of D.traffic){t.x+=t.v*dt;if(t.x>t.seg[1]-60)t.x=t.seg[1]-60;const dx=t.x-D.x;
@@ -114,7 +114,7 @@ function kHvDraw(c,D,W,H){const camY=Math.max(0,(D.flip?KHV.roof:D.y)-(H-200)),g
   // HUD
   c.fillStyle="rgba(2,6,23,.6)";c.fillRect(6,6,W-12,30);c.fillStyle="#f8fafc";c.font="bold 12px system-ui";c.textAlign="left";c.fillText(`📏 ${Math.round(D.dist/10)} m   ⭕ ${D.rings}   ${"❤️".repeat(Math.max(0,D.lives))}`,12,26);
   c.textAlign="right";c.fillText(`${Math.round(D.vx*.36)} km/h`,W-12,26);
-  c.fillStyle="rgba(2,6,23,.6)";c.fillRect(6,40,110,16);c.fillStyle=D.air>25?"#7dd3fc":"#f87171";c.fillRect(8,42,106*D.air/100,12);c.fillStyle="#0f172a";c.font="bold 10px system-ui";c.textAlign="left";c.fillText("💨 AIR",12,52);
+  c.fillStyle="rgba(2,6,23,.6)";c.fillRect(6,40,110,16);c.fillStyle=D.air>25?"#7dd3fc":"#f87171";c.fillRect(8,42,106*Math.min(1,D.air/100),12);c.fillStyle="#0f172a";c.font="bold 10px system-ui";c.textAlign="left";c.fillText("💨 AIR",12,52);
   if(D.msgT>0){c.fillStyle="rgba(2,6,23,.6)";c.fillRect(6,H-34,W-12,28);c.fillStyle="#fde047";c.font="bold 11px system-ui";c.textAlign="center";c.fillText(D.msg,W/2,H-16)}}
 function kHvLoop(ts){const D=kHv,cv=document.getElementById("khov");if(!D||KV.scr!=="hover"||!cv)return;const c=cv.getContext("2d");const dt=D.last?Math.min(.04,(ts-D.last)/1000):0;D.last=ts;
   kHvStep(D,dt);D.shake=Math.max(0,D.shake-dt*1.5);for(const p of D.fx){p.x+=p.vx*dt-D.vx*dt*.0;p.y+=p.vy*dt;p.l-=dt;if(p.grow)p.s*=1+dt*2.2}D.fx=D.fx.filter(p=>p.l>0).slice(-260);
@@ -126,6 +126,7 @@ function kHvView(v){const s=kHvState(),k=KS(),D=kHv;
     <div class="kcard"><div class="ksmall">🏆 Best score: <b>${s.best}</b> · runs: ${s.runs}</div><div class="ksmall">⬆️ <b>LIFT</b> fires the bottom thrusters · 🚀 <b>BOOST</b> fires the back thruster · 💨 the air tank refills when you drive on the road · ⭕ rings give air back</div></div>
     <div class="kpad">${(k.tix||0)>0?`<button class="kbtn big green" data-khv="go">🚀 Drive! (1 🎟️ · you have ${k.tix||0})</button>`:`<div class="ksmall">Out of tickets: earn more by learning.</div>`}</div>
     <div class="kcard"><div class="ksmall">🧪 <b>Real science:</b> a cold-gas thruster lets out compressed air very fast. Newton's third law: air pushed down pushes the car up! Real spacecraft (and SpaceX's Falcon 9 grid-fin steering) use cold-gas thrusters too.</div></div></div>`;return}
+  if(D.pre&&D.Q){const Q=D.Q;v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("🚀 Roadster Thrusters","pschool")}<div class="kcard"><div class="kh">🧠 Engineer's check</div><div class="kdbqt" style="font-size:17px;margin:8px 0">${esc(Q.q)}</div><div class="kdbqo">${Q.o.map((x,i)=>`<button class="kbtn" data-khv="q${i}">${esc(x)}</button>`).join("")}</div><div class="kpad"><button class="kbtn ghost small" data-khv="qskip">Skip ▶</button></div><div class="ksmall">Right answer = a bigger air tank (+25%) and a 4th ❤️!</div></div></div>`;return}
   const W=Math.min(400,v.clientWidth||360)-4,H=Math.round(W*1.15);
   v.innerHTML=`<div class="kids">${kToastHtml()}${kTop("🚀 Roadster Thrusters","pschool")}<div class="kdrvbox"><canvas id="khov" width="${W}" height="${H}" style="border-radius:14px;display:block;margin:auto;touch-action:none"></canvas></div>
    <div class="kpad kdrvbtns"><button class="kbtn big hvhold" id="khv_l" style="flex:2;background:#38bdf8;color:#04243a">⬆️ LIFT</button><button class="kbtn big hvhold lthr" id="khv_b">🚀 BOOST</button></div>
@@ -138,7 +139,7 @@ function kHvTiltOn(){const D=kHv;if(!D)return;const on=()=>{D.tilt=true;D.t0=nul
   try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==="function"){DeviceOrientationEvent.requestPermission().then(r=>{if(r==="granted")on();else kT("Tilt was not allowed.")}).catch(()=>kT("Tilt needs permission."))}else on()}catch(_){on()}}
 window.addEventListener("deviceorientation",e=>{const D=kHv;if(!D||!D.tilt||e.beta==null)return;const ang=(screen.orientation&&screen.orientation.angle)||window.orientation||0;const b=ang===90?-e.gamma:(ang===-90||ang===270)?e.gamma:e.beta,g=ang===90?e.beta:(ang===-90||ang===270)?-e.beta:e.gamma;
   if(D.t0==null)D.t0=b;D.tb=(D.tb==null?b:D.tb*.7+b*.3);D.tLift=Math.max(0,Math.min(1,(D.t0-D.tb-4)/18));D.tBoost=g>14});
-function kHvClick(d){const k=KS();if(d.khv==="flip")return kHvFlip();if(d.khv==="tilt"){if(kHv&&kHv.tilt){kHv.tilt=false;const b=document.getElementById("khvtilt");if(b)b.textContent="📱 Tilt off";return}return kHvTiltOn()}if(d.khv==="go"){if((k.tix||0)<1){kT("You need a 🎟️ ticket. Learn to earn one!");render();return}k.tix--;kHvNew();kBeep("click");kLine("Roadster with SpaceX package. Thrusters armed. Go!",2);render()}}
+function kHvClick(d){const k=KS();if(kHv&&kHv.pre&&/^q\d$/.test(d.khv)){const D=kHv,i=+d.khv.slice(1),Q=D.Q,ok=i===Q.a;try{kAnswer(Q.s||"sci",ok,Q)}catch(_){}if(ok){D.airMax=125;D.air=125;D.lives=4;kT("🧠 Correct! Bigger air tank and a 4th ❤️!")}else kT(`Answer: ${Q.o[Q.a]}. No bonus this time.`);D.pre=0;render();return}if(kHv&&kHv.pre&&d.khv==="qskip"){kHv.pre=0;render();return}if(d.khv==="flip")return kHvFlip();if(d.khv==="tilt"){if(kHv&&kHv.tilt){kHv.tilt=false;const b=document.getElementById("khvtilt");if(b)b.textContent="📱 Tilt off";return}return kHvTiltOn()}if(d.khv==="go"){if((k.tix||0)<1){kT("You need a 🎟️ ticket. Learn to earn one!");render();return}k.tix--;kHvNew();kBeep("click");kLine("Roadster with SpaceX package. Thrusters armed. Go!",2);render()}}
 const kHvH={};document.addEventListener("pointerdown",e=>{try{if(view!=="kids"||KV.scr!=="hover"||!kHv)return;const b=e.target.closest&&e.target.closest(".hvhold");if(!b)return;e.preventDefault();const m={khv_l:"lift",khv_b:"boost"}[b.id];if(!m)return;kHv[m]=true;kHvH[e.pointerId]=m}catch(_){}});
 ["pointerup","pointercancel"].forEach(ev=>document.addEventListener(ev,e=>{if(!kHv)return;const m=kHvH[e.pointerId];if(m){kHv[m]=false;delete kHvH[e.pointerId]}},true));
 document.addEventListener("keydown",e=>{if(typeof view==="undefined"||view!=="kids"||KV.scr!=="hover"||!kHv)return;if(e.key===" "||e.key==="ArrowUp"){e.preventDefault();kHv.lift=true}if(e.key==="ArrowRight")kHv.boost=true;if(e.key==="f"||e.key==="F")kHvFlip()});
