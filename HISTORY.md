@@ -1638,6 +1638,17 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Tested: all 14 study modes open on an iPhone-size screen with no errors or sideways scrolling; full suite passes.
 - Round 2 (`sie_more.js`): +26 cards, +46 questions (market participants, bid/ask, rights/warrants, ADRs, bond types and ratings, money market, GNMA/MBS, NAV math, REITs, options intrinsic/time value, short sales, discretion, statements, ACATS, free-riding, gifts $300 under Rule 3220 from Mar 30, 2026, Reg S-P, 15c3-3, laws and arbitration). Totals: 61 cards, 90 questions.
 
+## 19. Nov 25, 2026: audio fixes, version ids, KV quota, Free EA Course
+- Builds now always get a unique version id (build.py: argument or a UTC timestamp, never "dev"); before this, installed apps never noticed updates. Ship with `python3 build.py "Version YYYY-MM-DDx · Mon D"`.
+- Audio: dollar amounts spoken as words in the phone voice (sayable) and in all 1,315 recorded EA facts (tts_norm.money, re-recorded); abbreviations spelled letter by letter except word-like ones (FICA, ITIN, FINRA…); recorded voice (plays in background) is the default (S.set.recv2); smart mix draws new facts randomly, weighting weaker domains, instead of always the same section; updates wait only while audio is playing.
+- Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
+- Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
+
+- 2026-11-24 Version 2026-11-25f: Audio screen links the Free EA Course podcast on YouTube; HISTORY notes for Nov 25
+- 2026-11-24 Media: Free EA Course episode 4
+- 2026-11-24 Podcast: RSS feed and cover for the Free EA Course
+- 2026-11-24 Media: Free EA Course episode 3
+- 2026-11-24 Media: Free EA Course episode 2
 - 2026-11-24 Version 2026-11-25e: Recorded voice: all 1,315 EA facts back, dollar amounts now spoken as words in every recording
 - 2026-11-24 Media: Free EA Course episode 1 (podcast MP3 + YouTube MP4)
 - 2026-11-24 Version 2026-11-25d: Cloud saves batched to once a minute and trial-time reports every 3 minutes; sync worker writes to KV only on change (stays under Cloudflare free daily limits)
