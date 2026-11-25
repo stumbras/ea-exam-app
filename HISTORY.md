@@ -1644,6 +1644,9 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
 - Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
 
+- 2026-11-25 Version 2026-11-25k · Nov 25: Podcast list: guest episodes and EA ep 13
+- 2026-11-25 Guest deep-dive episodes: EDPNA, Customs Broker, Enrolled Agent, Series 65, SIE; EA ep 13
+- 2026-11-25 Media: Free EA Course episode 13
 - 2026-11-25 Version 2026-11-25j · Nov 25: Customs Broker: 82 new questions and 5 study cards
 - 2026-11-25 Version 2026-11-25i · Nov 25: SIE: 129 new questions and 17 study cards (pool doubled)
 - 2026-11-25 Allow cross-site reads of podcast media
