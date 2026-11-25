@@ -1638,6 +1638,8 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Tested: all 14 study modes open on an iPhone-size screen with no errors or sideways scrolling; full suite passes.
 - Round 2 (`sie_more.js`): +26 cards, +46 questions (market participants, bid/ask, rights/warrants, ADRs, bond types and ratings, money market, GNMA/MBS, NAV math, REITs, options intrinsic/time value, short sales, discretion, statements, ACATS, free-riding, gifts $300 under Rule 3220 from Mar 30, 2026, Reg S-P, 15c3-3, laws and arbitration). Totals: 61 cards, 90 questions.
 
+- 2026-11-24 Version 2026-11-25e: Recorded voice: all 1,315 EA facts back, dollar amounts now spoken as words in every recording
+- 2026-11-24 Media: Free EA Course episode 1 (podcast MP3 + YouTube MP4)
 - 2026-11-24 Version 2026-11-25d: Cloud saves batched to once a minute and trial-time reports every 3 minutes; sync worker writes to KV only on change (stays under Cloudflare free daily limits)
 - 2026-11-24 Version 2026-11-25c: Recorded voice: 73 facts re-recorded with dollar amounts as words; 150 not yet re-recorded are paused (not played) until redone
 - 2026-11-24 Version 2026-11-25b: Audio smart mix: topics mixed randomly each time (weaker areas a bit more often) instead of always starting in the same section
