@@ -1644,6 +1644,9 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
 - Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
 
+- 2026-11-26 Version 2026-11-26x: Reddit helper: one task at a time with 3 big steps, daily goal dots, done/skip return to today
+- 2026-11-26 Site: free exam podcasts section with Spotify, YouTube, Pocket Casts and RSS links
+- 2026-11-26 Media: Free EA Course episode 24
 - 2026-11-26 Version 2026-11-26w: Reddit helper: daily limits, 9:1 helpful-to-promo meter, 14-day per-group promo spacing, rules checkbox before posts, skip button, this-week search
 - 2026-11-26 Media: Free EA Course episode 23
 - 2026-11-26 Media: Free EA Course episode 22
