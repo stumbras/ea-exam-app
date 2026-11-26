@@ -1644,6 +1644,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
 - Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
 
+- 2026-11-25 Version 2026-11-26u · Nov 26: Part 2: 34 questions on the least-covered PSI outline topics
 - 2026-11-25 Version 2026-11-26t · Nov 26: Part 2 and 3: GPT batch 2 questions, exam-day tactics
 - 2026-11-25 Media: Free EA Course episode 18
 - 2026-11-25 Media: Free EA Course episode 17
