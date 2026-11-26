@@ -1644,6 +1644,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
 - Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
 
+- 2026-11-25 Version 2026-11-26p · Nov 26: Enrolled Agent Part 3: 36 new questions on the least-covered topics
 - 2026-11-25 Version 2026-11-26o · Nov 26: Podcast episodes button on each course home
 - 2026-11-25 Version 2026-11-26n · Nov 26: All 239 forms save for offline use; forms never spin forever; kids games lock zoom
 - 2026-11-25 Version 2026-11-26m · Nov 26: Enrolled Agent story questions: wrong answers balanced
