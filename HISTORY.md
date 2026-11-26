@@ -1644,7 +1644,26 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Cloudflare KV free tier (1,000 writes/day): cloud saves at most once a minute (csLater throttle) + on hide; trial-time reports every 3 min; sync worker writes wixlast/wixerr only on change and throttles the Wix check in memory.
 - Free EA Course: two-host 10-minute episodes built in /home/claude/podcast (show.py, video.py, notes.py, ytdesc.py, feed.py, publish.sh), uploaded to YouTube playlist PLGXhGTjp8qAo; podcast RSS at solvinglifellc-site…/media/podcast.xml; linked from the EA audio screen.
 
+- 2026-11-26 Version 2026-11-26w: Reddit helper: daily limits, 9:1 helpful-to-promo meter, 14-day per-group promo spacing, rules checkbox before posts, skip button, this-week search
+- 2026-11-26 Media: Free EA Course episode 23
+- 2026-11-26 Media: Free EA Course episode 22
+- 2026-11-26 Media: Free EA Course episode 21
+- 2026-11-26 Media: Free EA Course episode 20
+- 2026-11-26 Media: Free EA Course episode 14
+- 2026-11-26 Media: Free EA Course episode 13
+- 2026-11-26 Media: Free EA Course episode 12
+- 2026-11-26 Media: Free EA Course episode 11
+- 2026-11-26 Media: Free EA Course episode 10
+- 2026-11-26 Media: Free EA Course episode 9
+- 2026-11-26 Media: Free EA Course episode 8
+- 2026-11-25 Media: Free EA Course episode 7
+- 2026-11-25 Media: Free EA Course episode 6
+- 2026-11-25 Media: Free EA Course episode 5
+- 2026-11-25 Media: Free EA Course episode 4
+- 2026-11-25 Media: Free EA Course episode 3
+- 2026-11-25 Media: Free EA Course episode 2
 - 2026-11-25 Version 2026-11-26v: Round 5: 20 Part 2 + 16 Part 3 scenario questions for thinnest topics
+- 2026-11-25 Media: Free EA Course episode 1
 - 2026-11-25 Media: Free EA Course episode 19
 - 2026-11-25 Version 2026-11-26u · Nov 26: Part 2: 34 questions on the least-covered PSI outline topics
 - 2026-11-25 Version 2026-11-26t · Nov 26: Part 2 and 3: GPT batch 2 questions, exam-day tactics
