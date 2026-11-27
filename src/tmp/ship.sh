@@ -12,7 +12,7 @@ rm -rf /home/claude/ea-exam-app/src
 cd /home/claude/ea-exam-app && cp -r /home/claude/ea-app/pwa/. . && git add -A
 git -c user.name="Linas Kerbelis" -c user.email="stumbras@users.noreply.github.com" commit -qm "$1: $2
 
-Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_017Y7zWT8MhmMBQSpWCTPuco"
 git -c push.negotiate=true push -q origin main && git -c push.negotiate=true push -q origin main:gh-pages
 # branch "site" = the app only (no src/, HISTORY.md, README.md), for web hosts such as Cloudflare Pages
