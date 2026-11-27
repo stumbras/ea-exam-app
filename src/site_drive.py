@@ -29,7 +29,7 @@ function pick(k){if(S.done)return;S.done=1;const d=S.qs[S.i],bs=$("quiz").queryS
 function next(){S.i++;if(S.i<S.qs.length)return show();const p=Math.round(100*S.ok/S.qs.length);
  $("quiz").innerHTML='<h2>Your score: '+S.ok+' of '+S.qs.length+' ('+p+'%)</h2><p>'+(p>=80?'Good. Most states require between 70% and 88% to pass.':'Keep practicing. Most states require between 70% and 88% to pass.')+'</p>'+
  (S.bad.length?'<p><b>Review:</b></p><ul>'+S.bad.map(d=>'<li>'+esc(d.q)+' <i>'+esc(d.c)+'</i></li>').join('')+'</ul>':'')+'<button class="go" onclick="start()">Try a new test</button>'}"""
-CTA = ('<div class="cta"><h2>From Solving Life LLC</h2><p>Starting a first job or new to the U.S.? We prepare tax returns and help with ITIN applications: '
+CTA = ('<div class="cta"><h2>From Solving Life LLC</h2><p>We prepare tax returns from simple to complicated: individual and family, self-employed, small business, nonresident (1040-NR), amended and prior-year returns, plus ITIN applications: '
        '<a class="lk" href="https://solvinglifellc.com">solvinglifellc.com</a>.</p><p>Studying for a career license? Try our exam apps for the Enrolled Agent, Series 65, SIE and Customs Broker exams.</p>'
        '<p><a class="btn btn-main" href="apps">See the study apps</a></p></div>')
 def static(qs):
