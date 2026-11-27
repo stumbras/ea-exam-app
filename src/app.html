@@ -43,6 +43,16 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .logo{flex:none;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-weight:700;font-size:15px;letter-spacing:.02em;color:#0f3a4f;background:linear-gradient(145deg,#ffffff,#cfeee9);box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)}
 .top h1{color:#fff}
 .top .cycle{color:rgba(255,255,255,.78)}
+.eaybtn{margin-left:6px;font:600 11.5px system-ui;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+.eaymodal{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px}
+.eaybox{background:#fff;color:#10202e;border-radius:14px;padding:18px;max-width:380px;width:100%;display:flex;flex-direction:column;gap:10px}
+.eaybox button{text-align:left;padding:12px;border-radius:10px;border:2px solid #d5dde6;background:#fff;font:600 15px system-ui;color:#10202e;cursor:pointer}
+.eaybox button small{display:block;font-weight:400;font-size:12.5px;color:#4a5a6a;margin-top:3px}
+.eaybox button.on{border-color:#0f766e;background:#e9f7f5}
+.eaybox button:disabled{opacity:.45}
+.eaybox button.ghost{text-align:center;border:none;color:#1d5fd1}
+.eaybox p{font-size:13px;color:#4a5a6a;margin:0}
+
 .top .chip{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);color:#fff}
 .top .chip .dot{background:rgba(255,255,255,.7)}
 .top .chip.ok .dot{background:#7ee2a8}
@@ -870,13 +880,31 @@ body.course .tabs.bk{display:flex}
 /* ================= QUESTION BANK ================= */
 const BANK=[];
 function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return (h>>>0).toString(36)}
-function F(p,d,f,b){BANK.push({id:"p"+p+"f"+hash(f),p,d,t:"f",lv:1,f,b})}
+let _TY=0;function TY(y){_TY=y} // TY(2026) ... TY(0): items between are only for that tax year
+function _tg(){if(_TY)BANK[BANK.length-1].ty=_TY}
+function F(p,d,f,b){BANK.push({id:"p"+p+"f"+hash(f),p,d,t:"f",lv:1,f,b});_tg()}
 const LABS=[];function LAB(o){o.id="lab"+LABS.length+"-"+hash(o.t);LABS.push(o)} // practice labs: mock tax returns, mock QuickBooks, bookkeeping jobs
 const UNITS={};function U(p,t,re,s,d){(UNITS[p]=UNITS[p]||[]).push({t,re,s,d})} // lesson units: title, quiz matcher, slides
-function Q(p,d,lv,s,c,w,e){BANK.push({id:"p"+p+"q"+hash(s),p,d,t:"q",lv,s,opts:[c,...w],ans:0,ex:e,fixed:false})}
-function QX(p,d,lv,s,o,a,e){BANK.push({id:"p"+p+"q"+hash(s),p,d,t:"q",lv,s,opts:o,ans:a,ex:e,fixed:true})}
+function Q(p,d,lv,s,c,w,e){BANK.push({id:"p"+p+"q"+hash(s),p,d,t:"q",lv,s,opts:[c,...w],ans:0,ex:e,fixed:false});_tg()}
+function QX(p,d,lv,s,o,a,e){BANK.push({id:"p"+p+"q"+hash(s),p,d,t:"q",lv,s,opts:o,ans:a,ex:e,fixed:true});_tg()}
 const EXPL={};function EX(p,f,t){EXPL["p"+p+"f"+hash(f)]=t}
 /*BANK*/
+_TY=0;
+/* ---- EA exam window (Version 2026-11-27a). The window July 1, 2026 - Feb 28, 2027 tests tax year 2025; the next window
+   (expected May 1, 2027 - Feb 29, 2028) tests tax year 2026. The choice is kept in localStorage "ea-eay"; from March 1, 2027
+   the older window can no longer be chosen. EA items (parts 1-3) whose text holds a 2025-only amount are tagged ty 2025;
+   items written for tax year 2026 sit between TY(2026) and TY(0). Items of the other tax year are removed at start. ---- */
+const EAY_CUT="2027-03-01";
+function eayLocked(){return new Date().toISOString().slice(0,10)>=EAY_CUT}
+const EAY=(()=>{if(eayLocked())return 2027;let v=0;try{v=+localStorage.getItem("ea-eay")||0}catch(e){}return v===2027?2027:2026})();
+const EATY=EAY-1;
+const _Y25=/15,750|31,500|23,625|176,100|\$8,550|\$4,300\b|70 cents|\b108,000|88,100|137,000|11,950|626,350|1,252,700|239,100/;
+let EA_TAGGED=0,EA_HIDDEN=0;
+for(let i=BANK.length-1;i>=0;i--){const b=BANK[i];
+  if(b.p>=1&&b.p<=3&&!b.ty){const t=[b.s,b.f,b.b,b.ex].concat(b.opts||[]).join(" ");if(_Y25.test(t)){b.ty=2025;EA_TAGGED++}}
+  if(b.ty&&b.ty!==EATY){BANK.splice(i,1);EA_HIDDEN++}}
+function setEAY(y){if(eayLocked()&&y!==2027)return;try{localStorage.setItem("ea-eay",String(y))}catch(e){}location.reload()}
+function eayLabel(){return EAY===2027?"2026 tax law · exam window from May 2027":"2025 tax law · exam window to Feb 28, 2027"}
 
 /* ================= EXAM STRUCTURE ================= */
 const PARTS={
@@ -1075,8 +1103,9 @@ function grade(it,q,cap){if(S.au&&S.au[it.id])S.au[it.id][2]=0; // q: 0 missed, 
   r[7]=Date.now();S.it[it.id]=r;logDomain(it,ok);persist();
 }
 function markConf(it,on){const r=S.it[it.id];if(r){r[5]=on?1:0}}
+const _BP={n:0,m:{}};function BP(p){if(_BP.n!==BANK.length){_BP.n=BANK.length;_BP.m={};for(const i of BANK){(_BP.m[i.p]=_BP.m[i.p]||[]).push(i)}}return _BP.m[p]||[]} // items of one part, cached (the bank is fixed after start)
 function domStats(p,d){
-  const items=BANK.filter(i=>i.p==p&&i.d==d);let seen=0,mast=0,boxSum=0,ft=0,fm=0,fl=0,fs=0,missed=0;
+  const items=BP(p).filter(i=>i.d==d);let seen=0,mast=0,boxSum=0,ft=0,fm=0,fl=0,fs=0,missed=0;
   for(const i of items){const r=S.it[i.id];const easy=i.t==="f"||i.lv===1;if(easy)ft++;if(r){seen++;boxSum+=Math.min(r[0],MASTER_BOX);if(r[4]===0)missed++;if(easy){fs+=Math.max(r[4]?0.5:0.2,Math.min(r[0],MASTER_BOX));if(r[4])fl++}if(r[0]>=MASTER_BOX){mast++;if(easy)fm++}}}
   const hist=S.dom[p+"-"+d]||"";const hs=histStats(hist),acc=hs.acc; // acc is weighted by difficulty
   return{byLv:hs.by,rawAcc:hs.raw,total:items.length,seen,mast,mastery:items.length?boxSum/(items.length*MASTER_BOX):0,acc,n:hist.length,ft,fm,fl,missed,spct:ft?fs/(ft*MASTER_BOX):0,fs,fpct:ft?fm/ft:0};
@@ -1093,7 +1122,9 @@ function examDate(p){return S.set.exam[p]||""}
 function daysTo(d){return d?Math.ceil((new Date(d+"T12:00")-new Date())/86400000):null}
 function examNote(d){if(!d)return "";const m=+d.slice(5,7);  // the exam is given May 1 through the end of February; this app covers the window that ends Feb 28, 2027
   if(m===3||m===4)return "The exam is not given in March or April. Pick a date from May through February.";
-  if(d>"2027-02-28")return "From May 1, 2027 the exam tests the next tax year. This app covers exams through Feb 28, 2027.";
+  if(EAY===2026&&d>"2027-02-28")return "From May 2027 the exam tests tax year 2026. Tap Exam year at the top and pick From May 2027.";
+  if(EAY===2027&&d<"2027-03-01"&&daysTo(d)>=0)return "This date is in the window that tests tax year 2025. Tap Exam year at the top and pick Now to Feb 28, 2027.";
+  if(EAY===2027&&d>"2028-02-29")return "The window that tests tax year 2026 ends Feb 29, 2028.";
   if(daysTo(d)<0)return "This date has passed.";return ""}
 function examRowHtml(){const d=examDate(part),dl=daysTo(d),e=esc;
   if(examOpen)return `<div class="exambox"><b>Exam dates</b>${exParts().map(p=>{const v=examDate(p),nt=PARTS[p].x?"":examNote(v);return `<label class="examline"><span>${pl(p)}</span><input type="date" data-examin="${p}" value="${v}"><button class="btn ghost small" data-examclr="${p}" type="button">Clear</button></label>${nt?`<div class="small" style="color:var(--warn)">${e(nt)}</div>`:""}`}).join("")}
@@ -1108,8 +1139,8 @@ function newPerDay(p){ // auto pace: see every fact 5 weeks before the exam (tim
   return Math.min(80,Math.max(20,Math.ceil(unseen/Math.max(7,days))));
 }
 function pc(x){return x<10?(Math.round(x*10)/10)+"%":Math.round(x)+"%"}
-function missedPool(p,dom){return BANK.concat(GENS).filter(i=>{const r=S.it[i.id];return i.p==p&&(dom==="all"||i.d==dom)&&r&&r[4]===0}).sort((a,b)=>(S.it[b.id][6]||0)-(S.it[a.id][6]||0))} // last answer was wrong, in any mode
-function easyPool(p,dom){return BANK.filter(i=>i.p==p&&(dom==="all"||i.d==dom)&&(i.t==="f"||i.lv===1))}
+function missedPool(p,dom){return BP(p).concat(GENS).filter(i=>{const r=S.it[i.id];return i.p==p&&(dom==="all"||i.d==dom)&&r&&r[4]===0}).sort((a,b)=>(S.it[b.id][6]||0)-(S.it[a.id][6]||0))} // last answer was wrong, in any mode
+function easyPool(p,dom){return BP(p).filter(i=>(dom==="all"||i.d==dom)&&(i.t==="f"||i.lv===1))}
 function dueList(p,dom){const t=today();return easyPool(p,dom).filter(i=>{const r=S.it[i.id];return r&&r[1]<=t}).sort((a,b)=>S.it[a.id][0]-S.it[b.id][0]||S.it[a.id][1]-S.it[b.id][1])}
 function prior(p,d){const v=S.set.prior&&S.set.prior[p+"-"+d];return v==null||v===""?null:Math.max(0,Math.min(100,+v))/100}
 function domPriority(p,d){const st=domStats(p,d);const pr=prior(p,d);const acc=st.n>=8?(pr==null?st.acc:(st.acc*st.n+pr*8)/(st.n+8)):(pr==null?0.6:pr);return PARTS[p].doms[d][1]*(1.3-acc)*(1.1-st.fpct)}
@@ -1133,9 +1164,15 @@ try{const ls=localStorage.getItem("ea-lastsec");if(ls&&ls!=="start"&&!sessionSto
 const $=s=>document.querySelector(s);
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 
+function eayPick(){const lk=eayLocked();const o=document.createElement("div");o.className="eaymodal";o.onclick=e=>{if(e.target===o)o.remove()};
+  o.innerHTML='<div class="eaybox"><b>Which exam window are you taking?</b>'+
+  '<button '+(lk?'disabled ':'')+'class="'+(EAY===2026?'on':'')+'" onclick="setEAY(2026)">Now to Feb 28, 2027<small>Tests tax year 2025 law'+(lk?' · window closed':'')+'</small></button>'+
+  '<button class="'+(EAY===2027?'on':'')+'" onclick="setEAY(2027)">From May 2027<small>Tests tax year 2026 law and amounts (new window expected May 1, 2027 to Feb 29, 2028)</small></button>'+
+  '<p>Your progress is kept either way. Questions with year-specific amounts switch to the year you pick.</p><button class="ghost" onclick="this.closest(\'.eaymodal\').remove()">Close</button></div>';
+  document.body.appendChild(o)}
 function renderTabs(){
   const bk=!!PARTS[part].bk,X=PARTS[part].x?PARTS[part]:null,cy=document.querySelector(".top .cycle"),h1=document.querySelector(".top h1"),lg=document.querySelector(".top .logo");
-  if(h1)h1.textContent=bk?"Bookkeeping · QuickBooks · Taxes":"Enrolled Agent (EA) Prep · IRS SEE";if(cy)cy.textContent=bk?"Foundation course · 2025 and 2026 amounts":"2025 tax law · exam window to Feb 28, 2027";if(lg){lg.textContent=bk?"BK":"EA";lg.style.background=bk?"#0f7a3d":""}
+  if(h1)h1.textContent=bk?"Bookkeeping · QuickBooks · Taxes":"Enrolled Agent (EA) Prep · IRS SEE";if(cy){if(bk)cy.textContent="Foundation course · 2025 and 2026 amounts";else cy.innerHTML=esc(eayLabel())+' <button class="eaybtn" onclick="eayPick()">Exam year ▾</button>'}if(lg){lg.textContent=bk?"BK":"EA";lg.style.background=bk?"#0f7a3d":""}
   if(X){if(h1)h1.textContent=X.title;if(cy)cy.textContent=X.sub;if(lg){lg.textContent=X.logo;lg.style.background=X.x==="s65"?"#5b3fb0":X.x==="caa"?"#0d5c63":X.x==="notary"?"#7a2e4a":X.x==="cble"?"#1f5d8c":X.x==="sie"?"#2a7d4f":"#a0521a"}}
   const st=view==="start";if(st){if(h1)h1.textContent="Solving Life Academy";if(cy)cy.textContent="Pass your license exam · pick a course";if(lg){lg.innerHTML=SL_LOGO;lg.style.background="transparent"}}
   $("#tabs").className="tabs bk";$("#tabs").hidden=st;
@@ -1167,9 +1204,9 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
   const P=PARTS[part],ps=partStats(part);
   const due=dueList(part,filt).length,nw=newList(part,filt).length;
   touchDay();const newLeft=Math.max(0,newPerDay(part)-S.day.nw);
-  const lv2=BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv===2&&(filt==="all"||i.d==filt)).length;
-  const lv3=BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv===3&&(filt==="all"||i.d==filt)).length;
-  const traps=BANK.filter(i=>i.p==part&&S.it[i.id]&&S.it[i.id][5]).length;
+  const lv2=BP(part).filter(i=>i.t==="q"&&i.lv===2&&(filt==="all"||i.d==filt)).length;
+  const lv3=BP(part).filter(i=>i.t==="q"&&i.lv===3&&(filt==="all"||i.d==filt)).length;
+  const traps=BP(part).filter(i=>S.it[i.id]&&S.it[i.id][5]).length;
   const wd=weakestDomain(part);
   const exam=S.set.exam[part];let daysLeft="";if(exam){const dl=Math.ceil((new Date(exam+"T12:00")-new Date())/86400000);daysLeft=dl>=0?`${dl} days to your ${pl(part)} exam`:"Exam date passed"}
   let verdict;const fp=ps.fpct,np=newPerDay(part);
@@ -1216,11 +1253,11 @@ function renderHome(){if(PARTS[part].bk)return renderBk();const _dn=doneNote;set
     <div class="filters scroll" id="filters">${filters}</div>
     <div class="modes tiles${modeDesc?" desc":""}">
       <button class="mode" data-mode="smart"><span class="lvl">Smart session · pick your time</span><b>Study for 10, 20 or 40 minutes</b><p>Tell the app how long you have. It builds the best mix for that time: reviews that are due, facts you missed, questions from your weakest area, and a calculation or two.</p><span class="cnt">adapts to you</span></button>
-      <button class="mode" data-mode="lessons"><span class="lvl">Slides · units with forms</span><b>Slides</b><p>Unit lessons with form examples and diagrams, plus every fact as a slide by topic. Swipe or tap Next, have a slide read aloud, then quiz yourself.</p><span class="cnt">${(UNITS[part]||[]).length?(UNITS[part].length+" units · "):""}${BANK.filter(i=>i.p==part&&i.t==="f").length} fact slides</span></button>
+      <button class="mode" data-mode="lessons"><span class="lvl">Slides · units with forms</span><b>Slides</b><p>Unit lessons with form examples and diagrams, plus every fact as a slide by topic. Swipe or tap Next, have a slide read aloud, then quiz yourself.</p><span class="cnt">${(UNITS[part]||[]).length?(UNITS[part].length+" units · "):""}${BP(part).filter(i=>i.t==="f").length} fact slides</span></button>
       <button class="mode" data-mode="mix"><span class="lvl">Random 10 · everything mixed</span><b>10 random questions</b><p>A quick shuffle of every kind: easy facts, medium questions, hard scenarios and calculations, picked at random from ${filt==="all"?"the whole part":"this domain"}. Tap again for a new set.</p><span class="cnt">easy · medium · hard · math</span></button>
       <button class="mode" data-mode="easy"><span class="lvl">Easy · daily spaced repetition</span><b>Learn and review facts</b><p>Built on how memory works: reviews first, then 4 related new facts at a time. Read them, get quizzed right away, then again at the end, tomorrow, and at growing gaps. Each fact goes from picking it, to telling it from look-alikes, to typing it.</p><span class="cnt">${due} due · ${Math.min(nw,newLeft)} new today</span></button>
       <button class="mode" data-mode="facts"><span class="lvl">Easy · no daily limit</span><b>Drill all facts in order</b><p>No daily limit: your misses first, then any reviews due, then new facts in order. Facts you answered right stay away until their next scheduled review.</p><span class="cnt">${easyPool(part,filt).filter(i=>{const r=S.it[i.id];return !r||r[4]===0||r[1]<=today()}).length} ready to drill</span></button>
-      <button class="mode" data-mode="cards"><span class="lvl">Flashcards · spaced repetition</span><b>Flip cards</b><p>Classic cards: recall the answer, flip, rate yourself. Shares the same schedule and tracking as Easy. Self-rated cards build a fact up to "learning"; mastery still needs a typed answer in Easy.</p><span class="cnt">${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&S.it[i.id]&&S.it[i.id][1]<=today()).length} due · ${BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt)&&!S.it[i.id]).length} new</span></button>
+      <button class="mode" data-mode="cards"><span class="lvl">Flashcards · spaced repetition</span><b>Flip cards</b><p>Classic cards: recall the answer, flip, rate yourself. Shares the same schedule and tracking as Easy. Self-rated cards build a fact up to "learning"; mastery still needs a typed answer in Easy.</p><span class="cnt">${BP(part).filter(i=>i.t==="f"&&(filt==="all"||i.d==filt)&&S.it[i.id]&&S.it[i.id][1]<=today()).length} due · ${BP(part).filter(i=>i.t==="f"&&(filt==="all"||i.d==filt)&&!S.it[i.id]).length} new</span></button>
       
       <button class="mode" data-mode="audio"><span class="lvl">Audio · hands-free</span><b>Listen and review</b><p>${recOn()?"Recorded voice that keeps playing with the phone locked or another app open. ":""}For driving or the gym: 5, 10 or 15 minutes. You hear a question, a short pause, the answer, then the answer again in short form. Picks facts from your misses and due reviews first, or random.</p><span class="cnt">All parts or this part</span></button>
 
@@ -1497,7 +1534,7 @@ function itemCat(i){if(i.t==="q")return "q";const f=i.f,b=i.b;
 function itemStatus(i){const r=S.it[i.id];if(!r)return "new";if(r[0]>=MASTER_BOX)return "mastered";return r[4]?"learning":"shaky"}
 const STAT={mastered:["Mastered","strong"],learning:["Learning","mid"],shaky:["Shaky","weak"],new:["Not seen","new"]};
 function knowledgeRows(){
-  const items=BANK.filter(i=>i.p==part&&(filt==="all"||i.d==filt));
+  const items=BP(part).filter(i=>(filt==="all"||i.d==filt));
   return Object.entries(CATS).map(([k,label])=>{const list=items.filter(i=>itemCat(i)===k);if(!list.length)return "";
     const c={mastered:0,learning:0,shaky:0,new:0};list.forEach(i=>c[itemStatus(i)]++);const n=list.length,w=x=>(x/n*100).toFixed(1)+"%";
     return `<div class="dom"><div class="name">${label}</div><span class="mono small">${c.mastered}/${n} mastered</span>
@@ -1506,7 +1543,7 @@ function knowledgeRows(){
     `<div class="small muted">Mastered = answered right on 4+ spaced reviews. Shaky = your last answer was wrong.</div>`}
 function renderFacts(){
   const q=factQ.toLowerCase();const P=PARTS[part];
-  const all=BANK.filter(i=>i.p==part&&(filt==="all"||i.d==filt)&&(kCat==="all"||itemCat(i)===kCat));
+  const all=BP(part).filter(i=>(filt==="all"||i.d==filt)&&(kCat==="all"||itemCat(i)===kCat));
   const list=all.filter(i=>(kStat==="all"||itemStatus(i)===kStat)&&(!q||((i.f||i.s)+" "+(i.b||i.opts[i.ans])).toLowerCase().includes(q)));
   const by={};for(const c of list)(by[c.d]=by[c.d]||[]).push(c);
   const chip=(k,v,cur,attr)=>`<button aria-pressed="${cur===k}" ${attr}="${k}">${v}</button>`;
@@ -1606,7 +1643,7 @@ async function explainAI(btn){const s=sess,cur=s.queue[s.pos],it=BYID[cur.id];if
 
 /* ================= LESSONS: unit decks with forms and diagrams, plus every fact as a slide ================= */
 let les=null,unitRe=null;
-function lesDeck(k){return BANK.filter(i=>i.p==part&&i.t==="f"&&TOPIC_OF[i.id]===k).sort((a,b)=>(a.d-b.d)||(ORDER[a.id]-ORDER[b.id]))}
+function lesDeck(k){return BP(part).filter(i=>i.t==="f"&&TOPIC_OF[i.id]===k).sort((a,b)=>(a.d-b.d)||(ORDER[a.id]-ORDER[b.id]))}
 function lesKey(){return (les.unit!=null?"u":"")+part+"-"+(les.unit!=null?les.unit:les.topic)}
 function lesLen(){return les.unit!=null?UNITS[part][les.unit].s.length:lesDeck(les.topic).length}
 function lesSave(){S.set.les=S.set.les||{};S.set.les[lesKey()]=les.idx;persist()}
@@ -2082,11 +2119,11 @@ function startSession(mode,n){reviewAll=false;
     const rank=i=>{const r=S.it[i.id];if(!r)return 2;if(r[4]===0)return 0;if(r[1]<=t)return 1;return 9};
     q=easyPool(part,filt).map(i=>({i,k:rank(i)})).filter(x=>x.k<9).sort((a,b)=>a.k-b.k||a.i.d-b.i.d).slice(0,sz).map(x=>x.i);
     if(!q.length){doneNote=DONE_MSG;render();return}}
-  else if(mode==="medium"){q=weightPick(BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv===2&&(filt==="all"||i.d==filt)),sz)}
-  else if(mode==="hard"){const pool=BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv>=2&&(filt==="all"||i.d==filt));const h=weightPick(pool.filter(i=>i.lv===3),Math.ceil(sz*.7));q=h.concat(weightPick(pool.filter(i=>i.lv===2&&!h.includes(i)),sz-h.length));q=shuffle(q)}
-  else if(mode==="weak"){const d=weakestDomain(part);q=weightPick(BANK.filter(i=>i.p==part&&i.d==d),sz)}
-  else if(mode==="traps"){q=shuffle(BANK.filter(i=>i.p==part&&S.it[i.id]&&S.it[i.id][5])).slice(0,sz)}
-  else if(mode==="cards"){const t=today(),pool=BANK.filter(i=>i.p==part&&i.t==="f"&&(filt==="all"||i.d==filt));
+  else if(mode==="medium"){q=weightPick(BP(part).filter(i=>i.t==="q"&&i.lv===2&&(filt==="all"||i.d==filt)),sz)}
+  else if(mode==="hard"){const pool=BP(part).filter(i=>i.t==="q"&&i.lv>=2&&(filt==="all"||i.d==filt));const h=weightPick(pool.filter(i=>i.lv===3),Math.ceil(sz*.7));q=h.concat(weightPick(pool.filter(i=>i.lv===2&&!h.includes(i)),sz-h.length));q=shuffle(q)}
+  else if(mode==="weak"){const d=weakestDomain(part);q=weightPick(BP(part).filter(i=>i.d==d),sz)}
+  else if(mode==="traps"){q=shuffle(BP(part).filter(i=>S.it[i.id]&&S.it[i.id][5])).slice(0,sz)}
+  else if(mode==="cards"){const t=today(),pool=BP(part).filter(i=>i.t==="f"&&(filt==="all"||i.d==filt));
     const due=shuffle(pool.filter(i=>{const r=S.it[i.id];return r&&r[1]<=t})).slice(0,sz);
     const nw=pool.filter(i=>!S.it[i.id]).sort((a,b)=>ORDER[a.id]-ORDER[b.id]).slice(0,Math.max(0,Math.min(12,sz-due.length)));
     q=due.concat(nw);if(!q.length){doneNote="No flashcards are due and none are new in this selection. Come back tomorrow, or pick another domain.";render();return}
@@ -2100,12 +2137,12 @@ function startSession(mode,n){reviewAll=false;
     q=rnd(ez,3).concat(rnd(md,3),rnd(hd,2),rnd(cg,2));
     if(q.length<10){const rest=shuffle(ez.concat(md,hd,cg).filter(i=>!q.includes(i)));q=q.concat(rest.slice(0,10-q.length))}
     q=shuffle(q);if(!q.length){doneNote="Nothing to pick from in this selection.";render();return}}
-  else if(mode==="quiz"){q=weightPick(BANK.filter(i=>i.p==part&&i.t==="q"&&(filt==="all"||i.d==filt)),sz);if(!q.length){doneNote="No questions in this module yet.";render();return}}
+  else if(mode==="quiz"){q=weightPick(BP(part).filter(i=>i.t==="q"&&(filt==="all"||i.d==filt)),sz);if(!q.length){doneNote="No questions in this module yet.";render();return}}
   else if(mode==="leech"){q=hardest(part,20)}
   else if(mode==="final"){ // final-week review: your misses, your hardest facts, then exam-style questions from your weakest domains
     const n2=Math.max(sz,30),ds=Object.keys(PARTS[part].doms).map(d=>({d,st:domStats(part,d)})).sort((a,b)=>(a.st.n>=5?a.st.acc:(prior(part,a.d)??0.5))-(b.st.n>=5?b.st.acc:(prior(part,b.d)??0.5))).slice(0,2).map(x=>x.d);
     const a=shuffle(missedPool(part,"all")).slice(0,Math.ceil(n2*.4)),b=hardest(part,Math.ceil(n2*.2)).filter(i=>!a.includes(i));
-    const c=weightPick(BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv>=2&&ds.includes(String(i.d))&&!a.includes(i)),Math.max(0,n2-a.length-b.length));
+    const c=weightPick(BP(part).filter(i=>i.t==="q"&&i.lv>=2&&ds.includes(String(i.d))&&!a.includes(i)),Math.max(0,n2-a.length-b.length));
     q=shuffle(a.concat(b,c))}
   else if(mode==="qd"){ // n = questions. Adaptive quick drill v2: misses, due items, weakest areas at a climbing level (hard-only at 75%+), several calculations, few facts once strong, no repeats of fresh correct items.
     const N=n||10,t=today(),pickN=(l,k)=>{let c=0;for(const i of l){if(q.length>=N||c>=k)break;if(!q.includes(i)){q.push(i);c++}}};
@@ -2114,7 +2151,7 @@ function startSession(mode,n){reviewAll=false;
     const facts=easyPool(part,"all"),miss=shuffle(missedPool(part,"all")),dueF=shuffle(facts.filter(i=>{const r=S.it[i.id];return r&&r[4]!==0&&r[1]<=t}));
     const wk=x=>{const q=qAcc(x.st);return q!=null?q:(prior(part,x.d)??0.5)};const ds=Object.keys(PARTS[part].doms).map(d=>({d,st:domStats(part,d)})).sort((a,b)=>wk(a)-wk(b)).slice(0,3).map(x=>x.d);
     const lvOK=(d,lv)=>{const st=domStats(part,d),a=qAcc(st);return a===null?lv>=2:a<.55?lv<=2:a<.75?lv>=2:lv===3};
-    const qs=BANK.filter(i=>i.p==part&&i.t==="q"&&fresh(i));
+    const qs=BP(part).filter(i=>i.t==="q"&&fresh(i));
     pickN(miss,Math.ceil(N*.25));pickN(dueF,Math.ceil(N*(strong?.1:.15)));
     const hardFirst=l=>l.sort((a,b)=>(b.lv||1)-(a.lv||1));
     {const slots=Math.ceil(N*.4),a1=Math.ceil(slots/2),a2=Math.ceil((slots-a1)/2),share=[a1,a2,slots-a1-a2]; // the weakest topic gets half of these places, the next two share the rest (sorting hardest-first across topics used to crowd the weakest one out)
@@ -2124,13 +2161,13 @@ function startSession(mode,n){reviewAll=false;
     pickN(hardFirst(weightPick(qs.filter(i=>(i.lv||1)>=2),N)),N);pickN(weightPick(qs,N),N);pickN(shuffle(facts.filter(fresh)),N);pickN(shuffle(facts),N);
     if(!q.length){doneNote="Nothing to study in this part yet.";render();return}
     const fa=q.filter(i=>i.t==="f"||i.lv===1),ot=shuffle(q.filter(i=>!(i.t==="f"||i.lv===1)));q=[];while(fa.length||ot.length){q.push(...ot.splice(0,3),...fa.splice(0,1))}}
-  else if(mode==="exam"){const rk=i=>{const r=S.it[i.id];return !r?0:r[4]===0?1:2};q=shuffle(BANK.filter(i=>i.p==part&&i.t==="q"&&i.xs)).sort((x,y)=>rk(x)-rk(y)).slice(0,sz);if(!q.length){q=weightPick(BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv>=3),sz)}}
+  else if(mode==="exam"){const rk=i=>{const r=S.it[i.id];return !r?0:r[4]===0?1:2};q=shuffle(BP(part).filter(i=>i.t==="q"&&i.xs)).sort((x,y)=>rk(x)-rk(y)).slice(0,sz);if(!q.length){q=weightPick(BP(part).filter(i=>i.t==="q"&&i.lv>=3),sz)}}
   else if(mode==="common"){q=shuffle(qdCommon(part)).slice(0,sz);if(!q.length){doneNote="No common mistakes yet. They appear after you miss an item twice or miss one you were sure of.";render();return}}
   else if(mode==="smart"){ // n = minutes. Fill the time with what helps most: misses, due reviews, weakest-area questions, a calculation or two, then new facts.
     const t=today(),budget=(n||20)*60;let used=0;const add=(l,cost,cap)=>{let k=0;for(const i of l){if(used+cost>budget||k>=cap)break;if(!q.includes(i)){q.push(i);used+=cost;k++}}};
     const facts=easyPool(part,"all"),miss=shuffle(missedPool(part,"all")),dueF=shuffle(facts.filter(i=>{const r=S.it[i.id];return r&&r[4]!==0&&r[1]<=t}));
     const wk=x=>{const q=qAcc(x.st);return q!=null?q:(prior(part,x.d)??0.5)};const ds=Object.keys(PARTS[part].doms).map(d=>({d,st:domStats(part,d)})).sort((a,b)=>wk(a)-wk(b)).slice(0,2).map(x=>x.d);
-    const qs=BANK.filter(i=>i.p==part&&i.t==="q"&&i.lv>=2);
+    const qs=BP(part).filter(i=>i.t==="q"&&i.lv>=2);
     add(miss,40,Math.ceil(budget*.25/40));                                                   // about a quarter of the time: what was missed
     add(dueF,25,Math.ceil(budget*.25/25));                                                   // a quarter: reviews that are due
     add(weightPick(qs.filter(i=>ds.includes(String(i.d))),40),70,Math.ceil(budget*.30/70));   // most of the rest: exam questions from the two weakest areas
@@ -2141,10 +2178,10 @@ function startSession(mode,n){reviewAll=false;
     const fa=q.filter(i=>i.t==="f"||i.lv===1),ot=q.filter(i=>!(i.t==="f"||i.lv===1));q=[];while(fa.length||ot.length){q.push(...fa.splice(0,3),...ot.splice(0,2))}} // interleave facts and questions
   else if(mode==="heard"){const l=heardIds?heardIds.map(id=>BYID[id]).filter(Boolean):heardPool(part);heardIds=null;q=shuffle(l).slice(0,Math.max(sz,20));if(!q.length){doneNote="No audio facts waiting to be quizzed.";render();return}}
   else if(mode==="missed"){q=missedPool(part,filt).slice(0,sz);if(!q.length){doneNote="Nothing to redrill here. Nice work.";render();return}}
-  else if(mode==="unit"){const pool=BANK.filter(i=>i.p==part&&unitRe&&unitRe.test((i.f||i.s)+" "+(i.b||"")));q=weightPick(pool.filter(i=>i.t==="q"),Math.ceil(sz*.6));q=shuffle(q.concat(weightPick(pool.filter(i=>i.t==="f"),sz-q.length)));if(!q.length){doneNote="No questions are linked to this unit yet.";render();return}}
-  else if(mode==="topic"){q=weightPick(BANK.filter(i=>i.p==part&&TOPIC_OF[i.id]===topicSel),sz)}
-  else if(mode==="weakdom"){q=weightPick(BANK.filter(i=>i.p==part&&i.d==filt),sz)}
-  else if(mode==="mock"){const doms=PARTS[part].doms;for(const d in doms){const k=Math.max(1,Math.round(n*doms[d][1]/100));const pool=lenBal(BANK.filter(i=>i.p==part&&i.d==d&&i.t==="q"),k),unseen=i=>S.it[i.id]?1:0,hardish=shuffle(pool.filter(i=>i.lv>=2)).sort((x,y)=>unseen(x)-unseen(y)),easy=shuffle(pool.filter(i=>i.lv<2)).sort((x,y)=>unseen(x)-unseen(y));const e=Math.min(easy.length,Math.floor(k*0.15));q=q.concat(hardish.slice(0,k-e),easy.slice(0,e+Math.max(0,k-e-hardish.length)))}q=shuffle(q).slice(0,n)}
+  else if(mode==="unit"){const pool=BP(part).filter(i=>unitRe&&unitRe.test((i.f||i.s)+" "+(i.b||"")));q=weightPick(pool.filter(i=>i.t==="q"),Math.ceil(sz*.6));q=shuffle(q.concat(weightPick(pool.filter(i=>i.t==="f"),sz-q.length)));if(!q.length){doneNote="No questions are linked to this unit yet.";render();return}}
+  else if(mode==="topic"){q=weightPick(BP(part).filter(i=>TOPIC_OF[i.id]===topicSel),sz)}
+  else if(mode==="weakdom"){q=weightPick(BP(part).filter(i=>i.d==filt),sz)}
+  else if(mode==="mock"){const doms=PARTS[part].doms;for(const d in doms){const k=Math.max(1,Math.round(n*doms[d][1]/100));const pool=lenBal(BP(part).filter(i=>i.d==d&&i.t==="q"),k),unseen=i=>S.it[i.id]?1:0,hardish=shuffle(pool.filter(i=>i.lv>=2)).sort((x,y)=>unseen(x)-unseen(y)),easy=shuffle(pool.filter(i=>i.lv<2)).sort((x,y)=>unseen(x)-unseen(y));const e=Math.min(easy.length,Math.floor(k*0.15));q=q.concat(hardish.slice(0,k-e),easy.slice(0,e+Math.max(0,k-e-hardish.length)))}q=shuffle(q).slice(0,n)}
   if(!q.length)return;
   newSess(mode,q,n);
 }

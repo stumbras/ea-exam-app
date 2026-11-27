@@ -51,7 +51,7 @@ function xaAll1(){const D=Object.keys(PARTS[part].doms).map(d=>Object.assign({d,
      figure now rests on the long story questions, first try. Unanswered ones are assumed at 60% of the rest (8 phantom answers), so
      the figure starts 10% lower and moves with real story results. A right answer can still only raise it and a wrong one lower it. */
   const p0=prior==null||n<10?null:P/T;let p=p0,story=null;
-  try{const SQ=BANK.filter(i=>i.p==part&&i.story);if(SQ.length&&p0!=null){let ns=0,ks=0;SQ.forEach(i=>{const r=S.it[i.id];if(r&&r[2]){ns++;if(r[3]===r[2])ks++}});const rh=(ks+8*0.6*p0)/(ns+8);p=0.75*p0+0.25*rh;story={n:ns,k:ks,of:SQ.length,raw:p0}}}catch(e){}
+  try{const SQ=BP(part).filter(i=>i.story);if(SQ.length&&p0!=null){let ns=0,ks=0;SQ.forEach(i=>{const r=S.it[i.id];if(r&&r[2]){ns++;if(r[3]===r[2])ks++}});const rh=(ks+8*0.6*p0)/(ns+8);p=0.75*p0+0.25*rh;story={n:ns,k:ks,of:SQ.length,raw:p0}}}catch(e){}
   /* Version 182: results from practice outside this app, entered on the Diagnosis page, pull the figure toward what they show.
      Weight: 1% per outside question from the last 45 days, at most 50%, and only from 10 questions up. */
   let ext=null;try{const L=((S.set.ext||{})[part]||[]).filter(x=>Date.now()-x[0]<45*864e5);let en=0,ec=0;L.forEach(x=>{ec+=x[1];en+=x[2]});if(en>=10&&p!=null){const w=Math.min(0.5,en/100);ext={n:en,c:ec,w,before:p};p=(1-w)*p+w*(ec/en)}else if(en)ext={n:en,c:ec,w:0,before:p}}catch(e){}
@@ -72,12 +72,12 @@ const xaState0=xpState;xpState=function(){const st=xaState0();try{if(!XPU[part]|
     st.steps=st.steps.map((s,k)=>({s,k})).sort((a,b)=>grp(a.s)-grp(b.s)||(a.s.x&&b.s.x?rank[a.s.x.d]-rank[b.s.x.d]:0)||ord[a.s.k]-ord[b.s.k]||a.k-b.k).map(o=>o.s);st.byGain=true}catch(_){}return st};
 /* ---------- 4. yield: how many bank questions lean on each fact ---------- */
 const XAY={};
-function xaYield(){if(XAY[part])return XAY[part];const y={};try{const qt=BANK.filter(i=>i.p==part&&i.t==="q").map(i=>new Set(((i.s+" "+i.opts[i.ans]).toLowerCase().match(/[a-z0-9§]{3,}/g)||[])));
+function xaYield(){if(XAY[part])return XAY[part];const y={};try{const qt=BP(part).filter(i=>i.t==="q").map(i=>new Set(((i.s+" "+i.opts[i.ans]).toLowerCase().match(/[a-z0-9§]{3,}/g)||[])));
     BANK.forEach(i=>{if(i.p!=part||i.t!=="f")return;const w=[...fwords(i)];if(!w.length){y[i.id]=0;return}const need=Math.max(1,Math.ceil(w.length*0.6));let c=0;for(const s of qt){let h=0;for(const x of w){if(s.has(x)){h++;if(h>=need)break}}if(h>=need)c++}y[i.id]=c})}catch(_){}return XAY[part]=y}
 /* ---------- 3. ask first ---------- */
 function xaSpeed(){try{return XPU[part]?(S.set.pace||"fast"):"steady"}catch(_){return"steady"}}
 function xaKnows(d,k){try{if(xaSpeed()!=="steady")return true;const m=xpPeek(d);if(k!=null&&m.pc&&m.pc[k]!==undefined)return m.pc[k]/xpCheckN(k)>=0.5;const e=xaTopic(d);return e.p!=null&&e.n>=5&&e.p>=0.55}catch(_){return false}}
-function xaLearn(d,pool,k){try{const t=today(),Y=xaYield(),yb=i=>{const v=Y[i.id]||0;return v>=3?2:v>=1?1:0},topic=BANK.filter(i=>i.p==part&&i.d==d&&i.t==="f"),due=shuffle(topic.filter(i=>{const r=S.it[i.id];return r&&r[1]<=t})).slice(0,8);
+function xaLearn(d,pool,k){try{const t=today(),Y=xaYield(),yb=i=>{const v=Y[i.id]||0;return v>=3?2:v>=1?1:0},topic=BP(part).filter(i=>i.d==d&&i.t==="f"),due=shuffle(topic.filter(i=>{const r=S.it[i.id];return r&&r[1]<=t})).slice(0,8);
     const all=pool.filter(i=>!S.it[i.id]).sort((a,b)=>(yb(b)-yb(a))||(ORDER[a.id]-ORDER[b.id]));if(!all.length)return false;touchDay();const nw=all.slice(0,xaSpeed()==="max"?16:12),entries=due.map(i=>mkEntry(i));
     if(xaKnows(d,k)){nw.forEach(i=>entries.push(Object.assign(mkEntry(i),{pre:1})));newSess("easy",null,0,entries,nw.map(i=>i.id));
       sess.pre={pool:all.slice(nw.length).map(i=>i.id),added:0,hits:0,n:0};sess.throttled=true;sess.thrShown=1;sess.title="Learn · asked first";sess.note="New facts are asked before they are taught. A wrong answer here costs nothing.";render();return true}
@@ -85,7 +85,7 @@ function xaLearn(d,pool,k){try{const t=today(),Y=xaYield(),yb=i=>{const v=Y[i.id
     if(nw.length>=2)shuffle(nw.slice()).forEach(i=>entries.push({id:i.id,lazy:2,final:true}));
     newSess("easy",null,0,entries,nw.map(i=>i.id));return true}catch(_){return false}}
 xpLearnUnit=function(d,k){return xaLearn(d,xpUnitFacts(k),k)};
-const xaLearnTopic0=xpLearn;xpLearn=function(d){if(!XPU[part])return xaLearnTopic0(d);return xaLearn(d,BANK.filter(i=>i.p==part&&i.d==d&&i.t==="f"),null)};
+const xaLearnTopic0=xpLearn;xpLearn=function(d){if(!XPU[part])return xaLearnTopic0(d);return xaLearn(d,BP(part).filter(i=>i.d==d&&i.t==="f"),null)};
 const xaRecord0=record;record=function(ok,conf){const s=sess,cur=s&&s.queue[s.pos],P=s&&s.pre;if(!(P&&cur&&cur.pre))return xaRecord0.apply(this,arguments);
   const it=BYID[cur.id],key=it.p+"-"+it.d,t=today();let snap=null;
   try{if(!ok)snap={r:S.it[it.id]?S.it[it.id].slice():null,dd:JSON.stringify((S.dd&&S.dd[key])||null),dom:S.dom[key],days:S.days&&S.days[t]?S.days[t].slice():null,nw:S.day?S.day.nw:0}}catch(_){}
@@ -116,11 +116,11 @@ const XACAT=[["exc","EXCEPT and NOT questions",i=>/\bEXCEPT\b|\bNOT\b|not true|f
  ["long","Long scenarios",i=>i.s.length>=220],
  ["hard","Hard questions",i=>i.lv===3]];
 function xaVal(i){const r=S.it[i.id];return r&&r[2]?(r[3]/r[2]+(r[4]?1:0))/2:null}
-function xaCats(){const Q=BANK.filter(i=>i.p==part&&i.t==="q"&&i.opts),seen=Q.filter(i=>xaVal(i)!=null),all=seen.length?seen.reduce((a,i)=>a+xaVal(i),0)/seen.length:null;
+function xaCats(){const Q=BP(part).filter(i=>i.t==="q"&&i.opts),seen=Q.filter(i=>xaVal(i)!=null),all=seen.length?seen.reduce((a,i)=>a+xaVal(i),0)/seen.length:null;
   const rows=XACAT.map(([k,name,f])=>{const pool=Q.filter(f),s=pool.filter(i=>xaVal(i)!=null);return{k,name,total:pool.length,n:s.length,acc:s.length?s.reduce((a,i)=>a+xaVal(i),0)/s.length:null}});
   const G=GENS.filter(g=>g.p==part),gs=G.filter(g=>S.it[g.id]&&S.it[g.id][2]);if(G.length)rows.push({k:"calc",name:"Calculations",total:G.length,n:gs.reduce((a,g)=>a+S.it[g.id][2],0),acc:gs.length?gs.reduce((a,g)=>a+S.it[g.id][3],0)/gs.reduce((a,g)=>a+S.it[g.id][2],0):null});
   rows.forEach(r=>{r.weak=r.acc!=null&&all!=null&&r.n>=6&&r.acc<=all-0.08});return{all,seen:seen.length,rows}}
-function xaBasis(){const A=xaAll(),Q=BANK.filter(i=>i.p==part&&i.t==="q"),seen=Q.filter(i=>S.it[i.id]&&S.it[i.id][2]),first=l=>{const s=seen.filter(l);return{n:s.length,ok:s.length?s.filter(i=>S.it[i.id][3]===S.it[i.id][2]).length/s.length:null}};
+function xaBasis(){const A=xaAll(),Q=BP(part).filter(i=>i.t==="q"),seen=Q.filter(i=>S.it[i.id]&&S.it[i.id][2]),first=l=>{const s=seen.filter(l);return{n:s.length,ok:s.length?s.filter(i=>S.it[i.id][3]===S.it[i.id][2]).length/s.length:null}};
   const lm=typeof lastMock==="function"?lastMock(part):null,mock=lm&&lm.n>=20?{p:lm.c/lm.n,n:lm.n,days:Math.floor((Date.now()-lm.t)/864e5)}:null,un=A.D.filter(x=>!x.n);
   return{A,total:Q.length,seen:seen.length,basic:first(i=>(i.lv||2)===1),med:first(i=>(i.lv||2)===2),hard:first(i=>i.lv===3),cued:first(i=>lenCue(i)),plain:first(i=>!lenCue(i)),mock,un}}
 function xaSolidHtml(){try{const B=xaBasis(),A=B.A,pc=v=>v==null?"–":Math.round(v*100)+"%",row=(ok,t)=>`<div class="xachk ${ok?"y":"n"}"><i>${ok?"✓":"✗"}</i><span>${t}</span></div>`;
@@ -246,7 +246,7 @@ const xaExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.xa=
   if(a==="les"){xpOpenLesson(+d.k);xpFromPath=false;window.scrollTo(0,0);return true}
   if(a==="quiz"){xpRun({unit:+d.k,dd:isNaN(+d.d)?d.d:+d.d});return true}
   if(a==="conf"){startSession("common",10);return true}
-  if(a==="cat"||a==="sg"){let pool;if(d.c==="calc"){pool=GENS.filter(g=>g.p==part)}else{const f=(XACAT.find(c=>c[0]===d.c)||[])[2];pool=f?BANK.filter(i=>i.p==part&&i.t==="q"&&i.opts&&f(i)):[]}
+  if(a==="cat"||a==="sg"){let pool;if(d.c==="calc"){pool=GENS.filter(g=>g.p==part)}else{const f=(XACAT.find(c=>c[0]===d.c)||[])[2];pool=f?BP(part).filter(i=>i.t==="q"&&i.opts&&f(i)):[]}
     const rk=i=>{const r=S.it[i.id];return !r?1:r[4]===0?0:2};const q=shuffle(pool.slice()).sort((x,y)=>rk(x)-rk(y)).slice(0,10);if(q.length){newSess("quiz",shuffle(q));sess.title="Drill: "+(d.c==="calc"?"Calculations":(XACAT.find(c=>c[0]===d.c)||[])[1]);render()}return true}
   return true};
 /* when the path is finished and the estimate says ready, the button says so */
@@ -325,7 +325,7 @@ const xaAdvance0=advance;advance=function(){try{const s=sess;if(s&&XPU[part]&&(x
    pause, answer; the phone voice no longer says each answer a second time in this mode. */
 function xaAudOrder(scope){const rec=!!(aud&&aud.rec),ok=f=>!rec||REC[f.id]!==undefined,t=today();S.au=S.au||{};
   const pool=BANK.filter(i=>i.t==="f"&&(scope==="all"||i.p==part)&&ok(i)),hc=f=>(S.au[f.id]||[0,0])[0],ht=f=>(S.au[f.id]||[0,0])[1]===t?1:0;let link=[];
-  try{const miss=BANK.filter(i=>i.p==part&&i.t!=="f"&&i.opts&&S.it[i.id]&&S.it[i.id][4]===0).sort((a,b)=>(S.it[b.id][7]||0)-(S.it[a.id][7]||0)).slice(0,12);
+  try{const miss=BP(part).filter(i=>i.t!=="f"&&i.opts&&S.it[i.id]&&S.it[i.id][4]===0).sort((a,b)=>(S.it[b.id][7]||0)-(S.it[a.id][7]||0)).slice(0,12);
     for(const m of miss)for(const f of xaFactsFor(m))if(ok(f)&&!link.includes(f))link.push(f)}catch(_){}
   link=link.slice(0,8);const gain={};try{xaAll().D.forEach(x=>{gain[x.d]=x.gain==null?x.w/100:x.gain})}catch(_){}
   const g=f=>f.p==part?(gain[f.d]||0):-1,used=new Set(link);
@@ -333,7 +333,7 @@ function xaAudOrder(scope){const rec=!!(aud&&aud.rec),ok=f=>!rec||REC[f.id]!==un
   const rest=pool.filter(f=>!used.has(f)),ord=(a,b)=>g(b)-g(a)||a.p-b.p||a.d-b.d||ORDER[a.id]-ORDER[b.id];
   return link.concat(hard,rest.filter(f=>!hc(f)).sort(ord),rest.filter(f=>hc(f)).sort((a,b)=>ht(a)-ht(b)||hc(a)-hc(b)||ord(a,b)))}
 function xaAudQueue(scope,n){const rec=!!(aud&&aud.rec),ok=f=>!rec||REC[f.id]!==undefined;let link=[];
-  try{const miss=BANK.filter(i=>i.p==part&&i.t!=="f"&&i.opts&&S.it[i.id]&&S.it[i.id][4]===0).sort((a,b)=>(S.it[b.id][7]||0)-(S.it[a.id][7]||0)).slice(0,12);
+  try{const miss=BP(part).filter(i=>i.t!=="f"&&i.opts&&S.it[i.id]&&S.it[i.id][4]===0).sort((a,b)=>(S.it[b.id][7]||0)-(S.it[a.id][7]||0)).slice(0,12);
     for(const m of miss)for(const f of xaFactsFor(m))if(ok(f)&&!link.includes(f))link.push(f)}catch(_){}
   link=link.slice(0,8);const weak={};try{xaAll().D.filter(x=>x.gain!=null).sort((a,b)=>b.gain-a.gain).slice(0,2).forEach(x=>{weak[x.d]=1})}catch(_){}
   const rest=audQueue0(scope,"smart",n).filter(f=>!link.includes(f)),isW=f=>f.p==part&&weak[f.d],W=rest.filter(isW),R=rest.filter(f=>!isW(f)),out=link.slice();

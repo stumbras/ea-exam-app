@@ -14,11 +14,11 @@ function xpLes(d){const m=XPU[part],U=UNITS[part]||[],pos=S.set.les||{},out=[];i
   U.forEach((u,k)=>{if(m[k]==d)out.push({k,t:u.t,n:u.s.length,out:!!to[k],read:!!to[k]||(pos["u"+part+"-"+k]||0)>=u.s.length-1})});return out}
 let xpFromPath=false;
 function xpOpenLesson(k){part=+part||part;les={unit:null,topic:null,idx:0};view="lessons";xpFromPath=true;lesOpen("u",k)}
-function xpDom(d){const its=BANK.filter(i=>i.p==part&&i.d==d),f=its.filter(i=>i.t==="f"),q=its.filter(i=>i.t==="q"),fs=f.filter(i=>S.it[i.id]).length,qs=q.filter(i=>S.it[i.id]).length,st=domStats(part,d);
+function xpDom(d){const its=BP(part).filter(i=>i.d==d),f=its.filter(i=>i.t==="f"),q=its.filter(i=>i.t==="q"),fs=f.filter(i=>S.it[i.id]).length,qs=q.filter(i=>S.it[i.id]).length,st=domStats(part,d);
   const need=Math.min(30,Math.max(8,Math.ceil(q.length*0.3))),acc=st.n>=8?st.acc:null,learned=!f.length||fs/f.length>=0.8,practiced=learned&&(!q.length||(qs>=Math.min(need,q.length)&&acc!=null&&acc>=0.7)),strong=practiced&&(!q.length||(qs/q.length>=0.6&&st.n>=20&&st.acc>=0.8));
   const L=xpLes(d),lr=L.filter(u=>u.read).length,ln=L.find(u=>!u.read);
   return{d,L,les:L.length,lesRead:lr,lesNext:ln||null,name:PARTS[part].doms[d][0],w:PARTS[part].doms[d][1],f:f.length,fs,q:q.length,qs,need:Math.min(need,q.length),acc,learned,practiced,strong}}
-function xpState(){const D=Object.keys(PARTS[part].doms).map(xpDom),xs=BANK.filter(i=>i.p==part&&i.xs),xsNew=xs.filter(i=>!S.it[i.id]).length,mocks=S.hist.filter(h=>h.p==part&&h.m==="mock"),steps=[];
+function xpState(){const D=Object.keys(PARTS[part].doms).map(xpDom),xs=BP(part).filter(i=>i.xs),xsNew=xs.filter(i=>!S.it[i.id]).length,mocks=S.hist.filter(h=>h.p==part&&h.m==="mock"),steps=[];
   D.forEach(x=>{if(x.les)steps.push({k:"les",x,done:x.learned||x.lesRead>=x.les});steps.push({k:"learn",x,done:x.learned});steps.push({k:"prac",x,done:x.practiced})});
   if(xs.length)steps.push({k:"exam",done:!xsNew,xsNew,xs:xs.length});
   steps.push({k:"mock",done:mocks.length>0,last:mocks.length?mocks[mocks.length-1]:null});
@@ -42,13 +42,13 @@ function xpRun(a){if(a.les!==undefined){xpOpenLesson(a.les);window.scrollTo(0,0)
   if(a.mode==="easy"&&a.filt!=="all"&&xpLearn(a.filt))return;
   const f0=filt;filt=a.filt;try{startSession(a.mode,a.mode==="exam"?(S.set.qd||10):undefined)}finally{filt=f0}}
 /* a Learn step teaches facts: up to 8 due reviews of the topic, then up to 12 new facts in groups of four (shown first, then asked, then asked again in a harder form) */
-function xpLearn(d){try{const t=today(),pool=BANK.filter(i=>i.p==part&&i.d==d&&i.t==="f"),due=shuffle(pool.filter(i=>{const r=S.it[i.id];return r&&r[1]<=t})).slice(0,8),nw=pool.filter(i=>!S.it[i.id]).sort((a,b)=>ORDER[a.id]-ORDER[b.id]).slice(0,12);
+function xpLearn(d){try{const t=today(),pool=BP(part).filter(i=>i.d==d&&i.t==="f"),due=shuffle(pool.filter(i=>{const r=S.it[i.id];return r&&r[1]<=t})).slice(0,8),nw=pool.filter(i=>!S.it[i.id]).sort((a,b)=>ORDER[a.id]-ORDER[b.id]).slice(0,12);
   if(!nw.length)return false;touchDay();const entries=due.map(i=>mkEntry(i));
   for(let k=0;k<nw.length;k+=4){const ch=nw.slice(k,k+4);entries.push({learn:ch.map(i=>i.id),id:ch[0].id});shuffle(ch.slice()).forEach(i=>entries.push(mkEntry(i)))}
   if(nw.length>=2)shuffle(nw.slice()).forEach(i=>entries.push({id:i.id,lazy:2,final:true}));
   newSess("easy",null,0,entries,nw.map(i=>i.id));return true}catch(_){return false}}
 try{document.addEventListener("toggle",e=>{const t=e.target;if(t&&t.classList&&t.classList.contains("xprow")&&t.id)OPEN[t.id]=t.open},true)}catch(_){}
-function xpMockN(){return Math.min(25,BANK.filter(i=>i.p==part&&i.t==="q").length)}
+function xpMockN(){return Math.min(25,BP(part).filter(i=>i.t==="q").length)}
 doNextHtml=function(){try{if(PARTS[part].bk)return"";const a=xpNext();return `<button class="donext" data-xp="go"><span class="dn1">👉 ${a.first?"DO THIS FIRST TODAY":"DO THIS NEXT"}</span><b>${a.first||a.i>=a.tot?"":`Step ${a.i+1} of ${a.tot} · `}${esc(a.t)}</b><span class="dn2">${esc(a.d)}</span><span class="dn3">Tap here ▶</span></button>`+(PARTS[part].x==="notary"&&typeof notaryPathHtml==="function"?notaryPathHtml():"")}catch(_){return""}};
 function xpHtml(){try{if(PARTS[part].bk)return"";const st=xpState(),cur=st.steps.findIndex(s=>!s.done),cs=cur>=0?st.steps[cur]:null,e=esc,chip=(on,now,t)=>`<i class="xpc${on?" on":""}${now?" now":""}">${on?"✓ ":""}${t}</i>`;
   const row=x=>{const now=cs&&cs.x&&cs.x.d===x.d,op=OPEN["xp"+x.d]!==undefined?OPEN["xp"+x.d]:false;return `<details class="xprow${x.strong?" ok":""}${now?" now":""}" id="xp${x.d}" ${op?"open":""}><summary><b>${e(x.name)}</b><span class="xpw">${PARTS[part].x==="caa"?x.q+" questions":x.w+"% of the exam"+(x.dx!=null?" · diagnostic "+Math.round(x.dx*100)+"%":"")}</span><span class="xpcs">${x.les?chip(x.lesDone,now&&cs.k==="les","Lessons"):""}${chip(x.learned,now&&cs.k==="learn","Learn")}${chip(x.practiced,now&&cs.k==="prac",x.parked?"Practice · later":"Practice")}${chip(x.strong,now&&cs.k==="strong","Strong")}</span></summary>
@@ -107,7 +107,7 @@ xpDom=function(d){xpMigrate();const x=xpDom1(d),m=xpPeek(d),st=domStats(part,d),
 const xpState1=xpState;xpState=function(){const st=xpState1();st.steps.forEach(s=>{if(s.k==="prac")s.done=s.x.practiced||s.x.parked;if(s.k==="les")s.done=s.x.lesDone});st.done=st.steps.filter(s=>s.done).length;return st};
 /* lesson by lesson inside a topic */
 const XPUC={};/* which facts and questions each lesson covers: worked out once, they never change */
-function xpUnitPool(k){const key=part+"-"+k;if(!XPUC[key]){const re=UNITS[part][k].re;XPUC[key]={f:BANK.filter(i=>i.p==part&&i.t==="f"&&re.test(i.f+" "+i.b)),q:BANK.filter(i=>i.p==part&&i.t==="q"&&re.test(i.s+" "+(i.b||"")))}}return XPUC[key]}
+function xpUnitPool(k){const key=part+"-"+k;if(!XPUC[key]){const re=UNITS[part][k].re;XPUC[key]={f:BP(part).filter(i=>i.t==="f"&&re.test(i.f+" "+i.b)),q:BP(part).filter(i=>i.t==="q"&&re.test(i.s+" "+(i.b||"")))}}return XPUC[key]}
 function xpUnitFacts(k){return xpUnitPool(k).f}
 function xpUnitQs(k){return xpUnitPool(k).q}
 function xpUnitStep(x){const m=xpPeek(x.d),uq=m.uq||{},ua=m.ua||{},rr=m.rr||{},ul=m.ul||{};
@@ -127,11 +127,11 @@ function xpStuck(x){const m=xpPeek(x.d);if(!x.les||(m.pr||0)<2||(m.rp||0)>=m.pr)
   const miss=new Set(missedPool(part,"all").filter(i=>i.t==="q").map(i=>i.id));let best=null;x.L.forEach(u=>{const n=xpUnitQs(u.k).filter(i=>miss.has(i.id)).length;if(n&&(!best||n>best.n))best={u,n}});
   if(!best)return null;return{t:`Read again: ${best.u.t}`,d:`Last practice round: ${m.pl}% right. ${best.n} of your open misses come from this lesson.`,les:best.u.k,rp:1,dd:x.d}}
 function xpAfter(st,tot){const now=Date.now(),H=S.hist.filter(h=>h.p==part),mocks=H.filter(h=>h.m==="mock"),lm=mocks[mocks.length-1],since=lm?H.slice(H.lastIndexOf(lm)+1).length:H.length,last=H[H.length-1];
-  const base={st,i:tot,tot},dl=typeof daysTo==="function"?daysTo(examDate(part)):null,qn=BANK.filter(i=>i.p==part&&i.t==="q").length;
+  const base={st,i:tot,tot},dl=typeof daysTo==="function"?daysTo(examDate(part)):null,qn=BP(part).filter(i=>i.t==="q").length;
   if(dl!=null&&dl>=0&&dl<=7&&!H.some(h=>h.m==="final"&&now-h.t<2*864e5))return Object.assign({t:"Final-week review",d:`Your exam is ${dl===0?"today":dl===1?"tomorrow":"in "+dl+" days"}. Your misses, your hardest facts, then exam-style questions from your two weakest topics.`,mode:"final",filt:"all"},base);
   if(lm&&last===lm&&typeof mockWeak==="function"){const w=mockWeak(part);if(w&&w.a<0.75)return Object.assign({t:`From your mock: ${PARTS[part].doms[w.d][0]}`,d:`You got ${w.c} of ${w.n} right there in your recent mocks, your lowest topic. Hard questions on it now.`,mode:"hard",filt:isNaN(+w.d)?w.d:+w.d},base)}
   if(!lm||now-lm.t>7*864e5||(since>=15&&now-lm.t>3*864e5)){const n=Math.min(mocks.length<2?50:100,qn);return Object.assign({t:`Mock exam · ${n} questions`,d:`Timed and scored like the real thing, about ${Math.round(n*mpq(part))} min. ${lm?`Last mock: ${lm.c} of ${lm.n} right.`:""}`,mock:n},base)}
-  const un=BANK.filter(i=>i.p==part&&i.t==="q"&&!S.it[i.id]);
+  const un=BP(part).filter(i=>i.t==="q"&&!S.it[i.id]);
   if(un.length>=10&&last&&last.m==="qd")return Object.assign({t:`New questions · ${un.length} you have not seen`,d:"Ten questions you have never answered, so nothing on exam day is a first sight.",unseen:1},base);
   const w=st.D.slice().sort((a,b)=>(a.acc??0)-(b.acc??0))[0];return Object.assign({t:"Keep it sharp: smart drill",d:`Every step of the path is done. Weakest topic right now: ${w?w.name:""}.`,qd:"smart"},base)}
 const xpNext1=xpNext;xpNext=function(){const st=xpState(),due=dueList(part,"all").length,miss=missedPool(part,"all").length,i=st.steps.findIndex(s=>!s.done),tot=st.steps.length;
@@ -146,7 +146,7 @@ const xpNext1=xpNext;xpNext=function(){const st=xpState(),due=dueList(part,"all"
     if(s.x.pr>=1&&s.x.pl!=null){const l=xpLabel(s);l.d=`Round ${s.x.pr+1} · last round ${s.x.pl}% right · 70% on questions moves you on`;return Object.assign(base,l)}}
   return Object.assign(base,xpLabel(s))};
 const xpLearn1=xpLearn;
-function xpLearnUnit(d,k){try{const t=today(),pool=xpUnitFacts(k),topic=BANK.filter(i=>i.p==part&&i.d==d&&i.t==="f"),due=shuffle(topic.filter(i=>{const r=S.it[i.id];return r&&r[1]<=t})).slice(0,8),nw=pool.filter(i=>!S.it[i.id]).sort((a,b)=>ORDER[a.id]-ORDER[b.id]).slice(0,12);
+function xpLearnUnit(d,k){try{const t=today(),pool=xpUnitFacts(k),topic=BP(part).filter(i=>i.d==d&&i.t==="f"),due=shuffle(topic.filter(i=>{const r=S.it[i.id];return r&&r[1]<=t})).slice(0,8),nw=pool.filter(i=>!S.it[i.id]).sort((a,b)=>ORDER[a.id]-ORDER[b.id]).slice(0,12);
   if(!nw.length)return false;touchDay();const entries=due.map(i=>mkEntry(i));
   for(let j=0;j<nw.length;j+=4){const ch=nw.slice(j,j+4);entries.push({learn:ch.map(i=>i.id),id:ch[0].id});shuffle(ch.slice()).forEach(i=>entries.push(mkEntry(i)))}
   if(nw.length>=2)shuffle(nw.slice()).forEach(i=>entries.push({id:i.id,lazy:2,final:true}));
@@ -157,7 +157,7 @@ const xpRun1=xpRun;xpRun=function(a){const tag=c=>{try{if(sess&&view==="session"
     if(q.length<10)q=q.concat(weightPick(xpUnitFacts(a.unit),10-q.length));newSess("unit",shuffle(q));tag({k:"uq",d:a.dd,u:a.unit,fin:a.fin});return}
   if(a.ure!==undefined){if(xpLearnUnit(a.filt,a.ure)){tag({k:"ul",d:a.filt,u:a.ure});return}}
   if(a.mock&&a.mock>1){startSession("mock",a.mock);return}
-  if(a.unseen){const un=shuffle(BANK.filter(i=>i.p==part&&i.t==="q"&&!S.it[i.id])).slice(0,10);if(un.length){newSess("quiz",un);return}}
+  if(a.unseen){const un=shuffle(BP(part).filter(i=>i.t==="q"&&!S.it[i.id])).slice(0,10);if(un.length){newSess("quiz",un);return}}
   xpRun1(a);if(a.step&&a.step.k==="prac"&&a.mode==="quiz")tag({k:"prac",d:a.step.x.d})};
 const xpFinish0=finish;finish=function(){try{const s=sess,c=s&&s.xp;if(c&&s.done>=5){const m=xpMem(c.d),pct=s.correct/s.done;
     if(c.k==="ul"){m.ul=m.ul||{};m.ul[c.u]=(m.ul[c.u]||0)+1}

@@ -25,7 +25,7 @@ function faItems(pt){if(FAC[pt])return FAC[pt];const out=[],seen={};
     const txt=all.map(i=>(i.f||"")+" "+(i.b||"")+" "+(i.s||"")+" "+(i.ex||"")+" "+(i.opts?i.opts.join(" "):"")).join(" \n ");
     const keys=new Set(Object.keys(typeof GL!=="undefined"?GL:{}));Object.keys(gp).forEach(k=>keys.add(k));
     keys.forEach(k=>{if(seen[k]||!faIsAcr(k))return;const g=gl(k);if(!g||!g[0]||g[0].length>70||g[0].toLowerCase()===k.toLowerCase())return;
-      const re=new RegExp("(^|[^A-Za-z0-9])"+k.replace(/[\/\-&]/g,"\\$&")+"([^A-Za-z0-9]|$)");if(!re.test(txt))return;
+      if(!txt.includes(k))return;const re=new RegExp("(^|[^A-Za-z0-9])"+k.replace(/[\/\-&]/g,"\\$&")+"([^A-Za-z0-9]|$)");if(!txt.includes(k)||!re.test(txt))return;
       seen[k]=1;out.push({k:"gl:"+k,kind:"acr",name:k,mean:g[0],full:g[0]+(g[1]?". "+g[1]:"")})})}catch(e){}
   /* a kind needs at least 4 items to make a four-choice question */
   const n={form:out.filter(x=>x.kind==="form").length,acr:out.filter(x=>x.kind==="acr").length};

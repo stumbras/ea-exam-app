@@ -14,7 +14,7 @@ function quickHtml(){const P=PARTS[part],n=S.set.qd||10,e=esc;touchDay();
       <button class="btn" data-qd="common" ${com?"":"disabled"}><span>Common mistakes</span><b>${com}</b></button>
       <button class="btn" data-qd="weak"><span>Weakest area</span><b>${e(String(wd))}. ${e(P.doms[wd][0].split(/[,:(·]/)[0].split(" ").slice(0,3).join(" ").replace(/[&,]$/,""))}</b></button>
       <button class="btn" data-qd="new" ${nw?"":"disabled"}><span>New material</span><b>${nw}</b></button>
-      ${BANK.some(i=>i.p==part&&i.xs)?`<button class="btn" data-qd="exam" style="grid-column:1/-1"><span>Exam-style: forms, thresholds, deadlines, "which taxpayer"</span><b>${BANK.filter(i=>i.p==part&&i.xs&&!S.it[i.id]).length} new</b></button>`:""}
+      ${BANK.some(i=>i.p==part&&i.xs)?`<button class="btn" data-qd="exam" style="grid-column:1/-1"><span>Exam-style: forms, thresholds, deadlines, "which taxpayer"</span><b>${BP(part).filter(i=>i.xs&&!S.it[i.id]).length} new</b></button>`:""}
     </div>
     <div class="small muted">Today: ${day.n||0} answered${S.streak&&S.streak.n?" · "+S.streak.n+"-day streak":""} · ${ps.examAcc===null?"exam-style score after a few drills":"exam-style "+ps.examAcc+"%"}</div>
   </div></section>`}
@@ -46,7 +46,7 @@ function quickClick(b){const d=b.dataset;
   return false}
 
 /* ---------- one clear next step for the exam parts ---------- */
-function doNextPick(){const xs=BANK.filter(i=>i.p==part&&i.xs),xsNew=xs.filter(i=>!S.it[i.id]).length,miss=missedPool(part,"all").length,n=S.set.qd||10;
+function doNextPick(){const xs=BP(part).filter(i=>i.xs),xsNew=xs.filter(i=>!S.it[i.id]).length,miss=missedPool(part,"all").length,n=S.set.qd||10;
   if(miss>=5)return{qd:"missed",t:`Fix your ${miss} misses`,d:"The fastest points: questions you already got wrong, until they stick."};
   if(xsNew)return{qd:"exam",t:`Exam-style drill · ${n} questions`,d:`${xsNew} new questions written like the real test: which form, exact 2025 amounts, deadlines.`};
   if(miss)return{qd:"missed",t:`Fix your ${miss} miss${miss>1?"es":""}`,d:"Clear these before adding new material."};
