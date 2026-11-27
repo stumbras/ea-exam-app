@@ -1660,6 +1660,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - **Search reach** (`site_practice.py`, output in `pwa/company/`): the app is noindex and behind sign-in, and solvinglifewith.com had no sitemap, so search engines had nothing to index. Added free practice-question pages (EA 36, Series 65 30, SIE 30, Customs 30, EDPNA 24) with Quiz structured data, a hub page `free-practice-questions.html`, `sitemap.xml` and `robots.txt`. Rebuild with `node tmp/dumpbank.js <bank files> && python3 site_practice.py`. Still to do by the owner or with his yes: add solvinglifewith.com to Google Search Console and submit the sitemap.
 - Wix blog: SIE and Customs Broker practice-question posts published Nov 27.
 
+- 2026-11-26 Version 2026-11-27a: Site: IndexNow key file
 - 2026-11-26 Version 2026-11-27a: Site: canonical and sitemap addresses without .html
 - 2026-11-26 Version 2026-11-27a: EA exam-year switch with tax year 2026 items; Customs: 278 official past exam questions (2024-2025); free practice-question pages and sitemap; faster home screen
 - 2026-11-26 Version 2026-11-26z: Customs Broker: 33 original questions on GRIs, valuation, entry types, liquidation, protests and bonds
