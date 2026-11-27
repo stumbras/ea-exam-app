@@ -12,6 +12,7 @@
 .sl{border:1px solid #D9E0EA;border-radius:14px;padding:20px;margin:32px 0;background:#F6F8FB}.sl h2{margin:0 0 4px;font-size:22px}.sl>p{margin:0 0 14px;color:#44546A}
 .slg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.slc{background:#fff;border:1px solid #D9E0EA;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
 .slc b{font-size:17px;color:#0F1B2D}.slc span{color:#44546A;font-size:15px;flex:1}.slc a{font-weight:600;color:#0E7C66;text-decoration:none;min-height:32px;display:inline-flex;align-items:center}
+.slb{margin:0 0 14px}.slb button{min-height:46px;font-size:16px;font-weight:600;border-radius:10px;padding:10px 18px;border:0;background:#0E7C66;color:#fff;cursor:pointer}
 .sls{margin:16px 0 0;font-size:15px;color:#44546A}.sls a{color:#0E7C66;margin-right:14px;white-space:nowrap;display:inline-block;min-height:32px}</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Free license exam practice questions", "publisher": {"@type": "Organization", "name": "Solving Life LLC", "url": "https://solvinglifewith.com/"}}</script>
 </head>
@@ -25,15 +26,17 @@
 <div class="cta"><h2>Study all five in one app</h2><p>Adaptive drills, mock exams, audio and free podcasts. Free for 1 hour, then $49 for all five apps for 12 months.</p><p><a class="btn btn-main" href="apps.html">See the study apps</a></p></div>
 <section class="sl" aria-label="More from Solving Life LLC">
 <h2>More from Solving Life LLC</h2>
-<p>This page is free. Here is what else we do.</p>
+<p>This page is free. Support our free tools with a like, a share and a follow.</p>
+<p class="slb"><button type="button" onclick="slShare(this)">Share this page</button></p>
 <div class="slg">
-<div class="slc"><b>Tax preparation</b><span>Individual and family returns, self-employed and small business, nonresident (1040-NR), amended and prior-year returns, ITIN applications, bookkeeping and payroll.</span><a href="https://solvinglifellc.com">Get tax help →</a></div>
+<div class="slc"><b>Tax questions and tax preparation</b><span>Use our expertise. Individual and family returns, self-employed and small business, nonresident (1040-NR), amended and prior-year returns, ITIN applications, bookkeeping and payroll.</span><a href="https://solvinglifellc.com">Get tax help →</a></div>
 <div class="slc"><b>License exam study apps</b><span>Enrolled Agent, Series 65, SIE, Customs Broker and EDPNA. Try free for 1 hour, then $49 for all five for 12 months.</span><a href="https://solvinglifewith.com/apps">See the study apps →</a></div>
 <div class="slc"><b>Free exam podcasts</b><span>The Free EA Course and Free Series 65 Course, on Spotify, YouTube and other podcast apps.</span><a href="https://open.spotify.com/show/0NRGZiPQCCfqHR0qGIvviF">Listen on Spotify →</a></div>
 <div class="slc"><b>More free practice</b><span>U.S. citizenship test, driver's license and motorcycle permit tests, and license exam questions.</span><a href="https://solvinglifewith.com/free-practice-questions">All free practice →</a></div>
 </div>
-<p class="sls">Follow us: <a href="https://www.facebook.com/solvinglifellc">Facebook</a><a href="https://x.com/solvinglifellc">X</a><a href="https://www.youtube.com/@solvinglifellc">YouTube</a><a href="https://www.tiktok.com/@solvinglifellc">TikTok</a><a href="https://www.instagram.com/solvinglifellc/">Instagram</a></p>
+<p class="sls">Like and follow us: <a href="https://www.facebook.com/solvinglifellc">Facebook</a><a href="https://x.com/solvinglifellc">X</a><a href="https://www.youtube.com/@solvinglifellc">YouTube</a><a href="https://www.tiktok.com/@solvinglifellc">TikTok</a><a href="https://www.instagram.com/solvinglifellc/">Instagram</a></p>
 </section>
+<script>function slShare(b){var d={title:document.title,url:location.href.split("?")[0]};if(navigator.share){navigator.share(d).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(d.url).then(function(){b.textContent="Link copied"})}}</script>
 </main>
 <footer class="bottom"><div class="wrap"><span>© 2026 Solving Life LLC. Practice questions are written by Solving Life LLC unless marked as official exam questions. Not affiliated with the IRS, FINRA, NASAA, SSA or CBP.</span></div></footer>
 </body></html>
