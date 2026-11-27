@@ -13,14 +13,20 @@ const ALWAYS = ["linaskerbelis@gmail.com", "info@solvinglifewith.com", "info@sol
 const ADMINS = ["info@solvinglifewith.com"]; // Google accounts that can open the admin dashboard (study.solvinglifewith.com/admin/)
 const WIX_SITE = "8124ca47-5a9e-4015-ad89-7bb92faaf4bf";
 const WIX_PRODUCTS = ["3dcbe428-b0f3-4b32-ae59-70a38b0f2279"]; // "All 4 Exam Study Apps – 12 Months (Buy One, Get All)"
+const WIX_APP_PRODUCTS = { "455a3b0c-26d7-4f30-9674-ea03fdad7167": "cdl" }; // single-app products: "CDL Permit Prep App – 12 Months" ($10) opens the CDL app only
 const YEAR = 365 * 864e5;
 async function cfg(env) { return (await env.P.get("cfg", "json")) || { previewMin: 60 }; }
-async function grantOk(env, email) { const g = await env.P.get("g:" + email, "json"); return !!g && (!g.until || g.until > Date.now()); }
+// A grant is full access to every app unless it is marked appsOnly; g.apps = { cdl: untilMs } opens single apps.
+function grantFull(g) { return !!g && !g.appsOnly && (!g.until || g.until > Date.now()); }
+function grantApps(g) { return g && g.apps ? Object.keys(g.apps).filter(k => g.apps[k] > Date.now()) : []; }
+async function grantOk(env, email) { return grantFull(await env.P.get("g:" + email, "json")); }
 async function access(env, sub) {
   const who = await env.P.get("s:" + sub, "json"), email = (who && who.email || "").toLowerCase();
-  if (email && (ALWAYS.includes(email) || await grantOk(env, email))) return { access: "full", email };
+  const g = email ? await env.P.get("g:" + email, "json") : null;
+  if (email && (ALWAYS.includes(email) || grantFull(g))) return { access: "full", email };
+  const apps = grantApps(g);
   const used = +(await env.P.get("t:" + sub)) || 0, bonus = +(await env.P.get("b:" + sub)) || 0, limit = (await cfg(env)).previewMin * 60000 + bonus;
-  return { access: used >= limit ? "expired" : "trial", usedMs: used, limitMs: limit, email };
+  return { access: used >= limit ? "expired" : "trial", usedMs: used, limitMs: limit, email, apps };
 }
 // A buyer who just paid usually opens the app right away: when someone without full access checks in, look at Wix
 // orders again (at most once a minute) so the purchase unlocks in seconds instead of waiting for the 10-minute timer.
@@ -34,14 +40,18 @@ async function accessNow(env, sub) {
 async function wixSync(env) {
   const key = await env.P.get("wixkey"); if (!key) return { skipped: "no Wix key" };
   const since = await env.P.get("wixlast") || new Date(Date.now() - 30 * 864e5).toISOString();
-  const body = { search: { filter: { $and: [{ paymentStatus: { $eq: "PAID" } }, { updatedDate: { $gt: since } }, { "lineItems.catalogReference.catalogItemId": { $in: WIX_PRODUCTS } }] }, sort: [{ fieldName: "updatedDate", order: "ASC" }], cursorPaging: { limit: 100 } } };
+  const body = { search: { filter: { $and: [{ paymentStatus: { $eq: "PAID" } }, { updatedDate: { $gt: since } }, { "lineItems.catalogReference.catalogItemId": { $in: WIX_PRODUCTS.concat(Object.keys(WIX_APP_PRODUCTS)) } }] }, sort: [{ fieldName: "updatedDate", order: "ASC" }], cursorPaging: { limit: 100 } } };
   const r = await fetch("https://www.wixapis.com/ecom/v1/orders/search", { method: "POST", headers: { authorization: key, "wix-site-id": WIX_SITE, "content-type": "application/json" }, body: JSON.stringify(body) });
   const j = await r.json().catch(() => ({})); if (!r.ok) { const pe = await env.P.get("wixerr", "json"); if (!pe || pe.status !== r.status) await env.P.put("wixerr", JSON.stringify({ at: Date.now(), status: r.status, msg: JSON.stringify(j).slice(0, 300) })); return { error: r.status }; }
   let last = since, n = 0;
   for (const o of j.orders || []) {
     const email = String(o.buyerInfo && o.buyerInfo.email || "").trim().toLowerCase();
-    if (email) { const prev = await env.P.get("g:" + email, "json"), base = Math.max(Date.now(), prev && prev.until || 0);
-      await env.P.put("g:" + email, JSON.stringify({ at: Date.now(), note: "Wix order #" + o.number, until: base + YEAR })); n++; }
+    if (email) { const prev = await env.P.get("g:" + email, "json"), ids = (o.lineItems || []).map(li => li.catalogReference && li.catalogReference.catalogItemId);
+      if (ids.some(id => WIX_PRODUCTS.includes(id))) { const base = Math.max(Date.now(), prev && !prev.appsOnly && prev.until || 0);
+        await env.P.put("g:" + email, JSON.stringify({ at: Date.now(), note: "Wix order #" + o.number, until: base + YEAR, apps: prev && prev.apps || undefined })); n++; }
+      else { const g = prev || { at: Date.now(), appsOnly: true }; g.apps = g.apps || {}; let hit = false;
+        for (const id of ids) { const app = WIX_APP_PRODUCTS[id]; if (app) { g.apps[app] = Math.max(Date.now(), g.apps[app] || 0) + YEAR; hit = true; } }
+        if (hit) { g.note = ((g.note ? g.note + "; " : "") + "Wix order #" + o.number + " (single app)").slice(-200); await env.P.put("g:" + email, JSON.stringify(g)); n++; } } }
     if (o.updatedDate > last) last = o.updatedDate;
   }
   if (last !== since) await env.P.put("wixlast", last); if (await env.P.get("wixerr")) await env.P.delete("wixerr"); return { granted: n }; // write only on change: the 10-minute timer alone used ~290 of the 1,000 free daily writes
@@ -64,6 +74,7 @@ async function hub(req, env, u) {
       else if (code) { await env.P.delete("c:" + code); msg = "Code " + code + " removed."; } }
     else if (!okEmail) msg = "Please type a full email address.";
     else if (act === "add") { await env.P.put("g:" + email, JSON.stringify({ at: Date.now(), note: String(f.get("note") || "").slice(0, 200) })); msg = "Full access given to " + email; }
+    else if (act === "addcdl") { const g = (await env.P.get("g:" + email, "json")) || { at: Date.now(), appsOnly: true }; g.apps = g.apps || {}; g.apps.cdl = Math.max(Date.now(), g.apps.cdl || 0) + YEAR; g.note = String(f.get("note") || g.note || "").slice(0, 200); await env.P.put("g:" + email, JSON.stringify(g)); msg = "CDL app access (12 months) given to " + email; }
     else if (act === "remove") { await env.P.delete("g:" + email); msg = "Access removed for " + email; }
     else if (act === "reset") { for (const sub of await subsOf(email)) await env.P.delete("t:" + sub); msg = "Free preview reset for " + email; }
     else if (act === "extra") { const add = Math.max(0, Math.min(43200, Math.round(+f.get("minutes") || 60))) * 60000, subs = await subsOf(email);
@@ -73,18 +84,18 @@ async function hub(req, env, u) {
   for (const k of cl.keys) { const v = await env.P.get(k.name, "json"); if (v) codes.push({ code: k.name.slice(2), ...v }); }
   const g = await env.P.list({ prefix: "g:" }), s = await env.P.list({ prefix: "s:", limit: 1000 });
   const grants = [];
-  for (const k of g.keys) { const v = await env.P.get(k.name, "json") || {}; grants.push({ email: k.name.slice(2), until: v.until, note: v.note }); }
+  for (const k of g.keys) { const v = await env.P.get(k.name, "json") || {}; grants.push({ email: k.name.slice(2), until: v.until, note: (v.appsOnly ? "[only: " + grantApps(v).join(", ") + "] " : "") + (v.note || ""), appsOnly: !!v.appsOnly }); }
   const users = [];
   for (const k of s.keys) { const v = await env.P.get(k.name, "json"); if (v) users.push({ ...v, used: +(await env.P.get("t:" + k.name.slice(2))) || 0 }); }
   users.sort((a, b) => (b.last || 0) - (a.last || 0));
-  const full = e => ALWAYS.includes((e || "").toLowerCase()) || grants.some(x => x.email === (e || "").toLowerCase() && (!x.until || x.until > Date.now()));
+  const full = e => ALWAYS.includes((e || "").toLowerCase()) || grants.some(x => x.email === (e || "").toLowerCase() && !x.appsOnly && (!x.until || x.until > Date.now()));
   const d = t => t ? new Date(t).toLocaleString("en-US", { timeZone: "America/Denver", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "";
   const mk = await env.P.get("mailkey"), mf = await env.P.get("mailfrom"), wk = await env.P.get("wixkey"), we = await env.P.get("wixerr", "json"), wl = await env.P.get("wixlast");
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Solving Life app access</title>
 <style>body{font:16px/1.45 system-ui,sans-serif;max-width:760px;margin:0 auto;padding:18px;color:#122}h1{font-size:24px}form{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}input{font:inherit;padding:10px;border:1px solid #bbb;border-radius:10px;flex:1;min-width:200px}button{font:inherit;padding:10px 14px;border:0;border-radius:10px;background:#1a6b55;color:#fff;font-weight:700}button.r{background:#a33}button.g{background:#556}table{width:100%;border-collapse:collapse;font-size:14px}td,th{border-bottom:1px solid #ddd;padding:7px 4px;text-align:left}.ok{color:#1a6b55;font-weight:700}.msg{background:#e4f5ec;padding:10px;border-radius:10px}</style></head><body>
 <h1>Solving Life app access</h1><p>People who paid get full access to every exam app (EA, Series 65, EDPNA, Customs Broker). Everyone else gets a free preview after signing in with Google. The kids app is always free.</p>
 ${msg ? `<p class="msg">${esc(msg)}</p>` : ""}
-<form method="post"><input name="email" type="email" placeholder="customer@gmail.com" required><input name="note" placeholder="note (optional, e.g. paid $49 Nov 24)"><button name="act" value="add">Give full access</button><button class="r" name="act" value="remove">Remove</button><button class="g" name="act" value="reset">Reset free hour</button></form>
+<form method="post"><input name="email" type="email" placeholder="customer@gmail.com" required><input name="note" placeholder="note (optional, e.g. paid $49 Nov 24)"><button name="act" value="add">Give full access</button><button name="act" value="addcdl">Give CDL app only (12 months)</button><button class="r" name="act" value="remove">Remove</button><button class="g" name="act" value="reset">Reset free hour</button></form>
 <form method="post"><input name="minutes" type="number" min="0" max="10080" value="${C.previewMin}" style="max-width:120px"><button name="act" value="preview">Set free preview minutes (everyone)</button></form>
 <form method="post"><input name="email" type="email" placeholder="person@gmail.com" required><input name="minutes" type="number" value="60" style="max-width:110px"><button name="act" value="extra">Give extra free minutes</button></form>
 <h2>Wix store sales (automatic)</h2><p>Paid orders for "All 4 Exam Study Apps" give the buyer's email 12 months of full access, checked every 10 minutes. Status: ${wk ? '<span class="ok">Wix key saved</span>' : "no Wix key yet"}${wl ? " · checked through " + esc(d(Date.parse(wl))) : ""}${we ? " · last error " + esc(we.status) : ""}</p>

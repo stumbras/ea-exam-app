@@ -27782,19 +27782,22 @@ function csModal(){let m=document.getElementById("csmodal");if(!m){m=document.cr
 /* ---------- ACCESS: free 60-minute preview per Google account, then full access for people the owner adds in his hub.
    Kids (Becoming Genius) is always free. Not signed in = a sign-in screen on the exam apps. ---------- */
 const AC_BUY="https://www.solvinglifellc.com/product-page/all-4-exam-study-apps-12-months-buy-one-get-all";
+const AC_BUY_APP={cdl:{url:"https://www.solvinglifellc.com/product-page/cdl-permit-prep-app-12-months",label:"CDL Prep only: $10 for 12 months"}}; // single-app products; a grant for one opens that app only
+function acApp(){try{return typeof view!=="undefined"&&view!=="start"&&typeof PARTS!=="undefined"&&PARTS[part]?PARTS[part].x:""}catch(_){return""}}
+function acBuy(){const a=AC_BUY_APP[acApp()];return a?a.url:AC_BUY}
 let acLast=Date.now(),acPend=0,acBusy=false;
 ["pointerdown","keydown","touchstart","scroll"].forEach(ev=>document.addEventListener(ev,()=>{acLast=Date.now()},{passive:true,capture:true}));
 function acKids(){try{return (typeof view!=="undefined"&&view==="kids")||(typeof part!=="undefined"&&typeof PARTS!=="undefined"&&PARTS[part]&&PARTS[part].free&&typeof view!=="undefined"&&view!=="start")||(typeof SLAPP==="function"&&["cit","drive","moto"].includes(SLAPP()))||(typeof SLAPP==="function"&&SLAPP()==="kids")||document.body.classList.contains("kidsmode")}catch(_){return false}}
-function acState(){if(!cs)return"out";const a=cs.acc;if(!a)return"unknown";return a.access}
+function acState(){if(!cs)return"out";const a=cs.acc;if(!a)return"unknown";if(a.access!=="full"&&a.apps&&a.apps.length&&a.apps.includes(acApp()))return"full";return a.access}
 function acLeft(){const a=cs&&cs.acc,m=a?Math.max(0,Math.ceil(((a.limitMs||3600000)-(a.usedMs||0))/60000)):60;return m>=2880?Math.floor(m/1440)+" days":m>=120?Math.floor(m/60)+" h":m+" min"}
 async function acCheck(){if(!cs||acBusy)return;acBusy=true;try{const{st,j}=await csReq("/status");if(st===200&&j.access){if(!j.email){cs=null;csSave();csChip()}else{cs.acc=Object.assign(j,{at:Date.now()});csSave()}}}catch(_){}finally{acBusy=false;acDraw()}}
-async function acTick(){if(!cs||!cs.acc||cs.acc.access!=="trial"||acPend<5000)return;const ms=acPend;acPend=0;
+async function acTick(){if(!cs||!cs.acc||cs.acc.access!=="trial"||acState()==="full"||acPend<5000)return;const ms=acPend;acPend=0;
   try{const{st,j}=await csReq("/tick",{ms});if(st===200&&j.access){cs.acc=Object.assign(j,{at:Date.now()});csSave()}else acPend+=ms}catch(_){acPend+=ms}acDraw()}
 function acBadge(show){let b=document.getElementById("acbadge");if(!show){if(b)b.remove();return}
-  if(!b){b=document.createElement("button");b.id="acbadge";b.style.cssText="position:fixed;right:10px;bottom:10px;z-index:60;border:0;border-radius:999px;padding:8px 13px;font:700 13px system-ui;background:#ffd666;color:#3a2a00;box-shadow:0 4px 14px rgba(0,0,0,.25)";b.onclick=()=>window.open(AC_BUY,"_blank");document.body.appendChild(b)}
+  if(!b){b=document.createElement("button");b.id="acbadge";b.style.cssText="position:fixed;right:10px;bottom:10px;z-index:60;border:0;border-radius:999px;padding:8px 13px;font:700 13px system-ui;background:#ffd666;color:#3a2a00;box-shadow:0 4px 14px rgba(0,0,0,.25)";b.onclick=()=>window.open(acBuy(),"_blank");document.body.appendChild(b)}
   b.textContent="Free preview · "+acLeft()+" left · Get full access"}
 function acWall(kind){let w=document.getElementById("acwall");if(!kind){if(w)w.remove();return}
-  if(w&&w.dataset.k===kind)return;if(!w){w=document.createElement("div");w.id="acwall";document.body.appendChild(w)}w.dataset.k=kind;
+  const one=AC_BUY_APP[acApp()],wk=kind+(one?":"+acApp():"");if(w&&w.dataset.k===wk)return;if(!w){w=document.createElement("div");w.id="acwall";document.body.appendChild(w)}w.dataset.k=wk;
   w.style.cssText="position:fixed;inset:0;z-index:9000;background:linear-gradient(160deg,#0f2e47,#1a6b55);color:#fff;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto";
   const kidsLink=`<p style="margin:16px 0 0;font-size:14px;opacity:.85">The kids app is always free: <a style="color:#ffd666" href="./?kids">Becoming Genius</a></p>`;
   w.innerHTML=kind==="out"?`<div style="max-width:440px;text-align:center;font:16px/1.5 system-ui,sans-serif">
@@ -27805,7 +27808,8 @@ function acWall(kind){let w=document.getElementById("acwall");if(!kind){if(w)w.r
   :`<div style="max-width:440px;text-align:center;font:16px/1.5 system-ui,sans-serif">
     <div style="font-size:44px">⏰</div><h2 style="font-size:26px;margin:6px 0">Your free hour is done</h2>
     <p>Hope it helped! Get full access to every Solving Life exam app (EA, Series 65, EDPNA and Customs Broker), always updated, with your progress kept.</p>
-    <a href="${AC_BUY}" target="_blank" rel="noopener" style="display:inline-block;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;text-decoration:none;margin-top:8px">Get full access: $49 for all 5 apps</a>
+    ${one?`<a href="${one.url}" target="_blank" rel="noopener" style="display:inline-block;border-radius:999px;padding:14px 22px;font:800 17px system-ui;background:#ffd666;color:#3a2a00;text-decoration:none;margin-top:8px">${one.label}</a><br>`:""}
+    <a href="${AC_BUY}" target="_blank" rel="noopener" style="display:inline-block;border-radius:999px;padding:${one?"10px 18px;font:700 15px":"14px 22px;font:800 17px"} system-ui;background:${one?"#fff":"#ffd666"};color:#3a2a00;text-decoration:none;margin-top:8px">${one?"Or every exam app: $49":"Get full access: $49 for all exam apps"}</a>
     <p style="font-size:14px;margin:8px 0 0;opacity:.9">Pay with the same email you signed in with (<b>${esc(cs&&cs.email||"")}</b>). Access opens in about a minute: come back and tap "I already paid".</p>
     <p style="margin:14px 0 0;display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><input id="accode" placeholder="Have a code?" style="border:0;border-radius:999px;padding:10px 14px;font:600 15px system-ui;width:150px;text-transform:uppercase"><button id="acapply" style="border:0;border-radius:999px;padding:10px 14px;font:700 15px system-ui;background:#fff;color:#0f2e47">Apply</button></p>
     <p style="margin:10px 0 0"><button id="acre" style="background:none;border:1px solid #fff8;color:#fff;border-radius:999px;padding:9px 14px;font:600 14px system-ui">I already paid: check again</button></p>
@@ -27819,8 +27823,8 @@ const AC_ON=/(^|\.)solvinglifewith\.com$|\.workers\.dev$|\.github\.io$/.test(loc
 function acDraw(){if(!AC_ON||acKids()){acWall(null);acBadge(false);return}const st=acState();
   if(st==="out"){acBadge(false);if(!document.getElementById("csmodal"))acWall("out");else acWall(null);return}
   if(st==="expired"){acBadge(false);acWall("expired");return}
-  acWall(null);acBadge(st==="trial")}
-setInterval(()=>{if(cs&&cs.acc&&cs.acc.access==="trial"&&!acKids()&&document.visibilityState==="visible"&&Date.now()-acLast<120000)acPend+=15000},15000);
+  acWall(null);acBadge(st==="trial");const bb=document.getElementById("acbadge");if(bb&&AC_BUY_APP[acApp()])bb.textContent="Free preview · "+acLeft()+" left · "+AC_BUY_APP[acApp()].label}
+setInterval(()=>{if(cs&&cs.acc&&cs.acc.access==="trial"&&acState()!=="full"&&!acKids()&&document.visibilityState==="visible"&&Date.now()-acLast<120000)acPend+=15000},15000);
 setInterval(acTick,180000);setInterval(acDraw,4000);setInterval(acCheck,10*60000);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")acTick();else acCheck()});
 window.slAccess={check:acCheck,draw:acDraw};
@@ -28546,7 +28550,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 2026-11-28c · Nov 28";
+const BUILD="Version 2026-11-28d · Nov 28";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
