@@ -13,7 +13,7 @@ self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET")return;c
       try{const res=await fetch(key,{signal:ctl.signal});clearTimeout(t);if(res&&res.ok)fc.put(key,res.clone());return res}catch(_){clearTimeout(t);return new Response("Offline and this form is not saved yet.",{status:503,headers:{"Content-Type":"text/plain"}})}})());
     return}
   if(u.origin===self.location.origin&&/\/version\.json$/.test(u.pathname)){e.respondWith(fetch(r).catch(()=>new Response("{}",{headers:{"Content-Type":"application/json"}})));return}
-  if(u.origin===self.location.origin&&r.mode==="navigate"&&/^(ea|65|edpna|kids|cble|sie|admin)(\/(index\.html)?)?$/.test(u.href.slice(BASE.length).split(/[?#]/)[0]))return; // short links /ea/ /65/ /edpna/ /kids/: tiny pages that open the right app
+  if(u.origin===self.location.origin&&r.mode==="navigate"&&/^(ea|65|edpna|kids|cble|sie|citizenship|driving|motorcycle|admin)(\/(index\.html)?)?$/.test(u.href.slice(BASE.length).split(/[?#]/)[0]))return; // short links /ea/ /65/ /edpna/ /kids/: tiny pages that open the right app
   if(u.origin===self.location.origin&&u.href.startsWith(BASE)){
     const key=(r.mode==="navigate"||u.href===BASE)?INDEX:u.origin+u.pathname;
     e.respondWith((async()=>{const c=await caches.open(CACHE),hit=await c.match(key);

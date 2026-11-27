@@ -7,6 +7,9 @@
 const SLAPPS={
   s65:{part:5,name:"Solving Life Series 65 Prep",short:"Series 65 Prep",man:"manifest-65.webmanifest",color:"#5b3fb0",icon:"apple-touch-icon-65.png"},
   cble:{part:9,name:"Solving Life Customs Broker Prep",short:"Customs Broker Prep",man:"manifest-cble.webmanifest",color:"#1f5d8c",icon:"apple-touch-icon-cble.png"},
+  cit:{part:11,name:"Solving Life Citizenship Test",short:"Citizenship",man:"manifest-cit.webmanifest",color:"#102A49",icon:"apple-touch-icon.png"},
+  drive:{part:12,name:"Solving Life Driver's Test",short:"Driver's Test",man:"manifest-drive.webmanifest",color:"#127A68",icon:"apple-touch-icon.png"},
+  moto:{part:13,name:"Solving Life Motorcycle Test",short:"Motorcycle",man:"manifest-moto.webmanifest",color:"#7a4a12",icon:"apple-touch-icon.png"},
   sie:{part:10,name:"Solving Life SIE Prep",short:"SIE Prep",man:"manifest-sie.webmanifest",color:"#2a7d4f",icon:"apple-touch-icon-sie.png"},
   edpna:{part:6,name:"Solving Life EDPNA Prep",short:"EDPNA Prep",man:"manifest-edpna.webmanifest",color:"#a0521a",icon:"apple-touch-icon-edpna.png"}
 };
@@ -16,7 +19,7 @@ function slAppUI(){try{const a=SLAPPS[SLAPP()];if(!a)return;document.title=a.nam
   const at=document.querySelector('meta[name="apple-mobile-web-app-title"]');if(at)at.setAttribute("content",a.short);
   const ic=document.querySelector('link[rel="apple-touch-icon"]');if(ic)ic.setAttribute("href",a.icon);
   const tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.setAttribute("content",a.color)}catch(_){}}
-(function(){try{const sm=location.pathname.match(/\/(ea|65|edpna|kids|cble|sie)\/(index\.html)?$/);if(sm){location.replace("../?"+({ea:"study","65":"s65",edpna:"edpna",kids:"kids",cble:"cble",sie:"sie"})[sm[1]]+location.hash);return}}catch(_){}})();
+(function(){try{const sm=location.pathname.match(/\/(ea|65|edpna|kids|cble|sie|citizenship|driving|motorcycle)\/(index\.html)?$/);if(sm){location.replace("../?"+({ea:"study","65":"s65",edpna:"edpna",kids:"kids",cble:"cble",sie:"sie",citizenship:"cit",driving:"drive",motorcycle:"moto"})[sm[1]]+location.hash);return}}catch(_){}})();
 (function(){try{const q=new URLSearchParams(location.search);
   if(q.has("study")||q.has("kids")||q.has("course"))localStorage.removeItem("slApp");
   if(q.has("study")){localStorage.removeItem("kidsLock");localStorage.removeItem("courseLock")}

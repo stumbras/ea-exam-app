@@ -1,0 +1,2 @@
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const p=await b.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message.slice(0,300)+' @'+(e.stack||'').split('\n')[1]));p.on('console',m=>{if(m.type()==='error')errs.push('C:'+m.text().slice(0,200))});
+await p.goto('http://localhost:8765/?cit',{waitUntil:'load'});await p.waitForTimeout(2500);console.log(errs.slice(0,5),await p.title(),await p.evaluate(()=>typeof PARTS+' '+typeof render+' '+location.href));await b.close()})()

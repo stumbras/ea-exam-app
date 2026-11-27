@@ -1,0 +1,30 @@
+{
+ "name": "Solving Life Citizenship Test",
+ "short_name": "Citizenship",
+ "description": "Free U.S. citizenship civics test practice by Solving Life LLC. Works offline.",
+ "start_url": "./?cit",
+ "id": "./?cit",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#102A49",
+ "theme_color": "#102A49",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}

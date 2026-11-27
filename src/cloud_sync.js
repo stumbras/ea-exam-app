@@ -81,7 +81,7 @@ function csModal(){let m=document.getElementById("csmodal");if(!m){m=document.cr
 const AC_BUY="https://www.solvinglifellc.com/product-page/all-4-exam-study-apps-12-months-buy-one-get-all";
 let acLast=Date.now(),acPend=0,acBusy=false;
 ["pointerdown","keydown","touchstart","scroll"].forEach(ev=>document.addEventListener(ev,()=>{acLast=Date.now()},{passive:true,capture:true}));
-function acKids(){try{return (typeof view!=="undefined"&&view==="kids")||(typeof SLAPP==="function"&&SLAPP()==="kids")||document.body.classList.contains("kidsmode")}catch(_){return false}}
+function acKids(){try{return (typeof view!=="undefined"&&view==="kids")||(typeof part!=="undefined"&&typeof PARTS!=="undefined"&&PARTS[part]&&PARTS[part].free&&typeof view!=="undefined"&&view!=="start")||(typeof SLAPP==="function"&&["cit","drive","moto"].includes(SLAPP()))||(typeof SLAPP==="function"&&SLAPP()==="kids")||document.body.classList.contains("kidsmode")}catch(_){return false}}
 function acState(){if(!cs)return"out";const a=cs.acc;if(!a)return"unknown";return a.access}
 function acLeft(){const a=cs&&cs.acc,m=a?Math.max(0,Math.ceil(((a.limitMs||3600000)-(a.usedMs||0))/60000)):60;return m>=2880?Math.floor(m/1440)+" days":m>=120?Math.floor(m/60)+" h":m+" min"}
 async function acCheck(){if(!cs||acBusy)return;acBusy=true;try{const{st,j}=await csReq("/status");if(st===200&&j.access){if(!j.email){cs=null;csSave();csChip()}else{cs.acc=Object.assign(j,{at:Date.now()});csSave()}}}catch(_){}finally{acBusy=false;acDraw()}}

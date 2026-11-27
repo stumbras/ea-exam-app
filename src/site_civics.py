@@ -72,6 +72,7 @@ page = f"""<!doctype html>
 <li><b>Filed before October 20, 2025:</b> you take the older 2008 version (100 questions). Study that list at uscis.gov/citizenship.</li>
 <li><b>Age 65 or older with 20 years as a permanent resident:</b> you study only the 20 questions marked with a star (*). You are asked 10 and need 6, and you may take the test in your own language.</li>
 </ul>
+<a href="https://study.solvinglifewith.com/citizenship/" style="display:block;text-decoration:none;margin:18px 0;padding:18px 20px;border-radius:16px;background:linear-gradient(135deg,#102A49,#158A7E);color:#fff;font-weight:800;font-size:19px;line-height:1.25;box-shadow:0 8px 22px rgba(16,42,73,.2)">Open the full free app →<span style="display:block;font-weight:500;font-size:15px;margin-top:4px;color:#DCEBF5">Flashcards, adaptive drills that repeat what you miss, and mock tests. Free.</span></a>
 <div class="tool">
 <div class="row2">
 <select id="st" aria-label="Your state"><option value="">Your state (for the capital question)</option>{"".join(f"<option>{E(s)}</option>" for s in CAP)}<option>District of Columbia</option></select>
