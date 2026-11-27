@@ -1714,6 +1714,19 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Diagnostic test can be left and continued: exam_path.js keeps `slDx<part>` in localStorage after every answer (queue ids, position, per-topic levels and results); `xpDxStart()` resumes it, `xpDxStart(true)` / button "Start it over" discards it; the red button reads "Continue your diagnostic · X of 24 answered"; a result is only saved once all questions are answered (before, leaving after 12 answers scored it as finished). Kept 14 days, on this device only (not synced). Test: tmp/t_dx.js. Backup tmp/exam_path.before-dxresume.js.
 - Wix products: a DIGITAL product must have a digital file or every update fails with VARIANTS_ARE_NOT_ALIGNED_WITH_PRODUCT and the editor will not save. Both products now have an access-instructions PDF (pwa/access-cdl.pdf, pwa/access-bundle.pdf, uploaded to Wix media) set as `variantsInfo.variants[].digitalProperties.digitalFile.id`, and cover images (pwa/cover-*.png, tmp/mkcovers.py). Update shape that works: product{id,revision,media.itemsInfo.items[{url}],options:[],variantsInfo.variants[{id,sku,choices:[],price,digitalProperties}]}.
 
+### TEMP test-buy state (Nov 28)
+- Live sync worker (SHA 8fd28b18…) has linaskerbelis@gmail.com REMOVED from ALWAYS, and KV grant g:linaskerbelis@gmail.com deleted (backup in KV key bak:g:linaskerbelis@gmail.com = {"at":1795499007297,"note":"Family full access"}). Local sync/worker.js still has the email, so the next worker deploy from local restores ALWAYS; the KV grant must be put back by hand (or his Wix order creates a new one). Restore after his test buys.
+
+### Sync worker Nov 28 (live SHA 5388ebe6…)
+- wixSync now emails the buyer on each new grant (accessMail(): link, 3 sign-in steps, add-to-home-screen steps, other products, help/refund line) through sendMail (Resend, from login@solvinglifewith.com). Grants keep `orders:[numbers]`, so an order that is only updated never adds another year or another email. Verified with real order #10001 (CDL $10, linaskerbelis@gmail.com): grant created at the next 10-minute run, email "Your CDL Permit Prep app is unlocked" delivered. Backup tmp/worker.before-mail.js.
+- Wix product descriptions (both) rewritten: nothing to download, email with steps, cross-links between CDL and bundle, free tests. Bundle description now lists CDL. Wix still shows its own "Download" link + "download link is ready" email because the products are DIGITAL (cannot be turned off by API).
+- STILL TEMP: owner email removed from ALWAYS on live worker; restore after test buys.
+
+### Version 2026-11-28i (Nov 28)
+- Access PDFs rebuilt by tmp/mkaccesspdf.py (same content as the worker email: steps, install, other products). Site wording no longer says "all five".
+- Sync worker (live SHA c0af2099…): a FULL refund in Wix now removes what that order gave (bundle: until=now; single app: app removed) and emails "Your refund is done". Partial refunds are ignored.
+
+- 2026-11-27 Version 2026-11-28i · Nov 28: Access PDFs match the email; refund removes access; wording
 - 2026-11-27 Version 2026-11-28h · Nov 28: Diagnostic test can be left and continued later
 - 2026-11-27 Version 2026-11-28g · Nov 28: Access instruction PDFs for the two store products
 - 2026-11-27 Version 2026-11-28f · Nov 28: Cover images for the two store products; history notes

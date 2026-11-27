@@ -67,7 +67,7 @@ FOOT = PROMO + """
 """
 def cta(ex):
     return (f'<div class="cta"><h2>Want the full question bank?</h2><p>The Solving Life app has the complete {E(ex["name"])} bank with adaptive drills, mock exams and audio review. '
-            f'It works on any phone, even offline. Try it free for 1 hour; $49 unlocks all five exam apps for 12 months.</p>'
+            f'It works on any phone, even offline. Try it free for 1 hour; $49 unlocks every exam app for 12 months.</p>'
             f'<p><a class="btn btn-main" href="https://study.solvinglifewith.com/{ex["app"]}/">Start practicing free</a></p></div>')
 urls = []
 for ex in EX:
@@ -141,7 +141,7 @@ o += HUB_CSS + f"""<script type="application/ld+json">{json.dumps({"@context":"h
 <h2 class="sec">Next step: a U.S. career license</h2><p>Five professional licenses you can earn by passing an exam. Each page has free questions with answers and explanations.</p><div class="ex">""" + \
      "".join(f'<a href="{x["slug"]}.html"><b>{E(x["name"])} →</b><span>{E(x["desc"])}</span></a>' for x in EX) + '</div>\n' + \
      '<div class="tx"><h2>Need a tax return or an ITIN?</h2><p>We prepare U.S. tax returns from simple to complicated: individual and family, self-employed, nonresident (1040-NR), and joint returns with a non-citizen spouse.</p><p><a href="https://solvinglifellc.com">Get tax help at solvinglifellc.com →</a></p></div>\n' + \
-     '<div class="cta"><h2>Study all five in one app</h2><p>Adaptive drills, mock exams, audio and free podcasts. Free for 1 hour, then $49 for all five apps for 12 months.</p><p><a class="btn btn-main" href="apps.html">See the study apps</a></p></div>\n' + FOOT
+     '<div class="cta"><h2>Study them all in one app</h2><p>Adaptive drills, mock exams, audio and free podcasts. Free for 1 hour, then $49 for every exam app for 12 months.</p><p><a class="btn btn-main" href="apps.html">See the study apps</a></p></div>\n' + FOOT
 open(f"{OUT}/free-practice-questions.html", "w").write(o)
 base = [SITE, SITE + "apps", SITE + "giveaway"]
 import os

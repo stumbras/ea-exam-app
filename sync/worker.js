@@ -40,18 +40,29 @@ async function accessNow(env, sub) {
 async function wixSync(env) {
   const key = await env.P.get("wixkey"); if (!key) return { skipped: "no Wix key" };
   const since = await env.P.get("wixlast") || new Date(Date.now() - 30 * 864e5).toISOString();
-  const body = { search: { filter: { $and: [{ paymentStatus: { $eq: "PAID" } }, { updatedDate: { $gt: since } }, { "lineItems.catalogReference.catalogItemId": { $in: WIX_PRODUCTS.concat(Object.keys(WIX_APP_PRODUCTS)) } }] }, sort: [{ fieldName: "updatedDate", order: "ASC" }], cursorPaging: { limit: 100 } } };
+  const body = { search: { filter: { $and: [{ paymentStatus: { $in: ["PAID", "FULLY_REFUNDED"] } }, { updatedDate: { $gt: since } }, { "lineItems.catalogReference.catalogItemId": { $in: WIX_PRODUCTS.concat(Object.keys(WIX_APP_PRODUCTS)) } }] }, sort: [{ fieldName: "updatedDate", order: "ASC" }], cursorPaging: { limit: 100 } } };
   const r = await fetch("https://www.wixapis.com/ecom/v1/orders/search", { method: "POST", headers: { authorization: key, "wix-site-id": WIX_SITE, "content-type": "application/json" }, body: JSON.stringify(body) });
   const j = await r.json().catch(() => ({})); if (!r.ok) { const pe = await env.P.get("wixerr", "json"); if (!pe || pe.status !== r.status) await env.P.put("wixerr", JSON.stringify({ at: Date.now(), status: r.status, msg: JSON.stringify(j).slice(0, 300) })); return { error: r.status }; }
   let last = since, n = 0;
   for (const o of j.orders || []) {
     const email = String(o.buyerInfo && o.buyerInfo.email || "").trim().toLowerCase();
     if (email) { const prev = await env.P.get("g:" + email, "json"), ids = (o.lineItems || []).map(li => li.catalogReference && li.catalogReference.catalogItemId);
-      if (ids.some(id => WIX_PRODUCTS.includes(id))) { const base = Math.max(Date.now(), prev && !prev.appsOnly && prev.until || 0);
-        await env.P.put("g:" + email, JSON.stringify({ at: Date.now(), note: "Wix order #" + o.number, until: base + YEAR, apps: prev && prev.apps || undefined })); n++; }
+      const seen = prev && prev.orders || [];
+      if (o.paymentStatus === "FULLY_REFUNDED") { // a full refund in Wix takes back what that order gave
+        if (prev && seen.includes(o.number)) { const g = prev; g.orders = seen.filter(x => x !== o.number);
+          if (ids.some(id => WIX_PRODUCTS.includes(id))) g.until = Date.now() - 1;
+          for (const id of ids) { const app = WIX_APP_PRODUCTS[id]; if (app && g.apps) delete g.apps[app]; }
+          if (g.appsOnly && !grantApps(g).length) g.until = Date.now() - 1;
+          g.note = ((g.note ? g.note + "; " : "") + "refunded #" + o.number).slice(-200); await env.P.put("g:" + email, JSON.stringify(g)); n++;
+          await sendMail(env, email, "Your refund is done (order #" + o.number + ")", "Your order #" + o.number + " was refunded in full, and the paid access from that order has ended. The refund goes back to your original payment method; your bank may take a few days to show it.\n\nThe free 1-hour preview and the free practice tests stay open to you: https://study.solvinglifewith.com/\n\nQuestions? Write to info@solvinglifellc.com or text (720) 432-0981.\n\nSolving Life LLC\nsolvinglifellc.com"); } }
+      else if (seen.includes(o.number)) { /* this order already gave access: an order that is only updated must not add another year or another email */ }
+      else if (ids.some(id => WIX_PRODUCTS.includes(id))) { const base = Math.max(Date.now(), prev && !prev.appsOnly && prev.until || 0);
+        await env.P.put("g:" + email, JSON.stringify({ at: Date.now(), note: "Wix order #" + o.number, until: base + YEAR, apps: prev && prev.apps || undefined, orders: seen.concat(o.number).slice(-20) })); n++;
+        await sendMail(env, email, "Your Solving Life study apps are unlocked", accessMail("https://study.solvinglifewith.com/", "all Solving Life study apps", email, o.number)); }
       else { const g = prev || { at: Date.now(), appsOnly: true }; g.apps = g.apps || {}; let hit = false;
         for (const id of ids) { const app = WIX_APP_PRODUCTS[id]; if (app) { g.apps[app] = Math.max(Date.now(), g.apps[app] || 0) + YEAR; hit = true; } }
-        if (hit) { g.note = ((g.note ? g.note + "; " : "") + "Wix order #" + o.number + " (single app)").slice(-200); await env.P.put("g:" + email, JSON.stringify(g)); n++; } } }
+        if (hit) { g.note = ((g.note ? g.note + "; " : "") + "Wix order #" + o.number + " (single app)").slice(-200); g.orders = seen.concat(o.number).slice(-20); await env.P.put("g:" + email, JSON.stringify(g)); n++;
+          await sendMail(env, email, "Your CDL Permit Prep app is unlocked", accessMail("https://study.solvinglifewith.com/?cdl", "CDL Permit Prep", email, o.number)); } } }
     if (o.updatedDate > last) last = o.updatedDate;
   }
   if (last !== since) await env.P.put("wixlast", last); if (await env.P.get("wixerr")) await env.P.delete("wixerr"); return { granted: n }; // write only on change: the 10-minute timer alone used ~290 of the 1,000 free daily writes
@@ -123,6 +134,49 @@ async function readToken(env, req) {
   const p = t.slice(0, i); if (await hmac(env, p) !== t.slice(i + 1)) return null;
   const [sub, exp] = p.split("."); return +exp > Date.now() ? sub : null;
 }
+function accessMail(link, what, email, num) { const cdl = what === "CDL Permit Prep", S = "https://study.solvinglifewith.com/"; return `Thank you for your purchase (order #${num}).
+
+Your access to ${what} is ON. There is nothing to download or install.
+
+HOW TO OPEN IT
+1. Tap this link: ${link}
+2. Tap "Sign in".
+3. Sign in with this email address: ${email}
+   - Gmail address: choose "Sign in with Google".
+   - Any other address: type it, and we email you a 6-digit code.
+That is all. No password to remember.
+
+WANT IT ON YOUR PHONE LIKE AN APP? (optional)
+- iPhone: open the link in Safari, tap the Share button, then "Add to Home Screen".
+- Android: open the link in Chrome, tap the three-dot menu, then "Add to Home screen" or "Install app".
+- Computer: open the link in Chrome or Edge and click the install icon at the right end of the address bar.
+
+GOOD TO KNOW
+- Access lasts 12 months from today.
+- Your progress is saved to your account and follows you to any phone or computer.
+- If you still see a "buy" screen, tap "I already paid: check again".
+${cdl ? `
+MORE FROM SOLVING LIFE
+- All study apps for $49 (12 months): EA exam, SIE, Series 65, EDPNA, Customs Broker, and CDL too:
+  https://www.solvinglifellc.com/product-page/all-4-exam-study-apps-12-months-buy-one-get-all
+- Free practice tests, no payment needed:
+  Driver's permit: ${S}?drive
+  Motorcycle permit: ${S}?moto
+  U.S. citizenship test: ${S}?cit
+` : `
+INCLUDED IN YOUR ACCESS
+EA exam (all 3 parts), SIE, Series 65, EDPNA, Customs Broker and CDL Permit Prep. Pick any of them on the start screen.
+
+FREE FOR FAMILY AND FRIENDS (no payment needed)
+  Driver's permit: ${S}?drive
+  Motorcycle permit: ${S}?moto
+  U.S. citizenship test: ${S}?cit
+`}
+NEED HELP OR A REFUND?
+Write to info@solvinglifellc.com or text (720) 432-0981. (Please do not reply to this email: this address is not read.)
+
+Solving Life LLC
+solvinglifellc.com`; }
 async function sendMail(env, to, subject, text) {
   const key = await env.P.get("mailkey"); if (!key) return { ok: false, error: "no email key set" };
   const from = (await env.P.get("mailfrom")) || "Solving Life LLC <onboarding@resend.dev>";
