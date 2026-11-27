@@ -1670,6 +1670,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Owner rule: ads show only solvinglifellc.com. Wix redirects: /citizenship, /driving, /motorcycle, /free (to the solvinglifewith.com pages), /apps (study app).
 - Videos: /home/claude/ads/show (two-voice game show engine show.py + page.html: america-entry-exam, adulting-in-america, driving-game-show, citizenship-game-show), /home/claude/ads/edgy (kinetic text, make.py + vids.py), /home/claude/ads/cristy. Hosted at solvinglifewith.com/ads/.
 
+- 2026-11-27 Version 2026-11-27a · Nov 27: free tests page redesign; driving test repeats missed questions; new voices in anchor videos
 - 2026-11-27 Version 2026-11-27a · Nov 27: free tests: sign-in window path; notes
 - 2026-11-27 Version 2026-11-27a · Nov 27: ads: combined free-tests video and paid services video
 - 2026-11-27 Version 2026-11-27a · Nov 27: free tests: Google sign-in window, hub features free tests; videos use solvinglifellc.com

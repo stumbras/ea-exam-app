@@ -21,10 +21,11 @@ CSS = """.cta{background:#0F1B2D;color:#fff;border-radius:14px;padding:22px;marg
 .states{columns:2;list-style:none;padding:0}.states li{margin:6px 0}"""
 JS = """const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
 function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-let S;function start(){const st=shuf(B.slice(0,NS)).slice(0,Math.min(NS,15)),rest=shuf(B.slice(NS)).slice(0,N-st.length);S={qs:shuf(st.concat(rest)),i:0,ok:0,bad:[]};show()}
+let S,M=[];try{M=JSON.parse(localStorage.getItem("drv-miss")||"[]")}catch(e){}function svM(){try{localStorage.setItem("drv-miss",JSON.stringify(M.slice(-60)))}catch(e){}}
+function start(){const mm=shuf(B.filter(d=>M.includes(d.q))).slice(0,8),st=shuf(B.slice(0,NS)).slice(0,Math.min(NS,15)),rest=shuf(B.slice(NS)),all=[];mm.concat(st,rest).forEach(d=>{if(!all.includes(d))all.push(d)});S={qs:shuf(all.slice(0,N)),i:0,ok:0,bad:[]};show()}
 function show(){const d=S.qs[S.i];S.o=shuf([d.c].concat(d.w));S.done=0;
  $("quiz").innerHTML='<p class="prog">Question '+(S.i+1)+' of '+S.qs.length+' · correct: '+S.ok+'</p><h2>'+esc(d.q)+'</h2>'+S.o.map((t,k)=>'<button onclick="pick('+k+')">'+esc(t)+'</button>').join('')+'<div id="fb"></div>'}
-function pick(k){if(S.done)return;S.done=1;const d=S.qs[S.i],bs=$("quiz").querySelectorAll("button"),r=S.o.indexOf(d.c);bs[r].className="ok";if(k===r)S.ok++;else{bs[k].className="no";S.bad.push(d)}
+function pick(k){if(S.done)return;S.done=1;const d=S.qs[S.i],bs=$("quiz").querySelectorAll("button"),r=S.o.indexOf(d.c);bs[r].className="ok";if(k===r){S.ok++;M=M.filter(x=>x!==d.q)}else{bs[k].className="no";S.bad.push(d);if(!M.includes(d.q))M.push(d.q)}svM();
  $("fb").innerHTML='<p>'+esc(d.e)+'</p><button class="go" onclick="next()">'+(S.i+1<S.qs.length?'Next question':'See my score')+'</button>'}
 function next(){S.i++;if(S.i<S.qs.length)return show();const p=Math.round(100*S.ok/S.qs.length);
  $("quiz").innerHTML='<h2>Your score: '+S.ok+' of '+S.qs.length+' ('+p+'%)</h2><p>'+(p>=80?'Good. Most states require between 70% and 88% to pass.':'Keep practicing. Most states require between 70% and 88% to pass.')+'</p>'+
