@@ -68,7 +68,7 @@ def cta(ex):
             f'<p><a class="btn btn-main" href="https://study.solvinglifewith.com/{ex["app"]}/">Start practicing free</a></p></div>')
 urls = []
 for ex in EX:
-    qs = pick(ex); url = SITE + ex["slug"] + ".html"; urls.append(url)
+    qs = pick(ex); url = SITE + ex["slug"]; urls.append(url)
     ld = json.dumps({"@context":"https://schema.org","@type":"Quiz","name":ex["title"],"about":{"@type":"Thing","name":ex["name"]},"educationalLevel":"professional certification",
         "publisher":{"@type":"Organization","name":"Solving Life LLC","url":SITE},
         "hasPart":[{"@type":"Question","eduQuestionType":"Multiple choice","text":q["s"],"acceptedAnswer":{"@type":"Answer","text":q["c"],"answerExplanation":{"@type":"Comment","text":q["e"]}},
@@ -85,14 +85,14 @@ for ex in EX:
     o += cta(ex) + '<p>More free sets: ' + " · ".join(f'<a href="{x["slug"]}.html">{E(x["name"])}</a>' for x in EX if x is not ex) + '</p>\n' + FOOT
     open(f'{OUT}/{ex["slug"]}.html', "w").write(o); print(ex["slug"], len(qs))
 # hub page
-url = SITE + "free-practice-questions.html"; urls.append(url)
+url = SITE + "free-practice-questions"; urls.append(url)
 o = HEAD.format(title="Free License Exam Practice Questions: EA, Series 65, SIE, Customs Broker, EDPNA", desc="Free practice questions with answers for five license exams that need no degree or experience: Enrolled Agent, Series 65, SIE, Customs Broker and EDPNA.", url=url,
     ld=json.dumps({"@context":"https://schema.org","@type":"CollectionPage","name":"Free license exam practice questions","publisher":{"@type":"Organization","name":"Solving Life LLC","url":SITE}}))
 o += '<h1>Free license exam practice questions</h1>\n<p>Five professional licenses you can earn by passing an exam, with no degree and no work experience required. Each page has free questions with answers and explanations.</p>\n<ul>' + \
      "".join(f'<li><a href="{x["slug"]}.html"><b>{E(x["name"])}</b></a>: {E(x["desc"])}</li>' for x in EX) + '</ul>\n' + \
      '<div class="cta"><h2>Study all five in one app</h2><p>Adaptive drills, mock exams, audio and free podcasts. Free for 1 hour, then $49 for all five apps for 12 months.</p><p><a class="btn btn-main" href="apps.html">See the study apps</a></p></div>\n' + FOOT
 open(f"{OUT}/free-practice-questions.html", "w").write(o)
-base = [SITE, SITE + "apps.html", SITE + "giveaway.html"]
+base = [SITE, SITE + "apps", SITE + "giveaway"]
 open(f"{OUT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     "".join(f"<url><loc>{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in base + urls) + "</urlset>\n")
 open(f"{OUT}/robots.txt", "w").write("User-agent: *\nAllow: /\n\nSitemap: " + SITE + "sitemap.xml\n")
