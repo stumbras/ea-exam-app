@@ -1,0 +1,3 @@
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:400,height:860},isMobile:true,serviceWorkers:'block'});const p=await ctx.newPage();
+p.on('pageerror',e=>console.log('ERR',e.message.slice(0,300),(e.stack||'').split('\n').slice(1,4).join(' | ').slice(0,300)));p.on('console',m=>m.type()==='error'&&console.log('CON',m.text().slice(0,200)));
+await p.goto('http://localhost:8765/ea-exam-app/?'+(process.argv[2]||'cit'),{waitUntil:'load'});await p.waitForTimeout(2500);console.log(await p.evaluate(()=>document.body.innerText.slice(0,300).replace(/\n+/g,' | ')));await b.close()})()

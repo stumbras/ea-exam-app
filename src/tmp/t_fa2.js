@@ -5,7 +5,7 @@ for(const k of ['cit','drive']){const ctx=await b.newContext({viewport:{width:40
  console.log(k,'after tap:',await p.evaluate(()=>JSON.stringify({view,mode:typeof sess!=='undefined'&&sess&&sess.mode})+' '+document.body.innerText.slice(0,260).replace(/\n+/g,' | ')));
  // try a mock test of the smallest size
  await p.evaluate(()=>{view='home';render()});await p.waitForTimeout(300);
- const mock=p.locator('button',{hasText:'Mock exam'}).first();await mock.click();await p.waitForTimeout(600);
+ const mock=p.locator('button',{hasText:/Mock exam|Practice test/}).first();await mock.click();await p.waitForTimeout(600);
  console.log('  mock screen:',await p.evaluate(()=>document.body.innerText.slice(0,420).replace(/\n+/g,' | ')));await p.screenshot({path:'tmp/fb_'+k+'2.jpg',type:'jpeg',quality:70});
  console.log('  errs',errs.slice(0,4));await ctx.close()}
 await b.close()})()

@@ -58,7 +58,7 @@ function xpHtml(){try{if(PARTS[part].bk)return"";const st=xpState(),cur=st.steps
    ${st.D.map(row).join("")}
    ${ex?`<button class="xprow xpx${ex.done?" ok":""}${cs===ex?" now":""}" data-xp="exam"><b>${ex.done?"✓ ":""}Exam-style pack</b><span class="xpw">${ex.xs-ex.xsNew} of ${ex.xs} done</span></button>`:""}
    <button class="xprow xpx${mk.done?" ok":""}${cs===mk?" now":""}" data-xp="mock"><b>${mk.done?"✓ ":""}Mock exam</b><span class="xpw">${mk.last?`last: ${mk.last.c} of ${mk.last.n} right`:"not taken yet"}</span></button></section>`}catch(_){return""}}
-function xpTools(inner){if(!inner)return"";try{if(PARTS[part].bk)return inner}catch(_){}return `<details class="more" id="xptools" ${OPEN.xptools?"open":""}><summary><b>More ways to practice</b><span>Quick drill, one-tap decision rounds, step-by-step returns</span></summary><div class="xptl">${inner}</div></details>`}
+function xpTools(inner){if(!inner)return"";try{if(PARTS[part].bk)return inner}catch(_){}return `<details class="more" id="xptools" ${OPEN.xptools?"open":""}><summary><b>More ways to practice</b><span>${PARTS[part].free?"Quick drill, missed questions, flashcards":"Quick drill, one-tap decision rounds, step-by-step returns"}</span></summary><div class="xptl">${inner}</div></details>`}
 const xpExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.xp===undefined)return xpExtraClick0(b);const a=d.xp;
   if(a==="go"){xpRun(xpNext());return true}
   if(a==="les"){const x=xpDom(isNaN(+d.d)?d.d:+d.d);if(x.les)xpRun({les:(x.lesNext||x.L[0]).k});return true}

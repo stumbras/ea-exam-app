@@ -22,6 +22,10 @@ function slAppUI(){try{const a=SLAPPS[SLAPP()];if(!a)return;document.title=a.nam
 (function(){try{const sm=location.pathname.match(/\/(ea|65|edpna|kids|cble|sie|citizenship|driving|motorcycle)\/(index\.html)?$/);if(sm){location.replace("../?"+({ea:"study","65":"s65",edpna:"edpna",kids:"kids",cble:"cble",sie:"sie",citizenship:"cit",driving:"drive",motorcycle:"moto"})[sm[1]]+location.hash);return}}catch(_){}})();
 (function(){try{const q=new URLSearchParams(location.search);
   if(q.has("study")||q.has("kids")||q.has("course"))localStorage.removeItem("slApp");
+  /* arriving from another site on the plain address (for example solvinglifellc.com/apps) shows every app, not the one this browser used last */
+  try{let any=false;for(const k in SLAPPS)if(q.has(k))any=true;const sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone;
+    const rf=document.referrer?new URL(document.referrer).hostname:"";
+    if(!any&&!sa&&rf&&rf!==location.hostname&&!q.has("kids")&&!q.has("course"))localStorage.removeItem("slApp")}catch(_){}
   if(q.has("study")){localStorage.removeItem("kidsLock");localStorage.removeItem("courseLock")}
   for(const k in SLAPPS)if(q.has(k)){localStorage.setItem("slApp",k);localStorage.removeItem("kidsLock");localStorage.removeItem("courseLock")}
   const a=SLAPPS[SLAPP()];if(a){slAppUI();setTimeout(()=>{part=a.part;view="home";render()},0)}}catch(_){}})();
@@ -30,3 +34,37 @@ const slRenderTabs0=renderTabs;renderTabs=function(){const r=slRenderTabs0.apply
   const t=$("#tabs");if(t){t.hidden=false;t.innerHTML=view==="home"?"":`<button class="bkback go" data-nav="back">‹ Back · ${esc(PARTS[a.part].short)} main page</button>`}}}catch(_){}return r};
 document.addEventListener("click",function(e){try{const a=SLAPPS[SLAPP()];if(!a)return;const b=e.target.closest&&e.target.closest('[data-sec="start"]');if(!b)return;
   e.preventDefault();e.stopPropagation();hush();part=a.part;view="home";render();window.scrollTo(0,0)}catch(_){}},true);
+
+/* ---- Driver's Test: one state at a time (Version 2026-11-27o). The bank holds every state; the learner picks one, and the
+   study path, drills and practice tests then use road signs, rules of the road and that state only. The motorcycle add-on is a switch.
+   PARTS[12].doms lists only the chosen topics, while a lookup of any other topic still answers, so old saved answers never break a page. ---- */
+let DRV_ALL={1:["",50],2:["",50]},DRV_CUR={};
+function drvGet(k){try{return localStorage.getItem(k)||""}catch(_){return ""}}
+function drvState(){const s=drvGet("drvState");return s&&s!=="20"&&DRV_ALL[s]?s:""}
+function drvApply(){const s=drvState(),m=drvGet("drvMoto")==="1",c={};
+  c[1]=[DRV_ALL[1][0],s?(m?35:40):(m?45:50)];c[2]=[DRV_ALL[2][0],s?(m?30:35):(m?45:50)];if(s)c[s]=[DRV_ALL[s][0],25];if(m)c[20]=[DRV_ALL[20][0],10];DRV_CUR=c;_drvBP.k=""}
+const _drvBP={k:"",l:[]};let drvBP0=null,slRender0=null;
+setTimeout(function(){try{DRV_ALL=Object.assign({},PARTS[12].doms);
+PARTS[12].doms=new Proxy({},{get:(t,k)=>DRV_CUR[k]||DRV_ALL[k],has:(t,k)=>k in DRV_CUR,ownKeys:()=>Object.keys(DRV_CUR),
+  getOwnPropertyDescriptor:(t,k)=>k in DRV_CUR?{value:DRV_CUR[k],enumerable:true,configurable:true,writable:true}:undefined});
+drvBP0=BP;
+BP=function(p){const l=drvBP0(p);if(p!=12)return l;const k=Object.keys(DRV_CUR).join(",")+"|"+l.length;if(_drvBP.k!==k){_drvBP.k=k;_drvBP.l=l.filter(i=>i.d in DRV_CUR)}return _drvBP.l};
+drvApply();
+slRender0=render;render=function(){const r=slRender0.apply(this,arguments);try{drvCard()}catch(_){}slFreeWords();return r};render()}catch(e){console.error(e)}},0);
+function drvCard(){const v=document.getElementById("view");if(!v||part!=12||view!=="home"||document.getElementById("drvcard"))return;
+  const s=drvState(),m=drvGet("drvMoto")==="1",asked=drvGet("drvAsked")==="1";
+  const opts=Object.keys(DRV_ALL).filter(d=>d>2&&d!=20).map(d=>[d,DRV_ALL[d][0]]).sort((a,b)=>a[1]<b[1]?-1:1).map(([d,n])=>`<option value="${d}" ${s==d?"selected":""}>${esc(n)}</option>`).join("");
+  const el=document.createElement("section");el.id="drvcard";el.className="section";
+  el.innerHTML=`<div class="card" style="border:2px solid ${s||asked?"var(--line,#cfd8e3)":"#127A68"};border-radius:16px;padding:14px 16px">
+    <div style="font-weight:800;font-size:1.05rem">${s?"Your state: "+esc(DRV_ALL[s][0]):"Which state are you testing in?"}</div>
+    <div class="small muted" style="margin:4px 0 10px">${s?"You study road signs, rules of the road and "+esc(DRV_ALL[s][0])+" questions from the official state driver manual.":"Pick it and the app adds that state's own speed limits, parking distances, permit rules and alcohol limits. Signs and rules of the road are the same everywhere."}</div>
+    <label class="small" for="drvsel" style="display:block;font-weight:700;margin-bottom:4px">State</label>
+    <select id="drvsel" style="width:100%;padding:12px;border-radius:12px;font-size:1rem;border:1px solid #9aa7b6;background:#fff;color:#111"><option value="">${s?"No state (signs and rules only)":"Choose your state…"}</option>${opts}<option value="none">My state is not listed yet</option></select>
+    <label class="small" style="display:flex;gap:10px;align-items:center;margin-top:12px;font-weight:600"><input type="checkbox" id="drvmoto" ${m?"checked":""} style="width:22px;height:22px"> Add motorcycle permit questions</label></div>`;
+  v.insertBefore(el,v.firstChild);
+  el.querySelector("#drvsel").addEventListener("change",e=>{try{const x=e.target.value;localStorage.setItem("drvAsked","1");if(x&&x!=="none")localStorage.setItem("drvState",x);else localStorage.removeItem("drvState")}catch(_){}drvApply();render();window.scrollTo(0,0)});
+  el.querySelector("#drvmoto").addEventListener("change",e=>{try{localStorage.setItem("drvMoto",e.target.checked?"1":"0")}catch(_){}drvApply();render()})}
+/* free apps say "test", not "exam": the wording a permit or citizenship applicant uses */
+const SLWORDS=[[/Mock exam/g,"Practice test"],[/mock exams/g,"practice tests"],[/mock exam/g,"practice test"],[/the exam's own order/g,"the test's own order"],[/of the exam\b/g,"of the test"],[/\bexam date\b/g,"test date"],[/Exam-style/g,"Test-style"],[/the way the exam asks/g,"the way the test asks"],[/\bExam day\b/g,"Test day"],[/Exam dates/g,"Test dates"],[/Test test date/g,"Test date"]];
+function slFreeWords(){try{if(!PARTS[part]||!PARTS[part].free)return;const v=document.getElementById("view");if(!v)return;const w=document.createTreeWalker(v,NodeFilter.SHOW_TEXT);let n;
+  while(n=w.nextNode()){let t=n.nodeValue;if(!/xam/.test(t))continue;for(const [a,b] of SLWORDS)t=t.replace(a,b);if(t!==n.nodeValue)n.nodeValue=t}}catch(_){}}
