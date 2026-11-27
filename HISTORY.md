@@ -1710,6 +1710,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Hub (site_practice.py): state picker opens `?drive&st=<State name>` (sl_apps.js reads `st` and sets drvState); stat shows the real count of states from gen_free_banks.py ST; CDL card; "Questions people ask" with FAQPage JSON-LD.
 - D-U-N-S: only the Nov 23 receipt (inquiry 11268247, case 11327523) is in the personal Gmail, as a forward. The result goes to info@solvinglifewith.com, which the Gmail connector here cannot read.
 
+- 2026-11-27 Version 2026-11-28g · Nov 28: Access instruction PDFs for the two store products
 - 2026-11-27 Version 2026-11-28f · Nov 28: Cover images for the two store products; history notes
 - 2026-11-27 Version 2026-11-28e · Nov 28: Hub page: state picker, CDL card, FAQ; driving app accepts a chosen state
 - 2026-11-27 Version 2026-11-28d · Nov 28: CDL app can be bought alone: per-app access and paywall
