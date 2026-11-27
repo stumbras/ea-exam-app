@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Sign in · Solving Life LLC</title>
+<style>body{font:17px/1.45 system-ui,sans-serif;margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#102A49;color:#fff;text-align:center}main{padding:28px;max-width:360px}h1{font-size:24px;margin:0 0 6px}p{color:#C9D8E6;margin:0 0 20px}#b{display:flex;justify-content:center;min-height:44px}#m{margin-top:16px;color:#7BD0C6}</style></head><body><main>
+<h1>Save your progress</h1><p>Sign in with Google. No password is shared with us.</p><div id="b"></div><p id="m" role="status"></p></main>
+<script>
+const API="https://sync.solvinglifewith.com",CID="184315933690-kq6qmc1qjsi177ht716s3ignsn0osd4u.apps.googleusercontent.com",OK=["https://solvinglifewith.com","https://www.solvinglifewith.com"];
+const q=new URLSearchParams(location.search),src=(q.get("src")||"free").slice(0,60),to=OK.includes(q.get("o"))?q.get("o"):OK[0],m=t=>document.getElementById("m").textContent=t;
+function go(){google.accounts.id.initialize({client_id:CID,ux_mode:"popup",callback:async r=>{m("Checking…");try{const x=await fetch(API+"/login",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({id_token:r.credential,src})}),j=await x.json();if(!x.ok)return m(j.error||"Sign-in failed. Try again.");
+ if(window.opener){window.opener.postMessage({slFree:1,token:j.token,email:j.email},to);m("Signed in. You can close this window.");setTimeout(()=>window.close(),400)}else m("Signed in as "+j.email+". Go back to the test page and sign in there.")}catch(e){m("Network problem. Try again.")}}});
+ google.accounts.id.renderButton(document.getElementById("b"),{theme:"filled_blue",size:"large",shape:"pill",text:"continue_with",width:280,locale:"en"})}
+const s=document.createElement("script");s.src="https://accounts.google.com/gsi/client";s.async=true;s.onload=go;document.head.appendChild(s);
+</script></body></html>
