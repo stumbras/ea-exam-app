@@ -89,10 +89,12 @@ url = SITE + "free-practice-questions"; urls.append(url)
 o = HEAD.format(title="Free License Exam Practice Questions: EA, Series 65, SIE, Customs Broker, EDPNA", desc="Free practice questions with answers for five license exams that need no degree or experience: Enrolled Agent, Series 65, SIE, Customs Broker and EDPNA.", url=url,
     ld=json.dumps({"@context":"https://schema.org","@type":"CollectionPage","name":"Free license exam practice questions","publisher":{"@type":"Organization","name":"Solving Life LLC","url":SITE}}))
 o += '<h1>Free license exam practice questions</h1>\n<p>Five professional licenses you can earn by passing an exam, with no degree and no work experience required. Each page has free questions with answers and explanations.</p>\n<ul>' + \
-     "".join(f'<li><a href="{x["slug"]}.html"><b>{E(x["name"])}</b></a>: {E(x["desc"])}</li>' for x in EX) + '</ul>\n' + \
+     "".join(f'<li><a href="{x["slug"]}.html"><b>{E(x["name"])}</b></a>: {E(x["desc"])}</li>' for x in EX) + '</ul>\n<h2>Also free</h2><ul><li><a href="citizenship-test"><b>U.S. citizenship test</b></a>: all 128 official civics questions, with audio and Spanish.</li><li><a href="drivers-license-practice-test"><b>Driver\'s license practice test</b></a>: every state.</li><li><a href="motorcycle-permit-practice-test"><b>Motorcycle permit practice test</b></a></li></ul>\n' + \
      '<div class="cta"><h2>Study all five in one app</h2><p>Adaptive drills, mock exams, audio and free podcasts. Free for 1 hour, then $49 for all five apps for 12 months.</p><p><a class="btn btn-main" href="apps.html">See the study apps</a></p></div>\n' + FOOT
 open(f"{OUT}/free-practice-questions.html", "w").write(o)
 base = [SITE, SITE + "apps", SITE + "giveaway"]
+import os
+if os.path.exists("free/urls.txt"): base += [SITE + u.strip() for u in open("free/urls.txt") if u.strip()]
 open(f"{OUT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     "".join(f"<url><loc>{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in base + urls) + "</urlset>\n")
 open(f"{OUT}/robots.txt", "w").write("User-agent: *\nAllow: /\n\nSitemap: " + SITE + "sitemap.xml\n")
