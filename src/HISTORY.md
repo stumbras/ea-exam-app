@@ -1704,3 +1704,8 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - App (cloud_sync.js): `AC_BUY_APP`, `acApp()`, `acBuy()`; `acState()` counts an app grant as full access inside that app only; the expired wall and the badge show "CDL Prep only: $10" first and the $49 bundle second.
 - FOUND, NOT FIXED: the $49 bundle product (3dcbe428…) reports inventory OUT_OF_STOCK with no inventory item, so its Buy button may be disabled. Creating the inventory item was blocked by the permission system; Linas must approve or switch it to "In stock" in Wix.
 - Next paid apps Linas picked: Mortgage Loan Originator (SAFE MLO exam) and Texas All-Lines Insurance Adjuster.
+
+### Version 2026-11-28e (Nov 28): hub page after looking at competitors
+- Looked at zutobi.com, driving-tests.org and achievable.me in Chrome. Taken from them, honestly: "Updated for 2026" badge, state picker on the landing page, CDL next to car and motorcycle, FAQ. Not copied: user counts, star ratings, pass rates and pass guarantees (we have no data for those).
+- Hub (site_practice.py): state picker opens `?drive&st=<State name>` (sl_apps.js reads `st` and sets drvState); stat shows the real count of states from gen_free_banks.py ST; CDL card; "Questions people ask" with FAQPage JSON-LD.
+- D-U-N-S: only the Nov 23 receipt (inquiry 11268247, case 11327523) is in the personal Gmail, as a forward. The result goes to info@solvinglifewith.com, which the Gmail connector here cannot read.

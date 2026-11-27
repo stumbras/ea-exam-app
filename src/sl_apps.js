@@ -48,6 +48,7 @@ const _drvBP={k:"",l:[]};let drvBP0=null,slRender0=null;
 setTimeout(function(){try{DRV_ALL=Object.assign({},PARTS[12].doms);
 PARTS[12].doms=new Proxy({},{get:(t,k)=>DRV_CUR[k]||DRV_ALL[k],has:(t,k)=>k in DRV_CUR,ownKeys:()=>Object.keys(DRV_CUR),
   getOwnPropertyDescriptor:(t,k)=>k in DRV_CUR?{value:DRV_CUR[k],enumerable:true,configurable:true,writable:true}:undefined});
+try{const sq=new URLSearchParams(location.search).get("st");if(sq){const dm=Object.keys(DRV_ALL).find(d=>d>2&&d!=20&&DRV_ALL[d][0].toLowerCase()===sq.toLowerCase());if(dm){localStorage.setItem("drvState",dm);localStorage.setItem("drvAsked","1")}}}catch(_){}
 drvBP0=BP;
 BP=function(p){const l=drvBP0(p);if(p!=12)return l;const k=Object.keys(DRV_CUR).join(",")+"|"+l.length;if(_drvBP.k!==k){_drvBP.k=k;_drvBP.l=l.filter(i=>i.d in DRV_CUR)}return _drvBP.l};
 drvApply();
