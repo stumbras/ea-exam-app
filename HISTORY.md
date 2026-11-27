@@ -1663,6 +1663,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - **State permit questions (Nov 27):** `free/state/<state>.txt` (first line `#source`, then the same 6-field rows) gives a state page its own question bank; `site_drive.py` then titles the page with the count, shows the state questions, and each 25-question test draws up to 15 of them. Done from the official handbooks: Colorado 28 (DR 2337, 12/05/24), California 28 (REV. 6/2025), Texas 25 (DL-7, Jan 2026), Florida 27 (rev. 08/2023 + 2024 laws), New York 22 (MV-21 as posted Nov 2026). Handbook PDFs and flattened text are in /home/claude/dmv/<st>/. Only facts found in the handbook text were used. Next by population: Pennsylvania, Illinois, Ohio, Georgia, North Carolina, Michigan.
 - **Promo block (Nov 27):** `promo.py` holds one "More from Solving Life LLC" block (tax and ITIN help, paid study apps, podcasts on Spotify, more free practice, social links) and its CSS. `site_civics.py`, `site_drive.py` and `site_practice.py` import it, so every free page ends with it. Edit links there only.
 
+- 2026-11-26 Version 2026-11-27a: Site: ad images for social posts
 - 2026-11-26 Version 2026-11-27a: Site: every free page ends with a block linking tax help, study apps, podcasts and social accounts
 - 2026-11-26 Version 2026-11-27a: Site: citizenship test page also points to the study apps
 - 2026-11-26 Version 2026-11-27a: Site: state-specific permit questions for Florida and New York
