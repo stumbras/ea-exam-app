@@ -1663,6 +1663,14 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - **State permit questions (Nov 27):** `free/state/<state>.txt` (first line `#source`, then the same 6-field rows) gives a state page its own question bank; `site_drive.py` then titles the page with the count, shows the state questions, and each 25-question test draws up to 15 of them. Done from the official handbooks: Colorado 28 (DR 2337, 12/05/24), California 28 (REV. 6/2025), Texas 25 (DL-7, Jan 2026), Florida 27 (rev. 08/2023 + 2024 laws), New York 22 (MV-21 as posted Nov 2026). Handbook PDFs and flattened text are in /home/claude/dmv/<st>/. Only facts found in the handbook text were used. Next by population: Pennsylvania, Illinois, Ohio, Georgia, North Carolina, Michigan.
 - **Promo block (Nov 27):** `promo.py` holds one "More from Solving Life LLC" block (tax and ITIN help, paid study apps, podcasts on Spotify, more free practice, social links) and its CSS. `site_civics.py`, `site_drive.py` and `site_practice.py` import it, so every free page ends with it. Edit links there only.
 
+## 22. Free-test sign-in, customers, ads (Nov 27, 2026)
+- Free pages (promo.py block): "Save your progress" box under the test. Google sign-in opens study.solvinglifewith.com/gsignin (pwa/gsignin.html, an authorized origin) and posts the token back; email code also works. Progress (localStorage) syncs through sync worker /fload and /fsave (KV f:<sub>). Sign-ins carry src "free:<page>".
+- Sync worker: ORIGINS include solvinglifewith.com; s:<sub> has src/srcs; adminData returns freeUsers and customers; POST /admin/mail {subject,text,test} emails all customers who have not unsubscribed (footer with address and /unsub link, KV n:<email>); GET /unsub. Deployed by patching the live script through the Cloudflare API (edit pairs, SHA check).
+- Admin: tabs "Customers & email" (list, copy, CSV, email everyone, test) and "Free tests" (links, promo videos).
+- Owner rule: ads show only solvinglifellc.com. Wix redirects: /citizenship, /driving, /motorcycle, /free (to the solvinglifewith.com pages), /apps (study app).
+- Videos: /home/claude/ads/show (two-voice game show engine show.py + page.html: america-entry-exam, adulting-in-america, driving-game-show, citizenship-game-show), /home/claude/ads/edgy (kinetic text, make.py + vids.py), /home/claude/ads/cristy. Hosted at solvinglifewith.com/ads/.
+
+- 2026-11-27 Version 2026-11-27a · Nov 27: free tests: sign-in window path; notes
 - 2026-11-27 Version 2026-11-27a · Nov 27: ads: combined free-tests video and paid services video
 - 2026-11-27 Version 2026-11-27a · Nov 27: free tests: Google sign-in window, hub features free tests; videos use solvinglifellc.com
 - 2026-11-27 Version 2026-11-27a · Nov 27: free tests: save-progress sign-in; admin: customers, email all, free tests, videos
