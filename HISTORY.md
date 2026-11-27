@@ -1661,6 +1661,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Wix blog: SIE and Customs Broker practice-question posts published Nov 27.
 - **Free traffic pages (Nov 27, later):** `site_civics.py` builds `citizenship-test` (all 128 USCIS 2025-version civics questions from M-1778, self-graded spoken-style practice test 20/12, 65/20 mode, audio, state capital picker, Spanish study translation in `free/es.txt`; officeholder answers in `NOW`, checked Nov 27, 2026: the Speaker changes in January 2027, so update then). `site_drive.py` builds `drivers-license-practice-test`, `motorcycle-permit-practice-test` and 51 `<state>-permit-practice-test` pages from `free/car.txt` (55) and `free/moto.txt` (30): universal rules only, no state-specific numbers yet (aggregator sites disagree on test lengths, so they were left out until checked against each official handbook). Run both, then `site_practice.py` (reads `free/urls.txt` for the sitemap). solvinglifewith.com is verified in Google Search Console under the business Google account; sitemap submitted Nov 27. IndexNow key file is in `pwa/company/`.
 
+- 2026-11-26 Version 2026-11-27a: Site: state-specific permit questions for Colorado, California and Texas from the official handbooks
 - 2026-11-26 Version 2026-11-27a: Site: free U.S. citizenship test, driver's license and motorcycle permit practice tests (all states)
 - 2026-11-26 Version 2026-11-27a: Site: IndexNow key file
 - 2026-11-26 Version 2026-11-27a: Site: canonical and sitemap addresses without .html

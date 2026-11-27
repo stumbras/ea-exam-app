@@ -20,7 +20,7 @@ CSS = """.cta{background:#0F1B2D;color:#fff;border-radius:14px;padding:22px;marg
 .states{columns:2;list-style:none;padding:0}.states li{margin:6px 0}"""
 JS = """const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
 function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-let S;function start(){S={qs:shuf(B).slice(0,N),i:0,ok:0,bad:[]};show()}
+let S;function start(){const st=shuf(B.slice(0,NS)).slice(0,Math.min(NS,15)),rest=shuf(B.slice(NS)).slice(0,N-st.length);S={qs:shuf(st.concat(rest)),i:0,ok:0,bad:[]};show()}
 function show(){const d=S.qs[S.i];S.o=shuf([d.c].concat(d.w));S.done=0;
  $("quiz").innerHTML='<p class="prog">Question '+(S.i+1)+' of '+S.qs.length+' · correct: '+S.ok+'</p><h2>'+esc(d.q)+'</h2>'+S.o.map((t,k)=>'<button onclick="pick('+k+')">'+esc(t)+'</button>').join('')+'<div id="fb"></div>'}
 function pick(k){if(S.done)return;S.done=1;const d=S.qs[S.i],bs=$("quiz").querySelectorAll("button"),r=S.o.indexOf(d.c);bs[r].className="ok";if(k===r)S.ok++;else{bs[k].className="no";S.bad.push(d)}
@@ -38,7 +38,7 @@ def static(qs):
         o += (f'<div class="pq"><p><b>{i}.</b> {E(d["q"])}</p><ol type="A">' + "".join(f"<li>{E(t)}</li>" for t in opts) +
               f'</ol><details><summary>Show answer</summary><p><b>{L}. {E(d["c"])}</b></p><p>{E(d["e"])}</p></details></div>\n')
     return o
-def page(fn, title, desc, h1, intro, bank, n, shown, extra=""):
+def page(fn, title, desc, h1, intro, bank, n, shown, extra="", ns=0):
     url = SITE + fn
     o = f"""<!doctype html>
 <html lang="en">
@@ -65,7 +65,7 @@ def page(fn, title, desc, h1, intro, bank, n, shown, extra=""):
 <p>More free practice: <a href="drivers-license-practice-test">driver's license test, all states</a> · <a href="motorcycle-permit-practice-test">motorcycle permit test</a> · <a href="citizenship-test">U.S. citizenship test</a></p>
 </main>
 <footer class="bottom"><div class="wrap"><span>© 2026 Solving Life LLC. Practice questions are written by Solving Life LLC and are not official test questions. Not affiliated with any state DMV. Always study your state's official handbook.</span></div></footer>
-<script>const B={json.dumps(bank, ensure_ascii=False).replace("</", "<\\/")},N={n};
+<script>const B={json.dumps(bank, ensure_ascii=False).replace("</", "<\\/")},N={n},NS={ns};
 {JS}</script>
 </body></html>
 """
@@ -82,7 +82,20 @@ page("motorcycle-permit-practice-test", "Free Motorcycle Permit Practice Test 20
      "Free motorcycle permit practice test",
      "<p>Free practice for the motorcycle written knowledge test. The questions follow the safe-riding rules taught in state motorcycle operator manuals across the country. No sign-in.</p><p>Helmet laws, permit rules and test length differ by state, so read your state's official motorcycle manual too.</p>",
      MOTO, 20, MOTO)
+import os
 for s in STATES:
+    sf = "free/state/" + s.lower().replace(" ", "-") + ".txt"
+    if os.path.exists(sf):
+        src = open(sf, encoding="utf-8").readline().lstrip("#").strip()
+        rows = [dict(zip("qcabxe", l.rstrip("\n").split("|"))) for l in open(sf, encoding="utf-8") if l.strip() and not l.startswith("#")]
+        assert all(len(r) == 6 for r in rows), sf
+        ST = norm(rows)
+        page(slug(s), f"Free {s} Permit Practice Test 2026: {len(ST)} {s}-Specific Questions Plus Signs and Rules",
+             f"Free {s} driver's permit practice test with {len(ST)} questions on {s}'s own laws (speed limits, teen rules, DUI limits) from the official handbook, plus road signs and rules. No sign-in.",
+             f"Free {s} permit practice test",
+             f"<p>Free practice for the {E(s)} written knowledge test: {len(ST)} questions on rules that {E(s)} sets itself, plus the road signs, signals and rules of the road used in every state. No sign-in.</p><p class=\"prog\">{E(s)} questions are based on the {E(src)}. Laws change, so check the current handbook before test day.</p>",
+             ST + CAR, 25, ST, ns=len(ST), extra=f'<p>Riding a motorcycle in {E(s)}? Try the <a href="motorcycle-permit-practice-test">motorcycle permit practice test</a>.</p>')
+        urls.append(slug(s)); print("state bank:", s, len(ST)); continue
     rot = sorted(CAR, key=lambda d: h(s + d["q"]))[:25]
     page(slug(s), f"Free {s} Permit Practice Test 2026: Driver's License Questions and Answers",
          f"Free {s} driver's permit practice test: road signs, right-of-way and safe driving questions with answers. No sign-in.",
