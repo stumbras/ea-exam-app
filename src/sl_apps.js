@@ -7,9 +7,9 @@
 const SLAPPS={
   s65:{part:5,name:"Solving Life Series 65 Prep",short:"Series 65 Prep",man:"manifest-65.webmanifest",color:"#5b3fb0",icon:"apple-touch-icon-65.png"},
   cble:{part:9,name:"Solving Life Customs Broker Prep",short:"Customs Broker Prep",man:"manifest-cble.webmanifest",color:"#1f5d8c",icon:"apple-touch-icon-cble.png"},
-  cit:{part:11,name:"Solving Life Citizenship Test",short:"Citizenship",man:"manifest-cit.webmanifest",color:"#102A49",icon:"apple-touch-icon.png"},
-  drive:{part:12,name:"Solving Life Driver's Test",short:"Driver's Test",man:"manifest-drive.webmanifest",color:"#127A68",icon:"apple-touch-icon.png"},
-  moto:{part:13,name:"Solving Life Motorcycle Test",short:"Motorcycle",man:"manifest-moto.webmanifest",color:"#7a4a12",icon:"apple-touch-icon.png"},
+  cit:{part:11,name:"Solving Life Citizenship Test",short:"Citizenship",man:"manifest-cit.webmanifest",color:"#102A49",icon:"apple-touch-icon-cit.png"},
+  drive:{part:12,name:"Solving Life Driver's Test",short:"Driver's Test",man:"manifest-drive.webmanifest",color:"#127A68",icon:"apple-touch-icon-drive.png"},
+  moto:{part:13,name:"Solving Life Motorcycle Test",short:"Motorcycle",man:"manifest-moto.webmanifest",color:"#7a4a12",icon:"apple-touch-icon-moto.png"},
   sie:{part:10,name:"Solving Life SIE Prep",short:"SIE Prep",man:"manifest-sie.webmanifest",color:"#2a7d4f",icon:"apple-touch-icon-sie.png"},
   edpna:{part:6,name:"Solving Life EDPNA Prep",short:"EDPNA Prep",man:"manifest-edpna.webmanifest",color:"#a0521a",icon:"apple-touch-icon-edpna.png"}
 };
