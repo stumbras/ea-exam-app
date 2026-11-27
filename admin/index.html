@@ -33,12 +33,19 @@ iframe{width:100%;height:80vh;border:1px solid var(--line);border-radius:14px;ba
  <p id="msg"></p>
 </div>
 <div id="app" hidden>
- <div class="tabs"><button data-t="over" class="on">Overview</button><button data-t="access">Access control</button><button data-t="social">Social media</button><button data-t="sales">Products &amp; sales</button><button data-t="tools">All tools</button><button id="out" style="margin-left:auto">Sign out</button></div>
+ <div class="tabs"><button data-t="over" class="on">Overview</button><button data-t="cust">Customers &amp; email</button><button data-t="free">Free tests</button><button data-t="access">Access control</button><button data-t="social">Social media</button><button data-t="sales">Products &amp; sales</button><button data-t="tools">All tools</button><button id="out" style="margin-left:auto">Sign out</button></div>
  <section data-p="over">
   <div class="card"><h2>Today at a glance</h2><div class="grid" id="stats"></div><p class="mut" id="who"></p></div>
   <div class="card"><h2>Systems</h2><div id="sys"></div></div>
   <div class="card"><h2>Latest sign-ins</h2><table id="recent"></table></div>
  </section>
+ <section data-p="cust" hidden>
+  <div class="card"><h2>Customers</h2><p class="mut" id="cinfo"></p><p><button class="btn" id="ccopy">Copy all emails</button> <button class="btn" id="ccsv">Download list (CSV)</button></p><div style="overflow:auto"><table id="cust"></table></div></div>
+  <div class="card"><h2>Email everyone</h2><p class="mut">Goes to every customer who has not unsubscribed, from your sign-in email address. An unsubscribe link and the business address are added at the bottom. Up to 90 people per send.</p>
+   <input id="msub" placeholder="Subject" style="width:100%;margin-bottom:8px"><textarea id="mtxt" rows="9" placeholder="Your message" style="width:100%;font:inherit;padding:10px;border:1px solid #bbb;border-radius:10px"></textarea>
+   <p><button class="btn" id="mtest">Send a test to me</button> <button class="btn" id="mall" style="background:#a33">Send to all customers</button></p><p id="mmsg" class="mut"></p></div>
+ </section>
+ <section data-p="free" hidden><div class="card"><h2>Free tests</h2><p class="mut" id="finfo"></p><div class="links" id="fr"></div></div><div class="card"><h2>Promo videos</h2><div class="links" id="vid"></div></div></section>
  <section data-p="access" hidden><div class="card"><h2>Access control</h2><p class="mut">Give or remove full access, set the free preview, extra minutes, promo codes, Wix and email settings.</p><iframe id="hub" title="Access control"></iframe></div></section>
  <section data-p="social" hidden><div class="card"><h2>Social media</h2><div class="links" id="soc"></div></div></section>
  <section data-p="sales" hidden><div class="card"><h2>Products &amp; sales</h2><div class="links" id="sal"></div></div></section>
@@ -61,12 +68,22 @@ const d=t=>t?new Date(t).toLocaleString("en-US",{month:"short",day:"numeric",hou
 async function load(){if(!tok){$("#login").hidden=false;$("#app").hidden=true;return}
   const{st,j}=await req("/admin/me");if(st!==200){if(st===401){tok=null;try{localStorage.removeItem(K)}catch(_){}}$("#login").hidden=false;$("#app").hidden=true;return msg(j.error||"Please sign in again.")}
   $("#login").hidden=true;$("#app").hidden=false;$("#who").textContent="Signed in as "+j.email;
-  const S=[["People signed in",j.users],["Active today",j.active24h],["Active 7 days",j.active7d],["New 7 days",j.new7d],["Full access",j.fullAccess],["Wix buyers",j.wixBuyers],["Free hour used up",j.trialUsedUp],["Free preview (min)",j.previewMin]];
+  const S=[["People signed in",j.users],["Active today",j.active24h],["Active 7 days",j.active7d],["New 7 days",j.new7d],["Full access",j.fullAccess],["Wix buyers",j.wixBuyers],["Free hour used up",j.trialUsedUp],["Free preview (min)",j.previewMin],["Came from free tests",j.freeUsers||0],["Customer emails",(j.customers||[]).length]];
   $("#stats").innerHTML=S.map(([a,b])=>`<div class="stat"><b>${b}</b><span>${a}</span></div>`).join("");
   $("#sys").innerHTML=`<p>Wix sales sync: ${j.wix.key?'<span class="ok">on</span>':'<span class="bad">no Wix key yet</span>'}${j.wix.lastChecked?" · checked through "+esc(d(Date.parse(j.wix.lastChecked))):""}${j.wix.error?' · <span class="bad">last error '+esc(j.wix.error.status)+'</span>':""}</p>
    <p>Email sign-in codes: ${j.mail.key?'<span class="ok">on</span> · '+esc(j.mail.from):'<span class="bad">no email key</span>'}</p>
    <p>Promo codes: ${j.codes.map(c=>esc(c.code)+" ("+c.used+" used)").join(", ")||"none"}</p>`;
   $("#recent").innerHTML="<tr><th>Email</th><th>Last seen</th><th>Joined</th><th>Preview used</th></tr>"+j.recent.map(r=>`<tr><td>${esc(r.email)}</td><td>${d(r.last)}</td><td>${d(r.first)}</td><td>${r.usedMin} min</td></tr>`).join("");
+  const CU=j.customers||[],act=CU.filter(c=>!c.unsub),nm=s=>String(s||"app").replace(/^free:/,"Free: ").replace(/-/g," ");
+  $("#cinfo").textContent=CU.length+" people signed in with an email. "+act.length+" can be emailed, "+(CU.length-act.length)+" unsubscribed. People who sign in on a free test are added here automatically.";
+  $("#cust").innerHTML="<tr><th>Email</th><th>Came from</th><th>Joined</th><th>Last seen</th><th></th></tr>"+CU.map(c=>`<tr><td>${esc(c.email)}</td><td>${esc([c.src].concat((c.srcs||[]).filter(x=>x!==c.src)).map(nm).join(", "))}</td><td>${d(c.first)}</td><td>${d(c.last)}</td><td>${c.unsub?"unsubscribed":""}</td></tr>`).join("");
+  $("#ccopy").onclick=()=>{navigator.clipboard.writeText(act.map(c=>c.email).join(", ")).then(()=>{$("#ccopy").textContent="Copied "+act.length+" emails"}).catch(()=>{})};
+  $("#ccsv").onclick=()=>{const b=new Blob(["email,came_from,joined,last_seen,unsubscribed\n"+CU.map(c=>[c.email,c.src,new Date(c.first).toISOString(),new Date(c.last).toISOString(),c.unsub?"yes":""].join(",")).join("\n")],{type:"text/csv"}),x=document.createElement("a");x.href=URL.createObjectURL(b);x.download="solving-life-customers.csv";x.click()};
+  const send=async test=>{const subject=$("#msub").value,text=$("#mtxt").value;if(!test&&!confirm("Send this email to "+act.filter(c=>c.email!==j.email).length+" customers now?"))return;$("#mmsg").textContent="Sending…";const r=await req("/admin/mail",{subject,text,test});$("#mmsg").textContent=r.st===200?("Sent "+r.j.sent+" of "+r.j.total+(r.j.failed&&r.j.failed.length?". Failed: "+r.j.failed.join("; "):"")):(r.j.error||"Could not send")};
+  $("#mtest").onclick=()=>send(true);$("#mall").onclick=()=>send(false);
+  const SW="https://solvinglifewith.com/";$("#finfo").textContent=(j.freeUsers||0)+" people have signed in from a free test so far. Each free test has a Save your progress box; everyone who uses it lands in Customers.";
+  $("#fr").innerHTML=L(SW+"citizenship-test","U.S. citizenship test","All 128 official questions")+L(SW+"drivers-license-practice-test","Driver's license practice test","All states, 51 state pages")+L(SW+"motorcycle-permit-practice-test","Motorcycle permit test","30 questions")+L(SW+"free-practice-questions","License exam practice questions","EA, Series 65, SIE, Customs, EDPNA")+L(SW+"colorado-permit-practice-test","Colorado permit test","Example state page")+L("https://search.google.com/u/1/search-console","Google Search Console","See how many people find the free tests");
+  $("#vid").innerHTML=["driving-game-show","citizenship-game-show","citizenship-quiz","driving-quiz","waiting-for-k1","study-apps","tax-services"].map(v=>L(SW+"ads/"+v+".mp4",v.replace(/-/g," "),"Open, then save or share")).join("");
   $("#hub").src=j.hub;
   $("#soc").innerHTML=(j.social?L(j.social,"Auto-posting control","Connect accounts, queues, posting status"):'<a href="#" onclick="document.querySelector(\'[data-t=access]\').click();return false">Auto-posting control<small>Paste your social setup link once in Access control → Social media control link</small></a>')
    +(j.social?L(j.social.replace(/\/?$/,"/")+"reddit","Reddit helper","Ready-to-post drafts"):"")

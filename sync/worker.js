@@ -6,7 +6,7 @@
 // GET /status, POST /tick {ms}: preview meter (60 minutes per Google account). Owner hub: /hub/<ADMIN> (secret ADMIN).
 // WIX SALES: every 10 minutes (cron) paid Wix Stores orders for the bundle product give the buyer's email 12 months of access.
 // The owner pastes a Wix API key (Orders read) in the hub; it is stored in KV "wixkey"; "wixlast" = last order time checked.
-const ORIGINS = ["https://study.solvinglifewith.com", "https://ea-exam-app.linaskerbelis.workers.dev", "http://localhost:8080"];
+const ORIGINS = ["https://study.solvinglifewith.com", "https://solvinglifewith.com", "https://www.solvinglifewith.com", "https://ea-exam-app.linaskerbelis.workers.dev", "http://localhost:8080"];
 const CLIENT_IDS = ["184315933690-kq6qmc1qjsi177ht716s3ignsn0osd4u.apps.googleusercontent.com"];
 const MAX = 20 * 1024 * 1024;
 const ALWAYS = ["linaskerbelis@gmail.com", "info@solvinglifewith.com", "info@solvinglifellc.com", "cristyesplanada@gmail.com"];
@@ -120,21 +120,24 @@ async function sendMail(env, to, subject, text) {
 }
 const okEmail = e => /^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/i.test(e);
 async function subFor(env, email, fallback) { const m = await env.P.get("e:" + email); if (m) return m; await env.P.put("e:" + email, fallback); return fallback; }
-async function signedIn(env, req, sub, email, name) {
+async function signedIn(env, req, sub, email, name, src) {
   const saved = await env.P.get("u:" + sub, "json"), prev = await env.P.get("s:" + sub, "json");
-  await env.P.put("s:" + sub, JSON.stringify({ email, name: name || prev && prev.name || "", first: prev && prev.first || Date.now(), last: Date.now() }));
+  const sr = String(src || "").replace(/[^a-z0-9:_-]/gi, "").slice(0, 60), srcs = [...new Set([...(prev && prev.srcs || []), ...(sr ? [sr] : [])])].slice(0, 12);
+  await env.P.put("s:" + sub, JSON.stringify({ email, name: name || prev && prev.name || "", first: prev && prev.first || Date.now(), last: Date.now(), src: prev ? (prev.src || "app") : (sr || "app"), srcs }));
   return J(req, { token: await mkToken(env, sub), email, name: name || "", saved: saved ? { upd: saved.upd, data: saved.data } : null, ...(await accessNow(env, sub)) });
 }
 async function adminData(env) {
   const now = Date.now(), DAY = 864e5, C = await cfg(env);
   const s = await env.P.list({ prefix: "s:", limit: 1000 }), g = await env.P.list({ prefix: "g:" }), cl = await env.P.list({ prefix: "c:" });
-  let users = 0, a1 = 0, a7 = 0, new7 = 0, trialDone = 0; const recent = [];
+  let users = 0, a1 = 0, a7 = 0, new7 = 0, trialDone = 0, free = 0; const recent = [];
   for (const k of s.keys) { const v = await env.P.get(k.name, "json"); if (!v) continue; users++; if (now - (v.last || 0) < DAY) a1++; if (now - (v.last || 0) < 7 * DAY) a7++; if (now - (v.first || 0) < 7 * DAY) new7++;
-    const used = +(await env.P.get("t:" + k.name.slice(2))) || 0; if (used >= C.previewMin * 60000) trialDone++; recent.push({ email: v.email || "", last: v.last || 0, first: v.first || 0, usedMin: Math.round(used / 60000) }); }
+    const used = +(await env.P.get("t:" + k.name.slice(2))) || 0; if (used >= C.previewMin * 60000) trialDone++; if (/^free:/.test(v.src || "") || (v.srcs || []).some(x => /^free:/.test(x))) free++; recent.push({ email: v.email || "", last: v.last || 0, first: v.first || 0, usedMin: Math.round(used / 60000), src: v.src || "app", srcs: v.srcs || [] }); }
   recent.sort((x, y) => y.last - x.last);
+  const un = new Set((await env.P.list({ prefix: "n:" })).keys.map(k => k.name.slice(2)));
+  const customers = recent.filter(r => r.email).map(r => ({ email: r.email, first: r.first, last: r.last, src: r.src, srcs: r.srcs, unsub: un.has(r.email.toLowerCase()) }));
   let paid = 0, wixPaid = 0; for (const k of g.keys) { const v = await env.P.get(k.name, "json") || {}; if (!v.until || v.until > now) { paid++; if (/Wix order/.test(v.note || "")) wixPaid++; } }
   const codes = []; for (const k of cl.keys) { const v = await env.P.get(k.name, "json"); if (v) codes.push({ code: k.name.slice(2), minutes: v.minutes, used: v.used || 0, note: v.note || "" }); }
-  return { users, active24h: a1, active7d: a7, new7d: new7, trialUsedUp: trialDone, fullAccess: paid + ALWAYS.length, wixBuyers: wixPaid, previewMin: C.previewMin, codes,
+  return { users, active24h: a1, active7d: a7, new7d: new7, trialUsedUp: trialDone, fullAccess: paid + ALWAYS.length, wixBuyers: wixPaid, previewMin: C.previewMin, codes, freeUsers: free, customers,
     wix: { key: !!(await env.P.get("wixkey")), lastChecked: await env.P.get("wixlast"), error: await env.P.get("wixerr", "json") },
     mail: { key: !!(await env.P.get("mailkey")), from: await env.P.get("mailfrom") || "" }, recent: recent.slice(0, 40),
     hub: "https://sync.solvinglifewith.com/hub/" + env.ADMIN, social: await env.P.get("sociallink") || "" };
@@ -165,11 +168,11 @@ export default {
         await env.P.delete(k); return J(req, JSON.parse(v));
       }
       if (u.pathname === "/login" && req.method === "POST") {
-        const { id_token } = await req.json();
+        const { id_token, src } = await req.json();
         const r = await fetch("https://oauth2.googleapis.com/tokeninfo?id_token=" + encodeURIComponent(id_token || "")); const g = await r.json();
         if (!r.ok || !CLIENT_IDS.includes(g.aud) || !["accounts.google.com", "https://accounts.google.com"].includes(g.iss) || +g.exp * 1000 < Date.now()) return J(req, { error: "Google sign-in could not be checked." }, 401);
         const em = String(g.email || "").toLowerCase(), sub = em ? await subFor(env, em, g.sub) : g.sub;
-        return signedIn(env, req, sub, em, g.given_name || g.name || "");
+        return signedIn(env, req, sub, em, g.given_name || g.name || "", src);
       }
       if (u.pathname === "/mail/start" && req.method === "POST") {
         const { email } = await req.json().catch(() => ({})); const em = String(email || "").trim().toLowerCase();
@@ -182,14 +185,30 @@ export default {
         return J(req, { ok: true });
       }
       if (u.pathname === "/mail/verify" && req.method === "POST") {
-        const { email, code } = await req.json().catch(() => ({})); const em = String(email || "").trim().toLowerCase(), c = String(code || "").replace(/\D/g, "");
+        const { email, code, src } = await req.json().catch(() => ({})); const em = String(email || "").trim().toLowerCase(), c = String(code || "").replace(/\D/g, "");
         const o = await env.P.get("otp:" + em, "json"); if (!o || o.exp < Date.now()) return J(req, { error: "That code expired. Ask for a new one." }, 401);
         if (o.tries >= 5) return J(req, { error: "Too many tries. Ask for a new code." }, 429);
         if (await hmac(env, em + ":" + c) !== o.h) { o.tries++; await env.P.put("otp:" + em, JSON.stringify(o), { expirationTtl: 900 }); return J(req, { error: "Wrong code. Check the email and try again." }, 401); }
         await env.P.delete("otp:" + em); const sub = await subFor(env, em, "m:" + (await hmac(env, "mail:" + em)).slice(0, 24));
-        return signedIn(env, req, sub, em, "");
+        return signedIn(env, req, sub, em, "", src);
       }
+      if (u.pathname === "/unsub") { const e = String(u.searchParams.get("e") || "").toLowerCase(), ok = okEmail(e) && u.searchParams.get("k") === (await hmac(env, "unsub:" + e)).slice(0, 24);
+        if (ok) await env.P.put("n:" + e, String(Date.now()));
+        return new Response("<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>Solving Life LLC</title><body style='font:18px system-ui;max-width:520px;margin:60px auto;padding:20px'><h1>" + (ok ? "You are unsubscribed" : "Link not valid") + "</h1><p>" + (ok ? esc(e) + " will not get any more emails about new tools or services from Solving Life LLC. Sign-in codes you ask for still arrive." : "Please use the link from the email.") + "</p>", { headers: { "content-type": "text/html;charset=utf-8" } }); }
       const sub = await readToken(env, req); if (!sub) return J(req, { error: "Please sign in again." }, 401);
+      if (u.pathname === "/fload") { const s = await env.P.get("f:" + sub, "json"); return J(req, { saved: s || null }); }
+      if (u.pathname === "/fsave" && req.method === "POST") { const body = await req.text(); if (body.length > 60000) return J(req, { error: "Too large" }, 413);
+        const { upd, data } = JSON.parse(body); if (typeof data !== "string") return J(req, { error: "Nothing to save." }, 400);
+        await env.P.put("f:" + sub, JSON.stringify({ upd: +upd || Date.now(), data })); return J(req, { ok: true }); }
+      if (u.pathname === "/admin/mail" && req.method === "POST") { const who = await env.P.get("s:" + sub, "json"), em = (who && who.email || "").toLowerCase();
+        if (!ADMINS.includes(em)) return J(req, { error: "Not an admin." }, 403);
+        const { subject, text, test } = await req.json().catch(() => ({})); const sj = String(subject || "").trim().slice(0, 150), tx = String(text || "").trim().slice(0, 6000);
+        if (sj.length < 3 || tx.length < 10) return J(req, { error: "Write a subject and a message first." }, 400);
+        const d = await adminData(env), to = test ? [em] : [...new Set(d.customers.filter(c => !c.unsub && !ADMINS.includes(c.email.toLowerCase())).map(c => c.email.toLowerCase()))].slice(0, 90);
+        let sent = 0; const failed = [];
+        for (const e of to) { const r = await sendMail(env, e, sj, tx + "\n\n--\nSolving Life LLC\nLinas Kerbelis, 6350 Quitman Ct, Arvada, CO 80003\nUnsubscribe: https://sync.solvinglifewith.com/unsub?e=" + encodeURIComponent(e) + "&k=" + (await hmac(env, "unsub:" + e)).slice(0, 24));
+          if (r.ok) sent++; else failed.push(e + ": " + r.error); await new Promise(z => setTimeout(z, 600)); }
+        return J(req, { ok: true, sent, failed: failed.slice(0, 10), total: to.length }); }
       if (u.pathname === "/admin/me") { const who = await env.P.get("s:" + sub, "json"), em = (who && who.email || "").toLowerCase();
         if (!ADMINS.includes(em)) return J(req, { error: "This account is not an admin. Sign in with " + ADMINS[0] + "." }, 403);
         return J(req, { admin: true, email: em, ...(await adminData(env)) }); }
