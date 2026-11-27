@@ -1698,6 +1698,14 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Still to add: endorsements (passenger, school bus, tank, doubles/triples, hazmat), pre-trip inspection, more questions per section, a public practice page.
 - Driving app: 37 states. Downloaded, not yet written: ar, ne, nd, ri, vt, wv, wy, nm in /home/claude/dmv/dl. No file: Delaware, Maine, New Hampshire, Louisiana, South Dakota.
 
+### Version 2026-11-28d (Nov 28): CDL sold alone for $10
+- Wix product "CDL Permit Prep App – 12 Months", $10, digital, id 455a3b0c-26d7-4f30-9674-ea03fdad7167, page /product-page/cdl-permit-prep-app-12-months (created with products-with-inventory so it is in stock).
+- Sync worker (live SHA 37fe95ed…, backup tmp/worker.before-cdl.js): `WIX_APP_PRODUCTS` maps single-app products to an app key; a grant may be `{appsOnly:true, apps:{cdl:untilMs}}`; `/status` returns `apps:[...]` for people without full access; Wix orders for the CDL product add 12 months of `apps.cdl`; hub button "Give CDL app only (12 months)". A bundle order still gives full access and keeps any app grants.
+- App (cloud_sync.js): `AC_BUY_APP`, `acApp()`, `acBuy()`; `acState()` counts an app grant as full access inside that app only; the expired wall and the badge show "CDL Prep only: $10" first and the $49 bundle second.
+- FOUND, NOT FIXED: the $49 bundle product (3dcbe428…) reports inventory OUT_OF_STOCK with no inventory item, so its Buy button may be disabled. Creating the inventory item was blocked by the permission system; Linas must approve or switch it to "In stock" in Wix.
+- Next paid apps Linas picked: Mortgage Loan Originator (SAFE MLO exam) and Texas All-Lines Insurance Adjuster.
+
+- 2026-11-27 Version 2026-11-28d · Nov 28: CDL app can be bought alone: per-app access and paywall
 - 2026-11-27 Version 2026-11-28c · Nov 28: CDL Permit Prep app: general knowledge, air brakes, combination vehicles
 - 2026-11-27 Version 2026-11-28b · Nov 28: Driving: Wisconsin, Oregon, Oklahoma, Kentucky, Nevada, Utah, South Carolina
 - 2026-11-27 Version 2026-11-28a · Nov 28: Driving: Kansas, Mississippi, Idaho, Alaska, Montana, Connecticut, Hawaii
