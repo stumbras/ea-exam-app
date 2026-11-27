@@ -1710,6 +1710,11 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Hub (site_practice.py): state picker opens `?drive&st=<State name>` (sl_apps.js reads `st` and sets drvState); stat shows the real count of states from gen_free_banks.py ST; CDL card; "Questions people ask" with FAQPage JSON-LD.
 - D-U-N-S: only the Nov 23 receipt (inquiry 11268247, case 11327523) is in the personal Gmail, as a forward. The result goes to info@solvinglifewith.com, which the Gmail connector here cannot read.
 
+### Version 2026-11-28h (Nov 28)
+- Diagnostic test can be left and continued: exam_path.js keeps `slDx<part>` in localStorage after every answer (queue ids, position, per-topic levels and results); `xpDxStart()` resumes it, `xpDxStart(true)` / button "Start it over" discards it; the red button reads "Continue your diagnostic · X of 24 answered"; a result is only saved once all questions are answered (before, leaving after 12 answers scored it as finished). Kept 14 days, on this device only (not synced). Test: tmp/t_dx.js. Backup tmp/exam_path.before-dxresume.js.
+- Wix products: a DIGITAL product must have a digital file or every update fails with VARIANTS_ARE_NOT_ALIGNED_WITH_PRODUCT and the editor will not save. Both products now have an access-instructions PDF (pwa/access-cdl.pdf, pwa/access-bundle.pdf, uploaded to Wix media) set as `variantsInfo.variants[].digitalProperties.digitalFile.id`, and cover images (pwa/cover-*.png, tmp/mkcovers.py). Update shape that works: product{id,revision,media.itemsInfo.items[{url}],options:[],variantsInfo.variants[{id,sku,choices:[],price,digitalProperties}]}.
+
+- 2026-11-27 Version 2026-11-28h · Nov 28: Diagnostic test can be left and continued later
 - 2026-11-27 Version 2026-11-28g · Nov 28: Access instruction PDFs for the two store products
 - 2026-11-27 Version 2026-11-28f · Nov 28: Cover images for the two store products; history notes
 - 2026-11-27 Version 2026-11-28e · Nov 28: Hub page: state picker, CDL card, FAQ; driving app accepts a chosen state

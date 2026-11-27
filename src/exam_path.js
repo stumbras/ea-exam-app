@@ -63,6 +63,7 @@ const xpExtraClick0=extraClick;extraClick=function(b){const d=b.dataset;if(d.xp=
   if(a==="go"){xpRun(xpNext());return true}
   if(a==="les"){const x=xpDom(isNaN(+d.d)?d.d:+d.d);if(x.les)xpRun({les:(x.lesNext||x.L[0]).k});return true}
   if(a==="dx"){xpDxStart();return true}
+  if(a==="dxnew"){xpDxStart(true);return true}
   if(a==="nodx"){S.set.xp=S.set.xp||{};S.set.xp["nodx"+part]=1;persist();render();return true}
   if(a==="exam"){xpRun({mode:"exam",filt:"all"});return true}
   if(a==="mock"){xpRun({mock:1});return true}
@@ -180,12 +181,19 @@ const xpResults0=renderResults;renderResults=function(){xpResults0.apply(this,ar
       never taught. They come back later as new questions. The answers still count toward the topic's accuracy. */
 const XPW={1:1,2:2,3:3};
 function xpDx(){return XPU[part]?((S.set.xp||{})["dx"+part]||null):null}
-function xpDxLine(){try{if(!XPU[part])return"";const r=xpDx();return `<div class="row xpdx"><button class="btn small" data-xp="dx">${r?"Run the diagnostic again":"🩺 Diagnostic · 24 questions"}</button><span class="small muted">${r?`Last result: ${Math.round(r.s*100)}% · sets the order of the red button`:"Finds what you already know, so you skip it."}</span>${!r&&xpAnswered()<40&&!(S.set.xp||{})["nodx"+part]?`<button class="btn ghost small" data-xp="nodx">Skip it</button>`:""}</div>`}catch(_){return""}}
+function xpDxLine(){try{if(!XPU[part])return"";const r=xpDx();return `<div class="row xpdx">${(()=>{const v=xpDxSaved();return v?`<button class="btn pri small" data-xp="dx">▶ Continue the diagnostic · ${v.done} of ${v.n0||v.ids.length} answered</button><button class="btn ghost small" data-xp="dxnew">Start it over</button>`:`<button class="btn small" data-xp="dx">${r?"Run the diagnostic again":"🩺 Diagnostic · 24 questions"}</button>`})()}<span class="small muted">${r?`Last result: ${Math.round(r.s*100)}% · sets the order of the red button`:"Finds what you already know, so you skip it."}</span>${!r&&xpAnswered()<40&&!(S.set.xp||{})["nodx"+part]?`<button class="btn ghost small" data-xp="nodx">Skip it</button>`:""}</div>`}catch(_){return""}}
 function xpDxPick(d,lv,used){const ok=i=>i.p==part&&i.d==d&&i.t==="q"&&i.opts&&i.opts.length===4&&!used.includes(i.id);let pool=BANK.filter(i=>ok(i)&&(i.lv||2)===lv);if(!pool.length)pool=BANK.filter(ok);const un=pool.filter(i=>!S.it[i.id]);return shuffle(un.length?un:pool)[0]}
-function xpDxStart(){const doms=Object.keys(PARTS[part].doms),per=Math.max(4,Math.round(24/doms.length)),used=[],by={},q=[];
+/* Version 2026-11-28h: an unfinished diagnostic is kept (localStorage "slDx<part>") after every answer, so leaving in the
+   middle and coming back continues at the next question instead of starting over. Kept 14 days; a finished one clears it. */
+function xpDxKey(){return "slDx"+part}
+function xpDxSaved(){try{const v=JSON.parse(localStorage.getItem(xpDxKey())||"null");if(!v||!v.ids||Date.now()-v.t>14*864e5||v.pos>=v.ids.length||!v.ids.every(id=>BYID[id])){if(v)localStorage.removeItem(xpDxKey());return null}return v}catch(_){return null}}
+function xpDxSave(s){try{const c=s.xp;if(!c||c.k!=="dx")return;localStorage.setItem(xpDxKey(),JSON.stringify({t:Date.now(),ids:s.queue.map(e=>e.id),pos:s.pos+1,done:s.done,correct:s.correct,n0:c.n0,lv:c.lv,res:c.res,used:c.used,isNew:c.isNew}))}catch(_){}}
+function xpDxClear(){try{localStorage.removeItem(xpDxKey())}catch(_){}}
+function xpDxResume(v){const q=v.ids.map(id=>BYID[id]);newSess("quiz",q);sess.pos=v.pos;sess.done=v.done;sess.correct=v.correct;sess.xp={k:"dx",lv:v.lv,res:v.res,used:v.used,isNew:v.isNew||{},n0:v.n0||q.length};sess.title="Diagnostic";sess.qstart=Date.now();render()}
+function xpDxStart(fresh){if(!fresh){const v=xpDxSaved();if(v){xpDxResume(v);return}}else xpDxClear();const doms=Object.keys(PARTS[part].doms),per=Math.max(4,Math.round(24/doms.length)),used=[],by={},q=[];
   doms.forEach(d=>{by[d]=[];for(let k=0;k<per;k++){const i=xpDxPick(d,2,used);if(i){used.push(i.id);by[d].push(i)}}});
   for(let k=0;k<per;k++)doms.forEach(d=>{if(by[d][k])q.push(by[d][k])});if(!q.length)return;
-  newSess("quiz",q);const lv={},res={};doms.forEach(d=>{lv[d]=2;res[d]=[]});sess.xp={k:"dx",lv,res,used,isNew:{}};sess.title="Diagnostic";q.forEach(i=>{if(!S.it[i.id])sess.xp.isNew[i.id]=1});render()}
+  newSess("quiz",q);const lv={},res={};doms.forEach(d=>{lv[d]=2;res[d]=[]});sess.xp={k:"dx",lv,res,used,isNew:{},n0:q.length};sess.title="Diagnostic";q.forEach(i=>{if(!S.it[i.id])sess.xp.isNew[i.id]=1});render()}
 function xpCheckN(k){return xpUnitFacts(k).length>=40&&xpUnitQs(k).length>=12?8:5} /* a lesson that covers many facts needs a longer check */
 function xpCheckStart(a){const N=xpCheckN(a.pre),qs=xpUnitQs(a.pre),un=qs.filter(i=>!S.it[i.id]),src=un.length>=N?un:qs,take=(lv,n,got)=>shuffle(src.filter(i=>(i.lv||2)===lv&&!got.includes(i))).slice(0,n);
   let q=take(2,Math.ceil(N*.6),[]);q=q.concat(take(3,N-q.length,q));if(q.length<N)q=q.concat(shuffle(src.filter(i=>!q.includes(i))).slice(0,N-q.length));
@@ -194,10 +202,11 @@ function xpCheckStart(a){const N=xpCheckN(a.pre),qs=xpUnitQs(a.pre),un=qs.filter
 const xpRecord0=record;record=function(ok,conf){const s=sess,c=s&&s.xp,cur=s&&s.queue[s.pos],it=cur&&BYID[cur.id];const r=xpRecord0.apply(this,arguments);
   try{if(c&&it){if(c.k==="pc"&&ok&&conf)c.sure++;
     if(c.k==="dx"){const d=String(it.d),l=it.lv||2;c.res[d].push([l,ok?(conf?1:0.5):0]);c.lv[d]=Math.max(1,Math.min(3,l+(ok&&conf?1:ok?0:-1)));
-      const j=s.queue.findIndex((e,k)=>k>s.pos&&String(BYID[e.id].d)===d);if(j>0){const n=xpDxPick(d,c.lv[d],c.used);if(n){c.used.push(n.id);if(!S.it[n.id])c.isNew[n.id]=1;s.queue[j]=mkEntry(n)}}}}}catch(_){}return r};
+      const j=s.queue.findIndex((e,k)=>k>s.pos&&String(BYID[e.id].d)===d);if(j>0){const n=xpDxPick(d,c.lv[d],c.used);if(n){c.used.push(n.id);if(!S.it[n.id])c.isNew[n.id]=1;s.queue[j]=mkEntry(n)}}xpDxSave(s)}}}catch(_){}return r};
 function xpForgetNewMisses(s){try{Object.keys(s.xp.isNew||{}).forEach(id=>{const r=S.it[id];if(r&&r[4]===0&&r[2]<=1)delete S.it[id]})}catch(_){}}
 const xpFinish1=finish;finish=function(){try{const s=sess,c=s&&s.xp;
-  if(c&&c.k==="dx"&&s.done>=Math.min(12,s.queue.length)){const D={};let W=0,G=0;for(const d in c.res){let w=0,g=0;c.res[d].forEach(([l,v])=>{w+=XPW[l];g+=XPW[l]*v});if(w){D[d]=[g/w,c.res[d].length];const wt=PARTS[part].doms[d][1];W+=wt;G+=wt*g/w}}
+  if(c&&c.k==="dx"&&s.done<(c.n0||s.queue.length)){xpDxSave({xp:c,queue:s.queue,pos:s.phase==="ask"?s.pos-1:s.pos,done:s.done,correct:s.correct});s.dxPaused={done:s.done,n:c.n0||s.queue.length};s.xp=null}
+  else if(c&&c.k==="dx"){xpDxClear();const D={};let W=0,G=0;for(const d in c.res){let w=0,g=0;c.res[d].forEach(([l,v])=>{w+=XPW[l];g+=XPW[l]*v});if(w){D[d]=[g/w,c.res[d].length];const wt=PARTS[part].doms[d][1];W+=wt;G+=wt*g/w}}
     S.set.xp=S.set.xp||{};S.set.xp["dx"+part]={t:Date.now(),d:D,s:W?G/W:0,n:s.done};s.dxDone=1;xpForgetNewMisses(s);s.xp=null}
   if(c&&c.k==="pc"&&s.done>=c.n){const m=xpMem(c.d);m.pc=m.pc||{};m.pc[c.u]=c.sure;
     if(c.sure>=c.need){m.to=m.to||{};m.to[c.u]=1;const t=today();let k=0;xpUnitFacts(c.u).forEach(i=>{if(!S.it[i.id]){S.it[i.id]=[2,t+3+(k++%7),0,0,1,0]}});s.pcDone={pass:1,facts:k,u:c.u,n:c.n,need:c.need}}else s.pcDone={pass:0,sure:c.sure,u:c.u,n:c.n,need:c.need};
@@ -208,11 +217,13 @@ const xpDom2=xpDom;xpDom=function(d){const x=xpDom2(d),r=xpDx();x.dx=r&&r.d[d]?r
 const xpState2=xpState;xpState=function(){const st=xpState2();if(xpDx()&&st.D.every(x=>x.gain!=null)){const rank={};st.D.slice().sort((a,b)=>b.gain-a.gain).forEach((x,k)=>rank[x.d]=k);const ord={les:0,learn:1,prac:2,exam:3,mock:4,strong:5},grp=s=>s.k==="exam"?1:s.k==="mock"?2:s.k==="strong"?3:0;
     st.steps=st.steps.map((s,k)=>({s,k})).sort((a,b)=>grp(a.s)-grp(b.s)||(a.s.x&&b.s.x?rank[a.s.x.d]-rank[b.s.x.d]:0)||ord[a.s.k]-ord[b.s.k]||a.k-b.k).map(o=>o.s)}return st};
 const xpNext2=xpNext;xpNext=function(){const a=xpNext2();try{if(XPU[part]&&!xpDx()&&!a.first&&xpAnswered()<40&&!(S.set.xp||{})["nodx"+part]){const st=a.st||xpState();
+    const sv=xpDxSaved();if(sv)return{st,i:a.i,tot:a.tot,t:"Continue your diagnostic · "+sv.done+" of "+(sv.n0||sv.ids.length)+" answered",d:"It picks up at the next question. Nothing you answered is asked again.",dxgo:1};
     return{st,i:a.i,tot:a.tot,t:"Start with the diagnostic · 24 questions",d:"About 15 minutes. It finds what you already know, so the path skips it and begins where you gain the most.",dxgo:1}}}catch(_){}return a};
 const xpRun2=xpRun;xpRun=function(a){if(a.dxgo){xpDxStart();return}if(a.pre!==undefined){xpCheckStart(a);return}return xpRun2(a)};
 /* results page: what the diagnostic or the check found */
 const xpResults1=renderResults;renderResults=function(){xpResults1.apply(this,arguments);try{const s=sess,h=document.querySelector("#view .xpnx")||document.querySelector("#view #home");if(!s||!h)return;let html="";
   if(s.dxDone){const r=xpDx(),st=xpState(),order=st.D.slice().sort((a,b)=>(b.gain||0)-(a.gain||0));
     html=`<div class="dxr"><b>Your diagnostic · ${Math.round(r.s*100)}% overall</b><div class="small muted">Weighted by the exam's topic sizes. Harder questions count more. About 70% is the passing range.</div>${st.D.map(x=>{const v=x.dx==null?0:x.dx,cls=v>=0.75?"ok":v>=0.5?"mid":"bad";return `<div class="dxrow"><span>${esc(x.name)}</span><b class="${cls}">${Math.round(v*100)}% · ${v>=0.75?"strong":v>=0.5?"building":"weak"}</b><i><em class="${cls}" style="width:${Math.max(4,Math.round(v*100))}%"></em></i></div>`}).join("")}<div class="small">The red button now starts with <b>${esc(order[0].name)}</b>, then ${esc(order.slice(1,3).map(x=>x.name).join(", then "))}. Before each lesson a 5-question check lets you skip it. Questions you missed here are not counted as misses.</div></div>`}
+  if(s.dxPaused){html=`<div class="dxr"><b>Diagnostic paused · ${s.dxPaused.done} of ${s.dxPaused.n} answered</b><div class="small">Your answers are saved on this device. Open the diagnostic again and it continues at the next question.</div></div>`}
   if(s.pcDone){const u=UNITS[part][s.pcDone.u];html=`<div class="dxr"><b>${s.pcDone.pass?"Lesson skipped: "+esc(u.t):"Not yet: "+esc(u.t)}</b><div class="small">${s.pcDone.pass?`You got at least ${s.pcDone.need} of ${s.pcDone.n} right. ${s.pcDone.facts} facts from this lesson are placed on your review schedule over the next 9 days, so each is still confirmed once.`:`${s.pcDone.sure} of ${s.pcDone.n} right (${s.pcDone.need} skips the lesson). Reading the lesson is the next step.`}</div></div>`}
   if(html)h.insertAdjacentHTML("beforebegin",html)}catch(_){}};
