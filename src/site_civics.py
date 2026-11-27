@@ -38,7 +38,8 @@ for d in D:
 static += "</ol>\n"
 CTA = ('<div class="cta"><h2>Need an ITIN or help with your U.S. tax return?</h2><p>USCIS can ask about your tax returns at the naturalization interview. '
        'Solving Life LLC helps new immigrants and nonresidents with ITIN applications and U.S. tax returns.</p>'
-       '<p><a class="btn btn-main" href="https://solvinglifellc.com">Get tax help</a></p></div>')
+       '<p><a class="btn btn-main" href="https://solvinglifellc.com">Get tax help</a></p>'
+       '<p>Studying for a career license too? Our exam apps cover the Enrolled Agent, Series 65, SIE, Customs Broker and EDPNA exams: <a style="color:#9FE1CB" href="apps">see the study apps</a>.</p></div>')
 page = f"""<!doctype html>
 <html lang="en">
 <head>
