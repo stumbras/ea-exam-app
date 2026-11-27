@@ -1702,7 +1702,7 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Wix product "CDL Permit Prep App – 12 Months", $10, digital, id 455a3b0c-26d7-4f30-9674-ea03fdad7167, page /product-page/cdl-permit-prep-app-12-months (created with products-with-inventory so it is in stock).
 - Sync worker (live SHA 37fe95ed…, backup tmp/worker.before-cdl.js): `WIX_APP_PRODUCTS` maps single-app products to an app key; a grant may be `{appsOnly:true, apps:{cdl:untilMs}}`; `/status` returns `apps:[...]` for people without full access; Wix orders for the CDL product add 12 months of `apps.cdl`; hub button "Give CDL app only (12 months)". A bundle order still gives full access and keeps any app grants.
 - App (cloud_sync.js): `AC_BUY_APP`, `acApp()`, `acBuy()`; `acState()` counts an app grant as full access inside that app only; the expired wall and the badge show "CDL Prep only: $10" first and the $49 bundle second.
-- FOUND, NOT FIXED: the $49 bundle product (3dcbe428…) reports inventory OUT_OF_STOCK with no inventory item, so its Buy button may be disabled. Creating the inventory item was blocked by the permission system; Linas must approve or switch it to "In stock" in Wix.
+- FIXED Nov 28: the $49 bundle product (3dcbe428…) had no inventory item and read OUT_OF_STOCK. After Linas said to fix it, an inventory item (df80af08…, inStock true, not tracked) was created; it now reads IN_STOCK. New Wix products must be created with products-with-inventory, or they are unbuyable.
 - Next paid apps Linas picked: Mortgage Loan Originator (SAFE MLO exam) and Texas All-Lines Insurance Adjuster.
 
 ### Version 2026-11-28e (Nov 28): hub page after looking at competitors
