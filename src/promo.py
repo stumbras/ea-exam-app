@@ -17,4 +17,4 @@ PROMO = """<section class="sl" aria-label="More from Solving Life LLC">
 </div>
 <p class="sls">Like and follow us: <a href="https://www.facebook.com/solvinglifellc">Facebook</a><a href="https://x.com/solvinglifellc">X</a><a href="https://www.youtube.com/@solvinglifellc">YouTube</a><a href="https://www.tiktok.com/@solvinglifellc">TikTok</a><a href="https://www.instagram.com/solvinglifellc/">Instagram</a></p>
 </section>
-<script>function slShare(b){var d={title:document.title,url:location.href.split("?")[0]};if(navigator.share){navigator.share(d).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(d.url).then(function(){b.textContent="Link copied"})}}</script>"""
+<script>function slShare(b){var d={title:document.title,url:location.href.split("?")[0]};if(navigator.share){navigator.share(d).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(d.url).then(function(){b.textContent="Link copied"}).catch(function(){b.textContent=d.url})}}</script>"""
