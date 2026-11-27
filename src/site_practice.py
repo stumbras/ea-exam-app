@@ -2,6 +2,7 @@
 plus sitemap.xml and robots.txt. The app itself is noindex and behind sign-in, so these pages are how search engines
 find it. Run after tmp/dumpbank.js:  node tmp/dumpbank.js <bank files> && python3 site_practice.py"""
 import json, html, hashlib, os, re, datetime
+from promo import PROMO, PROMO_CSS
 B = json.load(open("/tmp/bank.json")); OUT = "pwa/company"; SITE = "https://solvinglifewith.com/"; TODAY = datetime.date.today().isoformat()
 E = html.escape
 EX = [
@@ -51,14 +52,16 @@ HEAD = """<!doctype html>
 <link rel="canonical" href="{url}">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{url}"><meta property="og:type" content="article">
 <link rel="stylesheet" href="style.css">
-<style>.pq{{border:1px solid #D9E0EA;border-radius:12px;padding:16px 18px;margin:14px 0;background:#fff}}.pq ol{{margin:8px 0 8px 22px;padding:0}}.pq li{{margin:4px 0}}.pq details{{margin-top:6px}}.pq summary{{cursor:pointer;color:#0E7C66;font-weight:600;min-height:32px}}.cta{{background:#0F1B2D;color:#fff;border-radius:14px;padding:22px;margin:28px 0}}.cta p{{color:#DDE5F0}}.cta h2{{color:#fff;margin-top:0}}</style>
+<style>.pq{{border:1px solid #D9E0EA;border-radius:12px;padding:16px 18px;margin:14px 0;background:#fff}}.pq ol{{margin:8px 0 8px 22px;padding:0}}.pq li{{margin:4px 0}}.pq details{{margin-top:6px}}.pq summary{{cursor:pointer;color:#0E7C66;font-weight:600;min-height:32px}}.cta{{background:#0F1B2D;color:#fff;border-radius:14px;padding:22px;margin:28px 0}}.cta p{{color:#DDE5F0}}.cta h2{{color:#fff;margin-top:0}}
+""" + PROMO_CSS.replace("{","{{").replace("}","}}") + """</style>
 <script type="application/ld+json">{ld}</script>
 </head>
 <body>
 <header class="top"><div class="wrap"><a class="brand" href="./">Solving Life LLC</a><nav class="main" aria-label="Main"><a href="./">Home</a><a href="apps.html">Study apps</a><a href="free-practice-questions.html">Free practice questions</a></nav></div></header>
 <main class="page">
 """
-FOOT = """</main>
+FOOT = PROMO + """
+</main>
 <footer class="bottom"><div class="wrap"><span>© 2026 Solving Life LLC. Practice questions are written by Solving Life LLC unless marked as official exam questions. Not affiliated with the IRS, FINRA, NASAA, SSA or CBP.</span></div></footer>
 </body></html>
 """

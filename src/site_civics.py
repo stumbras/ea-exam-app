@@ -3,6 +3,7 @@ Source: USCIS M-1778 (09/25) "128 Civics Questions and Answers (2025 version)" i
 free/es.txt is our own Spanish study translation (n|question|answers split by ;). Officeholder answers are set in NOW below:
 check them against uscis.gov/citizenship/testupdates whenever an office changes hands, then rebuild."""
 import json, html
+from promo import PROMO, PROMO_CSS
 E = html.escape
 Q = json.load(open("free/civics.json"))
 ES = {}
@@ -57,6 +58,7 @@ page = f"""<!doctype html>
 .row2 button.main{{background:#0E7C66;color:#fff;border-color:#0E7C66;font-weight:600}}.row2 button.bad{{background:#B42318;color:#fff;border-color:#B42318}}
 #card h2{{font-size:22px;margin:6px 0 10px}}#card .es{{color:#44546A;font-size:16px}}#card ul{{margin:8px 0 8px 20px}}.prog{{color:#44546A;font-size:14px}}
 .page ol li{{margin:10px 0}}
+{PROMO_CSS}
 </style>
 <script type="application/ld+json">{LD}</script>
 </head>
@@ -83,7 +85,7 @@ page = f"""<!doctype html>
 <h2>All 128 questions and answers (2025 version)</h2>
 <p>You only need to give one answer unless the question asks for more. Questions with * are the 65/20 questions.</p>
 {static}
-{CTA}
+{PROMO}
 <p>More free practice: <a href="drivers-license-practice-test">driver's license test</a> · <a href="motorcycle-permit-practice-test">motorcycle permit test</a> · <a href="free-practice-questions">license exam questions</a></p>
 </main>
 <footer class="bottom"><div class="wrap"><span>© 2026 Solving Life LLC. Questions and answers are from USCIS publication M-1778 (09/25). Spanish text is our own study translation. This site is not affiliated with USCIS and is not legal advice.</span></div></footer>

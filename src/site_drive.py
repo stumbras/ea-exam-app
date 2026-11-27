@@ -4,6 +4,7 @@ Questions are in free/car.txt and free/moto.txt (question|right|wrong|wrong|wron
 cover rules and signs that hold in every state. State-specific rules (speed limits, test length, fees) are NOT included yet:
 each state page says so and points to the official state handbook. Also writes free/urls.txt for the sitemap."""
 import json, html, hashlib
+from promo import PROMO, PROMO_CSS
 E = html.escape
 def load(f): return [dict(zip("qcabxe", [p for p in l.rstrip("\n").split("|")])) for l in open(f, encoding="utf-8") if l.strip()]
 def norm(rows): return [dict(q=r["q"], c=r["c"], w=[r["a"], r["b"], r["x"]], e=r["e"]) for r in rows]
@@ -50,7 +51,8 @@ def page(fn, title, desc, h1, intro, bank, n, shown, extra="", ns=0):
 <link rel="canonical" href="{url}">
 <meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{url}"><meta property="og:type" content="website">
 <link rel="stylesheet" href="style.css">
-<style>{CSS}</style>
+<style>{CSS}
+{PROMO_CSS}</style>
 </head>
 <body>
 <header class="top"><div class="wrap"><a class="brand" href="./">Solving Life LLC</a><nav class="main" aria-label="Main"><a href="drivers-license-practice-test">Driver's test</a><a href="motorcycle-permit-practice-test">Motorcycle test</a><a href="citizenship-test">Citizenship test</a></nav></div></header>
@@ -62,6 +64,7 @@ def page(fn, title, desc, h1, intro, bank, n, shown, extra="", ns=0):
 {CTA}
 <h2>Practice questions with answers</h2>
 {static(shown)}
+{PROMO}
 <p>More free practice: <a href="drivers-license-practice-test">driver's license test, all states</a> · <a href="motorcycle-permit-practice-test">motorcycle permit test</a> · <a href="citizenship-test">U.S. citizenship test</a></p>
 </main>
 <footer class="bottom"><div class="wrap"><span>© 2026 Solving Life LLC. Practice questions are written by Solving Life LLC and are not official test questions. Not affiliated with any state DMV. Always study your state's official handbook.</span></div></footer>
