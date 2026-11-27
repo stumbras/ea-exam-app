@@ -10,6 +10,7 @@ const SLAPPS={
   cit:{part:11,name:"Solving Life Citizenship Test",short:"Citizenship",man:"manifest-cit.webmanifest",color:"#102A49",icon:"apple-touch-icon-cit.png"},
   drive:{part:12,name:"Solving Life Driver's Test",short:"Driver's Test",man:"manifest-drive.webmanifest",color:"#127A68",icon:"apple-touch-icon-drive.png"},
   moto:{part:13,name:"Solving Life Motorcycle Test",short:"Motorcycle",man:"manifest-moto.webmanifest",color:"#7a4a12",icon:"apple-touch-icon-moto.png"},
+  cdl:{part:14,name:"Solving Life CDL Prep",short:"CDL Prep",man:"manifest-cdl.webmanifest",color:"#1d4e89",icon:"apple-touch-icon-cdl.png"},
   sie:{part:10,name:"Solving Life SIE Prep",short:"SIE Prep",man:"manifest-sie.webmanifest",color:"#2a7d4f",icon:"apple-touch-icon-sie.png"},
   edpna:{part:6,name:"Solving Life EDPNA Prep",short:"EDPNA Prep",man:"manifest-edpna.webmanifest",color:"#a0521a",icon:"apple-touch-icon-edpna.png"}
 };
@@ -19,7 +20,7 @@ function slAppUI(){try{const a=SLAPPS[SLAPP()];if(!a)return;document.title=a.nam
   const at=document.querySelector('meta[name="apple-mobile-web-app-title"]');if(at)at.setAttribute("content",a.short);
   const ic=document.querySelector('link[rel="apple-touch-icon"]');if(ic)ic.setAttribute("href",a.icon);
   const tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.setAttribute("content",a.color)}catch(_){}}
-(function(){try{const sm=location.pathname.match(/\/(ea|65|edpna|kids|cble|sie|citizenship|driving|motorcycle)\/(index\.html)?$/);if(sm){location.replace("../?"+({ea:"study","65":"s65",edpna:"edpna",kids:"kids",cble:"cble",sie:"sie",citizenship:"cit",driving:"drive",motorcycle:"moto"})[sm[1]]+location.hash);return}}catch(_){}})();
+(function(){try{const sm=location.pathname.match(/\/(ea|65|edpna|kids|cble|sie|cdl|citizenship|driving|motorcycle)\/(index\.html)?$/);if(sm){location.replace("../?"+({ea:"study","65":"s65",edpna:"edpna",kids:"kids",cble:"cble",sie:"sie",cdl:"cdl",citizenship:"cit",driving:"drive",motorcycle:"moto"})[sm[1]]+location.hash);return}}catch(_){}})();
 (function(){try{const q=new URLSearchParams(location.search);
   if(q.has("study")||q.has("kids")||q.has("course"))localStorage.removeItem("slApp");
   /* arriving from another site on the plain address (for example solvinglifellc.com/apps) shows every app, not the one this browser used last */

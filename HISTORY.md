@@ -1691,6 +1691,14 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 ### Version 2026-11-28a (Nov 28)
 - Seven more states (27-33). Linas said to use every PDF even if older: Kansas (2022), Montana (2018), Connecticut (March 2023) and Hawaii (2018) are older editions, labeled in the source line; replace when newer PDFs arrive. A Gemini prompt for verified links was given to him.
 
+### Version 2026-11-28c (Nov 28): CDL Permit Prep (part 14, paid)
+- New app `?cdl` (short link /cdl/), PARTS[14], SLAPPS.cdl, manifest-cdl, own icon, intro in x_intro.js. Not free: the normal 1-hour preview and paywall apply.
+- Bank: free/cdl/cdl.txt (87 rows: 12 inspection/control, 18 seeing/speed/space, 16 emergencies/cargo/alcohol, 22 air brakes, 19 combination) -> `python3 gen_cdl.py` -> cdl_bank.js. Each row ends with a regular expression that `python3 tmp/cdlcheck.py` must find in the official text /home/claude/dmv/cdl/tx.txt (Texas DL-7C handbook, 2026 file, model manual version July 2017). All 87 match. Note: this manual says the low-air warning comes on below 55 psi.
+- Linas wants CDL sold alone for about $10 after the 1-hour preview. Not done: needs a $10 Wix product and per-app access in the sync worker (today one grant opens every app, and the paywall says $49 for all apps).
+- Still to add: endorsements (passenger, school bus, tank, doubles/triples, hazmat), pre-trip inspection, more questions per section, a public practice page.
+- Driving app: 37 states. Downloaded, not yet written: ar, ne, nd, ri, vt, wv, wy, nm in /home/claude/dmv/dl. No file: Delaware, Maine, New Hampshire, Louisiana, South Dakota.
+
+- 2026-11-27 Version 2026-11-28c · Nov 28: CDL Permit Prep app: general knowledge, air brakes, combination vehicles
 - 2026-11-27 Version 2026-11-28b · Nov 28: Driving: Wisconsin, Oregon, Oklahoma, Kentucky, Nevada, Utah, South Carolina
 - 2026-11-27 Version 2026-11-28a · Nov 28: Driving: Kansas, Mississippi, Idaho, Alaska, Montana, Connecticut, Hawaii
 - 2026-11-27 Version 2026-11-27s · Nov 27: Driving: Alabama and Iowa from official manuals
