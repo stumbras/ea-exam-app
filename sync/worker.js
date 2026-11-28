@@ -31,6 +31,25 @@ async function access(env, sub) {
 // A buyer who just paid usually opens the app right away: when someone without full access checks in, look at Wix
 // orders again (at most once a minute) so the purchase unlocks in seconds instead of waiting for the 10-minute timer.
 let wixRunAt = 0;
+// REFERRALS: every 2 new people who first sign in from a member's share link give that member 30 days of CDL Prep (up to 3 times).
+const REF_NEED = 2, REF_DAYS = 30, REF_MAX = 3;
+async function refCode(env, sub) { const c = (await hmac(env, "ref:" + sub)).replace(/[^A-Za-z0-9]/g, "").slice(0, 10); await env.P.put("rfc:" + c, sub); return c; }
+async function refInfo(env, sub) { const code = await refCode(env, sub), l = (await env.P.get("rfl:" + sub, "json")) || [], who = await env.P.get("s:" + sub, "json"), g = who && who.email ? await env.P.get("g:" + who.email.toLowerCase(), "json") : null;
+  return { code, count: l.length, need: REF_NEED, rewards: Math.min(REF_MAX, Math.floor(l.length / REF_NEED)), max: REF_MAX, cdlUntil: g && g.apps && g.apps.cdl || 0 }; }
+async function refClaim(env, sub, ref) {
+  const c = String(ref || "").replace(/[^A-Za-z0-9]/g, "").slice(0, 10); if (!c) return { ok: false, why: "no code" };
+  const owner = await env.P.get("rfc:" + c); if (!owner) return { ok: false, why: "unknown code" }; if (owner === sub) return { ok: false, why: "own link" };
+  if (await env.P.get("rfby:" + sub)) return { ok: false, why: "already counted" };
+  const me = await env.P.get("s:" + sub, "json"); if (!me || Date.now() - (me.first || 0) > 2 * 864e5) return { ok: false, why: "not a new account" };
+  await env.P.put("rfby:" + sub, owner);
+  const l = (await env.P.get("rfl:" + owner, "json")) || []; if (l.includes(sub)) return { ok: false, why: "already counted" };
+  l.push(sub); await env.P.put("rfl:" + owner, JSON.stringify(l.slice(-50)));
+  if (l.length % REF_NEED === 0 && l.length / REF_NEED <= REF_MAX) { const ow = await env.P.get("s:" + owner, "json"), em = (ow && ow.email || "").toLowerCase();
+    if (em) { const g = (await env.P.get("g:" + em, "json")) || { at: Date.now(), appsOnly: true }; g.apps = g.apps || {}; g.apps.cdl = Math.max(Date.now(), g.apps.cdl || 0) + REF_DAYS * 864e5;
+      g.note = ((g.note ? g.note + "; " : "") + "referral reward " + (l.length / REF_NEED)).slice(-200); await env.P.put("g:" + em, JSON.stringify(g));
+      try { await sendMail(env, em, "You unlocked CDL Prep for 30 days", "Thank you for sharing Solving Life! " + REF_NEED + " friends joined from your link, so CDL Permit Prep is open for you for 30 more days.\n\nOpen it: https://study.solvinglifewith.com/?cdl\nSign in with this email address.\n\n--\nSolving Life LLC\nLinas Kerbelis, 6350 Quitman Ct, Arvada, CO 80003"); } catch (_) {} } }
+  return { ok: true };
+}
 async function accessNow(env, sub) {
   let a = await access(env, sub); if (a.access === "full" || !(await env.P.get("wixkey"))) return a;
   if (Date.now() - wixRunAt < 60000) return a; // throttle kept in memory: a KV write per check-in used up the free daily write quota
@@ -277,6 +296,8 @@ export default {
       if (u.pathname === "/admin/me") { const who = await env.P.get("s:" + sub, "json"), em = (who && who.email || "").toLowerCase();
         if (!ADMINS.includes(em)) return J(req, { error: "This account is not an admin. Sign in with " + ADMINS[0] + "." }, 403);
         return J(req, { admin: true, email: em, ...(await adminData(env)) }); }
+      if (u.pathname === "/ref") return J(req, await refInfo(env, sub));
+      if (u.pathname === "/ref/claim" && req.method === "POST") { const { ref } = await req.json().catch(() => ({})); return J(req, { ...(await refClaim(env, sub, ref)), ...(await refInfo(env, sub)) }); }
       if (u.pathname === "/status") return J(req, await accessNow(env, sub));
       if (u.pathname === "/tick" && req.method === "POST") {
         const a = await access(env, sub); if (a.access === "full") return J(req, a);

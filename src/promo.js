@@ -35,6 +35,25 @@ window.slSupport=function(){try{if(typeof PARTS==="undefined"||!PARTS[part]||!PA
 window.slCheer=function(pct){try{if(!PARTS[part]||!PARTS[part].free||pct<80)return "";
   return `<div style="background:#eafaf3;border:1px solid #9fe1cb;border-radius:14px;padding:12px 14px;margin:10px 0"><b>🎉 ${pct}%: that's a passing score!</b><div class="small" style="margin:4px 0 8px">Know someone studying for the same test? Send them this free app, and follow us for more free tests.</div><div style="display:flex;flex-wrap:wrap;gap:6px"><button type="button" onclick="slShareApp(this)" style="min-height:36px;border:0;border-radius:999px;padding:6px 13px;background:#127A68;color:#fff;font-weight:800">📤 Share</button>${SOC.slice(0,4).map(x=>pill(x[0],x[1],x[2])).join("")}</div></div>`}catch(_){return ""}};
 window.slShareApp=shareApp;
+
+/* Free CDL Prep for referrals (no reward for follows or shares on social platforms: their rules forbid it) */
+async function refCard(el){const box=el.querySelector(".slrefbox");if(!box)return;
+  const app=PARTS[part].x||"drive";
+  if(typeof cs==="undefined"||!cs){box.innerHTML=`<div style="font-size:.9rem;margin:6px 0 8px">Sign in (free) to get your personal invite link.</div><button type="button" class="slrefin" style="min-height:40px;border:0;border-radius:10px;padding:8px 14px;background:#1d4e89;color:#fff;font-weight:800">Sign in to get my link</button>`;
+    box.querySelector(".slrefin").addEventListener("click",()=>{try{slCloudOpen()}catch(_){}});return}
+  box.innerHTML='<div class="small">Loading your link…</div>';const j=await refInfoGet();if(!j){box.innerHTML='<div class="small">Could not load your link. Check your connection.</div>';return}
+  const url="https://study.solvinglifewith.com/?"+app+"&ref="+j.code,left=j.need-(j.count%j.need),done=j.rewards>=j.max;
+  const until=j.cdlUntil>Date.now()?`<div style="font-weight:800;color:#0b6b3a;margin-bottom:6px">✓ CDL Prep is open for you until ${new Date(j.cdlUntil).toLocaleDateString()}</div>`:"";
+  box.innerHTML=`${until}<div style="font-size:.9rem;margin:4px 0 8px">${done?"You have earned every free month. Thank you!":`<b>${j.count}</b> friend${j.count===1?"":"s"} joined · ${left} more for your next free month`}</div>
+   <div style="display:flex;gap:6px;flex-wrap:wrap"><input readonly value="${url}" style="flex:1;min-width:160px;font-size:14px;padding:8px;border-radius:8px;border:1px solid #9aa7b6"><button type="button" class="slrefsh" style="min-height:40px;border:0;border-radius:10px;padding:8px 14px;background:#1d4e89;color:#fff;font-weight:800">Share link</button></div>`;
+  box.querySelector(".slrefsh").addEventListener("click",e=>{const d={title:"Free practice test",text:"I'm using this free practice test. Try it:",url};if(navigator.share)navigator.share(d).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(url).then(()=>{e.target.textContent="Copied ✓"})})}
+window.slRefer=function(){try{if(typeof PARTS==="undefined"||!PARTS[part]||view!=="home")return;const x=PARTS[part].x;if(!["drive","moto","cit","cdl"].includes(x))return;
+  const v=document.getElementById("view");if(!v||document.getElementById("slrefer"))return;
+  const el=document.createElement("section");el.id="slrefer";el.className="section";
+  el.innerHTML=`<div style="border:2px solid #1d4e89;border-radius:16px;padding:14px 16px;background:#eef4fb;color:#0f2f57"><div style="font-weight:900;font-size:1.02rem">🚛 Get CDL Prep free: invite 2 friends</div>
+   <div style="font-size:.88rem;line-height:1.45;margin:4px 0 6px">Send your link to friends who are studying. When 2 of them open it and sign in for the first time, you get 30 days of CDL Permit Prep free (worth $10). Up to 3 free months.</div><div class="slrefbox"></div></div>`;
+  const sup=document.getElementById("slsupport"),dc=document.getElementById("drvcard")||document.getElementById("cdlcard");
+  const pr=document.getElementById("slpromo");if(pr&&pr.parentNode===v)v.insertBefore(el,pr);else v.appendChild(el);refCard(el)}catch(_){}};
 window.slPromo=function(){try{if(typeof PARTS==="undefined"||!PARTS[part]||!PARTS[part].free)return;if(!["home","results"].includes(view))return;
   const v=document.getElementById("view");if(!v||document.getElementById("slpromo"))return;const fs=set(part);if(!fs.length)return;
   const el=document.createElement("section");el.id="slpromo";el.className="section";

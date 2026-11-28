@@ -1,7 +1,7 @@
-const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:400,height:860},isMobile:true});const p=await ctx.newPage();
-await p.goto('https://study.solvinglifewith.com/?drive',{waitUntil:'load'});await p.waitForTimeout(6000);
-await p.goto('https://study.solvinglifewith.com/',{waitUntil:'load',referer:'https://www.solvinglifellc.com/apps'});await p.waitForTimeout(4000);
-console.log('from company site:',await p.evaluate(()=>document.title+' | slApp='+localStorage.getItem('slApp')+' | '+document.body.innerText.slice(0,90).replace(/\n+/g,' / ')));
-await p.goto('https://study.solvinglifewith.com/?drive',{waitUntil:'load'});await p.waitForTimeout(3000);
-await p.goto('https://study.solvinglifewith.com/',{waitUntil:'load'});await p.waitForTimeout(3000);
-console.log('typed address after driving:',await p.evaluate(()=>document.title));await b.close()})()
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const errs=[];
+const p=await (await b.newContext({viewport:{width:390,height:844},isMobile:true,serviceWorkers:'block'})).newPage();p.on('pageerror',e=>errs.push(e.message.slice(0,200)));
+await p.goto('http://localhost:8765/ea-exam-app/?drive&st=Texas&ref=Abc123XYZ9',{waitUntil:'load'});await p.waitForTimeout(1800);
+console.log('saved ref',await p.evaluate(()=>localStorage.getItem('slRef')));
+const el=await p.$('#slrefer');console.log('card',!!el);if(el){await el.screenshot({path:'tmp/ref.png'})}
+console.log('order',await p.$$eval('#view>section',x=>x.map(e=>e.id||e.className).slice(0,5).join(',')));
+console.log('errs',JSON.stringify(errs));await b.close()})()

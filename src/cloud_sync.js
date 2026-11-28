@@ -39,6 +39,7 @@ async function csOnCred(resp){csMsg="Checking your Google account…";csModal();
   catch(_){csMsg="No connection. Please try again when you're online.";csModal()}}
 async function csDone(j){
     cs={token:j.token,email:j.email,name:j.name,last:0,acc:j.access?{access:j.access,usedMs:j.usedMs,limitMs:j.limitMs,at:Date.now()}:null};csSave();csChip();setTimeout(acDraw,50);
+    try{refClaimNow()}catch(_){}
     if(csDecide(j.saved)==="pull"){csMsg="Found your saved progress. Loading it…";csModal();return setTimeout(()=>csApply(j.saved.data),600)}
     await csPush();csMsg="Done! Your progress is now saved to "+j.email+". Sign in with the same email on any phone or computer to continue.";csModal()}
 let csMailTo="",csMailSent=false;
@@ -136,3 +137,9 @@ setTimeout(csStart,1200);setInterval(()=>{csChip();csKid()},3000);
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",csInit);else setTimeout(csInit,0);
 })();
+
+/* ---------- REFERRALS: a friend who opens your link and signs in counts; 2 friends = 30 days of CDL Prep (up to 3 times). ---------- */
+(function(){try{const r=new URLSearchParams(location.search).get("ref");if(r&&/^[A-Za-z0-9]{6,12}$/.test(r)&&!localStorage.getItem("slRef"))localStorage.setItem("slRef",r)}catch(_){}})();
+async function refClaimNow(){try{const r=localStorage.getItem("slRef");if(!r||!cs||localStorage.getItem("slRefDone"))return;const{st}=await csReq("/ref/claim",{ref:r});if(st===200)localStorage.setItem("slRefDone","1")}catch(_){}}
+setTimeout(refClaimNow,4000);
+window.refInfoGet=async function(){if(!cs)return null;try{const{st,j}=await csReq("/ref");return st===200?j:null}catch(_){return null}};
