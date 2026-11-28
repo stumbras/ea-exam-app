@@ -332,7 +332,7 @@ body.kidsmode .top,body.kidsmode .tabs{display:none}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;margin-top:14px;display:grid;gap:14px}
 .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:12.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 .front{font-size:20px;font-weight:700;line-height:1.35;letter-spacing:-.01em}
-.stem{font-size:18px;line-height:1.5;font-weight:500}
+.stem{font-size:18px;line-height:1.5;font-weight:500}.signpic{display:flex;justify-content:center;margin:12px 0 4px}.signpic svg{width:116px;height:116px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.18))}.signpic.sm{margin:0;flex:none}.signpic.sm svg{width:64px;height:64px}
 .back{border-top:1.5px solid var(--line);padding-top:14px;font-size:17.5px;line-height:1.55}
 .opts{display:grid;gap:10px}
 .opt{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:14px 14px;font-size:17px;line-height:1.45;align-items:start;min-height:54px}
@@ -1178,7 +1178,7 @@ function eayPick(){const lk=eayLocked();const o=document.createElement("div");o.
 function renderTabs(){
   const bk=!!PARTS[part].bk,X=PARTS[part].x?PARTS[part]:null,cy=document.querySelector(".top .cycle"),h1=document.querySelector(".top h1"),lg=document.querySelector(".top .logo");
   if(h1)h1.textContent=bk?"Bookkeeping · QuickBooks · Taxes":"Enrolled Agent (EA) Prep · IRS SEE";if(cy){if(bk)cy.textContent="Foundation course · 2025 and 2026 amounts";else cy.innerHTML=esc(eayLabel())+' <button class="eaybtn" onclick="eayPick()">Exam year ▾</button>'}if(lg){lg.textContent=bk?"BK":"EA";lg.style.background=bk?"#0f7a3d":""}
-  if(X){if(h1)h1.textContent=X.title;if(cy)cy.textContent=X.sub;if(lg){lg.textContent=X.logo;lg.style.background=X.color?X.color:X.x==="s65"?"#5b3fb0":X.x==="caa"?"#0d5c63":X.x==="notary"?"#7a2e4a":X.x==="cble"?"#1f5d8c":X.x==="sie"?"#2a7d4f":"#a0521a"}}
+  if(X){if(h1)h1.textContent=X.title;if(cy)cy.textContent=X.sub;if(lg){const IC={s65:"65",edpna:"edpna",cble:"cble",sie:"sie",cdl:"cdl",cit:"cit",drive:"drive",moto:"moto"}[X.x];if(IC){lg.innerHTML=`<img src="apple-touch-icon-${IC}.png" alt="" style="width:100%;height:100%;border-radius:inherit;display:block">`;lg.style.padding="0";lg.style.overflow="hidden"}else{lg.textContent=X.logo;lg.style.color="#fff"}lg.style.background=X.color?X.color:X.x==="s65"?"#5b3fb0":X.x==="caa"?"#0d5c63":X.x==="notary"?"#7a2e4a":X.x==="cble"?"#1f5d8c":X.x==="sie"?"#2a7d4f":"#a0521a"}}
   const st=view==="start";if(st){if(h1)h1.textContent="Solving Life Academy";if(cy)cy.textContent="Pass your license exam · pick a course";if(lg){lg.innerHTML=SL_LOGO;lg.style.background="transparent"}}
   $("#tabs").className="tabs bk";$("#tabs").hidden=st;
   const lock=typeof CLOCK==="function"&&CLOCK(),main=view==="home"||(view==="bkland"&&lock); // inside a lesson, quiz, lab or simulator the bar is: Back (this section's main page) + Sections; it stays on screen while scrolling
@@ -2236,17 +2236,18 @@ async function fetchHow(id){const it=BYID[id];if(!AI||howBusy[id])return;howBusy
   howBusy[id]=0}
 function relatedHtml(it){const sib=siblings(it).slice(0,4);if(!sib.length)return "";return `<div class="related"><b>Compare</b>${sib.map(x=>`<div>${esc(x.f)}: ${esc(shortAns(x.b))}</div>`).join("")}</div>`}
 
+function sgnPic(p,t,sm){try{return PARTS[p]&&/^(drive|moto|cdl)$/.test(PARTS[p].x||"")&&typeof signPic==="function"?signPic(t).replace('class="signpic"',sm?'class="signpic sm"':'class="signpic"'):""}catch(_){return ""}}
 function renderLearn(){const s=sess,cur=s.queue[s.pos],its=cur.learn.map(id=>BYID[id]),P=PARTS[its[0].p];
   $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Learn ${its.length} new fact${its.length>1?"s":""}</h2><div class="small muted mono">${pl(its[0].p)} · ${esc(P.doms[its[0].d][0])}</div></div><button class="btn ghost small" id="quit">End session</button></div>
   <div class="card"><div class="small muted">Read each one once and say it to yourself. You'll be quizzed on them right away and again at the end of the session.</div>
-  <div class="list">${its.map(i=>`<div class="item"><div class="q">${esc(i.f)}</div><div>${esc(i.b)}</div></div>`).join("")}</div>
+  <div class="list">${its.map(i=>{const pc=sgnPic(i.p,i.f,1);return `<div class="item"${pc?' style="display:flex;gap:12px;align-items:center"':""}>${pc}<div><div class="q">${esc(i.f)}</div><div>${esc(i.b)}</div></div></div>`}).join("")}</div>
   <button class="btn pri" id="learned">Quiz me on these <span class="mono small">(enter)</span></button></div></section>`}
 function renderCard(){const s=sess,cur=s.queue[s.pos],it=BYID[cur.id],P=PARTS[it.p],shown=s.phase==="shown";
   const front=cur.rev?shortAns(it.b):it.f,back=cur.rev?it.f:it.b;
   $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Flashcards</h2><div class="small muted mono">${s.done} done · ${s.queue.length-s.pos} left</div></div><button class="btn ghost small" id="quit">End session</button></div>
   <div class="progress"><i style="width:${Math.round(Math.min(1,s.done/s.total)*100)}%"></i></div><div class="small muted mono" style="margin-top:6px">${liveLine()}</div>
   <div class="card"><div class="meta"><span>${pl(it.p)} · ${esc(P.doms[it.d][0])}</span><span>${cur.rev?"Name the topic":"Flashcard"}</span>${S.it[it.id]?"":"<span>New</span>"}</div>
-  <div class="front">${cur.rev?"“"+esc(front)+"”":esc(front)}</div>
+  ${cur.rev?"":sgnPic(it.p,it.f)}<div class="front">${cur.rev?"“"+esc(front)+"”":esc(front)}</div>
   ${shown?`<div class="back">${esc(back)}${cur.rev?`<div class="small muted" style="margin-top:6px">${esc(it.b)}</div>`:""}</div><div class="small muted">Be honest: how well did you know it before looking?</div>
   <div class="rate">${[["Didn't know",0,"again"],["Hard",1,"1 day"],["Knew it",2,""],["Instant",3,""]].map(([l,q,n])=>`<button class="r${q}" data-rate="${q}">${l}<small>${n||"key "+(q+1)}</small></button>`).join("")}</div>
   <button class="btn ghost small" id="flagitem">${S.flag[it.id]?"Flagged for checking":"Flag: looks wrong"}</button>`
@@ -2268,7 +2269,7 @@ function renderSession(){
   const mock=s.mode==="mock";const chosen=mock?s.answers[s.pos]:s.sel;const shown=!mock&&s.phase==="shown";
   let body=meta;
   if(V.rev){body+=`<div class="small muted">${esc(V.stem)}</div><div class="front">“${esc(V.cloze)}”</div>`}
-  else{body+=`<div class="${it.t==="f"?"front":"stem"}">${esc(V.stem)}</div>`;if(V.cloze&&V.cloze.trim()!=="____")body+=`<div class="cloze">${clozeHtml(V.cloze)}</div>`}
+  else{body+=`<div class="${it.t==="f"?"front":"stem"}">${esc(V.stem)}</div>`;body+=sgnPic(part,V.stem);if(V.cloze&&V.cloze.trim()!=="____")body+=`<div class="cloze">${clozeHtml(V.cloze)}</div>`}
   if(V.kind==="typed"){
     body+=shown?"":`<label class="small muted" for="typed">${V.label||"Type the missing number"}</label><div class="row"><input id="typed" inputmode="${V.cmp==="text"?"text":"decimal"}" autocomplete="off" style="flex:1;min-width:0;font:600 18px var(--mono);padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)"><button class="btn pri" id="check">Check</button></div><button class="btn ghost small" id="dontknow">I don't know</button>`;
   } else {

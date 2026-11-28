@@ -1771,7 +1771,9 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - 28u: SD, ME, NH, AZ, MA rechecked line by line against the official manuals (SD dps.sd.gov PDF, ME Rev 2/22 PDF, NH nationaldrivertraining copy, AZ Rev March 2026, MA Rev April 2026). All answers matched; NH question 3 reworded (hours are with driver ed, not a license type); AZ +1 (child seat height 4 ft 9 in).
 - 28v: +26 questions in the shared driving bank (sign colors, turn arrows, ABS, trucks, motorcycles, deer, railroad, work zones) from the Iowa 2026 manual; every state test now draws from 81 shared + its own set.
 - 28w: Kentucky +10, Oklahoma +9 (now 24 and 23), from their manuals.
+- 28x: Visuals: road sign and traffic-signal pictures (SVG, no words) on 31 driver questions, in lessons, quizzes and flashcards; app header now shows each app's real icon (CDL, Driver, Motorcycle, Citizenship, Series 65, SIE, Customs, EDPNA) instead of hard-to-read letters.
 
+- 2026-11-28 Version 2026-11-28x · Nov 28: Visuals: road sign pictures, real app icons in header
 - 2026-11-28 Version 2026-11-28w · Nov 28: Driver test: Kentucky and Oklahoma deeper
 - 2026-11-28 Version 2026-11-28v · Nov 28: Driver test: +26 shared questions
 - 2026-11-28 Version 2026-11-28u · Nov 28: Driver test: 5 states rechecked vs official manuals
