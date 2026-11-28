@@ -1780,7 +1780,9 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - 28ad: iPhone background audio fix. (1) Recorded fact audio: the app loaded only the next 2 files, and with the screen locked Safari slows downloads and timers, so playback stopped after a minute or two. Now recPrepAhead loads up to 160 files (4 at a time) while the app is in front; if a file is still loading, a looping silent clip keeps the audio session alive and playback continues from the promise, not a timer. (2) An app update found while audio (podcast or facts) was playing could reload the page: checkUpdate now treats any playing <audio> as busy.
 - 28ae: +27 EA scenario questions from the Key charts (bank_p23_charts.js): Part 3 notice order, 30/90/150-day and CDP deadlines, equivalent hearing, CAP vs CDP, forms 12153/9423/911/56/656/843/8821/8554, ASED/CSED/refund-claim date math, EA CE; Part 2 extension forms and dates (7004, 1041 Sept 30, 990/8868, 706/4768), OBBBA bonus 40% vs 100%, Section 179 phase-out math, mid-quarter, S corp shareholders.
 - 28af: Alaska +11, Kansas +9, Nevada +10, New Mexico +9 from their manuals (now 26, 24, 25, 24).
+- 28ag: Idaho +9, Arkansas +9, Delaware +8 from their manuals. Owner said do NOT hide ITIN on the coded tax site (dropped from backlog).
 
+- 2026-11-28 Version 2026-11-28ag · Nov 28: Driver test: ID, AR, DE deeper
 - 2026-11-28 Version 2026-11-28af · Nov 28: Driver test: AK, KS, NV, NM deeper
 - 2026-11-28 Version 2026-11-28ae · Nov 28: EA Part 2 and 3: 27 scenario questions from the charts
 - 2026-11-28 Version 2026-11-28ad · Nov 28: iPhone: audio keeps playing with the screen locked
