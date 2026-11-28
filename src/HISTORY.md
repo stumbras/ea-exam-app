@@ -1768,3 +1768,4 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Thin states raised to 16-17 questions each from their manuals: South Carolina (+9), Hawaii (+5), Connecticut (+6), Wisconsin (+5), Utah (+4), Montana (+4), Mississippi (+5). 1049 driving questions.
 - 28s: Iowa +4, Alabama +1 (both 16 now).
 - 28t: Iowa crash-report question reworded to match the manual exactly.
+- 28u: SD, ME, NH, AZ, MA rechecked line by line against the official manuals (SD dps.sd.gov PDF, ME Rev 2/22 PDF, NH nationaldrivertraining copy, AZ Rev March 2026, MA Rev April 2026). All answers matched; NH question 3 reworded (hours are with driver ed, not a license type); AZ +1 (child seat height 4 ft 9 in).
