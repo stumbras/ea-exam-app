@@ -1766,7 +1766,9 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 
 ### Version 2026-11-28r (Nov 28)
 - Thin states raised to 16-17 questions each from their manuals: South Carolina (+9), Hawaii (+5), Connecticut (+6), Wisconsin (+5), Utah (+4), Montana (+4), Mississippi (+5). 1049 driving questions.
+- 28s: Iowa +4, Alabama +1 (both 16 now).
 
+- 2026-11-28 Version 2026-11-28s · Nov 28: Driver test: Iowa and Alabama fuller
 - 2026-11-28 Version 2026-11-28r · Nov 28: Driver test: fuller sets for 7 thin states
 - 2026-11-28 Version 2026-11-28q · Nov 28: Driver test: all 50 states
 - 2026-11-28 Version 2026-11-28p · Nov 28: Driver test: 8 more states (45 total)

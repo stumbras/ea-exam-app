@@ -1766,3 +1766,4 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 
 ### Version 2026-11-28r (Nov 28)
 - Thin states raised to 16-17 questions each from their manuals: South Carolina (+9), Hawaii (+5), Connecticut (+6), Wisconsin (+5), Utah (+4), Montana (+4), Mississippi (+5). 1049 driving questions.
+- 28s: Iowa +4, Alabama +1 (both 16 now).
