@@ -1,0 +1,3 @@
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const p=await (await b.newContext({serviceWorkers:'block'})).newPage();
+await p.goto('http://localhost:8765/ea-exam-app/?study',{waitUntil:'load'});await p.waitForTimeout(2000);
+console.log(await p.evaluate(()=>[2,3].map(pt=>{const it=BP(pt);const D=PARTS[pt].doms;return 'PART '+pt+' total '+it.length+'\n'+Object.keys(D).map(d=>{const x=it.filter(i=>i.d==d);return ` ${d} ${D[d][0]} [${D[d][1]}q on exam]: Q=${x.filter(i=>i.t!=="f").length} F=${x.filter(i=>i.t==="f").length}`}).join('\n')}).join('\n')));await b.close()})()
