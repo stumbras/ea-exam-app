@@ -1754,6 +1754,10 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Podcast: Cloudflare Workers static assets answer Range requests with 200 and the whole file (documented limitation), and iPhone Safari will not play audio/video from such a host. pwa/llc/worker.js now runs for /media/* only (wrangler.jsonc: main + assets.binding ASSETS + run_worker_first ["/media/*"]) and returns 206 with Content-Range. Backup tmp/llc-wrangler.before-range.jsonc. The study app plays its own recordings through blob URLs, so it was not affected; /video on the study host still has no range support.
 - Podcast list: the current EA part comes first ("Part 3 episodes (5)", then "Other episodes"); episode part = "(EA Part N)" in the title, else by number (1-14 P1, 15-19 P3, 20-24 P2). The Podcast button opens the list without a second tap. Test tmp/t_pod2.js.
 
+### Version 2026-11-28o (Nov 28)
+- CDL: printable pre-trip inspection checklist pwa/cdl-pretrip.html (85 items, 13 sections, made by tmp/mkpretrip.py from handbook Section 11a in our own wording); opens inside the app in a frame from the CDL setup card (cdlPretrip in sl_apps.js, button #cdlpre); sw passes cdl-pretrip.html through for direct links. 18 more questions: doubles/triples now 18, tank 20. Bank 203 rows, all verified by cdlcheck.py. Test tmp/t_pre.js.
+
+- 2026-11-27 Version 2026-11-28o · Nov 28: CDL: pre-trip checklist, more doubles and tanker questions
 - 2026-11-27 Version 2026-11-28n · Nov 28: Podcast: byte ranges for iPhone, current part first
 - 2026-11-27 Version 2026-11-28m · Nov 28: Recorded voice: tap-to-start fix and no-sound watchdog; Podcast button in the top bar
 - 2026-11-27 Version 2026-11-28l · Nov 28: CDL: pre-trip inspection questions from the handbook
