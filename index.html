@@ -21774,8 +21774,8 @@ Q(12,26,2,"Iowa: In Iowa, how must a child under one year old and under 20 pound
 F(12,26,"Iowa: In Iowa, how must a child under one year old and under 20 pounds ride?","In a rear-facing child restraint system. A child under one year and weighing less than 20 pounds must be secured in a rear-facing child restraint system.");
 Q(12,26,2,"Iowa: Iowa requires both headlights from sunset to sunrise and whenever visibility is","500 feet or less",["1,000 feet or less", "200 feet or less", "100 feet or less"],"Iowa law requires both headlights from sunset to sunrise or whenever visibility is 500 feet or less.");
 F(12,26,"Iowa: Iowa requires both headlights from sunset to sunrise and whenever visibility is","500 feet or less. Iowa law requires both headlights from sunset to sunrise or whenever visibility is 500 feet or less.");
-Q(12,26,2,"Iowa: If you are in an Iowa crash with injury, death or over $1,500 damage and no officer investigates, you must report it within","72 hours",["10 days", "24 hours", "30 days"],"Failure to report within 72 hours results in loss of driving privileges and further penalties.");
-F(12,26,"Iowa: If you are in an Iowa crash with injury, death or over $1,500 damage and no officer investigates, you must report it within","72 hours. Failure to report within 72 hours results in loss of driving privileges and further penalties.");
+Q(12,26,2,"Iowa: An Iowa crash with injury, death or over $1,500 damage must be reported to police. Not reporting within how long costs your driving privileges?","72 hours",["10 days", "24 hours", "30 days"],"State law requires reporting such a crash to police; failure to do so within 72 hours results in loss of driving privileges and further penalties.");
+F(12,26,"Iowa: An Iowa crash with injury, death or over $1,500 damage must be reported to police. Not reporting within how long costs your driving privileges?","72 hours. State law requires reporting such a crash to police; failure to do so within 72 hours results in loss of driving privileges and further penalties.");
 Q(12,26,2,"Iowa: For an underage Iowa driver with a BAC of .08 or more, revocation lasts at least","180 days",["60 days", "30 days", "1 year"],"Underage drivers at .02 or more lose privileges for at least 60 days, and at least 180 days if the BAC is .08 or more.");
 F(12,26,"Iowa: For an underage Iowa driver with a BAC of .08 or more, revocation lasts at least","180 days. Underage drivers at .02 or more lose privileges for at least 60 days, and at least 180 days if the BAC is .08 or more.");
 Q(12,27,2,"Kansas: What score do you need to pass the Kansas knowledge test?","80%",["70%", "75%", "90%"],"You must score 80% to pass the knowledge test.");
@@ -29336,7 +29336,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 2026-11-28s · Nov 28";
+const BUILD="Version 2026-11-28t · Nov 28";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
