@@ -1770,3 +1770,4 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - 28t: Iowa crash-report question reworded to match the manual exactly.
 - 28u: SD, ME, NH, AZ, MA rechecked line by line against the official manuals (SD dps.sd.gov PDF, ME Rev 2/22 PDF, NH nationaldrivertraining copy, AZ Rev March 2026, MA Rev April 2026). All answers matched; NH question 3 reworded (hours are with driver ed, not a license type); AZ +1 (child seat height 4 ft 9 in).
 - 28v: +26 questions in the shared driving bank (sign colors, turn arrows, ABS, trucks, motorcycles, deer, railroad, work zones) from the Iowa 2026 manual; every state test now draws from 81 shared + its own set.
+- 28w: Kentucky +10, Oklahoma +9 (now 24 and 23), from their manuals.
