@@ -29719,7 +29719,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 2026-11-28ac · Nov 28";
+const BUILD="Version 2026-11-28ad · Nov 28";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -29741,7 +29741,7 @@ let updateReady="",updating=false;
 /* After "Update now", the web host can go on serving the older file for a few minutes. Without this the banner came straight
    back and looked like a loop. The version just tried is held back for 10 minutes and a plain note is shown instead. */
 let updHold="";try{const t=JSON.parse(sessionStorage.getItem("updTry")||"null");if(t&&t.v&&t.v!==BUILD&&Date.now()-t.t<6e5)updHold=t.v}catch(_){}
-function checkUpdate(){if(!navigator.onLine)return;fetch("./version.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v===updHold)return;if(j&&j.v&&j.v!==BUILD&&j.v!==updateReady){const busy=sess||(view==="audio"&&aud&&aud.state==="play")||(view==="lessons"&&window.speechSynthesis&&speechSynthesis.speaking);if(busy){clearTimeout(window._updT);window._updT=setTimeout(checkUpdate,120000);return}updateReady=j.v;if(navigator.serviceWorker&&navigator.serviceWorker.controller){applyUpdate();return}if(!sess&&(view==="home"||view==="kids"&&KV.scr==="home"))render()}}).catch(()=>{})}
+function checkUpdate(){if(!navigator.onLine)return;fetch("./version.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v===updHold)return;if(j&&j.v&&j.v!==BUILD&&j.v!==updateReady){const busy=sess||(view==="audio"&&aud&&aud.state==="play")||[...document.querySelectorAll("audio")].some(x=>!x.paused&&!x.ended)||(typeof recEl!=="undefined"&&recEl&&!recEl.paused)||(view==="lessons"&&window.speechSynthesis&&speechSynthesis.speaking);if(busy){clearTimeout(window._updT);window._updT=setTimeout(checkUpdate,120000);return}updateReady=j.v;if(navigator.serviceWorker&&navigator.serviceWorker.controller){applyUpdate();return}if(!sess&&(view==="home"||view==="kids"&&KV.scr==="home"))render()}}).catch(()=>{})}
 function applyUpdate(){try{sessionStorage.setItem("updTry",JSON.stringify({v:updateReady,t:Date.now()}))}catch(_){}updating=true;render();const c=navigator.serviceWorker.controller;if(c)c.postMessage("refresh");setTimeout(()=>location.reload(),6000)}
 const WHY={nohost:"this page is not opened inside Claude",nodb:"account storage is not offered in this view",nouser:"your account could not be identified in this view",noid:"your account could not be identified in this view",timeout:"your account did not answer in time",not_confirmed:"a save could not be read back",quota_exceeded:"account storage is full",unavailable:"the account service is busy"};
 const whyText=()=>WHY[syncWhy]||(syncWhy?"error: "+syncWhy:"");
@@ -30551,7 +30551,12 @@ function audLeftTxt(a){const c=audCover(part),rec=a&&a.rec,sec=BANK.reduce((t,i)
 async function recBlobUrl(id){try{const c=await caches.open(REC_CACHE);let r=await c.match(recUrl(id));   // the copy saved on this device first, then the network
     if(!r){r=await fetch(recUrl(id));if(!r.ok)return "";c.put(recUrl(id),r.clone()).catch(()=>{})}
     return URL.createObjectURL(new Blob([await r.arrayBuffer()],{type:"audio/mpeg"}))}catch(e){return ""}}
-function recPrep(a,k){const it=a.queue[k];if(!it||a.urls[it.id]!==undefined)return;a.urls[it.id]=null;recBlobUrl(it.id).then(u=>{if(aud===a&&!a.stop)a.urls[it.id]=u;else if(u)URL.revokeObjectURL(u)})}
+function recPrep(a,k){const it=a.queue[k];if(!it)return Promise.resolve();a.pr=a.pr||{};if(a.urls[it.id]!==undefined)return a.pr[it.id]||Promise.resolve();a.urls[it.id]=null;
+  return a.pr[it.id]=recBlobUrl(it.id).then(u=>{if(aud===a&&!a.stop)a.urls[it.id]=u;else if(u)URL.revokeObjectURL(u)})}
+/* iPhone: with the screen locked, Safari slows or stops downloads and timers, so the next fact was not ready and playback stopped after a minute or two.
+   Load the files well ahead while the app is in front (4 at a time), so a locked phone only switches between files already in memory. */
+async function recPrepAhead(a){if(a.ahead)return;a.ahead=true;const N=Math.min(a.queue.length,160);let i=0;
+  const one=async()=>{while(i<N&&aud===a&&!a.stop){const k=i++;try{await recPrep(a,k)}catch(e){}}};await Promise.all([one(),one(),one(),one()])}
 function startRec(){const a=aud;a.rec=true;a.queue=audQueue(a.scope,a.src,a.mins*6+20);
   if(!a.queue.length){a.msg="Nothing recorded for this choice yet. Pick Smart mix or Random.";render();return}
   const el=recEl||(recEl=new Audio());el.preload="auto";
@@ -30564,14 +30569,15 @@ function startRec(){const a=aud;a.rec=true;a.queue=audQueue(a.scope,a.src,a.mins
   try{const ms=navigator.mediaSession;if(ms){ms.setActionHandler("play",()=>recPause(a,false));ms.setActionHandler("pause",()=>recPause(a,true));ms.setActionHandler("nexttrack",()=>recNext(a,false));ms.setActionHandler("previoustrack",()=>{try{recEl.currentTime=0;a.phase="q";renderAudio()}catch(e){}})}}catch(e){}
   clearInterval(a.wd);a.wd=setInterval(()=>{if(aud!==a||a.stop||a.state!=="play"){clearInterval(a.wd);return}const e=recEl;if(a.paused||a.pos<0||!a.cur){a.wdN=0;return}
     if(a.wdPos===a.pos&&a.wdT===e.currentTime&&!e.ended){a.wdN=(a.wdN||0)+1;if(a.wdN>=3){a.wdN=0;a.diag=recDiag(a);a.needTap=true;a.paused=true;a.pauseAt=Date.now();renderAudio()}}else a.wdN=0;a.wdPos=a.pos;a.wdT=e.currentTime},2000);
-  recPrep(a,0);recPrep(a,1);render()}
+  recPrep(a,0);recPrep(a,1);recPrepAhead(a);render()}
 function recDiag(a){try{const e=recEl,u=a.cur?a.urls[a.cur.id]:undefined;return "Details for support: file "+(u===undefined?"not asked":u===null?"still loading":u===""?"failed to load":"loaded")+" · player "+(e.error?"error "+e.error.code:"ok")+" · ready "+e.readyState+" · net "+e.networkState+" · "+(navigator.onLine?"online":"offline")+" · "+BUILD}catch(_){return ""}}
 function recBegin(a){if(a.began)return;a.began=true;recPlayAt(a,0)}
 function recPlayAt(a,k){const el=recEl,it=a.queue[k];if(!it){recFinish(a);return}   // stays synchronous when the file is ready, so the next fact starts even with the phone locked
   a.pos=k;a.cur=it;a.didnt=false;a.knew=false;a.phase="q";const u=a.urls[it.id];
-  if(u){el.src=u;el.playbackRate=a.rate;const p=el.play();if(p&&p.catch)p.catch(err=>{if(aud===a&&!a.stop&&!a.paused){a.diag="Details for support: play blocked ("+String(err&&err.name||err).slice(0,40)+") · "+BUILD;a.needTap=true;a.paused=true;a.pauseAt=Date.now();renderAudio()}})}
+  if(u){el.loop=false;el.src=u;el.playbackRate=a.rate;const p=el.play();if(p&&p.catch)p.catch(err=>{if(aud===a&&!a.stop&&!a.paused){a.diag="Details for support: play blocked ("+String(err&&err.name||err).slice(0,40)+") · "+BUILD;a.needTap=true;a.paused=true;a.pauseAt=Date.now();renderAudio()}})}
   else if(u===""){a.miss++;if(a.miss>4){a.state="recfail";try{el.pause()}catch(e){}render();return}recNext(a,false);return}
-  else{recPrep(a,k);const t=setInterval(()=>{if(aud!==a||a.stop||a.pos!==k){clearInterval(t);return}if(a.urls[it.id]!==null&&a.urls[it.id]!==undefined){clearInterval(t);recPlayAt(a,k)}},120)}
+  else{try{el.loop=true;el.src=recSilence();const p=el.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}   // keep the audio session alive while the file loads, or a locked iPhone ends it
+    recPrep(a,k).then(()=>{if(aud===a&&!a.stop&&a.pos===k){try{el.loop=false}catch(e){}recPlayAt(a,k)}})}
   recPrep(a,k+1);recPrep(a,k+2);
   try{if("mediaSession" in navigator&&window.MediaMetadata)navigator.mediaSession.metadata=new MediaMetadata({title:it.f.slice(0,90),artist:"EA Exam APP · Part "+it.p,album:PARTS[it.p].doms[it.d][0]})}catch(e){}
   renderAudio()}
