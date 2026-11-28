@@ -3,7 +3,7 @@ Source: USCIS M-1778 (09/25) "128 Civics Questions and Answers (2025 version)" i
 free/es.txt is our own Spanish study translation (n|question|answers split by ;). Officeholder answers are set in NOW below:
 check them against uscis.gov/citizenship/testupdates whenever an office changes hands, then rebuild."""
 import json, html
-from promo import PROMO, PROMO_CSS
+from promo import PROMO, PROMO_CSS, TOPBAR
 E = html.escape
 Q = json.load(open("free/civics.json"))
 ES = {}
@@ -66,6 +66,7 @@ page = f"""<!doctype html>
 <header class="top"><div class="wrap"><a class="brand" href="./">Solving Life LLC</a><nav class="main" aria-label="Main"><a href="./">Home</a><a href="drivers-license-practice-test">Driver's test</a><a href="free-practice-questions">License exams</a></nav></div></header>
 <main class="page">
 <h1>Free U.S. citizenship test practice</h1>
+{TOPBAR}
 <p>All 128 official civics questions and answers for the <b>2025 version</b> of the naturalization test, from USCIS. Free, no sign-in.</p>
 <ul>
 <li><b>Filed Form N-400 on or after October 20, 2025:</b> you take this 2025 version. The officer asks up to 20 questions out loud. You need 12 correct.</li>

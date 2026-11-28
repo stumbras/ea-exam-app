@@ -4,7 +4,7 @@ Questions are in free/car.txt and free/moto.txt (question|right|wrong|wrong|wron
 cover rules and signs that hold in every state. State-specific rules (speed limits, test length, fees) are NOT included yet:
 each state page says so and points to the official state handbook. Also writes free/urls.txt for the sitemap."""
 import json, html, hashlib
-from promo import PROMO, PROMO_CSS
+from promo import PROMO, PROMO_CSS, TOPBAR
 E = html.escape
 def load(f): return [dict(zip("qcabxe", [p for p in l.rstrip("\n").split("|")])) for l in open(f, encoding="utf-8") if l.strip()]
 def norm(rows): return [dict(q=r["q"], c=r["c"], w=[r["a"], r["b"], r["x"]], e=r["e"]) for r in rows]
@@ -35,6 +35,14 @@ CTA = ('<div class="cta"><h2>Going for a CDL?</h2><p>CDL Permit Prep covers Gene
        '<h2>Tax returns from $60</h2><p>Solving Life LLC prepares tax returns from simple to complicated. Single $60, married filing jointly $80, any return with kids $100, one state return included. We beat any posted price by $20.</p>'
        '<p><a class="btn btn-main" href="https://www.solvinglifellc.com/pricing?utm_source=free_test_page&utm_medium=site&utm_campaign=drive">See tax prices</a></p>'
        '<p>Studying for a career license? Every exam app (Enrolled Agent, Series 65, SIE, Customs Broker, EDPNA, CDL) for 12 months: $49. <a class="lk" href="https://www.solvinglifellc.com/product-page/all-4-exam-study-apps-12-months-buy-one-get-all?utm_source=free_test_page&utm_medium=site&utm_campaign=drive">See the bundle</a> or <a class="lk" href="apps">see the study apps</a>.</p></div>')
+
+import json as _json
+_SG=[l.rstrip("\n").split("|") for l in open("free/signs.txt") if l.strip() and not l.startswith("#")]
+_CAR=[l.rstrip("\n").split("|") for l in open("free/car.txt") if l.strip() and not l.startswith("#")]
+SIGNS_GAL=('<h2>Road signs and signals you must know</h2><p>Tap a sign to see what it means.</p><div id="signgal" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px"></div>'
+ '<script>'+open("signs.js").read()+'window.SIGNQ='+_json.dumps({r[1]:r[0] for r in _SG})+';'
+ '(function(){var L='+_json.dumps([[r[1],r[2]] for r in _SG]+[[r[0],r[1]] for r in _CAR])+';var g=document.getElementById("signgal"),h="";'
+ 'L.forEach(function(x){var pic=signPic(x[0]);if(!pic)return;h+=\'<details style="border:1px solid #D9E0EA;border-radius:12px;padding:10px;background:#fff;text-align:center"><summary style="list-style:none;cursor:pointer">\'+pic+\'<div style="font-size:13px;color:#44546A;margin-top:4px">What does it mean?</div></summary><div style="font-weight:700;margin-top:6px">\'+x[1].replace(/</g,"&lt;")+\'</div></details>\'});g.innerHTML=h})();</script>')
 def static(qs):
     o = ""
     for i, d in enumerate(qs, 1):
@@ -63,9 +71,11 @@ def page(fn, title, desc, h1, intro, bank, n, shown, extra="", ns=0):
 <header class="top"><div class="wrap"><a class="brand" href="./">Solving Life LLC</a><nav class="main" aria-label="Main"><a href="drivers-license-practice-test">Driver's test</a><a href="motorcycle-permit-practice-test">Motorcycle test</a><a href="citizenship-test">Citizenship test</a></nav></div></header>
 <main class="page">
 <h1>{E(h1)}</h1>
+{TOPBAR}
 {intro}
 {APPBTN_M if fn.startswith("motorcycle") else APPBTN_D}<div class="tool"><div id="quiz"><button class="go" onclick="start()">Start a {n}-question practice test</button></div></div>
 {extra}
+{SIGNS_GAL if not fn.startswith("motorcycle") else ""}
 {CTA}
 <h2>Practice questions with answers</h2>
 {static(shown)}
