@@ -1736,3 +1736,8 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Price-beat guarantee: beat any posted price or written quote from a paid preparer by at least $20; same forms, shown before work starts, floor $25.
 - Wix Invoices saved items (Billable Items API, POST /billable-items/v1/billable-items): 10 items created (no ITIN item). Wix Payments already connected; invoices and pay links need no setup.
 - site_llc/make.py pricing page rewritten (main_rows with competitor column dated CHECKED, guarantee card, promise cards, other services). H&R Block figure = $89 base + $75 state from hrblock.com/tax-offices/upfront-pricing read Nov 28, 2026; averages NATP 2025 / NSA. RECHECK in January before the season. Live Wix site pricing page NOT changed.
+
+- Nov 28 10:22: owner access RESTORED (email back in ALWAYS on the live worker, KV grant "Family full access" rewritten, backup key removed). Live worker should now equal local sync/worker.js.
+
+### Version 2026-11-28l (Nov 28)
+- CDL: 17 more pre-trip inspection questions (topic 11 now 27), from the handbook Section 11a pages 162-177 read by OCR (tesseract; text kept in free/cdl/pretrip-ocr-tx-section11a.txt and added to the cdlcheck.py corpus). Bank 185 rows.
