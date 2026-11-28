@@ -8,6 +8,6 @@ for ln in open("free/cdl/cdl.txt",encoding="utf-8"):
     r=ln.rstrip("\n").split("|")
     if len(r)<8: continue
     d,q,right,w1,w2,w3,ex=r[:7]
-    out.append(f"Q(14,{d},{1 if int(d)<4 else 2},{J(q)},{J(right)},{J([w1,w2,w3])},{J(ex)});")
+    out.append(f"Q(14,{d},{1 if int(d)<4 or int(d)>10 else 2},{J(q)},{J(right)},{J([w1,w2,w3])},{J(ex)});")
     out.append(f"F(14,{d},{J(q)},{J(right+'. '+ex)});"); n+=1
 open("cdl_bank.js","w",encoding="utf-8").write("\n".join(out)+"\n"); print("cdl",n)

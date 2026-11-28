@@ -50,9 +50,36 @@ PARTS[12].doms=new Proxy({},{get:(t,k)=>DRV_CUR[k]||DRV_ALL[k],has:(t,k)=>k in D
   getOwnPropertyDescriptor:(t,k)=>k in DRV_CUR?{value:DRV_CUR[k],enumerable:true,configurable:true,writable:true}:undefined});
 try{const sq=new URLSearchParams(location.search).get("st");if(sq){const dm=Object.keys(DRV_ALL).find(d=>d>2&&d!=20&&DRV_ALL[d][0].toLowerCase()===sq.toLowerCase());if(dm){localStorage.setItem("drvState",dm);localStorage.setItem("drvAsked","1")}}}catch(_){}
 drvBP0=BP;
-BP=function(p){const l=drvBP0(p);if(p!=12)return l;const k=Object.keys(DRV_CUR).join(",")+"|"+l.length;if(_drvBP.k!==k){_drvBP.k=k;_drvBP.l=l.filter(i=>i.d in DRV_CUR)}return _drvBP.l};
+BP=function(p){const l=drvBP0(p);if(p==14){const k=Object.keys(CDL_CUR).join(",")+"|"+l.length;if(_cdlBP.k!==k){_cdlBP.k=k;_cdlBP.l=l.filter(i=>i.d in CDL_CUR)}return _cdlBP.l}if(p!=12)return l;const k=Object.keys(DRV_CUR).join(",")+"|"+l.length;if(_drvBP.k!==k){_drvBP.k=k;_drvBP.l=l.filter(i=>i.d in DRV_CUR)}return _drvBP.l};
 drvApply();
-slRender0=render;render=function(){const r=slRender0.apply(this,arguments);try{drvCard()}catch(_){}slFreeWords();return r};render()}catch(e){console.error(e)}},0);
+try{CDL_ALL=Object.assign({},PARTS[14].doms);PARTS[14].doms=new Proxy({},{get:(t,k)=>CDL_CUR[k]||CDL_ALL[k],has:(t,k)=>k in CDL_CUR,ownKeys:()=>Object.keys(CDL_CUR),
+  getOwnPropertyDescriptor:(t,k)=>k in CDL_CUR?{value:CDL_CUR[k],enumerable:true,configurable:true,writable:true}:undefined});cdlApply()}catch(e){console.error(e)}
+slRender0=render;render=function(){const r=slRender0.apply(this,arguments);try{drvCard()}catch(_){}try{cdlCard()}catch(_){}slFreeWords();return r};render()}catch(e){console.error(e)}},0);
+/* ---- CDL app (part 14): the learner ticks the endorsements they are testing for and picks a state. Core topics (1-5) and the
+   pre-trip topic (11) are always on; 6-10 are endorsements; 12 is Texas-only law, shown when the state is Texas. Weights are
+   rescaled to total 100. Same Proxy idea as the driver's test above. ---- */
+let CDL_ALL={},CDL_CUR={};const _cdlBP={k:"",l:[]};
+const CDL_END=[[6,"Passenger (P)"],[7,"School bus (S)"],[8,"Doubles / triples (T)"],[9,"Tank vehicles (N)"],[10,"Hazardous materials (H)"]];
+const CDL_ST="Alabama,Alaska,Arizona,Arkansas,California,Colorado,Connecticut,Delaware,District of Columbia,Florida,Georgia,Hawaii,Idaho,Illinois,Indiana,Iowa,Kansas,Kentucky,Louisiana,Maine,Maryland,Massachusetts,Michigan,Minnesota,Mississippi,Missouri,Montana,Nebraska,Nevada,New Hampshire,New Jersey,New Mexico,New York,North Carolina,North Dakota,Ohio,Oklahoma,Oregon,Pennsylvania,Rhode Island,South Carolina,South Dakota,Tennessee,Texas,Utah,Vermont,Virginia,Washington,West Virginia,Wisconsin,Wyoming".split(",");
+const CDL_STDOM={Texas:12}; /* states with their own verified question set */
+function cdlEnds(){return drvGet("cdlEnd").split(",").filter(x=>CDL_END.some(e=>e[0]==x))}
+function cdlApply(){const on=["1","2","3","4","5","11"].concat(cdlEnds()),sd=CDL_STDOM[drvGet("cdlState")];if(sd)on.push(String(sd));
+  const use=on.filter(d=>CDL_ALL[d]),tot=use.reduce((a,d)=>a+CDL_ALL[d][1],0)||1,c={};let sum=0,big=use[0];
+  use.forEach(d=>{const w=Math.max(1,Math.round(CDL_ALL[d][1]*100/tot));c[d]=[CDL_ALL[d][0],w];sum+=w;if(w>c[big][1])big=d});if(big)c[big][1]+=100-sum;CDL_CUR=c;_cdlBP.k=""}
+function cdlCard(){const v=document.getElementById("view");if(!v||part!=14||view!=="home"||document.getElementById("cdlcard"))return;
+  const st=drvGet("cdlState"),ends=cdlEnds(),has=CDL_STDOM[st];
+  const el=document.createElement("section");el.id="cdlcard";el.className="section";
+  el.innerHTML=`<div class="card" style="border:2px solid ${st?"var(--line,#cfd8e3)":"#1d4e89"};border-radius:16px;padding:14px 16px">
+    <div style="font-weight:800;font-size:1.05rem">${st?"Your CDL tests · "+esc(st):"Set up your CDL tests"}</div>
+    ${st?`<div class="small muted" style="margin:4px 0 6px">Core tests${ends.length?" + "+CDL_END.filter(e=>ends.includes(String(e[0]))).map(e=>e[1]).join(", "):", no endorsements"}${has?" + "+esc(st)+" rules":""}</div><details><summary class="small" style="font-weight:700;color:#1d4e89;cursor:pointer;padding:6px 0">Change endorsements or state</summary>`:""}
+    <div class="small muted" style="margin:4px 0 10px">General Knowledge, Air Brakes, Combination Vehicles and the pre-trip inspection are always included. Tick the endorsements you are testing for.</div>
+    ${CDL_END.map(([d,n])=>`<label class="small" style="display:flex;gap:10px;align-items:center;margin:8px 0;font-weight:600"><input type="checkbox" class="cdlend" value="${d}" ${ends.includes(String(d))?"checked":""} style="width:22px;height:22px"> ${n}</label>`).join("")}
+    <label class="small" for="cdlsel" style="display:block;font-weight:700;margin:12px 0 4px">State you are testing in</label>
+    <select id="cdlsel" style="width:100%;padding:12px;border-radius:12px;font-size:1rem;border:1px solid #9aa7b6;background:#fff;color:#111"><option value="">Choose your state…</option>${CDL_ST.map(n=>`<option ${st===n?"selected":""}>${n}</option>`).join("")}</select>
+    <div class="small muted" style="margin-top:8px">${!st?"CDL knowledge tests come from one national manual, so these questions apply in every state.":has?"Added: "+esc(st)+" special requirements from the official "+esc(st)+" commercial driver handbook.":"The CDL knowledge tests in "+esc(st)+" come from the same national manual these questions were checked against. "+esc(st)+" has no extra state-only question set in the app yet; fees, ages and test counts are set by your state, so confirm them with your state licensing office."}</div>${st?"</details>":""}</div>`;
+  v.insertBefore(el,v.firstChild);const dt=el.querySelector("details");if(dt&&window._cdlOpen){dt.open=true}if(dt)dt.addEventListener("toggle",()=>{window._cdlOpen=dt.open});
+  el.querySelector("#cdlsel").addEventListener("change",e=>{try{if(e.target.value)localStorage.setItem("cdlState",e.target.value);else localStorage.removeItem("cdlState")}catch(_){}cdlApply();render();window.scrollTo(0,0)});
+  el.querySelectorAll(".cdlend").forEach(b=>b.addEventListener("change",()=>{try{localStorage.setItem("cdlEnd",[...el.querySelectorAll(".cdlend")].filter(x=>x.checked).map(x=>x.value).join(","))}catch(_){}cdlApply();render()}))}
 function drvCard(){const v=document.getElementById("view");if(!v||part!=12||view!=="home"||document.getElementById("drvcard"))return;
   const s=drvState(),m=drvGet("drvMoto")==="1",asked=drvGet("drvAsked")==="1";
   const opts=Object.keys(DRV_ALL).filter(d=>d>2&&d!=20).map(d=>[d,DRV_ALL[d][0]]).sort((a,b)=>a[1]<b[1]?-1:1).map(([d,n])=>`<option value="${d}" ${s==d?"selected":""}>${esc(n)}</option>`).join("");

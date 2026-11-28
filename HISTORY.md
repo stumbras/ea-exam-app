@@ -1726,6 +1726,12 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - Access PDFs rebuilt by tmp/mkaccesspdf.py (same content as the worker email: steps, install, other products). Site wording no longer says "all five".
 - Sync worker (live SHA c0af2099…): a FULL refund in Wix now removes what that order gave (bundle: until=now; single app: app removed) and emails "Your refund is done". Partial refunds are ignored.
 
+### Version 2026-11-28j (Nov 28): CDL app made a full product
+- free/cdl/cdl.txt now 168 rows (was 87), every row verified by tmp/cdlcheck.py against the Texas DL-7C 2026 handbook text (national model manual, July 2017 version). New topics in PARTS[14].doms: 6 Passenger (P), 7 School bus (S), 8 Doubles/triples (T), 9 Tank (N), 10 Hazmat (H), 11 Pre-trip inspection and skills test, 12 Texas special requirements (handbook Section 14).
+- sl_apps.js: CDL chooser card (cdlCard, cdlApply, CDL_CUR Proxy like the driver app). Core 1-5 + 11 always on; endorsements by checkbox (localStorage cdlEnd); state select (cdlState) for all states + DC; only Texas has a state-only set (CDL_STDOM). Weights rescaled to 100. Test tmp/t_cdl2.js.
+- Not done: other states' own extras (need each state's official CDL handbook; most pasted links were dead), Section 11 item-by-item pre-trip list (text is garbled in the PDF extraction, needs OCR), Sections 12-13 skills-test detail.
+
+- 2026-11-27 Version 2026-11-28j · Nov 28: CDL app: all endorsements, pre-trip, Texas rules, chooser
 - 2026-11-27 Version 2026-11-28i · Nov 28: Access PDFs match the email; refund removes access; wording
 - 2026-11-27 Version 2026-11-28h · Nov 28: Diagnostic test can be left and continued later
 - 2026-11-27 Version 2026-11-28g · Nov 28: Access instruction PDFs for the two store products
