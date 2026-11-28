@@ -874,7 +874,8 @@ body.course .tabs.bk{display:flex}
       <div class="cycle">2025 tax law · exam window to Feb 28, 2027</div>
     </div></div>
     <div class="topact"><span class="chip" id="sync" role="button" tabindex="0" title="Tap to test account saving" style="cursor:pointer"><span class="dot"></span><span id="synctext">Saved on this device</span></span>
-    <button class="chip" id="themebtn" type="button" aria-label="Switch between light and dark">Dark</button></div>
+    <button class="chip" id="themebtn" type="button" aria-label="Switch between light and dark">Dark</button>
+    <button class="chip" id="podbtn" type="button" data-mode="pod" style="display:none;cursor:pointer;font-family:inherit" aria-label="Open the free podcast episodes">🎧 Podcast</button></div>
     <button class="kidsbtn" id="kidsbtn" type="button" aria-label="Give the kids app Becoming Genius to your kids">🚀<span>KIDS</span></button>
   </header>
   <nav class="tabs" role="tablist" id="tabs"></nav>
@@ -27892,7 +27893,7 @@ BP=function(p){const l=drvBP0(p);if(p==14){const k=Object.keys(CDL_CUR).join(","
 drvApply();
 try{CDL_ALL=Object.assign({},PARTS[14].doms);PARTS[14].doms=new Proxy({},{get:(t,k)=>CDL_CUR[k]||CDL_ALL[k],has:(t,k)=>k in CDL_CUR,ownKeys:()=>Object.keys(CDL_CUR),
   getOwnPropertyDescriptor:(t,k)=>k in CDL_CUR?{value:CDL_CUR[k],enumerable:true,configurable:true,writable:true}:undefined});cdlApply()}catch(e){console.error(e)}
-slRender0=render;render=function(){const r=slRender0.apply(this,arguments);try{drvCard()}catch(_){}try{cdlCard()}catch(_){}slFreeWords();return r};render()}catch(e){console.error(e)}},0);
+slRender0=render;render=function(){const r=slRender0.apply(this,arguments);try{drvCard()}catch(_){}try{cdlCard()}catch(_){}try{const pb=document.getElementById("podbtn");if(pb)pb.style.display=[1,2,3,5,6,9,10].includes(+part)&&view!=="start"&&view!=="kids"&&view!=="session"?"":"none"}catch(_){}slFreeWords();return r};render()}catch(e){console.error(e)}},0);
 /* ---- CDL app (part 14): the learner ticks the endorsements they are testing for and picks a state. Core topics (1-5) and the
    pre-trip topic (11) are always on; 6-10 are endorsements; 12 is Texas-only law, shown when the state is Texas. Weights are
    rescaled to total 100. Same Proxy idea as the driver's test above. ---- */
@@ -28785,7 +28786,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 2026-11-28l · Nov 28";
+const BUILD="Version 2026-11-28m · Nov 28";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -29623,16 +29624,19 @@ function startRec(){const a=aud;a.rec=true;a.queue=audQueue(a.scope,a.src,a.mins
   const el=recEl||(recEl=new Audio());el.preload="auto";
   Object.assign(a,{state:"play",pos:-1,cur:null,heard:0,marked:0,start:Date.now(),end:Date.now()+a.mins*60000,paused:false,stop:false,phase:"q",msg:"",urls:{},began:false,miss:0,block:a.mins,marks:0,offer:0});
   el.onended=()=>{if(aud!==a||a.stop||a.state!=="play")return;if(!a.began)recBegin(a);else recNext(a,true)};
-  el.onerror=()=>{if(aud!==a||a.stop||a.state!=="play"||!a.began)return;a.miss++;recNext(a,false)};
+  el.onerror=()=>{if(aud!==a||a.stop||a.state!=="play"||!a.began)return;a.miss++;if(a.miss>4){a.diag=recDiag(a);a.needTap=true;a.paused=true;a.pauseAt=Date.now();a.miss=0;renderAudio();return}recNext(a,false)};
   el.ontimeupdate=()=>{if(aud!==a||!a.cur||a.phase!=="q")return;if(el.currentTime>=(REC[a.cur.id]?REC[a.cur.id][0]:0)){a.phase="a";renderAudio()}};
   el.playbackRate=1;el.src=recSilence();const p=el.play();if(p&&p.catch)p.catch(()=>{});   // a short silent clip inside the tap unlocks the player on phones
   setTimeout(()=>{if(aud===a&&!a.stop)recBegin(a)},900);
   try{const ms=navigator.mediaSession;if(ms){ms.setActionHandler("play",()=>recPause(a,false));ms.setActionHandler("pause",()=>recPause(a,true));ms.setActionHandler("nexttrack",()=>recNext(a,false));ms.setActionHandler("previoustrack",()=>{try{recEl.currentTime=0;a.phase="q";renderAudio()}catch(e){}})}}catch(e){}
+  clearInterval(a.wd);a.wd=setInterval(()=>{if(aud!==a||a.stop||a.state!=="play"){clearInterval(a.wd);return}const e=recEl;if(a.paused||a.pos<0||!a.cur){a.wdN=0;return}
+    if(a.wdPos===a.pos&&a.wdT===e.currentTime&&!e.ended){a.wdN=(a.wdN||0)+1;if(a.wdN>=3){a.wdN=0;a.diag=recDiag(a);a.needTap=true;a.paused=true;a.pauseAt=Date.now();renderAudio()}}else a.wdN=0;a.wdPos=a.pos;a.wdT=e.currentTime},2000);
   recPrep(a,0);recPrep(a,1);render()}
+function recDiag(a){try{const e=recEl,u=a.cur?a.urls[a.cur.id]:undefined;return "Details for support: file "+(u===undefined?"not asked":u===null?"still loading":u===""?"failed to load":"loaded")+" · player "+(e.error?"error "+e.error.code:"ok")+" · ready "+e.readyState+" · net "+e.networkState+" · "+(navigator.onLine?"online":"offline")+" · "+BUILD}catch(_){return ""}}
 function recBegin(a){if(a.began)return;a.began=true;recPlayAt(a,0)}
 function recPlayAt(a,k){const el=recEl,it=a.queue[k];if(!it){recFinish(a);return}   // stays synchronous when the file is ready, so the next fact starts even with the phone locked
   a.pos=k;a.cur=it;a.didnt=false;a.knew=false;a.phase="q";const u=a.urls[it.id];
-  if(u){el.src=u;el.playbackRate=a.rate;const p=el.play();if(p&&p.catch)p.catch(()=>{if(aud===a&&!a.stop&&!a.paused){a.needTap=true;a.paused=true;a.pauseAt=Date.now();renderAudio()}})}
+  if(u){el.src=u;el.playbackRate=a.rate;const p=el.play();if(p&&p.catch)p.catch(err=>{if(aud===a&&!a.stop&&!a.paused){a.diag="Details for support: play blocked ("+String(err&&err.name||err).slice(0,40)+") · "+BUILD;a.needTap=true;a.paused=true;a.pauseAt=Date.now();renderAudio()}})}
   else if(u===""){a.miss++;if(a.miss>4){a.state="recfail";try{el.pause()}catch(e){}render();return}recNext(a,false);return}
   else{recPrep(a,k);const t=setInterval(()=>{if(aud!==a||a.stop||a.pos!==k){clearInterval(t);return}if(a.urls[it.id]!==null&&a.urls[it.id]!==undefined){clearInterval(t);recPlayAt(a,k)}},120)}
   recPrep(a,k+1);recPrep(a,k+2);
@@ -29719,7 +29723,7 @@ function renderAudio(){if(view!=="audio"||!aud)return;const a=aud,chip=(k,v,cur,
   $("#view").innerHTML=`<section class="section"><div class="sesshead"><div><h2>Audio review</h2><div class="small muted mono">${a.heard} ${a.cont?"heard":"reviewed"} · ${fmt(left)} ${a.cont?"to the next "+(a.block||10)+"-min mark":"left"}${a.paused?" · paused":""}</div></div><button class="btn ghost small" id="audend">${a.cont?"Stop":"End"}</button></div>
    <div class="progress"><i style="width:${Math.min(100,Math.round((1-left/((a.cont?(a.block||10):a.mins)*60))*100))}%"></i></div>
    ${a.cont&&a.offer&&Date.now()-a.offer<60000?`<div class="card" style="border:2px solid var(--good)"><b>✓ ${a.marks*(a.block||10)} minutes done</b><div class="small">Still playing. It carries on by itself.</div><button class="btn pri" id="audend">Stop here</button></div>`:""}
-   ${a.rec&&a.pos<0?`<div class="notice">Loading the audio…</div>`:""}${a.needTap?`<div class="card" style="border:2px solid var(--warn)"><b>The voice did not start.</b><div class="small">Phones only allow speech after a tap. Check that the volume is up and silent mode is off, then tap the button.</div><button class="btn pri" id="audtap">Turn the voice on</button></div>`:""}
+   ${a.rec&&a.pos<0?`<div class="notice">Loading the audio…</div>`:""}${a.needTap?`<div class="card" style="border:2px solid var(--warn)"><b>The voice did not start.</b><div class="small">Phones only allow speech after a tap. Check that the volume is up and silent mode is off, then tap the button.</div><button class="btn pri" id="audtap">Turn the voice on</button>${a.diag?`<div class="small muted" style="margin-top:8px">${esc(a.diag)}</div>`:""}</div>`:""}
    <div class="card"><div class="meta"><span>${pl(it.p)} · ${esc(PARTS[it.p].doms[it.d][0])}</span><span>${ph}</span></div>
    <div class="front">${esc(it.f)}</div>${a.phase==="a"||a.phase==="r"?`<div class="back">${esc(it.b)}</div>`:""}
    <div class="rate" style="grid-template-columns:repeat(2,1fr)"><button id="audmiss" class="r0" ${a.didnt||a.knew?"disabled":""}>${a.didnt?"Added to redrill":"Didn't know it"}</button><button id="audknew" class="r3" ${a.didnt||a.knew?"disabled":""}>${a.knew?"Counted":"Knew it"}</button><button id="audpause">${a.paused?"Resume":"Pause"}</button><button id="audskip">Skip</button></div>
@@ -29743,7 +29747,7 @@ function audioClick(b){const a=aud;if(!a)return false;
     if(b.id==="audskip"){recNext(a,false);return true}
     if(b.id==="audend"){a.stop=true;recFinish(a);return true}
     if(b.id==="audback"){a.stop=true;recFinish(a);aud=null;view="home";render();return true}}
-  if(b.id==="audtap"){unlockSpeech(true);a.needTap=false;return true}
+  if(b.id==="audtap"){if(a.rec){try{const el=recEl;if(el&&a.cur&&a.urls[a.cur.id]&&(el.error||!el.src||el.src.indexOf("blob:")!==0)){el.src=a.urls[a.cur.id]}}catch(e){}recPause(a,false);a.wdN=0;renderAudio();return true}unlockSpeech(true);a.needTap=false;return true}
   if(b.id==="audback"){a.stop=true;hush();aud=null;view="home";render();return true}
   if(b.id==="audagain"){openAudio();return true}
   if(b.id==="audend"){a.stop=true;hush();try{a.lock&&a.lock.release()}catch(e){}if(a.heard){S.hist.push({t:Date.now(),p:part,m:"audio",n:a.heard,c:a.heard-a.marked});persist()}a.state="done";render();return true}

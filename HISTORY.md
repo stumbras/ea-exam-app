@@ -1742,6 +1742,13 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 ### Version 2026-11-28l (Nov 28)
 - CDL: 17 more pre-trip inspection questions (topic 11 now 27), from the handbook Section 11a pages 162-177 read by OCR (tesseract; text kept in free/cdl/pretrip-ocr-tx-section11a.txt and added to the cdlcheck.py corpus). Bank 185 rows.
 
+- Nov 28 10:50: LIVE Wix site (solvinglifellc.com) updated and published through Aria in the Wix Harmony Editor (dashboard Aria cannot edit pages; open the editor, then tell Aria; long typed prompts freeze the tab for ~30 s; a "/" in the prompt opens the skills menu, so send with the arrow button). Pricing page: new intro, 10 new rows, guarantee line. Home cards: Individual "From $60, state included", Self-employed "Gig income +$60, Partnership $250", 1040-NR $170, stocks +$25. NOT changed and still on the live site: ITIN rows ($150/$150/$100, card "From $100") and the claims "IRS Certifying Acceptance Agent" + "As a CAA we review it in person" (owner has not confirmed CAA approval; flagged to him).
+
+### Version 2026-11-28m (Nov 28)
+- Owner: "voice in app dont work" (iPhone, EA Part 3, recorded voice). Not reproducible here (Chromium plays; no WebKit installed; audio cannot be heard). Found one real bug: the "Turn the voice on" button (#audtap) only unlocked the phone voice and never restarted the recorded player, so a blocked recording stayed silent. Fixed (recPause + reload src). Added a watchdog (6 s without progress shows the tap card) and a "Details for support" line (recDiag: file state, player error code, readyState, networkState, online, build) so the next report shows the cause. Note: the host does NOT honor Range requests for /audio, which is why playback uses blob URLs; do not switch to direct URLs.
+- Header chip "🎧 Podcast" (#podbtn, data-mode pod) on every course with a podcast (parts 1,2,3,5,6,9,10); hidden on the start screen, in sessions and in apps without a podcast. Tests tmp/t_aud.js, tmp/t_pod.js.
+
+- 2026-11-27 Version 2026-11-28m · Nov 28: Recorded voice: tap-to-start fix and no-sound watchdog; Podcast button in the top bar
 - 2026-11-27 Version 2026-11-28l · Nov 28: CDL: pre-trip inspection questions from the handbook
 - 2026-11-27 Version 2026-11-28k · Nov 28: Tax site: approved price list, comparison column, price-beat guarantee
 - 2026-11-27 Version 2026-11-28j · Nov 28: CDL app: all endorsements, pre-trip, Texas rules, chooser
