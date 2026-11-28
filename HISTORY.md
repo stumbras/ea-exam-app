@@ -1731,6 +1731,13 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - sl_apps.js: CDL chooser card (cdlCard, cdlApply, CDL_CUR Proxy like the driver app). Core 1-5 + 11 always on; endorsements by checkbox (localStorage cdlEnd); state select (cdlState) for all states + DC; only Texas has a state-only set (CDL_STDOM). Weights rescaled to 100. Test tmp/t_cdl2.js.
 - Not done: other states' own extras (need each state's official CDL handbook; most pasted links were dead), Section 11 item-by-item pre-trip list (text is garbled in the PDF extraction, needs OCR), Sections 12-13 skills-test detail.
 
+### Tax practice prices and Wix invoice items (Nov 28)
+- Owner-approved price list: single $60, MFJ $80, any return with kids $100, self-employed/gig +$60, itemized +$20, investments +$25, rental +$40 each, 1040-NR $170, partnership 1065 $250, extra state +$20; ITIN $80 per person (not sold until CAA approval). Every price includes federal + one state + e-file. Round numbers only (owner dislikes $9 endings).
+- Price-beat guarantee: beat any posted price or written quote from a paid preparer by at least $20; same forms, shown before work starts, floor $25.
+- Wix Invoices saved items (Billable Items API, POST /billable-items/v1/billable-items): 10 items created (no ITIN item). Wix Payments already connected; invoices and pay links need no setup.
+- site_llc/make.py pricing page rewritten (main_rows with competitor column dated CHECKED, guarantee card, promise cards, other services). H&R Block figure = $89 base + $75 state from hrblock.com/tax-offices/upfront-pricing read Nov 28, 2026; averages NATP 2025 / NSA. RECHECK in January before the season. Live Wix site pricing page NOT changed.
+
+- 2026-11-27 Version 2026-11-28k · Nov 28: Tax site: approved price list, comparison column, price-beat guarantee
 - 2026-11-27 Version 2026-11-28j · Nov 28: CDL app: all endorsements, pre-trip, Texas rules, chooser
 - 2026-11-27 Version 2026-11-28i · Nov 28: Access PDFs match the email; refund removes access; wording
 - 2026-11-27 Version 2026-11-28h · Nov 28: Diagnostic test can be left and continued later
