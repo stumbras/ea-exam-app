@@ -1764,6 +1764,10 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 ### Version 2026-11-28q (Nov 28)
 - Driver test now covers all 50 states. Added Louisiana 49 (Class D & E Guide R08/25, PDF), Delaware 50 (Driver Manual July 2026, PDF), South Dakota 51 and Maine 52 (read with WebFetch: dps.sd.gov download_file/2245/452 and maine.gov motoristhandbook.pdf Rev 2/22, because the shell download was refused/HTML), New Hampshire 53 (dmv.nh.gov refused; read a copy of the NH manual hosted by nationaldrivertraining.com, no edition date; source line says so). SD/ME/NH rows came from WebFetch summaries, not line-by-line: recheck against the PDFs when the owner can download them. 1011 driving questions.
 
+### Version 2026-11-28r (Nov 28)
+- Thin states raised to 16-17 questions each from their manuals: South Carolina (+9), Hawaii (+5), Connecticut (+6), Wisconsin (+5), Utah (+4), Montana (+4), Mississippi (+5). 1049 driving questions.
+
+- 2026-11-28 Version 2026-11-28r · Nov 28: Driver test: fuller sets for 7 thin states
 - 2026-11-28 Version 2026-11-28q · Nov 28: Driver test: all 50 states
 - 2026-11-28 Version 2026-11-28p · Nov 28: Driver test: 8 more states (45 total)
 - 2026-11-27 Version 2026-11-28o · Nov 28: CDL: pre-trip checklist, more doubles and tanker questions
