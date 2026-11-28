@@ -1,8 +1,10 @@
 {
   // Cloudflare Workers static site: the new solvinglifellc.com (preview until the owner says switch). Root directory "llc".
+  // worker.js runs only for /media/* to add byte-range support (needed by iPhone Safari for audio and video).
   "name": "solvinglifellc-site",
   "compatibility_date": "2026-11-01",
-  "assets": { "directory": "./" },
+  "main": "worker.js",
+  "assets": { "directory": "./", "binding": "ASSETS", "run_worker_first": ["/media/*"] },
   "workers_dev": true,
   "preview_urls": false
 }

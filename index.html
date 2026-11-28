@@ -28786,7 +28786,7 @@ async function pull(){if(!mainRef)return false;
   acct={items:Object.keys(remote.it).length,upd:remote.upd};
   if(startBlank&&!loaded&&!S.upd){S=Object.assign(remote,{ex:S.ex||{}})}else{S=mergeState(S,remote)}
   try{localStorage.setItem(LKEY,JSON.stringify(S))}catch(e){}return true}
-const BUILD="Version 2026-11-28m · Nov 28";
+const BUILD="Version 2026-11-28n · Nov 28";
 // Light / dark switch. With no choice saved, the device setting decides.
 function themeNow(){const a=document.documentElement.getAttribute("data-theme");return a||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light")}
 function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
@@ -29670,7 +29670,11 @@ async function recDownload(){if(recDl&&recDl.on)return;const ids=Object.keys(REC
 window.slPod=async function(feed,only){const box=document.getElementById("podlist");if(!box)return;box.innerHTML='<div class="small muted">Loading…</div>';
   try{const x=new DOMParser().parseFromString(await (await fetch("./"+feed+"?t="+Date.now(),{cache:"no-store"})).text(),"text/xml");
     const it=[...x.querySelectorAll("item")].map(i=>({t:i.querySelector("title").textContent,u:i.querySelector("enclosure").getAttribute("url"),d:+(i.getElementsByTagName("itunes:duration")[0]||{}).textContent||0})).reverse().filter(e=>!only||/^(Guest|Bonus)/.test(e.t));
-    box.innerHTML=it.map((e,k)=>`<div style="margin:10px 0"><div class="small"><b>${esc(e.t.replace(/ \((Enrolled Agent|EA|Series 65)[^)]*\)$/,""))}</b> · ${Math.round(e.d/60)} min</div><audio controls preload="none" src="${e.u}" style="width:100%"></audio></div>`).join("")||'<div class="small muted">No episodes yet.</div>';
+    /* which EA part an episode belongs to: from "(EA Part N)" in its title, else by episode number (1-14 Part 1, 15-19 Part 3, 20-24 Part 2) */
+    const epPart=t=>{const m=/EA Part (\d)/.exec(t);if(m)return +m[1];const n=+(/Ep (\d+)/.exec(t)||[])[1];return !n?0:n<=14?1:n<=19?3:n<=24?2:0};
+    const row=e=>`<div style="margin:10px 0"><div class="small"><b>${esc(e.t.replace(/ \((Enrolled Agent|EA|Series 65)[^)]*\)$/,""))}</b> · ${Math.round(e.d/60)} min</div><audio controls preload="none" src="${e.u}" style="width:100%"></audio></div>`;
+    const mine=feed==="podcast.xml"&&!only&&[1,2,3].includes(+part)?it.filter(e=>epPart(e.t)===+part):[],rest=it.filter(e=>!mine.includes(e));
+    box.innerHTML=(mine.length?`<div style="font-weight:800;margin:12px 0 2px">${esc(pl(part))} episodes (${mine.length})</div>`+mine.map(row).join("")+(rest.length?`<div style="font-weight:800;margin:18px 0 2px">Other episodes (${rest.length})</div>`:""):"")+rest.map(row).join("")||'<div class="small muted">No episodes yet.</div>';
     box.querySelectorAll("audio").forEach(a=>a.addEventListener("play",()=>{box.querySelectorAll("audio").forEach(b=>{if(b!==a)b.pause()});try{hush()}catch(_){}}));
   }catch(e){box.innerHTML='<div class="small muted">Could not load the episode list. Check your connection.</div>'}};
 function openAudio(){aud={state:"setup",mins:10,src:"smart",scope:"part",gap:1,rate:1,rec:recOn()&&recHas(part)&&S.set.recv2!==false};view="audio";render();window.scrollTo(0,0);if(recOn()&&recSaved===null)recCount()}
@@ -30147,7 +30151,7 @@ document.addEventListener("click",e=>{
   if(w7Click(b))return;
   if(quickClick(b))return;
   if(view==="lessons"&&lessonClick(b))return;
-  if(b.dataset.mode==="pod"){openAudio();setTimeout(()=>{const e=document.getElementById("podcard");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},350);return}if(b.dataset.mode==="audio"){openAudio();return}
+  if(b.dataset.mode==="pod"){openAudio();setTimeout(()=>{const e=document.getElementById("podcard");if(e){e.scrollIntoView({behavior:"smooth",block:"start"});const sb=e.querySelector("button[onclick^=slPod]");if(sb&&!document.querySelector("#podlist audio"))sb.click()}},350);return}if(b.dataset.mode==="audio"){openAudio();return}
   if(b.dataset.nav==="back"){hush();try{if(typeof tv!=="undefined"&&tv){tv.dr=null;tv.dord=null}}catch(_){}if(sess&&sess.mode!=="mock"){try{clearInterval(timerId)}catch(_){}sess=null}view=(typeof CLOCK==="function"&&CLOCK())?"bkland":"home";render();window.scrollTo(0,0);return}
   if(b.dataset.sec){hush();const sc=b.dataset.sec;try{localStorage.setItem("ea-lastsec",sc)}catch(_){}if(sc==="start"){view="start"}else{if(sc==="bk")part=BK;else if(sc==="s65")part=5;else if(sc==="edpna")part=6;else if(sc==="caa")part=7;else if(sc==="notary")part=8;else if(sc==="cble")part=9;else if(sc==="sie")part=10;else if(sc==="cit")part=11;else if(sc==="drive")part=12;else if(sc==="moto")part=13;else if(PARTS[part].bk||PARTS[part].x){let lp=1;try{lp=+(localStorage.getItem("ea-lastpart")||1)||1}catch(_){}part=lp}view="home"}
     try{sessionStorage.setItem("ea-part",part)}catch(_){}filt="all";confirmReset=false;aud=null;les=null;render();window.scrollTo(0,0);return}
