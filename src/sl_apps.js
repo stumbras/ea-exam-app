@@ -54,7 +54,7 @@ BP=function(p){const l=drvBP0(p);if(p==14){const k=Object.keys(CDL_CUR).join(","
 drvApply();
 try{CDL_ALL=Object.assign({},PARTS[14].doms);PARTS[14].doms=new Proxy({},{get:(t,k)=>CDL_CUR[k]||CDL_ALL[k],has:(t,k)=>k in CDL_CUR,ownKeys:()=>Object.keys(CDL_CUR),
   getOwnPropertyDescriptor:(t,k)=>k in CDL_CUR?{value:CDL_CUR[k],enumerable:true,configurable:true,writable:true}:undefined});cdlApply()}catch(e){console.error(e)}
-slRender0=render;render=function(){const r=slRender0.apply(this,arguments);try{drvCard()}catch(_){}try{cdlCard()}catch(_){}try{const pb=document.getElementById("podbtn");if(pb)pb.style.display=[1,2,3,5,6,9,10].includes(+part)&&view!=="start"&&view!=="kids"&&view!=="session"?"":"none"}catch(_){}slFreeWords();return r};render()}catch(e){console.error(e)}},0);
+slRender0=render;render=function(){const r=slRender0.apply(this,arguments);try{drvCard()}catch(_){}try{cdlCard()}catch(_){}try{slPromo()}catch(_){}try{const pb=document.getElementById("podbtn");if(pb)pb.style.display=[1,2,3,5,6,9,10].includes(+part)&&view!=="start"&&view!=="kids"&&view!=="session"?"":"none"}catch(_){}slFreeWords();return r};render()}catch(e){console.error(e)}},0);
 /* ---- CDL app (part 14): the learner ticks the endorsements they are testing for and picks a state. Core topics (1-5) and the
    pre-trip topic (11) are always on; 6-10 are endorsements; 12 is Texas-only law, shown when the state is Texas. Weights are
    rescaled to total 100. Same Proxy idea as the driver's test above. ---- */

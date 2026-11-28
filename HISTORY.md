@@ -1772,7 +1772,9 @@ Deploying the sync worker: Workers Builds is not connected for it; patch the liv
 - 28v: +26 questions in the shared driving bank (sign colors, turn arrows, ABS, trucks, motorcycles, deer, railroad, work zones) from the Iowa 2026 manual; every state test now draws from 81 shared + its own set.
 - 28w: Kentucky +10, Oklahoma +9 (now 24 and 23), from their manuals.
 - 28x: Visuals: road sign and traffic-signal pictures (SVG, no words) on 31 driver questions, in lessons, quizzes and flashcards; app header now shows each app's real icon (CDL, Driver, Motorcycle, Citizenship, Series 65, SIE, Customs, EDPNA) instead of hard-to-read letters.
+- 28y: Free apps (Driver, Motorcycle, Citizenship) now end their home and results screens with "More from Solving Life" cards: CDL Prep $10 (driver/moto), tax returns from $60 with the $20 price-beat, and all apps $49. All links go to solvinglifellc.com with utm tags. Free test web pages (50 state permit pages, citizenship, practice index) got the same prices and buy links; ITIN mentions removed from those pages until CAA approval.
 
+- 2026-11-28 Version 2026-11-28y · Nov 28: Free apps and pages link to tax services and paid apps
 - 2026-11-28 Version 2026-11-28x · Nov 28: Visuals: road sign pictures, real app icons in header
 - 2026-11-28 Version 2026-11-28w · Nov 28: Driver test: Kentucky and Oklahoma deeper
 - 2026-11-28 Version 2026-11-28v · Nov 28: Driver test: +26 shared questions

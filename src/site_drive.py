@@ -30,9 +30,11 @@ function pick(k){if(S.done)return;S.done=1;const d=S.qs[S.i],bs=$("quiz").queryS
 function next(){S.i++;if(S.i<S.qs.length)return show();const p=Math.round(100*S.ok/S.qs.length);
  $("quiz").innerHTML='<h2>Your score: '+S.ok+' of '+S.qs.length+' ('+p+'%)</h2><p>'+(p>=80?'Good. Most states require between 70% and 88% to pass.':'Keep practicing. Most states require between 70% and 88% to pass.')+'</p>'+
  (S.bad.length?'<p><b>Review:</b></p><ul>'+S.bad.map(d=>'<li>'+esc(d.q)+' <i>'+esc(d.c)+'</i></li>').join('')+'</ul>':'')+'<button class="go" onclick="start()">Try a new test</button>'}"""
-CTA = ('<div class="cta"><h2>From Solving Life LLC</h2><p>We prepare tax returns from simple to complicated: individual and family, self-employed, small business, nonresident (1040-NR), amended and prior-year returns, plus ITIN applications: '
-       '<a class="lk" href="https://solvinglifellc.com">solvinglifellc.com</a>.</p><p>Studying for a career license? Try our exam apps for the Enrolled Agent, Series 65, SIE and Customs Broker exams.</p>'
-       '<p><a class="btn btn-main" href="apps">See the study apps</a></p></div>')
+CTA = ('<div class="cta"><h2>Going for a CDL?</h2><p>CDL Permit Prep covers General Knowledge, Air Brakes, Combination Vehicles and every endorsement, for all 50 states. $10 for 12 months.</p>'
+       '<p><a class="btn btn-main" href="https://www.solvinglifellc.com/product-page/cdl-permit-prep-app-12-months?utm_source=free_test_page&utm_medium=site&utm_campaign=drive">Get CDL Prep</a></p>'
+       '<h2>Tax returns from $60</h2><p>Solving Life LLC prepares tax returns from simple to complicated. Single $60, married filing jointly $80, any return with kids $100, one state return included. We beat any posted price by $20.</p>'
+       '<p><a class="btn btn-main" href="https://www.solvinglifellc.com/pricing?utm_source=free_test_page&utm_medium=site&utm_campaign=drive">See tax prices</a></p>'
+       '<p>Studying for a career license? Every exam app (Enrolled Agent, Series 65, SIE, Customs Broker, EDPNA, CDL) for 12 months: $49. <a class="lk" href="https://www.solvinglifellc.com/product-page/all-4-exam-study-apps-12-months-buy-one-get-all?utm_source=free_test_page&utm_medium=site&utm_campaign=drive">See the bundle</a> or <a class="lk" href="apps">see the study apps</a>.</p></div>')
 def static(qs):
     o = ""
     for i, d in enumerate(qs, 1):

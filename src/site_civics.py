@@ -37,10 +37,10 @@ for d in D:
         g = d["g"]; static += f'<h3>{E(g)}</h3>\n<ol start="{d["n"]}">\n'
     static += f'<li><b>{E(d["q"])}</b>{" *" if d["s"] else ""}<br>{E(" · ".join(d["a"]))}{("<br><i>"+E(d["t"])+"</i>") if d["t"] else ""}</li>\n'
 static += "</ol>\n"
-CTA = ('<div class="cta"><h2>Need help with your U.S. tax return or an ITIN?</h2><p>USCIS can ask about your tax returns at the naturalization interview. '
-       'Solving Life LLC prepares tax returns from simple to complicated: individual and family, self-employed and small business, nonresident (1040-NR), amended and prior-year returns, plus ITIN applications.</p>'
-       '<p><a class="btn btn-main" href="https://solvinglifellc.com">Get tax help</a></p>'
-       '<p>Studying for a career license too? Our exam apps cover the Enrolled Agent, Series 65, SIE, Customs Broker and EDPNA exams: <a style="color:#9FE1CB" href="apps">see the study apps</a>.</p></div>')
+CTA = ('<div class="cta"><h2>Need help with your U.S. tax return?</h2><p>USCIS can ask about your tax returns at the naturalization interview. '
+       'Solving Life LLC prepares tax returns from simple to complicated: individual and family, self-employed and small business, nonresident (1040-NR), amended and prior-year returns. Single $60, married filing jointly $80, with kids $100, one state included. We beat any posted price by $20.</p>'
+       '<p><a class="btn btn-main" href="https://www.solvinglifellc.com/pricing?utm_source=free_test_page&utm_medium=site&utm_campaign=civics">See tax prices</a></p>'
+       '<p>Studying for a career license too? Every exam app (Enrolled Agent, Series 65, SIE, Customs Broker, EDPNA, CDL) for 12 months: $49. <a style="color:#9FE1CB" href="https://www.solvinglifellc.com/product-page/all-4-exam-study-apps-12-months-buy-one-get-all?utm_source=free_test_page&utm_medium=site&utm_campaign=civics">Get the bundle</a> or <a style="color:#9FE1CB" href="apps">see the study apps</a>.</p></div>')
 page = f"""<!doctype html>
 <html lang="en">
 <head>
