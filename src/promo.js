@@ -54,6 +54,13 @@ window.slRefer=function(){try{if(typeof PARTS==="undefined"||!PARTS[part]||view!
    <div style="font-size:.88rem;line-height:1.45;margin:4px 0 6px">Send your link to friends who are studying. When 2 of them open it and sign in for the first time, you get 30 days of CDL Permit Prep free (worth $10). Up to 3 free months.</div><div class="slrefbox"></div></div>`;
   const sup=document.getElementById("slsupport"),dc=document.getElementById("drvcard")||document.getElementById("cdlcard");
   const pr=document.getElementById("slpromo");if(pr&&pr.parentNode===v)v.insertBefore(el,pr);else v.appendChild(el);refCard(el)}catch(_){}};
+
+/* Small social badges at the bottom of every app screen (not during a test session or in Kids) */
+window.slSocials=function(){try{if(typeof view==="undefined"||["session","kids"].includes(view))return;const v=document.getElementById("view");if(!v||document.getElementById("slsoc"))return;
+  const el=document.createElement("div");el.id="slsoc";
+  el.style.cssText="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:22px 0 10px;font-size:.78rem";
+  el.innerHTML=`<span style="opacity:.65;font-weight:700;margin-right:2px">Follow Solving Life:</span>`+SOC.map(x=>`<a href="${x[1]}" target="_blank" rel="noopener" aria-label="Solving Life on ${x[0]}" style="display:inline-flex;align-items:center;min-height:30px;padding:3px 10px;border-radius:999px;background:${x[2]};color:#fff;font-weight:800;text-decoration:none">${x[0]}</a>`).join("")+`<a href="https://www.solvinglifellc.com/?utm_source=study_app&utm_medium=app_footer" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:30px;padding:3px 10px;border-radius:999px;background:#0f3a4f;color:#fff;font-weight:800;text-decoration:none">solvinglifellc.com</a>`;
+  v.appendChild(el)}catch(_){}};
 window.slPromo=function(){try{if(typeof PARTS==="undefined"||!PARTS[part]||!PARTS[part].free)return;if(!["home","results"].includes(view))return;
   const v=document.getElementById("view");if(!v||document.getElementById("slpromo"))return;const fs=set(part);if(!fs.length)return;
   const el=document.createElement("section");el.id="slpromo";el.className="section";
